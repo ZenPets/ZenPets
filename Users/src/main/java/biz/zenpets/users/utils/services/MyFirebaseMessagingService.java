@@ -60,7 +60,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
     }
 
-    /** HANDLE THE DATA MESSAGE **/
+    /***** HANDLE THE DATA MESSAGE *****/
     private void handleDataMessage(JSONObject json) {
         try {
             JSONObject data = json.getJSONObject("data");
