@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--&lt;!&ndash; DOCTORS LIST &ndash;&gt;-->
+    <!--<string name="url_doctors_list">http://34.235.84.116/zenpets/public/fetchDoctorsList</string>-->
+    <!--<string name="url_doctor_positive_reviews">http://34.235.84.116/zenpets/public/fetchPositiveReviews</string>-->
+    <!--<string name="url_doctor_negative_reviews">http://34.235.84.116/zenpets/public/fetchNegativeReviews</string>-->
+
+    <!--&lt;!&ndash; DOCTOR DETAILS &ndash;&gt;-->
+    <!--<string name="url_doctor_details">http://34.235.84.116/zenpets/public/fetchDoctorDetails</string>-->
+    <!--&lt;!&ndash;<string name="url_doctor_profile">http://34.235.84.116/zenpets/public/fetchDoctorProfile</string>&ndash;&gt;-->
+    <!--<string name="url_doctor_subscription_fetch">http://34.235.84.116/zenpets/public/fetchDoctorSubscription</string>-->
+    <!--<string name="url_question_bookmark_status">http://34.235.84.116/zenpets/public/getUserConsultationBookmarkStatus</string>-->
+    <!--<string name="url_question_bookmark_new">http://34.235.84.116/zenpets/public/newConsultationBookmark</string>-->
+    <!--<string name="url_question_bookmark_delete">http://34.235.84.116/zenpets/public/removeConsultationBookmark</string>-->
+    <!--<string name="url_doctor_reply_votes_yes">http://34.235.84.116/zenpets/public/fetchYesVotes</string>-->
+    <!--<string name="url_doctor_reply_votes_no">http://34.235.84.116/zenpets/public/fetchNoVotes</string>-->
+    <!--<string name="url_doctor_reply_vote_check">http://34.235.84.116/zenpets/public/checkUserVote</string>-->
+    <!--<string name="url_doctor_reply_vote_new">http://34.235.84.116/zenpets/public/newReplyVote</string>-->
+    <!--<string name="url_doctor_reply_vote_update_no">http://34.235.84.116/zenpets/public/updateReplyVoteNo</string>-->
+    <!--<string name="url_doctor_reply_vote_update_yes">http://34.235.84.116/zenpets/public/updateReplyVoteYes</string>-->
+    <!--<string name="url_doctor_education_fetch">http://34.235.84.116/zenpets/public/fetchDoctorEducation</string>-->
+
+    <!--&lt;!&ndash; DOCTOR REVIEWS &ndash;&gt;-->
+    <!--<string name="url_doctor_review_new">http://34.235.84.116/zenpets/public/newDoctorReview</string>-->
+    <!--<string name="url_clinic_rating_new">http://34.235.84.116/zenpets/public/newClinicRating</string>-->
+    <!--<string name="url_doctor_review_subset_fetch">http://34.235.84.116/zenpets/public/fetchDoctorReviewsSubset</string>-->
+    <!--<string name="url_doctor_review_all_fetch">http://34.235.84.116/zenpets/public/fetchDoctorReviews</string>-->
+    <!--<string name="url_doctor_reviews_check_vote">http://34.235.84.116/zenpets/public/checkUserReviewVote</string>-->
+    <!--<string name="url_doctor_review_new_vote">http://34.235.84.116/zenpets/public/newReviewVote</string>-->
+    <!--<string name="url_doctor_review_update_vote_yes">http://34.235.84.116/zenpets/public/updateReviewVoteYes</string>-->
+    <!--<string name="url_doctor_review_update_vote_no">http://34.235.84.116/zenpets/public/updateReviewVoteNo</string>-->
+    <!--<string name="url_doctor_review_fetch_positive">http://34.235.84.116/zenpets/public/fetchPositiveReviewVotes</string>-->
+    <!--<string name="url_doctor_review_fetch_negative">http://34.235.84.116/zenpets/public/fetchNegativeReviewVotes</string>-->
+
+    <!--&lt;!&ndash; DOCTOR TIMINGS &ndash;&gt;-->
+    <!--<string name="url_doctor_timings">http://34.235.84.116/zenpets/public/fetchDoctorTimings</string>-->
+    <!--<string name="url_timings_sun_mor">http://34.235.84.116/zenpets/public/fetchSundayMorningTimings</string>-->
+    <!--<string name="url_timings_sun_aft">http://34.235.84.116/zenpets/public/fetchSundayAfternoonTimings</string>-->
+    <!--<string name="url_timings_mon_mor">http://34.235.84.116/zenpets/public/fetchMondayMorningTimings</string>-->
+    <!--<string name="url_timings_mon_aft">http://34.235.84.116/zenpets/public/fetchMondayAfternoonTimings</string>-->
+    <!--<string name="url_timings_tue_aft">http://34.235.84.116/zenpets/public/fetchTuesdayAfternoonTimings</string>-->
+    <!--<string name="url_timings_tue_mor">http://34.235.84.116/zenpets/public/fetchTuesdayMorningTimings</string>-->
+    <!--<string name="url_timings_wed_mor">http://34.235.84.116/zenpets/public/fetchWednesdayMorningTimings</string>-->
+    <!--<string name="url_timings_wed_aft">http://34.235.84.116/zenpets/public/fetchWednesdayAfternoonTimings</string>-->
+    <!--<string name="url_timings_thu_mor">http://34.235.84.116/zenpets/public/fetchThursdayMorningTimings</string>-->
+    <!--<string name="url_timings_thu_aft">http://34.235.84.116/zenpets/public/fetchThursdayAfternoonTimings</string>-->
+    <!--<string name="url_timings_fri_mor">http://34.235.84.116/zenpets/public/fetchFridayMorningTimings</string>-->
+    <!--<string name="url_timings_fri_aft">http://34.235.84.116/zenpets/public/fetchFridayAfternoonTimings</string>-->
+    <!--<string name="url_timings_sat_mor">http://34.235.84.116/zenpets/public/fetchSaturdayMorningTimings</string>-->
+    <!--<string name="url_timings_sat_aft">http://34.235.84.116/zenpets/public/fetchSaturdayAfternoonTimings</string>-->
+    <!--<string name="url_timings_check_availability">http://34.235.84.116/zenpets/public/checkAvailability</string>-->
+
+    <!--&lt;!&ndash; CLINICS &ndash;&gt;-->
+    <!--<string name="url_clinic_fetch_images">http://34.235.84.116/zenpets/public/fetchClinicImages</string>-->
+
+    <!--&lt;!&ndash; LOCATION URLS &ndash;&gt;-->
+    <!--<string name="url_location_all_countries">http://34.235.84.116/zenpets/public/allCountries</string>-->
+    <!--<string name="url_location_all_states">http://34.235.84.116/zenpets/public/allStates</string>-->
+    <!--<string name="url_location_cities_in_state">http://34.235.84.116/zenpets/public/citiesInState</string>-->
+    <!--<string name="url_location_city_id">http://34.235.84.116/zenpets/public/getCityID</string>-->
+    <!--<string name="url_location_locality_id">http://34.235.84.116/zenpets/public/getLocalityID</string>-->
+    <!--<string name="url_location_localities_by_city">http://34.235.84.116/zenpets/public/fetchLocalitiesByCity</string>-->
+    <!--<string name="url_location_localities_search">http://34.235.84.116/zenpets/public/localitiesSearch</string>-->
+
+    <!--&lt;!&ndash; VISIT REASONS &ndash;&gt;-->
+    <!--<string name="url_visit_reasons">http://34.235.84.116/zenpets/public/visitReasons</string>-->
+
+    <!--&lt;!&ndash; VACCINES AND VACCINATIONS &ndash;&gt;-->
+    <!--<string name="url_all_vaccines">http://34.235.84.116/zenpets/public/allVaccines</string>-->
+    <!--<string name="url_new_vaccination">http://34.235.84.116/zenpets/public/newVaccination</string>-->
+    <!--<string name="url_new_vaccination_image">http://34.235.84.116/zenpets/public/newVaccinationImage</string>-->
+    <!--<string name="url_all_vaccinations">http://34.235.84.116/zenpets/public/fetchPetVaccinations</string>-->
+    <!--<string name="url_vaccination_images">http://34.235.84.116/zenpets/public/fetchVaccinationImages</string>-->
+
+    <!--&lt;!&ndash; PET TYPES AND BREEDS &ndash;&gt;-->
+    <!--<string name="url_pet_types">http://34.235.84.116/zenpets/public/petTypes</string>-->
+    <!--<string name="url_pet_breeds">http://34.235.84.116/zenpets/public/allPetBreeds</string>-->
+
+    <!--&lt;!&ndash; PET URL'S &ndash;&gt;-->
+    <!--<string name="url_add_new_pet">http://34.235.84.116/zenpets/public/newPet</string>-->
+    <!--<string name="url_user_pets">http://34.235.84.116/zenpets/public/fetchUserPets</string>-->
+    <!--<string name="url_pet_details">http://34.235.84.116/zenpets/public/fetchPetDetails</string>-->
+
+    <!--&lt;!&ndash; MEDICAL RECORDS &ndash;&gt;-->
+    <!--<string name="url_all_record_types">http://34.235.84.116/zenpets/public/allRecordTypes</string>-->
+    <!--<string name="url_new_medical_record">http://34.235.84.116/zenpets/public/newMedicalRecord</string>-->
+    <!--<string name="url_all_medical_records">http://34.235.84.116/zenpets/public/fetchPetMedicalRecords</string>-->
+    <!--<string name="url_new_medical_image">http://34.235.84.116/zenpets/public/newMedicalImage</string>-->
+    <!--<string name="url_medical_record_images">http://34.235.84.116/zenpets/public/fetchMedicalImages</string>-->
+
+    <!--&lt;!&ndash; PRESCRIPTIONS &ndash;&gt;-->
+    <!--<string name="url_all_prescriptions">http://34.235.84.116/zenpets/public/fetchPetPrescriptions</string>-->
+</resources>

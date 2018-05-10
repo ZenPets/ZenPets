@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/zen_toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/imgvwDoctorProfile"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center|bottom"
+            android:layout_margin="5dp"
+            android:scaleType="centerCrop"
+            app:placeholderImage="@drawable/beagle"
+            app:roundAsCircle="true"
+            app:roundingBorderColor="@color/semiTransparentDark"
+            app:roundingBorderWidth="4dp" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtDoctorName"
+            style="@style/NormalBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:padding="11dp"
+            android:text="@string/review_creator_doc_name"
+            android:textColor="@color/secondary_text"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:scrollbarSize="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/NormalBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="5dp"
+                android:text="@string/review_creator_recommend_label"
+                android:textColor="@color/secondary_text"
+                android:textSize="14sp" />
+
+            <RadioGroup
+                android:id="@+id/rdgRecommend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="start|center"
+                android:maxLines="1"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/btnYes"
+                    style="@style/LightBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginStart="0dp"
+                    android:checked="true"
+                    android:padding="11dp"
+                    android:text="@string/review_creator_recommend_yes"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/btnNo"
+                    style="@style/LightBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginStart="5dp"
+                    android:checked="false"
+                    android:padding="11dp"
+                    android:text="@string/review_creator_recommend_no"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp" />
+            </RadioGroup>
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/NormalBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="5dp"
+                android:text="@string/review_creator_time_title"
+                android:textColor="@color/secondary_text"
+                android:textSize="14sp" />
+
+            <RadioGroup
+                android:id="@+id/rdgStartTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/btnOnTime"
+                    style="@style/LightBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center"
+                    android:checked="true"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    android:text="@string/review_creator_time_on_time"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/btnTenLate"
+                    style="@style/LightBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center"
+                    android:checked="false"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    android:text="@string/review_creator_time_10_mins"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/btnHalfHourLate"
+                    style="@style/LightBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center"
+                    android:checked="false"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    android:text="@string/review_creator_time_30_mins"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/btnHourLate"
+                    style="@style/LightBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center"
+                    android:checked="false"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    android:text="@string/review_creator_time_hour_late"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp" />
+            </RadioGroup>
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/NormalBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="5dp"
+                android:text="@string/review_creator_rating_label"
+                android:textColor="@color/secondary_text"
+                android:textSize="14sp" />
+
+            <android.support.v7.widget.AppCompatRatingBar
+                android:id="@+id/ratingClinicExperience"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:numStars="5"
+                android:progressDrawable="@drawable/zen_ratings"
+                android:rating="0"
+                android:stepSize="1" />
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/NormalBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="5dp"
+                android:text="@string/review_creator_problem_label"
+                android:textColor="@color/secondary_text"
+                android:textSize="14sp" />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spnVisitReason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputExperience"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColorHint="@android:color/tertiary_text_light"
+                app:hintTextAppearance="@style/TextLabel">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtExperience"
+                    style="@style/NormalRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top|start"
+                    android:hint="@string/review_creator_experience_label"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:lines="6"
+                    android:maxLines="11"
+                    android:minLines="6"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="14sp" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txtTermsOfService"
+        style="@style/LightBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:padding="6dp"
+        android:text="@string/review_creator_terms"
+        android:textColor="@color/primary_text"
+        android:textColorLink="@android:color/holo_red_dark"
+        android:textSize="12sp" />
+</LinearLayout>

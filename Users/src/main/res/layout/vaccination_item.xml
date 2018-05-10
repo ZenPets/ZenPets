@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        style="@style/ZenPetsCards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <!--<FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/imgvwVaccinationPicture"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/beagle" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/imgvwOptions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|top"
+                    android:layout_margin="5dp"
+                    android:adjustViewBounds="true"
+                    android:background="#CCDCDCDC"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_more_vert_black_24dp" />
+            </FrameLayout>-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txtVaccineName"
+                    style="@style/CondensedRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:text="@string/vaccination_item_name"
+                    android:textColor="@color/primary_text"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:id="@+id/imgvwOptions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_margin="5dp"
+                    android:adjustViewBounds="true"
+                    android:background="#CCDCDCDC"
+                    android:padding="6dp"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="faw_ellipsis_v"
+                    app:iiv_size="16dp" />
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txtVaccineDate"
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_today_black_24dp"
+                android:drawablePadding="15dp"
+                android:drawableStart="@drawable/ic_today_black_24dp"
+                android:gravity="start|center"
+                android:padding="11dp"
+                android:text="@string/vaccination_item_date"
+                android:textColor="@color/secondary_text"
+                android:textSize="14sp" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txtVaccineNotes"
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_event_note_black_24dp"
+                android:drawablePadding="15dp"
+                android:drawableStart="@drawable/ic_event_note_black_24dp"
+                android:gravity="start|center"
+                android:padding="11dp"
+                android:text="@string/vaccination_item_notes"
+                android:textColor="@color/secondary_text"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/lato_bold</item>
+        <!--<item>@font/lato_light</item>-->
+        <item>@font/lato_regular</item>
+        <!--<item>@font/montserrat_bold</item>-->
+        <!--<item>@font/montserrat_regular</item>-->
+        <item>@font/oswald_bold</item>
+        <item>@font/oswald_regular</item>
+        <item>@font/raleway_bold</item>
+        <!--<item>@font/raleway_extra_bold</item>-->
+        <!--<item>@font/raleway_extra_light</item>-->
+        <item>@font/raleway_light</item>
+        <item>@font/raleway_medium</item>
+        <item>@font/raleway_regular</item>
+        <!--<item>@font/raleway_semi_bold</item>-->
+        <!--<item>@font/raleway_thin</item>-->
+        <item>@font/roboto_bold</item>
+        <item>@font/roboto_condensed_bold</item>
+        <item>@font/roboto_condensed_light</item>
+        <item>@font/roboto_condensed_regular</item>
+        <item>@font/roboto_medium</item>
+        <item>@font/roboto_regular</item>
+        <item>@font/roboto_light</item>
+        <item>@font/roboto_thin</item>
+    </array>
+</resources>

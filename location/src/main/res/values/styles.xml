@@ -1,0 +1,16 @@
+<resources>
+    <!-- THE PRIMARY ZEN PETS STYLE -->
+    <style name="ZenPets" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg_pattern</item>
+        <!--<item name="android:windowBackground">@color/app_bg</item>-->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+    </style>
+
+    <!-- THE TOOLBAR TITLE STYLE-->
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+</resources>

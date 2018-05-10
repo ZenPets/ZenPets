@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/zen_toolbar" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:scrollbarSize="4dp"
+        android:scrollbarThumbVertical="@color/primary_dark">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="220dp">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/imgvwProfilePicture"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    app:placeholderImage="@drawable/ic_person" />
+
+                <!--<android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/imgvwProfilePicture"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_person" />-->
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/linlaDisplayName"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:adjustViewBounds="true"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="faw_user"
+                    app:iiv_size="18dp" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtDisplayName"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:text="@string/profile_editor_display_name"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.50dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="5dp"
+                android:background="#CC999999" />
+
+            <LinearLayout
+                android:id="@+id/linlaEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:adjustViewBounds="true"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="faw_envelope"
+                    app:iiv_size="18dp" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txtEmailAddress"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:text="@string/profile_editor_email"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.50dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="5dp"
+                android:background="#CC999999" />
+
+            <LinearLayout
+                android:id="@+id/linlaPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:adjustViewBounds="true"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="faw_phone"
+                    app:iiv_size="18dp" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/inputPhoneNumber"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    app:hintTextAppearance="@style/TextLabel">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/edtPhoneNumber"
+                        style="@style/NormalRegular"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@null"
+                        android:gravity="start|center"
+                        android:hint="@string/profile_editor_phone"
+                        android:inputType="phone"
+                        android:padding="11dp"
+                        android:textColor="@color/primary_text"
+                        android:textColorHint="@color/tertiary_text"
+                        android:textSize="15sp" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.50dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="5dp"
+                android:background="#CC999999" />
+
+            <LinearLayout
+                android:id="@+id/linlaCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="top|center"
+                android:orientation="horizontal">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:adjustViewBounds="true"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="faw_map_marker"
+                    app:iiv_size="18dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!--<android.support.v7.widget.AppCompatTextView
+                        fontPath="fonts/Roboto-Medium.ttf"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="start|center"
+                        android:padding="11dp"
+                        android:text="@string/profile_editor_country"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="15sp" />
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/spnCountry"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp" />-->
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/CondensedRegular"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="start|center"
+                        android:padding="11dp"
+                        android:text="@string/profile_editor_state"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="15sp" />
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/spnState"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/CondensedRegular"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="start|center"
+                        android:padding="11dp"
+                        android:text="@string/profile_editor_city"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="15sp" />
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/spnCity"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.50dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="5dp"
+                android:background="#CC999999" />
+
+            <LinearLayout
+                android:id="@+id/linlaGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center|top"
+                android:orientation="horizontal">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:adjustViewBounds="true"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="faw_venus_mars"
+                    app:iiv_size="18dp" />
+
+                <RadioGroup
+                    android:id="@+id/rdgGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.AppCompatRadioButton
+                        android:id="@+id/rdbtnMale"
+                        style="@style/LightBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start|center"
+                        android:layout_weight="1"
+                        android:checked="true"
+                        android:padding="4dp"
+                        android:text="@string/profile_editor_male"
+                        android:textColor="@color/primary_text"
+                        android:textSize="14sp" />
+
+                    <android.support.v7.widget.AppCompatRadioButton
+                        android:id="@+id/rdbtnFemale"
+                        style="@style/LightBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start|center"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:padding="4dp"
+                        android:text="@string/profile_editor_female"
+                        android:textColor="@color/primary_text"
+                        android:textSize="14sp" />
+                </RadioGroup>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

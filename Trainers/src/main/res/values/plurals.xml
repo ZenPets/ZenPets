@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- DAYS -->
+    <plurals name="days">
+        <item quantity="one">1 day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+
+    <!-- MONTHS -->
+    <plurals name="months">
+        <item quantity="one">1 Month</item>
+        <item quantity="other">%d Months</item>
+    </plurals>
+
+    <!-- SESSIONS -->
+    <plurals name="sessions">
+        <item quantity="one">1 Session</item>
+        <item quantity="other">%d Sessions</item>
+    </plurals>
+</resources>

@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/zen_toolbar" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:maxLines="1"
+                android:paddingBottom="6dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="6dp"
+                android:text="@string/adoption_creator_type_label"
+                android:textColor="@color/primary_text"
+                android:textSize="14sp" />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spnPetTypes"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp" />
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:maxLines="1"
+                android:paddingBottom="6dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="6dp"
+                android:text="@string/adoption_creator_breed_label"
+                android:textColor="@color/primary_text"
+                android:textSize="14sp" />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spnBreeds"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputPetName"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:hint="@string/adoption_creator_pet_name"
+                android:textColorHint="@color/secondary_text"
+                app:hintTextAppearance="@style/TextLabel">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtPetName"
+                    style="@style/NormalRegular"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"
+                    android:maxLines="1"
+                    android:padding="11dp"
+                    android:textColor="@color/primary_text"
+                    android:textSize="14sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:maxLines="1"
+                android:paddingBottom="6dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="6dp"
+                android:text="@string/adoption_creator_pet_gender"
+                android:textColor="@color/primary_text"
+                android:textSize="14sp" />
+
+            <RadioGroup
+                android:id="@+id/rdgGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/rdbtnMale"
+                    style="@style/LightBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:padding="4dp"
+                    android:text="@string/adoption_creator_gender_male"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/rdbtnFemale"
+                    style="@style/LightBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:padding="4dp"
+                    android:text="@string/adoption_creator_gender_female"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp" />
+            </RadioGroup>
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:paddingBottom="6dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="6dp"
+                android:text="@string/adoption_creator_pet_vaccinated"
+                android:textColor="@color/primary_text"
+                android:textSize="14sp" />
+
+            <RadioGroup
+                android:id="@+id/rdgVaccinated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/rdbtnVaccinatedYes"
+                    style="@style/LightBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:padding="4dp"
+                    android:text="@string/adoption_creator_yes"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/rdbtnVaccinatedNo"
+                    style="@style/LightBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:padding="4dp"
+                    android:text="@string/adoption_creator_no"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp" />
+            </RadioGroup>
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:paddingBottom="6dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="6dp"
+                android:text="@string/adoption_creator_dewormed"
+                android:textColor="@color/primary_text"
+                android:textSize="14sp" />
+
+            <RadioGroup
+                android:id="@+id/rdgDewormed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/rdbtnDewormedYes"
+                    style="@style/LightBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:padding="4dp"
+                    android:text="@string/adoption_creator_yes"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/rdbtnDewormedNo"
+                    style="@style/LightBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:padding="4dp"
+                    android:text="@string/adoption_creator_no"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp" />
+            </RadioGroup>
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:paddingBottom="6dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="6dp"
+                android:text="@string/adoption_creator_neutered"
+                android:textColor="@color/primary_text"
+                android:textSize="14sp" />
+
+            <RadioGroup
+                android:id="@+id/rdgNeutered"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/rdbtnNeuteredYes"
+                    style="@style/LightBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:padding="4dp"
+                    android:text="@string/adoption_creator_yes"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/rdbtnNeuteredNo"
+                    style="@style/LightBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:padding="4dp"
+                    android:text="@string/adoption_creator_no"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp" />
+            </RadioGroup>
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:paddingBottom="6dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="6dp"
+                android:text="@string/adoption_creator_description"
+                android:textColor="@color/primary_text"
+                android:textSize="14sp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputDescription"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:hint="@string/adoption_creator_description_hint"
+                android:textColorHint="@color/secondary_text"
+                app:hintTextAppearance="@style/TextLabel">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtDescription"
+                    style="@style/NormalRegular"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="top|start"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:lines="6"
+                    android:maxLines="11"
+                    android:minLines="6"
+                    android:padding="11dp"
+                    android:textColor="@color/primary_text"
+                    android:textSize="14sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txtAddImages"
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="start|center"
+                android:paddingBottom="6dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="6dp"
+                android:text="@string/adoption_creator_images"
+                android:textColor="@color/primary_text"
+                android:textSize="14sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/gridAdoptionImages"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:cacheColorHint="@android:color/transparent"
+                android:fadingEdge="none"
+                android:persistentDrawingCache="scrolling"
+                android:scrollbarSize="5dp"
+                android:scrollbarThumbVertical="@color/primary_dark"
+                android:scrollbars="vertical"
+                android:visibility="gone" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

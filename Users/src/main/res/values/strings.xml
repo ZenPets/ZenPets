@@ -1,0 +1,540 @@
+<resources>
+    <string name="app_name">Zen Pets</string>
+
+    <!-- THE API KEY'S -->
+    <string name="facebook_app_id">1584967218498481</string>
+    <string name="google_maps_key">AIzaSyCoMTYVqI-JmuJ_cTV8TDqASsc2lknnQ_Q</string>
+    <string name="google_static_map_api_key">AIzaSyD-5QWNIgI2O0F6JmmrGZyKUHUPb_YePkw</string>
+    <string name="google_directions_api_key">AIzaSyAW3Rn42MhLRJ8EeeCGuyYSiPV5Q5q_4bI</string>
+
+    <!-- THE NOTIFICATION CHANNELS -->
+    <string name="default_notification_channel_id">USERS_DEFAULT_CHANNEL</string>
+    <string name="default_notification_channel_name">USERS_DEFAULT_CHANNEL</string>
+    <string name="default_notification_channel_desc">USERS_DEFAULT_CHANNEL</string>
+
+    <!-- A FEW COMMON STRINGS -->
+    <string name="common_loading">Loading....</string>
+
+    <!-- LANDING ACTIVITY -->
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+    <!-- GENERIC STRINGS -->
+    <string name="generic_mb_yes">Yes</string>
+    <string name="generic_mb_no">No</string>
+    <string name="generic_tilde">~</string>
+    <string name="generic_infinity">∞</string>
+
+    <!-- MENU TEXT STRINGS -->
+    <string name="menu_save">Save</string>
+    <string name="menu_cancel">Cancel</string>
+    <string name="menu_details">Details</string>
+    <string name="menu_edit">Edit</string>
+    <string name="menu_new">New</string>
+    <string name="menu_apply">Apply</string>
+    <string name="menu_attach">Submit</string>
+    <string name="menu_submit">Submit</string>
+    <string name="menu_bookmark">Bookmark</string>
+    <string name="menu_book">Book</string>
+    <string name="menu_call">Call</string>
+    <string name="menu_rate">Rate</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_read">Read</string>
+    <string name="menu_consult">Consult</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_delete">Delete</string>
+    <string name="menu_filter">Filter</string>
+    <string name="menu_adoption_status">Change Status</string>
+    <string name="menu_menu">Menu</string>
+    <string name="menu_question">Q &amp; A</string>
+
+    <!-- STORAGE PERMISSION TITLES AND MESSAGES -->
+    <string name="storage_permission_title">We Need A Permission</string>
+    <string name="storage_permission_message">\nZen Pets requires the Storage Permission to optimize Images that you upload to the Zen Pets platform.</string>
+
+    <!-- PERMISSION TITLES AND MESSAGES -->
+    <string name="location_permission_title">We Need Your Location</string>
+    <string name="location_permission_message">\nZen Pets requires the Location Permission to show you the appropriate listings near / at your location. \n\nFor a seamless experience, we recommend granting Zen Pets this permission.</string>
+
+    <!-- LOCATION PERMISSION DENIED -->
+    <string name="doctor_location_denied_title">Permission denied…</string>
+    <string name="doctor_location_denied_message">For finding Doctors near you, Zen Pets requires the Location permission.
+        \n\n
+        Without this permission being granted, we wouldn\'t be able to show you Doctors closest to you.
+        \n\n
+        Would you like to grant this permission? Click the \"GRANT PERMISSION\" button. If not, click the \"NEVERMIND\" button</string>
+    <string name="adoption_location_denied_message">For finding Adoptions in your City, Zen Pets requires the Location permission.
+        \n\n
+        Without this permission being granted, we won\'t be able to show you Adoptions in your City.
+        \n\n
+        Would you like to grant this permission? Click the \"GRANT PERMISSION\" button. If not, click the \"NEVERMIND\" button</string>
+
+    <!-- COMMON PERMISSION STRINGS -->
+    <string name="permission_grant">Grant Permission</string>
+    <string name="permission_deny">Not Now</string>
+    <string name="permission_nevermind">Nevermind</string>
+
+    <!-- SPLASH SCREEN -->
+    <string name="splash_title">ZEN PETS</string>
+
+    <!-- LOGIN SCREEN -->
+    <string name="login_social_message">Login using your social account</string>
+
+    <!-- PROFILE EDITOR STRINGS -->
+    <string name="profile_editor_display_name">Display Name</string>
+    <string name="profile_editor_email">Email Address</string>
+    <string name="profile_editor_prefix">1234</string>
+    <string name="profile_editor_phone">Phone Number</string>
+    <string name="profile_editor_country">Select your Country</string>
+    <string name="profile_editor_state">Select your State</string>
+    <string name="profile_editor_city">Select the City</string>
+    <string name="profile_editor_male">MALE</string>
+    <string name="profile_editor_female">FEMALE</string>
+
+    <!-- HOME FRAGMENT -->
+    <string name="home_title_appointment">Find Veterinarians</string>
+    <string name="home_subtitle_appointment">Find vets, pet clinics and more</string>
+    <string name="home_title_adopt">Adopt A Pet</string>
+    <string name="home_subtitle_adopt">Adopt a new best friend</string>
+    <string name="home_title_groomers">Groomers</string>
+    <string name="home_subtitle_groomers">Bathe your pet in luxury</string>
+    <string name="home_title_hostels">Pet Hostels</string>
+    <string name="home_subtitle_hostels">For the globetrotting pet parents</string>
+    <string name="home_title_boarding">Home Boarding</string>
+    <string name="home_subtitle_boarding">For your pets, a home away from home.</string>
+    <string name="home_title_trainers">Trainers</string>
+    <string name="home_subtitle_trainers">Train your best, with the best…</string>
+
+    <!-- QUESTION DETAILS -->
+    <string name="question_details_title">Consultation Title</string>
+    <string name="question_details_description">Consultation Description</string>
+    <string name="question_details_asked_for">Consultation Asked For</string>
+    <string name="question_details_time_stamp">Timestamp</string>
+    <string name="question_details_views">0 Views</string>
+    <string name="question_details_replies">0 Replies</string>
+    <string name="question_details_answers_label">Answers</string>
+    <string name="question_details_answers_empty">There are no answers on this question yet…</string>
+    <string name="question_details_asked_for_placeholder">Asked for %1$s %2$s %3$s</string>
+    <string name="question_details_views_placeholder">%1$s Views</string>
+    <string name="question_details_replies_placeholder">%1$s Replies</string>
+    <string name="question_details_location_placeholder">%1$s, %2$s</string>
+    <string name="question_details_votes_placeholder">%1$s / %2$s found this helpful</string>
+
+    <!-- REPLIES ITEM STRINGS -->
+    <string name="reply_item_doc_name">Doctor\'s Name</string>
+    <string name="reply_item_doc_location">Doctor\'s Location</string>
+    <string name="reply_item_time_stamp">Timestamp</string>
+    <string name="reply_item_reply">Consultation Reply</string>
+    <string name="reply_item_helpful_count">0 / 0 found this helpful</string>
+    <string name="reply_item_helpful_label">Was this answer helpful?</string>
+    <string name="reply_item_helpful_yes">YES</string>
+    <string name="reply_item_helpful_no">NO</string>
+
+    <!-- QUESTIONS LIST FRAGMENT -->
+    <string name="questions_list_filter_label">Filter questions</string>
+    <string name="questions_list_empty">There are no Consultation questions on this topic yet…</string>
+    <string name="questions_list_ask_question">Tap to ask free question</string>
+
+    <!-- QUESTIONS ITEM STRINGS -->
+    <string name="question_item_title">Consultation Title</string>
+    <string name="question_item_description">Consultation Description</string>
+    <string name="question_item_time_stamp">Timestamp</string>
+    <string name="question_item_views">0 Views</string>
+
+    <!-- PROFILE FRAGMENT -->
+    <string name="profile_user_name">USER NAME</string>
+    <string name="profile_view_profile">VIEW PROFILE</string>
+    <string name="profile_my_pets">My Pets</string>
+    <string name="profile_my_appointments">My Appointments</string>
+    <string name="profile_my_consultations">My Consultations</string>
+    <string name="profile_my_adoptions">My Adoption Listings</string>
+    <string name="profile_sign_out">Sign Out</string>
+
+    <!-- SPONSORED CLINIC STRINGS -->
+    <string name="sponsored_clinic_name">CLINIC NAME</string>
+    <string name="sponsored_clinic_address">CLINIC ADDRESS</string>
+    <string name="sponsored_clinic_charges">₹ 200</string>
+    <string name="sponsored_clinic_reviews">29 reviews</string>
+    <string name="sponsored_clinic_distance">~ 1.1 km</string>
+    <string name="sponsored_clinic_sponsored_title">SPONSORED</string>
+    <string name="sponsored_clinic_address_placeholder">%1$s, %2$s</string>
+    <string name="sponsored_clinic_distance_km">km</string>
+    <string name="sponsored_clinic_distance_placeholder">%1$s %2$s %3$s</string>
+
+    <!-- DOCTOR LIST STRINGS -->
+    <string name="doctor_list_tb_title">Find &amp; Book</string>
+    <string name="doctor_list_tb_location_title">LOCATION</string>
+    <string name="doctor_list_tb_location">Locality, City</string>
+    <string name="doctor_list_empty_message">We could not find any Doctors near you. Try changing your location…</string>
+    <string name="doctor_list_location_not_served">We currently do not serve this City. but fear not. We will have you covered shortly.</string>
+    <string name="doctor_list_tb_location_placeholder">%1$s, %2$s</string>
+    <string name="doctor_list_clinic_distance_placeholder">%1$s %2$s</string>
+    <string name="doctor_list_doctor_experience_text">yrs exp</string>
+    <string name="doctor_list_doctor_experience_placeholder">%1$s %2$s</string>
+    <string name="doctor_list_votes_percent_text">0 %</string>
+    <string name="doctor_list_votes_text">0 votes</string>
+    <string name="doctor_list_votes_open">(</string>
+    <string name="doctor_list_votes_close">)</string>
+    <string name="doctor_list_votes_placeholder">%1$s %2$s%3$s%4$s</string>
+    <string name="doctor_list_address_placeholder">%1$s \n%2$s - %3$s</string>
+
+    <!-- DOCTOR ITEM STRINGS -->
+    <string name="doctor_item_doc_name">DOCTOR NAME</string>
+    <string name="doctor_item_likes_percent">100%</string>
+    <string name="doctor_item_votes">(29 Votes)</string>
+    <string name="doctor_item_clinic_name">CLINIC NAME</string>
+    <string name="doctor_item_clinic_address">CLINIC ADDRESS</string>
+    <string name="doctor_item_doc_experience">20 yrs exp</string>
+    <string name="doctor_item_doc_charges">₹ 200</string>
+    <string name="doctor_item_clinic_distance">~ 1.1 km</string>
+
+    <!-- DOCTOR DETAILS -->
+    <string name="doctor_details_doc_name">Doctor Name</string>
+    <string name="doctor_details_doc_education">Doctor Education</string>
+    <string name="doctor_details_doc_education_empty">Education not added yet…</string>
+    <string name="doctor_details_doc_experience">20 yrs experience</string>
+    <string name="doctor_details_doc_votes">92% (200 votes)</string>
+    <string name="doctor_details_consultation_fees">Consultation Fees</string>
+    <string name="doctor_details_clinic_name">CLINIC NAME</string>
+    <string name="doctor_details_clinic_address">CLINIC ADDRESS</string>
+    <string name="doctor_details_morning_open">OPEN</string>
+    <string name="doctor_details_morning_timings">MORNING TIMINGS</string>
+    <string name="doctor_details_morning_closed">CLOSED IN THE MORNING</string>
+    <string name="doctor_details_afternoon_open">OPEN</string>
+    <string name="doctor_details_afternoon_timings">AFTERNOON TIMINGS</string>
+    <string name="doctor_details_afternoon_closed">CLOSED IN THE AFTERNOON / EVENING</string>
+    <string name="doctor_details_all_timings">SEE ALL TIMINGS</string>
+    <string name="doctor_details_reviews_label">REVIEWS</string>
+    <string name="doctor_details_all_reviews">SEE ALL REVIEWS</string>
+    <string name="doctor_details_all_reviews_placeholder">SEE ALL REVIEWS (%1$s)</string>
+    <string name="doctor_details_no_reviews">There are no reviews for this Doctor yet…</string>
+    <string name="doctor_details_no_image">No images have been added for this Clinic yet…</string>
+    <string name="doctor_details_feedback_button">Feedback</string>
+    <string name="doctor_details_book">Book Appointment</string>
+    <string name="doctor_details_call">Call</string>
+    <string name="doctor_details_doc_name_placeholder">%1$s %2$s</string>
+    <string name="doctor_details_doc_exp_placeholder">%1$s yrs experience</string>
+    <string name="doctor_details_doc_charges_placeholder">%1$s %2$s</string>
+    <string name="doctor_details_address_placeholder">%1$s, %2$s, %3$s, %4$s</string>
+    <string name="doctor_details_votes_placeholder">%1$s (%2$s)</string>
+    <string name="doctor_details_timings_placeholder">%1$s - %2$s</string>
+    <string name="doctor_details_timings_closed">Closed</string>
+
+    <!-- ALL TIMING STRINGS -->
+    <string name="all_timings_morning">MORNING</string>
+    <string name="all_timings_afternoon">AFTERNOON</string>
+    <string name="all_timings_sunday">SUNDAY</string>
+    <string name="all_timings_monday">MONDAY</string>
+    <string name="all_timings_tuesday">TUESDAY</string>
+    <string name="all_timings_wednesday">WEDNESDAY</string>
+    <string name="all_timings_thursday">THURSDAY</string>
+    <string name="all_timings_friday">FRIDAY</string>
+    <string name="all_timings_saturday">SATURDAY</string>
+
+    <!-- REVIEWS SUBSET STRINGS -->
+    <string name="review_subset_reason">Visit Reason</string>
+    <string name="review_subset_experience">Visit Experience</string>
+    <string name="review_subset_user_name">User Name</string>
+    <string name="review_subset_time_stamp">2 Months</string>
+
+    <!-- DOCTOR REVIEWS LIST -->
+    <string name="review_list_feedback_title">Feedback</string>
+    <string name="review_list_doctor_name">Doctor\'s Name</string>
+    <string name="review_list_empty">There are no Reviews for this Doctor yet…</string>
+    <string name="review_count_placeholder">Feedback (%1$s)</string>
+    <string name="review_doctor_placeholder">%1$s %2$s</string>
+    <string name="review_helpful_votes_placeholder">Yes (%1$s)</string>
+    <string name="review_not_helpful_votes_placeholder">No (%1$s)</string>
+
+    <!-- DOCTOR REVIEWS ITEM -->
+    <string name="reviews_item_user_alpha">A</string>
+    <string name="reviews_item_user_name">USER NAME</string>
+    <string name="reviews_item_user_time_stamp">6 months ago</string>
+    <string name="reviews_item_user_experience">EXPERIENCE</string>
+    <string name="reviews_item_user_reason">Visit Reason</string>
+    <string name="reviews_item_user_helpful">Did you find this helpful?</string>
+    <string name="reviews_item_user_helpful_no">No (0)</string>
+    <string name="reviews_item_user_helpful_yes">Yes (0)</string>
+
+    <!-- REVIEW CREATOR -->
+    <string name="review_creator_doc_name">DOCTOR NAME</string>
+    <string name="review_creator_recommend_label">Would you recommend the doctor to your family and friends?</string>
+    <string name="review_creator_recommend_yes">Yes</string>
+    <string name="review_creator_recommend_no">No</string>
+    <string name="review_creator_time_title">Did your appointment start on time?</string>
+    <string name="review_creator_time_on_time">On-time</string>
+    <string name="review_creator_time_10_mins">10 mins late</string>
+    <string name="review_creator_time_30_mins">30 mins late</string>
+    <string name="review_creator_time_hour_late"> <b>></b> 1 hour late</string>
+    <string name="review_creator_rating_label">Your overall experience at the clinic</string>
+    <string name="review_creator_problem_label">What was the purpose of your visit?</string>
+    <string name="review_creator_experience_label">How was your experience with the Doctor?</string>
+    <string name="review_creator_experience_hint">Tap to start typing…</string>
+    <string name="review_creator_terms">By submitting the review, I agree to the Terms &amp; Conditions</string>
+    <string name="review_creator_doc_name_placeholder">%1$s %2$s</string>
+
+    <!-- VISIT REASON -->
+    <string name="visit_reason_text">Visit Reason</string>
+
+    <!-- MAP DETAIL STRINGS -->
+    <string name="map_details_tb_title">Location</string>
+    <string name="map_details_tb_doc_name">Dr. Siddharth Lele</string>
+    <string name="map_details_clinic_name">Clinic Name</string>
+    <string name="map_details_clinic_address">Clinic Address</string>
+    <string name="map_details_directions">GET DIRECTIONS</string>
+    <string name="map_details_distance">Distance</string>
+    <string name="map_details_book">Book</string>
+
+    <!-- APPOINTMENT TIME SLOT -->
+    <string name="appointment_time_slot">TIME SLOT</string>
+
+    <!-- ZEN CUSTOM CALENDAR LAYOUT STRINGS -->
+    <string name="zen_calendar_day">S</string>
+    <string name="zen_calendar_date">11</string>
+
+    <!-- APPOINTMENT SLOT CREATOR -->
+    <string name="appointment_slot_creator_doctor_name">Doctor\'s Name</string>
+    <string name="appointment_slot_creator_clinic_details">Clinic Details</string>
+    <string name="appointment_slot_creator_morning_label">Morning</string>
+    <string name="appointment_slot_creator_morning_time">before 12 pm</string>
+    <string name="appointment_slot_creator_morning_closed">Closed in the morning…</string>
+    <string name="appointment_slot_creator_afternoon_label">Afternoon</string>
+    <string name="appointment_slot_creator_afternoon_time">after 12 pm</string>
+    <string name="appointment_slot_creator_afternoon_closed">Closed in the afternoon…</string>
+    <string name="appointment_slot_creator_doctor_name_placeholder">%1$s %2$s</string>
+    <string name="appointment_slot_creator_clinic_details_placeholder">%1$s, %2$s</string>
+
+    <!-- APPOINTMENT DETAILS CREATOR -->
+    <string name="appointment_creator_doctor_name">Doctor\'s Name</string>
+    <string name="appointment_creator_clinic_details">Clinic Details</string>
+    <string name="appointment_creator_date_time">Date and Time</string>
+    <string name="appointment_creator_user_name">(*) Your Name</string>
+    <string name="appointment_creator_select_pet">Select a Pet</string>
+    <string name="appointment_creator_email_address">(*) Email Address</string>
+    <string name="appointment_creator_mobile">(*) Mobile Number</string>
+    <string name="appointment_creator_purpose">Select the purpose of this appointment</string>
+    <string name="appointment_creator_book">Book</string>
+    <string name="appointment_creator_details_doctor">%1$s %2$s</string>
+    <string name="appointment_creator_clinic_details_placeholder">%1$s, %2$s</string>
+    <string name="appointment_creator_date_time_placeholder">%1$s - %2$s</string>
+
+    <!-- ADOPTION LIST STRINGS -->
+    <string name="adoption_list_tb_title">Adopt A Pet</string>
+    <string name="adoption_list_tb_location_label">LOCATION</string>
+    <string name="adoption_list_tb_location">City</string>
+    <string name="adoption_list_empty">There are no open Adoptions in your city at this moment :-(</string>
+
+    <!-- USER APPOINTMENT ITEM STRINGS -->
+    <string name="user_appointment_item_date">DATE</string>
+    <string name="user_appointment_item_time">TIME</string>
+    <string name="user_appointment_item_doc_name">DOCTOR NAME</string>
+    <string name="user_appointment_item_clinic_name">CLINIC NAME</string>
+    <string name="user_appointment_item_reason">VISIT REASON</string>
+    <string name="user_appointment_item_location">Location</string>
+    <string name="user_appointment_item_distance">Distance</string>
+    <string name="user_appointment_item_status">Status</string>
+    <string name="user_appointment_item_doc_name_placeholder">%1$s %2$s</string>
+    <string name="user_appointment_item_reason_placeholder">Visiting for \"%1$s\"</string>
+    <string name="user_appointment_item_location_placeholder">%1$s, %2$s</string>
+
+    <!-- DELETE AN APPOINTMENT PROMPT MESSAGE -->
+    <string name="appointment_delete_prompt">Are you sure you to delete this Appointment? Pressing <b>\"Yes\"</b> will confirm and process this deletion. \n\nYour appointment time slot will also be freed up and made available for other Zen Pets users.</string>
+
+    <!-- PROFILE DETAILS -->
+    <string name="profile_details_user_name">USER NAME</string>
+    <string name="profile_details_email">Email Address</string>
+    <string name="profile_details_phone">Phone Number</string>
+    <string name="profile_details_city">City</string>
+    <string name="profile_details_gender">Gender</string>
+    <string name="profile_details_phone_placeholder">%1$s %2$s</string>
+    <string name="profile_details_location_placeholder">%1$s, %2$s, %3$s</string>
+
+    <!-- BREEDS -->
+    <string name="breed_type_text">Breed Type</string>
+
+    <!-- PETS -->
+    <string name="pet_name_text">Pet Name</string>
+    <string name="pet_type_text">Pet Type</string>
+
+    <!-- PET CREATOR -->
+    <string name="pet_creator_overview">OVERVIEW</string>
+    <string name="pet_creator_type_label">Select the type of Pet</string>
+    <string name="pet_creator_breed_label">Select your Pet\'s Breed</string>
+    <string name="pet_creator_info">OTHER INFORMATION</string>
+    <string name="pet_creator_name_label">Pet\'s Name</string>
+    <string name="pet_creator_gender_label">Select your Pet\'s gender</string>
+    <string name="pet_creator_gender_male">Male</string>
+    <string name="pet_creator_gender_female">Female</string>
+    <string name="pet_creator_dob_label">Select your Pet\'s date of birth</string>
+    <string name="pet_creator_dob_hint">Click the button to select the DOB</string>
+    <string name="pet_creator_neutered">Has the pet been <b>neutered</b>?</string>
+    <string name="pet_creator_neutered_yes">Yes</string>
+    <string name="pet_creator_neutered_no">No</string>
+    <string name="pet_creator_image_picker_label">Select an image of your cute and cuddly</string>
+
+    <!-- USER PETS ITEM STRINGS -->
+    <string name="pet_item_name">Pet Name</string>
+    <string name="pet_item_breed">Pet Breed</string>
+    <string name="pet_item_gender">Pet Gender</string>
+    <string name="pet_item_age">Pet Age</string>
+
+    <!-- USER PET STRINGS -->
+    <string name="user_pets_empty">You haven\'t added any Pet\'s to your account yet. Tap here to add one now.</string>
+
+    <!-- PET DETAILS -->
+    <string name="pet_details_breed_hint">Breed</string>
+    <string name="pet_details_breed_name">Pet Breed</string>
+    <string name="pet_details_age_hint">Age</string>
+    <string name="pet_details_age_text">Pet Age</string>
+    <string name="pet_details_gender_hint">Gender</string>
+    <string name="pet_details_gender_text">Pet Gender</string>
+    <string name="pet_details_status_hint">Status</string>
+    <string name="pet_details_status_text">Pet Neutered</string>
+    <string name="pet_details_vaccinations_label">VACCINATION RECORDS</string>
+    <string name="pet_details_vaccinations_empty">There are no Vaccination records for this Pet yet</string>
+    <string name="pet_details_view_all_label">VIEW ALL</string>
+    <string name="pet_details_new_vaccination_label">NEW VACCINATION</string>
+    <string name="pet_details_records_label">MEDICAL RECORDS</string>
+    <string name="pet_details_records_empty">There are no Medical records for this pet yet…</string>
+    <string name="pet_details_new_record_label">NEW RECORD</string>
+    <string name="pet_details_status_neutered">Neutered</string>
+    <string name="pet_details_status_not_neutered">Not Neutered</string>
+
+    <!-- VACCINATION CREATOR -->
+    <string name="vaccination_creator_vaccine">Select the Vaccine</string>
+    <string name="vaccination_creator_date">Date of vaccination</string>
+    <string name="vaccination_creator_next_date">Next date of vaccination</string>
+    <string name="vaccination_creator_remind">Remind me of due date</string>
+    <string name="vaccination_creator_notes">Notes about this vaccine (optional)</string>
+    <string name="vaccination_creator_no_title">Proceed Without Images?</string>
+    <string name="vaccination_creator_no_images">You haven\'t selected any images for this Vaccination Record. Are you sure you want to save this record without adding images?
+    \n\nPlease note that you can add images after saving this Vaccination Record.</string>
+
+    <!-- VACCINATION ITEM STRINGS -->
+    <string name="vaccination_item_name">Vaccine Name</string>
+    <string name="vaccination_item_date">Vaccination Date</string>
+    <string name="vaccination_item_notes">Vaccination Notes</string>
+    <string name="vaccination_item_no_notes">Note not added</string>
+
+    <!-- DELETE A VACCINATION RECORD PROMPT MESSAGE -->
+    <string name="vaccination_delete_message">Are you sure you want to delete this Vaccination Record? Pressing <b>\"Yes\"</b> will confirm the deletion and will be <b>permanent</b></string>
+
+    <!-- MEDICAL RECORD CREATOR -->
+    <string name="medical_creator_no_images">You haven\'t selected any images for this Medical Record. Are you sure you want to save this record without adding images?
+    \n\nPlease note that you can add images after saving this Record.</string>
+
+    <!-- USER ADOPTION -->
+    <string name="user_adoption_list_empty">You haven\'t posted any pets up for Adoption. Tap here to post an adoption now.</string>
+
+    <!-- USER ADOPTION ITEM STRINGS -->
+    <string name="user_adoption_item_name">Adoption Name</string>
+    <string name="user_adoption_item_description">ADOPTION DESCRIPTION</string>
+    <string name="user_adoption_item_no_images">No Images Uploaded</string>
+    <string name="user_adoption_item_time_stamp">Time Stamp</string>
+    <string name="user_adoption_item_vaccinated">VACCINATED</string>
+    <string name="user_adoption_item_dewormed">DEWORMED</string>
+    <string name="user_adoption_item_neutered">NEUTERED</string>
+
+    <!-- ADOPTION DETAILS -->
+    <string name="adoption_details_name">Adoption Name</string>
+    <string name="adoption_details_unnamed">Unnamed Pet</string>
+    <string name="adoption_details_description">ADOPTION DESCRIPTION</string>
+    <string name="adoption_details_no_images">No Images Uploaded</string>
+    <!--<string name="adoption_details_posted">Posted %1$s</string>-->
+    <string name="adoption_details_posted">Posted on: %1$s (%2$s)</string>
+    <string name="adoption_details_time_stamp">Time Stamp</string>
+    <string name="adoption_details_pet_details">Pet Details</string>
+    <string name="adoption_details_vaccinated">VACCINATED</string>
+    <string name="adoption_details_dewormed">DEWORMED</string>
+    <string name="adoption_details_neutered">NEUTERED</string>
+    <string name="adoption_details_adopted">ADOPTED</string>
+    <string name="adoption_details_messages">Messages</string>
+    <string name="adoption_details_messages_empty">There are no messages on this adoption listing yet</string>
+    <string name="adoption_details_new_message_hint">Type a message</string>
+
+    <!-- QUESTION CREATOR STRINGS -->
+    <string name="question_creator_pet">Select a Pet</string>
+    <string name="question_creator_problem">Select a problem type</string>
+    <string name="question_creator_header">Header (min 10 chars)</string>
+    <string name="question_creator_description">Description (min 100 chars)</string>
+    <string name="question_creator_terms">I understand and accept Zen Pet Consult\'s Terms &amp; Conditions</string>
+
+    <!-- QUESTION SHEET STRINGS -->
+    <string name="question_sheet_title">ADD AN IMAGE</string>
+    <string name="question_sheet_gallery">Choose from gallery</string>
+    <string name="question_sheet_camera">Take a photo</string>
+
+    <!-- FILTER QUESTIONS STRINGS -->
+    <string name="filter_question_tb_title">Filter</string>
+    <string name="filter_question_tb_clear">CLEAR</string>
+    <string name="filter_question_apply">Apply</string>
+
+    <!-- PROBLEMS -->
+    <string name="problem_type_text">Problem Text</string>
+
+    <!-- USER PUBLIC QUESTIONS -->
+    <string name="user_public_question_filter">Filter questions</string>
+    <string name="user_public_question_empty">There are no Consultations at the moment</string>
+    <string name="user_public_question_empty_filtered">There are no Consultations in the selected category</string>
+    <string name="user_public_question_ask">ASK A FREE QUESTION</string>
+
+    <!-- USER PRIVATE QUESTIONS -->
+    <string name="user_private_question_empty">Private consultation question are coming soon.\n\nReal soon… :-)</string>
+
+    <!-- USER PAST APPOINTMENTS -->
+    <string name="user_past_appointment_empty">You have no past appointments to show</string>
+
+    <!-- USER UPCOMING APPOINTMENT LIST STRINGS -->
+    <string name="upcoming_appointment_list_empty">You have no upcoming appointments at the moment…</string>
+    <string name="upcoming_appointment_list_new">Tap to make an appointment</string>
+
+    <!-- ADOPTION CREATOR -->
+    <string name="adoption_creator_pet_name">If given, provide the Pet\'s Name</string>
+    <string name="adoption_creator_type_label">Select the type of Pet</string>
+    <string name="adoption_creator_breed_label">Select your Pet\'s Breed</string>
+    <string name="adoption_creator_pet_gender">Select the Pet\'s gender</string>
+    <string name="adoption_creator_gender_male">Male</string>
+    <string name="adoption_creator_gender_female">Female</string>
+    <string name="adoption_creator_pet_vaccinated">Has the pet been Vaccinated?</string>
+    <string name="adoption_creator_yes">Yes</string>
+    <string name="adoption_creator_no">No</string>
+    <string name="adoption_creator_dewormed">Has the pet been Dewormed?</string>
+    <string name="adoption_creator_neutered">Has the pet been Neutered?</string>
+    <string name="adoption_creator_description">Tell us something about the Pet. The more you describe the Pet, the better chances of it\'s being adopted.</string>
+    <string name="adoption_creator_description_hint">Tap to start typing…</string>
+    <string name="adoption_creator_images">Tap here to add images for your Adoption listing (Maximum 6 images)</string>
+
+    <!-- ADOPTION ALBUM ITEM -->
+    <string name="adoption_album_item_text">1</string>
+
+    <!-- ADOPTION MESSAGE STRINGS -->
+    <string name="adoption_message_incoming">This is an incoming message....</string>
+    <string name="adoption_message_outgoing">This is an outgoing message....</string>
+    <string name="adoption_message_time_stamp">11:15 PM</string>
+    <string name="adoption_message_outgoing_user">You</string>
+    <string name="adoption_message_ingoing_user">User Name</string>
+
+    <!-- TRAINERS LIST -->
+    <string name="trainer_list_tb_title">Find Trainers</string>
+    <string name="trainer_list_tb_location">City</string>
+    <string name="trainer_list_empty_message">There are no Trainers listed in your city yet. We are working overtime to get more Trainers on board to help you find the best Trainers for your cute and cuddly…</string>
+    <string name="trainer_list_location_not_served">We currently do not serve this City. but fear not. We will have you covered shortly.</string>
+    <string name="trainer_list_address_placeholder">%1$s, \n%2$s, %3$s, %4$s</string>
+    <string name="trainer_list_charges">Fees From </string>
+    <string name="trainer_list_charges_placeholder">Fees From %1$s - %2$s</string>
+    <string name="trainer_list_charges_na_placeholder">Fees From: N.A.</string>
+    <string name="trainer_list_modules">Trainer Modules</string>
+    <string name="trainer_list_modules_placeholder">%1$s Available</string>
+    <string name="trainer_list_modules_na_placeholder">No Trainings Available</string>
+
+    <!-- TRAINING MODULES ITEM -->
+    <string name="module_name">Training Module Name</string>
+    <string name="module_duration_sessions">Training Duration And Sessions</string>
+    <string name="module_duration_sessions_placeholder">Training is for %1$s in a total of %2$s</string>
+    <string name="module_details">Training Module Details</string>
+    <string name="module_format">Training Module Format</string>
+    <string name="module_format_individual_placeholder">Pets are trained individually</string>
+    <string name="module_format_group_placeholder">Pets are trained in groups of %1$s</string>
+    <string name="module_fees">Training Module Fees</string>
+    <string name="module_fees_placeholder">The Training Fee is: ₹ %1$s</string>
+</resources>

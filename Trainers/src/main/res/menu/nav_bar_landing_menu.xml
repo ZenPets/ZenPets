@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/grpHome"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/dashHome"
+            android:checked="true"
+            android:icon="@drawable/dash_home_dark"
+            android:title="Home" />
+    </group>
+
+    <group
+        android:id="@+id/grpFragments"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/dashProfile"
+            android:checked="false"
+            android:icon="@drawable/dash_profile_dark"
+            android:title="Profile" />
+        <item
+            android:id="@+id/dashModules"
+            android:checked="false"
+            android:icon="@drawable/dash_modules_dark"
+            android:title="Training Modules" />
+        <item
+            android:id="@+id/dashReviews"
+            android:checked="false"
+            android:icon="@drawable/dash_reviews_dark"
+            android:title="Reviews" />
+    </group>
+
+    <group
+        android:id="@+id/grpOthers"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/dashCalendar"
+            android:checked="false"
+            android:icon="@drawable/dash_calendar_dark"
+            android:title="Calendar" />
+        <item
+            android:id="@+id/dashClients"
+            android:checked="false"
+            android:icon="@drawable/dash_patients_dark"
+            android:title="Clients" />
+        <item
+            android:id="@+id/dashReports"
+            android:checked="false"
+            android:icon="@drawable/dash_reports_dark"
+            android:title="Reports" />
+    </group>
+
+    <group
+        android:id="@+id/grpHelp"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/dashHelp"
+            android:checked="false"
+            android:icon="@drawable/dash_help_dark"
+            android:title="Help" />
+        <item
+            android:id="@+id/dashFeedback"
+            android:checked="false"
+            android:icon="@drawable/dash_feedback_dark"
+            android:title="Feedback" />
+        <item
+            android:id="@+id/dashSettings"
+            android:checked="false"
+            android:icon="@drawable/dash_settings_dark"
+            android:title="Settings" />
+    </group>
+</menu>

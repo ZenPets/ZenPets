@@ -1,0 +1,101 @@
+<resources>
+    <string name="app_name">Zen Pets</string>
+
+    <!-- SPLASH SCREEN -->
+    <string name="splash_title">ZEN PETS</string>
+
+    <!-- THE API KEY'S -->
+    <string name="google_maps_key">AIzaSyD2Mo0q1AD6fCNLsrnrstTeE6pjS0clefQ</string>
+
+    <!-- PRIVACY POLICY -->
+    <string name="privacy_policy_url">http://zenpets.s3-website.ap-south-1.amazonaws.com/privacy-policy.html</string>
+
+    <!-- THE NOTIFICATION CHANNELS -->
+    <string name="default_notification_channel_id">TRAINERS_DEFAULT_CHANNEL</string>
+
+    <!-- COMMON STRINGS -->
+    <string name="loading_message">Loading…</string>
+
+    <!-- IMAGE PICKER SHEET STRINGS -->
+    <string name="image_picker_sheet_title">ADD AN IMAGE</string>
+    <string name="image_picker_sheet_gallery">Choose from photo gallery</string>
+    <string name="image_picker_sheet_camera">Take a photo</string>
+
+    <!-- LOGIN SCREEN -->
+    <string name="login_app_title">Zen Pets</string>
+    <string name="login_app_sub_title">for trainers</string>
+    <string name="login_email_hint">Email Address</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_sign_in">SIGN IN</string>
+    <string name="login_create_account">Create Account</string>
+    <string name="login_forgot_password">Forgot Password</string>
+    <string name="login_listed_message">If you have been pre-listed, click the link below to claim your profile</string>
+    <string name="login_listed">CLAIM PROFILE</string>
+
+    <string name="login_unregistered_title">"Email Not Found"</string>
+    <string name="login_unregistered_message">This email does not exist in our records. If you haven\'t signed up, please use the \"Create Account\" button to do so now.</string>
+    <string name="login_unregistered_create">Create Account</string>
+    <string name="login_unregistered_cancel">Cancel</string>
+
+    <string name="login_auth_failed_title">Authentication Failed</string>
+    <string name="login_auth_failed_message">Invalid Password. If you forgotten your password, click the \"Forgot Password\" button to reset your Password. We will send you an email on your registered Email Address to reset it.</string>
+    <string name="login_auth_failed_forgot_password">Forgot Password</string>
+    <string name="login_auth_failed_cancel">Cancel</string>
+
+    <!-- SIGN UP / CREATE ACCOUNT TEXT -->
+    <string name="sign_up_title">CREATE AN ACCOUNT</string>
+    <string name="sign_up_sub_title">Start using Zen Pets - For Trainers in a few steps</string>
+    <string name="sign_up_full_name">(*) Provide your Full Name</string>
+    <string name="sign_up_email_address_hint">(*) Email address</string>
+    <string name="sign_up_password_hint">(*) Password (at least 8 characters)</string>
+    <string name="sign_up_confirm_password_hint">(*) Confirm the Password</string>
+    <string name="sign_up_prefix_hint">1234</string>
+    <string name="sign_up_phone_number_hint">(*) Phone Number</string>
+    <string name="sign_up_mailing_address_hint">(*) Your Mailing / Postal Address</string>
+    <string name="sign_up_landmark_hint">Landmark (optional)</string>
+    <string name="sign_up_map_label">(*) Mark your Training facility\'s location on the map. This will help Pet Parents find your Training facility faster. To mark you location, click the button next to this text.</string>
+    <string name="sign_up_select_country">Select your Country</string>
+    <string name="sign_up_select_state">Select your State</string>
+    <string name="sign_up_select_city">Select the City</string>
+    <string name="sign_up_male">MALE</string>
+    <string name="sign_up_female">FEMALE</string>
+    <string name="sign_up_profile">(*) Tell us something about yourself…</string>
+    <string name="sign_up_display_profile">Select Your Display Profile</string>
+
+    <!-- LEGAL STRINGS -->
+    <string name="sign_up_full_terms">By continuing, I agree to the Seller Agreement and Privacy Policy</string>
+    <string name="terms_part_1">By continuing, I agree to the&#160;</string>
+    <string name="terms_part_2">Seller Agreement</string>
+    <string name="terms_part_3">&#160;and the&#160;</string>
+    <string name="terms_part_4">Privacy Policy</string>
+
+    <!-- LANDING ACTIVITY -->
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+    <!-- TRAINING MODULES LIST -->
+    <string name="empty_training_modules">You haven\'t added any Training Modules yet. When Pet Parents view your Profile, they won\'t see what Trainings you offer.\n\nClick here to add one now.</string>
+
+    <!-- TRAINING MODULES ITEM -->
+    <string name="module_name">Training Module Name</string>
+    <string name="module_duration_sessions">Training Duration And Sessions</string>
+    <string name="module_duration_sessions_placeholder">Training is for %1$s in a total of %2$s</string>
+    <string name="module_details">Training Module Details</string>
+    <string name="module_format">Training Module Format</string>
+    <string name="module_fees">Training Module Fees</string>
+    <string name="module_fees_placeholder">The Training Fee is: ₹ %1$s</string>
+
+    <!-- TRAINING MODULE CREATOR -->
+    <string name="tm_creator_verify_title">Verify Details</string>
+    <string name="tm_creator_verify_content_individually">You are adding a new Training Module titled \"%1$s\". The duration of this training is \"%2$s\" and has \"%3$s\". The pet is trained \"Individually\". The fee for this training module is \"Rs. %4$s\".\n\nIf the above details are correct, press the \"Okay\" button to add your new Training Module. Or, press \"Cancel\" to modify the information.</string>
+    <string name="tm_creator_verify_content_group">You are adding a new Training Module titled \"%1$s\". The duration of this training is \"%2$s\" and has \"%3$s\". The pet is trained in \"Groups of %4$s pets\". The fee for this training module is \"Rs. %5$s\".\n\nIf the above details are correct, press the \"Okay\" button to add your new Training Module. Or, press \"Cancel\" to modify the information.</string>
+    <string name="tm_creator_verify_okay">OKAY</string>
+    <string name="tm_creator_verify_cancel">CANCEL</string>
+    <string name="tm_creator_images">Tap here to add images for your Training Module (Maximum 10 images)</string>
+
+    <!-- TRAINER'S PROFILE -->
+    <string name="tp_internal_id">System Generated ID: %1$s</string>
+    <string name="tp_address_placeholder">%1$s, \n%2$s, %3$s, %4$s</string>
+    <string name="tp_empty_reviews">You haven\'t received any reviews for your Training Services yet. You could ask Pet Parents that signed up for your Training Services via Zen Pets to leave reviews for your future prospective Profile visitors.</string>
+    <string name="tp_empty_modules">You haven\'t added any Training Modules to your Profile yet. <b>Tap here to add one now…</b></string>
+</resources>

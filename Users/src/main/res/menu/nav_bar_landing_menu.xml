@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/grpHome"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/dashHome"
+            android:checked="true"
+            android:icon="@drawable/dash_home_light"
+            android:title="Home" />
+    </group>
+
+    <group
+        android:id="@+id/grpFragments"
+        android:checkableBehavior="single">
+        <!--<item
+            android:id="@+id/dashProfile"
+            android:checked="false"
+            android:icon="@drawable/dash_profile_light"
+            android:title="Profile" />-->
+        <item
+            android:id="@+id/dashDoctors"
+            android:checked="false"
+            android:icon="@drawable/dash_doctor_light"
+            android:title="Doctors" />
+        <item
+            android:id="@+id/dashAdopt"
+            android:checked="false"
+            android:icon="@drawable/dash_adopt_light"
+            android:title="Adopt A Pet" />
+        <item
+            android:id="@+id/dashGroomers"
+            android:checked="false"
+            android:icon="@drawable/dash_groomers_light"
+            android:title="Groomers" />
+        <item
+            android:id="@+id/dashKennel"
+            android:checked="false"
+            android:icon="@drawable/dash_kennel_light"
+            android:title="Kennels" />
+        <item
+            android:id="@+id/dashHomeBoarding"
+            android:checked="false"
+            android:icon="@drawable/dash_home_boarding_light"
+            android:title="Home Boarding" />
+    </group>
+
+    <group
+        android:id="@+id/grpOthers"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/dashHealthTips"
+            android:checked="false"
+            android:icon="@drawable/dash_health_tips_light"
+            android:title="Health Tips" />
+        <item
+            android:id="@+id/dashConsult"
+            android:checked="false"
+            android:icon="@drawable/dash_consult_light"
+            android:title="Consult" />
+    </group>
+
+    <group
+        android:id="@+id/grpHelp"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/dashHelp"
+            android:checked="false"
+            android:icon="@drawable/dash_help_light"
+            android:title="Help" />
+        <item
+            android:id="@+id/dashFeedback"
+            android:checked="false"
+            android:icon="@drawable/dash_feedback_light"
+            android:title="Feedback" />
+        <item
+            android:id="@+id/dashSettings"
+            android:checked="false"
+            android:icon="@drawable/dash_settings_light"
+            android:title="Settings" />
+    </group>
+</menu>
