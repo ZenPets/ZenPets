@@ -151,7 +151,7 @@ public class LandingActivity extends AppCompatActivity {
                         switchFragment(mContent);
                         return true;
 
-                    case R.id.dashCalendar:
+                    case R.id.dashInquiries:
                         mContent = new CalendarFragment();
                         switchFragment(mContent);
                         return true;
