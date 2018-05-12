@@ -95,7 +95,7 @@ public class TrainingEnquiryAdapter extends RecyclerView.Adapter<TrainingEnquiry
                 holder.txtUsersMessage.setText(strTrainingSlaveMessage);
             }
 
-            /* SET HE USER'S DISPLAY PROFILE */
+            /* SET THE USER'S DISPLAY PROFILE */
             String strUserDisplayProfile = message.getUserDisplayProfile();
             if (strUserDisplayProfile != null)    {
                 Log.e("DISPLAY PROFILE", strUserDisplayProfile);
@@ -105,10 +105,10 @@ public class TrainingEnquiryAdapter extends RecyclerView.Adapter<TrainingEnquiry
                 ImageRequest request = ImageRequestBuilder
                         .newBuilderWithResourceId(R.drawable.ic_action_user_light)
                         .build();
-                holder.imgvwTrainerDisplayProfile.setImageURI(request.getSourceUri());
+                holder.imgvwUserDisplayProfile.setImageURI(request.getSourceUri());
             }
 
-            /* SET THE USER'S MESSAGE */
+            /* SET THE USER'S NAME */
             String strUserName = message.getUserName();
             if (strUserName != null)    {
                 holder.txtUserName.setText(strUserName);

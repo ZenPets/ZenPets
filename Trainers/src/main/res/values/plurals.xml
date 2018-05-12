@@ -17,4 +17,11 @@
         <item quantity="one">1 Session</item>
         <item quantity="other">%d Sessions</item>
     </plurals>
+
+    <!-- ENQUIRY MESSAGE -->
+    <plurals name="enquiry_message">
+        <item quantity="zero">0 Messages</item>
+        <item quantity="one">1 Message</item>
+        <item quantity="other">%d Messages</item>
+    </plurals>
 </resources>

@@ -25,9 +25,9 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import biz.zenpets.trainers.R;
-import biz.zenpets.trainers.landing.modules.CalendarFragment;
 import biz.zenpets.trainers.landing.modules.ClientsFragment;
 import biz.zenpets.trainers.landing.modules.DashboardFragment;
+import biz.zenpets.trainers.landing.modules.EnquiriesFragment;
 import biz.zenpets.trainers.landing.modules.ProfileFragment;
 import biz.zenpets.trainers.landing.modules.ReportsFragment;
 import biz.zenpets.trainers.landing.modules.ReviewsFragment;
@@ -151,8 +151,8 @@ public class LandingActivity extends AppCompatActivity {
                         switchFragment(mContent);
                         return true;
 
-                    case R.id.dashInquiries:
-                        mContent = new CalendarFragment();
+                    case R.id.dashEnquiries:
+                        mContent = new EnquiriesFragment();
                         switchFragment(mContent);
                         return true;
                     case R.id.dashClients:

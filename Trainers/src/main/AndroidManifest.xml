@@ -80,6 +80,12 @@
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
+        <!-- ENQUIRY DETAILS -->
+        <activity
+            android:name=".details.trainers.TrainerEnquiryActivity"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
         <!-- FEEDBACK AND SETTINGS -->
         <activity
             android:name=".landing.modules.others.FeedbackActivity"

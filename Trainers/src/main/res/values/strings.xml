@@ -98,4 +98,16 @@
     <string name="tp_address_placeholder">%1$s, \n%2$s, %3$s, %4$s</string>
     <string name="tp_empty_reviews">You haven\'t received any reviews for your Training Services yet. You could ask Pet Parents that signed up for your Training Services via Zen Pets to leave reviews for your future prospective Profile visitors.</string>
     <string name="tp_empty_modules">You haven\'t added any Training Modules to your Profile yet. <b>Tap here to add one now…</b></string>
+
+    <!-- TRAINING ENQUIRIES -->
+    <string name="te_user_name">User Name</string>
+    <string name="te_training_module">Training Module</string>
+    <string name="te_training_module_placeholder">Enquiry on your training module, \"%1$s\"</string>
+    <string name="te_message_count_zero_messages">0 Messages</string>
+    <string name="te_message_count_placeholder">%1$s</string>
+    <string name="te_message_incoming">This is an incoming message....</string>
+    <string name="te_message_time_stamp">11:15 PM</string>
+
+    <!-- ENQUIRY DETAILS -->
+    <string name="enquiry_details_new_message_hint">Type a message</string>
 </resources>

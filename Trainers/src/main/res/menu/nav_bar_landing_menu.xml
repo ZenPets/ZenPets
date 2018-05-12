@@ -35,10 +35,10 @@
         android:id="@+id/grpOthers"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/dashInquiries"
+            android:id="@+id/dashEnquiries"
             android:checked="false"
             android:icon="@drawable/dash_inquiries_dark"
-            android:title="Inquiries" />
+            android:title="Enquiries" />
         <item
             android:id="@+id/dashClients"
             android:checked="false"
