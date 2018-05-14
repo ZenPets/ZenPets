@@ -1,7 +1,6 @@
 package biz.zenpets.users.utils.services;
 
 import android.app.ActivityManager;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
@@ -15,11 +14,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.text.TextUtils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import biz.zenpets.users.R;
 
@@ -86,31 +81,7 @@ public class NotificationUtils {
         /* SHOW THE NOTIFICATION */
         NotificationManagerCompat manager = NotificationManagerCompat.from(mContext);
         manager.notify(Config.NOTIFICATION_ID, notification.build());
-
-//        Notification notification;
-//        notification = mBuilder.setTicker(title).setWhen(0)
-//                .setContentTitle(title)
-//                .setContentText(message)
-//                .setContentIntent(resultPendingIntent)
-//                .setSound(alarmSound)
-//                .setShowWhen(true)
-//                .setWhen(System.currentTimeMillis())
-//                .setSmallIcon(getNotificationIcon())
-//                .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
-//                .setPriority(NotificationCompat.PRIORITY_HIGH)
-//                .setAutoCancel(true)
-//                .build();
-
-//        NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-//        assert notificationManager != null;
-//        notificationManager.notify(Config.NOTIFICATION_ID, notification);
     }
-
-    /** SET THE ICON BACKGROUND FOR PLATFORMS ABOVE LOLLIPOP (ANDROID 5 AND ABOVE)**/
-//    private int getNotificationIcon() {
-//        boolean useWhiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
-//        return useWhiteIcon ? R.drawable.icon_silhouette: R.drawable.zen_pets_notification_icon;
-//    }
 
     /** PLAY THE NOTIFICATION SOUND  **/
     public void playNotificationSound() {
@@ -147,23 +118,5 @@ public class NotificationUtils {
         }
 
         return isInBackground;
-    }
-
-    /** CLEAR THE TRAY NOTIFICATION MESSAGES **/
-    public static void clearNotifications(Context context) {
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancelAll();
-    }
-
-    /** GET THE MILLISECONDS **/
-    private static long getTimeMilliSec(String timeStamp) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        try {
-            Date date = format.parse(timeStamp);
-            return date.getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return 0;
     }
 }
