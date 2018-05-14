@@ -11,7 +11,9 @@ public class Enquiry {
     @SerializedName("userID") private String userID;
     @SerializedName("userName") private String userName;
     @SerializedName("userDisplayProfile") private String userDisplayProfile;
+    @SerializedName("trainerModuleID") private String trainerModuleID;
     @SerializedName("trainerModuleName") private String trainerModuleName;
+    @SerializedName("trainerID") private String trainerID;
     @SerializedName("trainingSlaveMessage") private String trainingSlaveMessage;
     @SerializedName("trainerSlaveTimestamp") private String trainerSlaveTimestamp;
 
@@ -71,12 +73,28 @@ public class Enquiry {
         this.userDisplayProfile = userDisplayProfile;
     }
 
+    public String getTrainerModuleID() {
+        return trainerModuleID;
+    }
+
+    public void setTrainerModuleID(String trainerModuleID) {
+        this.trainerModuleID = trainerModuleID;
+    }
+
     public String getTrainerModuleName() {
         return trainerModuleName;
     }
 
     public void setTrainerModuleName(String trainerModuleName) {
         this.trainerModuleName = trainerModuleName;
+    }
+
+    public String getTrainerID() {
+        return trainerID;
+    }
+
+    public void setTrainerID(String trainerID) {
+        this.trainerID = trainerID;
     }
 
     public String getTrainingSlaveMessage() {

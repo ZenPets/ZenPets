@@ -12,8 +12,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import biz.zenpets.users.details.trainers.enquiry.TrainerEnquiryActivity;
+import biz.zenpets.users.utils.AppPrefs;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
+
+    private AppPrefs getApp()	{
+        return (AppPrefs) getApplication();
+    }
 
     /** A TAG INSTANCE FOR LOGGING **/
     private static final String TAG = "MyFirebaseMsgService";
@@ -55,7 +60,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
 
             /* PLAY THE NOTIFICATION SOUND */
-            NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
+            NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext(), AppPrefs.zenChannelID());
             notificationUtils.playNotificationSound();
         }
     }
@@ -64,16 +69,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void handleDataMessage(JSONObject json) {
         try {
             JSONObject data = json.getJSONObject("data");
-            String title = data.getString("title");
-            String message = data.getString("message");
+            String notificationTitle = data.getString("notificationTitle");
+            String notificationMessage = data.getString("notificationMessage");
             boolean isBackground = data.getBoolean("is_background");
             String timestamp = data.getString("timestamp");
             JSONObject payload = data.getJSONObject("payload");
             String strReference = null;
             String strTrainerID = null;
             String strModuleID = null;
-            if (payload.has("reference")) {
-                strReference = payload.getString("reference");
+            if (payload.has("notificationReference")) {
+                strReference = payload.getString("notificationReference");
                 Log.e("REFERENCE", strReference);
                 if (strReference.equalsIgnoreCase("Enquiry"))   {
                     strTrainerID = payload.getString("trainerID");
@@ -83,8 +88,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 }
             }
 
-            Log.e(TAG, "title: " + title);
-            Log.e(TAG, "message: " + message);
+            Log.e(TAG, "title: " + notificationTitle);
+            Log.e(TAG, "message: " + notificationMessage);
             Log.e(TAG, "isBackground: " + isBackground);
             Log.e(TAG, "payload: " + payload.toString());
             Log.e(TAG, "timestamp: " + timestamp);
@@ -93,7 +98,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 Intent intent = new Intent(getApplicationContext(), TrainerEnquiryActivity.class);
                 intent.putExtra("TRAINER_ID", strTrainerID);
                 intent.putExtra("MODULE_ID", strModuleID);
-                showNotificationMessage(getApplicationContext(), title, message, timestamp, intent);
+                showNotificationMessage(getApplicationContext(), notificationTitle, notificationMessage, timestamp, intent);
             }
         } catch (JSONException e) {
             Log.e(TAG, "Json Exception: " + e.getMessage());
@@ -103,9 +108,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     /** SHOW TEXT ONLY NOTIFICATIONS **/
-    private void showNotificationMessage(Context context, String title, String message, String timeStamp, Intent intent) {
-        notificationUtils = new NotificationUtils(context);
+    private void showNotificationMessage(Context context, String notificationTitle, String message, String timeStamp, Intent intent) {
+        notificationUtils = new NotificationUtils(context, AppPrefs.zenChannelID());
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        notificationUtils.showNotificationMessage(title, message, timeStamp, intent);
+        notificationUtils.showNotificationMessage(notificationTitle, message, timeStamp, intent);
     }
 }

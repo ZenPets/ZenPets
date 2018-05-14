@@ -1,4 +1,4 @@
-package biz.zenpets.users.utils.models.trainers.enquiry;
+package biz.zenpets.trainers.utils.models.trainers.enquiries;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -14,9 +14,9 @@ public interface EnquiryMessagesAPI {
     Call<EnquiryMessages> fetchEnquiryMessages(@Query("trainingMasterID") String trainingMasterID);
 
     /** POST A NEW TRAINING ENQUIRY MESSAGE (USER) **/
-    @POST("newEnquiryUserMessage")
+    @POST("newEnquiryTrainerMessage")
     @FormUrlEncoded
-    Call<EnquiryMessage> newEnquiryUserMessage(
+    Call<EnquiryMessage> newEnquiryTrainerMessage(
             @Field("trainingMasterID") String trainingMasterID,
             @Field("trainerID") String trainerID,
             @Field("userID") String userID,

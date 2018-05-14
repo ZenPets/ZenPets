@@ -84,14 +84,14 @@ public class TrainingEnquiriesAdapter extends RecyclerView.Adapter<TrainingEnqui
                     /* GET AND SET THE ENQUIRY MESSAGE */
                     String trainingSlaveMessage = enquiry.getTrainingSlaveMessage();
                     if (trainingSlaveMessage != null)   {
-                        Log.e("MESSAGE", trainingSlaveMessage);
+//                        Log.e("MESSAGE", trainingSlaveMessage);
                         holder.txtUsersMessage.setText(trainingSlaveMessage);
                         holder.txtUsersMessage.setTextColor(ContextCompat.getColor(activity, android.R.color.primary_text_light));
                     }
 
                     /* GET AND SET THE ENQUIRY MESSAGE TIME STAMP */
                     String messageTimeStamp = enquiry.getTrainerSlaveTimestamp();
-                    Log.e("TS", messageTimeStamp);
+//                    Log.e("TS", messageTimeStamp);
                     long lngTimeStamp = Long.parseLong(messageTimeStamp) * 1000;
                     Calendar calendar = Calendar.getInstance(Locale.getDefault());
                     calendar.setTimeInMillis(lngTimeStamp);
@@ -170,6 +170,9 @@ public class TrainingEnquiriesAdapter extends RecyclerView.Adapter<TrainingEnqui
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(activity, TrainerEnquiryActivity.class);
+                intent.putExtra("TRAINER_ID", data.getTrainerID());
+                intent.putExtra("MODULE_ID", data.getTrainerModuleID());
+                intent.putExtra("TRAINING_MASTER_ID", data.getTrainingMasterID());
                 activity.startActivity(intent);
             }
         });

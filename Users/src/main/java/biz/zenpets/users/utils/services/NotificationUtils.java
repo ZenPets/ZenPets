@@ -1,7 +1,6 @@
 package biz.zenpets.users.utils.services;
 
 import android.app.ActivityManager;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
@@ -13,6 +12,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.text.TextUtils;
 
 import java.text.ParseException;
@@ -28,20 +28,22 @@ public class NotificationUtils {
     private static String TAG = NotificationUtils.class.getSimpleName();
 
     private Context mContext;
+    private String CHANNEL_ID;
 
-    public NotificationUtils(Context mContext) {
+    public NotificationUtils(Context mContext, String CHANNEL_ID) {
         this.mContext = mContext;
+        this.CHANNEL_ID = CHANNEL_ID;
     }
 
     public void showNotificationMessage(final String title, final String message, final String timeStamp, Intent intent) {
-        // Check for empty push message
+        /* CHECK FOR EMPTY PUSH MESSAGE */
         if (TextUtils.isEmpty(message))
             return;
 
+        /* SET THE NOTIFICATION ICON */
+        final int icon = R.drawable.zen_pets_notification_icon;
 
-        // notification icon
-        final int icon = R.mipmap.ic_launcher;
-
+        /* SET THE INTENT PARAMETERS */
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         final PendingIntent resultPendingIntent =
                 PendingIntent.getActivity(
@@ -50,12 +52,7 @@ public class NotificationUtils {
                         intent,
                         PendingIntent.FLAG_CANCEL_CURRENT
                 );
-
-        final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
-                mContext);
-
-//        final Uri alarmSound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
-//                + "://" + mContext.getPackageName() + "/raw/notification");
+        final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext, CHANNEL_ID);
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         showSmallNotification(mBuilder, icon, title, message, timeStamp, resultPendingIntent, alarmSound);
         playNotificationSound();
@@ -66,23 +63,54 @@ public class NotificationUtils {
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
         inboxStyle.addLine(message);
 
-        Notification notification;
-        notification = mBuilder.setSmallIcon(icon).setTicker(title).setWhen(0)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setContentIntent(resultPendingIntent)
-                .setSound(alarmSound)
-                .setShowWhen(true)
-                .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setAutoCancel(true)
-                .build();
+        /* CONFIGURE THE NOTIFICATION PARAMETERS */
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(mContext, CHANNEL_ID);
+        notification.setContentTitle(title);
+        notification.setContentText(message);
+        notification.setContentIntent(resultPendingIntent);
+        notification.setSound(alarmSound);
+        notification.setShowWhen(true);
+        notification.setWhen(System.currentTimeMillis());
+        notification.setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.zen_pets_notification_icon));
+        notification.setPriority(NotificationCompat.PRIORITY_HIGH);
+        notification.setAutoCancel(true);
+        notification.setSmallIcon(R.drawable.zen_pets_notification);
+//        notification.setSmallIcon(getNotificationIcon());
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)  {
+//            notification.setSmallIcon(R.drawable.icon_silhouette);
+//            notification.setColor(mContext.getResources().getColor(android.R.color.white));
+//        } else {
+//            notification.setSmallIcon(R.drawable.zen_pets_notification_icon);
+//        }
 
-        NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(Config.NOTIFICATION_ID, notification);
+        /* SHOW THE NOTIFICATION */
+        NotificationManagerCompat manager = NotificationManagerCompat.from(mContext);
+        manager.notify(Config.NOTIFICATION_ID, notification.build());
+
+//        Notification notification;
+//        notification = mBuilder.setTicker(title).setWhen(0)
+//                .setContentTitle(title)
+//                .setContentText(message)
+//                .setContentIntent(resultPendingIntent)
+//                .setSound(alarmSound)
+//                .setShowWhen(true)
+//                .setWhen(System.currentTimeMillis())
+//                .setSmallIcon(getNotificationIcon())
+//                .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
+//                .setPriority(NotificationCompat.PRIORITY_HIGH)
+//                .setAutoCancel(true)
+//                .build();
+
+//        NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+//        assert notificationManager != null;
+//        notificationManager.notify(Config.NOTIFICATION_ID, notification);
     }
+
+    /** SET THE ICON BACKGROUND FOR PLATFORMS ABOVE LOLLIPOP (ANDROID 5 AND ABOVE)**/
+//    private int getNotificationIcon() {
+//        boolean useWhiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
+//        return useWhiteIcon ? R.drawable.icon_silhouette: R.drawable.zen_pets_notification_icon;
+//    }
 
     /** PLAY THE NOTIFICATION SOUND  **/
     public void playNotificationSound() {

@@ -125,7 +125,7 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
 
     /***** FETCH THE LIST OF MESSAGE BETWEEN THE USER AND THE TRAINER *****/
     private void fetchEnquiryMessages() {
-        Call<EnquiryMessages> call = apiEnquiry.fetchEnquiryUserMessages(TRAINING_MASTER_ID);
+        Call<EnquiryMessages> call = apiEnquiry.fetchEnquiryMessages(TRAINING_MASTER_ID);
         call.enqueue(new Callback<EnquiryMessages>() {
             @Override
             public void onResponse(Call<EnquiryMessages> call, Response<EnquiryMessages> response) {

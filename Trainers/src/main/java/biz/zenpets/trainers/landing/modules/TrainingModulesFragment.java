@@ -141,8 +141,8 @@ public class TrainingModulesFragment extends Fragment {
         call.enqueue(new Callback<Modules>() {
             @Override
             public void onResponse(Call<Modules> call, Response<Modules> response) {
-                String strResult = new Gson().toJson(response.body());
                 try {
+                    String strResult = new Gson().toJson(response.body());
                     JSONObject JORoot = new JSONObject(strResult);
                     if (JORoot.has("error") && JORoot.getString("error").equalsIgnoreCase("false")) {
                         JSONArray JAModules = JORoot.getJSONArray("modules");

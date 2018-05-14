@@ -82,6 +82,8 @@
     <string name="module_duration_sessions_placeholder">Training is for %1$s in a total of %2$s</string>
     <string name="module_details">Training Module Details</string>
     <string name="module_format">Training Module Format</string>
+    <string name="module_format_individual_placeholder">Pets are trained individually</string>
+    <string name="module_format_group_placeholder">Pets are trained in groups of %1$s</string>
     <string name="module_fees">Training Module Fees</string>
     <string name="module_fees_placeholder">The Training Fee is: ₹ %1$s</string>
 
@@ -110,4 +112,9 @@
 
     <!-- ENQUIRY DETAILS -->
     <string name="enquiry_details_new_message_hint">Type a message</string>
+    <string name="ed_incoming_message">This is an incoming message…</string>
+    <string name="ed_user_name">User\'s Name</string>
+    <string name="ed_outgoing_message">This is an outgoing message…</string>
+    <string name="ed_trainer_name">Trainer\'s Name</string>
+    <string name="ed_message_time_stamp">11:15 PM</string>
 </resources>
