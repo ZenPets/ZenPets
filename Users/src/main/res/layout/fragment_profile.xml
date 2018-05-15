@@ -330,7 +330,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/linlaSignOut"
+                android:id="@+id/linlaSettings"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:gravity="center"
@@ -340,18 +340,18 @@
                     android:layout_width="47dp"
                     android:layout_height="47dp"
                     android:adjustViewBounds="true"
-                    app:iiv_color="@android:color/holo_red_dark"
-                    app:iiv_icon="faw_sign_out_alt"
+                    app:iiv_color="@color/accent"
+                    app:iiv_icon="faw_cog"
                     app:iiv_size="20dp" />
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/txtSignOut"
+                    android:id="@+id/txtSettings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start|center"
                     android:padding="11dp"
-                    android:text="@string/profile_sign_out"
-                    android:textColor="@android:color/holo_red_dark"
+                    android:text="@string/profile_settings_out"
+                    android:textColor="@color/accent"
                     android:textSize="14sp"
                     app:fontFamily="@font/lato_bold" />
             </LinearLayout>

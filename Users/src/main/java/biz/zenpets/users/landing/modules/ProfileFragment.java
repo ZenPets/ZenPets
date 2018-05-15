@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,9 +19,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.afollestad.materialdialogs.Theme;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
@@ -33,7 +28,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
-import biz.zenpets.users.LoginActivity;
 import biz.zenpets.users.R;
 import biz.zenpets.users.creator.pet.NewPetCreator;
 import biz.zenpets.users.details.profile.ProfileDetails;
@@ -43,6 +37,7 @@ import biz.zenpets.users.user.questions.UserQuestions;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.adapters.pet.UserPetsAdapter;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
+import biz.zenpets.users.utils.helpers.settings.SettingsActivity;
 import biz.zenpets.users.utils.models.pets.pets.Pet;
 import biz.zenpets.users.utils.models.pets.pets.Pets;
 import biz.zenpets.users.utils.models.pets.pets.PetsAPI;
@@ -112,34 +107,39 @@ public class ProfileFragment extends Fragment {
         startActivity(intent);
     }
 
-    /** PERFORM USER SIGN OUT **/
-    @OnClick(R.id.linlaSignOut) void signOut()    {
-        new MaterialDialog.Builder(getActivity())
-                .icon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_info_outline_black_24dp))
-                .title("Logout?")
-                .cancelable(true)
-                .content("Are your sure you want to log out of Zen Pets?")
-                .positiveText("Yes")
-                .negativeText("No")
-                .theme(Theme.LIGHT)
-                .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        auth.signOut();
-                        Intent intent = new Intent(getActivity(), LoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                        getActivity().finish();
-                    }
-                })
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        dialog.dismiss();
-                    }
-                }).show();
+    /** SHOW THE SETTINGS ACTIVITY **/
+    @OnClick(R.id.linlaSettings) void showSettings()    {
+        Intent intent = new Intent(getActivity(), SettingsActivity.class);
+        startActivity(intent);
     }
+
+//    @OnClick(R.id.linlaSignOut) void signOut()    {
+//        new MaterialDialog.Builder(getActivity())
+//                .icon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_info_outline_black_24dp))
+//                .title("Logout?")
+//                .cancelable(true)
+//                .content("Are your sure you want to log out of Zen Pets?")
+//                .positiveText("Yes")
+//                .negativeText("No")
+//                .theme(Theme.LIGHT)
+//                .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
+//                .onPositive(new MaterialDialog.SingleButtonCallback() {
+//                    @Override
+//                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                        auth.signOut();
+//                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        startActivity(intent);
+//                        getActivity().finish();
+//                    }
+//                })
+//                .onNegative(new MaterialDialog.SingleButtonCallback() {
+//                    @Override
+//                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                        dialog.dismiss();
+//                    }
+//                }).show();
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
@@ -141,40 +142,20 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
         configTB();
     }
 
-    /***** GET THE USER'S DETAILS *****/
-    private void fetchUserDetails() {
-        UsersAPI api = ZenApiClient.getClient().create(UsersAPI.class);
-        Call<UserData> call = api.fetchUserDetails(USER_ID);
-        call.enqueue(new Callback<UserData>() {
-            @Override
-            public void onResponse(Call<UserData> call, Response<UserData> response) {
-                UserData data = response.body();
-                if (data != null)   {
-                    USER_NAME = data.getUserName();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UserData> call, Throwable t) {
-                Log.e("PROFILE FAILURE", t.getMessage());
-                Crashlytics.logException(t);
-            }
-        });
-    }
-
     /***** FETCH THE LIST OF MESSAGE BETWEEN THE USER AND THE TRAINER *****/
     private void fetchEnquiryMessages() {
         Call<EnquiryMessages> call = apiEnquiry.fetchEnquiryMessages(TRAINING_MASTER_ID);
         call.enqueue(new Callback<EnquiryMessages>() {
             @Override
             public void onResponse(Call<EnquiryMessages> call, Response<EnquiryMessages> response) {
-                Log.e("RESPONSE RAW", String.valueOf(response.raw()));
                 if (response.body() != null && response.body().getMessages() != null)   {
                     arrMessages = response.body().getMessages();
                     if (arrMessages.size() > 0) {
 
                         /* SET THE ADAPTER */
                         listMessages.setAdapter(new TrainingEnquiryAdapter(TrainerEnquiryActivity.this, arrMessages));
+//                        listMessages.scrollToPosition(listMessages.getAdapter().getItemCount());
+//                        listMessages.scrollToPosition(arrMessages.size() - 1);
 
                         /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
                         listMessages.setVisibility(View.VISIBLE);
@@ -189,12 +170,18 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
                     linlaEmpty.setVisibility(View.VISIBLE);
                     listMessages.setVisibility(View.GONE);
                 }
+
+                /* HIDE THE PROGRESS */
+                linlaMessagesProgress.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<EnquiryMessages> call, Throwable t) {
                 Log.e("MESSAGES FAILURE", t.getMessage());
                 Crashlytics.logException(t);
+
+                /* HIDE THE PROGRESS */
+                linlaMessagesProgress.setVisibility(View.GONE);
             }
         });
     }
@@ -224,6 +211,9 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
             public void onFailure(Call<TrainingEnquiry> call, Throwable t) {
                 Log.e("CHECK FAILURE", t.getMessage());
                 Crashlytics.logException(t);
+
+                /* HIDE THE PROGRESS */
+                linlaMessagesProgress.setVisibility(View.GONE);
             }
         });
     }
@@ -263,7 +253,8 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
             TRAINER_ID = bundle.getString("TRAINER_ID");
             MODULE_ID = bundle.getString("MODULE_ID");
             if (TRAINER_ID != null && MODULE_ID != null)    {
-                /* FETCH THE TRAINING MODULE DETAILS */
+                /* SHOW THE PROGRESS AND FETCH THE TRAINING MODULE DETAILS */
+                linlaMessagesProgress.setVisibility(View.VISIBLE);
                 fetchModuleDetails();
                 Log.e("TRAINER ID", TRAINER_ID);
                 Log.e("MODULE ID", MODULE_ID);
@@ -370,6 +361,9 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
             public void onFailure(Call<Module> call, Throwable t) {
                 Log.e("DETAILS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
+
+                /* HIDE THE PROGRESS */
+                linlaMessagesProgress.setVisibility(View.GONE);
             }
         });
     }
@@ -405,6 +399,9 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ModuleImages> call, Throwable t) {
                 Crashlytics.logException(t);
+
+                /* HIDE THE PROGRESS */
+                linlaMessagesProgress.setVisibility(View.GONE);
             }
         });
     }
@@ -414,11 +411,13 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
         /* SET THE CONFIGURATION */
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
+        manager.setStackFromEnd(true);
         listMessages.setLayoutManager(manager);
-        listMessages.setHasFixedSize(true);
+        listMessages.setNestedScrollingEnabled(false);
+        ViewCompat.setNestedScrollingEnabled(listMessages, false);
 
-        /* SET THE ADAPTER */
-        listMessages.setAdapter(new TrainingEnquiryAdapter(TrainerEnquiryActivity.this, arrMessages));
+//        /* SET THE ADAPTER */
+//        listMessages.setAdapter(new TrainingEnquiryAdapter(TrainerEnquiryActivity.this, arrMessages));
 
         /* SET THE CONFIGURATION FOR THE MODULE IMAGES */
         LinearLayoutManager llmAppointments = new LinearLayoutManager(this);
@@ -503,6 +502,27 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Trainer> call, Throwable t) {
                 Log.e("DETAILS FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
+    }
+
+    /***** GET THE USER'S DETAILS *****/
+    private void fetchUserDetails() {
+        UsersAPI api = ZenApiClient.getClient().create(UsersAPI.class);
+        Call<UserData> call = api.fetchUserDetails(USER_ID);
+        call.enqueue(new Callback<UserData>() {
+            @Override
+            public void onResponse(Call<UserData> call, Response<UserData> response) {
+                UserData data = response.body();
+                if (data != null)   {
+                    USER_NAME = data.getUserName();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserData> call, Throwable t) {
+                Log.e("PROFILE FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

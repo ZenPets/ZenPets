@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
@@ -115,6 +116,171 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
 
         /* CONFIGURE THE TOOLBAR */
         configTB();
+    }
+
+    /***** FETCH THE LIST OF MESSAGE BETWEEN THE USER AND THE TRAINER *****/
+    private void fetchEnquiryMessages() {
+        EnquiryMessagesAPI apiEnquiry = ZenApiClient.getClient().create(EnquiryMessagesAPI.class);
+        Call<EnquiryMessages> call = apiEnquiry.fetchEnquiryMessages(TRAINING_MASTER_ID);
+        call.enqueue(new Callback<EnquiryMessages>() {
+            @Override
+            public void onResponse(Call<EnquiryMessages> call, Response<EnquiryMessages> response) {
+                try {
+                    String strResult = new Gson().toJson(response.body());
+                    JSONObject JORoot = new JSONObject(strResult);
+                    if (JORoot.has("error") && JORoot.getString("error").equalsIgnoreCase("false")) {
+                        JSONArray JAMessages = JORoot.getJSONArray("messages");
+//                        Log.e("MESSAGES", String.valueOf(JAMessages));
+
+                        /* THE DATA MODEL INSTANCE */
+                        EnquiryMessage data;
+
+                        for (int i = 0; i < JAMessages.length(); i++) {
+                            JSONObject JOMessages = JAMessages.getJSONObject(i);
+
+                            /* INSTANTIATE THE DATA OBJECT INSTANCE */
+                            data = new EnquiryMessage();
+
+                            /* SET THE TRAINING SLAVE ID */
+                            if (JOMessages.has("trainingSlaveID"))  {
+                                data.setTrainingSlaveID(JOMessages.getString("trainingSlaveID"));
+                            } else {
+                                data.setTrainingSlaveID(null);
+                            }
+
+                            /* SET THE TRAINING MASTER ID */
+                            if (JOMessages.has("trainingMasterID")) {
+                                data.setTrainingMasterID(JOMessages.getString("trainingMasterID"));
+                            } else {
+                                data.setTrainingMasterID(null);
+                            }
+
+                            /* SET THE TRAINER'S ID */
+                            if (JOMessages.has("trainerID"))    {
+                                data.setTrainerID(JOMessages.getString("trainerID"));
+                            } else {
+                                data.setTrainerID(null);
+                            }
+
+                            /* SET THE TRAINER'S NAME */
+                            if (JOMessages.has("trainerName"))  {
+                                data.setTrainerName(JOMessages.getString("trainerName"));
+                            } else {
+                                data.setTrainerName(null);
+                            }
+
+                            /* SET THE TRAINER'S DISPLAY PROFILE */
+                            if (JOMessages.has("trainerDisplayProfile"))    {
+                                data.setTrainerDisplayProfile(JOMessages.getString("trainerDisplayProfile"));
+                            } else {
+                                data.setTrainerDisplayProfile(null);
+                            }
+
+                            /* SET THE TRAINER'S TOKEN */
+                            if (JOMessages.has("trainerToken")) {
+                                data.setTrainerToken(JOMessages.getString("trainerToken"));
+                            } else {
+                                data.setTrainerToken(null);
+                            }
+
+                            /* SET THE USER'S ID */
+                            if (JOMessages.has("userID"))   {
+                                data.setUserID(JOMessages.getString("userID"));
+                            } else {
+                                data.setUserID(null);
+                            }
+
+                            /* SET THE USER'S NAME */
+                            if (JOMessages.has("userName")) {
+                                data.setUserName(JOMessages.getString("userName"));
+                            } else {
+                                data.setUserName(null);
+                            }
+
+                            /* SET THE USER'S DISPLAY PROFILE */
+                            if (JOMessages.has("userDisplayProfile"))   {
+                                data.setUserDisplayProfile(JOMessages.getString("userDisplayProfile"));
+                            } else {
+                                data.setUserDisplayProfile(null);
+                            }
+
+                            /* SET THE USER'S TOKEN */
+                            if (JOMessages.has("userToken"))    {
+                                data.setUserToken(JOMessages.getString("userToken"));
+                                USER_TOKEN = JOMessages.getString("userToken");
+                                Log.e("USER TOKEN", USER_TOKEN);
+                            } else {
+                                data.setUserToken(null);
+                                USER_TOKEN = null;
+                            }
+
+                            /* SET THE ENQUIRY MESSAGE */
+                            if (JOMessages.has("trainingSlaveMessage")) {
+                                data.setTrainingSlaveMessage(JOMessages.getString("trainingSlaveMessage"));
+                            } else {
+                                data.setTrainingSlaveMessage(null);
+                            }
+
+                            /* SET THE ENQUIRY TIME STAMP */
+                            if (JOMessages.has("trainerSlaveTimestamp"))    {
+                                data.setTrainerSlaveTimestamp(JOMessages.getString("trainerSlaveTimestamp"));
+                            } else {
+                                data.setTrainerSlaveTimestamp(null);
+                            }
+
+                            /* ADD THE COLLECTED DATA TO THE ARRAY LIST */
+                            arrMessages.add(data);
+                        }
+
+                        /* SET THE ADAPTER */
+                        listMessages.setAdapter(new TrainingMessagesAdapter(TrainerEnquiryActivity.this, arrMessages));
+                        listMessages.scrollToPosition(arrMessages.size() - 1);
+
+                        /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
+                        listMessages.setVisibility(View.VISIBLE);
+                        linlaEmpty.setVisibility(View.GONE);
+
+                        /* ENABLE THE REPLY EDIT TEXT */
+                        edtMessage.setEnabled(true);
+                    } else {
+                        /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
+                        linlaEmpty.setVisibility(View.VISIBLE);
+                        listMessages.setVisibility(View.GONE);
+
+                        /* DISABLE THE REPLY EDIT TEXT */
+                        edtMessage.setEnabled(false);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<EnquiryMessages> call, Throwable t) {
+                Log.e("MESSAGES FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
+    }
+
+    /***** GET THE INCOMING DATA *****/
+    private void getIncomingData() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null && bundle.containsKey("TRAINER_ID") && bundle.containsKey("MODULE_ID")) {
+            TRAINER_ID = bundle.getString("TRAINER_ID");
+            MODULE_ID = bundle.getString("MODULE_ID");
+            TRAINING_MASTER_ID = bundle.getString("TRAINING_MASTER_ID");
+            if (TRAINER_ID != null && MODULE_ID != null && TRAINING_MASTER_ID != null)    {
+                /* FETCH THE TRAINING MODULE DETAILS */
+                fetchModuleDetails();
+            } else {
+                Toast.makeText(getApplicationContext(), "Failed to get required info...", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "Failed to get required info...", Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     /***** FETCH THE TRAINING MODULE DETAILS *****/
@@ -246,191 +412,16 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
         });
     }
 
-    /***** FETCH THE LIST OF MESSAGE BETWEEN THE USER AND THE TRAINER *****/
-    private void fetchEnquiryMessages() {
-        EnquiryMessagesAPI apiEnquiry = ZenApiClient.getClient().create(EnquiryMessagesAPI.class);
-        Call<EnquiryMessages> call = apiEnquiry.fetchEnquiryMessages(TRAINING_MASTER_ID);
-        call.enqueue(new Callback<EnquiryMessages>() {
-            @Override
-            public void onResponse(Call<EnquiryMessages> call, Response<EnquiryMessages> response) {
-                try {
-                    String strResult = new Gson().toJson(response.body());
-                    JSONObject JORoot = new JSONObject(strResult);
-                    if (JORoot.has("error") && JORoot.getString("error").equalsIgnoreCase("false")) {
-                        JSONArray JAMessages = JORoot.getJSONArray("messages");
-//                        Log.e("MESSAGES", String.valueOf(JAMessages));
-
-                        /* THE DATA MODEL INSTANCE */
-                        EnquiryMessage data;
-
-                        for (int i = 0; i < JAMessages.length(); i++) {
-                            JSONObject JOMessages = JAMessages.getJSONObject(i);
-
-                            /* INSTANTIATE THE DATA OBJECT INSTANCE */
-                            data = new EnquiryMessage();
-
-                            /* SET THE TRAINING SLAVE ID */
-                            if (JOMessages.has("trainingSlaveID"))  {
-                                data.setTrainingSlaveID(JOMessages.getString("trainingSlaveID"));
-                            } else {
-                                data.setTrainingSlaveID(null);
-                            }
-
-                            /* SET THE TRAINING MASTER ID */
-                            if (JOMessages.has("trainingMasterID")) {
-                                data.setTrainingMasterID(JOMessages.getString("trainingMasterID"));
-                            } else {
-                                data.setTrainingMasterID(null);
-                            }
-
-                            /* SET THE TRAINER'S ID */
-                            if (JOMessages.has("trainerID"))    {
-                                data.setTrainerID(JOMessages.getString("trainerID"));
-                            } else {
-                                data.setTrainerID(null);
-                            }
-
-                            /* SET THE TRAINER'S NAME */
-                            if (JOMessages.has("trainerName"))  {
-                                data.setTrainerName(JOMessages.getString("trainerName"));
-                            } else {
-                                data.setTrainerName(null);
-                            }
-
-                            /* SET THE TRAINER'S DISPLAY PROFILE */
-                            if (JOMessages.has("trainerDisplayProfile"))    {
-                                data.setTrainerDisplayProfile(JOMessages.getString("trainerDisplayProfile"));
-                            } else {
-                                data.setTrainerDisplayProfile(null);
-                            }
-
-                            /* SET THE TRAINER'S TOKEN */
-                            if (JOMessages.has("trainerToken")) {
-                                data.setTrainerToken(JOMessages.getString("trainerToken"));
-                            } else {
-                                data.setTrainerToken(null);
-                            }
-
-                            /* SET THE USER'S ID */
-                            if (JOMessages.has("userID"))   {
-                                data.setUserID(JOMessages.getString("userID"));
-                            } else {
-                                data.setUserID(null);
-                            }
-
-                            /* SET THE USER'S NAME */
-                            if (JOMessages.has("userName")) {
-                                data.setUserName(JOMessages.getString("userName"));
-                            } else {
-                                data.setUserName(null);
-                            }
-
-                            /* SET THE USER'S DISPLAY PROFILE */
-                            if (JOMessages.has("userDisplayProfile"))   {
-                                data.setUserDisplayProfile(JOMessages.getString("userDisplayProfile"));
-                            } else {
-                                data.setUserDisplayProfile(null);
-                            }
-
-                            /* SET THE USER'S TOKEN */
-                            if (JOMessages.has("userToken"))    {
-                                data.setUserToken(JOMessages.getString("userToken"));
-                                USER_TOKEN = JOMessages.getString("userToken");
-                                Log.e("USER TOKEN", USER_TOKEN);
-                            } else {
-                                data.setUserToken(null);
-                                USER_TOKEN = null;
-                            }
-
-                            /* SET THE ENQUIRY MESSAGE */
-                            if (JOMessages.has("trainingSlaveMessage")) {
-                                data.setTrainingSlaveMessage(JOMessages.getString("trainingSlaveMessage"));
-                            } else {
-                                data.setTrainingSlaveMessage(null);
-                            }
-
-                            /* SET THE ENQUIRY TIME STAMP */
-                            if (JOMessages.has("trainerSlaveTimestamp"))    {
-                                data.setTrainerSlaveTimestamp(JOMessages.getString("trainerSlaveTimestamp"));
-                            } else {
-                                data.setTrainerSlaveTimestamp(null);
-                            }
-
-                            /* ADD THE COLLECTED DATA TO THE ARRAY LIST */
-                            arrMessages.add(data);
-                        }
-
-                        /* SET THE ADAPTER */
-                        listMessages.setAdapter(new TrainingMessagesAdapter(TrainerEnquiryActivity.this, arrMessages));
-
-                        /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
-                        listMessages.setVisibility(View.VISIBLE);
-                        linlaEmpty.setVisibility(View.GONE);
-                    } else {
-                        /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
-                        linlaEmpty.setVisibility(View.VISIBLE);
-                        listMessages.setVisibility(View.GONE);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-//                if (response.body() != null && response.body().getMessages() != null)   {
-//                    arrMessages = response.body().getMessages();
-//                    if (arrMessages.size() > 0) {
-//
-//                        /* SET THE ADAPTER */
-//                        listMessages.setAdapter(new TrainingMessagesAdapter(TrainerEnquiryActivity.this, arrMessages));
-//
-//                        /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
-//                        listMessages.setVisibility(View.VISIBLE);
-//                        linlaEmpty.setVisibility(View.GONE);
-//                    } else {
-//                        /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
-//                        linlaEmpty.setVisibility(View.VISIBLE);
-//                        listMessages.setVisibility(View.GONE);
-//                    }
-//                } else {
-//                    /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
-//                    linlaEmpty.setVisibility(View.VISIBLE);
-//                    listMessages.setVisibility(View.GONE);
-//                }
-            }
-
-            @Override
-            public void onFailure(Call<EnquiryMessages> call, Throwable t) {
-                Log.e("MESSAGES FAILURE", t.getMessage());
-                Crashlytics.logException(t);
-            }
-        });
-    }
-
-    /***** GET THE INCOMING DATA *****/
-    private void getIncomingData() {
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null && bundle.containsKey("TRAINER_ID") && bundle.containsKey("MODULE_ID")) {
-            TRAINER_ID = bundle.getString("TRAINER_ID");
-            MODULE_ID = bundle.getString("MODULE_ID");
-            TRAINING_MASTER_ID = bundle.getString("TRAINING_MASTER_ID");
-            if (TRAINER_ID != null && MODULE_ID != null && TRAINING_MASTER_ID != null)    {
-                /* FETCH THE TRAINING MODULE DETAILS */
-                fetchModuleDetails();
-            } else {
-                Toast.makeText(getApplicationContext(), "Failed to get required info...", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        } else {
-            Toast.makeText(getApplicationContext(), "Failed to get required info...", Toast.LENGTH_SHORT).show();
-            finish();
-        }
-    }
-
     /***** CONFIGURE THE RECYCLER VIEW *****/
     private void configRecycler() {
         /* SET THE CONFIGURATION */
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
+        manager.setStackFromEnd(true);
         listMessages.setLayoutManager(manager);
         listMessages.setHasFixedSize(true);
+        listMessages.setNestedScrollingEnabled(false);
+        ViewCompat.setNestedScrollingEnabled(listMessages, false);
 
         /* SET THE ADAPTER */
         listMessages.setAdapter(new TrainingMessagesAdapter(TrainerEnquiryActivity.this, arrMessages));

@@ -148,7 +148,13 @@
     <string name="profile_my_appointments">My Appointments</string>
     <string name="profile_my_consultations">My Consultations</string>
     <string name="profile_my_adoptions">My Adoption Listings</string>
-    <string name="profile_sign_out">Sign Out</string>
+    <string name="profile_settings_out">Settings</string>
+
+    <!-- SETTINGS ACTIVITY -->
+    <string name="settings_notifications_label">NOTIFICATIONS</string>
+    <string name="settings_notifications_sub_text">Manage your notifications. Check a box to subscribe to a channel, or uncheck a box to unsubscribe from a channel.</string>
+    <string name="settings_adoption_label">Subscribe to Adoptions</string>
+    <string name="settings_adoption_sub_text">To get a notification every time a new Adoption listing is published on Zen Pets. Only listings from your City will be displayed.</string>
 
     <!-- SPONSORED CLINIC STRINGS -->
     <string name="sponsored_clinic_name">CLINIC NAME</string>

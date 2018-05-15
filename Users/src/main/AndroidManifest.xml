@@ -283,6 +283,12 @@
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
+        <!-- -->
+        <activity
+            android:name=".utils.helpers.settings.SettingsActivity"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
         <!-- FOR THE FACEBOOK SDK (LOGIN) -->
         <activity
             android:name="com.facebook.FacebookActivity"
