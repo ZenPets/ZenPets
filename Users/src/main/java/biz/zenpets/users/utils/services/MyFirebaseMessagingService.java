@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -15,10 +16,6 @@ import biz.zenpets.users.details.trainers.enquiry.TrainerEnquiryActivity;
 import biz.zenpets.users.utils.AppPrefs;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-
-    private AppPrefs getApp()	{
-        return (AppPrefs) getApplication();
-    }
 
     /** A TAG INSTANCE FOR LOGGING **/
     private static final String TAG = "MyFirebaseMsgService";
@@ -34,7 +31,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         /* CHECK IF THE MESSAGE CONTAINS A PAYLOAD */
         if (remoteMessage.getNotification() != null) {
-            Log.e(TAG, "Notification Body: " + remoteMessage.getNotification().getBody());
+//            Log.e(TAG, "Notification Body: " + remoteMessage.getNotification().getBody());
             handleNotification(remoteMessage.getNotification().getBody());
         }
 
@@ -42,10 +39,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getData().size() > 0) {
             try {
                 JSONObject json = new JSONObject(remoteMessage.getData().toString());
-                Log.e("JSON", String.valueOf(json));
+//                Log.e("JSON", String.valueOf(json));
                 handleDataMessage(json);
             } catch (Exception e) {
                 Log.e(TAG, "Exception: " + e.getMessage());
+                Crashlytics.logException(e);
             }
         }
     }
@@ -71,46 +69,40 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             JSONObject data = json.getJSONObject("data");
             String notificationTitle = data.getString("notificationTitle");
             String notificationMessage = data.getString("notificationMessage");
-            boolean isBackground = data.getBoolean("is_background");
-            String timestamp = data.getString("timestamp");
             JSONObject payload = data.getJSONObject("payload");
             String strReference = null;
             String strTrainerID = null;
             String strModuleID = null;
+            String strTrainingMasterID = null;
             if (payload.has("notificationReference")) {
                 strReference = payload.getString("notificationReference");
-                Log.e("REFERENCE", strReference);
                 if (strReference.equalsIgnoreCase("Enquiry"))   {
                     strTrainerID = payload.getString("trainerID");
                     strModuleID = payload.getString("moduleID");
-                    Log.e("TRAINER ID", strTrainerID);
-                    Log.e("MODULE ID", strModuleID);
+                    strTrainingMasterID = payload.getString("trainingMasterID");
                 }
             }
-
-            Log.e(TAG, "title: " + notificationTitle);
-            Log.e(TAG, "message: " + notificationMessage);
-            Log.e(TAG, "isBackground: " + isBackground);
-            Log.e(TAG, "payload: " + payload.toString());
-            Log.e(TAG, "timestamp: " + timestamp);
 
             if (strReference.equalsIgnoreCase("Enquiry"))   {
                 Intent intent = new Intent(getApplicationContext(), TrainerEnquiryActivity.class);
                 intent.putExtra("TRAINER_ID", strTrainerID);
                 intent.putExtra("MODULE_ID", strModuleID);
-                showNotificationMessage(getApplicationContext(), notificationTitle, notificationMessage, timestamp, intent);
+                intent.putExtra("TRAINING_MASTER_ID", strTrainingMasterID);
+                showNotificationMessage(getApplicationContext(), notificationTitle, notificationMessage, intent);
             }
         } catch (JSONException e) {
             Log.e(TAG, "Json Exception: " + e.getMessage());
+            Crashlytics.logException(e);
         } catch (Exception e) {
             Log.e(TAG, "Exception: " + e.getMessage());
+            Crashlytics.logException(e);
         }
     }
 
     /** SHOW TEXT ONLY NOTIFICATIONS **/
-    private void showNotificationMessage(Context context, String notificationTitle, String message, String timeStamp, Intent intent) {
+    private void showNotificationMessage(Context context, String notificationTitle, String message, Intent intent) {
         notificationUtils = new NotificationUtils(context, AppPrefs.zenChannelID());
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        notificationUtils.showNotificationMessage(notificationTitle, message, timeStamp, intent);
+        notificationUtils.showNotificationMessage(notificationTitle, message, intent);
     }
 }

@@ -98,7 +98,6 @@ public class TrainingEnquiryAdapter extends RecyclerView.Adapter<TrainingEnquiry
             /* SET THE USER'S DISPLAY PROFILE */
             String strUserDisplayProfile = message.getUserDisplayProfile();
             if (strUserDisplayProfile != null)    {
-                Log.e("DISPLAY PROFILE", strUserDisplayProfile);
                 Uri uri = Uri.parse(strUserDisplayProfile);
                 holder.imgvwUserDisplayProfile.setImageURI(uri);
             } else {

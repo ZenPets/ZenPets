@@ -110,13 +110,13 @@ public class AppPrefs extends MultiDexApplication {
         return mPreferences.getString(DEVICE_TOKEN, null);
     }
 
-    /***** A METHOD TO PROVIDE A GLOBAL CONTEXT *****/
-    public static Context context() {
-        return app.getApplicationContext();
-    }
-
     /***** A METHOD TO RETURN THE NOTIFICATION CHANNEL ID *****/
     public static String zenChannelID()   {
         return app.NOTIFICATION_CHANNEL_ID;
+    }
+
+    /***** A METHOD TO PROVIDE A GLOBAL CONTEXT *****/
+    public static Context context() {
+        return app.getApplicationContext();
     }
 }

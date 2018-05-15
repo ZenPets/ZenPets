@@ -3,7 +3,6 @@ package biz.zenpets.users.utils.models.user;
 import com.google.gson.annotations.SerializedName;
 
 public class UserData {
-
     @SerializedName("error") private Boolean error;
     @SerializedName("userID") private String userID;
     @SerializedName("userAuthID") private String userAuthID;

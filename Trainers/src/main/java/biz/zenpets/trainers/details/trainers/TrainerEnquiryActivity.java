@@ -9,8 +9,10 @@ import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -110,6 +112,9 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
 
         /* GET THE INCOMING DATA */
         getIncomingData();
+
+        /* CONFIGURE THE TOOLBAR */
+        configTB();
     }
 
     /***** FETCH THE TRAINING MODULE DETAILS *****/
@@ -468,5 +473,29 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
                 Crashlytics.logException(t);
             }
         });
+    }
+
+    /***** CONFIGURE THE TOOLBAR *****/
+    private void configTB() {
+        Toolbar myToolbar = findViewById(R.id.myToolbar);
+        setSupportActionBar(myToolbar);
+        String strTitle = "Enquiry Messages";
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setTitle(strTitle);
+        getSupportActionBar().setSubtitle(null);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                break;
+            default:
+                break;
+        }
+        return false;
     }
 }

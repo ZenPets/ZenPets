@@ -3,16 +3,17 @@ package biz.zenpets.trainers.utils.services;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.text.TextUtils;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import biz.zenpets.trainers.landing.LandingActivity;
+import biz.zenpets.trainers.details.trainers.TrainerEnquiryActivity;
+import biz.zenpets.trainers.utils.AppPrefs;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -28,102 +29,80 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage == null)
             return;
 
-        // Check if message contains a notification payload.
+        /* CHECK IF THE MESSAGE CONTAINS A PAYLOAD */
         if (remoteMessage.getNotification() != null) {
-            Log.e(TAG, "Notification Body: " + remoteMessage.getNotification().getBody());
+//            Log.e(TAG, "Notification Body: " + remoteMessage.getNotification().getBody());
             handleNotification(remoteMessage.getNotification().getBody());
         }
 
-        // Check if message contains a data payload.
+        /* CHECK IF THE MESSAGE CONTAINS A DATA PAYLOAD */
         if (remoteMessage.getData().size() > 0) {
-            Log.e(TAG, "Data Payload: " + remoteMessage.getData().toString());
-
             try {
                 JSONObject json = new JSONObject(remoteMessage.getData().toString());
-                Log.e("JSON", String.valueOf(json));
+//                Log.e("JSON", String.valueOf(json));
                 handleDataMessage(json);
             } catch (Exception e) {
                 Log.e(TAG, "Exception: " + e.getMessage());
+                Crashlytics.logException(e);
             }
         }
     }
 
+    /** HANDLE THE NOTIFICATION **/
     private void handleNotification(String message) {
         Log.e("MESSAGE", message);
         if (!NotificationUtils.isAppIsInBackground(getApplicationContext())) {
-            // app is in foreground, broadcast the push message
+            /* APP IS IN THE FOREGROUND, BROADCAST THE MESSAGE */
             Intent pushNotification = new Intent(Config.PUSH_NOTIFICATION);
             pushNotification.putExtra("message", message);
             LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
 
-            // play notification sound
-            NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
+            /* PLAY THE NOTIFICATION SOUND */
+            NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext(), AppPrefs.zenChannelID());
             notificationUtils.playNotificationSound();
-        }else{
-            // If the app is in background, firebase itself handles the notification
         }
     }
 
+    /** HANDLE THE DATA MESSAGE **/
     private void handleDataMessage(JSONObject json) {
-        Log.e(TAG, "push json: " + json.toString());
-
         try {
             JSONObject data = json.getJSONObject("data");
-
-            String title = data.getString("title");
-            String message = data.getString("message");
-            boolean isBackground = data.getBoolean("is_background");
-            String imageUrl = data.getString("image");
-            String timestamp = data.getString("timestamp");
+            String notificationTitle = data.getString("notificationTitle");
+            String notificationMessage = data.getString("notificationMessage");
             JSONObject payload = data.getJSONObject("payload");
-
-            Log.e(TAG, "title: " + title);
-            Log.e(TAG, "message: " + message);
-            Log.e(TAG, "isBackground: " + isBackground);
-            Log.e(TAG, "payload: " + payload.toString());
-            Log.e(TAG, "imageUrl: " + imageUrl);
-            Log.e(TAG, "timestamp: " + timestamp);
-
-            if (!NotificationUtils.isAppIsInBackground(getApplicationContext())) {
-                // app is in foreground, broadcast the push message
-                Intent pushNotification = new Intent(Config.PUSH_NOTIFICATION);
-                pushNotification.putExtra("message", message);
-                LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
-
-                // play notification sound
-                NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
-                notificationUtils.playNotificationSound();
-            } else {
-                // app is in background, show the notification in notification tray
-                Intent resultIntent = new Intent(getApplicationContext(), LandingActivity.class);
-                resultIntent.putExtra("message", message);
-
-                // check for image attachment
-                if (TextUtils.isEmpty(imageUrl)) {
-                    showNotificationMessage(getApplicationContext(), title, message, timestamp, resultIntent);
-                } else {
-                    // image is present, show notification with image
-                    showNotificationMessageWithBigImage(getApplicationContext(), title, message, timestamp, resultIntent, imageUrl);
+            String strReference = null;
+            String strTrainerID = null;
+            String strModuleID = null;
+            String strTrainingMasterID = null;
+            if (payload.has("notificationReference")) {
+                strReference = payload.getString("notificationReference");
+                if (strReference.equalsIgnoreCase("Enquiry"))   {
+                    strTrainerID = payload.getString("trainerID");
+                    strModuleID = payload.getString("moduleID");
+                    strTrainingMasterID = payload.getString("trainingMasterID");
                 }
+            }
+
+            if (strReference.equalsIgnoreCase("Enquiry"))   {
+                Intent intent = new Intent(getApplicationContext(), TrainerEnquiryActivity.class);
+                intent.putExtra("TRAINER_ID", strTrainerID);
+                intent.putExtra("MODULE_ID", strModuleID);
+                intent.putExtra("TRAINING_MASTER_ID", strTrainingMasterID);
+                showNotificationMessage(getApplicationContext(), notificationTitle, notificationMessage, intent);
             }
         } catch (JSONException e) {
             Log.e(TAG, "Json Exception: " + e.getMessage());
+            Crashlytics.logException(e);
         } catch (Exception e) {
             Log.e(TAG, "Exception: " + e.getMessage());
+            Crashlytics.logException(e);
         }
     }
 
     /** SHOW TEXT ONLY NOTIFICATIONS **/
-    private void showNotificationMessage(Context context, String title, String message, String timeStamp, Intent intent) {
-        notificationUtils = new NotificationUtils(context);
+    private void showNotificationMessage(Context context, String notificationTitle, String message, Intent intent) {
+        notificationUtils = new NotificationUtils(context, AppPrefs.zenChannelID());
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        notificationUtils.showNotificationMessage(title, message, timeStamp, intent);
-    }
-
-    /** SHOW NOTIFICATIONS WITH TEXT AND IMAGE **/
-    private void showNotificationMessageWithBigImage(Context context, String title, String message, String timeStamp, Intent intent, String imageUrl) {
-        notificationUtils = new NotificationUtils(context);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        notificationUtils.showNotificationMessage(title, message, timeStamp, intent, imageUrl);
+        notificationUtils.showNotificationMessage(notificationTitle, message, intent);
     }
 }

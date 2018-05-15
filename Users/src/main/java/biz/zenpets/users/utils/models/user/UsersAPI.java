@@ -33,6 +33,10 @@ public interface UsersAPI {
     @GET("fetchProfile")
     Call<UserData> fetchProfile(@Query("userAuthID") String userAuthID);
 
+    /** FETCH USER'S PROFILE DETAILS **/
+    @GET("fetchUserDetails")
+    Call<UserData> fetchUserDetails(@Query("userID") String userID);
+
     /** UPDATE THE USER'S RECORD **/
     @POST("updateProfile")
     @FormUrlEncoded

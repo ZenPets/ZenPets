@@ -317,25 +317,25 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".utils.services.MyFirebaseInstanceIDService">
+        <!--<service android:name=".utils.services.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
-        </service>
-        <service
+        </service>-->
+        <!--<service
             android:name=".utils.services.MyJobService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
             </intent-filter>
-        </service>
+        </service>-->
 
         <!-- SET THE NOTIFICATION ICON -->
-        <meta-data
+        <!--<meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@mipmap/ic_launcher" />
+            android:resource="@drawable/zen_pets_notification" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/primary" />
+            android:resource="@color/primary" />-->
     </application>
 </manifest>

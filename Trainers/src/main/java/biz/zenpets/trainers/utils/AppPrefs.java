@@ -25,6 +25,9 @@ public class AppPrefs extends MultiDexApplication {
     /** THE DEVICE TOKEN **/
     private final String DEVICE_TOKEN = "deviceToken";
 
+    /** THE NOTIFICATION CHANNEL ID **/
+    private final String NOTIFICATION_CHANNEL_ID = "ZEN_CHANNEL_29081980";
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -87,5 +90,10 @@ public class AppPrefs extends MultiDexApplication {
     /***** GET THE DEVICE TOKEN *****/
     public String getDeviceToken()	{
         return mPreferences.getString(DEVICE_TOKEN, null);
+    }
+
+    /***** A METHOD TO RETURN THE NOTIFICATION CHANNEL ID *****/
+    public static String zenChannelID()   {
+        return app.NOTIFICATION_CHANNEL_ID;
     }
 }

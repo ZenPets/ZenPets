@@ -30,13 +30,10 @@ public class NotificationUtils {
         this.CHANNEL_ID = CHANNEL_ID;
     }
 
-    public void showNotificationMessage(final String title, final String message, final String timeStamp, Intent intent) {
+    public void showNotificationMessage(final String title, final String message,Intent intent) {
         /* CHECK FOR EMPTY PUSH MESSAGE */
         if (TextUtils.isEmpty(message))
             return;
-
-        /* SET THE NOTIFICATION ICON */
-        final int icon = R.drawable.zen_pets_notification_icon;
 
         /* SET THE INTENT PARAMETERS */
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -47,14 +44,15 @@ public class NotificationUtils {
                         intent,
                         PendingIntent.FLAG_CANCEL_CURRENT
                 );
-        final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext, CHANNEL_ID);
+
+        /* CONFIGURE THE NOTIFICATION SOUND */
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        showSmallNotification(mBuilder, icon, title, message, timeStamp, resultPendingIntent, alarmSound);
+        showSmallNotification(title, message, resultPendingIntent, alarmSound);
         playNotificationSound();
     }
 
     /** SHOW THE NOTIFICATION WITH THE DEFAULT STYLE **/
-    private void showSmallNotification(NotificationCompat.Builder mBuilder, int icon, String title, String message, String timeStamp, PendingIntent resultPendingIntent, Uri alarmSound) {
+    private void showSmallNotification(String title, String message, PendingIntent resultPendingIntent, Uri alarmSound) {
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
         inboxStyle.addLine(message);
 
@@ -69,14 +67,12 @@ public class NotificationUtils {
         notification.setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.zen_pets_notification_icon));
         notification.setPriority(NotificationCompat.PRIORITY_HIGH);
         notification.setAutoCancel(true);
-        notification.setSmallIcon(R.drawable.zen_pets_notification);
-//        notification.setSmallIcon(getNotificationIcon());
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)  {
-//            notification.setSmallIcon(R.drawable.icon_silhouette);
-//            notification.setColor(mContext.getResources().getColor(android.R.color.white));
-//        } else {
-//            notification.setSmallIcon(R.drawable.zen_pets_notification_icon);
-//        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)  {
+            notification.setSmallIcon(R.drawable.zen_pets_notification);
+            notification.setColor(mContext.getResources().getColor(R.color.accent));
+        } else {
+            notification.setSmallIcon(R.drawable.zen_pets_notification_icon);
+        }
 
         /* SHOW THE NOTIFICATION */
         NotificationManagerCompat manager = NotificationManagerCompat.from(mContext);

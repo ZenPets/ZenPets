@@ -9,8 +9,10 @@ import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -26,6 +28,10 @@ import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.adapters.trainers.TrainingModuleImagesAdapter;
 import biz.zenpets.users.utils.adapters.trainers.enquiry.TrainingEnquiryAdapter;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
+import biz.zenpets.users.utils.models.notifications.Notification;
+import biz.zenpets.users.utils.models.notifications.NotificationsAPI;
+import biz.zenpets.users.utils.models.trainers.Trainer;
+import biz.zenpets.users.utils.models.trainers.TrainersAPI;
 import biz.zenpets.users.utils.models.trainers.enquiry.EnquiryMessage;
 import biz.zenpets.users.utils.models.trainers.enquiry.EnquiryMessages;
 import biz.zenpets.users.utils.models.trainers.enquiry.EnquiryMessagesAPI;
@@ -36,6 +42,8 @@ import biz.zenpets.users.utils.models.trainers.modules.ModuleImage;
 import biz.zenpets.users.utils.models.trainers.modules.ModuleImages;
 import biz.zenpets.users.utils.models.trainers.modules.ModuleImagesAPI;
 import biz.zenpets.users.utils.models.trainers.modules.ModulesAPI;
+import biz.zenpets.users.utils.models.user.UserData;
+import biz.zenpets.users.utils.models.user.UsersAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -53,8 +61,9 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
     TrainingEnquiryAPI api = ZenApiClient.getClient().create(TrainingEnquiryAPI.class);
     EnquiryMessagesAPI apiEnquiry = ZenApiClient.getClient().create(EnquiryMessagesAPI.class);
 
-    /** THE LOGGED IN USER'S ID **/
+    /** THE LOGGED IN USER'S ID AND NAME **/
     String USER_ID = null;
+    String USER_NAME = null;
 
     /** THE INCOMING TRAINER AND MODULE ID **/
     String TRAINER_ID = null;
@@ -62,6 +71,9 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
 
     /** THE TRAINING ENQUIRY MASTER ID **/
     String TRAINING_MASTER_ID = null;
+
+    /** THE TRAINER'S TOKEN **/
+    String TRAINER_TOKEN = null;
 
     /** THE MESSAGES ARRAY LIST **/
     ArrayList<EnquiryMessage> arrMessages = new ArrayList<>();
@@ -119,8 +131,35 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
         /* GET THE USER ID */
         USER_ID = getApp().getUserID();
 
+        /* GET THE USER'S DETAILS */
+        fetchUserDetails();
+
         /* GET THE INCOMING DATA */
         getIncomingData();
+
+        /* CONFIGURE THE TOOLBAR */
+        configTB();
+    }
+
+    /***** GET THE USER'S DETAILS *****/
+    private void fetchUserDetails() {
+        UsersAPI api = ZenApiClient.getClient().create(UsersAPI.class);
+        Call<UserData> call = api.fetchUserDetails(USER_ID);
+        call.enqueue(new Callback<UserData>() {
+            @Override
+            public void onResponse(Call<UserData> call, Response<UserData> response) {
+                UserData data = response.body();
+                if (data != null)   {
+                    USER_NAME = data.getUserName();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserData> call, Throwable t) {
+                Log.e("PROFILE FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
 
     /***** FETCH THE LIST OF MESSAGE BETWEEN THE USER AND THE TRAINER *****/
@@ -228,6 +267,9 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
                 fetchModuleDetails();
                 Log.e("TRAINER ID", TRAINER_ID);
                 Log.e("MODULE ID", MODULE_ID);
+
+                /* FETCH THE TRAINER'S TOKEN */
+                fetchTrainerToken();
             } else {
                 Toast.makeText(getApplicationContext(), "Failed to get required info...", Toast.LENGTH_SHORT).show();
                 finish();
@@ -391,7 +433,7 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
     }
 
     /***** PUBLISH THE TRAINING ENQUIRY MESSAGE *****/
-    private void publishMessage(String strMessage, String strTimestamp) {
+    private void publishMessage(final String strMessage, String strTimestamp) {
         Call<EnquiryMessage> call = apiEnquiry.newEnquiryUserMessage(
                 TRAINING_MASTER_ID, null, USER_ID, strMessage, strTimestamp);
         call.enqueue(new Callback<EnquiryMessage>() {
@@ -401,6 +443,9 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Message successfully posted", Toast.LENGTH_SHORT).show();
                     edtMessage.setText("");
                     arrMessages.clear();
+
+                    /* SEND A NOTIFICATION TO THE TRAINER */
+                    sendNotificationToTrainer(strMessage);
 
                     /* FETCH THE LIST OF MESSAGE BETWEEN THE USER AND THE TRAINER */
                     fetchEnquiryMessages();
@@ -415,5 +460,75 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
                 Crashlytics.logException(t);
             }
         });
+    }
+
+    /***** SEND A NOTIFICATION TO THE TRAINER *****/
+    private void sendNotificationToTrainer(String strMessage) {
+        NotificationsAPI api = ZenApiClient.getClient().create(NotificationsAPI.class);
+        Call<Notification> call = api.sendEnquiryReplyNotification(
+                TRAINER_TOKEN, "New enquiry from " + USER_NAME,
+                strMessage, "Enquiry", TRAINER_ID, MODULE_ID, TRAINING_MASTER_ID);
+        call.enqueue(new Callback<Notification>() {
+            @Override
+            public void onResponse(Call<Notification> call, Response<Notification> response) {
+            }
+
+            @Override
+            public void onFailure(Call<Notification> call, Throwable t) {
+                Log.e("PUSH FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
+    }
+
+    /***** FETCH THE TRAINER'S TOKEN *****/
+    private void fetchTrainerToken() {
+        TrainersAPI api = ZenApiClient.getClient().create(TrainersAPI.class);
+        Call<Trainer> call = api.fetchTrainerDetails(TRAINER_ID);
+        call.enqueue(new Callback<Trainer>() {
+            @Override
+            public void onResponse(Call<Trainer> call, Response<Trainer> response) {
+                Trainer trainer = response.body();
+                if (trainer != null)    {
+                    /* GET THE TRAINER'S TOKEN */
+                    TRAINER_TOKEN = trainer.getTrainerToken();
+                    if (TRAINER_TOKEN != null)  {
+                        Log.e("TOKEN", TRAINER_TOKEN);
+                    } else {
+                        Log.e("TOKEN", "No Token Fetched...");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Trainer> call, Throwable t) {
+                Log.e("DETAILS FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
+    }
+
+    /***** CONFIGURE THE TOOLBAR *****/
+    private void configTB() {
+        Toolbar myToolbar = findViewById(R.id.myToolbar);
+        setSupportActionBar(myToolbar);
+        String strTitle = "Enquiry Messages";
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setTitle(strTitle);
+        getSupportActionBar().setSubtitle(null);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                break;
+            default:
+                break;
+        }
+        return false;
     }
 }
