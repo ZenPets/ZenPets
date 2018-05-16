@@ -50,6 +50,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@SuppressWarnings({"ConstantConditions", "deprecation"})
 public class TrainerEnquiryActivity extends AppCompatActivity {
 
     /** THE INCOMING TRAINER, MODULE ID AND TRAINING ENQUIRY MASTER ID **/
@@ -256,8 +257,15 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
                         /* DISABLE THE REPLY EDIT TEXT */
                         edtMessage.setEnabled(false);
                     }
+
+                    /* HIDE THE PROGRESS */
+                    linlaMessagesProgress.setVisibility(View.GONE);
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Crashlytics.logException(e);
+
+                    /* HIDE THE PROGRESS */
+                    linlaMessagesProgress.setVisibility(View.GONE);
                 }
             }
 
@@ -277,7 +285,8 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
             MODULE_ID = bundle.getString("MODULE_ID");
             TRAINING_MASTER_ID = bundle.getString("TRAINING_MASTER_ID");
             if (TRAINER_ID != null && MODULE_ID != null && TRAINING_MASTER_ID != null)    {
-                /* FETCH THE TRAINING MODULE DETAILS */
+                /* SHOW THE PROGRESS AND FETCH THE TRAINING MODULE DETAILS */
+                linlaMessagesProgress.setVisibility(View.VISIBLE);
                 fetchModuleDetails();
             } else {
                 Toast.makeText(getApplicationContext(), "Failed to get required info...", Toast.LENGTH_SHORT).show();
@@ -311,19 +320,17 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
                     String MODULE_DURATION_UNIT = module.getTrainerModuleDurationUnit();
                     String MODULE_SESSIONS = module.getTrainerModuleSessions();
                     if (MODULE_DURATION != null && MODULE_SESSIONS != null) {
-                        String strNumber = MODULE_DURATION;
-                        String strUnits = MODULE_DURATION_UNIT;
                         String strFinalUnits = null;
-                        if (strUnits.equalsIgnoreCase("day")) {
-                            int totalDays = Integer.parseInt(strNumber);
+                        if (MODULE_DURATION_UNIT.equalsIgnoreCase("day")) {
+                            int totalDays = Integer.parseInt(MODULE_DURATION);
                             Resources resDays = getResources();
                             if (totalDays == 1)    {
                                 strFinalUnits = resDays.getQuantityString(R.plurals.days, totalDays, totalDays);
                             } else if (totalDays > 1) {
                                 strFinalUnits = resDays.getQuantityString(R.plurals.days, totalDays, totalDays);
                             }
-                        } else if (strUnits.equalsIgnoreCase("Month")){
-                            int totalDays = Integer.parseInt(strNumber);
+                        } else if (MODULE_DURATION_UNIT.equalsIgnoreCase("Month")){
+                            int totalDays = Integer.parseInt(MODULE_DURATION);
                             Resources resDays = getResources();
                             if (totalDays == 1)    {
                                 strFinalUnits = resDays.getQuantityString(R.plurals.months, totalDays, totalDays);
@@ -379,6 +386,9 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
             public void onFailure(Call<Module> call, Throwable t) {
                 Log.e("DETAILS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
+
+                /* HIDE THE PROGRESS */
+                linlaMessagesProgress.setVisibility(View.GONE);
             }
         });
     }
@@ -414,6 +424,9 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ModuleImages> call, Throwable t) {
                 Crashlytics.logException(t);
+
+                /* HIDE THE PROGRESS */
+                linlaMessagesProgress.setVisibility(View.GONE);
             }
         });
     }
