@@ -16,7 +16,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -356,13 +355,13 @@ public class AdoptionsList extends AppCompatActivity {
             Bundle bundle = data.getExtras();
             if (bundle != null && bundle.containsKey("PET_GENDER") || bundle.containsKey("PET_SPECIES")) {
                 FILTER_PET_GENDER = bundle.getString("PET_GENDER");
-                if (FILTER_PET_GENDER != null)
-                    Log.e("GENDER", FILTER_PET_GENDER);
-                FILTER_PET_SPECIES = bundle.getString("PET_SPECIES");
-                if (FILTER_PET_SPECIES != null)
-                    Log.e("SPECIES", FILTER_PET_SPECIES);
+                if (FILTER_PET_GENDER != null)  {
 
-                /* CHECK */
+                }
+                FILTER_PET_SPECIES = bundle.getString("PET_SPECIES");
+                if (FILTER_PET_SPECIES != null) {
+
+                }
             }
         }
     }

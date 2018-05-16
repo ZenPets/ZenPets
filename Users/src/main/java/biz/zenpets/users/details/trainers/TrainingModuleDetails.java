@@ -7,7 +7,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.Toast;
@@ -101,7 +100,7 @@ public class TrainingModuleDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Module> call, Throwable t) {
-                Log.e("DETAILS FAILURE", t.getMessage());
+//                Log.e("DETAILS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

@@ -12,7 +12,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -222,7 +221,7 @@ public class AdoptionDetails extends AppCompatActivity {
 
                     /* GET THE TIME STAMP */
                     String adoptionTimeStamp = data.getAdoptionTimeStamp();
-                    Log.e("TS", adoptionTimeStamp);
+//                    Log.e("TS", adoptionTimeStamp);
                     long lngTimeStamp = Long.parseLong(adoptionTimeStamp) * 1000;
 
                     /* GET THE PRETTY DATE */

@@ -50,7 +50,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     /** HANDLE THE NOTIFICATION **/
     private void handleNotification(String message) {
-        Log.e("MESSAGE", message);
+//        Log.e("MESSAGE", message);
         if (!NotificationUtils.isAppIsInBackground(getApplicationContext())) {
             /* APP IS IN THE FOREGROUND, BROADCAST THE MESSAGE */
             Intent pushNotification = new Intent(Config.PUSH_NOTIFICATION);

@@ -9,7 +9,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,7 +109,7 @@ public class TrainingEnquiriesAdapter extends RecyclerView.Adapter<TrainingEnqui
 
             @Override
             public void onFailure(Call<Enquiry> call, Throwable t) {
-                Log.e("LATEST FAILURE", t.getMessage());
+//                Log.e("LATEST FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -160,7 +159,7 @@ public class TrainingEnquiriesAdapter extends RecyclerView.Adapter<TrainingEnqui
 
             @Override
             public void onFailure(Call<MessagesCount> call, Throwable t) {
-                Log.e("COUNT FAILURE", t.getMessage());
+//                Log.e("COUNT FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

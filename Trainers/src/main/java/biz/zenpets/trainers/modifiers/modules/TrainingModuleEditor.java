@@ -14,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -235,7 +234,7 @@ public class TrainingModuleEditor extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Module> call, Throwable t) {
-                Log.e("DETAILS FAILURE", t.getMessage());
+//                Log.e("DETAILS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -431,7 +430,7 @@ public class TrainingModuleEditor extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Module> call, Throwable t) {
-                Log.e("UPDATE FAILURE", t.getMessage());
+//                Log.e("UPDATE FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

@@ -11,7 +11,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -147,7 +146,7 @@ public class VaccinationsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Vaccinations> call, Throwable t) {
-                Log.e("EXCEPTION", t.getMessage());
+//                Log.e("EXCEPTION", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -392,7 +391,7 @@ public class VaccinationsFragment extends Fragment {
 
                 @Override
                 public void onFailure(Call<VaccinationImages> call, Throwable t) {
-                    Log.e("EXCEPTION", t.getMessage());
+//                    Log.e("EXCEPTION", t.getMessage());
                     Crashlytics.logException(t);
                 }
             });
@@ -463,7 +462,7 @@ public class VaccinationsFragment extends Fragment {
 
                                 @Override
                                 public void onFailure(Call<Vaccination> call, Throwable t) {
-                                    Log.e("DELETE FAILURE", t.getMessage());
+//                                    Log.e("DELETE FAILURE", t.getMessage());
                                     Crashlytics.logException(t);
                                 }
                             });

@@ -11,7 +11,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -237,7 +236,7 @@ public class TrainerDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Trainer> call, Throwable t) {
-                Log.e("DETAILS FAILURE", t.getMessage());
+//                Log.e("DETAILS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -325,7 +324,7 @@ public class TrainerDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ModulesMinMax> call, Throwable t) {
-                Log.e("RANGE FAILURE", t.getMessage());
+//                Log.e("RANGE FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -364,7 +363,7 @@ public class TrainerDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Modules> call, Throwable t) {
-                Log.e("MODULES FAILURE", t.getMessage());
+//                Log.e("MODULES FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -433,7 +432,7 @@ public class TrainerDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<TrainerReviewsCount> call, Throwable t) {
-                Log.e("COUNT FAILURE", t.getMessage());
+//                Log.e("COUNT FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

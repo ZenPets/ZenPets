@@ -21,7 +21,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -588,7 +587,7 @@ public class DoctorDetailsNew extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ReviewCount> call, Throwable t) {
-                Log.e("COUNT FAILURE", t.getMessage());
+//                Log.e("COUNT FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -671,7 +670,7 @@ public class DoctorDetailsNew extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Services> call, Throwable t) {
-                Log.e("SERVICES FAILURE", t.getMessage());
+//                Log.e("SERVICES FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -896,7 +895,7 @@ public class DoctorDetailsNew extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Timing> call, Throwable t) {
-                Log.e("TIMINGS FAILURE", t.getMessage());
+//                Log.e("TIMINGS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -1593,7 +1592,7 @@ public class DoctorDetailsNew extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Review> call, Throwable t) {
-                Log.e("CHECK FAILURE", t.getMessage());
+//                Log.e("CHECK FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

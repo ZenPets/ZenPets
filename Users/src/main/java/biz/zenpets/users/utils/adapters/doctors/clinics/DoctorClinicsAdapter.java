@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,7 +87,7 @@ public class DoctorClinicsAdapter extends RecyclerView.Adapter<DoctorClinicsAdap
 
             @Override
             public void onFailure(Call<ClinicRating> call, Throwable t) {
-                Log.e("RATINGS FAILURE", t.getMessage());
+//                Log.e("RATINGS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -166,7 +165,7 @@ public class LandingActivity extends AppCompatActivity {
             CharSequence name = getString(R.string.default_notification_channel_name);
             String description = getString(R.string.default_notification_channel_desc);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            Log.e("CHANNEL ID", AppPrefs.zenChannelID());
+//            Log.e("CHANNEL ID", AppPrefs.zenChannelID());
             NotificationChannel channel = new NotificationChannel(AppPrefs.zenChannelID(), name, importance);
             channel.setDescription(description);
             // Register the channel with the system; you can't change the importance

@@ -13,7 +13,6 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -233,7 +232,7 @@ public class VaccinationRecordModifier extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Vaccination> call, Throwable t) {
-                Log.e("DETAILS FAILURE", t.getMessage());
+//                Log.e("DETAILS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -319,7 +318,7 @@ public class VaccinationRecordModifier extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Vaccination> call, Throwable t) {
-                Log.e("EXCEPTION", t.getMessage());
+//                Log.e("EXCEPTION", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -366,7 +365,7 @@ public class VaccinationRecordModifier extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Vaccines> call, Throwable t) {
-                Log.e("VACCINES FAILURE", t.getMessage());
+//                Log.e("VACCINES FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

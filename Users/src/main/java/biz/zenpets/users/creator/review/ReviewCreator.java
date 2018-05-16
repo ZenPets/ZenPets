@@ -17,7 +17,6 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -36,7 +35,6 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import java.util.ArrayList;
 
 import biz.zenpets.users.R;
-import biz.zenpets.users.modifier.review.ReviewModifier;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.adapters.visit.VisitReasonsAdapter;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
@@ -46,12 +44,9 @@ import biz.zenpets.users.utils.helpers.doctors.reviews.AddNewReview;
 import biz.zenpets.users.utils.helpers.doctors.reviews.AddNewReviewInterface;
 import biz.zenpets.users.utils.helpers.doctors.reviews.PostClinicRating;
 import biz.zenpets.users.utils.helpers.doctors.reviews.PostClinicRatingInterface;
-import biz.zenpets.users.utils.helpers.visit.FetchVisitReasons;
-import biz.zenpets.users.utils.helpers.visit.FetchVisitReasonsInterface;
 import biz.zenpets.users.utils.models.visit.Reason;
 import biz.zenpets.users.utils.models.visit.Reasons;
 import biz.zenpets.users.utils.models.visit.ReasonsAPI;
-import biz.zenpets.users.utils.models.visit.VisitReasonsData;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -205,7 +200,7 @@ public class ReviewCreator extends AppCompatActivity
 
             @Override
             public void onFailure(@NonNull Call<Reasons> call, Throwable t) {
-                Log.e("REASONS FAILURE", t.getMessage());
+//                Log.e("REASONS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

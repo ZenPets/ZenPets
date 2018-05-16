@@ -18,7 +18,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -205,7 +204,7 @@ public class DoctorProfileActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Clinics> call, Throwable t) {
-                Log.e("CLINICS FAILURE", t.getMessage());
+//                Log.e("CLINICS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -277,7 +276,7 @@ public class DoctorProfileActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Reviews> call, Throwable t) {
-                Log.e("REVIEWS FAILURE", t.getMessage());
+//                Log.e("REVIEWS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -333,7 +332,7 @@ public class DoctorProfileActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<DoctorProfile> call, Throwable t) {
-                Log.e("PROFILE FAILURE", t.getMessage());
+//                Log.e("PROFILE FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -378,7 +377,7 @@ public class DoctorProfileActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Log.e("EDUCATION FAILURE", t.getMessage());
+//                Log.e("EDUCATION FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -532,7 +531,7 @@ public class DoctorProfileActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Review> call, Throwable t) {
-                Log.e("CHECK FAILURE", t.getMessage());
+//                Log.e("CHECK FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

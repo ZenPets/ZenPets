@@ -4,7 +4,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
@@ -12,7 +11,6 @@ import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -25,7 +23,6 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import java.util.ArrayList;
 
 import biz.zenpets.users.R;
-import biz.zenpets.users.creator.review.ReviewCreator;
 import biz.zenpets.users.utils.adapters.visit.VisitReasonsAdapter;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.models.reviews.Review;
@@ -33,7 +30,6 @@ import biz.zenpets.users.utils.models.reviews.ReviewsAPI;
 import biz.zenpets.users.utils.models.visit.Reason;
 import biz.zenpets.users.utils.models.visit.Reasons;
 import biz.zenpets.users.utils.models.visit.ReasonsAPI;
-import biz.zenpets.users.utils.models.visit.VisitReasonsData;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -165,7 +161,7 @@ public class ReviewModifier extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<Review> call, @NonNull Throwable t) {
-                Log.e("REVIEW FAILURE", t.getMessage());
+//                Log.e("REVIEW FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -204,7 +200,7 @@ public class ReviewModifier extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<Reasons> call, Throwable t) {
-                Log.e("REASONS FAILURE", t.getMessage());
+//                Log.e("REASONS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

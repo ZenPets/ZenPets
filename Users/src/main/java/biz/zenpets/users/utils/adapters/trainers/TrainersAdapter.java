@@ -6,7 +6,6 @@ import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,7 +98,7 @@ public class TrainersAdapter extends RecyclerView.Adapter<TrainersAdapter.Adopti
 
             @Override
             public void onFailure(Call<ModulesCount> call, Throwable t) {
-                Log.e("COUNT FAILURE", t.getMessage());
+//                Log.e("COUNT FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -126,7 +125,7 @@ public class TrainersAdapter extends RecyclerView.Adapter<TrainersAdapter.Adopti
 
             @Override
             public void onFailure(Call<ModulesMinMax> call, Throwable t) {
-                Log.e("RANGE FAILURE", t.getMessage());
+//                Log.e("RANGE FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

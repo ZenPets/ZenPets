@@ -13,7 +13,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -275,7 +274,7 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Trainer> call, Throwable t) {
-                Log.e("PROFILE FAILURE", t.getMessage());
+//                Log.e("PROFILE FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

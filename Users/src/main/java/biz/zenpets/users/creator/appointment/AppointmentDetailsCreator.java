@@ -14,7 +14,6 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -39,14 +38,11 @@ import java.util.Locale;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.creator.pet.NewPetCreator;
-import biz.zenpets.users.modifier.review.ReviewModifier;
 import biz.zenpets.users.utils.adapters.pet.PetSpinnerAdapter;
 import biz.zenpets.users.utils.adapters.visit.VisitReasonsAdapter;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.helpers.pets.pet.FetchUserPets;
 import biz.zenpets.users.utils.helpers.pets.pet.FetchUserPetsInterface;
-import biz.zenpets.users.utils.helpers.visit.FetchVisitReasons;
-import biz.zenpets.users.utils.helpers.visit.FetchVisitReasonsInterface;
 import biz.zenpets.users.utils.models.appointment.Appointment;
 import biz.zenpets.users.utils.models.appointment.AppointmentsAPI;
 import biz.zenpets.users.utils.models.appointment.client.Client;
@@ -58,7 +54,6 @@ import biz.zenpets.users.utils.models.user.UsersAPI;
 import biz.zenpets.users.utils.models.visit.Reason;
 import biz.zenpets.users.utils.models.visit.Reasons;
 import biz.zenpets.users.utils.models.visit.ReasonsAPI;
-import biz.zenpets.users.utils.models.visit.VisitReasonsData;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -282,7 +277,7 @@ public class AppointmentDetailsCreator extends AppCompatActivity implements Fetc
 
             @Override
             public void onFailure(@NonNull Call<Reasons> call, Throwable t) {
-                Log.e("REASONS FAILURE", t.getMessage());
+//                Log.e("REASONS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

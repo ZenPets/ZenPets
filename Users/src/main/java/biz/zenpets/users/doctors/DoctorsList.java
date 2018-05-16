@@ -16,7 +16,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -157,7 +156,7 @@ public class DoctorsList extends AppCompatActivity
 
             @Override
             public void onFailure(Call<Doctors> call, Throwable t) {
-                Log.e("DOCTORS FAILURE", t.getMessage());
+//                Log.e("DOCTORS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -238,7 +237,7 @@ public class DoctorsList extends AppCompatActivity
                                 /* FETCH THE LOCATION USING GEOCODER */
                                 fetchTheLocation();
                             } else {
-                                Log.e("EXCEPTION", String.valueOf(task.getException()));
+//                                Log.e("EXCEPTION", String.valueOf(task.getException()));
                                 Crashlytics.logException(task.getException());
                             }
                         }
@@ -271,7 +270,7 @@ public class DoctorsList extends AppCompatActivity
             }
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("GEOCODER", e.getMessage());
+//            Log.e("GEOCODER", e.getMessage());
             Crashlytics.logException(e);
         }
     }

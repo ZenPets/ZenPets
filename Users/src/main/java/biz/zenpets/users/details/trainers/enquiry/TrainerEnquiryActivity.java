@@ -12,7 +12,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -177,7 +176,7 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<EnquiryMessages> call, Throwable t) {
-                Log.e("MESSAGES FAILURE", t.getMessage());
+//                Log.e("MESSAGES FAILURE", t.getMessage());
                 Crashlytics.logException(t);
 
                 /* HIDE THE PROGRESS */
@@ -209,7 +208,7 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<TrainingEnquiry> call, Throwable t) {
-                Log.e("CHECK FAILURE", t.getMessage());
+//                Log.e("CHECK FAILURE", t.getMessage());
                 Crashlytics.logException(t);
 
                 /* HIDE THE PROGRESS */
@@ -240,7 +239,7 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<TrainingEnquiry> call, Throwable t) {
-                Log.e("CREATE FAILURE", t.getMessage());
+//                Log.e("CREATE FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -256,8 +255,8 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
                 /* SHOW THE PROGRESS AND FETCH THE TRAINING MODULE DETAILS */
                 linlaMessagesProgress.setVisibility(View.VISIBLE);
                 fetchModuleDetails();
-                Log.e("TRAINER ID", TRAINER_ID);
-                Log.e("MODULE ID", MODULE_ID);
+//                Log.e("TRAINER ID", TRAINER_ID);
+//                Log.e("MODULE ID", MODULE_ID);
 
                 /* FETCH THE TRAINER'S TOKEN */
                 fetchTrainerToken();
@@ -359,7 +358,7 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Module> call, Throwable t) {
-                Log.e("DETAILS FAILURE", t.getMessage());
+//                Log.e("DETAILS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
 
                 /* HIDE THE PROGRESS */
@@ -455,7 +454,7 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<EnquiryMessage> call, Throwable t) {
-                Log.e("PUBLISH FAILURE", t.getMessage());
+//                Log.e("PUBLISH FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -463,21 +462,23 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
 
     /***** SEND A NOTIFICATION TO THE TRAINER *****/
     private void sendNotificationToTrainer(String strMessage) {
-        NotificationsAPI api = ZenApiClient.getClient().create(NotificationsAPI.class);
-        Call<Notification> call = api.sendEnquiryReplyNotification(
-                TRAINER_TOKEN, "New enquiry from " + USER_NAME,
-                strMessage, "Enquiry", TRAINER_ID, MODULE_ID, TRAINING_MASTER_ID);
-        call.enqueue(new Callback<Notification>() {
-            @Override
-            public void onResponse(Call<Notification> call, Response<Notification> response) {
-            }
+        if (TRAINER_TOKEN != null)  {
+            NotificationsAPI api = ZenApiClient.getClient().create(NotificationsAPI.class);
+            Call<Notification> call = api.sendEnquiryReplyNotification(
+                    TRAINER_TOKEN, "New enquiry from " + USER_NAME,
+                    strMessage, "Enquiry", TRAINER_ID, MODULE_ID, TRAINING_MASTER_ID);
+            call.enqueue(new Callback<Notification>() {
+                @Override
+                public void onResponse(Call<Notification> call, Response<Notification> response) {
+                }
 
-            @Override
-            public void onFailure(Call<Notification> call, Throwable t) {
-                Log.e("PUSH FAILURE", t.getMessage());
-                Crashlytics.logException(t);
-            }
-        });
+                @Override
+                public void onFailure(Call<Notification> call, Throwable t) {
+//                    Log.e("PUSH FAILURE", t.getMessage());
+                    Crashlytics.logException(t);
+                }
+            });
+        }
     }
 
     /***** FETCH THE TRAINER'S TOKEN *****/
@@ -492,16 +493,16 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
                     /* GET THE TRAINER'S TOKEN */
                     TRAINER_TOKEN = trainer.getTrainerToken();
                     if (TRAINER_TOKEN != null)  {
-                        Log.e("TOKEN", TRAINER_TOKEN);
+//                        Log.e("TOKEN", TRAINER_TOKEN);
                     } else {
-                        Log.e("TOKEN", "No Token Fetched...");
+//                        Log.e("TOKEN", "No Token Fetched...");
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<Trainer> call, Throwable t) {
-                Log.e("DETAILS FAILURE", t.getMessage());
+//                Log.e("DETAILS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -522,7 +523,7 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UserData> call, Throwable t) {
-                Log.e("PROFILE FAILURE", t.getMessage());
+//                Log.e("PROFILE FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

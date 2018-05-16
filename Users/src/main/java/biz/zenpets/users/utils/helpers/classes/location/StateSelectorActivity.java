@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -124,7 +123,7 @@ public class StateSelectorActivity extends AppCompatActivity implements SearchVi
 
             @Override
             public void onFailure(Call<States> call, Throwable t) {
-                Log.e("STATES FAILURE", t.getMessage());
+//                Log.e("STATES FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

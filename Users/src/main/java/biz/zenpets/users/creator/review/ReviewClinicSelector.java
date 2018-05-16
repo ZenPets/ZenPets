@@ -12,7 +12,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -147,7 +146,7 @@ public class ReviewClinicSelector extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Clinics> call, Throwable t) {
-                Log.e("CLINICS FAILURE", t.getMessage());
+//                Log.e("CLINICS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -272,7 +271,7 @@ public class ReviewClinicSelector extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<ClinicRating> call, Throwable t) {
-                    Log.e("RATINGS FAILURE", t.getMessage());
+//                    Log.e("RATINGS FAILURE", t.getMessage());
                     Crashlytics.logException(t);
                 }
             });

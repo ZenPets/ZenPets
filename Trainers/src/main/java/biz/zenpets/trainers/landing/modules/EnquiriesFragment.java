@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,7 +99,7 @@ public class EnquiriesFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Enquiries> call, Throwable t) {
-                Log.e("ENQUIRIES FAILURE", t.getMessage());
+//                Log.e("ENQUIRIES FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

@@ -11,7 +11,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -160,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Trainer> call, Throwable t) {
-                Log.e("TRAINER FAILURE", t.getMessage());
+//                Log.e("TRAINER FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

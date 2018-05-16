@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,7 +75,7 @@ public class AdoptionsAdapter extends RecyclerView.Adapter<AdoptionsAdapter.Adop
         /* SET THE TIMESTAMP (DATE OF CREATION )*/
         if (data.getAdoptionTimeStamp() != null)    {
             String adoptionTimeStamp = data.getAdoptionTimeStamp();
-            Log.e("TS", adoptionTimeStamp);
+//            Log.e("TS", adoptionTimeStamp);
             long lngTimeStamp = Long.parseLong(adoptionTimeStamp) * 1000;
 
             /* GET THE PRETTY DATE */

@@ -18,7 +18,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -331,7 +330,7 @@ public class DoctorDetails extends AppCompatActivity
 
             @Override
             public void onFailure(Call<Reviews> call, Throwable t) {
-                Log.e("REVIEWS FAILURE", t.getMessage());
+//                Log.e("REVIEWS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

@@ -33,7 +33,6 @@ import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -498,7 +497,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onResponse(Call<Trainer> call, Response<Trainer> response) {
                 String message = response.body().getMessage();
                 if (message != null)    {
-                    Log.e("MESSAGE", message);
+//                    Log.e("MESSAGE", message);
                     if (message.equalsIgnoreCase("Trainer exists..."))   {
                         progressDialog.dismiss();
                         Intent intent = new Intent(SignUpActivity.this, LandingActivity.class);
@@ -514,7 +513,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Trainer> call, Throwable t) {
-                Log.e("EXISTS FAILURE", t.getMessage());
+//                Log.e("EXISTS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -545,7 +544,7 @@ public class SignUpActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e("UPLOAD EXCEPTION", e.toString());
+//                Log.e("UPLOAD EXCEPTION", e.toString());
                 Crashlytics.logException(e);
             }
         });
@@ -775,7 +774,7 @@ public class SignUpActivity extends AppCompatActivity {
                 if (bundle != null) {
                     TRAINER_LATITUDE = bundle.getDouble("LATITUDE");
                     TRAINER_LONGITUDE = bundle.getDouble("LONGITUDE");
-                    Log.e("COORDS", TRAINER_LATITUDE + " " + TRAINER_LONGITUDE);
+//                    Log.e("COORDS", TRAINER_LATITUDE + " " + TRAINER_LONGITUDE);
                 }
 
                 /* GET THE APPROXIMATE ADDRESS FOR DISPLAY */

@@ -2,18 +2,15 @@ package biz.zenpets.trainers;
 
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.ArrayList;
 
 import biz.zenpets.trainers.credentials.LoginActivity;
 import biz.zenpets.trainers.landing.LandingActivity;
@@ -106,7 +103,7 @@ public class SplashScreen extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Trainer> call, Throwable t) {
-                Log.e("TRAINER FAILURE", t.getMessage());
+//                Log.e("TRAINER FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

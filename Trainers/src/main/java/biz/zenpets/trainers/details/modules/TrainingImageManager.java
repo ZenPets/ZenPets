@@ -21,7 +21,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -576,7 +575,7 @@ public class TrainingImageManager extends AppCompatActivity {
                                             /* DISMISS THE PROGRESS DIALOG  */
                                             progressDialog.dismiss();
 
-                                            Log.e("DELETE FAILURE", t.getMessage());
+//                                            Log.e("DELETE FAILURE", t.getMessage());
                                             Crashlytics.logException(t);
                                         }
                                     });

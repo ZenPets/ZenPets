@@ -11,7 +11,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -237,7 +236,7 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Pets> call, Throwable t) {
-                Log.e("EXCEPTION", t.getMessage());
+//                Log.e("EXCEPTION", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

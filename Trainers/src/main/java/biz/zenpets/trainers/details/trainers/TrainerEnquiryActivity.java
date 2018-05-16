@@ -12,7 +12,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -43,6 +42,8 @@ import biz.zenpets.trainers.utils.models.trainers.modules.ModuleImage;
 import biz.zenpets.trainers.utils.models.trainers.modules.ModuleImages;
 import biz.zenpets.trainers.utils.models.trainers.modules.ModuleImagesAPI;
 import biz.zenpets.trainers.utils.models.trainers.modules.ModulesAPI;
+import biz.zenpets.trainers.utils.models.users.UserData;
+import biz.zenpets.trainers.utils.models.users.UsersAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -67,7 +68,8 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
     /** THE TRAINING MODULE IMAGES ADAPTER AND ARRAY LIST **/
     private ArrayList<ModuleImage> arrImages = new ArrayList<>();
 
-    /** THE USER'S TOKEN **/
+    /** THE USER'S ID AND TOKEN **/
+    private String USER_ID = null;
     private String USER_TOKEN = null;
 
     /** CAST THE LAYOUT ELEMENTS **/
@@ -193,6 +195,8 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
                             /* SET THE USER'S ID */
                             if (JOMessages.has("userID"))   {
                                 data.setUserID(JOMessages.getString("userID"));
+                                USER_ID = JOMessages.getString("userID");
+//                                Log.e("USER ID", USER_ID);
                             } else {
                                 data.setUserID(null);
                             }
@@ -214,11 +218,8 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
                             /* SET THE USER'S TOKEN */
                             if (JOMessages.has("userToken"))    {
                                 data.setUserToken(JOMessages.getString("userToken"));
-                                USER_TOKEN = JOMessages.getString("userToken");
-                                Log.e("USER TOKEN", USER_TOKEN);
                             } else {
                                 data.setUserToken(null);
-                                USER_TOKEN = null;
                             }
 
                             /* SET THE ENQUIRY MESSAGE */
@@ -267,11 +268,14 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
                     /* HIDE THE PROGRESS */
                     linlaMessagesProgress.setVisibility(View.GONE);
                 }
+
+                /* FETCH THE USER'S TOKEN */
+                fetchUserToken();
             }
 
             @Override
             public void onFailure(Call<EnquiryMessages> call, Throwable t) {
-                Log.e("MESSAGES FAILURE", t.getMessage());
+//                Log.e("MESSAGES FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -384,7 +388,7 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Module> call, Throwable t) {
-                Log.e("DETAILS FAILURE", t.getMessage());
+//                Log.e("DETAILS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
 
                 /* HIDE THE PROGRESS */
@@ -482,7 +486,7 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<EnquiryMessage> call, Throwable t) {
-                Log.e("PUBLISH FAILURE", t.getMessage());
+//                Log.e("PUBLISH FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -490,21 +494,23 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
 
     /***** SEND A NOTIFICATION TO THE USER *****/
     private void sendNotificationToUser(String strMessage) {
-        NotificationsAPI api = ZenApiClient.getClient().create(NotificationsAPI.class);
-        Call<Notification> call = api.sendEnquiryReplyNotification(
-                USER_TOKEN, "New reply from " + TRAINER_NAME,
-                strMessage, "Enquiry", TRAINER_ID, MODULE_ID, TRAINING_MASTER_ID);
-        call.enqueue(new Callback<Notification>() {
-            @Override
-            public void onResponse(Call<Notification> call, Response<Notification> response) {
-            }
+        if (USER_TOKEN != null) {
+            NotificationsAPI api = ZenApiClient.getClient().create(NotificationsAPI.class);
+            Call<Notification> call = api.sendEnquiryReplyNotification(
+                    USER_TOKEN, "New reply from " + TRAINER_NAME,
+                    strMessage, "Enquiry", TRAINER_ID, MODULE_ID, TRAINING_MASTER_ID);
+            call.enqueue(new Callback<Notification>() {
+                @Override
+                public void onResponse(Call<Notification> call, Response<Notification> response) {
+                }
 
-            @Override
-            public void onFailure(Call<Notification> call, Throwable t) {
-                Log.e("PUSH FAILURE", t.getMessage());
-                Crashlytics.logException(t);
-            }
-        });
+                @Override
+                public void onFailure(Call<Notification> call, Throwable t) {
+//                    Log.e("PUSH FAILURE", t.getMessage());
+                    Crashlytics.logException(t);
+                }
+            });
+        }
     }
 
     /***** CONFIGURE THE TOOLBAR *****/
@@ -529,5 +535,33 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
                 break;
         }
         return false;
+    }
+
+    /***** FETCH THE USER'S TOKEN *****/
+    private void fetchUserToken() {
+        UsersAPI api = ZenApiClient.getClient().create(UsersAPI.class);
+        Call<UserData> call = api.fetchUserDetails(USER_ID);
+        call.enqueue(new Callback<UserData>() {
+            @Override
+            public void onResponse(Call<UserData> call, Response<UserData> response) {
+//                Log.e("RAW", String.valueOf(response.raw()));
+                UserData trainer = response.body();
+                if (trainer != null)    {
+                    /* GET THE USER'S TOKEN */
+                    USER_TOKEN = trainer.getUserToken();
+                    if (USER_TOKEN != null)  {
+//                        Log.e("TOKEN", USER_TOKEN);
+                    } else {
+//                        Log.e("TOKEN", "No Token Fetched...");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserData> call, Throwable t) {
+//                Log.e("DETAILS FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
 }

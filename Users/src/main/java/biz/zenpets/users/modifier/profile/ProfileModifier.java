@@ -14,7 +14,6 @@ import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -253,7 +252,7 @@ public class ProfileModifier extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UserData> call, Throwable t) {
-                Log.e("PROFILE FAILURE", t.getMessage());
+//                Log.e("PROFILE FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -376,7 +375,7 @@ public class ProfileModifier extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UserData> call, Throwable t) {
-                Log.e("UPDATE FAILURE", t.getMessage());
+//                Log.e("UPDATE FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

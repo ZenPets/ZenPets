@@ -11,7 +11,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -135,7 +134,7 @@ public class PrescriptionsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Prescriptions> call, Throwable t) {
-                Log.e("EXCEPTION", t.getMessage());
+//                Log.e("EXCEPTION", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -273,7 +272,7 @@ public class PrescriptionsFragment extends Fragment {
 
                 @Override
                 public void onFailure(Call<MedicalImages> call, Throwable t) {
-                    Log.e("EXCEPTION", t.getMessage());
+//                    Log.e("EXCEPTION", t.getMessage());
                     Crashlytics.logException(t);
                 }
             });
@@ -344,7 +343,7 @@ public class PrescriptionsFragment extends Fragment {
 
                                 @Override
                                 public void onFailure(Call<Prescription> call, Throwable t) {
-                                    Log.e("DELETE FAILURE", t.getMessage());
+//                                    Log.e("DELETE FAILURE", t.getMessage());
                                     Crashlytics.logException(t);
                                 }
                             });

@@ -13,7 +13,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -246,7 +245,7 @@ public class TrainingModulesFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Modules> call, Throwable t) {
-                Log.e("MODULES FAILURE", t.getMessage());
+//                Log.e("MODULES FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -489,7 +488,7 @@ public class TrainingModulesFragment extends Fragment {
                                                                 /* DISMISS THE PROGRESS DIALOG  */
                                                                 progressDialog.dismiss();
 
-                                                                Log.e("DELETE FAILURE", t.getMessage());
+//                                                                Log.e("DELETE FAILURE", t.getMessage());
                                                                 Crashlytics.logException(t);
                                                             }
                                                         });
@@ -500,7 +499,7 @@ public class TrainingModulesFragment extends Fragment {
                                                         /* DISMISS THE PROGRESS DIALOG  */
                                                         progressDialog.dismiss();
 
-                                                        Log.e("DELETE FAILURE", e.getMessage());
+//                                                        Log.e("DELETE FAILURE", e.getMessage());
                                                         Crashlytics.logException(e);
                                                     }
                                                 });
@@ -535,7 +534,7 @@ public class TrainingModulesFragment extends Fragment {
 
                                                 @Override
                                                 public void onFailure(Call<Module> call, Throwable t) {
-                                                    Log.e("DELETE FAILURE", t.getMessage());
+//                                                    Log.e("DELETE FAILURE", t.getMessage());
                                                     Crashlytics.logException(t);
                                                 }
                                             });
@@ -568,7 +567,7 @@ public class TrainingModulesFragment extends Fragment {
 
                                                 @Override
                                                 public void onFailure(Call<Module> call, Throwable t) {
-                                                    Log.e("DELETE FAILURE", t.getMessage());
+//                                                    Log.e("DELETE FAILURE", t.getMessage());
                                                     Crashlytics.logException(t);
                                                 }
                                             });
@@ -605,7 +604,7 @@ public class TrainingModulesFragment extends Fragment {
                                                 /* DISMISS THE PROGRESS DIALOG */
                                                 progressDialog.dismiss();
 
-                                                Log.e("DELETE FAILURE", t.getMessage());
+//                                                Log.e("DELETE FAILURE", t.getMessage());
                                                 Crashlytics.logException(t);
                                             }
                                         });
@@ -614,7 +613,7 @@ public class TrainingModulesFragment extends Fragment {
 
                                 @Override
                                 public void onFailure(Call<ModuleImages> call, Throwable t) {
-                                    Log.e("IMAGES FAILURE", t.getMessage());
+//                                    Log.e("IMAGES FAILURE", t.getMessage());
                                     Crashlytics.logException(t);
                                 }
                             });

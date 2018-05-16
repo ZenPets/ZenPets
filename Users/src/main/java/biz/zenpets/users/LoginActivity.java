@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -242,7 +241,7 @@ public class LoginActivity extends AppCompatActivity
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
             } else {
-                Log.e("Google Login Status", String.valueOf(result.getStatus()));
+//                Log.e("Google Login Status", String.valueOf(result.getStatus()));
                 Toast.makeText(getApplicationContext(), "Google sign in failed. Please try again..", Toast.LENGTH_LONG).show();
             }
         } else {
