@@ -155,6 +155,8 @@
     <string name="settings_notifications_sub_text">Manage your notifications. Check a box to subscribe to a channel, or uncheck a box to unsubscribe from a channel.</string>
     <string name="settings_adoption_label">Subscribe to Adoptions</string>
     <string name="settings_adoption_sub_text">To get a notification every time a new Adoption listing is published on Zen Pets. Only listings from your City will be displayed.</string>
+    <string name="settings_notification_note"><b>NOTE:</b> You cannot opt-out of Notifications when you post an Adoption Listing or participate on an Adoption Listing. Similarly, you cannot opt-out of notifications when you initiate a Consultation or enquire with a Trainer.</string>
+    <string name="settings_sign_out">SIGN OUT</string>
 
     <!-- SPONSORED CLINIC STRINGS -->
     <string name="sponsored_clinic_name">CLINIC NAME</string>

@@ -113,34 +113,6 @@ public class ProfileFragment extends Fragment {
         startActivity(intent);
     }
 
-//    @OnClick(R.id.linlaSignOut) void signOut()    {
-//        new MaterialDialog.Builder(getActivity())
-//                .icon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_info_outline_black_24dp))
-//                .title("Logout?")
-//                .cancelable(true)
-//                .content("Are your sure you want to log out of Zen Pets?")
-//                .positiveText("Yes")
-//                .negativeText("No")
-//                .theme(Theme.LIGHT)
-//                .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
-//                .onPositive(new MaterialDialog.SingleButtonCallback() {
-//                    @Override
-//                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-//                        auth.signOut();
-//                        Intent intent = new Intent(getActivity(), LoginActivity.class);
-//                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                        startActivity(intent);
-//                        getActivity().finish();
-//                    }
-//                })
-//                .onNegative(new MaterialDialog.SingleButtonCallback() {
-//                    @Override
-//                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-//                        dialog.dismiss();
-//                    }
-//                }).show();
-//    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

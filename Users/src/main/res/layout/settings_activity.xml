@@ -95,6 +95,53 @@
                 app:layout_constraintEnd_toEndOf="@+id/linlaAdoptions"
                 app:layout_constraintStart_toStartOf="@+id/linlaAdoptions"
                 app:layout_constraintTop_toBottomOf="@+id/linlaAdoptions" />
+
+            <TextView
+                android:id="@+id/txtNotificationsNote"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_condensed_light"
+                android:paddingBottom="5dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="0dp"
+                android:paddingRight="11dp"
+                android:paddingStart="0dp"
+                android:paddingTop="5dp"
+                android:text="@string/settings_notification_note"
+                android:textColor="@color/secondary_text"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@+id/txtAdoptionLabel"
+                app:layout_constraintStart_toStartOf="@+id/txtAdoptionLabel"
+                app:layout_constraintTop_toBottomOf="@+id/txtAdoptionLabel" />
+
+            <LinearLayout
+                android:id="@+id/linlaSignOut"
+                android:layout_width="0dp"
+                android:layout_height="?attr/actionBarSize"
+                android:gravity="center|start"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@+id/txtNotificationsNote"
+                app:layout_constraintStart_toStartOf="@+id/txtNotificationsNote"
+                app:layout_constraintTop_toBottomOf="@+id/txtNotificationsNote">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:adjustViewBounds="true"
+                    app:iiv_color="@color/accent"
+                    app:iiv_icon="faw_sign_out_alt"
+                    app:iiv_size="20dp" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:text="@string/settings_sign_out"
+                    android:textColor="@color/accent"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/lato_bold" />
+            </LinearLayout>
         </android.support.constraint.ConstraintLayout>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

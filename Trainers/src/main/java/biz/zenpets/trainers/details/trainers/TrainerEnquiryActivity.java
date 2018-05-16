@@ -33,6 +33,8 @@ import biz.zenpets.trainers.R;
 import biz.zenpets.trainers.utils.adapters.enquiries.TrainingMessagesAdapter;
 import biz.zenpets.trainers.utils.adapters.modules.TrainingModuleImagesAdapter;
 import biz.zenpets.trainers.utils.helpers.ZenApiClient;
+import biz.zenpets.trainers.utils.models.notifications.Notification;
+import biz.zenpets.trainers.utils.models.notifications.NotificationsAPI;
 import biz.zenpets.trainers.utils.models.trainers.enquiries.EnquiryMessage;
 import biz.zenpets.trainers.utils.models.trainers.enquiries.EnquiryMessages;
 import biz.zenpets.trainers.utils.models.trainers.enquiries.EnquiryMessagesAPI;
@@ -54,6 +56,9 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
     private String TRAINER_ID = null;
     private String MODULE_ID = null;
     private String TRAINING_MASTER_ID = null;
+
+    /** THE TRAINER'S NAME **/
+    String TRAINER_NAME = null;
 
     /** THE MESSAGES ARRAY LIST **/
     private ArrayList<EnquiryMessage> arrMessages = new ArrayList<>();
@@ -165,6 +170,7 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
                             /* SET THE TRAINER'S NAME */
                             if (JOMessages.has("trainerName"))  {
                                 data.setTrainerName(JOMessages.getString("trainerName"));
+                                TRAINER_NAME = JOMessages.getString("trainerName");
                             } else {
                                 data.setTrainerName(null);
                             }
@@ -439,7 +445,7 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
     }
 
     /***** PUBLISH THE TRAINING ENQUIRY MESSAGE *****/
-    private void publishMessage(String strMessage, String strTimestamp) {
+    private void publishMessage(final String strMessage, String strTimestamp) {
         EnquiryMessagesAPI apiEnquiry = ZenApiClient.getClient().create(EnquiryMessagesAPI.class);
         Call<EnquiryMessage> call = apiEnquiry.newEnquiryTrainerMessage(
                 TRAINING_MASTER_ID, TRAINER_ID, null, strMessage, strTimestamp);
@@ -451,6 +457,9 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
                     edtMessage.setText("");
                     arrMessages.clear();
 
+                    /* SEND A NOTIFICATION TO THE USER */
+                    sendNotificationToUser(strMessage);
+
                     /* FETCH THE LIST OF MESSAGE BETWEEN THE USER AND THE TRAINER */
                     fetchEnquiryMessages();
                 } else {
@@ -461,6 +470,25 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<EnquiryMessage> call, Throwable t) {
                 Log.e("PUBLISH FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
+    }
+
+    /***** SEND A NOTIFICATION TO THE USER *****/
+    private void sendNotificationToUser(String strMessage) {
+        NotificationsAPI api = ZenApiClient.getClient().create(NotificationsAPI.class);
+        Call<Notification> call = api.sendEnquiryReplyNotification(
+                USER_TOKEN, "New reply from " + TRAINER_NAME,
+                strMessage, "Enquiry", TRAINER_ID, MODULE_ID, TRAINING_MASTER_ID);
+        call.enqueue(new Callback<Notification>() {
+            @Override
+            public void onResponse(Call<Notification> call, Response<Notification> response) {
+            }
+
+            @Override
+            public void onFailure(Call<Notification> call, Throwable t) {
+                Log.e("PUSH FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
