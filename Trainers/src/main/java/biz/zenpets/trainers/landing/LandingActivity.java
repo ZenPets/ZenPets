@@ -244,8 +244,6 @@ public class LandingActivity extends AppCompatActivity {
 
     /***** METHOD TO CHANGE THE FRAGMENT *****/
     private void switchFragment(Fragment fragment) {
-
-        /* HIDE THE NAV DRAWER */
         drawerLayout.closeDrawer(GravityCompat.START);
         getSupportFragmentManager()
                 .beginTransaction()
