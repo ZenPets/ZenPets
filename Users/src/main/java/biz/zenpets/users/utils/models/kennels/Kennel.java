@@ -10,6 +10,7 @@ public class Kennel {
     @SerializedName("kennelOwnerName") private String kennelOwnerName;
     @SerializedName("kennelOwnerDisplayProfile") private String kennelOwnerDisplayProfile;
     @SerializedName("kennelName") private String kennelName;
+    @SerializedName("kennelCoverPhoto") private String kennelCoverPhoto;
     @SerializedName("kennelAddress") private String kennelAddress;
     @SerializedName("kennelPinCode") private String kennelPinCode;
     @SerializedName("countryID") private String countryID;
@@ -82,6 +83,14 @@ public class Kennel {
 
     public void setKennelName(String kennelName) {
         this.kennelName = kennelName;
+    }
+
+    public String getKennelCoverPhoto() {
+        return kennelCoverPhoto;
+    }
+
+    public void setKennelCoverPhoto(String kennelCoverPhoto) {
+        this.kennelCoverPhoto = kennelCoverPhoto;
     }
 
     public String getKennelAddress() {

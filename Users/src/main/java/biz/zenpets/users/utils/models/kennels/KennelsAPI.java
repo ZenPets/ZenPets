@@ -6,7 +6,7 @@ import retrofit2.http.Query;
 
 public interface KennelsAPI {
 
-    /** FETCH THE LIST OF A USER'S PETS **/
+    /** FETCH A LIST OF KENNELS (FOR PET PARENTS) **/
     @GET("fetchKennelsListByCity")
     Call<Kennels> fetchKennelsListByCity(
             @Query("cityID") String cityID,
