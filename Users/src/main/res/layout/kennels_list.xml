@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -92,11 +93,19 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:cacheColorHint="@android:color/transparent"
+        android:clipToPadding="false"
         android:fadingEdge="none"
         android:persistentDrawingCache="scrolling"
         android:scrollbarSize="3dp"
         android:scrollbarThumbVertical="@color/primary_dark"
         android:scrollbars="vertical"
+        android:visibility="visible" />
+
+    <ProgressBar
+        android:id="@+id/progressLoading"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:padding="11dp"
         android:visibility="visible" />
 
     <LinearLayout
