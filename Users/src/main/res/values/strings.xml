@@ -338,6 +338,16 @@
     <string name="kennel_list_tb_location">City</string>
     <string name="kennel_list_empty">There are no open Adoptions in your city at this moment :-(</string>
 
+    <!-- KENNEL LIST ITEM STRINGS -->
+    <string name="kennel_list_kennel_name_label">KENNEL NAME</string>
+    <string name="kennel_list_kennel_address_label">KENNEL ADDRESS</string>
+    <string name="kennel_list_kennel_address_placeholder">%1$s, %2$s - %3$s</string>
+    <string name="kennel_list_kennel_capacity_label">PET CAPACITY</string>
+    <string name="kennel_list_kennel_capacity_zero">0 Pets</string>
+    <string name="kennel_list_kennel_capacity_placeholder">Kennel has a capacity to hold %1$s Pets</string>
+    <string name="kennel_list_kennel_distance">~ 1.1 km</string>
+    <string name="kennel_list_kennel_distance_placeholder">%1$s %2$s</string>
+
     <!-- USER APPOINTMENT ITEM STRINGS -->
     <string name="user_appointment_item_date">DATE</string>
     <string name="user_appointment_item_time">TIME</string>

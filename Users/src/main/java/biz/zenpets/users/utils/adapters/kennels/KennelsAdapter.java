@@ -1,14 +1,18 @@
 package biz.zenpets.users.utils.adapters.kennels;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
@@ -57,6 +61,40 @@ public class KennelsAdapter extends RecyclerView.Adapter<KennelsAdapter.KennelsV
     public void onBindViewHolder(@NonNull final KennelsVH holder, final int position) {
         final Kennel data = arrKennels.get(position);
 
+        /* SET THE KENNEL COVER PHOTO */
+        String strKennelCoverPhoto = data.getKennelCoverPhoto();
+        if (strKennelCoverPhoto != null
+                && !strKennelCoverPhoto.equalsIgnoreCase("")
+                && !strKennelCoverPhoto.equalsIgnoreCase("null")) {
+            Uri uri = Uri.parse(strKennelCoverPhoto);
+            holder.imgvwKennelCoverPhoto.setImageURI(uri);
+        } else {
+            ImageRequest request = ImageRequestBuilder
+                    .newBuilderWithResourceId(R.drawable.empty_graphic)
+                    .build();
+            holder.imgvwKennelCoverPhoto.setImageURI(request.getSourceUri());
+        }
+
+        /* SET THE KENNEL NAME */
+        if (data.getKennelName() != null)   {
+            holder.txtKennelName.setText(data.getKennelName());
+        }
+
+        /* SET THE KENNEL ADDRESS */
+        String strKennelAddress = data.getKennelAddress();
+        String cityName = data.getCityName();
+        String kennelPinCode = data.getKennelPinCode();
+        holder.txtKennelAddress.setText(activity.getString(R.string.kennel_list_kennel_address_placeholder, strKennelAddress, cityName, kennelPinCode));
+
+        /* SET THE CAPACITY OF LARGE SIZE PETS */
+        if (data.getKennelPetCapacity() != null
+                && !data.getKennelPetCapacity().equalsIgnoreCase("")
+                && !data.getKennelPetCapacity().equalsIgnoreCase("null"))   {
+            holder.txtPetCapacity.setText(activity.getString(R.string.kennel_list_kennel_capacity_placeholder, data.getKennelPetCapacity()));
+        } else {
+            holder.txtPetCapacity.setText(activity.getString(R.string.kennel_list_kennel_capacity_zero));
+        }
+
         /* SET THE KENNEL'S DISTANCE */
         Double latitude = Double.valueOf(data.getKennelLatitude());
         Double longitude = Double.valueOf(data.getKennelLongitude());
@@ -80,13 +118,12 @@ public class KennelsAdapter extends RecyclerView.Adapter<KennelsAdapter.KennelsV
                     JSONObject JODistance = JOSteps.getJSONObject("distance");
                     if (JODistance.has("text")) {
                         String distance = JODistance.getString("text");
-                        Log.e("DISTANCE", distance);
                         String strTilde = activity.getString(R.string.generic_tilde);
-//                        holder.txtClinicDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strTilde, distance));
+                        holder.txtKennelDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strTilde, distance));
                     } else {
                         String distance = "Unknown";
                         String strInfinity = activity.getString(R.string.generic_infinity);
-//                        holder.txtClinicDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
+                        holder.txtKennelDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -98,7 +135,7 @@ public class KennelsAdapter extends RecyclerView.Adapter<KennelsAdapter.KennelsV
                 Crashlytics.logException(t);
                 String distance = "Unknown";
                 String strInfinity = activity.getString(R.string.generic_infinity);
-//                holder.txtClinicDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
+                holder.txtKennelDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
             }
         });
     }
@@ -116,8 +153,22 @@ public class KennelsAdapter extends RecyclerView.Adapter<KennelsAdapter.KennelsV
 
     class KennelsVH extends RecyclerView.ViewHolder	{
 
+        SimpleDraweeView imgvwKennelCoverPhoto;
+        TextView txtKennelName;
+        TextView txtKennelAddress;
+        TextView txtPetCapacity;
+        TextView txtKennelLikes;
+        TextView txtKennelDistance;
+
         KennelsVH(View v) {
             super(v);
+
+            imgvwKennelCoverPhoto = v.findViewById(R.id.imgvwKennelCoverPhoto);
+            txtKennelName = v.findViewById(R.id.txtKennelName);
+            txtKennelAddress = v.findViewById(R.id.txtKennelAddress);
+            txtPetCapacity = v.findViewById(R.id.txtPetCapacity);
+            txtKennelLikes = v.findViewById(R.id.txtKennelLikes);
+            txtKennelDistance = v.findViewById(R.id.txtKennelDistance);
         }
     }
 }

@@ -160,7 +160,7 @@ public class KennelsList extends AppCompatActivity {
 
                             for (int i = 0; i < JAKennels.length(); i++) {
                                 JSONObject JOKennels = JAKennels.getJSONObject(i);
-                                Log.e("KENNEL", String.valueOf(JOKennels));
+//                                Log.e("KENNEL", String.valueOf(JOKennels));
 
                                 /* INSTANTIATE THE KENNELS DATA MODEL INSTANCE */
                                 data = new Kennel();
@@ -177,6 +177,15 @@ public class KennelsList extends AppCompatActivity {
                                     data.setKennelName(JOKennels.getString("kennelName"));
                                 } else {
                                     data.setKennelName(null);
+                                }
+
+                                /* GET THE KENNEL'S COVER PHOTO */
+                                if (JOKennels.has("kennelCoverPhoto")
+                                        && !JOKennels.getString("kennelCoverPhoto").equalsIgnoreCase("")
+                                        && !JOKennels.getString("kennelCoverPhoto").equalsIgnoreCase("null"))  {
+                                    data.setKennelCoverPhoto(JOKennels.getString("kennelCoverPhoto"));
+                                } else {
+                                    data.setKennelCoverPhoto(null);
                                 }
 
                                 /* GET THE KENNEL OWNER'S ID */
@@ -298,25 +307,11 @@ public class KennelsList extends AppCompatActivity {
                                     data.setKennelPhoneNumber1(null);
                                 }
 
-                                /* GET THE KENNEL'S LARGE PET CAPACITY */
-                                if (JOKennels.has("kennelLargePetCapacity"))    {
-                                    data.setKennelLargePetCapacity(JOKennels.getString("kennelLargePetCapacity"));
+                                /* GET THE KENNEL'S PET CAPACITY */
+                                if (JOKennels.has("kennelPetCapacity"))    {
+                                    data.setKennelPetCapacity(JOKennels.getString("kennelPetCapacity"));
                                 } else {
-                                    data.setKennelLargePetCapacity(null);
-                                }
-
-                                /* GET THE KENNEL'S MEDIUM PET CAPACITY */
-                                if (JOKennels.has("kennelMediumPetCapacity"))    {
-                                    data.setKennelMediumPetCapacity(JOKennels.getString("kennelMediumPetCapacity"));
-                                } else {
-                                    data.setKennelMediumPetCapacity(null);
-                                }
-
-                                /* GET THE KENNEL'S SMALL PET CAPACITY */
-                                if (JOKennels.has("kennelSmallPetCapacity"))    {
-                                    data.setKennelSmallPetCapacity(JOKennels.getString("kennelSmallPetCapacity"));
-                                } else {
-                                    data.setKennelSmallPetCapacity(null);
+                                    data.setKennelPetCapacity(null);
                                 }
 
                                 /* ADD THE COLLECTED DATA TO THE ARRAY LIST */

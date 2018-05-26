@@ -25,9 +25,7 @@ public class Kennel {
     @SerializedName("kennelPhoneNumber1") private String kennelPhoneNumber1;
     @SerializedName("kennelPhonePrefix2") private String kennelPhonePrefix2;
     @SerializedName("kennelPhoneNumber2") private String kennelPhoneNumber2;
-    @SerializedName("kennelLargePetCapacity") private String kennelLargePetCapacity;
-    @SerializedName("kennelMediumPetCapacity") private String kennelMediumPetCapacity;
-    @SerializedName("kennelSmallPetCapacity") private String kennelSmallPetCapacity;
+    @SerializedName("kennelPetCapacity") private String kennelPetCapacity;
 
     public Boolean getError() {
         return error;
@@ -205,27 +203,11 @@ public class Kennel {
         this.kennelPhoneNumber2 = kennelPhoneNumber2;
     }
 
-    public String getKennelLargePetCapacity() {
-        return kennelLargePetCapacity;
+    public String getKennelPetCapacity() {
+        return kennelPetCapacity;
     }
 
-    public void setKennelLargePetCapacity(String kennelLargePetCapacity) {
-        this.kennelLargePetCapacity = kennelLargePetCapacity;
-    }
-
-    public String getKennelMediumPetCapacity() {
-        return kennelMediumPetCapacity;
-    }
-
-    public void setKennelMediumPetCapacity(String kennelMediumPetCapacity) {
-        this.kennelMediumPetCapacity = kennelMediumPetCapacity;
-    }
-
-    public String getKennelSmallPetCapacity() {
-        return kennelSmallPetCapacity;
-    }
-
-    public void setKennelSmallPetCapacity(String kennelSmallPetCapacity) {
-        this.kennelSmallPetCapacity = kennelSmallPetCapacity;
+    public void setKennelPetCapacity(String kennelPetCapacity) {
+        this.kennelPetCapacity = kennelPetCapacity;
     }
 }
