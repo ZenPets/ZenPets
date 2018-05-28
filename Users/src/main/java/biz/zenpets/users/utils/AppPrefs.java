@@ -34,6 +34,18 @@ public class AppPrefs extends MultiDexApplication {
     /** THE APPLICATION INSTANCE **/
     private static AppPrefs app;
 
+    /** THE CURRENT CITY ID AND NAME **/
+    private final String CITY_ID = "cityID";
+    private final String CITY_NAME = "cityName";
+
+    /** THE CURRENT LOCALITY ID AND NAME **/
+    private final String LOCALITY_ID = "localityID";
+    private final String LOCALITY_NAME = "localityName";
+
+    /** THE CURRENT LATITUDE AND LONGITUDE **/
+    String LATITUDE = "latitude";
+    String LONGITUDE = "longitude";
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -113,6 +125,62 @@ public class AppPrefs extends MultiDexApplication {
     /***** A METHOD TO RETURN THE NOTIFICATION CHANNEL ID *****/
     public static String zenChannelID()   {
         return app.NOTIFICATION_CHANNEL_ID;
+    }
+
+    /** SET THE CITY DETAILS **/
+    public void setCityDetails(String cityID, String cityName) {
+        final SharedPreferences.Editor edit = mPreferences.edit();
+        edit.putString(CITY_ID, cityID);
+        edit.putString(CITY_NAME, cityName);
+        edit.apply();
+    }
+
+    /** GET THE CITY DETAILS **/
+    public String[] getCityDetails()	{
+        String cityID = mPreferences.getString(CITY_ID, null);
+        String cityName = mPreferences.getString(CITY_NAME, null);
+
+        return new String[]	{cityID, cityName};
+    }
+
+    /** SET THE LOCALITY DETAILS **/
+    public void setLocalityDetails(String localityID, String localityName) {
+        final SharedPreferences.Editor edit = mPreferences.edit();
+        edit.putString(LOCALITY_ID, localityID);
+        edit.putString(LOCALITY_NAME, localityName);
+        edit.apply();
+    }
+
+    /** GET THE LOCALITY DETAILS **/
+    public String[] getLocalityDetails()	{
+        String localityID = mPreferences.getString(LOCALITY_ID, null);
+        String localityName = mPreferences.getString(LOCALITY_NAME, null);
+
+        return new String[]	{localityID, localityName};
+    }
+
+    /** SET THE USER'S ORIGIN LATITUDE **/
+    public void setOriginLatitude(String originLatLng) {
+        final SharedPreferences.Editor edit = mPreferences.edit();
+        edit.putString(LATITUDE, originLatLng);
+        edit.apply();
+    }
+
+    /** GET THE USER'S ORIGIN LATITUDE **/
+    public String getOriginLatitude()	{
+        return mPreferences.getString(LATITUDE, null);
+    }
+
+    /** SET THE USER'S ORIGIN LONGITUDE **/
+    public void setOriginLongitude(String longitude) {
+        final SharedPreferences.Editor edit = mPreferences.edit();
+        edit.putString(LONGITUDE, longitude);
+        edit.apply();
+    }
+
+    /** GET THE USER'S ORIGIN LONGITUDE **/
+    public String getOriginLongitude()	{
+        return mPreferences.getString(LONGITUDE, null);
     }
 
     /***** A METHOD TO PROVIDE A GLOBAL CONTEXT *****/

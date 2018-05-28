@@ -40,11 +40,16 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|center"
                     android:background="#A6000000"
-                    android:padding="11dp"
+                    android:paddingBottom="15dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="15dp"
                     android:text="@string/kennel_list_kennel_name_label"
                     android:textColor="@android:color/primary_text_dark"
                     android:textSize="14sp"
-                    app:fontFamily="@font/lato_bold" />
+                    app:fontFamily="@font/roboto_condensed_bold" />
             </FrameLayout>
 
             <LinearLayout
@@ -168,7 +173,7 @@
                         android:text="@string/doctor_item_likes_percent"
                         android:textColor="@color/secondary_text"
                         android:textSize="11sp"
-                        app:fontFamily="@font/lato_regular" />
+                        app:fontFamily="@font/roboto_condensed_bold" />
                 </LinearLayout>
 
                 <com.mikepenz.iconics.view.IconicsImageView
@@ -199,7 +204,7 @@
                         android:text="@string/doctor_item_clinic_distance"
                         android:textColor="@color/secondary_text"
                         android:textSize="11sp"
-                        app:fontFamily="@font/lato_regular" />
+                        app:fontFamily="@font/roboto_condensed_bold" />
                 </LinearLayout>
             </LinearLayout>
         </android.support.constraint.ConstraintLayout>

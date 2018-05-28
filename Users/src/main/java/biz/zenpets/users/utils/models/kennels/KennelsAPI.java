@@ -17,4 +17,8 @@ public interface KennelsAPI {
     Call<Kennels> fetchKennelsListByCityTest(
             @Query("cityID") String cityID,
             @Query("pageNumber") String pageNumber);
+
+    /** FETCH THE TOTAL NUMBER OF KENNEL PAGES **/
+    @GET("fetchKennelPages")
+    Call<KennelPages> fetchKennelPages(@Query("cityID") String cityID);
 }
