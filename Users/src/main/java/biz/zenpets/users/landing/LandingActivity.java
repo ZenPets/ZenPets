@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -74,20 +73,20 @@ public class LandingActivity extends AppCompatActivity {
         /* CREATE THE NOTIFICATION CHANNEL */
         createNotificationChannel();
 
-        String[] arrCity = getApp().getCityDetails();
-        String CITY_ID = arrCity[0];
-        String CITY_NAME = arrCity[1];
-
-        String[] arrLocality = getApp().getLocalityDetails();
-        String LOCALITY_ID = arrLocality[0];
-        String LOCALITY_NAME = arrLocality[1];
-
-        Log.e("CITY ID", CITY_ID);
-        Log.e("CITY NAME", CITY_NAME);
-        Log.e("LOCALITY ID", LOCALITY_ID);
-        Log.e("LOCALITY_NAME", LOCALITY_NAME);
-        Log.e("LATITUDE", getApp().getOriginLatitude());
-        Log.e("LONGITUDE", getApp().getOriginLongitude());
+//        String[] arrCity = getApp().getCityDetails();
+//        String CITY_ID = arrCity[0];
+//        String CITY_NAME = arrCity[1];
+//
+//        String[] arrLocality = getApp().getLocalityDetails();
+//        String LOCALITY_ID = arrLocality[0];
+//        String LOCALITY_NAME = arrLocality[1];
+//
+//        Log.e("CITY ID", CITY_ID);
+//        Log.e("CITY NAME", CITY_NAME);
+//        Log.e("LOCALITY ID", LOCALITY_ID);
+//        Log.e("LOCALITY_NAME", LOCALITY_NAME);
+//        Log.e("LATITUDE", getApp().getOriginLatitude());
+//        Log.e("LONGITUDE", getApp().getOriginLongitude());
     }
 
     /***** FETCH THE USER'S PROFILE *****/

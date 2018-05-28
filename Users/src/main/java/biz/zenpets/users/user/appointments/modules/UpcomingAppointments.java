@@ -19,7 +19,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import biz.zenpets.users.R;
-import biz.zenpets.users.doctors.DoctorsList;
+import biz.zenpets.users.doctors.NewDoctorsList;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.adapters.appointment.user.UpcomingAppointmentsAdapter;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
@@ -55,13 +55,13 @@ public class UpcomingAppointments extends Fragment {
 
     /** MAKE A NEW APPOINTMENT (FAB) **/
     @OnClick(R.id.fabNewAppointment) void fabNewAppointment()   {
-        Intent intent = new Intent(getActivity(), DoctorsList.class);
+        Intent intent = new Intent(getActivity(), NewDoctorsList.class);
         startActivity(intent);
     }
 
     /** MAKE A NEW APPOINTMENT (EMPTY BUTTON) **/
     @OnClick(R.id.btnMakeAppointment) void btnNewAppointment()  {
-        Intent intent = new Intent(getActivity(), DoctorsList.class);
+        Intent intent = new Intent(getActivity(), NewDoctorsList.class);
         startActivity(intent);
     }
 

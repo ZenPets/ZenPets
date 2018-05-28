@@ -94,7 +94,7 @@ public class NewDoctorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @NonNull
     private RecyclerView.ViewHolder getViewHolder(ViewGroup parent, LayoutInflater inflater) {
         RecyclerView.ViewHolder viewHolder;
-        View v1 = inflater.inflate(R.layout.kennels_item, parent, false);
+        View v1 = inflater.inflate(R.layout.doctors_item, parent, false);
         viewHolder = new DoctorsVH(v1);
         return viewHolder;
     }
@@ -117,48 +117,50 @@ public class NewDoctorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 doctorsVH.txtClinicAddress.setText(activity.getString(R.string.doctor_list_address_placeholder, clinicAddress, cityName, clinicPinCode));
 
                 /* SET THE CLINIC DISTANCE */
-                Double latitude = Double.valueOf(data.getClinicLatitude());
-                Double longitude = Double.valueOf(data.getClinicLongitude());
-                LatLng LATLNG_DESTINATION = new LatLng(latitude, longitude);
-                String strOrigin = LATLNG_ORIGIN.latitude + "," + LATLNG_ORIGIN.longitude;
-                String strDestination = LATLNG_DESTINATION.latitude + "," + LATLNG_DESTINATION.longitude;
-                String strSensor = "false";
-                String strKey = activity.getString(R.string.google_directions_api_key);
-                DistanceAPI api = ZenDistanceClient.getClient().create(DistanceAPI.class);
-                Call<String> call = api.json(strOrigin, strDestination, strSensor, strKey);
-                call.enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        try {
-                            String strDistance = response.body();
-                            JSONObject JORootDistance = new JSONObject(strDistance);
-                            JSONArray array = JORootDistance.getJSONArray("routes");
-                            JSONObject JORoutes = array.getJSONObject(0);
-                            JSONArray JOLegs= JORoutes.getJSONArray("legs");
-                            JSONObject JOSteps = JOLegs.getJSONObject(0);
-                            JSONObject JODistance = JOSteps.getJSONObject("distance");
-                            if (JODistance.has("text")) {
-                                String distance = JODistance.getString("text");
-                                String strTilde = activity.getString(R.string.generic_tilde);
-                                doctorsVH.txtClinicDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strTilde, distance));
-                            } else {
-                                String distance = "Unknown";
-                                String strInfinity = activity.getString(R.string.generic_infinity);
-                                doctorsVH.txtClinicDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
+                if (data.getClinicLatitude() != null && data.getClinicLongitude() != null)  {
+                    Double latitude = Double.valueOf(data.getClinicLatitude());
+                    Double longitude = Double.valueOf(data.getClinicLongitude());
+                    LatLng LATLNG_DESTINATION = new LatLng(latitude, longitude);
+                    String strOrigin = LATLNG_ORIGIN.latitude + "," + LATLNG_ORIGIN.longitude;
+                    String strDestination = LATLNG_DESTINATION.latitude + "," + LATLNG_DESTINATION.longitude;
+                    String strSensor = "false";
+                    String strKey = activity.getString(R.string.google_directions_api_key);
+                    DistanceAPI api = ZenDistanceClient.getClient().create(DistanceAPI.class);
+                    Call<String> call = api.json(strOrigin, strDestination, strSensor, strKey);
+                    call.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            try {
+                                String strDistance = response.body();
+                                JSONObject JORootDistance = new JSONObject(strDistance);
+                                JSONArray array = JORootDistance.getJSONArray("routes");
+                                JSONObject JORoutes = array.getJSONObject(0);
+                                JSONArray JOLegs= JORoutes.getJSONArray("legs");
+                                JSONObject JOSteps = JOLegs.getJSONObject(0);
+                                JSONObject JODistance = JOSteps.getJSONObject("distance");
+                                if (JODistance.has("text")) {
+                                    String distance = JODistance.getString("text");
+                                    String strTilde = activity.getString(R.string.generic_tilde);
+                                    doctorsVH.txtClinicDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strTilde, distance));
+                                } else {
+                                    String distance = "Unknown";
+                                    String strInfinity = activity.getString(R.string.generic_infinity);
+                                    doctorsVH.txtClinicDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        Crashlytics.logException(t);
-                        String distance = "Unknown";
-                        String strInfinity = activity.getString(R.string.generic_infinity);
-                        doctorsVH.txtClinicDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            Crashlytics.logException(t);
+                            String distance = "Unknown";
+                            String strInfinity = activity.getString(R.string.generic_infinity);
+                            doctorsVH.txtClinicDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
+                        }
+                    });
+                }
 
                 /* SET THE DOCTOR'S NAME */
                 String doctorPrefix = data.getDoctorPrefix();
@@ -352,7 +354,7 @@ public class NewDoctorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         final LinearLayout linlaClinicDistance;
         final AppCompatTextView txtClinicDistance;
 
-        public DoctorsVH(View v) {
+        DoctorsVH(View v) {
             super(v);
 
             linlaDoctorContainer = v.findViewById(R.id.linlaDoctorContainer);
