@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".kennels.KennelsList">
+    <item
+        android:id="@+id/menuSearchKennels"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:title="@string/search_hint_kennels"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:defaultQueryHint="@string/search_hint_kennels"
+        app:queryHint="@string/search_hint_kennels"
+        app:showAsAction="ifRoom|collapseActionView" />
+</menu>

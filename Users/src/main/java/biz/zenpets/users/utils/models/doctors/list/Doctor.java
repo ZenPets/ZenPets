@@ -2,6 +2,10 @@ package biz.zenpets.users.utils.models.doctors.list;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
+import biz.zenpets.users.utils.models.clinics.images.ClinicImage;
+
 public class Doctor {
 
     @SerializedName("clinicID") private String clinicID;
@@ -18,8 +22,13 @@ public class Doctor {
     @SerializedName("doctorName") private String doctorName;
     @SerializedName("doctorExperience") private String doctorExperience;
     @SerializedName("doctorCharges") private String doctorCharges;
+    @SerializedName("clinicDistance") private String clinicDistance;
+    @SerializedName("doctorVotes") private String doctorVotes;
+    @SerializedName("doctorLikes") private String doctorLikes;
+    @SerializedName("doctorLikesPercent") private String doctorLikesPercent;
     @SerializedName("currencySymbol") private String currencySymbol;
     @SerializedName("doctorClaimed") private String doctorClaimed;
+    @SerializedName("images") private ArrayList<ClinicImage> images;
 
     public String getClinicID() {
         return clinicID;
@@ -133,6 +142,38 @@ public class Doctor {
         this.doctorCharges = doctorCharges;
     }
 
+    public String getClinicDistance() {
+        return clinicDistance;
+    }
+
+    public void setClinicDistance(String clinicDistance) {
+        this.clinicDistance = clinicDistance;
+    }
+
+    public String getDoctorVotes() {
+        return doctorVotes;
+    }
+
+    public void setDoctorVotes(String doctorVotes) {
+        this.doctorVotes = doctorVotes;
+    }
+
+    public String getDoctorLikes() {
+        return doctorLikes;
+    }
+
+    public void setDoctorLikes(String doctorLikes) {
+        this.doctorLikes = doctorLikes;
+    }
+
+    public String getDoctorLikesPercent() {
+        return doctorLikesPercent;
+    }
+
+    public void setDoctorLikesPercent(String doctorLikesPercent) {
+        this.doctorLikesPercent = doctorLikesPercent;
+    }
+
     public String getCurrencySymbol() {
         return currencySymbol;
     }
@@ -147,5 +188,13 @@ public class Doctor {
 
     public void setDoctorClaimed(String doctorClaimed) {
         this.doctorClaimed = doctorClaimed;
+    }
+
+    public ArrayList<ClinicImage> getImages() {
+        return images;
+    }
+
+    public void setImages(ArrayList<ClinicImage> images) {
+        this.images = images;
     }
 }

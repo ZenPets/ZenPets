@@ -14,8 +14,8 @@ import java.util.ArrayList;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.utils.AppPrefs;
-import biz.zenpets.users.utils.models.clinics.ClinicImagesData;
-import biz.zenpets.users.utils.models.doctors.DoctorsData;
+import biz.zenpets.users.utils.models.clinics.images.ClinicImage;
+import biz.zenpets.users.utils.models.doctors.list.Doctor;
 import okhttp3.Call;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -23,25 +23,27 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 @SuppressWarnings("ConstantConditions")
-public class FetchDoctors extends AsyncTask<Object, Void, ArrayList<DoctorsData>> {
+public class FetchDoctors extends AsyncTask<Object, Void, ArrayList<Doctor>> {
 
     /* THE INTERFACE INSTANCE */
     private final FetchDoctorsInterface delegate;
 
     /* THE DOCTOR ARRAY LIST AND CLINIC IMAGES ARRAY LIST INSTANCES */
-    private final ArrayList<DoctorsData> arrDoctors = new ArrayList<>();
-    private final ArrayList<ClinicImagesData> arrImages = new ArrayList<>();
+    private final ArrayList<Doctor> arrDoctors = new ArrayList<>();
+    private final ArrayList<ClinicImage> arrImages = new ArrayList<>();
 
     public FetchDoctors(FetchDoctorsInterface delegate) {
         this.delegate = delegate;
     }
 
     @Override
-    protected ArrayList<DoctorsData> doInBackground(Object... objects) {
-        String URL_DOCTORS_LIST = AppPrefs.context().getString(R.string.url_doctors_list);
+    protected ArrayList<Doctor> doInBackground(Object... objects) {
+//        String URL_DOCTORS_LIST = AppPrefs.context().getString(R.string.url_doctors_list);
+        String URL_DOCTORS_LIST = AppPrefs.context().getString(R.string.url_doctors_list_test);
         HttpUrl.Builder builder = HttpUrl.parse(URL_DOCTORS_LIST).newBuilder();
         builder.addQueryParameter("cityID", String.valueOf(objects[0]));
-        builder.addQueryParameter("localityID", String.valueOf(objects[1]));
+//        builder.addQueryParameter("localityID", String.valueOf(objects[1]));
+        builder.addQueryParameter("pageNumber", String.valueOf(objects[2]));
         String FINAL_URL = builder.build().toString();
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -55,11 +57,12 @@ public class FetchDoctors extends AsyncTask<Object, Void, ArrayList<DoctorsData>
             if (JORoot.has("error") && JORoot.getString("error").equalsIgnoreCase("false")) {
                 JSONArray JAClinics = JORoot.getJSONArray("doctors");
                 if (JAClinics.length() > 0) {
-                    DoctorsData data;
+                    Doctor data;
 
                     for (int i = 0; i < JAClinics.length(); i++) {
                         JSONObject JOClinics = JAClinics.getJSONObject(i);
-                        data = new DoctorsData();
+//                        Log.e("DOCTOR", String.valueOf(JOClinics));
+                        data = new Doctor();
 
                         /* GET THE CLINIC ID */
                         String clinicID = JOClinics.getString("clinicID");
@@ -92,9 +95,9 @@ public class FetchDoctors extends AsyncTask<Object, Void, ArrayList<DoctorsData>
                                 && !clinicLongitude.equalsIgnoreCase("0"))    {
 
                             /* GET THE ORIGIN (USER) */
-                            Double originLat = (Double) objects[2];
-                            Double originLng = (Double) objects[3];
-                            LatLng LATLNG_ORIGIN = new LatLng(originLat, originLng);
+                            String originLat = String.valueOf(objects[3]);
+                            String originLng = String.valueOf(objects[4]);
+                            LatLng LATLNG_ORIGIN = new LatLng(Double.valueOf(originLat), Double.valueOf(originLng));
 
                             /* GET THE DESTINATION (CLINIC) */
                             Double latitude = Double.valueOf(clinicLatitude);
@@ -128,10 +131,14 @@ public class FetchDoctors extends AsyncTask<Object, Void, ArrayList<DoctorsData>
                         String doctorID = JOClinics.getString("doctorID");
                         data.setDoctorID(doctorID);
 
-                        /* GET THE DOCTOR'S NAME */
+                        /* GET THE DOCTOR'S PREFIX AND NAME */
                         String doctorPrefix = JOClinics.getString("doctorPrefix");
                         String doctorName = JOClinics.getString("doctorName");
-                        data.setDoctorName(doctorPrefix + " " + doctorName);
+                        data.setDoctorPrefix(doctorPrefix);
+                        data.setDoctorName(doctorName);
+//                        Log.e("PREFIX", doctorPrefix);
+//                        Log.e("NAME", doctorName);
+//                        data.setDoctorName(doctorPrefix + " " + doctorName);
 
                         /* GET THE DOCTOR'S DISPLAY PROFILE */
                         String doctorDisplayProfile = JOClinics.getString("doctorDisplayProfile");
@@ -144,7 +151,9 @@ public class FetchDoctors extends AsyncTask<Object, Void, ArrayList<DoctorsData>
                         /* GET THE CURRENCY CODE AND THE DOCTOR'S CHARGES */
                         String currencySymbol = JOClinics.getString("currencySymbol");
                         String doctorCharges = JOClinics.getString("doctorCharges");
-                        data.setDoctorCharges(currencySymbol + " " + doctorCharges);
+                        data.setCurrencySymbol(currencySymbol);
+                        data.setDoctorCharges(doctorCharges);
+//                        data.setDoctorCharges(currencySymbol + " " + doctorCharges);
 
                         /* THE TOTAL VOTES, TOTAL LIKES AND TOTAL DISLIKES */
                         int TOTAL_VOTES = 0;
@@ -224,10 +233,10 @@ public class FetchDoctors extends AsyncTask<Object, Void, ArrayList<DoctorsData>
                         JSONObject JORootImages = new JSONObject(strResultImages);
                         if (JORootImages.has("error") && JORootImages.getString("error").equalsIgnoreCase("false")) {
                             JSONArray JAImages = JORootImages.getJSONArray("images");
-                            ClinicImagesData images;
+                            ClinicImage images;
                             for (int j = 0; j < JAImages.length(); j++) {
                                 JSONObject JOImages = JAImages.getJSONObject(j);
-                                images = new ClinicImagesData();
+                                images = new ClinicImage();
 
                                 /* GET THE IMAGE ID */
                                 if (JOImages.has("imageID"))    {
@@ -291,7 +300,7 @@ public class FetchDoctors extends AsyncTask<Object, Void, ArrayList<DoctorsData>
     }
 
     @Override
-    protected void onPostExecute(ArrayList<DoctorsData> doctorsData) {
+    protected void onPostExecute(ArrayList<Doctor> doctorsData) {
         super.onPostExecute(doctorsData);
         delegate.onDoctorsList(doctorsData);
     }

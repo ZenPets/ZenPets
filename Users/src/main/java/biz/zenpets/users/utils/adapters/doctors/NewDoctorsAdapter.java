@@ -2,48 +2,24 @@ package biz.zenpets.users.utils.adapters.doctors;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.crashlytics.android.Crashlytics;
-import com.google.android.gms.maps.model.LatLng;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.details.doctors.DoctorDetailsNew;
-import biz.zenpets.users.utils.AppPrefs;
-import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
-import biz.zenpets.users.utils.helpers.classes.ZenDistanceClient;
-import biz.zenpets.users.utils.helpers.clinics.distance.DistanceAPI;
 import biz.zenpets.users.utils.models.clinics.images.ClinicImage;
-import biz.zenpets.users.utils.models.clinics.images.ClinicImages;
-import biz.zenpets.users.utils.models.clinics.images.ClinicImagesAPI;
 import biz.zenpets.users.utils.models.doctors.list.Doctor;
-import biz.zenpets.users.utils.models.reviews.Review;
-import biz.zenpets.users.utils.models.reviews.Reviews;
-import biz.zenpets.users.utils.models.reviews.ReviewsAPI;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
+@SuppressWarnings("ConstantConditions")
 public class NewDoctorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-    private AppPrefs getApp()	{
-        return (AppPrefs) AppPrefs.context();
-    }
 
     private static final int ITEM = 0;
     private static final int LOADING = 1;
@@ -53,13 +29,6 @@ public class NewDoctorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private boolean isLoadingAdded = false;
 
-    /** THE ORIGIN **/
-    private LatLng LATLNG_ORIGIN;
-
-    /** THE DATA TYPES FOR CALCULATING THE LIKES PERCENTAGE  **/
-    private int TOTAL_LIKES = 0;
-    private int TOTAL_VOTES = 0;
-
     /** THE CLINIC IMAGES ADAPTER AND ARRAY LIST **/
     private ArrayList<ClinicImage> arrImages = new ArrayList<>();
     private DoctorClinicImagesAdapter adapter;
@@ -67,10 +36,6 @@ public class NewDoctorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public NewDoctorsAdapter(Activity activity) {
         this.activity = activity;
         this.arrDoctors = new ArrayList<>();
-        String strLatitude = getApp().getOriginLatitude();
-        String strLongitude = getApp().getOriginLongitude();
-        LATLNG_ORIGIN = new LatLng(Double.valueOf(strLatitude), Double.valueOf(strLongitude));
-        Log.e("LAT LNG", String.valueOf(LATLNG_ORIGIN));
     }
 
     @NonNull
@@ -116,50 +81,15 @@ public class NewDoctorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 String clinicPinCode = data.getClinicPinCode();
                 doctorsVH.txtClinicAddress.setText(activity.getString(R.string.doctor_list_address_placeholder, clinicAddress, cityName, clinicPinCode));
 
-                /* SET THE CLINIC DISTANCE */
-                if (data.getClinicLatitude() != null && data.getClinicLongitude() != null)  {
-                    Double latitude = Double.valueOf(data.getClinicLatitude());
-                    Double longitude = Double.valueOf(data.getClinicLongitude());
-                    LatLng LATLNG_DESTINATION = new LatLng(latitude, longitude);
-                    String strOrigin = LATLNG_ORIGIN.latitude + "," + LATLNG_ORIGIN.longitude;
-                    String strDestination = LATLNG_DESTINATION.latitude + "," + LATLNG_DESTINATION.longitude;
-                    String strSensor = "false";
-                    String strKey = activity.getString(R.string.google_directions_api_key);
-                    DistanceAPI api = ZenDistanceClient.getClient().create(DistanceAPI.class);
-                    Call<String> call = api.json(strOrigin, strDestination, strSensor, strKey);
-                    call.enqueue(new Callback<String>() {
-                        @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
-                            try {
-                                String strDistance = response.body();
-                                JSONObject JORootDistance = new JSONObject(strDistance);
-                                JSONArray array = JORootDistance.getJSONArray("routes");
-                                JSONObject JORoutes = array.getJSONObject(0);
-                                JSONArray JOLegs= JORoutes.getJSONArray("legs");
-                                JSONObject JOSteps = JOLegs.getJSONObject(0);
-                                JSONObject JODistance = JOSteps.getJSONObject("distance");
-                                if (JODistance.has("text")) {
-                                    String distance = JODistance.getString("text");
-                                    String strTilde = activity.getString(R.string.generic_tilde);
-                                    doctorsVH.txtClinicDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strTilde, distance));
-                                } else {
-                                    String distance = "Unknown";
-                                    String strInfinity = activity.getString(R.string.generic_infinity);
-                                    doctorsVH.txtClinicDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<String> call, Throwable t) {
-                            Crashlytics.logException(t);
-                            String distance = "Unknown";
-                            String strInfinity = activity.getString(R.string.generic_infinity);
-                            doctorsVH.txtClinicDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
-                        }
-                    });
+                /* SET THE CLINIC'S DISTANCE FROM THE USER'S LOCATION */
+                if (data.getClinicDistance() != null)   {
+                    String distance = data.getClinicDistance();
+                    String strTilde = activity.getString(R.string.generic_tilde);
+                    doctorsVH.txtClinicDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strTilde, distance));
+                } else {
+                    String distance = "Unknown";
+                    String strInfinity = activity.getString(R.string.generic_infinity);
+                    doctorsVH.txtClinicDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
                 }
 
                 /* SET THE DOCTOR'S NAME */
@@ -177,93 +107,44 @@ public class NewDoctorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 String charges = data.getDoctorCharges();
                 doctorsVH.txtDoctorCharges.setText(activity.getString(R.string.doctor_details_doc_charges_placeholder, currency, charges));
 
-                /* GET THE TOTAL NUMBER OF POSITIVE REVIEWS */
-                ReviewsAPI apiYes = ZenApiClient.getClient().create(ReviewsAPI.class);
-                Call<Reviews> callYes = apiYes.fetchPositiveReviews(data.getDoctorID(), "Yes");
-                callYes.enqueue(new Callback<Reviews>() {
-                    @Override
-                    public void onResponse(Call<Reviews> call, Response<Reviews> response) {
-                        if (response.body() != null && response.body().getReviews() != null)    {
-                            ArrayList<Review> arrReview = response.body().getReviews();
-                            TOTAL_LIKES = arrReview.size();
-                            TOTAL_VOTES = TOTAL_VOTES + arrReview.size();
+                /* SET THE LIKES PERCENTAGE AND TOTAL NUMBER OF LIKES */
+                if (data.getDoctorLikes() != null && data.getDoctorLikesPercent() != null)  {
+                    String percent = data.getDoctorLikesPercent();
+                    String open = activity.getString(R.string.doctor_list_votes_open);
+                    String close = activity.getString(R.string.doctor_list_votes_close);
+                    String votes = data.getDoctorVotes();
+                    doctorsVH.txtDoctorLikes.setText(activity.getString(R.string.doctor_list_votes_placeholder,percent, open, votes, close));
+                } else {
+                    String percent = activity.getString(R.string.doctor_list_votes_percent_text);
+                    String open = activity.getString(R.string.doctor_list_votes_open);
+                    String close = activity.getString(R.string.doctor_list_votes_close);
+                    String votes = activity.getString(R.string.doctor_list_votes_text);
+                    doctorsVH.txtDoctorLikes.setText(activity.getString(R.string.doctor_list_votes_placeholder,percent, open, votes, close));
+                }
 
-                            /* GET THE TOTAL NUMBER OF NEGATIVE REVIEWS */
-                            ReviewsAPI apiNo = ZenApiClient.getClient().create(ReviewsAPI.class);
-                            Call<Reviews> callNo = apiNo.fetchNegativeReviews(data.getDoctorID(), "No");
-                            callNo.enqueue(new Callback<Reviews>() {
-                                @Override
-                                public void onResponse(Call<Reviews> call, Response<Reviews> response) {
-                                    if (response.body() != null && response.body().getReviews() != null)    {
-                                        ArrayList<Review> arrReview = response.body().getReviews();
-                                        TOTAL_VOTES = TOTAL_VOTES + arrReview.size();
+                /* SET THE IMAGES */
+                ArrayList<ClinicImage> arrImages = data.getImages();
+                if (arrImages != null && arrImages.size() > 0)  {
+                    /* CONFIGURE THE RECYCLER VIEW */
+                    LinearLayoutManager llmAppointments = new LinearLayoutManager(activity);
+                    llmAppointments.setOrientation(LinearLayoutManager.HORIZONTAL);
+                    llmAppointments.setAutoMeasureEnabled(true);
+                    doctorsVH.listClinicImages.setLayoutManager(llmAppointments);
+                    doctorsVH.listClinicImages.setHasFixedSize(true);
+                    doctorsVH.listClinicImages.setNestedScrollingEnabled(false);
 
-                                        /* CALCULATE THE PERCENTAGE OF LIKES */
-                                        double percentLikes = ((double)TOTAL_LIKES / TOTAL_VOTES) * 100;
-                                        int finalPercentLikes = (int)percentLikes;
-                                        String strLikesPercentage = String.valueOf(finalPercentLikes) + "%";
+                    /* CONFIGURE THE ADAPTER */
+                    DoctorClinicImagesAdapter adapter = new DoctorClinicImagesAdapter(activity, arrImages);
 
-                                        /* GET THE TOTAL NUMBER OF REVIEWS / VOTES */
-                                        Resources resReviews = AppPrefs.context().getResources();
-                                        String reviewQuantity = null;
-                                        if (TOTAL_VOTES == 0)   {
-                                            reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
-                                        } else if (TOTAL_VOTES == 1)    {
-                                            reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
-                                        } else if (TOTAL_VOTES > 1) {
-                                            reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
-                                        }
-                                        String strVotes = reviewQuantity;
-                                        String open = activity.getString(R.string.doctor_list_votes_open);
-                                        String close = activity.getString(R.string.doctor_list_votes_close);
-                                        doctorsVH.txtDoctorLikes.setText(activity.getString(R.string.doctor_list_votes_placeholder, strLikesPercentage, open, strVotes, close));
-                                    }
-                                }
+                    /* SET THE ADAPTER TO THE RECYCLER VIEW */
+                    doctorsVH.listClinicImages.setAdapter(adapter);
 
-                                @Override
-                                public void onFailure(Call<Reviews> call, Throwable t) {
-                                    Crashlytics.logException(t);
-                                }
-                            });
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Reviews> call, Throwable t) {
-                        Crashlytics.logException(t);
-                    }
-                });
-
-                /* SET THE CLINIC IMAGES */
-                ClinicImagesAPI apiImages = ZenApiClient.getClient().create(ClinicImagesAPI.class);
-                Call<ClinicImages> callImages = apiImages.fetchClinicImages(data.getClinicID());
-                callImages.enqueue(new Callback<ClinicImages>() {
-                    @Override
-                    public void onResponse(Call<ClinicImages> call, Response<ClinicImages> response) {
-                        if (response.body() != null && response.body().getImages() != null) {
-                            arrImages = response.body().getImages();
-                            if (arrImages.size() > 0)   {
-                                /* RECONFIGURE AND SET THE ADAPTER TO THE RECYCLER VIEW */
-                                adapter = new DoctorClinicImagesAdapter(activity, arrImages);
-                                doctorsVH.listClinicImages.setAdapter(adapter);
-
-                                /* SHOW THE IMAGES CONTAINER */
-                                doctorsVH.linlaImagesContainer.setVisibility(View.VISIBLE);
-                            } else {
-                                /* HIDE THE IMAGES CONTAINER */
-                                doctorsVH.linlaImagesContainer.setVisibility(View.GONE);
-                            }
-                        } else {
-                            /* HIDE THE IMAGES CONTAINER */
-                            doctorsVH.linlaImagesContainer.setVisibility(View.GONE);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ClinicImages> call, Throwable t) {
-                        Crashlytics.logException(t);
-                    }
-                });
+                    /* SHOW THE IMAGES CONTAINER */
+                    doctorsVH.linlaImagesContainer.setVisibility(View.VISIBLE);
+                } else {
+                    /* HIDE THE IMAGES CONTAINER */
+                    doctorsVH.linlaImagesContainer.setVisibility(View.GONE);
+                }
 
                 /* SHOW THE DOCTOR DETAILS */
                 doctorsVH.linlaDoctorContainer.setOnClickListener(new View.OnClickListener() {
@@ -372,10 +253,10 @@ public class NewDoctorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             txtClinicDistance = v.findViewById(R.id.txtClinicDistance);
 
             /* CONFIGURE THE RECYCLER VIEW */
-            LinearLayoutManager llmAppointments = new LinearLayoutManager(activity);
-            llmAppointments.setOrientation(LinearLayoutManager.HORIZONTAL);
-            llmAppointments.setAutoMeasureEnabled(true);
-            listClinicImages.setLayoutManager(llmAppointments);
+            LinearLayoutManager manager = new LinearLayoutManager(activity);
+            manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+//            manager.setAutoMeasureEnabled(true);
+            listClinicImages.setLayoutManager(manager);
             listClinicImages.setHasFixedSize(true);
             listClinicImages.setNestedScrollingEnabled(false);
 
@@ -384,7 +265,6 @@ public class NewDoctorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             listClinicImages.setAdapter(adapter);
         }
     }
-
 
     protected class LoadingVH extends RecyclerView.ViewHolder {
         LoadingVH(View itemView) {

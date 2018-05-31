@@ -16,73 +16,9 @@
         app:contentInsetStart="0dp"
         app:contentInsetStartWithNavigation="0dp"
         app:navigationIcon="@drawable/ic_apps_white_24dp"
+        app:subtitleTextAppearance="@style/Toolbar.SubtitleText"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:titleTextAppearance="@style/Toolbar.TitleText">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <android.support.v7.widget.AppCompatTextView
-                style="@style/NormalRegular"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="start|center"
-                android:text="@string/kennel_list_tb_title"
-                android:textColor="@android:color/primary_text_dark"
-                android:textSize="14sp" />
-
-            <LinearLayout
-                android:id="@+id/linlaLocationSelector"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginStart="0dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="end|center"
-                android:orientation="vertical">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/txtLocationLabel"
-                    style="@style/NormalRegular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="start|center"
-                    android:paddingBottom="0dp"
-                    android:paddingEnd="5dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingStart="5dp"
-                    android:paddingTop="2dp"
-                    android:text="@string/kennel_list_tb_location_label"
-                    android:textColor="@android:color/primary_text_dark"
-                    android:textSize="12sp" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/txtLocation"
-                    style="@style/NormalRegular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:paddingBottom="2dp"
-                    android:paddingEnd="5dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingStart="5dp"
-                    android:paddingTop="0dp"
-                    android:text="@string/kennel_list_tb_location"
-                    android:textColor="@android:color/primary_text_dark"
-                    android:textSize="12sp" />
-            </LinearLayout>
-        </LinearLayout>
-    </android.support.v7.widget.Toolbar>
+        app:titleTextAppearance="@style/Toolbar.TitleText" />
 
     <include layout="@layout/zen_progress" />
 
@@ -99,14 +35,14 @@
         android:scrollbarSize="3dp"
         android:scrollbarThumbVertical="@color/primary_dark"
         android:scrollbars="vertical"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/progressLoading"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:padding="11dp"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/linlaEmpty"
@@ -115,9 +51,9 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
-        <android.support.v7.widget.AppCompatImageView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="110dp"
@@ -129,17 +65,18 @@
             android:scaleType="centerInside"
             android:src="@drawable/empty_graphic" />
 
-        <android.support.v7.widget.AppCompatTextView
-            style="@style/LightNormal"
+        <TextView
+            android:id="@+id/txtEmpty"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/roboto_condensed_light"
             android:gravity="center"
             android:padding="11dp"
             android:text="@string/kennel_list_empty"
-            android:textColor="@color/tertiary_text"
+            android:textColor="@color/secondary_text"
             android:textSize="14sp" />
     </LinearLayout>
 </LinearLayout>

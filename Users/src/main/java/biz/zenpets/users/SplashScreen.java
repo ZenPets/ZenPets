@@ -13,7 +13,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -313,7 +312,7 @@ public class SplashScreen extends AppCompatActivity
 
         /* CHECK FOR A VALID, NON NULL RESULT */
         if (FINAL_LOCALITY_ID != null)  {
-            Log.e("LOCALITY ID", FINAL_LOCALITY_ID);
+//            Log.e("LOCALITY ID", FINAL_LOCALITY_ID);
 
             /* SET THE CITY AND LOCALITY ID AND THE ORIGIN LAT LNG TO SHARED PREFS */
             getApp().setCityDetails(FINAL_CITY_ID, DETECTED_CITY);

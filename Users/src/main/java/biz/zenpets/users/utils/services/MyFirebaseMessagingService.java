@@ -3,7 +3,6 @@ package biz.zenpets.users.utils.services;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -42,7 +41,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //                Log.e("JSON", String.valueOf(json));
                 handleDataMessage(json);
             } catch (Exception e) {
-                Log.e(TAG, "Exception: " + e.getMessage());
+//                Log.e(TAG, "Exception: " + e.getMessage());
                 Crashlytics.logException(e);
             }
         }
@@ -91,10 +90,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 showNotificationMessage(getApplicationContext(), notificationTitle, notificationMessage, intent);
             }
         } catch (JSONException e) {
-            Log.e(TAG, "Json Exception: " + e.getMessage());
+//            Log.e(TAG, "Json Exception: " + e.getMessage());
             Crashlytics.logException(e);
         } catch (Exception e) {
-            Log.e(TAG, "Exception: " + e.getMessage());
+//            Log.e(TAG, "Exception: " + e.getMessage());
             Crashlytics.logException(e);
         }
     }

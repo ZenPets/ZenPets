@@ -2,6 +2,7 @@
 <resources>
     <!--&lt;!&ndash; DOCTORS LIST &ndash;&gt;-->
     <!--<string name="url_doctors_list">http://34.235.84.116/zenpets/public/fetchDoctorsList</string>-->
+    <!--<string name="url_doctors_list_test">http://34.235.84.116/zenpets/public/fetchDoctorsListTest</string>-->
     <!--<string name="url_doctor_positive_reviews">http://34.235.84.116/zenpets/public/fetchPositiveReviews</string>-->
     <!--<string name="url_doctor_negative_reviews">http://34.235.84.116/zenpets/public/fetchNegativeReviews</string>-->
 
@@ -90,4 +91,7 @@
 
     <!--&lt;!&ndash; PRESCRIPTIONS &ndash;&gt;-->
     <!--<string name="url_all_prescriptions">http://34.235.84.116/zenpets/public/fetchPetPrescriptions</string>-->
+
+    <!--&lt;!&ndash; KENNEL URL'S &ndash;&gt;-->
+    <!--<string name="url_kennels_list">http://34.235.84.116/zenpets/public/fetchKennelsListByCity</string>-->
 </resources>

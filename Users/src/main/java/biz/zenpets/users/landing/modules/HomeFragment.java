@@ -15,8 +15,8 @@ import android.widget.Toast;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.adoptions.AdoptionsList;
-import biz.zenpets.users.doctors.NewDoctorsList;
-import biz.zenpets.users.kennels.KennelsList;
+import biz.zenpets.users.doctors.DoctorsList;
+import biz.zenpets.users.kennels.NewKennelsList;
 import biz.zenpets.users.trainers.TrainersList;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -25,7 +25,7 @@ public class HomeFragment extends Fragment {
 
     /** SHOW THE LIST OF DOCTORS **/
     @OnClick(R.id.linlaAppointment) void showDoctors()   {
-        Intent intent = new Intent(getActivity(), NewDoctorsList.class);
+        Intent intent = new Intent(getActivity(), DoctorsList.class);
         startActivity(intent);
     }
 
@@ -42,7 +42,7 @@ public class HomeFragment extends Fragment {
 
     /** SHOW THE LIST OF PET KENNELS **/
     @OnClick(R.id.linlaPetKennels) void showPetHostels() {
-        Intent intent = new Intent(getActivity(), KennelsList.class);
+        Intent intent = new Intent(getActivity(), NewKennelsList.class);
         startActivity(intent);
     }
 

@@ -2,6 +2,8 @@ package biz.zenpets.users.utils.helpers.kennels.classes;
 
 import android.os.AsyncTask;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,7 +14,7 @@ import java.util.ArrayList;
 import biz.zenpets.users.R;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.helpers.kennels.interfaces.FetchKennelsInterface;
-import biz.zenpets.users.utils.models.kennels.Kennel;
+import biz.zenpets.users.utils.models.kennels.kennels.Kennel;
 import okhttp3.Call;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -60,6 +62,15 @@ public class FetchKennels extends AsyncTask<Object, Void, ArrayList<Kennel>> {
                             data.setKennelID(JOKennels.getString("kennelID"));
                         } else {
                             data.setKennelID(null);
+                        }
+
+                        /* GET THE KENNEL COVER PHOTO */
+                        if (JOKennels.has("kennelCoverPhoto")
+                                && !JOKennels.getString("kennelCoverPhoto").equalsIgnoreCase("")
+                                && !JOKennels.getString("kennelCoverPhoto").equalsIgnoreCase("null"))  {
+                            data.setKennelCoverPhoto(JOKennels.getString("kennelCoverPhoto"));
+                        } else {
+                            data.setKennelCoverPhoto(null);
                         }
 
                         /* GET THE KENNEL NAME */
@@ -160,6 +171,48 @@ public class FetchKennels extends AsyncTask<Object, Void, ArrayList<Kennel>> {
                             data.setKennelLongitude(null);
                         }
 
+                        /* GET THE CLINIC LATITUDE AND LONGITUDE */
+                        String kennelLatitude = JOKennels.getString("kennelLatitude");
+                        String kennelLongitude = JOKennels.getString("kennelLongitude");
+                        if (kennelLatitude != null
+                                && !kennelLatitude.equalsIgnoreCase("0")
+                                && kennelLongitude != null
+                                && !kennelLongitude.equalsIgnoreCase("0"))    {
+
+                            /* GET THE ORIGIN (USER) */
+                            String originLat = String.valueOf(objects[2]);
+                            String originLng = String.valueOf(objects[3]);
+                            LatLng LATLNG_ORIGIN = new LatLng(Double.valueOf(originLat), Double.valueOf(originLng));
+//                            Log.e("LAT LNG", String.valueOf(LATLNG_ORIGIN));
+
+                            /* GET THE DESTINATION (CLINIC) */
+                            Double latitude = Double.valueOf(kennelLatitude);
+                            Double longitude = Double.valueOf(kennelLongitude);
+                            LatLng LATLNG_DESTINATION = new LatLng(latitude, longitude);
+                            String URL_DISTANCE = getUrl(LATLNG_ORIGIN, LATLNG_DESTINATION);
+                            OkHttpClient clientDistance = new OkHttpClient();
+                            Request requestDistance = new Request.Builder()
+                                    .url(URL_DISTANCE)
+                                    .build();
+                            Call callDistance = clientDistance.newCall(requestDistance);
+                            Response respDistance = callDistance.execute();
+                            String strDistance = respDistance.body().string();
+//                            Log.e("DISTANCE", strDistance);
+                            JSONObject JORootDistance = new JSONObject(strDistance);
+                            JSONArray array = JORootDistance.getJSONArray("routes");
+                            JSONObject JORoutes = array.getJSONObject(0);
+                            JSONArray JOLegs= JORoutes.getJSONArray("legs");
+                            JSONObject JOSteps = JOLegs.getJSONObject(0);
+                            JSONObject JODistance = JOSteps.getJSONObject("distance");
+                            if (JODistance.has("text")) {
+                                data.setKennelDistance(JODistance.getString("text"));
+                            } else {
+                                data.setKennelDistance("Unknown");
+                            }
+                        } else {
+                            data.setKennelDistance("Unknown");
+                        }
+
                         /* GET THE KENNEL'S PHONE PREFIX #1*/
                         if (JOKennels.has("kennelPhonePrefix1"))    {
                             data.setKennelPhonePrefix1(JOKennels.getString("kennelPhonePrefix1"));
@@ -212,5 +265,26 @@ public class FetchKennels extends AsyncTask<Object, Void, ArrayList<Kennel>> {
     protected void onPostExecute(ArrayList<Kennel> kennels) {
         super.onPostExecute(kennels);
         delegate.onKennels(kennels);
+    }
+
+    /** CONCATENATE THE URL TO THE GOOGLE MAPS API FOR GETTING THE DISTANCE **/
+    private String getUrl(LatLng origin, LatLng destination) {
+        /* ORIGIN OF THE ROUTE */
+        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
+
+        /* DESTINATION OF THE ROUTE */
+        String str_dest = "destination=" + destination.latitude + "," + destination.longitude;
+
+        /* SENSOR ENABLED */
+        String sensor = "sensor=false&key=" + AppPrefs.context().getString(R.string.google_directions_api_key);
+
+        /* BUILDING THE PARAMETERS FOR THE WEB SERVICE */
+        String parameters = str_origin + "&" + str_dest + "&" + sensor;
+
+        /* THE OUTPUT FORMAT */
+        String output = "json";
+
+        /* BUILD THE FINAL URL FOR THE WEB SERVICE */
+        return "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
     }
 }

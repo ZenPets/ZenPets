@@ -131,7 +131,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:padding="11dp"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/linlaEmpty"

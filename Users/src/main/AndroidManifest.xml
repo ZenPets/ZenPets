@@ -278,6 +278,14 @@
             android:name=".kennels.KennelsList"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".kennels.NewKennelsList"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".details.kennels.KennelDetails"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <!-- COUNTRY, STATE, CITY, LOCALITY SELECTOR ACTIVITIES -->
         <activity

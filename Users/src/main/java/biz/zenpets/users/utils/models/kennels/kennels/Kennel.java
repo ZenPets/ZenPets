@@ -1,4 +1,4 @@
-package biz.zenpets.users.utils.models.kennels;
+package biz.zenpets.users.utils.models.kennels.kennels;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -53,6 +53,9 @@ public class Kennel {
     @SerializedName("kennelLongitude")
     @Expose
     private String kennelLongitude;
+    @SerializedName("kennelDistance")
+    @Expose
+    private String kennelDistance;
     @SerializedName("kennelPhonePrefix1")
     @Expose
     private String kennelPhonePrefix1;
@@ -77,22 +80,12 @@ public class Kennel {
         this.kennelID = kennelID;
     }
 
-    public Kennel withKennelID(String kennelID) {
-        this.kennelID = kennelID;
-        return this;
-    }
-
     public String getKennelOwnerID() {
         return kennelOwnerID;
     }
 
     public void setKennelOwnerID(String kennelOwnerID) {
         this.kennelOwnerID = kennelOwnerID;
-    }
-
-    public Kennel withKennelOwnerID(String kennelOwnerID) {
-        this.kennelOwnerID = kennelOwnerID;
-        return this;
     }
 
     public String getKennelOwnerName() {
@@ -103,22 +96,12 @@ public class Kennel {
         this.kennelOwnerName = kennelOwnerName;
     }
 
-    public Kennel withKennelOwnerName(String kennelOwnerName) {
-        this.kennelOwnerName = kennelOwnerName;
-        return this;
-    }
-
     public String getKennelOwnerDisplayProfile() {
         return kennelOwnerDisplayProfile;
     }
 
     public void setKennelOwnerDisplayProfile(String kennelOwnerDisplayProfile) {
         this.kennelOwnerDisplayProfile = kennelOwnerDisplayProfile;
-    }
-
-    public Kennel withKennelOwnerDisplayProfile(String kennelOwnerDisplayProfile) {
-        this.kennelOwnerDisplayProfile = kennelOwnerDisplayProfile;
-        return this;
     }
 
     public String getKennelName() {
@@ -129,22 +112,12 @@ public class Kennel {
         this.kennelName = kennelName;
     }
 
-    public Kennel withKennelName(String kennelName) {
-        this.kennelName = kennelName;
-        return this;
-    }
-
     public String getKennelCoverPhoto() {
         return kennelCoverPhoto;
     }
 
     public void setKennelCoverPhoto(String kennelCoverPhoto) {
         this.kennelCoverPhoto = kennelCoverPhoto;
-    }
-
-    public Kennel withKennelCoverPhoto(String kennelCoverPhoto) {
-        this.kennelCoverPhoto = kennelCoverPhoto;
-        return this;
     }
 
     public String getKennelAddress() {
@@ -155,22 +128,12 @@ public class Kennel {
         this.kennelAddress = kennelAddress;
     }
 
-    public Kennel withKennelAddress(String kennelAddress) {
-        this.kennelAddress = kennelAddress;
-        return this;
-    }
-
     public String getKennelPinCode() {
         return kennelPinCode;
     }
 
     public void setKennelPinCode(String kennelPinCode) {
         this.kennelPinCode = kennelPinCode;
-    }
-
-    public Kennel withKennelPinCode(String kennelPinCode) {
-        this.kennelPinCode = kennelPinCode;
-        return this;
     }
 
     public String getCountryID() {
@@ -181,22 +144,12 @@ public class Kennel {
         this.countryID = countryID;
     }
 
-    public Kennel withCountryID(String countryID) {
-        this.countryID = countryID;
-        return this;
-    }
-
     public String getCountryName() {
         return countryName;
     }
 
     public void setCountryName(String countryName) {
         this.countryName = countryName;
-    }
-
-    public Kennel withCountryName(String countryName) {
-        this.countryName = countryName;
-        return this;
     }
 
     public String getStateID() {
@@ -207,22 +160,12 @@ public class Kennel {
         this.stateID = stateID;
     }
 
-    public Kennel withStateID(String stateID) {
-        this.stateID = stateID;
-        return this;
-    }
-
     public String getStateName() {
         return stateName;
     }
 
     public void setStateName(String stateName) {
         this.stateName = stateName;
-    }
-
-    public Kennel withStateName(String stateName) {
-        this.stateName = stateName;
-        return this;
     }
 
     public String getCityID() {
@@ -233,22 +176,12 @@ public class Kennel {
         this.cityID = cityID;
     }
 
-    public Kennel withCityID(String cityID) {
-        this.cityID = cityID;
-        return this;
-    }
-
     public String getCityName() {
         return cityName;
     }
 
     public void setCityName(String cityName) {
         this.cityName = cityName;
-    }
-
-    public Kennel withCityName(String cityName) {
-        this.cityName = cityName;
-        return this;
     }
 
     public String getKennelLatitude() {
@@ -259,11 +192,6 @@ public class Kennel {
         this.kennelLatitude = kennelLatitude;
     }
 
-    public Kennel withKennelLatitude(String kennelLatitude) {
-        this.kennelLatitude = kennelLatitude;
-        return this;
-    }
-
     public String getKennelLongitude() {
         return kennelLongitude;
     }
@@ -272,9 +200,12 @@ public class Kennel {
         this.kennelLongitude = kennelLongitude;
     }
 
-    public Kennel withKennelLongitude(String kennelLongitude) {
-        this.kennelLongitude = kennelLongitude;
-        return this;
+    public String getKennelDistance() {
+        return kennelDistance;
+    }
+
+    public void setKennelDistance(String kennelDistance) {
+        this.kennelDistance = kennelDistance;
     }
 
     public String getKennelPhonePrefix1() {
@@ -285,22 +216,12 @@ public class Kennel {
         this.kennelPhonePrefix1 = kennelPhonePrefix1;
     }
 
-    public Kennel withKennelPhonePrefix1(String kennelPhonePrefix1) {
-        this.kennelPhonePrefix1 = kennelPhonePrefix1;
-        return this;
-    }
-
     public String getKennelPhoneNumber1() {
         return kennelPhoneNumber1;
     }
 
     public void setKennelPhoneNumber1(String kennelPhoneNumber1) {
         this.kennelPhoneNumber1 = kennelPhoneNumber1;
-    }
-
-    public Kennel withKennelPhoneNumber1(String kennelPhoneNumber1) {
-        this.kennelPhoneNumber1 = kennelPhoneNumber1;
-        return this;
     }
 
     public String getKennelPhonePrefix2() {
@@ -311,11 +232,6 @@ public class Kennel {
         this.kennelPhonePrefix2 = kennelPhonePrefix2;
     }
 
-    public Kennel withKennelPhonePrefix2(String kennelPhonePrefix2) {
-        this.kennelPhonePrefix2 = kennelPhonePrefix2;
-        return this;
-    }
-
     public String getKennelPhoneNumber2() {
         return kennelPhoneNumber2;
     }
@@ -324,21 +240,11 @@ public class Kennel {
         this.kennelPhoneNumber2 = kennelPhoneNumber2;
     }
 
-    public Kennel withKennelPhoneNumber2(String kennelPhoneNumber2) {
-        this.kennelPhoneNumber2 = kennelPhoneNumber2;
-        return this;
-    }
-
     public String getKennelPetCapacity() {
         return kennelPetCapacity;
     }
 
     public void setKennelPetCapacity(String kennelPetCapacity) {
         this.kennelPetCapacity = kennelPetCapacity;
-    }
-
-    public Kennel withKennelPetCapacity(String kennelPetCapacity) {
-        this.kennelPetCapacity = kennelPetCapacity;
-        return this;
     }
 }

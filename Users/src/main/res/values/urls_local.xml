@@ -2,6 +2,7 @@
 <resources>
     <!-- DOCTORS LIST -->
     <string name="url_doctors_list">http://192.168.11.2/zenpets/public/fetchDoctorsList</string>
+    <string name="url_doctors_list_test">http://192.168.11.2/zenpets/public/fetchDoctorsListTest</string>
     <string name="url_doctor_positive_reviews">http://192.168.11.2/zenpets/public/fetchPositiveReviews</string>
     <string name="url_doctor_negative_reviews">http://192.168.11.2/zenpets/public/fetchNegativeReviews</string>
 

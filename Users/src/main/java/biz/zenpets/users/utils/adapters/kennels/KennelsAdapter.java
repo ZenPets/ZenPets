@@ -1,8 +1,11 @@
 package biz.zenpets.users.utils.adapters.kennels;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +25,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import biz.zenpets.users.R;
+import biz.zenpets.users.details.kennels.KennelDetails;
+import biz.zenpets.users.utils.AppPrefs;
+import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.helpers.classes.ZenDistanceClient;
 import biz.zenpets.users.utils.helpers.clinics.distance.DistanceAPI;
-import biz.zenpets.users.utils.models.kennels.Kennel;
+import biz.zenpets.users.utils.models.kennels.kennels.Kennel;
+import biz.zenpets.users.utils.models.kennels.reviews.KennelReview;
+import biz.zenpets.users.utils.models.kennels.reviews.KennelReviews;
+import biz.zenpets.users.utils.models.kennels.reviews.KennelReviewsAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,6 +45,10 @@ public class KennelsAdapter extends RecyclerView.Adapter<KennelsAdapter.KennelsV
 
     /***** ARRAY LIST TO GET DATA FROM THE ACTIVITY *****/
     private final ArrayList<Kennel> arrKennels;
+
+    /** THE DATA TYPES FOR CALCULATING THE LIKES PERCENTAGE  **/
+    private int TOTAL_LIKES = 0;
+    private int TOTAL_VOTES = 0;
 
     /** THE ORIGIN **/
     private LatLng LATLNG_ORIGIN;
@@ -95,6 +108,65 @@ public class KennelsAdapter extends RecyclerView.Adapter<KennelsAdapter.KennelsV
             holder.txtPetCapacity.setText(activity.getString(R.string.kennel_list_kennel_capacity_zero));
         }
 
+        /* GET THE TOTAL NUMBER OF POSITIVE REVIEWS */
+        TOTAL_LIKES = 0;
+        TOTAL_VOTES = 0;
+        KennelReviewsAPI apiYes = ZenApiClient.getClient().create(KennelReviewsAPI.class);
+        Call<KennelReviews> callYes = apiYes.fetchPositiveKennelReviews(data.getKennelID(), "Yes");
+        callYes.enqueue(new Callback<KennelReviews>() {
+            @Override
+            public void onResponse(Call<KennelReviews> call, Response<KennelReviews> response) {
+                if (response.body() != null && response.body().getReviews() != null)    {
+                    ArrayList<KennelReview> arrReview = response.body().getReviews();
+                    TOTAL_LIKES = arrReview.size();
+                    TOTAL_VOTES = TOTAL_VOTES + arrReview.size();
+
+                    /* GET THE TOTAL NUMBER OF NEGATIVE REVIEWS */
+                    KennelReviewsAPI apiNo = ZenApiClient.getClient().create(KennelReviewsAPI.class);
+                    Call<KennelReviews> callNo = apiNo.fetchNegativeKennelReviews(data.getKennelID(), "No");
+                    callNo.enqueue(new Callback<KennelReviews>() {
+                        @Override
+                        public void onResponse(Call<KennelReviews> call, Response<KennelReviews> response) {
+                            if (response.body() != null && response.body().getReviews() != null)    {
+                                ArrayList<KennelReview> arrReview = response.body().getReviews();
+                                TOTAL_VOTES = TOTAL_VOTES + arrReview.size();
+
+                                /* CALCULATE THE PERCENTAGE OF LIKES */
+                                double percentLikes = ((double)TOTAL_LIKES / TOTAL_VOTES) * 100;
+                                int finalPercentLikes = (int)percentLikes;
+                                String strLikesPercentage = String.valueOf(finalPercentLikes) + "%";
+
+                                /* GET THE TOTAL NUMBER OF REVIEWS / VOTES */
+                                Resources resReviews = AppPrefs.context().getResources();
+                                String reviewQuantity = null;
+                                if (TOTAL_VOTES == 0)   {
+                                    reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
+                                } else if (TOTAL_VOTES == 1)    {
+                                    reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
+                                } else if (TOTAL_VOTES > 1) {
+                                    reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
+                                }
+                                String strVotes = reviewQuantity;
+                                String open = activity.getString(R.string.doctor_list_votes_open);
+                                String close = activity.getString(R.string.doctor_list_votes_close);
+                                holder.txtKennelLikes.setText(activity.getString(R.string.doctor_list_votes_placeholder, strLikesPercentage, open, strVotes, close));
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<KennelReviews> call, Throwable t) {
+                            Crashlytics.logException(t);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<KennelReviews> call, Throwable t) {
+                Crashlytics.logException(t);
+            }
+        });
+
         /* SET THE KENNEL'S DISTANCE */
         Double latitude = Double.valueOf(data.getKennelLatitude());
         Double longitude = Double.valueOf(data.getKennelLongitude());
@@ -138,6 +210,16 @@ public class KennelsAdapter extends RecyclerView.Adapter<KennelsAdapter.KennelsV
                 holder.txtKennelDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
             }
         });
+
+        /* SHOW THE KENNEL DETAILS */
+        holder.cardKennel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, KennelDetails.class);
+                intent.putExtra("KENNEL_ID", data.getKennelID());
+                activity.startActivity(intent);
+            }
+        });
     }
 
     @NonNull
@@ -152,7 +234,7 @@ public class KennelsAdapter extends RecyclerView.Adapter<KennelsAdapter.KennelsV
     }
 
     class KennelsVH extends RecyclerView.ViewHolder	{
-
+        CardView cardKennel;
         SimpleDraweeView imgvwKennelCoverPhoto;
         TextView txtKennelName;
         TextView txtKennelAddress;
@@ -162,7 +244,7 @@ public class KennelsAdapter extends RecyclerView.Adapter<KennelsAdapter.KennelsV
 
         KennelsVH(View v) {
             super(v);
-
+            cardKennel = v.findViewById(R.id.cardKennel);
             imgvwKennelCoverPhoto = v.findViewById(R.id.imgvwKennelCoverPhoto);
             txtKennelName = v.findViewById(R.id.txtKennelName);
             txtKennelAddress = v.findViewById(R.id.txtKennelAddress);

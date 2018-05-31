@@ -336,7 +336,8 @@
     <string name="kennel_list_tb_title">Find Kennels</string>
     <string name="kennel_list_tb_location_label">LOCATION</string>
     <string name="kennel_list_tb_location">City</string>
-    <string name="kennel_list_empty">There are no open Adoptions in your city at this moment :-(</string>
+    <string name="kennel_list_empty">There are no open Kennels listed in your city at this moment :-(
+    \n\nBut hang in there. We are working hard to get Kennels listed on Zen Pets.</string>
 
     <!-- KENNEL LIST ITEM STRINGS -->
     <string name="kennel_list_kennel_name_label">KENNEL NAME</string>
@@ -347,6 +348,10 @@
     <string name="kennel_list_kennel_capacity_placeholder">Kennel has a capacity to hold %1$s Pets</string>
     <string name="kennel_list_kennel_distance">~ 1.1 km</string>
     <string name="kennel_list_kennel_distance_placeholder">%1$s %2$s</string>
+
+    <!-- KENNEL DETAILS -->
+    <string name="kennel_details_name">KENNEL NAME</string>
+    <string name="kennel_details_address">KENNEL ADDRESS</string>
 
     <!-- USER APPOINTMENT ITEM STRINGS -->
     <string name="user_appointment_item_date">DATE</string>

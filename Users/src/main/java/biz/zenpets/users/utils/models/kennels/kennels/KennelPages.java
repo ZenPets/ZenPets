@@ -1,4 +1,4 @@
-package biz.zenpets.users.utils.models.kennels;
+package biz.zenpets.users.utils.models.kennels.kennels;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -3,7 +3,6 @@ package biz.zenpets.users.utils.models.reviews;
 import com.google.gson.annotations.SerializedName;
 
 public class Review {
-
     @SerializedName("reviewID") private String reviewID;
     @SerializedName("doctorID") private String doctorID;
     @SerializedName("doctorPrefix") private String doctorPrefix;

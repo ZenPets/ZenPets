@@ -16,6 +16,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,6 +43,7 @@ import java.util.List;
 import java.util.Locale;
 
 import biz.zenpets.users.R;
+import biz.zenpets.users.utils.TypefaceSpan;
 import biz.zenpets.users.utils.models.location.City;
 import biz.zenpets.users.utils.models.location.Localities;
 import biz.zenpets.users.utils.models.location.Locality;
@@ -344,10 +347,13 @@ public class FilterLocationActivity extends AppCompatActivity implements SearchV
     private void configAB() {
         Toolbar myToolbar = findViewById(R.id.myToolbar);
         setSupportActionBar(myToolbar);
+        String strTitle = "Select A Location";
+        SpannableString s = new SpannableString(strTitle);
+        s.setSpan(new TypefaceSpan(getApplicationContext()), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setTitle(null);
+        getSupportActionBar().setTitle(s);
         getSupportActionBar().setSubtitle(null);
     }
 

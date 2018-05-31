@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +25,12 @@ import biz.zenpets.users.R;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.helpers.classes.ZenDistanceClient;
 import biz.zenpets.users.utils.helpers.clinics.distance.DistanceAPI;
-import biz.zenpets.users.utils.models.kennels.Kennel;
+import biz.zenpets.users.utils.models.kennels.kennels.Kennel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@SuppressWarnings("ConstantConditions")
 public class TestKennelsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private AppPrefs getApp()	{
@@ -44,17 +44,16 @@ public class TestKennelsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private Context context;
 
     private boolean isLoadingAdded = false;
-
-    /** THE ORIGIN **/
-    private LatLng LATLNG_ORIGIN;
+    
+    /** THE LAT LNG INSTANCE **/
+    LatLng LATLNG_ORIGIN = null;
 
     public TestKennelsAdapter(Context context) {
         this.context = context;
         this.arrKennels = new ArrayList<>();
-        String strLatitude = getApp().getOriginLatitude();
-        String strLongitude = getApp().getOriginLongitude();
-        LATLNG_ORIGIN = new LatLng(Double.valueOf(strLatitude), Double.valueOf(strLongitude));
-        Log.e("LAT LNG", String.valueOf(LATLNG_ORIGIN));
+        String LATITUDE = getApp().getOriginLatitude();
+        String LONGITUDE = getApp().getOriginLongitude();
+        LATLNG_ORIGIN = new LatLng(Double.valueOf(LATITUDE), Double.valueOf(LONGITUDE));
     }
 
     @NonNull
@@ -125,7 +124,15 @@ public class TestKennelsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     kennelsVH.txtPetCapacity.setText(context.getString(R.string.kennel_list_kennel_capacity_zero));
                 }
 
-                /* SET THE KENNEL'S DISTANCE */
+//                /* SET THE KENNEL'S DISTANCE FROM THE USER'S LOCATION */
+//                if (data.getKennelDistance() != null)   {
+//                    String distance = data.getKennelDistance();
+//                    String strTilde = context.getString(R.string.generic_tilde);
+//                    kennelsVH.txtKennelDistance.setText(context.getString(R.string.doctor_list_clinic_distance_placeholder, strTilde, distance));
+//                }
+
+
+                /* SET THE KENNEL'S DISTANCE FROM THE USER'S CURRENT LOCATION */
                 if (data.getKennelLatitude() != null && data.getKennelLongitude() != null)  {
                     Double latitude = Double.valueOf(data.getKennelLatitude());
                     Double longitude = Double.valueOf(data.getKennelLongitude());
@@ -169,6 +176,10 @@ public class TestKennelsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                             kennelsVH.txtKennelDistance.setText(context.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
                         }
                     });
+                } else {
+                    String distance = "Unknown";
+                    String strInfinity = context.getString(R.string.generic_infinity);
+                    kennelsVH.txtKennelDistance.setText(context.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
                 }
                 break;
             case LOADING:
@@ -242,7 +253,7 @@ public class TestKennelsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         TextView txtKennelLikes;
         TextView txtKennelDistance;
 
-        public KennelsVH(View v) {
+        KennelsVH(View v) {
             super(v);
 
             imgvwKennelCoverPhoto = v.findViewById(R.id.imgvwKennelCoverPhoto);
