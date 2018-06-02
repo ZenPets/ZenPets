@@ -44,20 +44,16 @@ import biz.zenpets.users.R;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.TypefaceSpan;
 import biz.zenpets.users.utils.adapters.kennels.KennelsAdapter;
-import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
+import biz.zenpets.users.utils.helpers.kennels.classes.FetchKennels;
+import biz.zenpets.users.utils.helpers.kennels.interfaces.FetchKennelsInterface;
 import biz.zenpets.users.utils.helpers.location.classes.FetchCityID;
 import biz.zenpets.users.utils.helpers.location.interfaces.FetchCityIDInterface;
 import biz.zenpets.users.utils.models.kennels.kennels.Kennel;
-import biz.zenpets.users.utils.models.kennels.kennels.Kennels;
-import biz.zenpets.users.utils.models.kennels.kennels.KennelsAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class NewKennelsList extends AppCompatActivity
-        implements FetchCityIDInterface, SearchView.OnQueryTextListener {
+        implements FetchCityIDInterface, FetchKennelsInterface, SearchView.OnQueryTextListener {
 
     private AppPrefs getApp()	{
         return (AppPrefs) getApplication();
@@ -108,95 +104,121 @@ public class NewKennelsList extends AppCompatActivity
         configRecycler();
     }
 
+    @Override
+    public void onKennels(ArrayList<Kennel> data) {
+        /* CAST THE DATA IN THE GLOBAL INSTANCE */
+        arrKennels = data;
+
+        /* CHECK FOR CONTENTS */
+        if (arrKennels.size() > 0)  {
+            /* SET THE ADAPTER */
+            listKennels.setAdapter(new KennelsAdapter(NewKennelsList.this, arrKennels));
+
+            /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
+            listKennels.setVisibility(View.VISIBLE);
+            linlaEmpty.setVisibility(View.GONE);
+
+            /* HIDE THE PROGRESS BAR */
+            linlaProgress.setVisibility(View.GONE);
+        } else {
+            /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
+            linlaEmpty.setVisibility(View.VISIBLE);
+            listKennels.setVisibility(View.GONE);
+
+            /* HIDE THE PROGRESS BAR */
+            linlaProgress.setVisibility(View.GONE);
+        }
+    }
+
     /** GET THE LIST OF KENNELS **/
     private void fetchKennels() {
-        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-        Call<Kennels> call = api.fetchKennelsListByCity(FINAL_CITY_ID);
-        call.enqueue(new Callback<Kennels>() {
-            @Override
-            public void onResponse(Call<Kennels> call, Response<Kennels> response) {
-                if (response.body() != null && response.body().getKennels() != null)    {
-                    arrKennels = response.body().getKennels();
-                    if (arrKennels.size() > 0)  {
-                        /* SET THE ADAPTER */
-                        listKennels.setAdapter(new KennelsAdapter(NewKennelsList.this, arrKennels, LATLNG_ORIGIN));
-
-                        /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
-                        listKennels.setVisibility(View.VISIBLE);
-                        linlaEmpty.setVisibility(View.GONE);
-
-                        /* HIDE THE PROGRESS BAR */
-                        linlaProgress.setVisibility(View.GONE);
-                    } else {
-                        /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
-                        linlaEmpty.setVisibility(View.VISIBLE);
-                        listKennels.setVisibility(View.GONE);
-
-                        /* HIDE THE PROGRESS BAR */
-                        linlaProgress.setVisibility(View.GONE);
-                    }
-                } else {
-                    /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
-                    linlaEmpty.setVisibility(View.VISIBLE);
-                    listKennels.setVisibility(View.GONE);
-
-                    /* HIDE THE PROGRESS BAR */
-                    linlaProgress.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Kennels> call, Throwable t) {
-                Log.e("KENNELS FAILURE", t.getMessage());
-                Crashlytics.logException(t);
-            }
-        });
+//        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
+//        Call<Kennels> call = api.fetchKennelsListByCity(FINAL_CITY_ID);
+//        call.enqueue(new Callback<Kennels>() {
+//            @Override
+//            public void onResponse(Call<Kennels> call, Response<Kennels> response) {
+//                if (response.body() != null && response.body().getKennels() != null)    {
+//                    arrKennels = response.body().getKennels();
+//                    if (arrKennels.size() > 0)  {
+//                        /* SET THE ADAPTER */
+//                        listKennels.setAdapter(new KennelsAdapter(NewKennelsList.this, arrKennels, LATLNG_ORIGIN));
+//
+//                        /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
+//                        listKennels.setVisibility(View.VISIBLE);
+//                        linlaEmpty.setVisibility(View.GONE);
+//
+//                        /* HIDE THE PROGRESS BAR */
+//                        linlaProgress.setVisibility(View.GONE);
+//                    } else {
+//                        /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
+//                        linlaEmpty.setVisibility(View.VISIBLE);
+//                        listKennels.setVisibility(View.GONE);
+//
+//                        /* HIDE THE PROGRESS BAR */
+//                        linlaProgress.setVisibility(View.GONE);
+//                    }
+//                } else {
+//                    /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
+//                    linlaEmpty.setVisibility(View.VISIBLE);
+//                    listKennels.setVisibility(View.GONE);
+//
+//                    /* HIDE THE PROGRESS BAR */
+//                    linlaProgress.setVisibility(View.GONE);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Kennels> call, Throwable t) {
+//                Log.e("KENNELS FAILURE", t.getMessage());
+//                Crashlytics.logException(t);
+//            }
+//        });
     }
 
     /** FETCH THE KENNEL SEARCH RESULTS **/
-    private void fetchKennelResults(String query) {
-        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-        Call<Kennels> call = api.searchKennels(FINAL_CITY_ID, query);
-        call.enqueue(new Callback<Kennels>() {
-            @Override
-            public void onResponse(Call<Kennels> call, Response<Kennels> response) {
-                if (response.body() != null && response.body().getKennels() != null)    {
-                    arrKennels = response.body().getKennels();
-                    if (arrKennels.size() > 0)  {
-                        /* SET THE ADAPTER */
-                        listKennels.setAdapter(new KennelsAdapter(NewKennelsList.this, arrKennels, LATLNG_ORIGIN));
-
-                        /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
-                        listKennels.setVisibility(View.VISIBLE);
-                        linlaEmpty.setVisibility(View.GONE);
-
-                        /* HIDE THE PROGRESS BAR */
-                        linlaProgress.setVisibility(View.GONE);
-                    } else {
-                        /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
-                        linlaEmpty.setVisibility(View.VISIBLE);
-                        listKennels.setVisibility(View.GONE);
-
-                        /* HIDE THE PROGRESS BAR */
-                        linlaProgress.setVisibility(View.GONE);
-                    }
-                } else {
-                    /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
-                    linlaEmpty.setVisibility(View.VISIBLE);
-                    listKennels.setVisibility(View.GONE);
-
-                    /* HIDE THE PROGRESS BAR */
-                    linlaProgress.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Kennels> call, Throwable t) {
-                Log.e("KENNELS FAILURE", t.getMessage());
-                Crashlytics.logException(t);
-            }
-        });
-    }
+//    private void fetchKennelResults(String query) {
+//        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
+//        Call<Kennels> call = api.searchKennels(FINAL_CITY_ID, query);
+//        call.enqueue(new Callback<Kennels>() {
+//            @Override
+//            public void onResponse(Call<Kennels> call, Response<Kennels> response) {
+//                if (response.body() != null && response.body().getKennels() != null)    {
+//                    arrKennels = response.body().getKennels();
+//                    if (arrKennels.size() > 0)  {
+//                        /* SET THE ADAPTER */
+//                        listKennels.setAdapter(new KennelsAdapter(NewKennelsList.this, arrKennels, LATLNG_ORIGIN));
+//
+//                        /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
+//                        listKennels.setVisibility(View.VISIBLE);
+//                        linlaEmpty.setVisibility(View.GONE);
+//
+//                        /* HIDE THE PROGRESS BAR */
+//                        linlaProgress.setVisibility(View.GONE);
+//                    } else {
+//                        /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
+//                        linlaEmpty.setVisibility(View.VISIBLE);
+//                        listKennels.setVisibility(View.GONE);
+//
+//                        /* HIDE THE PROGRESS BAR */
+//                        linlaProgress.setVisibility(View.GONE);
+//                    }
+//                } else {
+//                    /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
+//                    linlaEmpty.setVisibility(View.VISIBLE);
+//                    listKennels.setVisibility(View.GONE);
+//
+//                    /* HIDE THE PROGRESS BAR */
+//                    linlaProgress.setVisibility(View.GONE);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Kennels> call, Throwable t) {
+//                Log.e("KENNELS FAILURE", t.getMessage());
+//                Crashlytics.logException(t);
+//            }
+//        });
+//    }
 
     /** FETCH THE USER'S LOCATION **/
     private void fetchUsersLocation() {
@@ -313,6 +335,7 @@ public class NewKennelsList extends AppCompatActivity
         if (FINAL_CITY_ID != null)   {
             Log.e("CITY ID", FINAL_CITY_ID);
             /* GET THE LIST OF KENNELS */
+            new FetchKennels(this).execute(FINAL_CITY_ID, LATLNG_ORIGIN.latitude, LATLNG_ORIGIN.longitude);
             fetchKennels();
         } else {
             /* SET THE ERROR MESSAGE */
@@ -336,7 +359,7 @@ public class NewKennelsList extends AppCompatActivity
         listKennels.setHasFixedSize(true);
 
         /* SET THE ADAPTER */
-        listKennels.setAdapter(new KennelsAdapter(NewKennelsList.this, arrKennels, LATLNG_ORIGIN));
+        listKennels.setAdapter(new KennelsAdapter(NewKennelsList.this, arrKennels));
     }
 
     /***** CONFIGURE THE ACTIONBAR *****/
@@ -385,7 +408,7 @@ public class NewKennelsList extends AppCompatActivity
             /* CLEAR THE ARRAY, SHOW THE PROGRESS AND FETCH THE KENNEL SEARCH RESULTS */
             arrKennels.clear();
             linlaProgress.setVisibility(View.VISIBLE);
-            fetchKennelResults(query);
+//            fetchKennelResults(query);
             searchView.clearFocus();
         }
         return true;

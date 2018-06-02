@@ -39,7 +39,6 @@ public class FetchKennels extends AsyncTask<Object, Void, ArrayList<Kennel>> {
         String strUrl = AppPrefs.context().getString(R.string.url_kennels_list);
         HttpUrl.Builder builder = HttpUrl.parse(strUrl).newBuilder();
         builder.addQueryParameter("cityID", String.valueOf(objects[0]));
-        builder.addQueryParameter("pageNumber", String.valueOf(objects[1]));
         String FINAL_URL = builder.build().toString();
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -181,8 +180,8 @@ public class FetchKennels extends AsyncTask<Object, Void, ArrayList<Kennel>> {
                                 && !kennelLongitude.equalsIgnoreCase("0"))    {
 
                             /* GET THE ORIGIN (USER) */
-                            String originLat = String.valueOf(objects[2]);
-                            String originLng = String.valueOf(objects[3]);
+                            String originLat = String.valueOf(objects[1]);
+                            String originLng = String.valueOf(objects[2]);
                             LatLng LATLNG_ORIGIN = new LatLng(Double.valueOf(originLat), Double.valueOf(originLng));
 //                            Log.e("LAT LNG", String.valueOf(LATLNG_ORIGIN));
 

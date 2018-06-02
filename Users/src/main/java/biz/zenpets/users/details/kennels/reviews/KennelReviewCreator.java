@@ -1,5 +1,6 @@
 package biz.zenpets.users.details.kennels.reviews;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -8,15 +9,20 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.models.kennels.kennels.Kennel;
 import biz.zenpets.users.utils.models.kennels.kennels.KennelsAPI;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,6 +40,10 @@ public class KennelReviewCreator extends AppCompatActivity {
     /** THE INCOMING KENNEL ID AND THE KENNEL OWNER'S ID **/
     private String KENNEL_ID = null;
     private String KENNEL_OWNER_ID = null;
+
+    /** CAST THE LAYOUT ELEMENTS **/
+    @BindView(R.id.imgvwKennelCoverPhoto) SimpleDraweeView imgvwKennelCoverPhoto;
+    @BindView(R.id.txtKennelName) TextView txtKennelName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,7 +69,25 @@ public class KennelReviewCreator extends AppCompatActivity {
             @Override
             public void onResponse(Call<Kennel> call, Response<Kennel> response) {
                 if (!response.body().getError()) {
+                    Kennel kennel = response.body();
 
+                    /* GET AND SET THE KENNEL NAME */
+                    String kennelName = kennel.getKennelName();
+                    txtKennelName.setText(kennelName);
+
+                    /* GET AND SET THE KENNEL COVER PHOTO */
+                    String kennelCoverPhoto = kennel.getKennelCoverPhoto();
+                    if (kennelCoverPhoto != null
+                            && !kennelCoverPhoto.equalsIgnoreCase("")
+                            && !kennelCoverPhoto.equalsIgnoreCase("null"))    {
+                        Uri uriClinic = Uri.parse(kennelCoverPhoto);
+                        imgvwKennelCoverPhoto.setImageURI(uriClinic);
+                    } else {
+                        ImageRequest request = ImageRequestBuilder
+                                .newBuilderWithResourceId(R.drawable.ic_business_black_24dp)
+                                .build();
+                        imgvwKennelCoverPhoto.setImageURI(request.getSourceUri());
+                    }
                 } else {
                     Toast.makeText(getApplicationContext(), "Failed to get required info....", Toast.LENGTH_SHORT).show();
                     finish();
