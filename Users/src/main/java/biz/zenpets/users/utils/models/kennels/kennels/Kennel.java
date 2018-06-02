@@ -1,76 +1,43 @@
 package biz.zenpets.users.utils.models.kennels.kennels;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Kennel {
 
-    @SerializedName("kennelID")
-    @Expose
-    private String kennelID;
-    @SerializedName("kennelOwnerID")
-    @Expose
-    private String kennelOwnerID;
-    @SerializedName("kennelOwnerName")
-    @Expose
-    private String kennelOwnerName;
-    @SerializedName("kennelOwnerDisplayProfile")
-    @Expose
-    private String kennelOwnerDisplayProfile;
-    @SerializedName("kennelName")
-    @Expose
-    private String kennelName;
-    @SerializedName("kennelCoverPhoto")
-    @Expose
-    private String kennelCoverPhoto;
-    @SerializedName("kennelAddress")
-    @Expose
-    private String kennelAddress;
-    @SerializedName("kennelPinCode")
-    @Expose
-    private String kennelPinCode;
-    @SerializedName("countryID")
-    @Expose
-    private String countryID;
-    @SerializedName("countryName")
-    @Expose
-    private String countryName;
-    @SerializedName("stateID")
-    @Expose
-    private String stateID;
-    @SerializedName("stateName")
-    @Expose
-    private String stateName;
-    @SerializedName("cityID")
-    @Expose
-    private String cityID;
-    @SerializedName("cityName")
-    @Expose
-    private String cityName;
-    @SerializedName("kennelLatitude")
-    @Expose
-    private String kennelLatitude;
-    @SerializedName("kennelLongitude")
-    @Expose
-    private String kennelLongitude;
-    @SerializedName("kennelDistance")
-    @Expose
-    private String kennelDistance;
-    @SerializedName("kennelPhonePrefix1")
-    @Expose
-    private String kennelPhonePrefix1;
-    @SerializedName("kennelPhoneNumber1")
-    @Expose
-    private String kennelPhoneNumber1;
-    @SerializedName("kennelPhonePrefix2")
-    @Expose
-    private String kennelPhonePrefix2;
-    @SerializedName("kennelPhoneNumber2")
-    @Expose
-    private String kennelPhoneNumber2;
-    @SerializedName("kennelPetCapacity")
-    @Expose
-    private String kennelPetCapacity;
+    @SerializedName("error") private Boolean error;
+    @SerializedName("kennelID") private String kennelID;
+    @SerializedName("kennelOwnerID") private String kennelOwnerID;
+    @SerializedName("kennelOwnerName") private String kennelOwnerName;
+    @SerializedName("kennelOwnerDisplayProfile") private String kennelOwnerDisplayProfile;
+    @SerializedName("kennelName") private String kennelName;
+    @SerializedName("kennelCoverPhoto") private String kennelCoverPhoto;
+    @SerializedName("kennelAddress") private String kennelAddress;
+    @SerializedName("kennelPinCode") private String kennelPinCode;
+    @SerializedName("countryID") private String countryID;
+    @SerializedName("countryName") private String countryName;
+    @SerializedName("stateID") private String stateID;
+    @SerializedName("stateName") private String stateName;
+    @SerializedName("cityID") private String cityID;
+    @SerializedName("cityName") private String cityName;
+    @SerializedName("kennelLatitude") private String kennelLatitude;
+    @SerializedName("kennelLongitude") private String kennelLongitude;
+    @SerializedName("kennelDistance") private String kennelDistance;
+    @SerializedName("kennelPhonePrefix1") private String kennelPhonePrefix1;
+    @SerializedName("kennelPhoneNumber1") private String kennelPhoneNumber1;
+    @SerializedName("kennelPhonePrefix2") private String kennelPhonePrefix2;
+    @SerializedName("kennelPhoneNumber2") private String kennelPhoneNumber2;
+    @SerializedName("kennelPetCapacity") private String kennelPetCapacity;
+    @SerializedName("kennelLikes") private String kennelLikes;
+    @SerializedName("kennelVotes") private String kennelVotes;
+    @SerializedName("kennelLikesPercent") private String kennelLikesPercent;
+
+    public Boolean getError() {
+        return error;
+    }
+
+    public void setError(Boolean error) {
+        this.error = error;
+    }
 
     public String getKennelID() {
         return kennelID;
@@ -246,5 +213,29 @@ public class Kennel {
 
     public void setKennelPetCapacity(String kennelPetCapacity) {
         this.kennelPetCapacity = kennelPetCapacity;
+    }
+
+    public String getKennelLikes() {
+        return kennelLikes;
+    }
+
+    public void setKennelLikes(String kennelLikes) {
+        this.kennelLikes = kennelLikes;
+    }
+
+    public String getKennelVotes() {
+        return kennelVotes;
+    }
+
+    public void setKennelVotes(String kennelVotes) {
+        this.kennelVotes = kennelVotes;
+    }
+
+    public String getKennelLikesPercent() {
+        return kennelLikesPercent;
+    }
+
+    public void setKennelLikesPercent(String kennelLikesPercent) {
+        this.kennelLikesPercent = kennelLikesPercent;
     }
 }

@@ -1,5 +1,6 @@
 package biz.zenpets.users.utils.helpers.kennels.classes;
 
+import android.content.res.Resources;
 import android.os.AsyncTask;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -247,6 +248,69 @@ public class FetchKennels extends AsyncTask<Object, Void, ArrayList<Kennel>> {
                         } else {
                             data.setKennelPetCapacity(null);
                         }
+
+                        /* THE TOTAL VOTES, TOTAL LIKES AND TOTAL DISLIKES */
+                        int TOTAL_VOTES = 0;
+                        int TOTAL_LIKES = 0;
+
+                        /* GET THE POSITIVE REVIEWS / FEEDBACK */
+                        String URL_POSITIVE_REVIEWS = AppPrefs.context().getString(R.string.url_positive_kennel_reviews);
+                        HttpUrl.Builder builderPositive = HttpUrl.parse(URL_POSITIVE_REVIEWS).newBuilder();
+                        builderPositive.addQueryParameter("kennelID", data.getKennelID());
+                        builderPositive.addQueryParameter("kennelRecommendStatus", "Yes");
+                        String FINAL_URL_POSITIVE = builderPositive.build().toString();
+                        OkHttpClient clientPositive = new OkHttpClient();
+                        Request requestPositive = new Request.Builder()
+                                .url(FINAL_URL_POSITIVE)
+                                .build();
+                        Call callPositive = clientPositive.newCall(requestPositive);
+                        Response responsePositive = callPositive.execute();
+                        String strPositiveReview = responsePositive.body().string();
+                        JSONObject JORootPositive = new JSONObject(strPositiveReview);
+                        if (JORootPositive.has("error") && JORootPositive.getString("error").equalsIgnoreCase("false")) {
+                            JSONArray JAPositiveReviews = JORootPositive.getJSONArray("reviews");
+                            TOTAL_LIKES = JAPositiveReviews.length();
+                            TOTAL_VOTES = TOTAL_VOTES + JAPositiveReviews.length();
+                        }
+
+                        /* GET THE POSITIVE REVIEWS / FEEDBACK */
+                        String URL_DOCTOR_REVIEWS = AppPrefs.context().getString(R.string.url_doctor_negative_reviews);
+                        HttpUrl.Builder builderNegative = HttpUrl.parse(URL_DOCTOR_REVIEWS).newBuilder();
+                        builderNegative.addQueryParameter("kennelID", data.getKennelID());
+                        builderNegative.addQueryParameter("kennelRecommendStatus", "No");
+                        String FINAL_URL_Negative = builderNegative.build().toString();
+                        OkHttpClient clientNegative = new OkHttpClient();
+                        Request requestReviews = new Request.Builder()
+                                .url(FINAL_URL_Negative)
+                                .build();
+                        Call reviewCall = clientNegative.newCall(requestReviews);
+                        Response responseNegative = reviewCall.execute();
+                        String strNegativeReview = responseNegative.body().string();
+                        JSONObject JORootNegative = new JSONObject(strNegativeReview);
+                        if (JORootNegative.has("error") && JORootNegative.getString("error").equalsIgnoreCase("false")) {
+                            JSONArray JANegativeReviews = JORootNegative.getJSONArray("reviews");
+                            TOTAL_VOTES = TOTAL_VOTES + JANegativeReviews.length();
+                        }
+
+                        /* GET THE TOTAL LIKES */
+                        data.setKennelLikes(String.valueOf(TOTAL_LIKES));
+
+                        /* CALCULATE THE PERCENTAGE OF LIKES */
+                        double percentLikes = ((double)TOTAL_LIKES / TOTAL_VOTES) * 100;
+                        int finalPercentLikes = (int)percentLikes;
+                        data.setKennelLikesPercent(String.valueOf(finalPercentLikes) + "%");
+
+                        /* GET THE TOTAL NUMBER OF REVIEWS / VOTES */
+                        Resources resReviews = AppPrefs.context().getResources();
+                        String reviewQuantity = null;
+                        if (TOTAL_VOTES == 0)   {
+                            reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
+                        } else if (TOTAL_VOTES == 1)    {
+                            reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
+                        } else if (TOTAL_VOTES > 1) {
+                            reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
+                        }
+                        data.setKennelVotes(reviewQuantity);
 
                         /* ADD THE GATHERED DATA TO THE ARRAY LIST */
                         arrKennels.add(data);

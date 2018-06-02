@@ -46,7 +46,68 @@
                     app:placeholderImage="@drawable/ic_business_black_48dp"
                     app:placeholderImageScaleType="center" />
 
-                <LinearLayout
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:background="#A6000000"
+                    android:paddingBottom="25dp">
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/imgvwKennelOwnerDisplayProfile"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:placeholderImage="@drawable/ic_person_black_24dp"
+                        app:placeholderImageScaleType="center"
+                        app:roundAsCircle="true"
+                        app:roundingBorderColor="@color/semiTransparentDark"
+                        app:roundingBorderWidth="2dp"
+                        app:srcCompat="@drawable/ic_person_black_24dp" />
+
+                    <TextView
+                        android:id="@+id/txtKennelName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:gravity="start|center"
+                        android:text="@string/kennel_details_name"
+                        android:textColor="@android:color/primary_text_dark"
+                        android:textSize="16sp"
+                        app:fontFamily="@font/roboto_condensed_bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imgvwKennelOwnerDisplayProfile"
+                        app:layout_constraintTop_toTopOf="@+id/imgvwKennelOwnerDisplayProfile" />
+
+                    <TextView
+                        android:id="@+id/txtKennelOwnerName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="KENNEL OWNER'S NAME"
+                        android:textColor="@android:color/secondary_text_dark"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/roboto_condensed_regular"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imgvwKennelOwnerDisplayProfile"
+                        app:layout_constraintTop_toBottomOf="@+id/txtKennelName" />
+                </android.support.constraint.ConstraintLayout>
+
+                <!--<LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
@@ -72,7 +133,7 @@
                         android:textColor="@android:color/primary_text_dark"
                         android:textSize="16sp"
                         app:fontFamily="@font/roboto_condensed_bold" />
-                </LinearLayout>
+                </LinearLayout>-->
             </FrameLayout>
 
             <android.support.v7.widget.Toolbar

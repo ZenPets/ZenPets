@@ -53,4 +53,8 @@ public interface KennelReviewsAPI {
     Call<KennelReview> checkUserKennelReview(
             @Query("userID") String userID,
             @Query("kennelID") String kennelID);
+
+    /** FETCH THE KENNEL'S AVERAGE RATINGS **/
+    @GET("fetchKennelRatings")
+    Call<KennelRating> fetchKennelRatings(@Query("kennelID") String kennelID);
 }

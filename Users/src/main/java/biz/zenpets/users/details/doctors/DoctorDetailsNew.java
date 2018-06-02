@@ -1629,7 +1629,7 @@ public class DoctorDetailsNew extends AppCompatActivity {
                 builder.setCancelable(false);
                 builder.setIcon(R.drawable.ic_info_outline_black_24dp);
                 builder.setTitle("Permission Required");
-                builder.setMessage("\nZen Pets requires the permission to call the DoctorProfile's phone number. \n\nFor a seamless experience, we recommend granting Zen Pets this permission.");
+                builder.setMessage("\nZen Pets requires the permission to call the Doctor's phone number. \n\nFor a seamless experience, we recommend granting Zen Pets this permission.");
                 builder.setPositiveButton("Grant Permission", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

@@ -2,7 +2,6 @@ package biz.zenpets.users.utils.adapters.kennels;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -12,31 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.google.android.gms.maps.model.LatLng;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.details.kennels.KennelDetails;
-import biz.zenpets.users.utils.AppPrefs;
-import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
-import biz.zenpets.users.utils.helpers.classes.ZenDistanceClient;
-import biz.zenpets.users.utils.helpers.clinics.distance.DistanceAPI;
 import biz.zenpets.users.utils.models.kennels.kennels.Kennel;
-import biz.zenpets.users.utils.models.kennels.reviews.KennelReview;
-import biz.zenpets.users.utils.models.kennels.reviews.KennelReviews;
-import biz.zenpets.users.utils.models.kennels.reviews.KennelReviewsAPI;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class KennelsAdapter extends RecyclerView.Adapter<KennelsAdapter.KennelsVH> {
 
@@ -108,108 +92,108 @@ public class KennelsAdapter extends RecyclerView.Adapter<KennelsAdapter.KennelsV
             holder.txtPetCapacity.setText(activity.getString(R.string.kennel_list_kennel_capacity_zero));
         }
 
-        /* GET THE TOTAL NUMBER OF POSITIVE REVIEWS */
-        TOTAL_LIKES = 0;
-        TOTAL_VOTES = 0;
-        KennelReviewsAPI apiYes = ZenApiClient.getClient().create(KennelReviewsAPI.class);
-        Call<KennelReviews> callYes = apiYes.fetchPositiveKennelReviews(data.getKennelID(), "Yes");
-        callYes.enqueue(new Callback<KennelReviews>() {
-            @Override
-            public void onResponse(Call<KennelReviews> call, Response<KennelReviews> response) {
-                if (response.body() != null && response.body().getReviews() != null)    {
-                    ArrayList<KennelReview> arrReview = response.body().getReviews();
-                    TOTAL_LIKES = arrReview.size();
-                    TOTAL_VOTES = TOTAL_VOTES + arrReview.size();
+//        /* GET THE TOTAL NUMBER OF POSITIVE REVIEWS */
+//        KennelReviewsAPI apiYes = ZenApiClient.getClient().create(KennelReviewsAPI.class);
+//        Call<KennelReviews> callYes = apiYes.fetchPositiveKennelReviews(data.getKennelID(), "Yes");
+//        callYes.enqueue(new Callback<KennelReviews>() {
+//            @Override
+//            public void onResponse(Call<KennelReviews> call, Response<KennelReviews> response) {
+//                Log.e("POSITIVE RAW", String.valueOf(response.raw()));
+//                if (response.body() != null && response.body().getReviews() != null)    {
+//                    ArrayList<KennelReview> arrPositive = response.body().getReviews();
+//                    TOTAL_LIKES = arrPositive.size();
+//                    TOTAL_VOTES = TOTAL_VOTES + arrPositive.size();
+//
+//                    /* GET THE TOTAL NUMBER OF NEGATIVE REVIEWS */
+//                    KennelReviewsAPI apiNo = ZenApiClient.getClient().create(KennelReviewsAPI.class);
+//                    Call<KennelReviews> callNo = apiNo.fetchNegativeKennelReviews(data.getKennelID(), "No");
+//                    callNo.enqueue(new Callback<KennelReviews>() {
+//                        @Override
+//                        public void onResponse(Call<KennelReviews> call, Response<KennelReviews> response) {
+//                            Log.e("NEGATIVE RAW", String.valueOf(response.raw()));
+////                            if (response.body() != null && response.body().getReviews() != null)    {
+//                                ArrayList<KennelReview> arrNegative = response.body().getReviews();
+//                                TOTAL_VOTES = TOTAL_VOTES + arrNegative.size();
+//
+//                                /* CALCULATE THE PERCENTAGE OF LIKES */
+//                                double percentLikes = ((double)TOTAL_LIKES / TOTAL_VOTES) * 100;
+//                                int finalPercentLikes = (int)percentLikes;
+//                                String strLikesPercentage = String.valueOf(finalPercentLikes) + "%";
+//
+//                                /* GET THE TOTAL NUMBER OF REVIEWS / VOTES */
+//                                Resources resReviews = AppPrefs.context().getResources();
+//                                String reviewQuantity = null;
+//                                if (TOTAL_VOTES == 0)   {
+//                                    reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
+//                                } else if (TOTAL_VOTES == 1)    {
+//                                    reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
+//                                } else if (TOTAL_VOTES > 1) {
+//                                    reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
+//                                }
+//                                String strVotes = reviewQuantity;
+//                                String open = activity.getString(R.string.doctor_list_votes_open);
+//                                String close = activity.getString(R.string.doctor_list_votes_close);
+//                                holder.txtKennelLikes.setText(activity.getString(R.string.doctor_list_votes_placeholder, strLikesPercentage, open, strVotes, close));
+////                            }
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<KennelReviews> call, Throwable t) {
+//                            Crashlytics.logException(t);
+//                        }
+//                    });
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<KennelReviews> call, Throwable t) {
+//                Crashlytics.logException(t);
+//            }
+//        });
 
-                    /* GET THE TOTAL NUMBER OF NEGATIVE REVIEWS */
-                    KennelReviewsAPI apiNo = ZenApiClient.getClient().create(KennelReviewsAPI.class);
-                    Call<KennelReviews> callNo = apiNo.fetchNegativeKennelReviews(data.getKennelID(), "No");
-                    callNo.enqueue(new Callback<KennelReviews>() {
-                        @Override
-                        public void onResponse(Call<KennelReviews> call, Response<KennelReviews> response) {
-                            if (response.body() != null && response.body().getReviews() != null)    {
-                                ArrayList<KennelReview> arrReview = response.body().getReviews();
-                                TOTAL_VOTES = TOTAL_VOTES + arrReview.size();
-
-                                /* CALCULATE THE PERCENTAGE OF LIKES */
-                                double percentLikes = ((double)TOTAL_LIKES / TOTAL_VOTES) * 100;
-                                int finalPercentLikes = (int)percentLikes;
-                                String strLikesPercentage = String.valueOf(finalPercentLikes) + "%";
-
-                                /* GET THE TOTAL NUMBER OF REVIEWS / VOTES */
-                                Resources resReviews = AppPrefs.context().getResources();
-                                String reviewQuantity = null;
-                                if (TOTAL_VOTES == 0)   {
-                                    reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
-                                } else if (TOTAL_VOTES == 1)    {
-                                    reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
-                                } else if (TOTAL_VOTES > 1) {
-                                    reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
-                                }
-                                String strVotes = reviewQuantity;
-                                String open = activity.getString(R.string.doctor_list_votes_open);
-                                String close = activity.getString(R.string.doctor_list_votes_close);
-                                holder.txtKennelLikes.setText(activity.getString(R.string.doctor_list_votes_placeholder, strLikesPercentage, open, strVotes, close));
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<KennelReviews> call, Throwable t) {
-                            Crashlytics.logException(t);
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onFailure(Call<KennelReviews> call, Throwable t) {
-                Crashlytics.logException(t);
-            }
-        });
-
-        /* SET THE KENNEL'S DISTANCE */
-        Double latitude = Double.valueOf(data.getKennelLatitude());
-        Double longitude = Double.valueOf(data.getKennelLongitude());
-        LatLng LATLNG_DESTINATION = new LatLng(latitude, longitude);
-        String strOrigin = LATLNG_ORIGIN.latitude + "," + LATLNG_ORIGIN.longitude;
-        String strDestination = LATLNG_DESTINATION.latitude + "," + LATLNG_DESTINATION.longitude;
-        String strSensor = "false";
-        String strKey = activity.getString(R.string.google_directions_api_key);
-        DistanceAPI api = ZenDistanceClient.getClient().create(DistanceAPI.class);
-        Call<String> call = api.json(strOrigin, strDestination, strSensor, strKey);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                try {
-                    String strDistance = response.body();
-                    JSONObject JORootDistance = new JSONObject(strDistance);
-                    JSONArray array = JORootDistance.getJSONArray("routes");
-                    JSONObject JORoutes = array.getJSONObject(0);
-                    JSONArray JOLegs= JORoutes.getJSONArray("legs");
-                    JSONObject JOSteps = JOLegs.getJSONObject(0);
-                    JSONObject JODistance = JOSteps.getJSONObject("distance");
-                    if (JODistance.has("text")) {
-                        String distance = JODistance.getString("text");
-                        String strTilde = activity.getString(R.string.generic_tilde);
-                        holder.txtKennelDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strTilde, distance));
-                    } else {
-                        String distance = "Unknown";
-                        String strInfinity = activity.getString(R.string.generic_infinity);
-                        holder.txtKennelDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Crashlytics.logException(t);
-                String distance = "Unknown";
-                String strInfinity = activity.getString(R.string.generic_infinity);
-                holder.txtKennelDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
-            }
-        });
+//        /* SET THE KENNEL'S DISTANCE */
+//        Double latitude = Double.valueOf(data.getKennelLatitude());
+//        Double longitude = Double.valueOf(data.getKennelLongitude());
+//        LatLng LATLNG_DESTINATION = new LatLng(latitude, longitude);
+//        String strOrigin = LATLNG_ORIGIN.latitude + "," + LATLNG_ORIGIN.longitude;
+//        String strDestination = LATLNG_DESTINATION.latitude + "," + LATLNG_DESTINATION.longitude;
+//        String strSensor = "false";
+//        String strKey = activity.getString(R.string.google_directions_api_key);
+//        DistanceAPI api = ZenDistanceClient.getClient().create(DistanceAPI.class);
+//        Call<String> call = api.json(strOrigin, strDestination, strSensor, strKey);
+//        call.enqueue(new Callback<String>() {
+//            @Override
+//            public void onResponse(Call<String> call, Response<String> response) {
+//                try {
+//                    String strDistance = response.body();
+//                    JSONObject JORootDistance = new JSONObject(strDistance);
+//                    JSONArray array = JORootDistance.getJSONArray("routes");
+//                    JSONObject JORoutes = array.getJSONObject(0);
+//                    JSONArray JOLegs= JORoutes.getJSONArray("legs");
+//                    JSONObject JOSteps = JOLegs.getJSONObject(0);
+//                    JSONObject JODistance = JOSteps.getJSONObject("distance");
+//                    if (JODistance.has("text")) {
+//                        String distance = JODistance.getString("text");
+//                        String strTilde = activity.getString(R.string.generic_tilde);
+//                        holder.txtKennelDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strTilde, distance));
+//                    } else {
+//                        String distance = "Unknown";
+//                        String strInfinity = activity.getString(R.string.generic_infinity);
+//                        holder.txtKennelDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<String> call, Throwable t) {
+//                Crashlytics.logException(t);
+//                String distance = "Unknown";
+//                String strInfinity = activity.getString(R.string.generic_infinity);
+//                holder.txtKennelDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
+//            }
+//        });
 
         /* SHOW THE KENNEL DETAILS */
         holder.cardKennel.setOnClickListener(new View.OnClickListener() {

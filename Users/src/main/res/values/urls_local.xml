@@ -94,4 +94,6 @@
 
     <!-- KENNEL URL'S -->
     <string name="url_kennels_list">http://192.168.11.2/zenpets/public/fetchKennelsListByCity</string>
+    <string name="url_positive_kennel_reviews">http://192.168.11.2/zenpets/public/fetchPositiveKennelReviews</string>
+    <string name="url_negative_kennel_reviews">http://192.168.11.2/zenpets/public/fetchNegativeKennelReviews</string>
 </resources>

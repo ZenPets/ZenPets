@@ -46,7 +46,7 @@
                     android:text="@string/home_title_appointment"
                     android:textColor="@color/secondary_text"
                     android:textSize="15sp"
-                    app:fontFamily="@font/lato_bold" />
+                    app:fontFamily="@font/roboto_medium" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                     android:text="@string/home_subtitle_appointment"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
-                    app:fontFamily="@font/lato_regular" />
+                    app:fontFamily="@font/roboto_condensed_regular" />
             </LinearLayout>
 
             <com.mikepenz.iconics.view.IconicsImageView
@@ -122,7 +122,7 @@
                     android:text="@string/home_title_adopt"
                     android:textColor="@color/secondary_text"
                     android:textSize="15sp"
-                    app:fontFamily="@font/lato_bold" />
+                    app:fontFamily="@font/roboto_medium" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="match_parent"
@@ -137,7 +137,7 @@
                     android:text="@string/home_subtitle_adopt"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
-                    app:fontFamily="@font/lato_regular" />
+                    app:fontFamily="@font/roboto_condensed_regular" />
             </LinearLayout>
 
             <com.mikepenz.iconics.view.IconicsImageView
@@ -198,7 +198,7 @@
                     android:text="@string/home_title_groomers"
                     android:textColor="@color/secondary_text"
                     android:textSize="15sp"
-                    app:fontFamily="@font/lato_bold" />
+                    app:fontFamily="@font/roboto_medium" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="match_parent"
@@ -213,7 +213,7 @@
                     android:text="@string/home_subtitle_groomers"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
-                    app:fontFamily="@font/lato_regular" />
+                    app:fontFamily="@font/roboto_condensed_regular" />
             </LinearLayout>
 
             <com.mikepenz.iconics.view.IconicsImageView
@@ -274,7 +274,7 @@
                     android:text="@string/home_title_kennels"
                     android:textColor="@color/secondary_text"
                     android:textSize="15sp"
-                    app:fontFamily="@font/lato_bold" />
+                    app:fontFamily="@font/roboto_medium" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="match_parent"
@@ -289,7 +289,7 @@
                     android:text="@string/home_subtitle_kennels"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
-                    app:fontFamily="@font/lato_regular" />
+                    app:fontFamily="@font/roboto_condensed_regular" />
             </LinearLayout>
 
             <com.mikepenz.iconics.view.IconicsImageView
@@ -350,7 +350,7 @@
                     android:text="@string/home_title_boarding"
                     android:textColor="@color/secondary_text"
                     android:textSize="15sp"
-                    app:fontFamily="@font/lato_bold" />
+                    app:fontFamily="@font/roboto_medium" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="match_parent"
@@ -365,7 +365,7 @@
                     android:text="@string/home_subtitle_boarding"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
-                    app:fontFamily="@font/lato_regular" />
+                    app:fontFamily="@font/roboto_condensed_regular" />
             </LinearLayout>
 
             <com.mikepenz.iconics.view.IconicsImageView
@@ -426,7 +426,7 @@
                     android:text="@string/home_title_trainers"
                     android:textColor="@color/secondary_text"
                     android:textSize="15sp"
-                    app:fontFamily="@font/lato_bold" />
+                    app:fontFamily="@font/roboto_medium" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="match_parent"
@@ -441,7 +441,7 @@
                     android:text="@string/home_subtitle_trainers"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
-                    app:fontFamily="@font/lato_regular" />
+                    app:fontFamily="@font/roboto_condensed_regular" />
             </LinearLayout>
 
             <com.mikepenz.iconics.view.IconicsImageView

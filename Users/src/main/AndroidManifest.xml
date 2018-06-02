@@ -40,8 +40,6 @@
             </intent-filter>
         </activity>
 
-        <!-- FIRST PET CREATOR -->
-
         <!-- LOGIN -->
         <activity
             android:name=".LoginActivity"
@@ -284,6 +282,16 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".details.kennels.KennelDetails"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <!-- KENNEL REVIEWS -->
+        <activity
+            android:name=".details.kennels.reviews.KennelReviewCreator"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".modifier.kennel.KennelReviewModifier"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
