@@ -33,7 +33,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:fontFamily="@font/roboto_condensed_bold"
             android:maxLines="1"
             android:paddingBottom="5dp"
             android:paddingEnd="11dp"
@@ -43,7 +42,8 @@
             android:paddingTop="5dp"
             android:text="Kennel Name"
             android:textColor="@color/secondary_text"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            app:fontFamily="@font/roboto_condensed_bold" />
     </LinearLayout>
 
     <ScrollView
@@ -72,9 +72,9 @@
                 android:paddingStart="11dp"
                 android:paddingTop="5dp"
                 android:text="Would you recommend this Kennel to family and friends?"
-                android:textColor="@color/secondary_text"
+                android:textColor="@color/primary_text"
                 android:textSize="14sp"
-                app:fontFamily="@font/roboto_condensed_bold" />
+                app:fontFamily="@font/roboto_condensed_regular" />
 
             <RadioGroup
                 android:id="@+id/rdgRecommend"
@@ -87,7 +87,6 @@
 
                 <RadioButton
                     android:id="@+id/btnYes"
-                    style="@style/LightBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start|center"
@@ -96,6 +95,7 @@
                     android:layout_marginRight="5dp"
                     android:layout_marginStart="0dp"
                     android:checked="true"
+                    android:fontFamily="@font/roboto_condensed_regular"
                     android:padding="11dp"
                     android:text="@string/review_creator_recommend_yes"
                     android:textColor="@color/secondary_text"
@@ -103,7 +103,6 @@
 
                 <RadioButton
                     android:id="@+id/btnNo"
-                    style="@style/LightBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start|center"
@@ -112,6 +111,7 @@
                     android:layout_marginRight="0dp"
                     android:layout_marginStart="5dp"
                     android:checked="false"
+                    android:fontFamily="@font/roboto_condensed_regular"
                     android:padding="11dp"
                     android:text="@string/review_creator_recommend_no"
                     android:textColor="@color/secondary_text"
@@ -129,9 +129,9 @@
                 android:paddingStart="11dp"
                 android:paddingTop="5dp"
                 android:text="How would rate this Kennel?"
-                android:textColor="@color/secondary_text"
+                android:textColor="@color/primary_text"
                 android:textSize="14sp"
-                app:fontFamily="@font/roboto_condensed_bold" />
+                app:fontFamily="@font/roboto_condensed_regular" />
 
             <RatingBar
                 android:id="@+id/ratingKennel"
@@ -148,7 +148,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:textColorHint="@android:color/tertiary_text_light"
+                android:textColorHint="@color/secondary_text"
                 app:hintTextAppearance="@style/TextLabel">
 
                 <android.support.design.widget.TextInputEditText
@@ -162,7 +162,7 @@
                     android:maxLines="11"
                     android:minLines="6"
                     android:padding="11dp"
-                    android:textColor="@android:color/primary_text_light"
+                    android:textColor="@color/primary_text"
                     android:textSize="14sp"
                     app:fontFamily="@font/roboto_condensed_regular" />
             </android.support.design.widget.TextInputLayout>

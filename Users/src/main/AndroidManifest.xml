@@ -287,6 +287,10 @@
 
         <!-- KENNEL REVIEWS -->
         <activity
+            android:name=".details.kennels.reviews.KennelReviewsActivity"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
             android:name=".details.kennels.reviews.KennelReviewCreator"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />

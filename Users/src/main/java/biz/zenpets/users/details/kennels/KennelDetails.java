@@ -49,6 +49,7 @@ import java.util.ArrayList;
 import biz.zenpets.users.R;
 import biz.zenpets.users.creator.profile.ProfileEditor;
 import biz.zenpets.users.details.kennels.reviews.KennelReviewCreator;
+import biz.zenpets.users.details.kennels.reviews.KennelReviewsActivity;
 import biz.zenpets.users.modifier.kennel.KennelReviewModifier;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.adapters.kennels.reviews.KennelReviewsAdapter;
@@ -134,9 +135,13 @@ public class KennelDetails extends AppCompatActivity {
     @OnClick(R.id.imgvwChargesInfo) void showChargesInfo()  {
     }
 
-//    /** SHOW ALL THE KENNEL REVIEWS **/
-//    @OnClick(R.id.txtAllReviews) void showAllReviews()  {
-//    }
+    /** SHOW ALL THE KENNEL REVIEWS **/
+    @OnClick(R.id.txtAllReviews) void showAllReviews()  {
+        Intent intent = new Intent(getApplicationContext(), KennelReviewsActivity.class);
+        intent.putExtra("KENNEL_ID", KENNEL_ID);
+        intent.putExtra("KENNEL_NAME", KENNEL_NAME);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -161,7 +166,7 @@ public class KennelDetails extends AppCompatActivity {
         listReviews.setVisibility(View.GONE);
         txtAllReviews.setVisibility(View.GONE);
         fetchReviewCount();
-        fetchDoctorReviews();
+        fetchKennelReviews();
 
         /* CONFIGURE THE APP BAR LAYOUT */
         appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -322,8 +327,8 @@ public class KennelDetails extends AppCompatActivity {
                     /* FETCH THE KENNEL'S RATING */
                     fetchKennelRatings();
 
-                    /* FETCH THE KENNEL'S REVIEWS */
-                    fetchKennelReviews();
+                    /* FETCH THE KENNEL'S FEEDBACK */
+                    fetchKennelFeedback();
                 } else {
                     Toast.makeText(getApplicationContext(), "Failed to get required info...", Toast.LENGTH_SHORT).show();
                     finish();
@@ -368,12 +373,13 @@ public class KennelDetails extends AppCompatActivity {
         });
     }
 
-    /***** FETCH THE DOCTOR'S REVIEWS *****/
-    private void fetchDoctorReviews() {
+    /***** FETCH THE KENNEL'S REVIEWS *****/
+    private void fetchKennelReviews() {
         Call<KennelReviews> call = apiReview.fetchKennelReviewsSubset(KENNEL_ID);
         call.enqueue(new Callback<KennelReviews>() {
             @Override
             public void onResponse(Call<KennelReviews> call, Response<KennelReviews> response) {
+                Log.e("REVIEWS RAW", String.valueOf(response.raw()));
                 if (response.body() != null && response.body().getReviews() != null)    {
                     arrReviewsSubset = response.body().getReviews();
                     if (arrReviewsSubset.size() > 0)    {
@@ -435,8 +441,8 @@ public class KennelDetails extends AppCompatActivity {
         });
     }
 
-    /** FETCH THE KENNEL'S REVIEWS **/
-    private void fetchKennelReviews() {
+    /** FETCH THE KENNEL'S FEEDBACK **/
+    private void fetchKennelFeedback() {
         Call<KennelReviews> callYes = apiReview.fetchPositiveKennelReviews(KENNEL_ID, "Yes");
         callYes.enqueue(new Callback<KennelReviews>() {
             @Override
@@ -747,5 +753,24 @@ public class KennelDetails extends AppCompatActivity {
         listReviews.setHasFixedSize(true);
         listReviews.setNestedScrollingEnabled(false);
         listReviews.setAdapter(new KennelReviewsAdapter(KennelDetails.this, arrReviewsSubset));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK)    {
+            if (requestCode == 101 || requestCode == 102)   {
+                /* CLEAR THE ARRAY LIST */
+                arrReviewsSubset.clear();
+
+                /* SHOW THE REVIEWS PROGRESS AND FETCH THE REVIEW AGAIN */
+                linlaReviewsProgress.setVisibility(View.VISIBLE);
+                listReviews.setVisibility(View.GONE);
+                txtAllReviews.setVisibility(View.GONE);
+                linlaNoReviews.setVisibility(View.GONE);
+                fetchKennelReviews();
+            }
+        }
     }
 }

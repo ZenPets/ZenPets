@@ -47,11 +47,23 @@ public class KennelsAdapter extends RecyclerView.Adapter<KennelsAdapter.KennelsV
     public void onBindViewHolder(@NonNull final KennelsVH holder, final int position) {
         final Kennel data = arrKennels.get(position);
 
+//        /* SET THE KENNEL COVER PHOTO */
+//        String strKennelCoverPhoto = data.getKennelCoverPhoto();
+//        if (strKennelCoverPhoto != null
+//                && !strKennelCoverPhoto.equalsIgnoreCase("")
+//                && !strKennelCoverPhoto.equalsIgnoreCase("null")) {
+//            Uri uri = Uri.parse(strKennelCoverPhoto);
+//            holder.imgvwKennelCoverPhoto.setImageURI(uri);
+//        } else {
+//            ImageRequest request = ImageRequestBuilder
+//                    .newBuilderWithResourceId(R.drawable.empty_graphic)
+//                    .build();
+//            holder.imgvwKennelCoverPhoto.setImageURI(request.getSourceUri());
+//        }
+
         /* SET THE KENNEL COVER PHOTO */
         String strKennelCoverPhoto = data.getKennelCoverPhoto();
-        if (strKennelCoverPhoto != null
-                && !strKennelCoverPhoto.equalsIgnoreCase("")
-                && !strKennelCoverPhoto.equalsIgnoreCase("null")) {
+        if (strKennelCoverPhoto != null) {
             Uri uri = Uri.parse(strKennelCoverPhoto);
             holder.imgvwKennelCoverPhoto.setImageURI(uri);
         } else {
@@ -73,9 +85,7 @@ public class KennelsAdapter extends RecyclerView.Adapter<KennelsAdapter.KennelsV
         holder.txtKennelAddress.setText(activity.getString(R.string.kennel_list_kennel_address_placeholder, strKennelAddress, cityName, kennelPinCode));
 
         /* SET THE CAPACITY OF LARGE SIZE PETS */
-        if (data.getKennelPetCapacity() != null
-                && !data.getKennelPetCapacity().equalsIgnoreCase("")
-                && !data.getKennelPetCapacity().equalsIgnoreCase("null"))   {
+        if (data.getKennelPetCapacity() != null)   {
             holder.txtPetCapacity.setText(activity.getString(R.string.kennel_list_kennel_capacity_placeholder, data.getKennelPetCapacity()));
         } else {
             holder.txtPetCapacity.setText(activity.getString(R.string.kennel_list_kennel_capacity_zero));

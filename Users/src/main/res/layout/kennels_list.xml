@@ -35,7 +35,7 @@
         android:scrollbarSize="3dp"
         android:scrollbarThumbVertical="@color/primary_dark"
         android:scrollbars="vertical"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <ProgressBar
         android:id="@+id/progressLoading"
@@ -51,7 +51,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"

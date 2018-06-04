@@ -1,14 +1,26 @@
 package biz.zenpets.users.details.kennels.reviews;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.RadioGroup;
+import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +34,8 @@ import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.models.kennels.kennels.Kennel;
 import biz.zenpets.users.utils.models.kennels.kennels.KennelsAPI;
+import biz.zenpets.users.utils.models.kennels.reviews.KennelReview;
+import biz.zenpets.users.utils.models.kennels.reviews.KennelReviewsAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -41,9 +55,22 @@ public class KennelReviewCreator extends AppCompatActivity {
     private String KENNEL_ID = null;
     private String KENNEL_OWNER_ID = null;
 
+    /** DATA TYPES TO HOLD THE USER SELECTIONS **/
+    private String RECOMMEND_STATUS = "Yes";
+    private String KENNEL_RATING = "0.0";
+
+    /** A PROGRESS DIALOG INSTANCE **/
+    private ProgressDialog dialog;
+
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.imgvwKennelCoverPhoto) SimpleDraweeView imgvwKennelCoverPhoto;
     @BindView(R.id.txtKennelName) TextView txtKennelName;
+    @BindView(R.id.scrollContainer) ScrollView scrollContainer;
+    @BindView(R.id.rdgRecommend) RadioGroup rdgRecommend;
+    @BindView(R.id.ratingKennel) RatingBar ratingKennel;
+    @BindView(R.id.inputExperience) TextInputLayout inputExperience;
+    @BindView(R.id.edtExperience) TextInputEditText edtExperience;
+    @BindView(R.id.txtTermsOfService) TextView txtTermsOfService;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +86,23 @@ public class KennelReviewCreator extends AppCompatActivity {
 
         /* GET THE INCOMING DATA **/
         getIncomingData();
+
+        /* CHECK THE RECOMMENDATION STATUS **/
+        rdgRecommend.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                switch (checkedId) {
+                    case R.id.btnYes:
+                        RECOMMEND_STATUS = "Yes";
+                        break;
+                    case R.id.btnNo:
+                        RECOMMEND_STATUS = "No";
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
     /** FETCH THE KENNEL'S DETAILS **/
@@ -158,5 +202,67 @@ public class KennelReviewCreator extends AppCompatActivity {
 
     /** VALIDATE REVIEW DATA **/
     private void validateData() {
+        /* HIDE THE KEYBOARD **/
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(edtExperience.getWindowToken(), 0);
+        }
+
+        /* GET THE DATA **/
+        String KENNEL_EXPERIENCE = edtExperience.getText().toString().trim();
+        KENNEL_RATING = String.valueOf(ratingKennel.getRating());
+
+        /* VERIFY ALL REQUIRED DATA **/
+        int sdk = Build.VERSION.SDK_INT;
+        if (TextUtils.isEmpty(RECOMMEND_STATUS))    {
+            if(sdk < Build.VERSION_CODES.JELLY_BEAN) {
+                rdgRecommend.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.error_background));
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    rdgRecommend.setBackground(ContextCompat.getDrawable(this, R.drawable.error_background));
+                }
+            }
+            scrollContainer.smoothScrollTo(0, rdgRecommend.getTop());
+        } else if (TextUtils.isEmpty(KENNEL_EXPERIENCE))    {
+            inputExperience.setErrorEnabled(true);
+            inputExperience.setError("Please provide your experience");
+            inputExperience.requestFocus();
+        } else {
+            inputExperience.setErrorEnabled(false);
+
+            /* SHOW THE PROGRESS DIALOG AND POST THE NEW REVIEW */
+            dialog = new ProgressDialog(this);
+            dialog.setMessage("Please wait while we publish your review..");
+            dialog.setIndeterminate(false);
+            dialog.setCancelable(false);
+            dialog.show();
+
+            String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
+            KennelReviewsAPI api = ZenApiClient.getClient().create(KennelReviewsAPI.class);
+            Call<KennelReview> call = api.newKennelReview(
+                    KENNEL_ID, USER_ID, KENNEL_RATING, RECOMMEND_STATUS, KENNEL_EXPERIENCE, timeStamp);
+            call.enqueue(new Callback<KennelReview>() {
+                @Override
+                public void onResponse(Call<KennelReview> call, Response<KennelReview> response) {
+                    if (response.isSuccessful() && !response.body().getError())    {
+                        dialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "Review published successfully...", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent();
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    } else {
+                        /* DISMISS THE DIALOG */
+                        dialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "Error publishing review...", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<KennelReview> call, Throwable t) {
+                    Log.e("REVIEW FAILURE", t.getMessage());
+                    Crashlytics.logException(t);
+                }
+            });
+        }
     }
 }
