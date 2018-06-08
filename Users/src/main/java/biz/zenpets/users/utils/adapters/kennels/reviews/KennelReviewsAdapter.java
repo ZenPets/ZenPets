@@ -1,20 +1,23 @@
 package biz.zenpets.users.utils.adapters.kennels.reviews;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.mikepenz.iconics.view.IconicsImageView;
 
-import org.ocpsoft.prettytime.PrettyTime;
-
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -47,26 +50,21 @@ public class KennelReviewsAdapter extends RecyclerView.Adapter<KennelReviewsAdap
     public void onBindViewHolder(@NonNull ReviewsVH holder, final int position) {
         KennelReview data = arrReviews.get(position);
 
-        /* SET THE VISIT EXPERIENCE */
-        if (data.getKennelExperience() != null) {
-            holder.txtKennelExperience.setText(data.getKennelExperience());
+        /* SET THE USER'S DISPLAY PROFILE */
+        String userDisplayProfile = data.getUserDisplayProfile();
+        if (userDisplayProfile != null) {
+            Uri uri = Uri.parse(userDisplayProfile);
+            holder.imgvwUserDisplayProfile.setImageURI(uri);
+        } else {
+            ImageRequest request = ImageRequestBuilder
+                    .newBuilderWithResourceId(R.drawable.ic_person_black_24dp)
+                    .build();
+            holder.imgvwUserDisplayProfile.setImageURI(request.getSourceUri());
         }
 
         /* SET THE USER NAME */
         if (data.getUserName() != null) {
             holder.txtUserName.setText(data.getUserName());
-        }
-
-        /* SET THE TIMESTAMP */
-        if (data.getKennelReviewTimestamp() != null)  {
-            String reviewTimestamp = data.getKennelReviewTimestamp();
-            long lngTimeStamp = Long.parseLong(reviewTimestamp) * 1000;
-            Calendar calendar = Calendar.getInstance(Locale.getDefault());
-            calendar.setTimeInMillis(lngTimeStamp);
-            Date date = calendar.getTime();
-            PrettyTime prettyTime = new PrettyTime();
-            String strDate = prettyTime.format(date);
-            holder.txtTimeStamp.setText(strDate);
         }
 
         /* SET THE RECOMMEND STATUS */
@@ -77,6 +75,25 @@ public class KennelReviewsAdapter extends RecyclerView.Adapter<KennelReviewsAdap
         } else if (strRecommendStatus.equalsIgnoreCase("No"))   {
             holder.imgvwLikeStatus.setIcon("faw_thumbs_down2");
             holder.imgvwLikeStatus.setColor(ContextCompat.getColor(activity, android.R.color.holo_red_dark));
+        }
+
+        /* SET THE REVIEW RATING */
+        String kennelRating = data.getKennelRating();
+        if (kennelRating != null && !kennelRating.equalsIgnoreCase("null")) {
+            holder.kennelRating.setRating(Float.parseFloat(kennelRating));
+        } else {
+            holder.kennelRating.setRating(0);
+        }
+
+        /* SET THE TIME STAMP */
+        Date date = new Date(Long.parseLong(data.getKennelReviewTimestamp()) * 1000L);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String timeStamp = sdf.format(date);
+        holder.txtTimestamp.setText(timeStamp);
+
+        /* SET THE USER'S KENNEL EXPERIENCE / REVIEW */
+        if (data.getKennelExperience() != null) {
+            holder.txtKennelExperience.setText(data.getKennelExperience());
         }
     }
 
@@ -93,18 +110,22 @@ public class KennelReviewsAdapter extends RecyclerView.Adapter<KennelReviewsAdap
 
     class ReviewsVH extends RecyclerView.ViewHolder	{
 
-        TextView txtKennelExperience;
-        IconicsImageView imgvwLikeStatus;
+        SimpleDraweeView imgvwUserDisplayProfile;
         TextView txtUserName;
-        TextView txtTimeStamp;
+        RatingBar kennelRating;
+        TextView txtTimestamp;
+        IconicsImageView imgvwLikeStatus;
+        TextView txtKennelExperience;
 
         ReviewsVH(View v) {
             super(v);
 
-            txtKennelExperience = v.findViewById(R.id.txtKennelExperience);
-            imgvwLikeStatus = v.findViewById(R.id.imgvwLikeStatus);
+            imgvwUserDisplayProfile = v.findViewById(R.id.imgvwUserDisplayProfile);
             txtUserName = v.findViewById(R.id.txtUserName);
-            txtTimeStamp = v.findViewById(R.id.txtTimeStamp);
+            kennelRating = v.findViewById(R.id.kennelRating);
+            txtTimestamp = v.findViewById(R.id.txtTimestamp);
+            imgvwLikeStatus = v.findViewById(R.id.imgvwLikeStatus);
+            txtKennelExperience = v.findViewById(R.id.txtKennelExperience);
         }
     }
 }

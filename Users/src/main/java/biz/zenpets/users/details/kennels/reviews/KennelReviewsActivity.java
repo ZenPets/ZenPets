@@ -3,23 +3,40 @@ package biz.zenpets.users.details.kennels.reviews;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+
+import java.util.ArrayList;
+
 import biz.zenpets.users.R;
+import biz.zenpets.users.utils.adapters.kennels.reviews.KennelReviewsAdapter;
+import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
+import biz.zenpets.users.utils.models.kennels.reviews.KennelReview;
+import biz.zenpets.users.utils.models.kennels.reviews.KennelReviews;
+import biz.zenpets.users.utils.models.kennels.reviews.KennelReviewsAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class KennelReviewsActivity extends AppCompatActivity {
 
     /** THE INCOMING KENNEL ID AND NAME **/
     String KENNEL_ID = null;
     String KENNEL_NAME = null;
+
+    /** A KENNEL REVIEWS ARRAY LIST INSTANCE **/
+    ArrayList<KennelReview> arrReviews = new ArrayList<>();
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.txtKennelName) TextView txtKennelName;
@@ -34,6 +51,9 @@ public class KennelReviewsActivity extends AppCompatActivity {
         setContentView(R.layout.kennel_reviews_list);
         ButterKnife.bind(this);
 
+        /* CONFIGURE THE RECYCLER VIEW */
+        configRecycler();
+
         /* GET THE INCOMING DATA */
         getIncomingData();
 
@@ -43,16 +63,57 @@ public class KennelReviewsActivity extends AppCompatActivity {
 
     /** FETCH THE KENNEL'S REVIEWS **/
     private void fetchKennelReviews() {
+        KennelReviewsAPI api = ZenApiClient.getClient().create(KennelReviewsAPI.class);
+        Call<KennelReviews> call = api.fetchKennelReviews(KENNEL_ID);
+        call.enqueue(new Callback<KennelReviews>() {
+            @Override
+            public void onResponse(Call<KennelReviews> call, Response<KennelReviews> response) {
+                if (!response.body().getError() && response.body() != null && response.body().getReviews() != null)    {
+                    arrReviews = response.body().getReviews();
+                    if (arrReviews.size() > 0)  {
+                        /* SET THE KENNEL REVIEWS ADAPTER */
+                        listKennelReviews.setAdapter(new KennelReviewsAdapter(KennelReviewsActivity.this, arrReviews));
+
+                        /* HIDE THE PROGRESS AFTER FETCHING THE DATA */
+                        linlaProgress.setVisibility(View.GONE);
+
+                        /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
+                        listKennelReviews.setVisibility(View.VISIBLE);
+                        linlaEmpty.setVisibility(View.GONE);
+                    } else {
+                        /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
+                        linlaEmpty.setVisibility(View.VISIBLE);
+                        listKennelReviews.setVisibility(View.GONE);
+
+                        /* HIDE THE PROGRESS AFTER FETCHING THE DATA */
+                        linlaProgress.setVisibility(View.GONE);
+                    }
+                } else {
+                    /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
+                    linlaEmpty.setVisibility(View.VISIBLE);
+                    listKennelReviews.setVisibility(View.GONE);
+
+                    /* HIDE THE PROGRESS AFTER FETCHING THE DATA */
+                    linlaProgress.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<KennelReviews> call, Throwable t) {
+                Log.e("REVIEWS FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
 
     /* GET THE INCOMING DATA */
     private void getIncomingData() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null
-                && bundle.containsKey("DOCTOR_ID")
-                && bundle.containsKey("DOCTOR_NAME")) {
-            KENNEL_ID = bundle.getString("DOCTOR_ID");
-            KENNEL_NAME = bundle.getString("DOCTOR_NAME");
+                && bundle.containsKey("KENNEL_ID")
+                && bundle.containsKey("KENNEL_NAME")) {
+            KENNEL_ID = bundle.getString("KENNEL_ID");
+            KENNEL_NAME = bundle.getString("KENNEL_NAME");
             if (KENNEL_ID != null && KENNEL_NAME != null)  {
                 /* SET THE KENNEL'S NAME */
                 txtKennelName.setText(KENNEL_NAME);
@@ -91,5 +152,19 @@ public class KennelReviewsActivity extends AppCompatActivity {
                 break;
         }
         return false;
+    }
+
+    /***** CONFIGURE THE RECYCLER VIEW *****/
+    private void configRecycler() {
+        /* SET THE CONFIGURATION */
+        LinearLayoutManager manager = new LinearLayoutManager(KennelReviewsActivity.this);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        manager.setAutoMeasureEnabled(true);
+        listKennelReviews.setLayoutManager(manager);
+        listKennelReviews.setHasFixedSize(true);
+        listKennelReviews.setNestedScrollingEnabled(true);
+
+        /* SET THE KENNEL REVIEWS ADAPTER */
+        listKennelReviews.setAdapter(new KennelReviewsAdapter(KennelReviewsActivity.this, arrReviews));
     }
 }

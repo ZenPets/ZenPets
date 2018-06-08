@@ -175,9 +175,6 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
         TextView txtTimestamp;
         IconicsImageView imgvwLikeStatus;
         TextView txtKennelExperience;
-//        TextView txtReplyStatus;
-//        TextView txtReply;
-//        IconicsImageView imgvwReviewOptions;
 
         ReviewsVH(View v) {
             super(v);

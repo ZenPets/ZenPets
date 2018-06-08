@@ -30,6 +30,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -112,6 +113,8 @@ public class KennelModifier extends AppCompatActivity {
     private List<String> arrCapacity = new ArrayList<>();
 
     /** CAST THE LAYOUT ELEMENTS **/
+    @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
+    @BindView(R.id.scrollDetails) ScrollView scrollDetails;
     @BindView(R.id.inputKennelID) TextInputLayout inputKennelID;
     @BindView(R.id.edtKennelID) TextInputEditText edtKennelID;
     @BindView(R.id.inputKennelName) TextInputLayout inputKennelName;
@@ -295,7 +298,13 @@ public class KennelModifier extends AppCompatActivity {
                             }
                         });
                     }
+
+                    /* HIDE THE PROGRESS AFTER FETCHING THE DATA */
+                    linlaProgress.setVisibility(View.GONE);
                 } else {
+                    /* HIDE THE PROGRESS AFTER FETCHING THE DATA */
+                    linlaProgress.setVisibility(View.GONE);
+
                     Toast.makeText(getApplicationContext(), "Failed to get required info...", Toast.LENGTH_SHORT).show();
                     finish();
                 }
@@ -327,7 +336,8 @@ public class KennelModifier extends AppCompatActivity {
         if (bundle != null && bundle.containsKey("KENNEL_ID"))    {
             KENNEL_ID = bundle.getString("KENNEL_ID");
             if (KENNEL_ID != null)  {
-                /* FETCH THE KENNEL DETAILS */
+                /* SHOW THE PROGRESS AND FETCH THE KENNEL DETAILS */
+                linlaProgress.setVisibility(View.VISIBLE);
                 fetchKennelDetails();
             } else {
                 Toast.makeText(getApplicationContext(), "Failed to get required info...", Toast.LENGTH_SHORT).show();

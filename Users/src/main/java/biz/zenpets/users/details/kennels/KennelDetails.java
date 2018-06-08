@@ -125,7 +125,6 @@ public class KennelDetails extends AppCompatActivity {
     @BindView(R.id.txtPhoneNumber2) TextView txtPhoneNumber2;
     @BindView(R.id.txtKennelAddress) TextView txtKennelAddress;
     @BindView(R.id.kennelMap) MapView kennelMap;
-//    @BindView(R.id.linlaReviews) LinearLayout linlaReviews;
     @BindView(R.id.linlaReviewsProgress) LinearLayout linlaReviewsProgress;
     @BindView(R.id.listReviews) RecyclerView listReviews;
     @BindView(R.id.txtAllReviews) TextView txtAllReviews;
@@ -160,13 +159,6 @@ public class KennelDetails extends AppCompatActivity {
 
         /* CONFIGURE THE RECYCLER VIEW */
         configRecycler();
-
-        /* SHOW THE PROGRESS AND FETCH THE FIRST 3 REVIEWS FOR THE DOCTOR */
-        linlaReviewsProgress.setVisibility(View.VISIBLE);
-        listReviews.setVisibility(View.GONE);
-        txtAllReviews.setVisibility(View.GONE);
-        fetchReviewCount();
-        fetchKennelReviews();
 
         /* CONFIGURE THE APP BAR LAYOUT */
         appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -323,6 +315,13 @@ public class KennelDetails extends AppCompatActivity {
                             }
                         });
                     }
+
+                    /* SHOW THE PROGRESS AND FETCH THE FIRST 3 REVIEWS FOR THE DOCTOR */
+                    linlaReviewsProgress.setVisibility(View.VISIBLE);
+                    listReviews.setVisibility(View.GONE);
+                    txtAllReviews.setVisibility(View.GONE);
+                    fetchReviewCount();
+                    fetchKennelReviews();
 
                     /* FETCH THE KENNEL'S RATING */
                     fetchKennelRatings();
@@ -659,7 +658,7 @@ public class KennelDetails extends AppCompatActivity {
                         String reviewID = review.getKennelReviewID();
                         Intent intent = new Intent(KennelDetails.this, KennelReviewModifier.class);
                         intent.putExtra("REVIEW_ID", reviewID);
-                        startActivityForResult(intent, 101);
+                        startActivityForResult(intent, 102);
                     }
                 } else {
                     String profileStatus = getApp().getProfileStatus();
@@ -684,7 +683,7 @@ public class KennelDetails extends AppCompatActivity {
                         Intent intentNewFeedback = new Intent(getApplicationContext(), KennelReviewCreator.class);
                         intentNewFeedback.putExtra("KENNEL_ID", KENNEL_ID);
                         intentNewFeedback.putExtra("KENNEL_OWNER_ID", KENNEL_OWNER_ID);
-                        startActivity(intentNewFeedback);
+                        startActivityForResult(intentNewFeedback, 101);
                     }
                 }
             }
