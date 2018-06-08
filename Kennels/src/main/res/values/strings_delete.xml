@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- DELETE A KENNEL RECORD -->
+    <string name="delete_kennel_title">Delete Kennel?</string>
+    <string name="delete_kennel_content">Are you sure you want to delete the Kennel titled \"%1$s\"?
+        Deleting this will also delete any images you have uploaded
+        along with any reviews that may have been posted for this Kennel by Pet Parents.
+    \n\nDeleting this is permanent and as soon as the Kennel is deleted, it will no longer be shown to Pet Parents in the Zen Pets application.
+    \n\nTo confirm, press the \"Delete\" button.</string>
+</resources>

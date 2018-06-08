@@ -16,6 +16,9 @@ public class KennelReview {
     @SerializedName("kennelRecommendStatus") private String kennelRecommendStatus;
     @SerializedName("kennelExperience") private String kennelExperience;
     @SerializedName("kennelReviewTimestamp") private String kennelReviewTimestamp;
+    @SerializedName("kennelReplyStatus") private String kennelReplyStatus;
+    @SerializedName("kennelReplyText") private String kennelReplyText;
+    @SerializedName("kennelReplyTimestamp") private String kennelReplyTimestamp;
 
     public Boolean getError() {
         return error;
@@ -111,5 +114,29 @@ public class KennelReview {
 
     public void setKennelReviewTimestamp(String kennelReviewTimestamp) {
         this.kennelReviewTimestamp = kennelReviewTimestamp;
+    }
+
+    public String getKennelReplyStatus() {
+        return kennelReplyStatus;
+    }
+
+    public void setKennelReplyStatus(String kennelReplyStatus) {
+        this.kennelReplyStatus = kennelReplyStatus;
+    }
+
+    public String getKennelReplyText() {
+        return kennelReplyText;
+    }
+
+    public void setKennelReplyText(String kennelReplyText) {
+        this.kennelReplyText = kennelReplyText;
+    }
+
+    public String getKennelReplyTimestamp() {
+        return kennelReplyTimestamp;
+    }
+
+    public void setKennelReplyTimestamp(String kennelReplyTimestamp) {
+        this.kennelReplyTimestamp = kennelReplyTimestamp;
     }
 }

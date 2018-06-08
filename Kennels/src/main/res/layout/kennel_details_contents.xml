@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:map="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".details.kennel.KennelDetails"
+    tools:showIn="@layout/kennel_details">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|top"
+            android:orientation="horizontal">
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:layout_width="47dp"
+                android:layout_height="47dp"
+                android:adjustViewBounds="true"
+                android:padding="11dp"
+                app:iiv_color="@color/secondary_text"
+                app:iiv_icon="faw_hospital_o"
+                app:iiv_size="20dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="top|center"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txtClinicName"
+                    style="@style/CondensedBold"
+                    android:layout_width="fill_parent"
+                    android:layout_height="47dp"
+                    android:gravity="start|center"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    android:text="CLINIC NAME"
+                    android:textColor="@color/primary_text"
+                    android:textSize="16sp" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txtClinicAddress"
+                    style="@style/CondensedRegular"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    android:text="CLINIC ADDRESS"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="15sp" />
+
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/clinicMap"
+                    android:layout_width="fill_parent"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    map:cameraZoom="18"
+                    map:mapType="normal" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start|center"
+                android:orientation="horizontal">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:adjustViewBounds="true"
+                    android:padding="11dp"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="faw_phone_square"
+                    app:iiv_size="20dp" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txtPhone1"
+                    style="@style/LightBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    android:text="Phone 1"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start|center"
+                android:orientation="horizontal">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:adjustViewBounds="true"
+                    android:padding="11dp"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="faw_phone_square"
+                    app:iiv_size="20dp" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txtPhone2"
+                    style="@style/LightBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    android:text="Phone 2"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="top|center"
+            android:orientation="horizontal">
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:layout_width="47dp"
+                android:layout_height="47dp"
+                android:adjustViewBounds="true"
+                android:padding="11dp"
+                app:iiv_color="@color/secondary_text"
+                app:iiv_icon="faw_user_md"
+                app:iiv_size="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/CondensedBold"
+                    android:layout_width="fill_parent"
+                    android:layout_height="47dp"
+                    android:gravity="start|center"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    android:text="DOCTORS"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:id="@+id/linlaDoctors"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="top|center"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/listDoctors"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:cacheColorHint="@android:color/transparent"
+                        android:fadingEdge="none"
+                        android:persistentDrawingCache="scrolling"
+                        android:scrollbarSize="5dp"
+                        android:scrollbarThumbVertical="@color/primary_dark"
+                        android:scrollbars="none" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linlaNoDoctors"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="top|center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/LightBold"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:paddingBottom="5dp"
+                        android:paddingEnd="11dp"
+                        android:paddingLeft="11dp"
+                        android:paddingRight="11dp"
+                        android:paddingStart="11dp"
+                        android:paddingTop="5dp"
+                        android:text="This Clinic doesn't have any Doctors yet. Or, there was an error..."
+                        android:textColor="@color/secondary_text"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="top|center"
+            android:orientation="horizontal">
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:layout_width="47dp"
+                android:layout_height="47dp"
+                android:adjustViewBounds="true"
+                android:padding="11dp"
+                app:iiv_color="@color/secondary_text"
+                app:iiv_icon="gmd_collections"
+                app:iiv_size="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/linlaClinicImages"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="top|center"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/CondensedBold"
+                        android:layout_width="fill_parent"
+                        android:layout_height="47dp"
+                        android:gravity="start|center"
+                        android:paddingBottom="5dp"
+                        android:paddingEnd="11dp"
+                        android:paddingLeft="11dp"
+                        android:paddingRight="11dp"
+                        android:paddingStart="11dp"
+                        android:paddingTop="5dp"
+                        android:text="CLINIC PICTURES"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="16sp" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/listClinicImages"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:cacheColorHint="@android:color/transparent"
+                        android:fadingEdge="none"
+                        android:persistentDrawingCache="scrolling"
+                        android:scrollbarSize="5dp"
+                        android:scrollbarThumbVertical="@color/primary_dark"
+                        android:scrollbars="none" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linlaNoClinicImages"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="top|center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/LightBold"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:paddingBottom="5dp"
+                        android:paddingEnd="11dp"
+                        android:paddingLeft="11dp"
+                        android:paddingRight="11dp"
+                        android:paddingStart="11dp"
+                        android:paddingTop="5dp"
+                        android:text="This Clinic doesn't have any pictures to show yet..."
+                        android:textColor="@color/secondary_text"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end|center"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtManageImages"
+                        style="@style/CondensedBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:paddingBottom="15dp"
+                        android:paddingEnd="11dp"
+                        android:paddingLeft="11dp"
+                        android:paddingRight="11dp"
+                        android:paddingStart="11dp"
+                        android:paddingTop="15dp"
+                        android:text="MANAGE CLINIC IMAGES"
+                        android:textColor="@color/primary_dark"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

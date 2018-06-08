@@ -1,0 +1,90 @@
+<resources>
+    <string name="app_name">Kennel Manager</string>
+
+    <!-- GOOGLE MAPS API KEY -->
+    <string name="google_maps_api_key">AIzaSyBW_52FTXhgeW_Z_GHLHxcG1lRVAej5W28</string>
+
+    <!-- SPLASH SCREEN -->
+    <string name="splash_title">ZEN PETS</string>
+
+    <!-- THE NOTIFICATION CHANNELS -->
+    <string name="default_notification_channel_id">KENNEL_DEFAULT_CHANNEL</string>
+    <string name="default_notification_channel_name">KENNEL_DEFAULT_CHANNEL</string>
+    <string name="default_notification_channel_desc">KENNEL_DEFAULT_CHANNEL</string>
+
+    <!-- LANDING ACTIVITY -->
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+    <!-- COMMON STRINGS -->
+    <string name="loading_message">Loading…</string>
+
+    <!-- IMAGE PICKER SHEET STRINGS -->
+    <string name="image_picker_sheet_title">ADD AN IMAGE</string>
+    <string name="image_picker_sheet_gallery">Choose from photo gallery</string>
+    <string name="image_picker_sheet_camera">Take a photo</string>
+
+    <!-- LOGIN SCREEN -->
+    <string name="login_app_title">Zen Pets</string>
+    <string name="login_app_sub_title">for kennels</string>
+    <string name="login_email_hint">Email Address</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_sign_in">SIGN IN</string>
+    <string name="login_create_account">Create Account</string>
+    <string name="login_forgot_password">Forgot Password</string>
+    <string name="login_listed_message">If you have been pre-listed, click the link below to claim your profile</string>
+    <string name="login_listed">CLAIM PROFILE</string>
+
+    <string name="login_unregistered_title">"Email Not Found"</string>
+    <string name="login_unregistered_message">This email does not exist in our records. If you haven\'t signed up, please use the \"Create Account\" button to do so now.</string>
+    <string name="login_unregistered_create">Create Account</string>
+    <string name="login_unregistered_cancel">Cancel</string>
+
+    <string name="login_auth_failed_title">Authentication Failed</string>
+    <string name="login_auth_failed_message">Invalid Password. If you forgotten your password, click the \"Forgot Password\" button to reset your Password. We will send you an email on your registered Email Address to reset it.</string>
+    <string name="login_auth_failed_forgot_password">Forgot Password</string>
+    <string name="login_auth_failed_cancel">Cancel</string>
+
+    <!-- SIGN UP / CREATE ACCOUNT TEXT -->
+    <string name="sign_up_title">CREATE AN ACCOUNT</string>
+    <string name="sign_up_sub_title">Start using Zen Pets - For Kennels in a few steps</string>
+    <string name="sign_up_full_name">(*) Provide your Full Name</string>
+    <string name="sign_up_email_address_hint">(*) Email address</string>
+    <string name="sign_up_password_hint">(*) Password (at least 8 characters)</string>
+    <string name="sign_up_confirm_password_hint">(*) Confirm the Password</string>
+    <string name="sign_up_prefix_hint">1234</string>
+    <string name="sign_up_phone_number_hint">(*) Phone Number</string>
+    <string name="sign_up_mailing_address_hint">(*) Your Mailing / Postal Address</string>
+    <string name="sign_up_pin_code_hint">(*) Pin Code</string>
+    <string name="sign_up_select_country">Select your Country</string>
+    <string name="sign_up_select_state">Select your State</string>
+    <string name="sign_up_select_city">Select the City</string>
+    <string name="sign_up_display_profile">Select Your Display Profile</string>
+
+    <!-- LEGAL STRINGS -->
+    <string name="sign_up_full_terms">By continuing, I agree to the Seller Agreement and Privacy Policy</string>
+    <string name="terms_part_1">By continuing, I agree to the&#160;</string>
+    <string name="terms_part_2">Seller Agreement</string>
+    <string name="terms_part_3">&#160;and the&#160;</string>
+    <string name="terms_part_4">Privacy Policy</string>
+
+    <!-- KENNEL LIST ITEM STRINGS -->
+    <string name="kennel_list_kennel_name_label">KENNEL NAME</string>
+    <string name="kennel_list_kennel_address_label">KENNEL ADDRESS</string>
+    <string name="kennel_list_kennel_address_placeholder">%1$s, %2$s - %3$s</string>
+    <string name="kennel_list_kennel_capacity_label">PET CAPACITY</string>
+    <string name="kennel_list_kennel_capacity_zero">0 Pets</string>
+    <string name="kennel_list_kennel_capacity_placeholder">Kennel has a capacity to hold %1$s Pets</string>
+
+    <!-- KENNEL FEEDBACK LIST -->
+    <string name="reviews_list_empty">There are no reviews / feedback for you, yet.
+        \n\nThis section will populate as soon as Zen Pets Users start adding reviews for your services…</string>
+
+    <!-- KENNEL REVIEW STRINGS -->
+    <string name="review_subset_reason">Visit Reason</string>
+    <string name="review_subset_experience">Visit Experience</string>
+    <string name="review_subset_user_name">User Name</string>
+    <string name="review_subset_time_stamp">2 Months</string>
+    <string name="review_reply_from_label"><b>Reply from Siddharth Lele</b> on 6/6/2018</string>
+    <string name="review_reply_from_title">Reply from </string>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menuUnhelpful"
+        android:title="Unhelpful"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menuInappropriate"
+        android:title="Inappropriate"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menuSpam"
+        android:title="Spam"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menuAbusive"
+        android:title="Abusive"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menuViolent"
+        android:title="Violent"
+        app:showAsAction="always" />
+</menu>
