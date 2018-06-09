@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <include layout="@layout/zen_toolbar" />
+
+    <include layout="@layout/zen_progress" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="top|center"
+        android:orientation="vertical">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/reviewContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/imgvwUserDisplayProfile"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:placeholderImage="@drawable/ic_person_black_24dp"
+                app:roundAsCircle="true"
+                app:roundingBorderColor="@color/semiTransparentLight"
+                app:roundingBorderWidth="2dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/txtUserName"
+                app:layout_constraintEnd_toStartOf="@+id/imgvwLikeStatus"
+                app:layout_constraintStart_toEndOf="@+id/imgvwUserDisplayProfile"
+                app:layout_constraintTop_toTopOf="@+id/imgvwUserDisplayProfile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/review_subset_user_name"
+                android:textColor="@color/primary_text"
+                android:textSize="12sp" />
+
+            <RatingBar
+                android:id="@+id/kennelRating"
+                style="?android:attr/ratingBarStyleSmall"
+                app:layout_constraintStart_toStartOf="@+id/txtUserName"
+                app:layout_constraintTop_toBottomOf="@+id/txtUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:numStars="5"
+                android:rating="2"
+                android:stepSize="1" />
+
+            <TextView
+                android:id="@+id/txtTimestamp"
+                app:layout_constraintBottom_toBottomOf="@+id/kennelRating"
+                app:layout_constraintEnd_toStartOf="@+id/imgvwLikeStatus"
+                app:layout_constraintStart_toEndOf="@+id/kennelRating"
+                app:layout_constraintTop_toTopOf="@+id/kennelRating"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/review_subset_time_stamp"
+                android:textColor="@color/tertiary_text"
+                android:textSize="12sp" />
+
+            <!--<com.mikepenz.iconics.view.IconicsImageView
+                android:id="@+id/imgvwReviewOptions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:paddingBottom="5dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="5dp"
+                app:iiv_color="@color/tertiary_text"
+                app:iiv_icon="faw_ellipsis_v"
+                app:iiv_size="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txtUserName" />-->
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:id="@+id/imgvwLikeStatus"
+                app:iiv_color="@color/tertiary_text"
+                app:iiv_icon="faw_thumbs_up2"
+                app:iiv_size="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txtUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:paddingBottom="5dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="5dp" />
+
+            <!--<com.mikepenz.iconics.view.IconicsImageView
+                android:id="@+id/imgvwPostReply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="2dp"
+                android:layout_marginRight="2dp"
+                android:paddingBottom="5dp"
+                android:paddingEnd="8dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="8dp"
+                android:paddingStart="11dp"
+                android:paddingTop="5dp"
+                app:iiv_color="@android:color/holo_orange_dark"
+                app:iiv_icon="gmd_reply"
+                app:iiv_size="16dp"
+                app:layout_constraintEnd_toStartOf="@+id/imgvwLikeStatus"
+                app:layout_constraintTop_toTopOf="@+id/txtUserName" />-->
+
+            <TextView
+                android:id="@+id/txtKennelExperience"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/kennelRating"
+                app:layout_constraintTop_toBottomOf="@+id/imgvwUserDisplayProfile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Kennel Review"
+                android:textColor="@color/primary_text"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txtReplyStatus"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/txtKennelExperience"
+                app:layout_constraintTop_toBottomOf="@+id/txtKennelExperience"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/review_reply_from_label"
+                android:textColor="@color/primary_text"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txtReply"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/txtReplyStatus"
+                app:layout_constraintTop_toBottomOf="@+id/txtReplyStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Kennel Owner's Reply"
+                android:textColor="@color/primary_text" />
+
+            <!--<LinearLayout
+                android:id="@+id/linlaPostReply"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtKennelExperience">
+
+                <TextView
+                    android:id="@+id/txtPostReply"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end|center"
+                    android:padding="11dp"
+                    android:text="Post a reply..."
+                    android:textColor="@color/tertiary_text"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/roboto_regular" />
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:padding="11dp"
+                    app:iiv_color="@color/tertiary_text"
+                    app:iiv_icon="faw_reply"
+                    app:iiv_size="14dp" />
+            </LinearLayout>-->
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+</LinearLayout>

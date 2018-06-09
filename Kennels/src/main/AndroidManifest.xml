@@ -69,6 +69,12 @@
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
+        <!-- REVIEWS -->
+        <activity
+            android:name=".details.review.ReviewDetails"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
         <!-- LEGAL -->
         <activity
             android:name=".utils.legal.PrivacyPolicyActivity"

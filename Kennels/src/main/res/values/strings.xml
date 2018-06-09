@@ -86,5 +86,5 @@
     <string name="review_subset_user_name">User Name</string>
     <string name="review_subset_time_stamp">2 Months</string>
     <string name="review_reply_from_label"><b>Reply from Siddharth Lele</b> on 6/6/2018</string>
-    <string name="review_reply_from_title">Reply from </string>
+    <string name="review_reply_from_title">Replied on </string>
 </resources>
