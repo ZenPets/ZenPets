@@ -13,7 +13,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -140,7 +139,7 @@ public class KennelReviewCreator extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Kennel> call, Throwable t) {
-                Log.e("DETAILS FAILURE", t.getMessage());
+//                Log.e("DETAILS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -259,7 +258,7 @@ public class KennelReviewCreator extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<KennelReview> call, Throwable t) {
-                    Log.e("REVIEW FAILURE", t.getMessage());
+//                    Log.e("REVIEW FAILURE", t.getMessage());
                     Crashlytics.logException(t);
                 }
             });

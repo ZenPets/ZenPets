@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,10 +108,8 @@ public class KennelsAdapter extends RecyclerView.Adapter<KennelsAdapter.KennelsV
                 if (rating != null) {
                     String strRating = rating.getAvgKennelRating();
                     if (strRating != null && !strRating.equalsIgnoreCase("null")) {
-//                        Log.e("RATING", strRating);
                         Double dblRating = Double.valueOf(strRating);
                         String finalRating = String.format("%.1f", dblRating);
-//                        Log.e("FINAL RATING", finalRating);
                         holder.kennelRating.setRating(Float.parseFloat(finalRating));
                     } else {
                         holder.kennelRating.setRating(0);
@@ -124,7 +121,7 @@ public class KennelsAdapter extends RecyclerView.Adapter<KennelsAdapter.KennelsV
 
             @Override
             public void onFailure(Call<KennelRating> call, Throwable t) {
-                Log.e("RATINGS FAILURE", t.getMessage());
+//                Log.e("RATINGS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

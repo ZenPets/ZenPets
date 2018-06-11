@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -100,7 +99,7 @@ public class KennelReviewsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<KennelReviews> call, Throwable t) {
-                Log.e("REVIEWS FAILURE", t.getMessage());
+//                Log.e("REVIEWS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

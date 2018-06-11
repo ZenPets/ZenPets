@@ -57,4 +57,14 @@ public interface KennelReviewsAPI {
     /** FETCH THE KENNEL'S AVERAGE RATINGS **/
     @GET("fetchKennelRatings")
     Call<KennelRating> fetchKennelRatings(@Query("kennelID") String kennelID);
+
+    /** UPDATE A KENNEL REVIEW **/
+    @POST("updateKennelReview")
+    @FormUrlEncoded
+    Call<KennelReview> updateKennelReview(
+            @Field("kennelReviewID") String kennelReviewID,
+            @Field("kennelRating") String kennelRating,
+            @Field("kennelRecommendStatus") String kennelRecommendStatus,
+            @Field("kennelExperience") String kennelExperience,
+            @Field("kennelReviewTimestamp") String kennelReviewTimestamp);
 }

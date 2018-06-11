@@ -19,7 +19,6 @@ import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -194,7 +193,7 @@ public class KennelDetails extends AppCompatActivity {
         call.enqueue(new Callback<Kennel>() {
             @Override
             public void onResponse(Call<Kennel> call, Response<Kennel> response) {
-                Log.e("RAW RESPONSE", String.valueOf(response.raw()));
+//                Log.e("RAW RESPONSE", String.valueOf(response.raw()));
                 Kennel data = response.body();
                 if (data != null)   {
 
@@ -336,7 +335,7 @@ public class KennelDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Kennel> call, Throwable t) {
-                Log.e("KENNEL FAILURES", t.getMessage());
+//                Log.e("KENNEL FAILURES", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -378,7 +377,7 @@ public class KennelDetails extends AppCompatActivity {
         call.enqueue(new Callback<KennelReviews>() {
             @Override
             public void onResponse(Call<KennelReviews> call, Response<KennelReviews> response) {
-                Log.e("REVIEWS RAW", String.valueOf(response.raw()));
+//                Log.e("REVIEWS RAW", String.valueOf(response.raw()));
                 if (response.body() != null && response.body().getReviews() != null)    {
                     arrReviewsSubset = response.body().getReviews();
                     if (arrReviewsSubset.size() > 0)    {
@@ -434,7 +433,7 @@ public class KennelDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<KennelRating> call, Throwable t) {
-                Log.e("RATINGS FAILURE", t.getMessage());
+//                Log.e("RATINGS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -651,7 +650,7 @@ public class KennelDetails extends AppCompatActivity {
         call.enqueue(new Callback<KennelReview>() {
             @Override
             public void onResponse(Call<KennelReview> call, Response<KennelReview> response) {
-                Log.e("RESPONSE RAW", String.valueOf(response.raw()));
+//                Log.e("RESPONSE RAW", String.valueOf(response.raw()));
                 if (!response.body().getError()) {
                     KennelReview review = response.body();
                     if (review != null) {

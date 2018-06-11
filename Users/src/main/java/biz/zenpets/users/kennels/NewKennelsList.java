@@ -19,7 +19,6 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -522,7 +521,7 @@ public class NewKennelsList extends AppCompatActivity
 
             @Override
             public void onFailure(Call<Kennels> call, Throwable t) {
-                Log.e("KENNELS FAILURE", t.getMessage());
+//                Log.e("KENNELS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -570,7 +569,7 @@ public class NewKennelsList extends AppCompatActivity
 
             @Override
             public void onFailure(Call<Kennels> call, Throwable t) {
-                Log.e("KENNELS FAILURE", t.getMessage());
+//                Log.e("KENNELS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -651,7 +650,7 @@ public class NewKennelsList extends AppCompatActivity
                                 /* FETCH THE LOCATION USING GEOCODER */
                                 fetchTheLocation();
                             } else {
-                                Log.e("EXCEPTION", String.valueOf(task.getException()));
+//                                Log.e("EXCEPTION", String.valueOf(task.getException()));
                                 Crashlytics.logException(task.getException());
                             }
                         }
@@ -668,13 +667,13 @@ public class NewKennelsList extends AppCompatActivity
                 DETECTED_CITY = addresses.get(0).getLocality();
 
                 if (DETECTED_CITY != null && !DETECTED_CITY.equalsIgnoreCase("null")) {
-                    Log.e("CITY", DETECTED_CITY);
+//                    Log.e("CITY", DETECTED_CITY);
                     new FetchCityID(this).execute(DETECTED_CITY);
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("GEOCODER", e.getMessage());
+//            Log.e("GEOCODER", e.getMessage());
             Crashlytics.logException(e);
         }
     }
@@ -689,7 +688,7 @@ public class NewKennelsList extends AppCompatActivity
 
         /* CHECK FOR A VALID RESULT */
         if (FINAL_CITY_ID != null)   {
-            Log.e("CITY ID", FINAL_CITY_ID);
+//            Log.e("CITY ID", FINAL_CITY_ID);
             /* FETCH THE LIST OF KENNELS */
 //            new FetchKennels(this).execute(FINAL_CITY_ID, LATLNG_ORIGIN.latitude, LATLNG_ORIGIN.longitude);
             new fetchKennels().execute();
