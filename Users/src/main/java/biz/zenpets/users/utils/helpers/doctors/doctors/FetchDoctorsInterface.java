@@ -4,6 +4,6 @@ import java.util.ArrayList;
 
 import biz.zenpets.users.utils.models.doctors.list.Doctor;
 
-public interface FetchDoctorsInterface {
+interface FetchDoctorsInterface {
     void onDoctorsList(ArrayList<Doctor> data);
 }

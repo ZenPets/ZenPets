@@ -67,7 +67,7 @@ public class MedicalRecordsFragment extends Fragment {
     private String RECORD_TYPE_ID = null;
 
     /** THE MEDICAL RECORDS ARRAY LIST **/
-    ArrayList<MedicalRecord> arrRecords = new ArrayList<>();
+    private ArrayList<MedicalRecord> arrRecords = new ArrayList<>();
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;

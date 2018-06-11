@@ -150,7 +150,7 @@ public class DoctorDetails extends AppCompatActivity
 
     /** THE CLINIC IMAGES ADAPTER AND ARRAY LIST **/
     private ClinicImagesAdapter imagesAdapter;
-    private ArrayList<ClinicImage> arrImages = new ArrayList<>();
+    private final ArrayList<ClinicImage> arrImages = new ArrayList<>();
 
     /** PERMISSION REQUEST CONSTANTS **/
     private static final int CALL_PHONE_CONSTANT = 200;

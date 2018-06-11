@@ -19,10 +19,10 @@ import okhttp3.Response;
 public class AddNewPet extends AsyncTask<Object, Void, String> {
 
     /** THE INTERFACE INSTANCE **/
-    AddNewPetInterface delegate;
+    private final AddNewPetInterface delegate;
 
     /** STRING TO HOLD AND RETURN THE NEW PET ID **/
-    String PET_ID = null;
+    private String PET_ID = null;
 
     public AddNewPet(AddNewPetInterface delegate) {
         this.delegate = delegate;

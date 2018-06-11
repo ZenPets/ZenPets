@@ -73,10 +73,10 @@ public class DoctorProfileActivity extends AppCompatActivity {
     }
 
     /** THE LOGGED IN USER'S ID **/
-    String USER_ID = null;
+    private String USER_ID = null;
 
     /** THE INCOMING DOCTOR ID **/
-    String DOCTOR_ID = null;
+    private String DOCTOR_ID = null;
 
     /* A STRING BUILDER INSTANCE FOR THE DOCTOR'S EDUCATION */
     private StringBuilder sb;
@@ -91,8 +91,8 @@ public class DoctorProfileActivity extends AppCompatActivity {
     private boolean blnSubscriptionStatus = false;
 
     /* THE ARRAY LIST INSTANCES */
-    ArrayList<Review> arrReviews = new ArrayList<>();
-    ArrayList<Clinic> arrClinics = new ArrayList<>();
+    private ArrayList<Review> arrReviews = new ArrayList<>();
+    private ArrayList<Clinic> arrClinics = new ArrayList<>();
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.appBar) AppBarLayout appBar;

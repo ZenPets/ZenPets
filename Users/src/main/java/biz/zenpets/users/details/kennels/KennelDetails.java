@@ -75,18 +75,18 @@ public class KennelDetails extends AppCompatActivity {
     }
 
     /** THE LOGGED IN USER'S ID **/
-    String USER_ID = null;
+    private String USER_ID = null;
 
     /** THE INCOMING KENNEL ID **/
-    String KENNEL_ID = null;
+    private String KENNEL_ID = null;
 
     /** A KENNEL API AND KENNEL REVIEWS API INSTANCE **/
-    KennelsAPI apiKennel = ZenApiClient.getClient().create(KennelsAPI.class);
-    KennelReviewsAPI apiReview = ZenApiClient.getClient().create(KennelReviewsAPI.class);
+    private final KennelsAPI apiKennel = ZenApiClient.getClient().create(KennelsAPI.class);
+    private final KennelReviewsAPI apiReview = ZenApiClient.getClient().create(KennelReviewsAPI.class);
 
     /** THE TOTAL VOTES, TOTAL LIKES AND TOTAL DISLIKES **/
-    int TOTAL_VOTES = 0;
-    int TOTAL_LIKES = 0;
+    private int TOTAL_VOTES = 0;
+    private int TOTAL_LIKES = 0;
 
     /** PERMISSION REQUEST CONSTANTS **/
     private static final int CALL_PHONE_CONSTANT = 200;
@@ -95,19 +95,19 @@ public class KennelDetails extends AppCompatActivity {
     private ArrayList<KennelReview> arrReviewsSubset = new ArrayList<>();
 
     /** DATA TYPES TO HOLD THE KENNEL DETAILS **/
-    String KENNEL_COVER_PHOTO = null;
-    String KENNEL_NAME = null;
-    String KENNEL_OWNER_ID = null;
-    String KENNEL_OWNER_DISPLAY_PROFILE = null;
-    String KENNEL_OWNER_NAME = null;
-    String KENNEL_ADDRESS = null;
-    String CITY_NAME = null;
-    String STATE_NAME = null;
-    String KENNEL_PIN_CODE = null;
-    Double KENNEL_LATITUDE = null;
-    Double KENNEL_LONGITUDE = null;
-    String KENNEL_PHONE_NUMBER_1 = null;
-    String KENNEL_PHONE_NUMBER_2 = null;
+    private String KENNEL_COVER_PHOTO = null;
+    private String KENNEL_NAME = null;
+    private String KENNEL_OWNER_ID = null;
+    private String KENNEL_OWNER_DISPLAY_PROFILE = null;
+    private String KENNEL_OWNER_NAME = null;
+    private String KENNEL_ADDRESS = null;
+    private String CITY_NAME = null;
+    private String STATE_NAME = null;
+    private String KENNEL_PIN_CODE = null;
+    private Double KENNEL_LATITUDE = null;
+    private Double KENNEL_LONGITUDE = null;
+    private String KENNEL_PHONE_NUMBER_1 = null;
+    private String KENNEL_PHONE_NUMBER_2 = null;
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.appBar) AppBarLayout appBar;

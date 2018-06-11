@@ -53,9 +53,9 @@ public class NewLandingActivity extends AppCompatActivity {
     private Fragment mContent;
 
     /** DECLARE THE LAYOUT ELEMENTS **/
-    ActionBarDrawerToggle mDrawerToggle;
-    CircleImageView imgvwUserProfile;
-    AppCompatTextView txtUserName;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private CircleImageView imgvwUserProfile;
+    private AppCompatTextView txtUserName;
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.drawerLayout) DrawerLayout drawerLayout;

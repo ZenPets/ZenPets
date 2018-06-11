@@ -52,7 +52,7 @@ import retrofit2.Response;
 public class VaccinationRecordModifier extends AppCompatActivity {
 
     /** THE INCOMING VACCINATION ID **/
-    String VACCINATION_ID = null;
+    private String VACCINATION_ID = null;
 
     /** DATA TYPES FOR HOLDING THE COLLECTED DATA **/
     private String VACCINE_ID = null;

@@ -4,6 +4,6 @@ import java.util.ArrayList;
 
 import biz.zenpets.users.utils.models.visit.VisitReasonsData;
 
-public interface FetchVisitReasonsInterface {
+interface FetchVisitReasonsInterface {
     void visitReasons(ArrayList<VisitReasonsData> data);
 }

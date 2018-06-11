@@ -1,5 +1,5 @@
 package biz.zenpets.users.utils.helpers.pets.records;
 
-public interface AddNewMedicalRecordInterface {
+interface AddNewMedicalRecordInterface {
     void onNewRecord(String result);
 }

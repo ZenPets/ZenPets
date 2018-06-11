@@ -54,6 +54,7 @@ public class ReviewsFragment extends Fragment {
     String KENNEL_ID = null;
 
     /** AN ARRAY LIST TO STORE THE LIST OF KENNELS **/
+    ReviewsAdapter reviewsAdapter;
     ArrayList<Kennel> arrKennels = new ArrayList<>();
 
     /** THE REVIEWS ADAPTER AND ARRAY LISTS **/
@@ -94,6 +95,9 @@ public class ReviewsFragment extends Fragment {
 
         /* CONFIGURE THE ACTIONBAR */
         configAB();
+
+        /* INSTANTIATE THE KENNEL REVIEWS ADAPTER */
+        reviewsAdapter = new ReviewsAdapter(getActivity(), arrReviews);
 
         /* CONFIGURE THE RECYCLER VIEW */
         configRecycler();
@@ -145,8 +149,11 @@ public class ReviewsFragment extends Fragment {
                         listReviews.setVisibility(View.VISIBLE);
                         linlaEmpty.setVisibility(View.GONE);
 
+                        /* INSTANTIATE THE KENNEL REVIEWS ADAPTER */
+                        reviewsAdapter = new ReviewsAdapter(getActivity(), arrReviews);
+
                         /* SET THE REVIEWS ADAPTER TO THE RECYCLER VIEW */
-                        listReviews.setAdapter(new ReviewsAdapter(getActivity(), arrReviews));
+                        listReviews.setAdapter(reviewsAdapter);
                     } else {
                         /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
                         linlaEmpty.setVisibility(View.VISIBLE);
@@ -225,6 +232,6 @@ public class ReviewsFragment extends Fragment {
         listReviews.setNestedScrollingEnabled(true);
 
         /* SET THE EDUCATIONS ADAPTER */
-        listReviews.setAdapter(new ReviewsAdapter(getActivity(), arrReviews));
+        listReviews.setAdapter(reviewsAdapter);
     }
 }

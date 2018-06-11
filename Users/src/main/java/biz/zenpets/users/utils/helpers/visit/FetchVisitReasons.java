@@ -17,13 +17,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class FetchVisitReasons extends AsyncTask<Void, Void, ArrayList<VisitReasonsData>> {
+class FetchVisitReasons extends AsyncTask<Void, Void, ArrayList<VisitReasonsData>> {
 
     /** AN INTERFACE INSTANCE **/
-    FetchVisitReasonsInterface delegate;
+    private final FetchVisitReasonsInterface delegate;
 
     /** AN ARRAY LIST INSTANCE **/
-    ArrayList<VisitReasonsData> arrReasons = new ArrayList<>();
+    private final ArrayList<VisitReasonsData> arrReasons = new ArrayList<>();
 
     public FetchVisitReasons(FetchVisitReasonsInterface delegate) {
         this.delegate = delegate;

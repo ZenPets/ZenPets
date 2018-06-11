@@ -19,10 +19,10 @@ import okhttp3.Response;
 public class PostMedicalImage extends AsyncTask<Object, Void, String> {
 
     /** THE INTERFACE INSTANCE **/
-    PostMedicalImageInterface delegate;
+    private final PostMedicalImageInterface delegate;
 
     /** THE MEDICAL RECORD IMAGE ID **/
-    String MEDICAL_RECORD_IMAGE_ID = null;
+    private String MEDICAL_RECORD_IMAGE_ID = null;
 
     public PostMedicalImage(PostMedicalImageInterface delegate) {
         this.delegate = delegate;

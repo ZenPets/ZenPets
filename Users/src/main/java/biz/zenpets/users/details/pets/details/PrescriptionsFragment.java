@@ -54,7 +54,7 @@ public class PrescriptionsFragment extends Fragment {
     private String PET_ID = null;
 
     /** THE PRESCRIPTIONS ARRAY LIST **/
-    ArrayList<Prescription> arrPrescriptions = new ArrayList<>();
+    private ArrayList<Prescription> arrPrescriptions = new ArrayList<>();
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;

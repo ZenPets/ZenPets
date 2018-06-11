@@ -98,7 +98,7 @@ public class DoctorDetailsNew extends AppCompatActivity {
     }
 
     /** THE LOGGED IN USER'S ID **/
-    String USER_ID = null;
+    private String USER_ID = null;
 
     /** THE INCOMING CLINIC ID AND THE DOCTOR ID **/
     private String DOCTOR_ID = null;
@@ -117,41 +117,41 @@ public class DoctorDetailsNew extends AppCompatActivity {
     private String DOCTOR_PHONE_NUMBER = null;
 
     /** THE TOTAL VOTES, TOTAL LIKES AND TOTAL DISLIKES **/
-    int TOTAL_VOTES = 0;
-    int TOTAL_LIKES = 0;
+    private int TOTAL_VOTES = 0;
+    private int TOTAL_LIKES = 0;
 
     /** THE DOCTOR DAILY TIMING STRINGS **/
-    String SUN_MOR_FROM = null;
-    String SUN_MOR_TO = null;
-    String SUN_AFT_FROM = null;
-    String SUN_AFT_TO = null;
-    String MON_MOR_FROM = null;
-    String MON_MOR_TO = null;
-    String MON_AFT_FROM = null;
-    String MON_AFT_TO = null;
-    String TUE_MOR_FROM = null;
-    String TUE_MOR_TO = null;
-    String TUE_AFT_FROM = null;
-    String TUE_AFT_TO = null;
-    String WED_MOR_FROM = null;
-    String WED_MOR_TO = null;
-    String WED_AFT_FROM = null;
-    String WED_AFT_TO = null;
-    String THU_MOR_FROM = null;
-    String THU_MOR_TO = null;
-    String THU_AFT_FROM = null;
-    String THU_AFT_TO = null;
-    String FRI_MOR_FROM = null;
-    String FRI_MOR_TO = null;
-    String FRI_AFT_FROM = null;
-    String FRI_AFT_TO = null;
-    String SAT_MOR_FROM = null;
-    String SAT_MOR_TO = null;
-    String SAT_AFT_FROM = null;
-    String SAT_AFT_TO = null;
+    private String SUN_MOR_FROM = null;
+    private String SUN_MOR_TO = null;
+    private String SUN_AFT_FROM = null;
+    private String SUN_AFT_TO = null;
+    private String MON_MOR_FROM = null;
+    private String MON_MOR_TO = null;
+    private String MON_AFT_FROM = null;
+    private String MON_AFT_TO = null;
+    private String TUE_MOR_FROM = null;
+    private String TUE_MOR_TO = null;
+    private String TUE_AFT_FROM = null;
+    private String TUE_AFT_TO = null;
+    private String WED_MOR_FROM = null;
+    private String WED_MOR_TO = null;
+    private String WED_AFT_FROM = null;
+    private String WED_AFT_TO = null;
+    private String THU_MOR_FROM = null;
+    private String THU_MOR_TO = null;
+    private String THU_AFT_FROM = null;
+    private String THU_AFT_TO = null;
+    private String FRI_MOR_FROM = null;
+    private String FRI_MOR_TO = null;
+    private String FRI_AFT_FROM = null;
+    private String FRI_AFT_TO = null;
+    private String SAT_MOR_FROM = null;
+    private String SAT_MOR_TO = null;
+    private String SAT_AFT_FROM = null;
+    private String SAT_AFT_TO = null;
 
     /* THE SERVICES AND SUBSET ADAPTER AND ARRAY LISTS **/
-    ArrayList<Service> arrServicesSubset = new ArrayList<>();
+    private ArrayList<Service> arrServicesSubset = new ArrayList<>();
 
     /** THE REVIEWS AND SUBSET ADAPTER AND ARRAY LISTS **/
     private ReviewsAdapter reviewsAdapter;

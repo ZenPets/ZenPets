@@ -322,15 +322,15 @@ public class DoctorReviews extends AppCompatActivity {
         }
 
         class ReviewsVH extends RecyclerView.ViewHolder	{
-            SimpleDraweeView imgvwUserProfile;
-            AppCompatTextView txtUserName;
-            AppCompatTextView txtTimeStamp;
-            IconicsImageView imgvwLikeStatus;
-            AppCompatTextView txtVisitExperience;
-            AppCompatTextView txtVisitReason;
-            AppCompatTextView txtHelpfulYes;
-            AppCompatTextView txtHelpfulNo;
-            IconicsImageView imgvwFlagReply;
+            final SimpleDraweeView imgvwUserProfile;
+            final AppCompatTextView txtUserName;
+            final AppCompatTextView txtTimeStamp;
+            final IconicsImageView imgvwLikeStatus;
+            final AppCompatTextView txtVisitExperience;
+            final AppCompatTextView txtVisitReason;
+            final AppCompatTextView txtHelpfulYes;
+            final AppCompatTextView txtHelpfulNo;
+            final IconicsImageView imgvwFlagReply;
 
             ReviewsVH(View v) {
                 super(v);

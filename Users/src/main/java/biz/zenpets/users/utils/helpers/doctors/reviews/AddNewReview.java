@@ -19,10 +19,10 @@ import okhttp3.Response;
 public class AddNewReview extends AsyncTask<Object, Void, String> {
 
     /** THE INTERFACE INSTANCE TO RETURN THE RESULTS TO THE CALLING ACTIVITY **/
-    AddNewReviewInterface delegate;
+    private final AddNewReviewInterface delegate;
 
     /** THE NEW REVIEW ID **/
-    String REVIEW_ID = null;
+    private String REVIEW_ID = null;
 
     public AddNewReview(AddNewReviewInterface delegate) {
         this.delegate = delegate;

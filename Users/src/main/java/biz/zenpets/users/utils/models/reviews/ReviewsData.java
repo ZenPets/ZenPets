@@ -1,6 +1,6 @@
 package biz.zenpets.users.utils.models.reviews;
 
-public class ReviewsData {
+class ReviewsData {
     private String reviewID = null;
     private String doctorID = null;
     private String userID = null;

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import biz.zenpets.users.R;
 import biz.zenpets.users.utils.models.pets.breeds.Breed;
 
-public class BreedsListAdapter extends BaseAdapter {
+class BreedsListAdapter extends BaseAdapter {
 
     /** THE ACTIVITY INSTANCE FOR USE IN THE ADAPTER **/
     private final Activity activity;

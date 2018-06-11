@@ -210,12 +210,12 @@ public class TrainersAdapter extends RecyclerView.Adapter<TrainersAdapter.Adopti
     }
 
     class AdoptionsVH extends RecyclerView.ViewHolder	{
-        LinearLayout linlaTrainerContainer;
-        AppCompatTextView txtTrainerName;
-        AppCompatTextView txtTrainerAddress;
-        AppCompatTextView txtTrainerLikes;
-        AppCompatTextView txtTrainerModules;
-        AppCompatTextView txtTrainerCharges;
+        final LinearLayout linlaTrainerContainer;
+        final AppCompatTextView txtTrainerName;
+        final AppCompatTextView txtTrainerAddress;
+        final AppCompatTextView txtTrainerLikes;
+        final AppCompatTextView txtTrainerModules;
+        final AppCompatTextView txtTrainerCharges;
 
         AdoptionsVH(View v) {
             super(v);

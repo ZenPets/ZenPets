@@ -39,7 +39,7 @@ import retrofit2.Response;
 public class ReviewModifier extends AppCompatActivity {
 
     /** THE INCOMING REVIEW ID **/
-    String REVIEW_ID = null;
+    private String REVIEW_ID = null;
 
     /** THE VISIT REASONS ARRAY LIST **/
     private ArrayList<Reason> arrReasons = new ArrayList<>();

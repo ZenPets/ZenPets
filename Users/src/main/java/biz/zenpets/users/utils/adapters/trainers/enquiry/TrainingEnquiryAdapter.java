@@ -136,16 +136,16 @@ public class TrainingEnquiryAdapter extends RecyclerView.Adapter<TrainingEnquiry
     }
 
     class MessagesVH extends RecyclerView.ViewHolder	{
-        LinearLayout linlaTrainer;
-        SimpleDraweeView imgvwTrainerDisplayProfile;
-        TextView txtTrainersMessage;
-        TextView txtTrainerName;
-        TextView txtTrainerTimeStamp;
-        LinearLayout linlaUser;
-        SimpleDraweeView imgvwUserDisplayProfile;
-        TextView txtUsersMessage;
-        TextView txtUserName;
-        TextView txtUserTimeStamp;
+        final LinearLayout linlaTrainer;
+        final SimpleDraweeView imgvwTrainerDisplayProfile;
+        final TextView txtTrainersMessage;
+        final TextView txtTrainerName;
+        final TextView txtTrainerTimeStamp;
+        final LinearLayout linlaUser;
+        final SimpleDraweeView imgvwUserDisplayProfile;
+        final TextView txtUsersMessage;
+        final TextView txtUserName;
+        final TextView txtUserTimeStamp;
 
         MessagesVH(View v) {
             super(v);

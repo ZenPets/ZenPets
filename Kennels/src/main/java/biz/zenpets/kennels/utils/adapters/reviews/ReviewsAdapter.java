@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.StyleSpan;
@@ -15,12 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.afollestad.materialdialogs.Theme;
-import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
@@ -32,12 +26,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import biz.zenpets.kennels.R;
-import biz.zenpets.kennels.utils.models.helpers.ZenApiClient;
 import biz.zenpets.kennels.utils.models.reviews.Review;
-import biz.zenpets.kennels.utils.models.reviews.ReviewsAPI;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsVH> {
 
@@ -45,25 +34,25 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
     private final Activity activity;
 
     /***** ARRAY LIST TO GET DATA FROM THE ACTIVITY *****/
-    private final ArrayList<Review> arrReviews;
+    private final ArrayList<Review> list;
 
-    public ReviewsAdapter(Activity activity, ArrayList<Review> arrReviews) {
+    public ReviewsAdapter(Activity activity, ArrayList<Review> list) {
 
         /* CAST THE ACTIVITY IN THE GLOBAL ACTIVITY INSTANCE */
         this.activity = activity;
 
         /* CAST THE CONTENTS OF THE ARRAY LIST IN THE METHOD TO THE LOCAL INSTANCE */
-        this.arrReviews = arrReviews;
+        this.list = list;
     }
 
     @Override
     public int getItemCount() {
-        return arrReviews.size();
+        return list.size();
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ReviewsVH holder, final int position) {
-        final Review data = arrReviews.get(position);
+        final Review data = list.get(position);
 
         /* SET THE USER'S DISPLAY PROFILE */
         String userDisplayProfile = data.getUserDisplayProfile();
@@ -119,7 +108,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
             if (kennelReplyStatus.equalsIgnoreCase("0"))    {
                 holder.txtReplyStatus.setVisibility(View.GONE);
                 holder.txtReply.setVisibility(View.GONE);
-                holder.imgvwEditReply.setVisibility(View.GONE);
+//                holder.imgvwEditReply.setVisibility(View.GONE);
             } else if (kennelReplyStatus.equalsIgnoreCase("1")) {
                 String replyText = data.getKennelReplyText();
                 Date dateReply = new Date(Long.parseLong(data.getKennelReplyTimestamp()) * 1000L);
@@ -133,69 +122,69 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
                 holder.txtReply.setText(replyText);
                 holder.txtReplyStatus.setVisibility(View.VISIBLE);
                 holder.txtReply.setVisibility(View.VISIBLE);
-                holder.imgvwEditReply.setVisibility(View.VISIBLE);
+//                holder.imgvwEditReply.setVisibility(View.VISIBLE);
             }
         } else {
             holder.txtReplyStatus.setVisibility(View.GONE);
             holder.txtReply.setVisibility(View.GONE);
-            holder.imgvwEditReply.setVisibility(View.GONE);
+//            holder.imgvwEditReply.setVisibility(View.GONE);
         }
-        
-        /* EDIT THE REPLY */
-        holder.imgvwEditReply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateReply(data.getKennelReviewID(), data.getKennelReplyText(), position);
-            }
-        });
+
+//        /* EDIT THE REPLY */
+//        holder.imgvwEditReply.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                updateReply(data.getKennelReviewID(), data.getKennelReplyText(), position);
+//            }
+//        });
     }
 
     /** UPDATE THE KENNEL OWNER'S REPLY **/
-    private void updateReply(final String kennelReviewID, String kennelReplyText, final int position) {
-        final String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
-        new MaterialDialog.Builder(activity)
-                .title("Update your reply")
-                .content(null)
-                .inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_MULTI_LINE)
-                .inputRange(5, 200)
-                .theme(Theme.LIGHT)
-                .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
-                .positiveText("Update")
-                .negativeText("Cancel")
-                .input("Update your reply...", kennelReplyText, false, new MaterialDialog.InputCallback() {
-                    @Override
-                    public void onInput(@NonNull final MaterialDialog dialog, CharSequence input) {
-                        ReviewsAPI apiInterface = ZenApiClient.getClient().create(ReviewsAPI.class);
-                        Call<Review> call = apiInterface.updateKennelReviewReply(kennelReviewID, input.toString(), timeStamp);
-                        call.enqueue(new Callback<Review>() {
-                            @Override
-                            public void onResponse(Call<Review> call, Response<Review> response) {
-                                if (response.isSuccessful())    {
-                                    dialog.dismiss();
-                                    Toast.makeText(activity, "Successfully updated the reply...", Toast.LENGTH_SHORT).show();
-                                    notifyItemChanged(position);
-                                } else {
-                                    dialog.dismiss();
-                                    Toast.makeText(activity, "Update failed...", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<Review> call, Throwable t) {
-//                                Log.e("FAILURE", t.getMessage());
-                                Crashlytics.logException(t);
-                            }
-                        });
-                    }
-                })
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        dialog.dismiss();
-                    }
-                })
-                .show();
-    }
+//    private void updateReply(final String kennelReviewID, String kennelReplyText, final int position) {
+//        final String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
+//        new MaterialDialog.Builder(activity)
+//                .title("Update your reply")
+//                .content(null)
+//                .inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_MULTI_LINE)
+//                .inputRange(5, 200)
+//                .theme(Theme.LIGHT)
+//                .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
+//                .positiveText("Update")
+//                .negativeText("Cancel")
+//                .input("Update your reply...", kennelReplyText, false, new MaterialDialog.InputCallback() {
+//                    @Override
+//                    public void onInput(@NonNull final MaterialDialog dialog, CharSequence input) {
+//                        ReviewsAPI apiInterface = ZenApiClient.getClient().create(ReviewsAPI.class);
+//                        Call<Review> call = apiInterface.updateKennelReviewReply(kennelReviewID, input.toString(), timeStamp);
+//                        call.enqueue(new Callback<Review>() {
+//                            @Override
+//                            public void onResponse(Call<Review> call, Response<Review> response) {
+//                                if (response.isSuccessful())    {
+//                                    dialog.dismiss();
+//                                    Toast.makeText(activity, "Successfully updated the reply...", Toast.LENGTH_SHORT).show();
+//                                    notifyItemChanged(position);
+//                                } else {
+//                                    dialog.dismiss();
+//                                    Toast.makeText(activity, "Update failed...", Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<Review> call, Throwable t) {
+////                                Log.e("FAILURE", t.getMessage());
+//                                Crashlytics.logException(t);
+//                            }
+//                        });
+//                    }
+//                })
+//                .onNegative(new MaterialDialog.SingleButtonCallback() {
+//                    @Override
+//                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                        dialog.dismiss();
+//                    }
+//                })
+//                .show();
+//    }
 
     @NonNull
     @Override
@@ -218,7 +207,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
         TextView txtKennelExperience;
         TextView txtReplyStatus;
         TextView txtReply;
-        IconicsImageView imgvwEditReply;
+//        IconicsImageView imgvwEditReply;
 
         ReviewsVH(View v) {
             super(v);
@@ -231,7 +220,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
             txtKennelExperience = v.findViewById(R.id.txtKennelExperience);
             txtReplyStatus = v.findViewById(R.id.txtReplyStatus);
             txtReply = v.findViewById(R.id.txtReply);
-            imgvwEditReply = v.findViewById(R.id.imgvwEditReply);
+//            imgvwEditReply = v.findViewById(R.id.imgvwEditReply);
         }
     }
 }

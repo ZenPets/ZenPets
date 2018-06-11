@@ -69,8 +69,8 @@ public class AdoptionsList extends AppCompatActivity {
     private ArrayList<Adoption> arrAdoptions = new ArrayList<>();
 
     /** THE ADOPTION FILTER STRINGS **/
-    String FILTER_PET_GENDER = null;
-    String FILTER_PET_SPECIES = null;
+    private String FILTER_PET_GENDER = null;
+    private String FILTER_PET_SPECIES = null;
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.txtLocation) AppCompatTextView txtLocation;

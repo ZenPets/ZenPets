@@ -27,19 +27,19 @@ import okhttp3.Response;
 public class FetchPetDetails extends AsyncTask<Object, Void, String[]> {
 
     /** THE INTERFACE INSTANCE **/
-    FetchPetDetailsInterface delegate;
+    private final FetchPetDetailsInterface delegate;
 
     /* THE PET DETAIL STRINGS */
     private String PET_TYPE_ID = null;
     private String PET_TYP_NAME = null;
     private String BREED_ID = null;
     private String BREED_NAME = null;
-    String PET_NAME = null;
-    String PET_GENDER = null;
-    String PET_AGE = null;
-    String PET_NEUTERED = null;
-    String PET_DISPLAY_PROFILE = null;
-    String PET_ACTIVE = null;
+    private String PET_NAME = null;
+    private String PET_GENDER = null;
+    private String PET_AGE = null;
+    private String PET_NEUTERED = null;
+    private String PET_DISPLAY_PROFILE = null;
+    private String PET_ACTIVE = null;
 
     public FetchPetDetails(FetchPetDetailsInterface delegate) {
         this.delegate = delegate;

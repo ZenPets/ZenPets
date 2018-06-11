@@ -22,13 +22,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class FetchKennels extends AsyncTask<Object, Void, ArrayList<Kennel>> {
+class FetchKennels extends AsyncTask<Object, Void, ArrayList<Kennel>> {
 
     /* THE INTERFACE INSTANCE */
     private final FetchKennelsInterface delegate;
 
     /* A KENNELS ARRAY LIST INSTANCE */
-    ArrayList<Kennel> arrKennels = new ArrayList<>();
+    private final ArrayList<Kennel> arrKennels = new ArrayList<>();
 
     public FetchKennels(FetchKennelsInterface delegate) {
         this.delegate = delegate;

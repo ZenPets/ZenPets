@@ -16,13 +16,13 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class AddNewMedicalRecord extends AsyncTask<Object, Void, String> {
+class AddNewMedicalRecord extends AsyncTask<Object, Void, String> {
 
     /** THE INTERFACE INSTANCE **/
-    AddNewMedicalRecordInterface delegate;
+    private final AddNewMedicalRecordInterface delegate;
 
     /** A STRING INSTANCE TO HOLD THE NEW RECORD ID **/
-    String MEDICAL_RECORD_ID = null;
+    private String MEDICAL_RECORD_ID = null;
 
     public AddNewMedicalRecord(AddNewMedicalRecordInterface delegate) {
         this.delegate = delegate;

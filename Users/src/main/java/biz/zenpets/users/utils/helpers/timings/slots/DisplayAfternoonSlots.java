@@ -22,7 +22,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class DisplayAfternoonSlots extends AsyncTask<Object, Void, ArrayList<AfternoonTimeSlotsData>> {
+class DisplayAfternoonSlots extends AsyncTask<Object, Void, ArrayList<AfternoonTimeSlotsData>> {
 
     /* THE INTERFACE INSTANCE TO RETURN THE RESULTS TO THE CALLING ACTIVITY */
     private final AfternoonSlotsInterface delegate;

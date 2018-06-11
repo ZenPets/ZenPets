@@ -23,7 +23,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 @SuppressWarnings("ConstantConditions")
-public class FetchDoctors extends AsyncTask<Object, Void, ArrayList<Doctor>> {
+class FetchDoctors extends AsyncTask<Object, Void, ArrayList<Doctor>> {
 
     /* THE INTERFACE INSTANCE */
     private final FetchDoctorsInterface delegate;

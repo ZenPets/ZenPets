@@ -37,7 +37,7 @@ public class DetailsFragment extends Fragment implements FetchPetDetailsInterfac
     private String PET_AGE = null;
     private String PET_NEUTERED = null;
     private String PET_DISPLAY_PROFILE = null;
-    String PET_ACTIVE = null;
+    private String PET_ACTIVE = null;
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;

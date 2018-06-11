@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import biz.zenpets.users.utils.models.trainers.modules.Module;
 
-public class TrainingEnquiries {
+class TrainingEnquiries {
 
     @SerializedName("error") private Boolean error;
     @SerializedName("modules") private ArrayList<Module> modules = null;

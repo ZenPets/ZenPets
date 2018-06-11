@@ -19,18 +19,18 @@ import biz.zenpets.users.utils.models.clinics.images.ClinicImage;
 import biz.zenpets.users.utils.models.doctors.list.Doctor;
 
 @SuppressWarnings("ConstantConditions")
-public class NewDoctorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+class NewDoctorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int ITEM = 0;
     private static final int LOADING = 1;
 
     private final ArrayList<Doctor> arrDoctors;
-    private Activity activity;
+    private final Activity activity;
 
     private boolean isLoadingAdded = false;
 
     /** THE CLINIC IMAGES ADAPTER AND ARRAY LIST **/
-    private ArrayList<ClinicImage> arrImages = new ArrayList<>();
+    private final ArrayList<ClinicImage> arrImages = new ArrayList<>();
     private DoctorClinicImagesAdapter adapter;
 
     public NewDoctorsAdapter(Activity activity) {
@@ -214,12 +214,12 @@ public class NewDoctorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    public Doctor getItem(int position) {
+    private Doctor getItem(int position) {
         return arrDoctors.get(position);
     }
 
     /** THE DOCTORS VIEW HOLDER **/
-    protected class DoctorsVH extends RecyclerView.ViewHolder {
+    class DoctorsVH extends RecyclerView.ViewHolder {
 
         final LinearLayout linlaDoctorContainer;
         final AppCompatTextView txtDoctorName;
@@ -266,7 +266,7 @@ public class NewDoctorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    protected class LoadingVH extends RecyclerView.ViewHolder {
+    class LoadingVH extends RecyclerView.ViewHolder {
         LoadingVH(View itemView) {
             super(itemView);
         }

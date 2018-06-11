@@ -51,12 +51,12 @@ public class ProfileModifier extends AppCompatActivity {
     private String USER_EMAIL = null;
     private String USER_DISPLAY_PROFILE = null;
     private String USER_PHONE_NUMBER = null;
-    String COUNTRY_ID = null;
+    private final String COUNTRY_ID = null;
 //    String COUNTRY_NAME = null;
-    String STATE_ID = null;
-    String STATE_NAME = null;
-    String CITY_ID = null;
-    String CITY_NAME = null;
+private String STATE_ID = null;
+    private String STATE_NAME = null;
+    private String CITY_ID = null;
+    private String CITY_NAME = null;
     private String USER_GENDER = "Male";
 
     /** REQUEST CODES **/

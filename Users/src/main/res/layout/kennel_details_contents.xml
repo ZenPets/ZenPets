@@ -44,7 +44,7 @@
                 android:text="@string/doctor_details_doc_votes"
                 android:textColor="@color/secondary_text"
                 android:textSize="12sp"
-                app:fontFamily="@font/roboto_condensed_regular" />
+                app:fontFamily="@font/roboto_regular" />
 
             <android.support.v7.widget.AppCompatRatingBar
                 android:id="@+id/kennelRating"
@@ -56,8 +56,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="4dp"
                 android:numStars="5"
-                android:rating="2"
-                android:stepSize="1" />
+                android:rating="2" />
         </LinearLayout>
 
         <LinearLayout
@@ -91,7 +90,7 @@
                 android:text="@string/doctor_details_consultation_fees"
                 android:textColor="@color/secondary_text"
                 android:textSize="12sp"
-                app:fontFamily="@font/roboto_condensed_regular" />
+                app:fontFamily="@font/roboto_regular" />
 
             <com.mikepenz.iconics.view.IconicsImageView
                 android:id="@+id/imgvwChargesInfo"
@@ -133,8 +132,8 @@
                     android:id="@+id/txtPhoneNumber1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autoLink=""
-                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:autoLink="phone"
+                    android:fontFamily="@font/roboto_regular"
                     android:paddingBottom="5dp"
                     android:paddingEnd="11dp"
                     android:paddingLeft="11dp"
@@ -167,7 +166,8 @@
                     android:id="@+id/txtPhoneNumber2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:autoLink="phone"
+                    android:fontFamily="@font/roboto_regular"
                     android:paddingBottom="5dp"
                     android:paddingEnd="11dp"
                     android:paddingLeft="11dp"
@@ -217,7 +217,7 @@
                     android:text="@string/kennel_details_address"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
-                    app:fontFamily="@font/roboto_condensed_regular" />
+                    app:fontFamily="@font/roboto_regular" />
 
                 <com.google.android.gms.maps.MapView
                     android:id="@+id/kennelMap"
@@ -366,7 +366,7 @@
                 android:paddingStart="11dp"
                 android:paddingTop="8dp"
                 app:iiv_color="@color/secondary_text"
-                app:iiv_icon="faw_credit_card"
+                app:iiv_icon="gmd_rate_review"
                 app:iiv_size="16dp" />
 
             <LinearLayout
@@ -387,7 +387,7 @@
                     android:text="@string/doctor_details_reviews_label"
                     android:textColor="@color/primary_text"
                     android:textSize="15sp"
-                    app:fontFamily="@font/roboto_condensed_bold" />
+                    app:fontFamily="@font/roboto_medium" />
 
                 <LinearLayout
                     android:id="@+id/linlaReviewsProgress"
@@ -440,7 +440,7 @@
                     android:text="@string/doctor_details_all_reviews"
                     android:textColor="@color/accent"
                     android:textSize="15sp"
-                    app:fontFamily="@font/roboto_condensed_bold" />
+                    app:fontFamily="@font/roboto_medium" />
 
                 <LinearLayout
                     android:id="@+id/linlaNoReviews"
@@ -474,7 +474,7 @@
                         android:text="There are no reviews for this Kennel yet..."
                         android:textColor="@color/secondary_text"
                         android:textSize="14sp"
-                        app:fontFamily="@font/roboto_condensed_light" />
+                        app:fontFamily="@font/roboto_light" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

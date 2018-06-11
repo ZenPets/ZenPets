@@ -1,6 +1,6 @@
 package biz.zenpets.users.utils.services;
 
-public class Config {
+class Config {
 
     // global topic to receive app wide push notifications
     public static final String TOPIC_GLOBAL = "global";

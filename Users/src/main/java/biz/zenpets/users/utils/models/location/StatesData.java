@@ -1,6 +1,6 @@
 package biz.zenpets.users.utils.models.location;
 
-public class StatesData {
+class StatesData {
 
     private String stateID;
     private String stateName;

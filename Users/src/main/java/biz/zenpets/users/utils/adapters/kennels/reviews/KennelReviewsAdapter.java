@@ -110,12 +110,12 @@ public class KennelReviewsAdapter extends RecyclerView.Adapter<KennelReviewsAdap
 
     class ReviewsVH extends RecyclerView.ViewHolder	{
 
-        SimpleDraweeView imgvwUserDisplayProfile;
-        TextView txtUserName;
-        RatingBar kennelRating;
-        TextView txtTimestamp;
-        IconicsImageView imgvwLikeStatus;
-        TextView txtKennelExperience;
+        final SimpleDraweeView imgvwUserDisplayProfile;
+        final TextView txtUserName;
+        final RatingBar kennelRating;
+        final TextView txtTimestamp;
+        final IconicsImageView imgvwLikeStatus;
+        final TextView txtKennelExperience;
 
         ReviewsVH(View v) {
             super(v);

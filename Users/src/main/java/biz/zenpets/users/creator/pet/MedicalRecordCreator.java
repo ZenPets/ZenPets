@@ -83,28 +83,28 @@ public class MedicalRecordCreator extends AppCompatActivity
     }
 
     /** THE INCOMING PET ID **/
-    String PET_ID = null;
+    private String PET_ID = null;
 
     /** THE LOGGED IN USER'S ID **/
-    String USER_ID = null;
+    private String USER_ID = null;
 
     /** PERMISSION REQUEST CONSTANT **/
     private static final int ACCESS_STORAGE_CONSTANT = 201;
 
     /** DATA TYPES TO HOLD THE RECORD DATA **/
-    String RECORD_TYPE_ID = null;
-    String RECORD_TYPE_NAME = null;
-    String RECORD_NOTES = null;
-    String RECORD_DATE = null;
+    private String RECORD_TYPE_ID = null;
+    private String RECORD_TYPE_NAME = null;
+    private String RECORD_NOTES = null;
+    private String RECORD_DATE = null;
 
     /** THE NEWLY CREATED MEDICAL RECORD ID **/
-    String MEDICAL_RECORD_ID = null;
+    private String MEDICAL_RECORD_ID = null;
 
     /** THE ARRAY LIST FOR THE RECORD IMAGES **/
     private final ArrayList<AdoptionAlbumData> arrAlbums = new ArrayList<>();
 
     /** THE ARRAY LIST FOR THE RECORD TYPES **/
-    ArrayList<RecordType> arrRecordTypes = new ArrayList<>();
+    private ArrayList<RecordType> arrRecordTypes = new ArrayList<>();
 
     /** A PROGRESS DIALOG **/
     private ProgressDialog dialog;

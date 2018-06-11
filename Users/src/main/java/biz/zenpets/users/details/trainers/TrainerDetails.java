@@ -57,17 +57,17 @@ import retrofit2.Response;
 public class TrainerDetails extends AppCompatActivity {
 
     /** THE INCOMING TRAINER ID **/
-    String TRAINER_ID = null;
+    private String TRAINER_ID = null;
 
     /** THE TRAINER REVIEWS ARRAY LIST **/
     private ArrayList<TrainerReview> arrReviewsSubset = new ArrayList<>();
 
     /** THE TRAINER'S TRAINING MODULES ARRAY LIST **/
-    ArrayList<Module> arrModules = new ArrayList<>();
+    private ArrayList<Module> arrModules = new ArrayList<>();
 
     /** THE TOTAL VOTES, TOTAL LIKES AND TOTAL DISLIKES **/
-    int TOTAL_VOTES = 0;
-    int TOTAL_LIKES = 0;
+    private int TOTAL_VOTES = 0;
+    private int TOTAL_LIKES = 0;
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.appBar) AppBarLayout appBar;

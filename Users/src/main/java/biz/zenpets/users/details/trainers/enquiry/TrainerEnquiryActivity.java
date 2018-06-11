@@ -58,25 +58,25 @@ public class TrainerEnquiryActivity extends AppCompatActivity {
     }
 
     /** A TRAINING ENQUIRY API AND ENQUIRY MESSAGE INSTANCE **/
-    TrainingEnquiryAPI api = ZenApiClient.getClient().create(TrainingEnquiryAPI.class);
-    EnquiryMessagesAPI apiEnquiry = ZenApiClient.getClient().create(EnquiryMessagesAPI.class);
+    private final TrainingEnquiryAPI api = ZenApiClient.getClient().create(TrainingEnquiryAPI.class);
+    private final EnquiryMessagesAPI apiEnquiry = ZenApiClient.getClient().create(EnquiryMessagesAPI.class);
 
     /** THE LOGGED IN USER'S ID AND NAME **/
-    String USER_ID = null;
-    String USER_NAME = null;
+    private String USER_ID = null;
+    private String USER_NAME = null;
 
     /** THE INCOMING TRAINER AND MODULE ID **/
-    String TRAINER_ID = null;
-    String MODULE_ID = null;
+    private String TRAINER_ID = null;
+    private String MODULE_ID = null;
 
     /** THE TRAINING ENQUIRY MASTER ID **/
-    String TRAINING_MASTER_ID = null;
+    private String TRAINING_MASTER_ID = null;
 
     /** THE TRAINER'S TOKEN **/
-    String TRAINER_TOKEN = null;
+    private String TRAINER_TOKEN = null;
 
     /** THE MESSAGES ARRAY LIST **/
-    ArrayList<EnquiryMessage> arrMessages = new ArrayList<>();
+    private ArrayList<EnquiryMessage> arrMessages = new ArrayList<>();
 
     /** THE TRAINING MODULE IMAGES ADAPTER AND ARRAY LIST **/
     private ArrayList<ModuleImage> arrImages = new ArrayList<>();

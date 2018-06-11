@@ -19,10 +19,10 @@ import okhttp3.Response;
 public class NewVaccination extends AsyncTask<Object, Void, String> {
 
     /** AN INTERFACE INSTANCE **/
-    NewVaccinationInterface delegate;
+    private final NewVaccinationInterface delegate;
 
     /** THE VACCINATION ID **/
-    String VACCINATION_ID = null;
+    private String VACCINATION_ID = null;
 
     public NewVaccination(NewVaccinationInterface delegate) {
         this.delegate = delegate;

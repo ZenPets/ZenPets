@@ -37,7 +37,7 @@ public class UserPets extends AppCompatActivity
     private String USER_ID = null;
 
     /** THE PETS ADAPTER AND ARRAY LIST **/
-    UserPetsAdapter adapter;
+    private UserPetsAdapter adapter;
     private ArrayList<Pet> arrPets = new ArrayList<>();
 
     /** CAST THE LAYOUT ELEMENTS **/

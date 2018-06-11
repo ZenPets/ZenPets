@@ -19,10 +19,10 @@ import okhttp3.Response;
 public class PostClinicRating extends AsyncTask<Object, Void, String> {
 
     /** THE INTERFACE INSTANCE TO RETURN THE RESULTS TO THE CALLING ACTIVITY **/
-    PostClinicRatingInterface delegate;
+    private final PostClinicRatingInterface delegate;
 
     /** THE NEW CLINIC RATING ID **/
-    String RATING_ID = null;
+    private String RATING_ID = null;
 
     public PostClinicRating(PostClinicRatingInterface delegate) {
         this.delegate = delegate;

@@ -1,6 +1,6 @@
 package biz.zenpets.users.utils.models.location;
 
-public class CitiesData {
+class CitiesData {
 
     private String cityID;
     private String cityName;

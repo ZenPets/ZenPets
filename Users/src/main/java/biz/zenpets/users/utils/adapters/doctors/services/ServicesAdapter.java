@@ -48,7 +48,7 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Servic
     }
 
     class ServicesVH extends RecyclerView.ViewHolder	{
-        AppCompatTextView txtServiceName;
+        final AppCompatTextView txtServiceName;
 
         ServicesVH(View v) {
             super(v);

@@ -60,7 +60,7 @@ public class VaccinationsFragment extends Fragment {
     private String VACCINE_ID = null;
 
     /** THE VACCINATIONS ARRAY LIST **/
-    ArrayList<Vaccination> arrVaccinations = new ArrayList<>();
+    private ArrayList<Vaccination> arrVaccinations = new ArrayList<>();
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;

@@ -50,20 +50,23 @@ import biz.zenpets.users.R;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.TypefaceSpan;
 import biz.zenpets.users.utils.adapters.kennels.KennelsAdapter;
-import biz.zenpets.users.utils.helpers.kennels.interfaces.FetchKennelsInterface;
+import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.helpers.location.classes.FetchCityID;
 import biz.zenpets.users.utils.helpers.location.interfaces.FetchCityIDInterface;
 import biz.zenpets.users.utils.models.kennels.kennels.Kennel;
+import biz.zenpets.users.utils.models.kennels.kennels.Kennels;
+import biz.zenpets.users.utils.models.kennels.kennels.KennelsAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.Call;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NewKennelsList extends AppCompatActivity
-        implements FetchCityIDInterface, FetchKennelsInterface, SearchView.OnQueryTextListener {
+        implements FetchCityIDInterface, SearchView.OnQueryTextListener {
 
     private AppPrefs getApp()	{
         return (AppPrefs) getApplication();
@@ -90,12 +93,12 @@ public class NewKennelsList extends AppCompatActivity
     Kennel data;
 
     /** THE KENNELS ADAPTER AND ARRAY LIST INSTANCE **/
-    KennelsAdapter kennelsAdapter;
+    private KennelsAdapter kennelsAdapter;
     private ArrayList<Kennel> arrKennels = new ArrayList<>();
 
     /** CAST THE LAYOUT ELEMENTS **/
 //    @BindView(R.id.txtLocation) TextView txtLocation;
-    @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
+//    @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
     @BindView(R.id.listKennels) RecyclerView listKennels;
     @BindView(R.id.progressLoading) ProgressBar progressLoading;
     @BindView(R.id.linlaEmpty) LinearLayout linlaEmpty;
@@ -108,20 +111,21 @@ public class NewKennelsList extends AppCompatActivity
         ButterKnife.bind(this);
 
         /* INSTANTIATE THE KENNELS ADAPTER */
-        kennelsAdapter = new KennelsAdapter(NewKennelsList.this, arrKennels);
+        kennelsAdapter = new KennelsAdapter(NewKennelsList.this, arrKennels, LATLNG_ORIGIN);
 
         /* INSTANTIATE THE LOCATION CLIENT */
         locationProviderClient = LocationServices.getFusedLocationProviderClient(NewKennelsList.this);
 
         /* SHOW THE PROGRESS AND FETCH THE USER'S LOCATION */
-        linlaProgress.setVisibility(View.VISIBLE);
+//        linlaProgress.setVisibility(View.VISIBLE);
+        progressLoading.setVisibility(View.VISIBLE);
         fetchUsersLocation();
 
         /* CONFIGURE THE RECYCLER VIEW **/
         configRecycler();
     }
 
-    private class fetchKennels extends AsyncTask<Void, Void, Void>  {
+    private class fetchKennels extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -133,9 +137,9 @@ public class NewKennelsList extends AppCompatActivity
             Request request = new Request.Builder()
                     .url(FINAL_URL)
                     .build();
-            Call call = client.newCall(request);
+            okhttp3.Call call = client.newCall(request);
             try {
-                Response response = call.execute();
+                okhttp3.Response response = call.execute();
                 String strResult = response.body().string();
                 JSONObject JORoot = new JSONObject(strResult);
                 if (JORoot.has("error") && JORoot.getString("error").equalsIgnoreCase("false")) {
@@ -276,8 +280,8 @@ public class NewKennelsList extends AppCompatActivity
                                 Request requestDistance = new Request.Builder()
                                         .url(URL_DISTANCE)
                                         .build();
-                                Call callDistance = clientDistance.newCall(requestDistance);
-                                Response respDistance = callDistance.execute();
+                                okhttp3.Call callDistance = clientDistance.newCall(requestDistance);
+                                okhttp3.Response respDistance = callDistance.execute();
                                 String strDistance = respDistance.body().string();
                                 JSONObject JORootDistance = new JSONObject(strDistance);
                                 JSONArray array = JORootDistance.getJSONArray("routes");
@@ -343,8 +347,8 @@ public class NewKennelsList extends AppCompatActivity
                             Request requestPositive = new Request.Builder()
                                     .url(FINAL_URL_POSITIVE)
                                     .build();
-                            Call callPositive = clientPositive.newCall(requestPositive);
-                            Response responsePositive = callPositive.execute();
+                            okhttp3.Call callPositive = clientPositive.newCall(requestPositive);
+                            okhttp3.Response responsePositive = callPositive.execute();
                             String strPositiveReview = responsePositive.body().string();
                             JSONObject JORootPositive = new JSONObject(strPositiveReview);
                             if (JORootPositive.has("error") && JORootPositive.getString("error").equalsIgnoreCase("false")) {
@@ -354,8 +358,8 @@ public class NewKennelsList extends AppCompatActivity
                             }
 
                             /* GET THE POSITIVE REVIEWS / FEEDBACK */
-                            String URL_DOCTOR_REVIEWS = AppPrefs.context().getString(R.string.url_doctor_negative_reviews);
-                            HttpUrl.Builder builderNegative = HttpUrl.parse(URL_DOCTOR_REVIEWS).newBuilder();
+                            String URL_NEGATIVE_REVIEWS = AppPrefs.context().getString(R.string.url_negative_kennel_reviews);
+                            HttpUrl.Builder builderNegative = HttpUrl.parse(URL_NEGATIVE_REVIEWS).newBuilder();
                             builderNegative.addQueryParameter("kennelID", data.getKennelID());
                             builderNegative.addQueryParameter("kennelRecommendStatus", "No");
                             String FINAL_URL_Negative = builderNegative.build().toString();
@@ -363,8 +367,8 @@ public class NewKennelsList extends AppCompatActivity
                             Request requestReviews = new Request.Builder()
                                     .url(FINAL_URL_Negative)
                                     .build();
-                            Call reviewCall = clientNegative.newCall(requestReviews);
-                            Response responseNegative = reviewCall.execute();
+                            okhttp3.Call reviewCall = clientNegative.newCall(requestReviews);
+                            okhttp3.Response responseNegative = reviewCall.execute();
                             String strNegativeReview = responseNegative.body().string();
                             JSONObject JORootNegative = new JSONObject(strNegativeReview);
                             if (JORootNegative.has("error") && JORootNegative.getString("error").equalsIgnoreCase("false")) {
@@ -392,8 +396,19 @@ public class NewKennelsList extends AppCompatActivity
                             }
                             data.setKennelVotes(reviewQuantity);
 
+                            /* GET THE KENNEL RATING */
+
                             /* ADD THE GATHERED DATA TO THE ARRAY LIST */
                             arrKennels.add(data);
+                            Runnable runnable = new Runnable() {
+                                @Override
+                                public void run() {
+//                                    if (linlaProgress.getVisibility() == View.VISIBLE)  {
+//                                        linlaProgress.setVisibility(View.GONE);
+//                                    }
+                                    kennelsAdapter.notifyDataSetChanged();
+                                }
+                            }; runOnUiThread(runnable);
                         }
 //
                         /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
@@ -436,229 +451,13 @@ public class NewKennelsList extends AppCompatActivity
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            /* SET THE ADAPTER TO THE RECYCLER VIEW */
-            listKennels.setAdapter(kennelsAdapter);
-
-            /* HIDE THE PROGRESSBAR AFTER LOADING THE DATA */
-            linlaProgress.setVisibility(View.GONE);
-        }
-    }
-
-//    private class fetchKennels extends AsyncTask<Void, Void, Void>  {
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Void... voids) {
-//            KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-//            Call<Kennels> call = api.fetchKennelsListByCity(FINAL_CITY_ID);
-//            call.enqueue(new Callback<Kennels>() {
-//                @Override
-//                public void onResponse(Call<Kennels> call, Response<Kennels> response) {
-//                    try {
-//                        String strResult = new Gson().toJson(response.body());
-//                        JSONObject JORoot = new JSONObject(strResult);
-//    //                    Log.e("ROOT", String.valueOf(JORoot));
-//                        if (JORoot.has("error") && JORoot.getString("error").equalsIgnoreCase("false")) {
-//                            JSONArray JAKennels = JORoot.getJSONArray("kennels");
-//                            if (JAKennels.length() > 0) {
-//                                for (int i = 0; i < JAKennels.length(); i++) {
-//                                    JSONObject JOKennels = JAKennels.getJSONObject(i);
-////                                    Log.e("KENNEL", String.valueOf(JOKennels));
-//
-//                                    /* INSTANTIATE THE KENNEL DATA MODEL INSTANCE */
-//                                    data = new Kennel();
-//
-//                                    /* GET THE KENNEL ID */
-//                                    if (JOKennels.has("kennelID"))  {
-//                                        data.setKennelID(JOKennels.getString("kennelID"));
-//                                    } else {
-//                                        data.setKennelID(null);
-//                                    }
-//
-//                                    /* GET THE KENNEL NAME */
-//                                    if (JOKennels.has("kennelName"))    {
-//                                        data.setKennelName(JOKennels.getString("kennelName"));
-//                                    } else {
-//                                        data.setKennelName(null);
-//                                    }
-//
-//                                    /* GET THE KENNEL COVER PHOTO */
-//                                    if (JOKennels.has("kennelCoverPhoto")
-//                                            && !JOKennels.getString("kennelCoverPhoto").equalsIgnoreCase("")
-//                                            && !JOKennels.getString("kennelCoverPhoto").equalsIgnoreCase("null"))  {
-//                                        data.setKennelCoverPhoto(JOKennels.getString("kennelCoverPhoto"));
-//                                    } else {
-//                                        data.setKennelCoverPhoto(null);
-//                                    }
-//
-//                                    /* GET THE KENNEL ADDRESS */
-//                                    if (JOKennels.has("kennelAddress")) {
-//                                        data.setKennelAddress(JOKennels.getString("kennelAddress"));
-//                                    } else {
-//                                        data.setKennelAddress(null);
-//                                    }
-//
-//                                    /* GET THE KENNEL PIN CODE */
-//                                    if (JOKennels.has("kennelPinCode")) {
-//                                        data.setKennelPinCode(JOKennels.getString("kennelPinCode"));
-//                                    } else {
-//                                        data.setKennelPinCode(null);
-//                                    }
-//
-//                                    /* GET THE COUNTRY ID AND NAME */
-//                                    if (JOKennels.has("countryID") && JOKennels.has("countryName"))   {
-//                                        data.setCountryID(JOKennels.getString("countryID"));
-//                                        data.setCountryName(JOKennels.getString("countryName"));
-//                                    } else {
-//                                        data.setCountryID(null);
-//                                        data.setCountryName(null);
-//                                    }
-//
-//                                    /* GET THE STATE ID AND NAME */
-//                                    if (JOKennels.has("stateID") && JOKennels.has("stateName"))   {
-//                                        data.setStateID(JOKennels.getString("stateID"));
-//                                        data.setStateName(JOKennels.getString("stateName"));
-//                                    } else {
-//                                        data.setStateID(null);
-//                                        data.setStateName(null);
-//                                    }
-//
-//                                    /* GET THE CITY ID AND NAME */
-//                                    if (JOKennels.has("cityID") && JOKennels.has("cityName"))   {
-//                                        data.setCityID(JOKennels.getString("cityID"));
-//                                        data.setCityName(JOKennels.getString("cityName"));
-//                                    } else {
-//                                        data.setCityID(null);
-//                                        data.setCityName(null);
-//                                    }
-//
-//                                    /* GET THE KENNEL PET CAPACITY */
-//                                    if (JOKennels.has("kennelPetCapacity")
-//                                            && !JOKennels.getString("kennelPetCapacity").equalsIgnoreCase("")
-//                                            && !JOKennels.getString("kennelPetCapacity").equalsIgnoreCase("null")) {
-//                                        data.setKennelPetCapacity(JOKennels.getString("kennelPetCapacity"));
-//                                    } else {
-//                                        data.setKennelPetCapacity(null);
-//                                    }
-//
-//                                    /* GET THE KENNEL DISTANCE FROM THE USER'S LOCATION */
-//                                    if (JOKennels.has("kennelLatitude") && JOKennels.has("kennelLongitude")) {
-//                                        String kennelLatitude = JOKennels.getString("kennelLatitude");
-//                                        String kennelLongitude = JOKennels.getString("kennelLongitude");
-//                                        Double latitude = Double.valueOf(kennelLatitude);
-//                                        Double longitude = Double.valueOf(kennelLongitude);
-//                                        LatLng LATLNG_DESTINATION = new LatLng(latitude, longitude);
-//                                        String strOrigin = LATLNG_ORIGIN.latitude + "," + LATLNG_ORIGIN.longitude;
-//                                        String strDestination = LATLNG_DESTINATION.latitude + "," + LATLNG_DESTINATION.longitude;
-//                                        String strSensor = "false";
-//                                        String strKey = getString(R.string.google_directions_api_key);
-//                                        DistanceAPI api = ZenDistanceClient.getClient().create(DistanceAPI.class);
-//                                        Call<String> callDistance = api.json(strOrigin, strDestination, strSensor, strKey);
-//                                        callDistance.enqueue(new Callback<String>() {
-//                                            @Override
-//                                            public void onResponse(Call<String> call, Response<String> response) {
-//                                                try {
-//                                                    String strDistance = response.body();
-//                                                    JSONObject JORootDistance = new JSONObject(strDistance);
-//                                                    JSONArray array = JORootDistance.getJSONArray("routes");
-//                                                    JSONObject JORoutes = array.getJSONObject(0);
-//                                                    JSONArray JOLegs= JORoutes.getJSONArray("legs");
-//                                                    JSONObject JOSteps = JOLegs.getJSONObject(0);
-//                                                    JSONObject JODistance = JOSteps.getJSONObject("distance");
-//                                                    if (JODistance.has("text")) {
-//                                                        String distance = JODistance.getString("text");
-//                                                        String strTilde = getString(R.string.generic_tilde);
-//                                                        Log.e("DISTANCE", distance);
-//                                                        data.setKennelDistance(strTilde + " " + distance);
-//                                                    } else {
-//                                                        String distance = "Unknown";
-//                                                        String strInfinity = getString(R.string.generic_infinity);
-//                                                        Log.e("DISTANCE", distance);
-//                                                        data.setKennelDistance(strInfinity + " " + distance);
-//                                                    }
-//
-////                                                    arrKennels.add(data);
-//                                                    kennelsAdapter.notifyDataSetChanged();
-//                                                    Log.e("DISTANCE ADDED", "Distance added...");
-//                                                } catch (JSONException e) {
-//                                                    e.printStackTrace();
-//                                                }
-//                                            }
-//
-//                                            @Override
-//                                            public void onFailure(Call<String> call, Throwable t) {
-//                                            }
-//                                        });
-//                                    } else {
-//                                        String distance = "Unknown";
-//                                        String strInfinity = getString(R.string.generic_infinity);
-//                                        data.setKennelDistance(strInfinity + " " + distance);
-//                                    }
-//
-//                                    /* ADD THE COLLECTED DATA TO THE ARRAY LIST */
-//                                    arrKennels.add(data);
-//                                    kennelsAdapter.notifyDataSetChanged();
-//                                    Log.e("DATA ADDED", "Data added...");
-//                                }
-//
-//                                /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
-//                                Runnable run = new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        listKennels.setVisibility(View.VISIBLE);
-//                                        linlaEmpty.setVisibility(View.GONE);
-//                                    }
-//                                }; runOnUiThread(run);
-//                            } else {
-//                                /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
-//                                Runnable run = new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        linlaEmpty.setVisibility(View.VISIBLE);
-//                                        listKennels.setVisibility(View.GONE);
-//                                    }
-//                                }; runOnUiThread(run);
-//                            }
-//                        } else {
-//                            /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
-//                            Runnable run = new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    linlaEmpty.setVisibility(View.VISIBLE);
-//                                    listKennels.setVisibility(View.GONE);
-//                                }
-//                            }; runOnUiThread(run);
-//                        }
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                        Log.e("EXCEPTION", e.getMessage());
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<Kennels> call, Throwable t) {
-//                    Log.e("KENNELS FAILURE", t.getMessage());
-//                    Crashlytics.logException(t);
-//                }
-//            });
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Void aVoid) {
-//            super.onPostExecute(aVoid);
-//
 //            /* SET THE ADAPTER TO THE RECYCLER VIEW */
 //            listKennels.setAdapter(kennelsAdapter);
-//
-//            /* HIDE THE PROGRESSBAR AFTER LOADING THE DATA */
-//            linlaProgress.setVisibility(View.GONE);
-//        }
-//    }
+
+            /* HIDE THE PROGRESSBAR AFTER LOADING THE DATA */
+            progressLoading.setVisibility(View.GONE);
+        }
+    }
 
     /** CONCATENATE THE URL TO THE GOOGLE MAPS API FOR GETTING THE DISTANCE **/
     private String getUrl(LatLng origin, LatLng destination) {
@@ -681,165 +480,101 @@ public class NewKennelsList extends AppCompatActivity
         return "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
     }
 
-    /** FETCH THE LIST OF KENNELS **/
-//    private void fetchKennels() {
-//        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-//        Call<Kennels> call = api.fetchKennelsListByCity(FINAL_CITY_ID);
-//        call.enqueue(new Callback<Kennels>() {
-//            @Override
-//            public void onResponse(Call<Kennels> call, Response<Kennels> response) {
-//                try {
-//                    String strResult = new Gson().toJson(response.body());
-//                    JSONObject JORoot = new JSONObject(strResult);
-////                    Log.e("ROOT", String.valueOf(JORoot));
-//                    if (JORoot.has("error") && JORoot.getString("error").equalsIgnoreCase("false")) {
-//                        JSONArray JAKennels = JORoot.getJSONArray("kennels");
-//                        for (int i = 0; i < JAKennels.length(); i++) {
-//                            JSONObject JOKennels = JAKennels.getJSONObject(i);
-//                            Log.e("KENNEL", String.valueOf(JOKennels));
-//
-//                            /* INSTANTIATE THE KENNEL DATA MODEL INSTANCE */
-//                            data = new Kennel();
-//
-//                            /* GET THE KENNEL ID */
-//                            if (JOKennels.has("kennelID"))  {
-//                                data.setKennelID(JOKennels.getString("kennelID"));
-//                            } else {
-//                                data.setKennelID(null);
-//                            }
-//
-//                            /* ADD THE COLLECTED DATA TO THE ARRAY LIST */
-//                            arrKennels.add(data);
-//                        }
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Kennels> call, Throwable t) {
-//                Log.e("KENNELS FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
-//            }
-//        });
-//    }
+    /** GET THE LIST OF KENNELS **/
+    private void fetchKennels() {
+        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
+        Call<Kennels> call = api.fetchKennelsListByCity(FINAL_CITY_ID);
+        call.enqueue(new Callback<Kennels>() {
+            @Override
+            public void onResponse(Call<Kennels> call, Response<Kennels> response) {
+                if (response.body() != null && response.body().getKennels() != null)    {
+                    arrKennels = response.body().getKennels();
+                    if (arrKennels.size() > 0)  {
+                        /* SET THE ADAPTER */
+                        listKennels.setAdapter(new KennelsAdapter(NewKennelsList.this, arrKennels, LATLNG_ORIGIN));
 
-    @Override
-    public void onKennels(ArrayList<Kennel> data) {
-        /* CAST THE DATA IN THE GLOBAL INSTANCE */
-        arrKennels = data;
+                        /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
+                        listKennels.setVisibility(View.VISIBLE);
+                        linlaEmpty.setVisibility(View.GONE);
 
-        /* CHECK FOR CONTENTS */
-        if (arrKennels.size() > 0)  {
-            /* SET THE ADAPTER */
-            listKennels.setAdapter(kennelsAdapter);
+                        /* HIDE THE PROGRESS BAR */
+//                        linlaProgress.setVisibility(View.GONE);
+                        progressLoading.setVisibility(View.GONE);
+                    } else {
+                        /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
+                        linlaEmpty.setVisibility(View.VISIBLE);
+                        listKennels.setVisibility(View.GONE);
 
-            /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
-            listKennels.setVisibility(View.VISIBLE);
-            linlaEmpty.setVisibility(View.GONE);
+                        /* HIDE THE PROGRESS BAR */
+//                        linlaProgress.setVisibility(View.GONE);
+                        progressLoading.setVisibility(View.GONE);
+                    }
+                } else {
+                    /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
+                    linlaEmpty.setVisibility(View.VISIBLE);
+                    listKennels.setVisibility(View.GONE);
 
-            /* HIDE THE PROGRESS BAR */
-            linlaProgress.setVisibility(View.GONE);
-        } else {
-            /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
-            linlaEmpty.setVisibility(View.VISIBLE);
-            listKennels.setVisibility(View.GONE);
+                    /* HIDE THE PROGRESS BAR */
+//                    linlaProgress.setVisibility(View.GONE);
+                    progressLoading.setVisibility(View.GONE);
+                }
+            }
 
-            /* HIDE THE PROGRESS BAR */
-            linlaProgress.setVisibility(View.GONE);
-        }
+            @Override
+            public void onFailure(Call<Kennels> call, Throwable t) {
+                Log.e("KENNELS FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
 
-    /** GET THE LIST OF KENNELS **/
-//    private void fetchKennels() {
-//        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-//        Call<Kennels> call = api.fetchKennelsListByCity(FINAL_CITY_ID);
-//        call.enqueue(new Callback<Kennels>() {
-//            @Override
-//            public void onResponse(Call<Kennels> call, Response<Kennels> response) {
-//                if (response.body() != null && response.body().getKennels() != null)    {
-//                    arrKennels = response.body().getKennels();
-//                    if (arrKennels.size() > 0)  {
-//                        /* SET THE ADAPTER */
-//                        listKennels.setAdapter(new KennelsAdapter(NewKennelsList.this, arrKennels, LATLNG_ORIGIN));
-//
-//                        /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
-//                        listKennels.setVisibility(View.VISIBLE);
-//                        linlaEmpty.setVisibility(View.GONE);
-//
-//                        /* HIDE THE PROGRESS BAR */
-//                        linlaProgress.setVisibility(View.GONE);
-//                    } else {
-//                        /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
-//                        linlaEmpty.setVisibility(View.VISIBLE);
-//                        listKennels.setVisibility(View.GONE);
-//
-//                        /* HIDE THE PROGRESS BAR */
-//                        linlaProgress.setVisibility(View.GONE);
-//                    }
-//                } else {
-//                    /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
-//                    linlaEmpty.setVisibility(View.VISIBLE);
-//                    listKennels.setVisibility(View.GONE);
-//
-//                    /* HIDE THE PROGRESS BAR */
-//                    linlaProgress.setVisibility(View.GONE);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Kennels> call, Throwable t) {
-//                Log.e("KENNELS FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
-//            }
-//        });
-//    }
-
     /** FETCH THE KENNEL SEARCH RESULTS **/
-//    private void fetchKennelResults(String query) {
-//        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-//        Call<Kennels> call = api.searchKennels(FINAL_CITY_ID, query);
-//        call.enqueue(new Callback<Kennels>() {
-//            @Override
-//            public void onResponse(Call<Kennels> call, Response<Kennels> response) {
-//                if (response.body() != null && response.body().getKennels() != null)    {
-//                    arrKennels = response.body().getKennels();
-//                    if (arrKennels.size() > 0)  {
-//                        /* SET THE ADAPTER */
-//                        listKennels.setAdapter(new KennelsAdapter(NewKennelsList.this, arrKennels, LATLNG_ORIGIN));
-//
-//                        /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
-//                        listKennels.setVisibility(View.VISIBLE);
-//                        linlaEmpty.setVisibility(View.GONE);
-//
-//                        /* HIDE THE PROGRESS BAR */
+    private void fetchKennelResults(String query) {
+        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
+        Call<Kennels> call = api.searchKennels(FINAL_CITY_ID, query);
+        call.enqueue(new Callback<Kennels>() {
+            @Override
+            public void onResponse(Call<Kennels> call, Response<Kennels> response) {
+                if (response.body() != null && response.body().getKennels() != null)    {
+                    arrKennels = response.body().getKennels();
+                    if (arrKennels.size() > 0)  {
+                        /* SET THE ADAPTER */
+                        listKennels.setAdapter(new KennelsAdapter(NewKennelsList.this, arrKennels, LATLNG_ORIGIN));
+
+                        /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
+                        listKennels.setVisibility(View.VISIBLE);
+                        linlaEmpty.setVisibility(View.GONE);
+
+                        /* HIDE THE PROGRESS BAR */
 //                        linlaProgress.setVisibility(View.GONE);
-//                    } else {
-//                        /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
-//                        linlaEmpty.setVisibility(View.VISIBLE);
-//                        listKennels.setVisibility(View.GONE);
-//
-//                        /* HIDE THE PROGRESS BAR */
+                        progressLoading.setVisibility(View.GONE);
+                    } else {
+                        /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
+                        linlaEmpty.setVisibility(View.VISIBLE);
+                        listKennels.setVisibility(View.GONE);
+
+                        /* HIDE THE PROGRESS BAR */
 //                        linlaProgress.setVisibility(View.GONE);
-//                    }
-//                } else {
-//                    /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
-//                    linlaEmpty.setVisibility(View.VISIBLE);
-//                    listKennels.setVisibility(View.GONE);
-//
-//                    /* HIDE THE PROGRESS BAR */
+                        progressLoading.setVisibility(View.GONE);
+                    }
+                } else {
+                    /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
+                    linlaEmpty.setVisibility(View.VISIBLE);
+                    listKennels.setVisibility(View.GONE);
+
+                    /* HIDE THE PROGRESS BAR */
 //                    linlaProgress.setVisibility(View.GONE);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Kennels> call, Throwable t) {
-//                Log.e("KENNELS FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
-//            }
-//        });
-//    }
+                    progressLoading.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Kennels> call, Throwable t) {
+                Log.e("KENNELS FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
+    }
 
     /** FETCH THE USER'S LOCATION **/
     private void fetchUsersLocation() {
@@ -958,6 +693,7 @@ public class NewKennelsList extends AppCompatActivity
             /* FETCH THE LIST OF KENNELS */
 //            new FetchKennels(this).execute(FINAL_CITY_ID, LATLNG_ORIGIN.latitude, LATLNG_ORIGIN.longitude);
             new fetchKennels().execute();
+//            fetchKennels();
         } else {
             /* SET THE ERROR MESSAGE */
             txtEmpty.setText(getString(R.string.doctor_list_location_not_served));
@@ -967,7 +703,8 @@ public class NewKennelsList extends AppCompatActivity
             listKennels.setVisibility(View.GONE);
 
             /* HIDE THE PROGRESS */
-            linlaProgress.setVisibility(View.GONE);
+//            linlaProgress.setVisibility(View.GONE);
+            progressLoading.setVisibility(View.GONE);
         }
     }
 
@@ -1028,8 +765,9 @@ public class NewKennelsList extends AppCompatActivity
         if (query != null)  {
             /* CLEAR THE ARRAY, SHOW THE PROGRESS AND FETCH THE KENNEL SEARCH RESULTS */
             arrKennels.clear();
-            linlaProgress.setVisibility(View.VISIBLE);
-//            fetchKennelResults(query);
+//            linlaProgress.setVisibility(View.VISIBLE);
+            progressLoading.setVisibility(View.VISIBLE);
+            fetchKennelResults(query);
             searchView.clearFocus();
         }
         return true;

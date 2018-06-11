@@ -60,7 +60,7 @@ public class ProfileFragment extends Fragment {
 
     /** THE USER AUTH ID AND USER ID **/
     private String USER_AUTH_ID = null;
-    String USER_ID = null;
+    private String USER_ID = null;
 
     /** THE USER NAME AND DISPLAY PROFILE **/
     private String USER_NAME = null;

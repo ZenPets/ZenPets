@@ -4,6 +4,6 @@ import java.util.ArrayList;
 
 import biz.zenpets.users.utils.models.reviews.Review;
 
-public interface FetchDoctorReviewsSubsetInterface {
+interface FetchDoctorReviewsSubsetInterface {
     void onReviewSubset(ArrayList<Review> data);
 }

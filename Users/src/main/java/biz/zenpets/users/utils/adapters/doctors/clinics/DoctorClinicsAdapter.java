@@ -105,9 +105,9 @@ public class DoctorClinicsAdapter extends RecyclerView.Adapter<DoctorClinicsAdap
     }
 
     class ClinicsVH extends RecyclerView.ViewHolder	{
-        AppCompatTextView txtClinicName;
-        AppCompatRatingBar clinicRating;
-        AppCompatTextView txtClinicAddress;
+        final AppCompatTextView txtClinicName;
+        final AppCompatRatingBar clinicRating;
+        final AppCompatTextView txtClinicAddress;
         ClinicsVH(View v) {
             super(v);
 

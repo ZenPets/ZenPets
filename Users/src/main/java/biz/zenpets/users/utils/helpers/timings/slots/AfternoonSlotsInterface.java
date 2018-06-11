@@ -4,6 +4,6 @@ import java.util.ArrayList;
 
 import biz.zenpets.users.utils.models.appointment.slots.AfternoonTimeSlotsData;
 
-public interface AfternoonSlotsInterface {
+interface AfternoonSlotsInterface {
     void onAfternoonSlotResult(ArrayList<AfternoonTimeSlotsData> arrAfternoonSlots);
 }

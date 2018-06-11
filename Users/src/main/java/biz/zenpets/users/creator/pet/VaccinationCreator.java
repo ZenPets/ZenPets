@@ -80,7 +80,7 @@ public class VaccinationCreator extends AppCompatActivity
     private String PET_ID = null;
 
     /** THE NEW VACCINATION ID **/
-    String VACCINATION_ID = null;
+    private String VACCINATION_ID = null;
 
     /** DATA TYPES FOR HOLDING THE COLLECTED DATA **/
     private String VACCINE_ID = null;

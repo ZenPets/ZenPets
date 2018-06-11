@@ -31,7 +31,7 @@ import retrofit2.Response;
 public class TrainingModuleDetails extends AppCompatActivity {
 
     /** THE INCOMING MODULE ID **/
-    String MODULE_ID = null;
+    private String MODULE_ID = null;
 
     /** THE TRAINING MODULE IMAGES ARRAY LIST **/
     private ArrayList<ModuleImage> arrImages = new ArrayList<>();

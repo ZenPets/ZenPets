@@ -22,7 +22,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class FetchDoctorReviewsSubset extends AsyncTask<Object, Void, ArrayList<Review>> {
+class FetchDoctorReviewsSubset extends AsyncTask<Object, Void, ArrayList<Review>> {
 
     /* THE INTERFACE INSTANCE */
     private final FetchDoctorReviewsSubsetInterface delegate;

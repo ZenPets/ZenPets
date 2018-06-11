@@ -197,6 +197,39 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
+                    <RatingBar
+                        android:id="@+id/kennelRating"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="4dp"
+                        android:numStars="5"
+                        android:rating="0" />
+                </LinearLayout>
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="3dp"
+                    android:adjustViewBounds="true"
+                    app:iiv_color="@color/tertiary_text"
+                    app:iiv_icon="oct_primitive_dot"
+                    app:iiv_size="4dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
                     <TextView
                         android:id="@+id/txtKennelDistance"
                         android:layout_width="wrap_content"

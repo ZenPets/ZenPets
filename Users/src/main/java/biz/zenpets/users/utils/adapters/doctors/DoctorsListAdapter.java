@@ -47,7 +47,7 @@ public class DoctorsListAdapter extends RecyclerView.Adapter<DoctorsListAdapter.
     private final ArrayList<Doctor> arrDoctors;
 
     /** THE ORIGIN **/
-    private LatLng LATLNG_ORIGIN;
+    private final LatLng LATLNG_ORIGIN;
 
     /** THE DATA TYPES FOR CALCULATING THE LIKES PERCENTAGE  **/
     private int TOTAL_LIKES = 0;

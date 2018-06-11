@@ -21,10 +21,10 @@ import okhttp3.Response;
 public class FetchBreedTypes extends AsyncTask<Object, Void, ArrayList<BreedsData>> {
 
     /** THE INTERFACE INSTANCE **/
-    FetchBreedTypesInterface delegate;
+    private final FetchBreedTypesInterface delegate;
 
     /** AN ARRAY LIST INSTANCE **/
-    ArrayList<BreedsData> arrBreeds = new ArrayList<>();
+    private final ArrayList<BreedsData> arrBreeds = new ArrayList<>();
 
     public FetchBreedTypes(FetchBreedTypesInterface delegate) {
         this.delegate = delegate;

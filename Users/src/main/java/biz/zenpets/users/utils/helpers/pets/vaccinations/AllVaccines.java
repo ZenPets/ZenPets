@@ -20,10 +20,10 @@ import okhttp3.Response;
 public class AllVaccines extends AsyncTask<Void, Void, ArrayList<Vaccine>> {
 
     /** AN INTERFACE INSTANCE **/
-    AllVaccinesInterface delegate;
+    private final AllVaccinesInterface delegate;
 
     /** AN ARRAY LIST INSTANCE **/
-    ArrayList<Vaccine> arrVaccines = new ArrayList<>();
+    private final ArrayList<Vaccine> arrVaccines = new ArrayList<>();
 
     public AllVaccines(AllVaccinesInterface delegate) {
         this.delegate = delegate;

@@ -31,10 +31,10 @@ import okhttp3.Response;
 public class FetchUserPets extends AsyncTask<Object, Void, ArrayList<Pet>> {
 
     /** THE INTERFACE INSTANCE **/
-    private FetchUserPetsInterface delegate;
+    private final FetchUserPetsInterface delegate;
 
     /** AN ARRAY LIST INSTANCE **/
-    private ArrayList<Pet> arrPets = new ArrayList<>();
+    private final ArrayList<Pet> arrPets = new ArrayList<>();
 
     public FetchUserPets(FetchUserPetsInterface delegate) {
         this.delegate = delegate;

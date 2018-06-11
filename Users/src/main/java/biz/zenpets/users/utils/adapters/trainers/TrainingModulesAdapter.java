@@ -33,7 +33,7 @@ import retrofit2.Response;
 public class TrainingModulesAdapter extends RecyclerView.Adapter<TrainingModulesAdapter.ModulesVH> {
     
     /** AN ACTIVITY INSTANCE **/
-    Activity activity;
+    private final Activity activity;
 
     /***** ARRAY LIST TO GET DATA FROM THE ACTIVITY *****/
     private final ArrayList<Module> arrAdapterModules;
@@ -174,16 +174,16 @@ public class TrainingModulesAdapter extends RecyclerView.Adapter<TrainingModules
     }
 
     class ModulesVH extends RecyclerView.ViewHolder	{
-        LinearLayout linlaModuleContainer;
+        final LinearLayout linlaModuleContainer;
         final AppCompatTextView txtModuleName;
         final AppCompatTextView txtModuleDuration;
         final AppCompatTextView txtModuleDetails;
-        ImageView imgvwModuleFormat;
-        TextView txtModuleFormat;
-        AppCompatTextView txtModuleFees;
-        LinearLayout linlaImagesContainer;
-        RecyclerView listModuleImages;
-        AppCompatTextView txtEnquire;
+        final ImageView imgvwModuleFormat;
+        final TextView txtModuleFormat;
+        final AppCompatTextView txtModuleFees;
+        final LinearLayout linlaImagesContainer;
+        final RecyclerView listModuleImages;
+        final AppCompatTextView txtEnquire;
 
         ModulesVH(View v) {
             super(v);

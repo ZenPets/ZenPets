@@ -8,9 +8,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -35,6 +39,7 @@ import biz.zenpets.kennels.R;
 import biz.zenpets.kennels.details.kennel.KennelDetails;
 import biz.zenpets.kennels.modifier.kennel.KennelModifier;
 import biz.zenpets.kennels.utils.AppPrefs;
+import biz.zenpets.kennels.utils.TypefaceSpan;
 import biz.zenpets.kennels.utils.models.helpers.ZenApiClient;
 import biz.zenpets.kennels.utils.models.kennels.Kennel;
 import biz.zenpets.kennels.utils.models.kennels.Kennels;
@@ -101,6 +106,9 @@ public class KennelsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        /* CONFIGURE THE ACTIONBAR */
+        configAB();
+
         /* GET THE KENNEL OWNER'S ID */
         KENNEL_OWNER_ID = getApp().getKennelOwnerID();
 
@@ -141,13 +149,6 @@ public class KennelsFragment extends Fragment {
             @Override
             public void onResponse(Call<Kennels> call, Response<Kennels> response) {
                 Log.e("RAW", String.valueOf(response.raw()));
-//                try {
-//                    String strResult = new Gson().toJson(response.body());
-//                    JSONObject JORoot = new JSONObject(strResult);
-//                    Log.e("ROOT", String.valueOf(JORoot));
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
                 if (response.body() != null && response.body().getKennels() != null)    {
                     arrKennels = response.body().getKennels();
                     if (arrKennels.size() > 0)  {
@@ -178,6 +179,20 @@ public class KennelsFragment extends Fragment {
                 Crashlytics.logException(t);
             }
         });
+    }
+
+    /***** CONFIGURE THE ACTIONBAR *****/
+    private void configAB() {
+        String strTitle = "Your Kennels";
+        SpannableString s = new SpannableString(strTitle);
+        s.setSpan(new TypefaceSpan(getActivity()), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(s);
     }
 
     /***** CONFIGURE THE RECYCLER VIEW *****/

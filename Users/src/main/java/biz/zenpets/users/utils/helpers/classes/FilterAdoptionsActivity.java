@@ -22,8 +22,8 @@ import butterknife.OnClick;
 public class FilterAdoptionsActivity extends AppCompatActivity {
 
     /** DATA TYPES TO HOLD THE USER'S SELECTIONS **/
-    String PET_GENDER = null;
-    String PET_SPECIES = null;
+    private String PET_GENDER = null;
+    private String PET_SPECIES = null;
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.txtClear) AppCompatTextView txtClear;

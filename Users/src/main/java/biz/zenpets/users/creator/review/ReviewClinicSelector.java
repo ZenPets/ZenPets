@@ -47,7 +47,7 @@ public class ReviewClinicSelector extends AppCompatActivity {
     private String DOCTOR_ID = null;
 
     /* THE DOCTOR CLINICS ARRAY LIST INSTANCE */
-    ArrayList<Clinic> arrClinics = new ArrayList<>();
+    private ArrayList<Clinic> arrClinics = new ArrayList<>();
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.imgvwDoctorProfile) SimpleDraweeView imgvwDoctorProfile;
@@ -300,10 +300,10 @@ public class ReviewClinicSelector extends AppCompatActivity {
         }
 
         class ClinicsVH extends RecyclerView.ViewHolder	{
-            LinearLayout linlaClinicContainer;
-            AppCompatTextView txtClinicName;
-            AppCompatRatingBar clinicRating;
-            AppCompatTextView txtClinicAddress;
+            final LinearLayout linlaClinicContainer;
+            final AppCompatTextView txtClinicName;
+            final AppCompatRatingBar clinicRating;
+            final AppCompatTextView txtClinicAddress;
             ClinicsVH(View v) {
                 super(v);
                 linlaClinicContainer = v.findViewById(R.id.linlaClinicContainer);

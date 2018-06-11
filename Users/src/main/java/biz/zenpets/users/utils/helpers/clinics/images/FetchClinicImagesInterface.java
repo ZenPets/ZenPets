@@ -4,6 +4,6 @@ import java.util.ArrayList;
 
 import biz.zenpets.users.utils.models.clinics.ClinicImagesData;
 
-public interface FetchClinicImagesInterface {
+interface FetchClinicImagesInterface {
     void onClinicImages(ArrayList<ClinicImagesData> data);
 }

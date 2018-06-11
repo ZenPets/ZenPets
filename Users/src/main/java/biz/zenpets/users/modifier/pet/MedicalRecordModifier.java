@@ -48,18 +48,18 @@ import retrofit2.Response;
 public class MedicalRecordModifier extends AppCompatActivity {
 
     /** THE INCOMING MEDICAL RECORD ID **/
-    String MEDICAL_RECORD_ID = null;
+    private String MEDICAL_RECORD_ID = null;
 
     /** THE RECORD TYPES ARRAY LIST INSTANCE **/
-    ArrayList<RecordType> arrTypes = new ArrayList<>();
+    private ArrayList<RecordType> arrTypes = new ArrayList<>();
 
     /** DATA TYPES TO HOLD THE COLLECTED DATA **/
-    String RECORD_TYPE_ID = null;
-    String RECORD_TYPE_NAME = null;
-    String USER_ID = null;
-    String PET_ID = null;
-    String RECORD_NOTES = null;
-    String RECORD_DATE = null;
+    private String RECORD_TYPE_ID = null;
+    private String RECORD_TYPE_NAME = null;
+    private String USER_ID = null;
+    private String PET_ID = null;
+    private String RECORD_NOTES = null;
+    private String RECORD_DATE = null;
 
     /** A PROGRESS DIALOG **/
     private ProgressDialog dialog;

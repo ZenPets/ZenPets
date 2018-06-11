@@ -20,10 +20,10 @@ import okhttp3.Response;
 public class FetchRecordTypes extends AsyncTask<Void, Void, ArrayList<RecordType>> {
 
     /** THE INTERFACE INSTANCE **/
-    FetchRecordTypesInterface typesInterface;
+    private final FetchRecordTypesInterface typesInterface;
 
     /** AN ARRAY LIST INSTANCE **/
-    ArrayList<RecordType> arrRecordTypes = new ArrayList<>();
+    private final ArrayList<RecordType> arrRecordTypes = new ArrayList<>();
 
     public FetchRecordTypes(FetchRecordTypesInterface typesInterface) {
         this.typesInterface = typesInterface;

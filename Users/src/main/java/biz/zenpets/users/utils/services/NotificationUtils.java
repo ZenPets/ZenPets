@@ -18,12 +18,12 @@ import java.util.List;
 
 import biz.zenpets.users.R;
 
-public class NotificationUtils {
+class NotificationUtils {
 
     private static String TAG = NotificationUtils.class.getSimpleName();
 
-    private Context mContext;
-    private String CHANNEL_ID;
+    private final Context mContext;
+    private final String CHANNEL_ID;
 
     public NotificationUtils(Context mContext, String CHANNEL_ID) {
         this.mContext = mContext;

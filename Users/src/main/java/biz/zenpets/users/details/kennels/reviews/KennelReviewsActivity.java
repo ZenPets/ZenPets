@@ -32,11 +32,11 @@ import retrofit2.Response;
 public class KennelReviewsActivity extends AppCompatActivity {
 
     /** THE INCOMING KENNEL ID AND NAME **/
-    String KENNEL_ID = null;
-    String KENNEL_NAME = null;
+    private String KENNEL_ID = null;
+    private String KENNEL_NAME = null;
 
     /** A KENNEL REVIEWS ARRAY LIST INSTANCE **/
-    ArrayList<KennelReview> arrReviews = new ArrayList<>();
+    private ArrayList<KennelReview> arrReviews = new ArrayList<>();
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.txtKennelName) TextView txtKennelName;

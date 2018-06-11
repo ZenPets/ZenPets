@@ -1,6 +1,6 @@
 package biz.zenpets.users.utils.models.pets.vaccines;
 
-public class VaccinesData {
+class VaccinesData {
 
     private String vaccineID;
     private String vaccineName;

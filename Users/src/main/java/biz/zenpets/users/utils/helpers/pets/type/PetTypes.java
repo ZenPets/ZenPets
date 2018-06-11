@@ -20,10 +20,10 @@ import okhttp3.Response;
 public class PetTypes extends AsyncTask<Void, Void, ArrayList<PetTypesData>> {
 
     /** THE INTERFACE INSTANCE **/
-    PetTypesInterface delegate;
+    private final PetTypesInterface delegate;
 
     /** THE ARRAY LIST INSTANCE **/
-    ArrayList<PetTypesData> arrPetTypes = new ArrayList<>();
+    private final ArrayList<PetTypesData> arrPetTypes = new ArrayList<>();
 
     public PetTypes(PetTypesInterface delegate) {
         this.delegate = delegate;
