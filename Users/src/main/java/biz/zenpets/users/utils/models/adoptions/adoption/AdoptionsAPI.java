@@ -28,7 +28,10 @@ public interface AdoptionsAPI {
 
     /** FETCH ALL ADOPTION IN THE SELECTED CITY **/
     @GET("fetchAdoptions")
-    Call<Adoptions> fetchAdoptions(@Query("cityID") String cityID);
+    Call<Adoptions> fetchAdoptions(
+            @Query("cityID") String cityID,
+            @Query("petTypeName") String petTypeName,
+            @Query("adoptionGender") String adoptionGender);
 
     /** FETCH ALL USER ADOPTION LISTING **/
     @GET("listUserAdoptions")

@@ -2,6 +2,7 @@ package biz.zenpets.users.details.adoptions;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -22,10 +23,14 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.mikepenz.iconics.view.IconicsImageView;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -46,6 +51,9 @@ import biz.zenpets.users.utils.models.adoptions.messages.AdoptionMessagesAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class UserAdoptionDetails extends AppCompatActivity {
 
@@ -251,13 +259,22 @@ public class UserAdoptionDetails extends AppCompatActivity {
 
                     /* GET THE TIME STAMP */
                     String adoptionTimeStamp = data.getAdoptionTimeStamp();
+//                    Log.e("TS", adoptionTimeStamp);
                     long lngTimeStamp = Long.parseLong(adoptionTimeStamp) * 1000;
+
+                    /* GET THE PRETTY DATE */
+                    Calendar calPretty = Calendar.getInstance(Locale.getDefault());
+                    calPretty.setTimeInMillis(lngTimeStamp);
+                    Date date = calPretty.getTime();
+                    PrettyTime prettyTime = new PrettyTime();
+                    String strPrettyDate = prettyTime.format(date);
+
                     Calendar calendar = Calendar.getInstance(Locale.getDefault());
                     calendar.setTimeInMillis(lngTimeStamp);
-                    Date date = calendar.getTime();
-                    PrettyTime prettyTime = new PrettyTime();
-                    ADOPTION_TIMESTAMP = prettyTime.format(date);
-                    txtTimeStamp.setText(getString(R.string.adoption_details_posted, ADOPTION_TIMESTAMP));
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                    Date currentTimeZone = calendar.getTime();
+                    String strDate = sdf.format(currentTimeZone);
+                    txtTimeStamp.setText(getString(R.string.adoption_details_posted, strDate, strPrettyDate));
 
                     /* GET THE VACCINATION STATUS */
                     ADOPTION_VACCINATION = data.getAdoptionVaccinated();
@@ -358,13 +375,13 @@ public class UserAdoptionDetails extends AppCompatActivity {
     /***** FETCH THE ADOPTION MESSAGES *****/
     private void fetchAdoptionMessages() {
         AdoptionMessagesAPI api = ZenApiClient.getClient().create(AdoptionMessagesAPI.class);
-        retrofit2.Call<AdoptionMessages> call = api.fetchAdoptionMessages(ADOPTION_ID);
-        call.enqueue(new retrofit2.Callback<AdoptionMessages>() {
+        Call<AdoptionMessages> call = api.fetchAdoptionMessages(ADOPTION_ID);
+        call.enqueue(new Callback<AdoptionMessages>() {
             @Override
-            public void onResponse(retrofit2.Call<AdoptionMessages> call, retrofit2.Response<AdoptionMessages> response) {
-                if (response.isSuccessful())    {
+            public void onResponse(Call<AdoptionMessages> call, Response<AdoptionMessages> response) {
+                if (response.isSuccessful() && response.body().getMessages() != null)    {
                     arrMessages = response.body().getMessages();
-                    
+
                     /* CHECK FOR ARRAY SIZE */
                     if (arrMessages.size() > 0 && arrMessages != null)  {
                         /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY MESSAGE VIEW */
@@ -387,8 +404,7 @@ public class UserAdoptionDetails extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(retrofit2.Call<AdoptionMessages> call, Throwable t) {
-//                Log.e("TUESDAY FAILURE", t.getMessage());
+            public void onFailure(Call<AdoptionMessages> call, Throwable t) {
                 Crashlytics.logException(t);
             }
         });
@@ -569,6 +585,24 @@ public class UserAdoptionDetails extends AppCompatActivity {
                 holder.linlaOutgoing.setVisibility(View.VISIBLE);
                 holder.linlaIncoming.setVisibility(View.GONE);
 
+                /* SET THE INCOMING USER'S DISPLAY PROFILE */
+                String strUserDisplayProfile = data.getUserDisplayProfile();
+                if (strUserDisplayProfile != null)    {
+                    Uri uri = Uri.parse(strUserDisplayProfile);
+                    holder.imgvwOutgoingProfile.setImageURI(uri);
+                } else {
+                    ImageRequest request = ImageRequestBuilder
+                            .newBuilderWithResourceId(R.drawable.ic_action_user_light)
+                            .build();
+                    holder.imgvwOutgoingProfile.setImageURI(request.getSourceUri());
+                }
+
+                /* SET THE USER'S NAME */
+                String strUserName = data.getUserName();
+                if (strUserName != null)    {
+                    holder.txtOutgoingUserName.setText(strUserName);
+                }
+
                 /* SET THE MESSAGE TEXT */
                 if (data.getMessageText() != null)  {
                     holder.txtOutgoingMessage.setText(data.getMessageText());
@@ -584,7 +618,6 @@ public class UserAdoptionDetails extends AppCompatActivity {
                     PrettyTime prettyTime = new PrettyTime();
                     holder.txtOutgoingTimeStamp.setText(prettyTime.format(date));
                 }
-
             } else {
                 /* SHOW THE INCOMING MESSAGE CONTAINER AND HIDE THE OUTGOING MESSAGE CONTAINER */
                 holder.linlaIncoming.setVisibility(View.VISIBLE);
@@ -595,6 +628,24 @@ public class UserAdoptionDetails extends AppCompatActivity {
                     holder.txtIncomingMessage.setText(data.getMessageText());
                 }
 
+                /* SET THE INCOMING USER'S DISPLAY PROFILE */
+                String strUserDisplayProfile = data.getUserDisplayProfile();
+                if (strUserDisplayProfile != null)    {
+                    Uri uri = Uri.parse(strUserDisplayProfile);
+                    holder.imgvwIncomingProfile.setImageURI(uri);
+                } else {
+                    ImageRequest request = ImageRequestBuilder
+                            .newBuilderWithResourceId(R.drawable.ic_action_user_light)
+                            .build();
+                    holder.imgvwIncomingProfile.setImageURI(request.getSourceUri());
+                }
+
+                /* SET THE USER'S NAME */
+                String strUserName = data.getUserName();
+                if (strUserName != null)    {
+                    holder.txtIncomingUserName.setText(strUserName);
+                }
+
                 /* SET THE TIME STAMP */
                 if (data.getMessageTimeStamp() != null) {
                     String messageTimeStamp = data.getMessageTimeStamp();
@@ -603,7 +654,7 @@ public class UserAdoptionDetails extends AppCompatActivity {
                     calendar.setTimeInMillis(lngTimeStamp);
                     Date date = calendar.getTime();
                     PrettyTime prettyTime = new PrettyTime();
-                    holder.txtOutgoingTimeStamp.setText(prettyTime.format(date));
+                    holder.txtIncomingTimeStamp.setText(prettyTime.format(date));
                 }
             }
         }
@@ -613,28 +664,36 @@ public class UserAdoptionDetails extends AppCompatActivity {
 
             View itemView = LayoutInflater.
                     from(parent.getContext()).
-                    inflate(R.layout.adoption_message_item, parent, false);
+                    inflate(R.layout.adoption_message_item_new, parent, false);
 
-            return new AdoptionMessagesAdapter.MessagesVH(itemView);
+            return new MessagesVH(itemView);
         }
 
         class MessagesVH extends RecyclerView.ViewHolder	{
 
             final LinearLayout linlaIncoming;
+            SimpleDraweeView imgvwIncomingProfile;
             final AppCompatTextView txtIncomingMessage;
+            final AppCompatTextView txtIncomingUserName;
             final AppCompatTextView txtIncomingTimeStamp;
             final LinearLayout linlaOutgoing;
+            SimpleDraweeView imgvwOutgoingProfile;
             final AppCompatTextView txtOutgoingMessage;
+            final AppCompatTextView txtOutgoingUserName;
             final AppCompatTextView txtOutgoingTimeStamp;
 
             MessagesVH(View v) {
                 super(v);
 
                 linlaIncoming = v.findViewById(R.id.linlaIncoming);
+                imgvwIncomingProfile = v.findViewById(R.id.imgvwIncomingProfile);
                 txtIncomingMessage = v.findViewById(R.id.txtIncomingMessage);
+                txtIncomingUserName = v.findViewById(R.id.txtIncomingUserName);
                 txtIncomingTimeStamp = v.findViewById(R.id.txtIncomingTimeStamp);
                 linlaOutgoing = v.findViewById(R.id.linlaOutgoing);
+                imgvwOutgoingProfile = v.findViewById(R.id.imgvwOutgoingProfile);
                 txtOutgoingMessage = v.findViewById(R.id.txtOutgoingMessage);
+                txtOutgoingUserName = v.findViewById(R.id.txtOutgoingUserName);
                 txtOutgoingTimeStamp = v.findViewById(R.id.txtOutgoingTimeStamp);
             }
         }

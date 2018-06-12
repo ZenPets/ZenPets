@@ -330,6 +330,45 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linlaHomeBoarding"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:adjustViewBounds="true"
+                    app:iiv_color="@color/tertiary_text"
+                    app:iiv_icon="oct_home"
+                    app:iiv_size="20dp" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txtHomeBoarding"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:text="@string/profile_home_boarding"
+                    android:textColor="@color/primary_text"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/lato_bold" />
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:adjustViewBounds="true"
+                    android:padding="11dp"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="gmd_chevron_right"
+                    app:iiv_size="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/linlaSettings"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"

@@ -14,6 +14,7 @@ import com.mikepenz.iconics.view.IconicsImageView;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -49,13 +50,6 @@ public class UserAdoptionsAdapter extends RecyclerView.Adapter<UserAdoptionsAdap
     public void onBindViewHolder(AdoptionsVH holder, final int position) {
         final Adoption data = arrAdoptions.get(position);
 
-        /* SET THE ADOPTION NAME */
-        if (data.getAdoptionName() != null && !data.getAdoptionName().equalsIgnoreCase("")) {
-            holder.txtAdoptionName.setText(data.getAdoptionName());
-        } else {
-            holder.txtAdoptionName.setText(activity.getString(R.string.adoption_details_unnamed));
-        }
-
         /* SET THE PET'S GENDER */
         if (data.getAdoptionGender().equalsIgnoreCase("male"))  {
             holder.imgvwGender.setIcon("faw-mars");
@@ -73,20 +67,31 @@ public class UserAdoptionsAdapter extends RecyclerView.Adapter<UserAdoptionsAdap
         /* SET THE TIMESTAMP (DATE OF CREATION )*/
         if (data.getAdoptionTimeStamp() != null)    {
             String adoptionTimeStamp = data.getAdoptionTimeStamp();
+//            Log.e("TS", adoptionTimeStamp);
             long lngTimeStamp = Long.parseLong(adoptionTimeStamp) * 1000;
+
+            /* GET THE PRETTY DATE */
+            Calendar calPretty = Calendar.getInstance(Locale.getDefault());
+            calPretty.setTimeInMillis(lngTimeStamp);
+            Date date = calPretty.getTime();
+            PrettyTime prettyTime = new PrettyTime();
+            String strPrettyDate = prettyTime.format(date);
+
             Calendar calendar = Calendar.getInstance(Locale.getDefault());
             calendar.setTimeInMillis(lngTimeStamp);
-            Date date = calendar.getTime();
-            PrettyTime prettyTime = new PrettyTime();
-            String strDate = prettyTime.format(date);
-            holder.txtTimeStamp.setText(activity.getString(R.string.adoption_details_posted, strDate));
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+            Date currentTimeZone = calendar.getTime();
+            String strDate = sdf.format(currentTimeZone);
+//            holder.txtTimeStamp.setText("Posted on: " + strDate + " (" + strPrettyDate + ")");
+            holder.txtTimeStamp.setText(activity.getString(R.string.adoption_details_posted, strDate, strPrettyDate));
         }
 
         /* SET THE PET'S DETAILS (BREED NAME, PET TYPE NAME AND PET AGE) */
         if (data.getBreedName() != null  && data.getPetTypeName() != null)   {
             String breed = data.getBreedName();
             String petType = data.getPetTypeName();
-            String combinedDetails = "The Pet is a \"" + petType + "\" of the Breed \"" + breed + "\"";
+//            String combinedDetails = "The Pet is a \"" + petType + "\" of the Breed \"" + breed + "\"";
+            String combinedDetails = "Species: \"" + petType + "\" | Breed: \"" + breed + "\"";
             holder.txtPetDetails.setText(combinedDetails);
         }
 
@@ -120,44 +125,6 @@ public class UserAdoptionsAdapter extends RecyclerView.Adapter<UserAdoptionsAdap
             }
         }
 
-        /* SET THE ADOPTION STATUS */
-        if (data.getAdoptionStatus() != null)   {
-            holder.txtAdopted.setText(data.getAdoptionStatus());
-            if (data.getAdoptionStatus().equalsIgnoreCase("Open"))  {
-                holder.txtAdopted.setTextColor(ContextCompat.getColor(activity, android.R.color.holo_green_dark));
-            } else if (data.getAdoptionStatus().equalsIgnoreCase("Adopted"))    {
-                holder.txtAdopted.setTextColor(ContextCompat.getColor(activity, android.R.color.holo_red_dark));
-            }
-        } else {
-            holder.txtAdopted.setTextColor(ContextCompat.getColor(activity, android.R.color.holo_red_dark));
-        }
-
-//        /* SET THE IMAGES */
-//        ArrayList<AdoptionsImageData> arrImages = data.getImages();
-//        if (arrImages.size() > 0)   {
-//            /* CONFIGURE THE RECYCLER VIEW */
-//            LinearLayoutManager llmAppointments = new LinearLayoutManager(activity);
-//            llmAppointments.setOrientation(LinearLayoutManager.HORIZONTAL);
-//            llmAppointments.setAutoMeasureEnabled(true);
-//            holder.listAdoptionImages.setLayoutManager(llmAppointments);
-//            holder.listAdoptionImages.setHasFixedSize(true);
-//            holder.listAdoptionImages.setNestedScrollingEnabled(false);
-//
-//            /* CONFIGURE THE ADAPTER */
-//            AdoptionsImagesAdapter adapter = new AdoptionsImagesAdapter(activity, arrImages);
-//
-//            /* SET THE ADAPTER TO THE RECYCLER VIEW */
-//            holder.listAdoptionImages.setAdapter(adapter);
-//
-//            /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY TEXT */
-//            holder.listAdoptionImages.setVisibility(ConsultationView.VISIBLE);
-//            holder.txtNoImages.setVisibility(ConsultationView.GONE);
-//        } else {
-//            /* HIDE THE RECYCLER VIEW AND SHOW THE EMPTY TEXT */
-//            holder.listAdoptionImages.setVisibility(ConsultationView.GONE);
-//            holder.txtNoImages.setVisibility(ConsultationView.VISIBLE);
-//        }
-
         /* SHOW THE ADOPTION DETAILS */
         holder.linlaAdoptionContainer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,7 +149,7 @@ public class UserAdoptionsAdapter extends RecyclerView.Adapter<UserAdoptionsAdap
     class AdoptionsVH extends RecyclerView.ViewHolder	{
 
         final LinearLayout linlaAdoptionContainer;
-        final AppCompatTextView txtAdoptionName;
+//        final AppCompatTextView txtAdoptionName;
         final IconicsImageView imgvwGender;
         final AppCompatTextView txtAdoptionDescription;
         final AppCompatTextView txtNoImages;
@@ -198,7 +165,7 @@ public class UserAdoptionsAdapter extends RecyclerView.Adapter<UserAdoptionsAdap
             super(v);
 
             linlaAdoptionContainer = v.findViewById(R.id.linlaAdoptionContainer);
-            txtAdoptionName = v.findViewById(R.id.txtAdoptionName);
+//            txtAdoptionName = v.findViewById(R.id.txtAdoptionName);
             imgvwGender = v.findViewById(R.id.imgvwGender);
             txtAdoptionDescription = v.findViewById(R.id.txtAdoptionDescription);
             txtNoImages = v.findViewById(R.id.txtNoImages);

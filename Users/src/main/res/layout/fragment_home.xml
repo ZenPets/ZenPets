@@ -328,7 +328,7 @@
                 android:layout_height="47dp"
                 android:adjustViewBounds="true"
                 app:iiv_color="?attr/colorPrimary"
-                app:iiv_icon="oct-home"
+                app:iiv_icon="oct_home"
                 app:iiv_size="20dp" />
 
             <LinearLayout

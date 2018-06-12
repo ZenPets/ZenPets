@@ -16,6 +16,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -108,10 +109,11 @@ public class AdoptionsList extends AppCompatActivity {
     /* FETCH THE ADOPTION LISTINGS */
     private void fetchAdoptions() {
         AdoptionsAPI api = ZenApiClient.getClient().create(AdoptionsAPI.class);
-        Call<Adoptions> call = api.fetchAdoptions(FINAL_CITY_ID);
+        Call<Adoptions> call = api.fetchAdoptions(FINAL_CITY_ID, FILTER_PET_SPECIES, FILTER_PET_GENDER);
         call.enqueue(new Callback<Adoptions>() {
             @Override
             public void onResponse(Call<Adoptions> call, Response<Adoptions> response) {
+                Log.e("ADOPTIONS LIST", String.valueOf(response.raw()));
                 if (response.isSuccessful() && response.body().getAdoptions() != null)    {
                     arrAdoptions = response.body().getAdoptions();
 
@@ -353,14 +355,20 @@ public class AdoptionsList extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == 101)  {
             Bundle bundle = data.getExtras();
-            if (bundle != null && bundle.containsKey("PET_GENDER") || bundle.containsKey("PET_SPECIES")) {
-                FILTER_PET_GENDER = bundle.getString("PET_GENDER");
-                if (FILTER_PET_GENDER != null)  {
-
-                }
-                FILTER_PET_SPECIES = bundle.getString("PET_SPECIES");
-                if (FILTER_PET_SPECIES != null) {
-
+            if (bundle != null) {
+                if (bundle.containsKey("PET_GENDER") || bundle.containsKey("PET_SPECIES"))  {
+                    FILTER_PET_GENDER = bundle.getString("PET_GENDER");
+                    FILTER_PET_SPECIES = bundle.getString("PET_SPECIES");
+                    if (FILTER_PET_SPECIES != null && FILTER_PET_SPECIES.equalsIgnoreCase("Both"))    {
+                        FILTER_PET_SPECIES = null;
+                    }
+                    if (FILTER_PET_SPECIES != null && FILTER_PET_GENDER != null)    {
+                        fetchAdoptions();
+                    } else if (FILTER_PET_SPECIES != null && FILTER_PET_GENDER == null) {
+                        fetchAdoptions();
+                    } else if (FILTER_PET_SPECIES == null && FILTER_PET_GENDER != null) {
+                        fetchAdoptions();
+                    }
                 }
             }
         }

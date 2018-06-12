@@ -100,6 +100,7 @@
     <string name="home_subtitle_groomers">Bathe your pet in luxury</string>
     <string name="home_title_kennels">Pet Kennels</string>
     <string name="home_subtitle_kennels">For the globetrotting pet parents</string>
+    <string name="home_subtitle_kennels_alternate">For the globetrotting pet parents</string>
     <string name="home_title_boarding">Home Boarding</string>
     <string name="home_subtitle_boarding">For your pets, a home away from home.</string>
     <string name="home_title_trainers">Trainers</string>
@@ -148,6 +149,7 @@
     <string name="profile_my_appointments">My Appointments</string>
     <string name="profile_my_consultations">My Consultations</string>
     <string name="profile_my_adoptions">My Adoption Listings</string>
+    <string name="profile_home_boarding">Home Boarding</string>
     <string name="profile_settings_out">Settings</string>
 
     <!-- SETTINGS ACTIVITY -->
@@ -345,7 +347,7 @@
     <string name="kennel_list_kennel_address_placeholder">%1$s, %2$s - %3$s</string>
     <string name="kennel_list_kennel_capacity_label">PET CAPACITY</string>
     <string name="kennel_list_kennel_capacity_zero">0 Pets</string>
-    <string name="kennel_list_kennel_capacity_placeholder">Kennel has a capacity to hold %1$s Pets</string>
+    <string name="kennel_list_kennel_capacity_placeholder">Kennel has a capacity to accommodate %1$s Pets</string>
     <string name="kennel_list_kennel_distance">~ 1.1 km</string>
     <string name="kennel_list_kennel_distance_placeholder">%1$s %2$s</string>
 

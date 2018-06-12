@@ -2,6 +2,7 @@ package biz.zenpets.users.details.adoptions;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -12,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +23,9 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.mikepenz.iconics.view.IconicsImageView;
 
 import org.ocpsoft.prettytime.PrettyTime;
@@ -339,6 +344,7 @@ public class AdoptionDetails extends AppCompatActivity {
         call.enqueue(new Callback<AdoptionMessages>() {
             @Override
             public void onResponse(Call<AdoptionMessages> call, Response<AdoptionMessages> response) {
+                Log.e("ADOPTION MESSAGES", String.valueOf(response.raw()));
                 if (response.isSuccessful() && response.body().getMessages() != null)    {
                     arrMessages = response.body().getMessages();
                     
@@ -503,6 +509,24 @@ public class AdoptionDetails extends AppCompatActivity {
                 holder.linlaOutgoing.setVisibility(View.VISIBLE);
                 holder.linlaIncoming.setVisibility(View.GONE);
 
+                /* SET THE INCOMING USER'S DISPLAY PROFILE */
+                String strUserDisplayProfile = data.getUserDisplayProfile();
+                if (strUserDisplayProfile != null)    {
+                    Uri uri = Uri.parse(strUserDisplayProfile);
+                    holder.imgvwOutgoingProfile.setImageURI(uri);
+                } else {
+                    ImageRequest request = ImageRequestBuilder
+                            .newBuilderWithResourceId(R.drawable.ic_action_user_light)
+                            .build();
+                    holder.imgvwOutgoingProfile.setImageURI(request.getSourceUri());
+                }
+
+                /* SET THE USER'S NAME */
+                String strUserName = data.getUserName();
+                if (strUserName != null)    {
+                    holder.txtOutgoingUserName.setText(strUserName);
+                }
+
                 /* SET THE MESSAGE TEXT */
                 if (data.getMessageText() != null)  {
                     holder.txtOutgoingMessage.setText(data.getMessageText());
@@ -518,7 +542,6 @@ public class AdoptionDetails extends AppCompatActivity {
                     PrettyTime prettyTime = new PrettyTime();
                     holder.txtOutgoingTimeStamp.setText(prettyTime.format(date));
                 }
-
             } else {
                 /* SHOW THE INCOMING MESSAGE CONTAINER AND HIDE THE OUTGOING MESSAGE CONTAINER */
                 holder.linlaIncoming.setVisibility(View.VISIBLE);
@@ -529,6 +552,24 @@ public class AdoptionDetails extends AppCompatActivity {
                     holder.txtIncomingMessage.setText(data.getMessageText());
                 }
 
+                /* SET THE INCOMING USER'S DISPLAY PROFILE */
+                String strUserDisplayProfile = data.getUserDisplayProfile();
+                if (strUserDisplayProfile != null)    {
+                    Uri uri = Uri.parse(strUserDisplayProfile);
+                    holder.imgvwIncomingProfile.setImageURI(uri);
+                } else {
+                    ImageRequest request = ImageRequestBuilder
+                            .newBuilderWithResourceId(R.drawable.ic_action_user_light)
+                            .build();
+                    holder.imgvwIncomingProfile.setImageURI(request.getSourceUri());
+                }
+
+                /* SET THE USER'S NAME */
+                String strUserName = data.getUserName();
+                if (strUserName != null)    {
+                    holder.txtIncomingUserName.setText(strUserName);
+                }
+
                 /* SET THE TIME STAMP */
                 if (data.getMessageTimeStamp() != null) {
                     String messageTimeStamp = data.getMessageTimeStamp();
@@ -537,7 +578,7 @@ public class AdoptionDetails extends AppCompatActivity {
                     calendar.setTimeInMillis(lngTimeStamp);
                     Date date = calendar.getTime();
                     PrettyTime prettyTime = new PrettyTime();
-                    holder.txtOutgoingTimeStamp.setText(prettyTime.format(date));
+                    holder.txtIncomingTimeStamp.setText(prettyTime.format(date));
                 }
             }
         }
@@ -547,7 +588,7 @@ public class AdoptionDetails extends AppCompatActivity {
 
             View itemView = LayoutInflater.
                     from(parent.getContext()).
-                    inflate(R.layout.adoption_message_item, parent, false);
+                    inflate(R.layout.adoption_message_item_new, parent, false);
 
             return new MessagesVH(itemView);
         }
@@ -555,10 +596,12 @@ public class AdoptionDetails extends AppCompatActivity {
         class MessagesVH extends RecyclerView.ViewHolder	{
 
             final LinearLayout linlaIncoming;
+            SimpleDraweeView imgvwIncomingProfile;
             final AppCompatTextView txtIncomingMessage;
             final AppCompatTextView txtIncomingUserName;
             final AppCompatTextView txtIncomingTimeStamp;
             final LinearLayout linlaOutgoing;
+            SimpleDraweeView imgvwOutgoingProfile;
             final AppCompatTextView txtOutgoingMessage;
             final AppCompatTextView txtOutgoingUserName;
             final AppCompatTextView txtOutgoingTimeStamp;
@@ -567,10 +610,12 @@ public class AdoptionDetails extends AppCompatActivity {
                 super(v);
 
                 linlaIncoming = v.findViewById(R.id.linlaIncoming);
+                imgvwIncomingProfile = v.findViewById(R.id.imgvwIncomingProfile);
                 txtIncomingMessage = v.findViewById(R.id.txtIncomingMessage);
                 txtIncomingUserName = v.findViewById(R.id.txtIncomingUserName);
                 txtIncomingTimeStamp = v.findViewById(R.id.txtIncomingTimeStamp);
                 linlaOutgoing = v.findViewById(R.id.linlaOutgoing);
+                imgvwOutgoingProfile = v.findViewById(R.id.imgvwOutgoingProfile);
                 txtOutgoingMessage = v.findViewById(R.id.txtOutgoingMessage);
                 txtOutgoingUserName = v.findViewById(R.id.txtOutgoingUserName);
                 txtOutgoingTimeStamp = v.findViewById(R.id.txtOutgoingTimeStamp);
