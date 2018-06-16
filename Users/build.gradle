@@ -48,7 +48,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:15.0.1'
 
     /** CONSTRAINT LAYOUT **/
-    implementation 'com.android.support.constraint:constraint-layout:1.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
 
     /** FIREBASE **/
     implementation 'com.google.firebase:firebase-core:15.0.2'
@@ -56,7 +56,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:15.0.2'
     implementation 'com.google.firebase:firebase-messaging:15.0.2'
     implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.3'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.4'
 
     /** THE FACEBOOK SDK **/
     implementation ('com.facebook.android:facebook-login:4.28.0') {

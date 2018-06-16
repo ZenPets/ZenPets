@@ -18,7 +18,7 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <!--<LinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -40,7 +40,7 @@
                     android:text="@string/adoption_details_name"
                     android:textColor="@color/secondary_text"
                     android:textSize="14sp"
-                    app:fontFamily="@font/lato_bold" />
+                    app:fontFamily="@font/montserrat_bold" />
 
                 <com.mikepenz.iconics.view.IconicsImageView
                     android:id="@+id/imgvwGender"
@@ -54,7 +54,7 @@
                     app:iiv_color="@android:color/holo_blue_dark"
                     app:iiv_icon="faw_venus"
                     app:iiv_size="16dp" />
-            </LinearLayout>-->
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -81,9 +81,9 @@
                     android:text="@string/adoption_details_description"
                     android:textColor="@color/secondary_text"
                     android:textSize="13sp"
-                    app:fontFamily="@font/lato_regular" />
+                    app:fontFamily="@font/montserrat_regular" />
 
-                <com.mikepenz.iconics.view.IconicsImageView
+                <!--<com.mikepenz.iconics.view.IconicsImageView
                     android:id="@+id/imgvwGender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
                     android:padding="11dp"
                     app:iiv_color="@android:color/holo_blue_dark"
                     app:iiv_icon="faw_venus"
-                    app:iiv_size="16dp" />
+                    app:iiv_size="16dp" />-->
             </LinearLayout>
 
             <!--<LinearLayout
@@ -179,7 +179,7 @@
                     android:text="@string/adoption_details_pet_details"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
-                    app:fontFamily="@font/lato_regular" />
+                    app:fontFamily="@font/montserrat_regular" />
             </LinearLayout>
 
             <LinearLayout
@@ -211,7 +211,7 @@
                     android:text="@string/adoption_details_time_stamp"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
-                    app:fontFamily="@font/lato_regular" />
+                    app:fontFamily="@font/montserrat_regular" />
             </LinearLayout>
 
             <View
@@ -245,7 +245,7 @@
                         android:text="@string/adoption_details_vaccinated"
                         android:textColor="@color/secondary_text"
                         android:textSize="12sp"
-                        app:fontFamily="@font/lato_regular" />
+                        app:fontFamily="@font/montserrat_regular" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txtVaccinated"
@@ -278,7 +278,7 @@
                         android:text="@string/adoption_details_dewormed"
                         android:textColor="@color/secondary_text"
                         android:textSize="12sp"
-                        app:fontFamily="@font/lato_regular" />
+                        app:fontFamily="@font/montserrat_regular" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txtDewormed"
@@ -311,7 +311,7 @@
                         android:text="@string/adoption_details_neutered"
                         android:textColor="@color/secondary_text"
                         android:textSize="12sp"
-                        app:fontFamily="@font/lato_regular" />
+                        app:fontFamily="@font/montserrat_regular" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txtNeutered"

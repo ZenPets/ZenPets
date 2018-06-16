@@ -26,6 +26,24 @@ public interface AdoptionsAPI {
             @Field("adoptionTimeStamp") String adoptionTimeStamp,
             @Field("adoptionStatus") String adoptionStatus);
 
+    /** CREATE A NEW ADOPTION LISTING (TEST) **/
+    @POST("newTestAdoption")
+    @FormUrlEncoded
+    Call<Adoption> newTestAdoption(
+            @Field("petTypeID") String petTypeID,
+            @Field("breedID") String breedID,
+            @Field("userID") String userID,
+            @Field("cityID") String cityID,
+            @Field("adoptionName") String adoptionName,
+            @Field("adoptionCoverPhoto") String adoptionCoverPhoto,
+            @Field("adoptionDescription") String adoptionDescription,
+            @Field("adoptionGender") String adoptionGender,
+            @Field("adoptionVaccinated") String adoptionVaccinated,
+            @Field("adoptionDewormed") String adoptionDewormed,
+            @Field("adoptionNeutered") String adoptionNeutered,
+            @Field("adoptionTimeStamp") String adoptionTimeStamp,
+            @Field("adoptionStatus") String adoptionStatus);
+
     /** FETCH ALL ADOPTION IN THE SELECTED CITY **/
     @GET("fetchAdoptions")
     Call<Adoptions> fetchAdoptions(

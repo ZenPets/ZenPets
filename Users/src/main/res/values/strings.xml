@@ -7,6 +7,10 @@
     <string name="google_static_map_api_key">AIzaSyD-5QWNIgI2O0F6JmmrGZyKUHUPb_YePkw</string>
     <string name="google_directions_api_key">AIzaSyAW3Rn42MhLRJ8EeeCGuyYSiPV5Q5q_4bI</string>
 
+    <!-- RAZOR PAY API KEYS -->
+    <string name="razor_pay_api_key_id">rzp_test_ySDpAnHqFLEgk3</string>
+    <string name="razor_pay_api_key_secret">Pt4op0fbrZtMCJT0idcdBi67</string>
+
     <!-- THE NOTIFICATION CHANNELS -->
     <string name="default_notification_channel_id">USERS_DEFAULT_CHANNEL</string>
     <string name="default_notification_channel_name">USERS_DEFAULT_CHANNEL</string>

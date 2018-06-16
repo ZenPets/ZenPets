@@ -17,7 +17,7 @@ import com.crashlytics.android.Crashlytics;
 import java.util.ArrayList;
 
 import biz.zenpets.users.R;
-import biz.zenpets.users.creator.adoption.AdoptionCreator;
+import biz.zenpets.users.creator.adoption.AdoptionCreatorNew;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.adapters.adoptions.user.UserAdoptionsAdapter;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
@@ -50,13 +50,13 @@ public class UserAdoptions extends AppCompatActivity {
 
     /** CREATE A NEW ADOPTION LISTING **/
     @OnClick(R.id.linlaEmpty) void newAdoptionListing()    {
-        Intent intent = new Intent(UserAdoptions.this, AdoptionCreator.class);
+        Intent intent = new Intent(UserAdoptions.this, AdoptionCreatorNew.class);
         startActivityForResult(intent, 101);
     }
 
     /** CREATE A NEW ADOPTION LISTING **/
     @OnClick(R.id.fabNewAdoptionListing) void fabNewAdoptionListing()  {
-        Intent intent = new Intent(UserAdoptions.this, AdoptionCreator.class);
+        Intent intent = new Intent(UserAdoptions.this, AdoptionCreatorNew.class);
         startActivityForResult(intent, 101);
     }
 
