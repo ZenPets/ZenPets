@@ -66,7 +66,7 @@ import biz.zenpets.users.utils.models.adoptions.adoption.Adoption;
 import biz.zenpets.users.utils.models.adoptions.adoption.AdoptionsAPI;
 import biz.zenpets.users.utils.models.adoptions.images.AdoptionImage;
 import biz.zenpets.users.utils.models.adoptions.images.AdoptionImagesAPI;
-import biz.zenpets.users.utils.models.pets.breeds.BreedsData;
+import biz.zenpets.users.utils.models.pets.breeds.Breed;
 import biz.zenpets.users.utils.models.pets.types.PetTypesData;
 import biz.zenpets.users.utils.models.user.UserData;
 import biz.zenpets.users.utils.models.user.UsersAPI;
@@ -108,7 +108,7 @@ public class AdoptionCreator extends AppCompatActivity
     private ArrayList<PetTypesData> arrPetTypes = new ArrayList<>();
 
     /** THE BREEDS ARRAY LIST **/
-    private ArrayList<BreedsData> arrBreeds = new ArrayList<>();
+    private ArrayList<Breed> arrBreeds = new ArrayList<>();
 
     /** THE ARRAY LISTS FOR THE ADOPTION ALBUMS **/
     private final ArrayList<AdoptionAlbumData> arrAlbums = new ArrayList<>();
@@ -660,7 +660,7 @@ public class AdoptionCreator extends AppCompatActivity
     }
 
     @Override
-    public void breedTypes(ArrayList<BreedsData> data) {
+    public void breedTypes(ArrayList<Breed> data) {
         /* CAST THE RESULTS IN THE GLOBAL INSTANCE */
         arrBreeds = data;
 

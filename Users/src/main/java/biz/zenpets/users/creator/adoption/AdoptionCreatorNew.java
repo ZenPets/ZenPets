@@ -2,6 +2,8 @@ package biz.zenpets.users.creator.adoption;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -17,30 +19,77 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.PicassoEngine;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import biz.zenpets.users.R;
+import biz.zenpets.users.utils.AppPrefs;
+import biz.zenpets.users.utils.adapters.adoptions.AdoptionsAlbumAdapter;
+import biz.zenpets.users.utils.adapters.pet.BreedsAdapter;
+import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
+import biz.zenpets.users.utils.models.adoptions.AdoptionAlbumData;
+import biz.zenpets.users.utils.models.adoptions.adoption.Adoption;
+import biz.zenpets.users.utils.models.adoptions.adoption.AdoptionsAPI;
+import biz.zenpets.users.utils.models.pets.breeds.Breed;
+import biz.zenpets.users.utils.models.pets.breeds.Breeds;
+import biz.zenpets.users.utils.models.pets.breeds.BreedsAPI;
+import biz.zenpets.users.utils.models.user.UserData;
+import biz.zenpets.users.utils.models.user.UsersAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.zelory.compressor.Compressor;
 import pl.aprilapps.easyphotopicker.DefaultCallback;
 import pl.aprilapps.easyphotopicker.EasyImage;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AdoptionCreatorNew extends AppCompatActivity {
+
+    private AppPrefs getApp()	{
+        return (AppPrefs) getApplication();
+    }
+
+    /** THE LOGGED IN USER'S ID, USER_AUTH_ID, AND CITY ID **/
+    String USER_ID = null;
+    String USER_AUTH_ID = null;
+    private String CITY_ID = null;
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.groupSpecies) RadioGroup groupSpecies;
@@ -51,15 +100,48 @@ public class AdoptionCreatorNew extends AppCompatActivity {
     @BindView(R.id.inputDescription) TextInputLayout inputDescription;
     @BindView(R.id.edtDescription) TextInputEditText edtDescription;
     @BindView(R.id.imgvwAdoptionCover) ImageView imgvwAdoptionCover;
+    @BindView(R.id.gridAdoptionImages) RecyclerView gridAdoptionImages;
+    @BindView(R.id.linlaEmpty) LinearLayout linlaEmpty;
 
     /** PERMISSION REQUEST CONSTANT **/
     private static final int ACCESS_STORAGE_CONSTANT = 201;
 
+    /** BOOLEAN TO CHECK IF USER IS SELECTING A COVER PHOTO (FALSE) OR ADOPTION IMAGES (TRUE) **/
+    boolean blnSource = false;
+
+    /** THE BREEDS ARRAY LIST **/
+    private ArrayList<Breed> arrBreeds = new ArrayList<>();
+
+    /** THE ARRAY LISTS FOR THE ADOPTION ALBUMS **/
+    private final ArrayList<AdoptionAlbumData> arrAlbums = new ArrayList<>();
+
+    /** A PROGRESS DIALOG INSTANCE **/
+    private ProgressDialog dialog;
+
     /** THE OBJECTS TO HOLD THE ADOPTION DETAILS **/
+    String ADOPTION_PET_TYPE_ID = null;
+    String ADOPTION_BREED_ID = null;
+    String ADOPTION_GENDER = null;
+    String ADOPTION_NAME = null;
+    String ADOPTION_DESCRIPTION = null;
     Uri ADOPTION_COVER_URI = null;
+    String FILE_NAME = null;
+    String ADOPTION_COVER_URL = null;
 
     /** SELECT THE ADOPTION COVER PHOTO **/
     @OnClick(R.id.imgvwAdoptionCover) void selectCover()    {
+        /* TOGGLE THE FLAG TO FALSE */
+        blnSource = false;
+
+        /* CHECK STORAGE PERMISSION */
+        checkStoragePermission();
+    }
+
+    /** SELECT THE ADOPTION IMAGES **/
+    @OnClick(R.id.linlaEmpty) void selectImages()   {
+        /* TOGGLE THE FLAG TO TRUE */
+        blnSource = true;
+
         /* CHECK STORAGE PERMISSION */
         checkStoragePermission();
     }
@@ -70,12 +152,105 @@ public class AdoptionCreatorNew extends AppCompatActivity {
         setContentView(R.layout.adoption_creator_new);
         ButterKnife.bind(this);
 
+        /* FETCH THE USER'S NAME AND DISPLAY PROFILE */
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            USER_AUTH_ID = user.getUid();
+            /* FETCH THE USER'S PROFILE DETAILS */
+            fetchProfileDetails();
+        } else {
+            Toast.makeText(getApplicationContext(), "Failed to get required info....", Toast.LENGTH_SHORT).show();
+        }
+
         /* THE EASY IMAGE CONFIGURATION */
         EasyImage.configuration(this)
                 .setImagesFolderName("Zen Pets")
                 .setCopyTakenPhotosToPublicGalleryAppFolder(true)
                 .setCopyPickedImagesToPublicGalleryAppFolder(true)
                 .setAllowMultiplePickInGallery(false);
+
+        /* CONFIGURE THE TOOLBAR */
+        configTB();
+
+        /* CONFIGURE THE RECYCLER VIEW */
+        configRecycler();
+
+        /* SELECT THE ADOPTION PET'S SPECIES */
+        groupSpecies.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rdbtnDog:
+                        /* SET THE PET SPECIES TO "1" (PET TYPE ID)*/
+                        ADOPTION_PET_TYPE_ID = "1";
+                        break;
+                    case R.id.rdbtnCat:
+                        /* SET THE PET SPECIES TO "2" (PET TYPE ID)*/
+                        ADOPTION_PET_TYPE_ID = "2";
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+
+        /* FETCH THE LIST OF BREEDS */
+        fetchBreedsList();
+
+        /* SELECT THE ADOPTION PET'S GENDER */
+        groupGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rdbtnMale:
+                        /* SET THE GENDER TO MALE */
+                        ADOPTION_GENDER = "Male";
+                        break;
+                    case R.id.rdbtnFemale:
+                        /* SET THE GENDER TO FEMALE */
+                        ADOPTION_GENDER = "Female";
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+
+        /* SELECT A BREED */
+        spnBreeds.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ADOPTION_BREED_ID = arrBreeds.get(position).getBreedID();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+    }
+
+    /** FETCH THE LIST OF BREEDS **/
+    private void fetchBreedsList() {
+        BreedsAPI api = ZenApiClient.getClient().create(BreedsAPI.class);
+        Call<Breeds> call = api.allPetBreeds(ADOPTION_PET_TYPE_ID);
+        call.enqueue(new Callback<Breeds>() {
+            @Override
+            public void onResponse(Call<Breeds> call, Response<Breeds> response) {
+                arrBreeds = response.body().getBreeds();
+
+                /* INSTANTIATE THE BREEDS ADAPTER */
+                BreedsAdapter breedsAdapter = new BreedsAdapter(AdoptionCreatorNew.this, arrBreeds);
+
+                /* SET THE ADAPTER TO THE BREEDS SPINNER */
+                spnBreeds.setAdapter(breedsAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<Breeds> call, Throwable t) {
+                Log.e("BREEDS FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
 
     /***** CHECK STORAGE PERMISSION *****/
@@ -116,41 +291,15 @@ public class AdoptionCreatorNew extends AppCompatActivity {
                         ACCESS_STORAGE_CONSTANT);
             }
         } else {
-            final BottomSheetDialog sheetDialog = new BottomSheetDialog(AdoptionCreatorNew.this);
-            @SuppressLint("InflateParams") View view = getLayoutInflater().inflate(R.layout.image_picker_sheet, null);
-            sheetDialog.setContentView(view);
-            sheetDialog.show();
-
-            /* CAST THE CHOOSER ELEMENTS */
-            LinearLayout linlaGallery = view.findViewById(R.id.linlaGallery);
-            LinearLayout linlaCamera = view.findViewById(R.id.linlaCamera);
-
-            /* SELECT A GALLERY IMAGE */
-            linlaGallery.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    sheetDialog.dismiss();
-                    EasyImage.openGallery(AdoptionCreatorNew.this, 0);
-                }
-            });
-
-            /* SELECT A CAMERA IMAGE */
-            linlaCamera.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    sheetDialog.dismiss();
-                    EasyImage.openCamera(AdoptionCreatorNew.this, 0);
-                }
-            });
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == ACCESS_STORAGE_CONSTANT)  {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)    {
+            if (blnSource)  {
+                Matisse.from(AdoptionCreatorNew.this)
+                        .choose(MimeType.allOf())
+                        .theme(R.style.Matisse_Zhihu)
+                        .countable(true)
+                        .maxSelectable(10)
+                        .imageEngine(new PicassoEngine())
+                        .forResult(101);
+            } else {
                 final BottomSheetDialog sheetDialog = new BottomSheetDialog(AdoptionCreatorNew.this);
                 @SuppressLint("InflateParams") View view = getLayoutInflater().inflate(R.layout.image_picker_sheet, null);
                 sheetDialog.setContentView(view);
@@ -177,6 +326,52 @@ public class AdoptionCreatorNew extends AppCompatActivity {
                         EasyImage.openCamera(AdoptionCreatorNew.this, 0);
                     }
                 });
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == ACCESS_STORAGE_CONSTANT)  {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)    {
+                if (blnSource)  {
+                    Matisse.from(AdoptionCreatorNew.this)
+                            .choose(MimeType.allOf())
+                            .theme(R.style.Matisse_Zhihu)
+                            .countable(true)
+                            .maxSelectable(10)
+                            .imageEngine(new PicassoEngine())
+                            .forResult(101);
+                } else {
+                    final BottomSheetDialog sheetDialog = new BottomSheetDialog(AdoptionCreatorNew.this);
+                    @SuppressLint("InflateParams") View view = getLayoutInflater().inflate(R.layout.image_picker_sheet, null);
+                    sheetDialog.setContentView(view);
+                    sheetDialog.show();
+
+                    /* CAST THE CHOOSER ELEMENTS */
+                    LinearLayout linlaGallery = view.findViewById(R.id.linlaGallery);
+                    LinearLayout linlaCamera = view.findViewById(R.id.linlaCamera);
+
+                    /* SELECT A GALLERY IMAGE */
+                    linlaGallery.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            sheetDialog.dismiss();
+                            EasyImage.openGallery(AdoptionCreatorNew.this, 0);
+                        }
+                    });
+
+                    /* SELECT A CAMERA IMAGE */
+                    linlaCamera.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            sheetDialog.dismiss();
+                            EasyImage.openCamera(AdoptionCreatorNew.this, 0);
+                        }
+                    });
+                }
             } else {
             }
         }
@@ -186,12 +381,60 @@ public class AdoptionCreatorNew extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        EasyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
-            @Override
-            public void onImagesPicked(@NonNull List<File> imageFiles, EasyImage.ImageSource source, int type) {
-                onPhotoReturned(imageFiles);
+        if (requestCode == 101 && resultCode == RESULT_OK) {
+            /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
+            gridAdoptionImages.setVisibility(View.VISIBLE);
+            linlaEmpty.setVisibility(View.GONE);
+
+            /* CLEAR THE ARRAY LIST */
+            arrAlbums.clear();
+
+            AdoptionAlbumData albums;
+            for (int i = 0; i < Matisse.obtainResult(data).size(); i++) {
+                albums = new AdoptionAlbumData();
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), Matisse.obtainResult(data).get(i));
+                    Bitmap bmpImage = resizeBitmap(bitmap);
+                    albums.setBmpAdoptionImage(bmpImage);
+
+                    /* SET THE IMAGE NUMBER */
+                    String strNumber = String.valueOf(i + 1);
+                    albums.setTxtImageNumber(strNumber);
+
+                    /* ADD THE COLLECTED DATA TO THE ARRAY LIST */
+                    arrAlbums.add(albums);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        });
+
+            /* SET THE ADAPTER TO THE RECYCLER VIEW */
+            gridAdoptionImages.setAdapter(new AdoptionsAlbumAdapter(AdoptionCreatorNew.this, arrAlbums));
+            gridAdoptionImages.setVisibility(View.VISIBLE);
+        } else {
+            EasyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
+                @Override
+                public void onImagesPicked(@NonNull List<File> imageFiles, EasyImage.ImageSource source, int type) {
+                    onPhotoReturned(imageFiles);
+                }
+            });
+        }
+    }
+
+    /** RESIZE THE BITMAP **/
+    private Bitmap resizeBitmap(Bitmap image)   {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        float bitmapRatio = (float)width / (float) height;
+        if (bitmapRatio > 0) {
+            width = 800;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = 800;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
     /***** PROCESS THE SELECTED IMAGE AND GRAB THE URI *****/
@@ -232,6 +475,189 @@ public class AdoptionCreatorNew extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /***** CONFIGURE THE TOOLBAR *****/
+    private void configTB() {
+        Toolbar myToolbar = findViewById(R.id.myToolbar);
+        setSupportActionBar(myToolbar);
+        String strTitle = "New Adoption Listing";
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setTitle(strTitle);
+        getSupportActionBar().setSubtitle(null);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = new MenuInflater(AdoptionCreatorNew.this);
+        inflater.inflate(R.menu.activity_save_cancel, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                break;
+            case R.id.menuSave:
+                /* CHECK FOR ALL ADOPTION DETAILS  */
+                checkDetails();
+                break;
+            case R.id.menuCancel:
+                /* CANCEL CATEGORY CREATION */
+                finish();
+                break;
+            default:
+                break;
+        }
+        return false;
+    }
+
+    /** CHECK FOR ALL ADOPTION DETAILS  **/
+    private void checkDetails() {
+        /* HIDE THE KEYBOARD */
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(edtAdoptionName.getWindowToken(), 0);
+        }
+
+        /* COLLECT THE REQUIRED DATA */
+        if (!TextUtils.isEmpty(edtAdoptionName.getText().toString()))    {
+            ADOPTION_NAME = edtAdoptionName.getText().toString();
+        } else {
+            ADOPTION_NAME = "Null";
+        }
+        ADOPTION_DESCRIPTION = edtDescription.getText().toString().trim();
+
+        if (ADOPTION_COVER_URI != null && ADOPTION_NAME != null)   {
+            FILE_NAME = ADOPTION_NAME.replaceAll(" ", "_").toLowerCase().trim() + "_" + USER_ID;
+        } else {
+            FILE_NAME = null;
+            ADOPTION_COVER_URL = "Null";
+        }
+
+        if (TextUtils.isEmpty(ADOPTION_DESCRIPTION)) {
+            edtDescription.setError("Please provide the Pet's Description");
+            edtDescription.requestFocus();
+        } else if (ADOPTION_COVER_URI == null)  {
+            Toast.makeText(getApplicationContext(), "Please choose a Cover Photo", Toast.LENGTH_SHORT).show();
+        } else if (arrAlbums.size() <= 0) {
+            Toast.makeText(getApplicationContext(), "Upload at least one picture of the Pet", Toast.LENGTH_SHORT).show();
+        } else  {
+            /* PUBLISH THE ADOPTION COVER PHOTO */
+            publishAdoptionCover();
+        }
+    }
+
+    /** PUBLISH THE ADOPTION COVER PHOTO **/
+    private void publishAdoptionCover() {
+        /* INSTANTIATE THE PROGRESS DIALOG INSTANCE */
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Please wait while we publish your question..");
+        dialog.setIndeterminate(false);
+        dialog.setCancelable(false);
+        dialog.show();
+
+        /* PUBLISH THE PET PROFILE TO FIREBASE */
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference refStorage = storageReference.child("Adoption Covers").child(FILE_NAME);
+        refStorage.putFile(ADOPTION_COVER_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Uri downloadURL = taskSnapshot.getDownloadUrl();
+                if (downloadURL != null)    {
+                    ADOPTION_COVER_URL = String.valueOf(downloadURL);
+                    if (ADOPTION_COVER_URL != null)    {
+                        /* DISMISS THE DIALOG AND PUBLISH THE ADOPTION LISTING */
+                        dialog.dismiss();
+                        publishAdoptionListing();
+                    } else {
+                        dialog.dismiss();
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "Error publishing adoption...",
+                                Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    dialog.dismiss();
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "Error publishing adoption...",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    /** PUBLISH THE ADOPTION LISTING **/
+    private void publishAdoptionListing() {
+        String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
+        AdoptionsAPI api = ZenApiClient.getClient().create(AdoptionsAPI.class);
+        Call<Adoption> call = api.newTestAdoption(
+                ADOPTION_PET_TYPE_ID, ADOPTION_BREED_ID, USER_ID, CITY_ID,
+                ADOPTION_NAME, ADOPTION_COVER_URL, ADOPTION_DESCRIPTION, ADOPTION_GENDER,
+                timeStamp, "Open"
+        );
+    }
+
+    /***** FETCH THE USER'S PROFILE DETAILS *****/
+    private void fetchProfileDetails() {
+        UsersAPI api = ZenApiClient.getClient().create(UsersAPI.class);
+        Call<UserData> call = api.fetchProfile(USER_AUTH_ID);
+        call.enqueue(new Callback<UserData>() {
+            @Override
+            public void onResponse(Call<UserData> call, Response<UserData> response) {
+                UserData data = response.body();
+                if (data != null)   {
+                    /* GET THE USER'S CITY ID */
+                    CITY_ID = data.getCityID();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserData> call, Throwable t) {
+                Crashlytics.logException(t);
+            }
+        });
+    }
+
+    /** CONFIGURE THE RECYCLER VIEW **/
+    private void configRecycler() {
+        /* SET THE CONFIGURATION */
+        int intOrientation = getResources().getConfiguration().orientation;
+        gridAdoptionImages.setHasFixedSize(true);
+        GridLayoutManager glm = null;
+        boolean isTablet = getResources().getBoolean(R.bool.isTablet);
+        if (isTablet)   {
+            if (intOrientation == 1)	{
+                glm = new GridLayoutManager(this, 2);
+                glm.setAutoMeasureEnabled(true);
+            } else if (intOrientation == 2) {
+                glm = new GridLayoutManager(this, 4);
+                glm.setAutoMeasureEnabled(true);
+            }
+        } else {
+            if (intOrientation == 1)    {
+                glm = new GridLayoutManager(this, 2);
+                glm.setAutoMeasureEnabled(true);
+            } else if (intOrientation == 2) {
+                glm = new GridLayoutManager(this, 4);
+                glm.setAutoMeasureEnabled(true);
+            }
+        }
+        gridAdoptionImages.setLayoutManager(glm);
+        gridAdoptionImages.setNestedScrollingEnabled(false);
+
+        /* SET THE ADAPTER */
+        gridAdoptionImages.setAdapter(new AdoptionsAlbumAdapter(AdoptionCreatorNew.this, arrAlbums));
     }
 
     @Override

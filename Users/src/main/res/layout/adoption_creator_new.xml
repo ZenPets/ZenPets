@@ -58,7 +58,7 @@
                     android:checked="true"
                     android:fontFamily="@font/montserrat_regular"
                     android:padding="4dp"
-                    android:text="Dog"
+                    android:text="@string/adoption_creator_species_dog"
                     android:textColor="@color/secondary_text"
                     android:textSize="14sp" />
 
@@ -71,7 +71,7 @@
                     android:checked="false"
                     android:fontFamily="@font/montserrat_regular"
                     android:padding="4dp"
-                    android:text="Cat"
+                    android:text="@string/adoption_creator_species_cat"
                     android:textColor="@color/secondary_text"
                     android:textSize="14sp" />
             </RadioGroup>
@@ -196,7 +196,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
                 android:fontFamily="@font/montserrat_regular"
-                android:text="Tell the potential adopters something about the Pet. Descriptive posts will increase the chances of quick adoptions.."
+                android:text="@string/adoption_creator_description_alt"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -242,24 +242,23 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
                 android:fontFamily="@font/montserrat_regular"
-                android:text="Select a Cover Photo of the pet"
+                android:text="@string/adoption_creator_cover_label"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inputDescription" />
 
             <android.support.v7.widget.CardView
+                android:id="@+id/cardAdoptionCover"
                 style="@style/ZenPetsCards"
                 android:layout_width="0dp"
                 android:layout_height="220dp"
-                android:layout_marginBottom="24dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
                 app:contentPadding="5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtCoverLabel">
@@ -272,6 +271,71 @@
                     android:scaleType="center"
                     android:src="@drawable/empty_camera" />
             </android.support.v7.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardAdoptionCover">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/gridAdoptionImages"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:cacheColorHint="@android:color/transparent"
+                    android:fadingEdge="none"
+                    android:persistentDrawingCache="scrolling"
+                    android:scrollbarSize="3dp"
+                    android:scrollbarThumbVertical="@color/primary_dark"
+                    android:scrollbars="vertical"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/linlaEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="110dp"
+                        android:layout_marginLeft="110dp"
+                        android:layout_marginRight="110dp"
+                        android:layout_marginStart="110dp"
+                        android:layout_marginTop="5dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/zen_pets_graphic" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="-25dp"
+                        android:gravity="center"
+                        android:padding="11dp"
+                        android:text="@string/adoption_creator_images"
+                        android:textColor="@color/tertiary_text"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/montserrat_regular" />
+                </LinearLayout>
+            </LinearLayout>
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 </LinearLayout>

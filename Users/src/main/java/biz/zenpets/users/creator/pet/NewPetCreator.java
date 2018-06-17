@@ -66,7 +66,7 @@ import biz.zenpets.users.utils.helpers.pets.pet.AddNewPet;
 import biz.zenpets.users.utils.helpers.pets.pet.AddNewPetInterface;
 import biz.zenpets.users.utils.helpers.pets.type.PetTypes;
 import biz.zenpets.users.utils.helpers.pets.type.PetTypesInterface;
-import biz.zenpets.users.utils.models.pets.breeds.BreedsData;
+import biz.zenpets.users.utils.models.pets.breeds.Breed;
 import biz.zenpets.users.utils.models.pets.types.PetTypesData;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -108,7 +108,7 @@ public class NewPetCreator extends AppCompatActivity
     private ArrayList<PetTypesData> arrPetTypes = new ArrayList<>();
 
     /** THE BREEDS ARRAY LIST **/
-    private ArrayList<BreedsData> arrBreeds = new ArrayList<>();
+    private ArrayList<Breed> arrBreeds = new ArrayList<>();
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
@@ -554,7 +554,7 @@ public class NewPetCreator extends AppCompatActivity
     }
 
     @Override
-    public void breedTypes(ArrayList<BreedsData> data) {
+    public void breedTypes(ArrayList<Breed> data) {
         /* CAST THE RESULTS IN THE GLOBAL INSTANCE */
         arrBreeds = data;
 

@@ -38,9 +38,6 @@ public interface AdoptionsAPI {
             @Field("adoptionCoverPhoto") String adoptionCoverPhoto,
             @Field("adoptionDescription") String adoptionDescription,
             @Field("adoptionGender") String adoptionGender,
-            @Field("adoptionVaccinated") String adoptionVaccinated,
-            @Field("adoptionDewormed") String adoptionDewormed,
-            @Field("adoptionNeutered") String adoptionNeutered,
             @Field("adoptionTimeStamp") String adoptionTimeStamp,
             @Field("adoptionStatus") String adoptionStatus);
 

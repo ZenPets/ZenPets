@@ -11,27 +11,27 @@ import java.util.ArrayList;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.utils.AppPrefs;
-import biz.zenpets.users.utils.models.pets.breeds.BreedsData;
+import biz.zenpets.users.utils.models.pets.breeds.Breed;
 import okhttp3.Call;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class FetchBreedTypes extends AsyncTask<Object, Void, ArrayList<BreedsData>> {
+public class FetchBreedTypes extends AsyncTask<Object, Void, ArrayList<Breed>> {
 
     /** THE INTERFACE INSTANCE **/
     private final FetchBreedTypesInterface delegate;
 
     /** AN ARRAY LIST INSTANCE **/
-    private final ArrayList<BreedsData> arrBreeds = new ArrayList<>();
+    private final ArrayList<Breed> arrBreeds = new ArrayList<>();
 
     public FetchBreedTypes(FetchBreedTypesInterface delegate) {
         this.delegate = delegate;
     }
 
     @Override
-    protected ArrayList<BreedsData> doInBackground(Object... objects) {
+    protected ArrayList<Breed> doInBackground(Object... objects) {
         String URL_BREEDS = AppPrefs.context().getString(R.string.url_pet_breeds);
         HttpUrl.Builder builder = HttpUrl.parse(URL_BREEDS).newBuilder();
         builder.addQueryParameter("petTypeID", String.valueOf(objects[0]));
@@ -47,10 +47,10 @@ public class FetchBreedTypes extends AsyncTask<Object, Void, ArrayList<BreedsDat
             JSONObject JORoot = new JSONObject(strResult);
             if (JORoot.has("error") && JORoot.getString("error").equalsIgnoreCase("false")) {
                 JSONArray JABreeds = JORoot.getJSONArray("breeds");
-                BreedsData data;
+                Breed data;
                 for (int i = 0; i < JABreeds.length(); i++) {
                     JSONObject JOBreeds = JABreeds.getJSONObject(i);
-                    data = new BreedsData();
+                    data = new Breed();
 
                     /* GET THE BREED ID */
                     if (JOBreeds.has("breedID"))    {
@@ -87,7 +87,7 @@ public class FetchBreedTypes extends AsyncTask<Object, Void, ArrayList<BreedsDat
     }
 
     @Override
-    protected void onPostExecute(ArrayList<BreedsData> data) {
+    protected void onPostExecute(ArrayList<Breed> data) {
         super.onPostExecute(data);
         delegate.breedTypes(data);
     }

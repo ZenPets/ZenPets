@@ -524,10 +524,12 @@
     <string name="upcoming_appointment_list_new">Tap to make an appointment</string>
 
     <!-- ADOPTION CREATOR -->
-    <string name="adoption_creator_pet_name">If given, provide the Pet\'s Name</string>
+    <string name="adoption_creator_pet_name">If given, enter the Pet\'s Name</string>
     <string name="adoption_creator_type_label">Select the type of Pet</string>
     <string name="adoption_creator_breed_label">Select your Pet\'s Breed</string>
     <string name="adoption_creator_pet_gender">Select the Pet\'s gender</string>
+    <string name="adoption_creator_species_dog">Dog</string>
+    <string name="adoption_creator_species_cat">Cat</string>
     <string name="adoption_creator_gender_male">Male</string>
     <string name="adoption_creator_gender_female">Female</string>
     <string name="adoption_creator_pet_vaccinated">Has the pet been Vaccinated?</string>
@@ -536,8 +538,10 @@
     <string name="adoption_creator_dewormed">Has the pet been Dewormed?</string>
     <string name="adoption_creator_neutered">Has the pet been Neutered?</string>
     <string name="adoption_creator_description">Tell us something about the Pet. The more you describe the Pet, the better chances of it\'s being adopted.</string>
+    <string name="adoption_creator_description_alt">Tell the potential adopters something about the Pet. Descriptive posts will increase the chances of quick adoptions…</string>
     <string name="adoption_creator_description_hint">Tap to start typing…</string>
-    <string name="adoption_creator_images">Tap here to add images for your Adoption listing (Maximum 6 images)</string>
+    <string name="adoption_creator_cover_label">Select a Cover Photo of the pet</string>
+    <string name="adoption_creator_images">Tap here to add images for your Adoption listing (Maximum 10 images)</string>
 
     <!-- ADOPTION ALBUM ITEM -->
     <string name="adoption_album_item_text">1</string>
