@@ -395,8 +395,6 @@ public class NewKennelsList extends AppCompatActivity
                             }
                             data.setKennelVotes(reviewQuantity);
 
-                            /* GET THE KENNEL RATING */
-
                             /* ADD THE GATHERED DATA TO THE ARRAY LIST */
                             arrKennels.add(data);
                             Runnable runnable = new Runnable() {

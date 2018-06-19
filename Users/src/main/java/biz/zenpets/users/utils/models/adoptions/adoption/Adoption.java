@@ -15,12 +15,14 @@ public class Adoption {
     @SerializedName("cityID") private String cityID;
     @SerializedName("cityName") private String cityName;
     @SerializedName("adoptionName") private String adoptionName;
+    @SerializedName("adoptionCoverPhoto") private String adoptionCoverPhoto;
     @SerializedName("adoptionDescription") private String adoptionDescription;
     @SerializedName("adoptionGender") private String adoptionGender;
     @SerializedName("adoptionVaccinated") private String adoptionVaccinated;
     @SerializedName("adoptionDewormed") private String adoptionDewormed;
     @SerializedName("adoptionNeutered") private String adoptionNeutered;
     @SerializedName("adoptionTimeStamp") private String adoptionTimeStamp;
+    @SerializedName("adoptionPrettyDate") private String adoptionPrettyDate;
     @SerializedName("adoptionStatus") private String adoptionStatus;
 
     public Boolean getError() {
@@ -111,6 +113,14 @@ public class Adoption {
         this.adoptionName = adoptionName;
     }
 
+    public String getAdoptionCoverPhoto() {
+        return adoptionCoverPhoto;
+    }
+
+    public void setAdoptionCoverPhoto(String adoptionCoverPhoto) {
+        this.adoptionCoverPhoto = adoptionCoverPhoto;
+    }
+
     public String getAdoptionDescription() {
         return adoptionDescription;
     }
@@ -157,6 +167,14 @@ public class Adoption {
 
     public void setAdoptionTimeStamp(String adoptionTimeStamp) {
         this.adoptionTimeStamp = adoptionTimeStamp;
+    }
+
+    public String getAdoptionPrettyDate() {
+        return adoptionPrettyDate;
+    }
+
+    public void setAdoptionPrettyDate(String adoptionPrettyDate) {
+        this.adoptionPrettyDate = adoptionPrettyDate;
     }
 
     public String getAdoptionStatus() {

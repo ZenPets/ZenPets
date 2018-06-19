@@ -52,6 +52,7 @@ import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.PicassoEngine;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -65,6 +66,8 @@ import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.models.adoptions.AdoptionAlbumData;
 import biz.zenpets.users.utils.models.adoptions.adoption.Adoption;
 import biz.zenpets.users.utils.models.adoptions.adoption.AdoptionsAPI;
+import biz.zenpets.users.utils.models.adoptions.images.AdoptionImage;
+import biz.zenpets.users.utils.models.adoptions.images.AdoptionImagesAPI;
 import biz.zenpets.users.utils.models.pets.breeds.Breed;
 import biz.zenpets.users.utils.models.pets.breeds.Breeds;
 import biz.zenpets.users.utils.models.pets.breeds.BreedsAPI;
@@ -115,13 +118,17 @@ public class AdoptionCreatorNew extends AppCompatActivity {
     /** THE ARRAY LISTS FOR THE ADOPTION ALBUMS **/
     private final ArrayList<AdoptionAlbumData> arrAlbums = new ArrayList<>();
 
+    /** THE UPLOAD INCREMENT COUNTER **/
+    private int IMAGE_UPLOAD_COUNTER = 0;
+
     /** A PROGRESS DIALOG INSTANCE **/
     private ProgressDialog dialog;
 
     /** THE OBJECTS TO HOLD THE ADOPTION DETAILS **/
-    String ADOPTION_PET_TYPE_ID = null;
+    private String ADOPTION_ID = null;
+    String ADOPTION_PET_TYPE_ID = "1";
     String ADOPTION_BREED_ID = null;
-    String ADOPTION_GENDER = null;
+    String ADOPTION_GENDER = "Male";
     String ADOPTION_NAME = null;
     String ADOPTION_DESCRIPTION = null;
     Uri ADOPTION_COVER_URI = null;
@@ -183,10 +190,24 @@ public class AdoptionCreatorNew extends AppCompatActivity {
                     case R.id.rdbtnDog:
                         /* SET THE PET SPECIES TO "1" (PET TYPE ID)*/
                         ADOPTION_PET_TYPE_ID = "1";
+
+                        /* CLEAR THE BREEDS ARRAY LIST */
+                        arrBreeds.clear();
+
+                        /* FETCH THE LIST OF BREEDS */
+                        fetchBreedsList();
+
                         break;
                     case R.id.rdbtnCat:
                         /* SET THE PET SPECIES TO "2" (PET TYPE ID)*/
                         ADOPTION_PET_TYPE_ID = "2";
+
+                        /* CLEAR THE BREEDS ARRAY LIST */
+                        arrBreeds.clear();
+
+                        /* FETCH THE LIST OF BREEDS */
+                        fetchBreedsList();
+
                         break;
                     default:
                         break;
@@ -545,7 +566,7 @@ public class AdoptionCreatorNew extends AppCompatActivity {
         } else if (ADOPTION_COVER_URI == null)  {
             Toast.makeText(getApplicationContext(), "Please choose a Cover Photo", Toast.LENGTH_SHORT).show();
         } else if (arrAlbums.size() <= 0) {
-            Toast.makeText(getApplicationContext(), "Upload at least one picture of the Pet", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Add at least one picture of the Pet (excluding the Cover Photo)", Toast.LENGTH_LONG).show();
         } else  {
             /* PUBLISH THE ADOPTION COVER PHOTO */
             publishAdoptionCover();
@@ -561,7 +582,7 @@ public class AdoptionCreatorNew extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.show();
 
-        /* PUBLISH THE PET PROFILE TO FIREBASE */
+        /* PUBLISH THE ADOPTION COVER PHOTO TO FIREBASE */
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference refStorage = storageReference.child("Adoption Covers").child(FILE_NAME);
         refStorage.putFile(ADOPTION_COVER_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -571,8 +592,7 @@ public class AdoptionCreatorNew extends AppCompatActivity {
                 if (downloadURL != null)    {
                     ADOPTION_COVER_URL = String.valueOf(downloadURL);
                     if (ADOPTION_COVER_URL != null)    {
-                        /* DISMISS THE DIALOG AND PUBLISH THE ADOPTION LISTING */
-                        dialog.dismiss();
+                        /* PUBLISH THE ADOPTION LISTING */
                         publishAdoptionListing();
                     } else {
                         dialog.dismiss();
@@ -606,6 +626,106 @@ public class AdoptionCreatorNew extends AppCompatActivity {
                 ADOPTION_NAME, ADOPTION_COVER_URL, ADOPTION_DESCRIPTION, ADOPTION_GENDER,
                 timeStamp, "Open"
         );
+        call.enqueue(new Callback<Adoption>() {
+            @Override
+            public void onResponse(Call<Adoption> call, Response<Adoption> response) {
+                if (response.isSuccessful())    {
+                    /* GET THE ADOPTION ID */
+                    ADOPTION_ID = response.body().getAdoptionID();
+
+                    /* PUBLISH THE ADOPTION IMAGES */
+                    publishAdoptionImages();
+                } else {
+                    dialog.dismiss();
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "There was an error posting the new adoption. Please try again",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Adoption> call, Throwable t) {
+                Log.e("ADOPTION FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
+    }
+
+    /***** PUBLISH THE ADOPTION IMAGES *****/
+    private void publishAdoptionImages()  {
+        Bitmap bitmap = arrAlbums.get(IMAGE_UPLOAD_COUNTER).getBmpAdoptionImage();
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root + "/ZenPets/Adoptions");
+        myDir.mkdirs();
+        final String imageNumber = String.valueOf(IMAGE_UPLOAD_COUNTER + 1);
+        String fName = "photo" + imageNumber + ".jpg";
+        File file = new File(myDir, fName);
+        if (file.exists()) file.delete();
+
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            out.close();
+
+            /* GET THE FINAL ADOPTION IMAGE URI */
+            Uri uri = Uri.fromFile(file);
+            String FILE_NAME;
+            if (ADOPTION_NAME != null) {
+                FILE_NAME = ADOPTION_NAME.replaceAll(" ", "_").toLowerCase().trim() + "_" + USER_ID + "_" + fName;
+            } else {
+                FILE_NAME = "ADOPTION_" + USER_ID + "_" + fName;
+            }
+
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+            StorageReference refStorage = storageReference.child("Adoptions").child(FILE_NAME);
+            UploadTask uploadTask = refStorage.putFile(uri);
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Uri downloadURL = taskSnapshot.getDownloadUrl();
+                    if (downloadURL != null) {
+                        /* INCREMENT THE UPLOAD COUNTER AND UPLOAD THE IMAGE */
+                        IMAGE_UPLOAD_COUNTER++;
+                        postImage(String.valueOf(downloadURL));
+                    }
+                }
+            });
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /***** POST / PUBLISH THE ADOPTION IMAGE *****/
+    private void postImage(String imageURL)    {
+        AdoptionImagesAPI api = ZenApiClient.getClient().create(AdoptionImagesAPI.class);
+        Call<AdoptionImage> call = api.postAdoptionImages(
+                ADOPTION_ID, imageURL);
+        call.enqueue(new Callback<AdoptionImage>() {
+            @Override
+            public void onResponse(Call<AdoptionImage> call, Response<AdoptionImage> response) {
+                if (response.isSuccessful())    {
+                    if (IMAGE_UPLOAD_COUNTER == arrAlbums.size()) {
+                        dialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "New Adoption listed successfully", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent();
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    } else {
+                        /* PUBLISH THE NEXT IMAGE IN THE ARRAY */
+                        publishAdoptionImages();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AdoptionImage> call, Throwable t) {
+                Crashlytics.logException(t);
+            }
+        });
     }
 
     /***** FETCH THE USER'S PROFILE DETAILS *****/
@@ -617,6 +737,9 @@ public class AdoptionCreatorNew extends AppCompatActivity {
             public void onResponse(Call<UserData> call, Response<UserData> response) {
                 UserData data = response.body();
                 if (data != null)   {
+                    /* GET THE USER'S ID */
+                    USER_ID = data.getUserID();
+
                     /* GET THE USER'S CITY ID */
                     CITY_ID = data.getCityID();
                 }

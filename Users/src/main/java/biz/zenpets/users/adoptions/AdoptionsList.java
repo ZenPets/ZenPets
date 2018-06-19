@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,6 +21,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -30,23 +32,33 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.ocpsoft.prettytime.PrettyTime;
+
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import biz.zenpets.users.R;
-import biz.zenpets.users.utils.adapters.adoptions.AdoptionsAdapter;
+import biz.zenpets.users.utils.AppPrefs;
+import biz.zenpets.users.utils.adapters.adoptions.TestAdoptionsAdapter;
 import biz.zenpets.users.utils.helpers.classes.FilterAdoptionsActivity;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.models.adoptions.adoption.Adoption;
-import biz.zenpets.users.utils.models.adoptions.adoption.Adoptions;
-import biz.zenpets.users.utils.models.adoptions.adoption.AdoptionsAPI;
 import biz.zenpets.users.utils.models.location.City;
 import biz.zenpets.users.utils.models.location.LocationsAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,7 +78,11 @@ public class AdoptionsList extends AppCompatActivity {
     /** PERMISSION REQUEST CONSTANTS **/
     private static final int ACCESS_FINE_LOCATION_CONSTANT = 200;
 
-    /** THE ADOPTION ARRAY LIST **/
+    /** THE ADOPTION DATA MODEL INSTANCE **/
+    Adoption data;
+
+    /** THE ADOPTION ADAPTER AND ARRAY LIST INSTANCES **/
+    private TestAdoptionsAdapter adoptionsAdapter;
     private ArrayList<Adoption> arrAdoptions = new ArrayList<>();
 
     /** THE ADOPTION FILTER STRINGS **/
@@ -77,6 +93,7 @@ public class AdoptionsList extends AppCompatActivity {
     @BindView(R.id.txtLocation) AppCompatTextView txtLocation;
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
     @BindView(R.id.listAdoptions) RecyclerView listAdoptions;
+    @BindView(R.id.progressLoading) ProgressBar progressLoading;
     @BindView(R.id.linlaEmpty) LinearLayout linlaEmpty;
 
     /** FILTER THE ADOPTION LISTINGS **/
@@ -93,6 +110,9 @@ public class AdoptionsList extends AppCompatActivity {
         setContentView(R.layout.adoptions_list);
         ButterKnife.bind(this);
 
+        /* INSTANTIATE THE KENNELS ADAPTER */
+        adoptionsAdapter = new TestAdoptionsAdapter(AdoptionsList.this, arrAdoptions);
+
         /* INSTANTIATE THE LOCATION CLIENT */
         locationProviderClient = LocationServices.getFusedLocationProviderClient(AdoptionsList.this);
 
@@ -106,53 +126,236 @@ public class AdoptionsList extends AppCompatActivity {
         configRecycler();
     }
 
-    /* FETCH THE ADOPTION LISTINGS */
-    private void fetchAdoptions() {
-        AdoptionsAPI api = ZenApiClient.getClient().create(AdoptionsAPI.class);
-        Call<Adoptions> call = api.fetchAdoptions(FINAL_CITY_ID, FILTER_PET_SPECIES, FILTER_PET_GENDER);
-        call.enqueue(new Callback<Adoptions>() {
-            @Override
-            public void onResponse(Call<Adoptions> call, Response<Adoptions> response) {
-                Log.e("ADOPTIONS LIST", String.valueOf(response.raw()));
-                if (response.isSuccessful() && response.body().getAdoptions() != null)    {
-                    arrAdoptions = response.body().getAdoptions();
+    private class fetchAdoptions extends AsyncTask<Void, Void, Void>    {
 
-                    /* CHECK THE ARRAY LIST SIZE AND SHOW THE APPROPRIATE LAYOUT */
-                    if (arrAdoptions.size() > 0)    {
-                        /* SET THE ADAPTER TO THE ADOPTIONS RECYCLER */
-                        listAdoptions.setAdapter(new AdoptionsAdapter(AdoptionsList.this, arrAdoptions));
+        @Override
+        protected Void doInBackground(Void... voids) {
+            String strUrl = AppPrefs.context().getString(R.string.url_adoptions_list);
+            HttpUrl.Builder builder = HttpUrl.parse(strUrl).newBuilder();
+            builder.addQueryParameter("cityID", FINAL_CITY_ID);
+            builder.addQueryParameter("petTypeName", FILTER_PET_SPECIES);
+            builder.addQueryParameter("adoptionGender", FILTER_PET_GENDER);
+            String FINAL_URL = builder.build().toString();
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(FINAL_URL)
+                    .build();
+            okhttp3.Call call = client.newCall(request);
+            try {
+                okhttp3.Response response = call.execute();
+                String strResult = response.body().string();
+                JSONObject JORoot = new JSONObject(strResult);
+                Log.e("ROOT", String.valueOf(JORoot));
+                if (JORoot.has("error") && JORoot.getString("error").equalsIgnoreCase("false")) {
+                    JSONArray JAAdoptions = JORoot.getJSONArray("adoptions");
+                    if (JAAdoptions.length() > 0) {
+                        for (int i = 0; i < JAAdoptions.length(); i++) {
+                            JSONObject JOAdoptions = JAAdoptions.getJSONObject(i);
+                            data = new Adoption();
 
+                            /* GET THE ADOPTION ID */
+                            if (JOAdoptions.has("adoptionID"))  {
+                                data.setAdoptionID(JOAdoptions.getString("adoptionID"));
+                            } else {
+                                data.setAdoptionID(null);
+                            }
+
+                            /* GET THE PET TYPE ID */
+                            if (JOAdoptions.has("petTypeID"))   {
+                                data.setPetTypeID(JOAdoptions.getString("petTypeID"));
+                            } else {
+                                data.setPetTypeID(null);
+                            }
+
+                            /* GET THE PET TYPE NAME */
+                            if (JOAdoptions.has("petTypeName")) {
+                                data.setPetTypeName(JOAdoptions.getString("petTypeName"));
+                            } else {
+                                data.setPetTypeName(null);
+                            }
+
+                            /* GET THE BREED ID */
+                            if (JOAdoptions.has("breedID")) {
+                                data.setBreedID(JOAdoptions.getString("breedID"));
+                            } else {
+                                data.setBreedID(null);
+                            }
+
+                            /* GET THE BREED NAME */
+                            if (JOAdoptions.has("breedName"))   {
+                                data.setBreedName(JOAdoptions.getString("breedName"));
+                            } else {
+                                data.setBreedName(null);
+                            }
+
+                            /* GET THE USER'S ID */
+                            if (JOAdoptions.has("userID"))  {
+                                data.setUserID(JOAdoptions.getString("userID"));
+                            } else {
+                                data.setUserID(null);
+                            }
+
+                            /* GET THE USER'S NAME */
+                            if (JOAdoptions.has("userName"))    {
+                                data.setUserName(JOAdoptions.getString("userName"));
+                            } else {
+                                data.setUserName(null);
+                            }
+
+                            /* GET THE ADOPTION NAME */
+                            if (JOAdoptions.has("adoptionName"))    {
+                                data.setAdoptionName(JOAdoptions.getString("adoptionName"));
+                            } else {
+                                data.setAdoptionName(null);
+                            }
+
+                            /* GET THE ADOPTION COVER PHOTO */
+                            if (JOAdoptions.has("adoptionCoverPhoto"))  {
+                                data.setAdoptionCoverPhoto(JOAdoptions.getString("adoptionCoverPhoto"));
+                            } else {
+                                data.setAdoptionCoverPhoto(null);
+                            }
+
+                            /* GET THE ADOPTION DESCRIPTION */
+                            if (JOAdoptions.has("adoptionDescription")) {
+                                data.setAdoptionDescription(JOAdoptions.getString("adoptionDescription"));
+                            } else {
+                                data.setAdoptionDescription(null);
+                            }
+
+                            /* GET THE ADOPTION GENDER */
+                            if (JOAdoptions.has("adoptionGender"))  {
+                                data.setAdoptionGender(JOAdoptions.getString("adoptionGender"));
+                            } else {
+                                data.setAdoptionGender(null);
+                            }
+
+                            /* GET THE ADOPTION TIMESTAMP */
+                            if (JOAdoptions.has("adoptionTimeStamp"))   {
+                                String adoptionTimeStamp = JOAdoptions.getString("adoptionTimeStamp");
+                                long lngTimeStamp = Long.parseLong(adoptionTimeStamp) * 1000;
+
+                                /* GET THE PRETTY DATE */
+                                Calendar calPretty = Calendar.getInstance(Locale.getDefault());
+                                calPretty.setTimeInMillis(lngTimeStamp);
+                                Date date = calPretty.getTime();
+                                PrettyTime prettyTime = new PrettyTime();
+                                String strPrettyDate = prettyTime.format(date);
+                                data.setAdoptionPrettyDate(strPrettyDate);
+
+                                Calendar calendar = Calendar.getInstance(Locale.getDefault());
+                                calendar.setTimeInMillis(lngTimeStamp);
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                                Date currentTimeZone = calendar.getTime();
+                                String strDate = sdf.format(currentTimeZone);
+                                data.setAdoptionTimeStamp(strDate);
+                            } else {
+                                data.setAdoptionTimeStamp(null);
+                            }
+
+                            /* ADD THE GATHERED DATA TO THE ARRAY LIST */
+                            arrAdoptions.add(data);
+                            Runnable runnable = new Runnable() {
+                                @Override
+                                public void run() {
+                                    adoptionsAdapter.notifyDataSetChanged();
+                                }
+                            }; runOnUiThread(runnable);
+                        }
+//
                         /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
-                        listAdoptions.setVisibility(View.VISIBLE);
-                        linlaEmpty.setVisibility(View.GONE);
-
-                        /* HIDE THE PROGRESS BAR AFTER LOADING THE DATA */
-                        linlaProgress.setVisibility(View.GONE);
+                        Runnable run = new Runnable() {
+                            @Override
+                            public void run() {
+                                listAdoptions.setVisibility(View.VISIBLE);
+                                linlaEmpty.setVisibility(View.GONE);
+                            }
+                        }; runOnUiThread(run);
                     } else {
                         /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
-                        linlaEmpty.setVisibility(View.VISIBLE);
-                        listAdoptions.setVisibility(View.GONE);
-
-                        /* HIDE THE PROGRESS BAR AFTER LOADING THE DATA */
-                        linlaProgress.setVisibility(View.GONE);
+                        Runnable run = new Runnable() {
+                            @Override
+                            public void run() {
+                                linlaEmpty.setVisibility(View.VISIBLE);
+                                listAdoptions.setVisibility(View.GONE);
+                            }
+                        }; runOnUiThread(run);
                     }
                 } else {
                     /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
-                    linlaEmpty.setVisibility(View.VISIBLE);
-                    listAdoptions.setVisibility(View.GONE);
-
-                    /* HIDE THE PROGRESS BAR AFTER LOADING THE DATA */
-                    linlaProgress.setVisibility(View.GONE);
+                    Runnable run = new Runnable() {
+                        @Override
+                        public void run() {
+                            linlaEmpty.setVisibility(View.VISIBLE);
+                            listAdoptions.setVisibility(View.GONE);
+                        }
+                    }; runOnUiThread(run);
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+            return null;
+        }
 
-            @Override
-            public void onFailure(Call<Adoptions> call, Throwable t) {
-//                Log.e("TUESDAY FAILURE", t.getMessage());
-                Crashlytics.logException(t);
-            }
-        });
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            /* HIDE THE PROGRESSBAR AFTER LOADING THE DATA */
+            progressLoading.setVisibility(View.GONE);
+//            linlaProgress.setVisibility(View.GONE);
+        }
     }
+
+    /* FETCH THE ADOPTION LISTINGS */
+//    private void fetchAdoptions() {
+//        AdoptionsAPI api = ZenApiClient.getClient().create(AdoptionsAPI.class);
+//        Call<Adoptions> call = api.fetchTestAdoptions(FINAL_CITY_ID, FILTER_PET_SPECIES, FILTER_PET_GENDER);
+//        call.enqueue(new Callback<Adoptions>() {
+//            @Override
+//            public void onResponse(Call<Adoptions> call, Response<Adoptions> response) {
+//                Log.e("ADOPTIONS LIST", String.valueOf(response.raw()));
+//                if (response.isSuccessful() && response.body().getAdoptions() != null)    {
+//                    arrAdoptions = response.body().getAdoptions();
+//
+//                    /* CHECK THE ARRAY LIST SIZE AND SHOW THE APPROPRIATE LAYOUT */
+//                    if (arrAdoptions.size() > 0)    {
+//                        /* SET THE ADAPTER TO THE ADOPTIONS RECYCLER */
+//                        listAdoptions.setAdapter(new TestAdoptionsAdapter(AdoptionsList.this, arrAdoptions));
+//
+//                        /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
+//                        listAdoptions.setVisibility(View.VISIBLE);
+//                        linlaEmpty.setVisibility(View.GONE);
+//
+//                        /* HIDE THE PROGRESS BAR AFTER LOADING THE DATA */
+//                        linlaProgress.setVisibility(View.GONE);
+//                    } else {
+//                        /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
+//                        linlaEmpty.setVisibility(View.VISIBLE);
+//                        listAdoptions.setVisibility(View.GONE);
+//
+//                        /* HIDE THE PROGRESS BAR AFTER LOADING THE DATA */
+//                        linlaProgress.setVisibility(View.GONE);
+//                    }
+//                } else {
+//                    /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
+//                    linlaEmpty.setVisibility(View.VISIBLE);
+//                    listAdoptions.setVisibility(View.GONE);
+//
+//                    /* HIDE THE PROGRESS BAR AFTER LOADING THE DATA */
+//                    linlaProgress.setVisibility(View.GONE);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Adoptions> call, Throwable t) {
+////                Log.e("TUESDAY FAILURE", t.getMessage());
+//                Crashlytics.logException(t);
+//            }
+//        });
+//    }
 
     /***** FETCH THE USER'S LOCATION *****/
     private void getUsersLocation() {
@@ -233,7 +436,8 @@ public class AdoptionsList extends AppCompatActivity {
     /***** FETCH THE CITY ID *****/
     private void fetchCityID() {
         /* SHOW THE PROGRESS WHILE FETCHING THE DATA */
-        linlaProgress.setVisibility(View.VISIBLE);
+        progressLoading.setVisibility(View.VISIBLE);
+//        linlaProgress.setVisibility(View.VISIBLE);
 
         LocationsAPI api = ZenApiClient.getClient().create(LocationsAPI.class);
         Call<City> call = api.getCityID(DETECTED_CITY);
@@ -247,7 +451,8 @@ public class AdoptionsList extends AppCompatActivity {
                     FINAL_CITY_ID = city.getCityID();
                     if (FINAL_CITY_ID != null)  {
                         /* FETCH THE ADOPTION LISTINGS */
-                        fetchAdoptions();
+//                        fetchAdoptions();
+                        new fetchAdoptions().execute();
                     } else {
                         new MaterialDialog.Builder(AdoptionsList.this)
                                 .title("Location not Served!")
@@ -347,7 +552,7 @@ public class AdoptionsList extends AppCompatActivity {
         listAdoptions.setHasFixedSize(true);
 
         /* INSTANTIATE AND SET THE ADAPTER */
-        listAdoptions.setAdapter(new AdoptionsAdapter(AdoptionsList.this, arrAdoptions));
+        listAdoptions.setAdapter(new TestAdoptionsAdapter(AdoptionsList.this, arrAdoptions));
     }
 
     @Override
@@ -363,11 +568,14 @@ public class AdoptionsList extends AppCompatActivity {
                         FILTER_PET_SPECIES = null;
                     }
                     if (FILTER_PET_SPECIES != null && FILTER_PET_GENDER != null)    {
-                        fetchAdoptions();
+//                        fetchAdoptions();
+                        new fetchAdoptions().execute();
                     } else if (FILTER_PET_SPECIES != null && FILTER_PET_GENDER == null) {
-                        fetchAdoptions();
+//                        fetchAdoptions();
+                        new fetchAdoptions().execute();
                     } else if (FILTER_PET_SPECIES == null && FILTER_PET_GENDER != null) {
-                        fetchAdoptions();
+//                        fetchAdoptions();
+                        new fetchAdoptions().execute();
                     }
                 }
             }

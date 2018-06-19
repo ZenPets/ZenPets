@@ -123,6 +123,13 @@
             android:scrollbars="vertical"
             android:visibility="visible" />
 
+        <ProgressBar
+            android:id="@+id/progressLoading"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:padding="11dp"
+            android:visibility="gone" />
+
         <LinearLayout
             android:id="@+id/linlaEmpty"
             android:layout_width="fill_parent"

@@ -28,9 +28,9 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
-                android:fontFamily="@font/montserrat_regular"
                 android:text="@string/adoption_creator_type_label"
                 android:textSize="14sp"
+                app:fontFamily="@font/montserrat_regular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -56,11 +56,11 @@
                     android:layout_gravity="start|center"
                     android:layout_weight="1"
                     android:checked="true"
-                    android:fontFamily="@font/montserrat_regular"
                     android:padding="4dp"
                     android:text="@string/adoption_creator_species_dog"
                     android:textColor="@color/secondary_text"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    app:fontFamily="@font/montserrat_regular" />
 
                 <android.support.v7.widget.AppCompatRadioButton
                     android:id="@+id/rdbtnCat"
@@ -69,11 +69,11 @@
                     android:layout_gravity="start|center"
                     android:layout_weight="1"
                     android:checked="false"
-                    android:fontFamily="@font/montserrat_regular"
                     android:padding="4dp"
                     android:text="@string/adoption_creator_species_cat"
                     android:textColor="@color/secondary_text"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    app:fontFamily="@font/montserrat_regular" />
             </RadioGroup>
 
             <TextView
@@ -85,9 +85,9 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
-                android:fontFamily="@font/montserrat_regular"
                 android:text="@string/adoption_creator_breed_label"
                 android:textSize="14sp"
+                app:fontFamily="@font/montserrat_regular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/groupSpecies" />
@@ -124,9 +124,12 @@
                     android:id="@+id/edtAdoptionName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_regular"
                     android:hint="@string/adoption_creator_pet_name"
-                    android:textSize="14sp" />
+                    android:inputType="textCapWords"
+                    android:maxLines="1"
+                    android:textColor="@color/primary_text"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/montserrat_regular" />
             </android.support.design.widget.TextInputLayout>
 
             <TextView
@@ -138,9 +141,9 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
-                android:fontFamily="@font/montserrat_regular"
                 android:text="@string/adoption_creator_pet_gender"
                 android:textSize="14sp"
+                app:fontFamily="@font/montserrat_regular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inputAdoptionName" />
@@ -166,11 +169,11 @@
                     android:layout_gravity="start|center"
                     android:layout_weight="1"
                     android:checked="true"
-                    android:fontFamily="@font/montserrat_regular"
                     android:padding="4dp"
                     android:text="@string/adoption_creator_gender_male"
                     android:textColor="@color/secondary_text"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    app:fontFamily="@font/montserrat_regular" />
 
                 <android.support.v7.widget.AppCompatRadioButton
                     android:id="@+id/rdbtnFemale"
@@ -179,11 +182,11 @@
                     android:layout_gravity="start|center"
                     android:layout_weight="1"
                     android:checked="false"
-                    android:fontFamily="@font/montserrat_regular"
                     android:padding="4dp"
                     android:text="@string/adoption_creator_gender_female"
                     android:textColor="@color/secondary_text"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    app:fontFamily="@font/montserrat_regular" />
             </RadioGroup>
 
             <TextView
@@ -195,9 +198,9 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
-                android:fontFamily="@font/montserrat_regular"
                 android:text="@string/adoption_creator_description_alt"
                 android:textSize="14sp"
+                app:fontFamily="@font/montserrat_regular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/groupGender" />
@@ -221,7 +224,6 @@
                     android:id="@+id/edtDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_regular"
                     android:gravity="top|start"
                     android:hint="@string/adoption_creator_description_hint"
                     android:inputType="textCapSentences|textMultiLine"
@@ -229,7 +231,8 @@
                     android:maxLines="11"
                     android:minLines="6"
                     android:textColor="@color/primary_text"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    app:fontFamily="@font/montserrat_regular" />
             </android.support.design.widget.TextInputLayout>
 
             <TextView
@@ -241,9 +244,9 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
-                android:fontFamily="@font/montserrat_regular"
                 android:text="@string/adoption_creator_cover_label"
                 android:textSize="14sp"
+                app:fontFamily="@font/montserrat_regular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inputDescription" />

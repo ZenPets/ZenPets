@@ -48,6 +48,13 @@ public interface AdoptionsAPI {
             @Query("petTypeName") String petTypeName,
             @Query("adoptionGender") String adoptionGender);
 
+    /** FETCH ALL ADOPTION IN THE SELECTED CITY (TEST) **/
+    @GET("fetchTestAdoptions")
+    Call<Adoptions> fetchTestAdoptions(
+            @Query("cityID") String cityID,
+            @Query("petTypeName") String petTypeName,
+            @Query("adoptionGender") String adoptionGender);
+
     /** FETCH ALL USER ADOPTION LISTING **/
     @GET("listUserAdoptions")
     Call<Adoptions> listUserAdoptions(@Query("userID") String userID);
