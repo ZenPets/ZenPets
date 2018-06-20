@@ -1,8 +1,10 @@
 package biz.zenpets.users.utils.adapters.adoptions;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,16 +13,31 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import biz.zenpets.users.R;
+import biz.zenpets.users.details.adoptions.TestAdoptionDetails;
+import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.models.adoptions.adoption.Adoption;
 import biz.zenpets.users.utils.models.adoptions.images.AdoptionImage;
+import biz.zenpets.users.utils.models.adoptions.images.AdoptionImages;
+import biz.zenpets.users.utils.models.adoptions.images.AdoptionImagesAPI;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+@SuppressWarnings("ConstantConditions")
 public class TestAdoptionsAdapter extends RecyclerView.Adapter<TestAdoptionsAdapter.AdoptionsVH> {
 
     /***** THE ACTIVITY INSTANCE FOR USE IN THE ADAPTER *****/
@@ -48,7 +65,7 @@ public class TestAdoptionsAdapter extends RecyclerView.Adapter<TestAdoptionsAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdoptionsVH holder, final int position) {
+    public void onBindViewHolder(@NonNull final AdoptionsVH holder, final int position) {
         final Adoption data = arrAdoptions.get(position);
 
         /* SET THE ADOPTION COVER PHOTO */
@@ -77,104 +94,72 @@ public class TestAdoptionsAdapter extends RecyclerView.Adapter<TestAdoptionsAdap
             holder.txtAdoptionDescription.setText(data.getAdoptionDescription());
         }
 
-        /* SET THE ADOPTION TIME STAMP */
+        /* SET THE TIMESTAMP (DATE OF CREATION )*/
         if (data.getAdoptionTimeStamp() != null)    {
-            String strPrettyDate = data.getAdoptionPrettyDate();
-            String strDate = data.getAdoptionTimeStamp();
+            String adoptionTimeStamp = data.getAdoptionTimeStamp();
+            long lngTimeStamp = Long.parseLong(adoptionTimeStamp) * 1000;
+
+            /* GET THE PRETTY DATE */
+            Calendar calPretty = Calendar.getInstance(Locale.getDefault());
+            calPretty.setTimeInMillis(lngTimeStamp);
+            Date date = calPretty.getTime();
+            PrettyTime prettyTime = new PrettyTime();
+            String strPrettyDate = prettyTime.format(date);
+
+            Calendar calendar = Calendar.getInstance(Locale.getDefault());
+            calendar.setTimeInMillis(lngTimeStamp);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+            Date currentTimeZone = calendar.getTime();
+            String strDate = sdf.format(currentTimeZone);
             holder.txtTimeStamp.setText(activity.getString(R.string.adoption_details_posted, strDate, strPrettyDate));
         }
 
-//        /* SET THE PET'S GENDER */
-//        if (data.getAdoptionGender().equalsIgnoreCase("male"))  {
-//            holder.imgvwGender.setIcon("faw-mars");
-//            holder.imgvwGender.setColor(ContextCompat.getColor(activity, android.R.color.holo_blue_dark));
-//        } else if (data.getAdoptionGender().equalsIgnoreCase("female")) {
-//            holder.imgvwGender.setIcon("faw-venus");
-//            holder.imgvwGender.setColor(ContextCompat.getColor(activity, android.R.color.holo_red_dark));
-//        }
+        /* SET THE PET'S DETAILS (BREED NAME, PET TYPE NAME AND PET AGE) */
+        if (data.getBreedName() != null  && data.getAdoptionGender() != null)   {
+            String strPetDetails = "The pet is a " + data.getAdoptionGender() + ", " + data.getBreedName();
+            holder.txtPetDetails.setText(strPetDetails);
+        }
 
-//        /* SET THE TIMESTAMP (DATE OF CREATION )*/
-//        if (data.getAdoptionTimeStamp() != null)    {
-//            String adoptionTimeStamp = data.getAdoptionTimeStamp();
-////            Log.e("TS", adoptionTimeStamp);
-//            long lngTimeStamp = Long.parseLong(adoptionTimeStamp) * 1000;
-//
-//            /* GET THE PRETTY DATE */
-//            Calendar calPretty = Calendar.getInstance(Locale.getDefault());
-//            calPretty.setTimeInMillis(lngTimeStamp);
-//            Date date = calPretty.getTime();
-//            PrettyTime prettyTime = new PrettyTime();
-//            String strPrettyDate = prettyTime.format(date);
-//
-//            Calendar calendar = Calendar.getInstance(Locale.getDefault());
-//            calendar.setTimeInMillis(lngTimeStamp);
-//            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-//            Date currentTimeZone = calendar.getTime();
-//            String strDate = sdf.format(currentTimeZone);
-////            holder.txtTimeStamp.setText("Posted on: " + strDate + " (" + strPrettyDate + ")");
-//            holder.txtTimeStamp.setText(activity.getString(R.string.adoption_details_posted, strDate, strPrettyDate));
-//        }
-//
-//        /* SET THE PET'S DETAILS (BREED NAME, PET TYPE NAME AND PET AGE) */
-//        if (data.getBreedName() != null  && data.getPetTypeName() != null)   {
-//            String breed = data.getBreedName();
-//            String petType = data.getPetTypeName();
-////            String combinedDetails = "The Pet is a \"" + petType + "\" of the Breed \"" + breed + "\"";
-//            String combinedDetails = "Species: \"" + petType + "\" | Breed: \"" + breed + "\"";
-//            holder.txtPetDetails.setText(combinedDetails);
-//        }
-//
-//        /* SET THE VACCINATED STATUS */
-//        if (data.getAdoptionVaccinated() != null)  {
-//            holder.txtVaccinated.setText(data.getAdoptionVaccinated());
-//            if (data.getAdoptionVaccinated().equalsIgnoreCase("yes"))  {
-//                holder.txtVaccinated.setTextColor(ContextCompat.getColor(activity, android.R.color.holo_green_dark));
-//            } else if (data.getAdoptionVaccinated().equalsIgnoreCase("no"))    {
-//                holder.txtVaccinated.setTextColor(ContextCompat.getColor(activity, android.R.color.holo_red_dark));
-//            }
-//        }
-//
-//        /* SET THE DEWORMED STATUS */
-//        if (data.getAdoptionDewormed() != null) {
-//            holder.txtDewormed.setText(data.getAdoptionDewormed());
-//            if (data.getAdoptionDewormed().equalsIgnoreCase("yes")) {
-//                holder.txtDewormed.setTextColor(ContextCompat.getColor(activity, android.R.color.holo_green_dark));
-//            } else if (data.getAdoptionDewormed().equalsIgnoreCase("no"))   {
-//                holder.txtDewormed.setTextColor(ContextCompat.getColor(activity, android.R.color.holo_red_dark));
-//            }
-//        }
-//
-//        /* SET THE NEUTERED STATUS */
-//        if (data.getAdoptionNeutered() != null) {
-//            holder.txtNeutered.setText(data.getAdoptionNeutered());
-//            if (data.getAdoptionNeutered().equalsIgnoreCase("yes")) {
-//                holder.txtNeutered.setTextColor(ContextCompat.getColor(activity, android.R.color.holo_green_dark));
-//            } else if (data.getAdoptionNeutered().equalsIgnoreCase("no"))   {
-//                holder.txtNeutered.setTextColor(ContextCompat.getColor(activity, android.R.color.holo_red_dark));
-//            }
-//        }
-//
-////        /* SET THE ADOPTION STATUS */
-////        if (data.getAdoptionStatus() != null)   {
-////            holder.txtAdopted.setText(data.getAdoptionStatus());
-////            if (data.getAdoptionStatus().equalsIgnoreCase("Open"))  {
-////                holder.txtAdopted.setTextColor(ContextCompat.getColor(activity, android.R.color.holo_green_dark));
-////            } else if (data.getAdoptionStatus().equalsIgnoreCase("Adopted"))    {
-////                holder.txtAdopted.setTextColor(ContextCompat.getColor(activity, android.R.color.holo_red_dark));
-////            }
-////        } else {
-////            holder.txtAdopted.setTextColor(ContextCompat.getColor(activity, android.R.color.holo_red_dark));
-////        }
-//
-//        /* SHOW THE ADOPTION DETAILS */
-//        holder.linlaAdoptionContainer.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(activity, AdoptionDetails.class);
-//                intent.putExtra("ADOPTION_ID", data.getAdoptionID());
-//                activity.startActivity(intent);
-//            }
-//        });
+        /* SET THE ADOPTION IMAGES */
+        AdoptionImagesAPI apiImages = ZenApiClient.getClient().create(AdoptionImagesAPI.class);
+        Call<AdoptionImages> callImages = apiImages.fetchTestAdoptionImages(data.getAdoptionID());
+        callImages.enqueue(new Callback<AdoptionImages>() {
+            @Override
+            public void onResponse(Call<AdoptionImages> call, Response<AdoptionImages> response) {
+                if (response.body() != null && response.body().getImages() != null) {
+                    arrImages = response.body().getImages();
+                    if (arrImages.size() > 0)   {
+                        /* RECONFIGURE AND SET THE ADAPTER TO THE RECYCLER VIEW */
+                        adapter = new AdoptionsImagesAdapter(activity, arrImages);
+                        holder.listAdoptionImages.setAdapter(adapter);
+
+                        /* SHOW THE IMAGES CONTAINER */
+                        holder.linlaAdoptionImages.setVisibility(View.VISIBLE);
+                    } else {
+                        /* HIDE THE IMAGES CONTAINER */
+                        holder.linlaAdoptionImages.setVisibility(View.GONE);
+                    }
+                } else {
+                    /* HIDE THE IMAGES CONTAINER */
+                    holder.linlaAdoptionImages.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AdoptionImages> call, Throwable t) {
+                Crashlytics.logException(t);
+            }
+        });
+
+        /* SHOW THE ADOPTION DETAILS */
+        holder.cardAdoptionContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, TestAdoptionDetails.class);
+                intent.putExtra("ADOPTION_ID", data.getAdoptionID());
+                activity.startActivity(intent);
+            }
+        });
     }
 
     @NonNull
@@ -188,8 +173,9 @@ public class TestAdoptionsAdapter extends RecyclerView.Adapter<TestAdoptionsAdap
         return new AdoptionsVH(itemView);
     }
 
+    @SuppressWarnings("deprecation")
     class AdoptionsVH extends RecyclerView.ViewHolder	{
-
+        CardView cardAdoptionContainer;
         SimpleDraweeView imgvwAdoptionCover;
         TextView txtAdoptionName;
         TextView txtAdoptionDescription;
@@ -200,6 +186,7 @@ public class TestAdoptionsAdapter extends RecyclerView.Adapter<TestAdoptionsAdap
 
         AdoptionsVH(View v) {
             super(v);
+            cardAdoptionContainer = v.findViewById(R.id.cardAdoptionContainer);
             imgvwAdoptionCover = v.findViewById(R.id.imgvwAdoptionCover);
             txtAdoptionName = v.findViewById(R.id.txtAdoptionName);
             txtAdoptionDescription = v.findViewById(R.id.txtAdoptionDescription);

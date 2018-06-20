@@ -63,6 +63,10 @@ public interface AdoptionsAPI {
     @GET("fetchAdoptionDetails")
     Call<Adoption> fetchAdoptionDetails(@Query("adoptionID") String adoptionID);
 
+    /** FETCH AN ADOPTION'S DETAILS (TEST) **/
+    @GET("fetchTestAdoptionDetails")
+    Call<Adoption> fetchTestAdoptionDetails(@Query("adoptionID") String adoptionID);
+
     /** CHANGE AN ADOPTION'S STATUS **/
     @POST("changeAdoptionStatus")
     @FormUrlEncoded

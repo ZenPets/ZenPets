@@ -19,4 +19,8 @@ public interface AdoptionImagesAPI {
     /** FETCH AN ADOPTION'S IMAGES **/
     @GET("fetchAdoptionImages")
     Call<AdoptionImages> fetchAdoptionImages(@Query("adoptionID") String adoptionID);
+
+    /** FETCH AN ADOPTION'S IMAGES (TEST) **/
+    @GET("fetchTestAdoptionImages")
+    Call<AdoptionImages> fetchTestAdoptionImages(@Query("adoptionID") String adoptionID);
 }

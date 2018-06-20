@@ -1,32 +1,28 @@
 package biz.zenpets.users.details.adoptions;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
-import com.mikepenz.iconics.view.IconicsImageView;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
@@ -50,12 +46,11 @@ import biz.zenpets.users.utils.models.adoptions.messages.AdoptionMessages;
 import biz.zenpets.users.utils.models.adoptions.messages.AdoptionMessagesAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserAdoptionDetails extends AppCompatActivity {
+public class TestAdoptionDetails extends AppCompatActivity {
 
     private AppPrefs getApp()	{
         return (AppPrefs) getApplication();
@@ -77,6 +72,7 @@ public class UserAdoptionDetails extends AppCompatActivity {
     private String CITY_ID = null;
     private String CITY_NAME = null;
     private String ADOPTION_NAME = null;
+    String ADOPTION_COVER_PHOTO = null;
     private String ADOPTION_DESCRIPTION = null;
     private String ADOPTION_GENDER = null;
     private String ADOPTION_VACCINATION = null;
@@ -84,9 +80,6 @@ public class UserAdoptionDetails extends AppCompatActivity {
     private String ADOPTION_NEUTERED = null;
     private String ADOPTION_TIMESTAMP = null;
     private String ADOPTION_STATUS = null;
-
-    /** THE ADOPTION MESSAGE **/
-    private String ADOPTION_MESSAGE = null;
 
     /** THE PROGRESS DIALOG INSTANCE **/
     private ProgressDialog dialog;
@@ -98,74 +91,22 @@ public class UserAdoptionDetails extends AppCompatActivity {
     private ArrayList<AdoptionMessage> arrMessages = new ArrayList<>();
 
     /** CAST THE LAYOUT ELEMENTS **/
-    @BindView(R.id.txtAdoptionName) AppCompatTextView txtAdoptionName;
-    @BindView(R.id.imgvwGender) IconicsImageView imgvwGender;
-    @BindView(R.id.imgvwAdoptionOptions) IconicsImageView imgvwAdoptionOptions;
-    @BindView(R.id.txtAdoptionDescription) AppCompatTextView txtAdoptionDescription;
-    @BindView(R.id.txtNoImages) AppCompatTextView txtNoImages;
+    @BindView(R.id.imgvwAdoptionCover) SimpleDraweeView imgvwAdoptionCover;
+    @BindView(R.id.txtAdoptionName) TextView txtAdoptionName;
+    @BindView(R.id.txtAdoptionDescription) TextView txtAdoptionDescription;
+    @BindView(R.id.txtPetDetails) TextView txtPetDetails;
+    @BindView(R.id.txtTimeStamp) TextView txtTimeStamp;
+    @BindView(R.id.linlaAdoptionImages) LinearLayout linlaAdoptionImages;
     @BindView(R.id.listAdoptionImages) RecyclerView listAdoptionImages;
-    @BindView(R.id.txtTimeStamp) AppCompatTextView txtTimeStamp;
-    @BindView(R.id.txtPetDetails) AppCompatTextView txtPetDetails;
-    @BindView(R.id.txtVaccinated) AppCompatTextView txtVaccinated;
-    @BindView(R.id.txtDewormed) AppCompatTextView txtDewormed;
-    @BindView(R.id.txtNeutered) AppCompatTextView txtNeutered;
-    @BindView(R.id.txtAdopted) AppCompatTextView txtAdopted;
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
     @BindView(R.id.listMessages) RecyclerView listMessages;
     @BindView(R.id.linlaEmpty) LinearLayout linlaEmpty;
     @BindView(R.id.edtComment) AppCompatEditText edtComment;
 
-    /** CHANGE THE ADOPTION STATUS **/
-    @OnClick(R.id.imgvwAdoptionOptions) protected void changeStatus()   {
-        PopupMenu pm = new PopupMenu(this, imgvwAdoptionOptions);
-        pm.getMenuInflater().inflate(R.menu.pm_adoption_status, pm.getMenu());
-        pm.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId())   {
-                    case R.id.menuStatus:
-                        if (ADOPTION_STATUS.equalsIgnoreCase("Open"))   {
-                            /* CHANGE THE STATUS TO ADOPTED */
-                            updateStatusAdopted("Adopted");
-                        } else if (ADOPTION_STATUS.equalsIgnoreCase("Adopted")) {
-                            /* CHANGE THE STATUS TO OPEN */
-                            updateStatusAdopted("Open");
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                return false;
-            }
-        });
-        pm.show();
-    }
-
-    /** PUBLISH A NEW MESSAGE **/
-    @OnClick(R.id.imgbtnComment) void newMessage()  {
-        /* HIDE THE KEYBOARD */
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null) {
-            imm.hideSoftInputFromWindow(edtComment.getWindowToken(), 0);
-        }
-
-        /* COLLECT THE ADOPTION MESSAGE */
-        ADOPTION_MESSAGE = edtComment.getText().toString().trim();
-
-        /* VALIDATE THE MESSAGE IS NOT NULL */
-        if (TextUtils.isEmpty(ADOPTION_MESSAGE)) {
-            edtComment.setError("Please type a message....");
-            edtComment.requestFocus();
-        } else  {
-            /* PUBLISH THE ADOPTION MESSAGE */
-            postMessage();
-        }
-    }
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_adoption_details);
+        setContentView(R.layout.adoption_details_new);
         ButterKnife.bind(this);
 
         /* GET THE LOGGED IN / POSTER'S USER ID */
@@ -179,36 +120,22 @@ public class UserAdoptionDetails extends AppCompatActivity {
 
         /* CONFIGURE THE TOOLBAR */
         configTB();
-
-//        /* TOGGLE THE ADOPTION STATUS */
-//        switchStatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-//                if (isChecked) {
-//                    /* CHANGE THE STATUS TO ADOPTED */
-//                    updateStatusAdopted("Open");
-//                } else {
-//                    /* CHANGE THE STATUS TO OPEN */
-//                    updateStatusAdopted("Adopted");
-//                }
-//            }
-//        });
     }
 
     /***** FETCH THE ADOPTION DETAILS *****/
     private void fetchAdoptionDetails() {
         /* SHOW THE PROGRESS DIALOG WHILE FETCHING THE ADOPTION DETAILS **/
-        dialog = new ProgressDialog(UserAdoptionDetails.this);
+        dialog = new ProgressDialog(TestAdoptionDetails.this);
         dialog.setMessage("Fetching the adoption details....");
         dialog.setIndeterminate(false);
         dialog.setCancelable(false);
         dialog.show();
 
         AdoptionsAPI api = ZenApiClient.getClient().create(AdoptionsAPI.class);
-        retrofit2.Call<Adoption> call = api.fetchAdoptionDetails(ADOPTION_ID);
-        call.enqueue(new retrofit2.Callback<Adoption>() {
+        Call<Adoption> call = api.fetchTestAdoptionDetails(ADOPTION_ID);
+        call.enqueue(new Callback<Adoption>() {
             @Override
-            public void onResponse(retrofit2.Call<Adoption> call, retrofit2.Response<Adoption> response) {
+            public void onResponse(Call<Adoption> call, Response<Adoption> response) {
                 Adoption data = response.body();
                 if (data != null)   {
                     /* GET THE PET TYPE ID */
@@ -223,6 +150,14 @@ public class UserAdoptionDetails extends AppCompatActivity {
                     /* SET THE BREED NAME */
                     BREED_NAME = data.getBreedName();
 
+                    /* SET THE PET DETAILS */
+                    if (BREED_NAME != null  && PET_TYPE_NAME != null)   {
+                        String breed = data.getBreedName();
+                        String petType = data.getPetTypeName();
+                        String combinedDetails = "Species: \"" + petType + "\" | Breed: \"" + breed + "\"";
+                        txtPetDetails.setText(combinedDetails);
+                    }
+
                     /* SET THE USER ID */
                     USER_ID = data.getUserID();
 
@@ -234,6 +169,20 @@ public class UserAdoptionDetails extends AppCompatActivity {
 
                     /* GET THE CITY NAME */
                     CITY_NAME = data.getCityName();
+
+                    /* SET THE ADOPTION COVER PHOTO */
+                    ADOPTION_COVER_PHOTO = data.getAdoptionCoverPhoto();
+                    if (ADOPTION_COVER_PHOTO != null
+                            && !ADOPTION_COVER_PHOTO.equalsIgnoreCase("")
+                            && !ADOPTION_COVER_PHOTO.equalsIgnoreCase("null")) {
+                        Uri uri = Uri.parse(ADOPTION_COVER_PHOTO);
+                        imgvwAdoptionCover.setImageURI(uri);
+                    } else {
+                        ImageRequest request = ImageRequestBuilder
+                                .newBuilderWithResourceId(R.drawable.empty_graphic)
+                                .build();
+                        imgvwAdoptionCover.setImageURI(request.getSourceUri());
+                    }
 
                     /* GET THE ADOPTION NAME */
                     ADOPTION_NAME = data.getAdoptionName();
@@ -247,19 +196,14 @@ public class UserAdoptionDetails extends AppCompatActivity {
                     ADOPTION_DESCRIPTION = data.getAdoptionDescription();
                     txtAdoptionDescription.setText(ADOPTION_DESCRIPTION);
 
-                    /* GET THE GENDER */
+                    /* GET THE ADOPTION DETAILS */
                     ADOPTION_GENDER = data.getAdoptionGender();
-                    if (ADOPTION_GENDER.equalsIgnoreCase("male"))  {
-                        imgvwGender.setIcon("faw-mars");
-                        imgvwGender.setColor(ContextCompat.getColor(UserAdoptionDetails.this, android.R.color.holo_blue_dark));
-                    } else if (ADOPTION_GENDER.equalsIgnoreCase("female")) {
-                        imgvwGender.setIcon("faw-venus");
-                        imgvwGender.setColor(ContextCompat.getColor(UserAdoptionDetails.this, android.R.color.holo_red_dark));
-                    }
+                    BREED_NAME = data.getBreedName();
+                    String strPetDetails = "The pet is a " + ADOPTION_GENDER + ", " + BREED_NAME;
+                    txtPetDetails.setText(strPetDetails);
 
                     /* GET THE TIME STAMP */
                     String adoptionTimeStamp = data.getAdoptionTimeStamp();
-//                    Log.e("TS", adoptionTimeStamp);
                     long lngTimeStamp = Long.parseLong(adoptionTimeStamp) * 1000;
 
                     /* GET THE PRETTY DATE */
@@ -275,42 +219,6 @@ public class UserAdoptionDetails extends AppCompatActivity {
                     Date currentTimeZone = calendar.getTime();
                     String strDate = sdf.format(currentTimeZone);
                     txtTimeStamp.setText(getString(R.string.adoption_details_posted, strDate, strPrettyDate));
-
-                    /* GET THE VACCINATION STATUS */
-                    ADOPTION_VACCINATION = data.getAdoptionVaccinated();
-                    txtVaccinated.setText(ADOPTION_VACCINATION);
-                    if (ADOPTION_VACCINATION.equalsIgnoreCase("yes"))  {
-                        txtVaccinated.setTextColor(ContextCompat.getColor(UserAdoptionDetails.this, android.R.color.holo_green_dark));
-                    } else if (ADOPTION_VACCINATION.equalsIgnoreCase("no"))    {
-                        txtVaccinated.setTextColor(ContextCompat.getColor(UserAdoptionDetails.this, android.R.color.holo_red_dark));
-                    }
-
-                    /* GET THE DEWORMED STATUS */
-                    ADOPTION_DEWORMED = data.getAdoptionDewormed();
-                    txtDewormed.setText(ADOPTION_DEWORMED);
-                    if (ADOPTION_DEWORMED.equalsIgnoreCase("yes")) {
-                        txtDewormed.setTextColor(ContextCompat.getColor(UserAdoptionDetails.this, android.R.color.holo_green_dark));
-                    } else if (ADOPTION_DEWORMED.equalsIgnoreCase("no"))   {
-                        txtDewormed.setTextColor(ContextCompat.getColor(UserAdoptionDetails.this, android.R.color.holo_red_dark));
-                    }
-
-                    /* GET THE NEUTERED STATUS */
-                    ADOPTION_NEUTERED = data.getAdoptionNeutered();
-                    txtNeutered.setText(ADOPTION_NEUTERED);
-                    if (ADOPTION_NEUTERED.equalsIgnoreCase("yes")) {
-                        txtNeutered.setTextColor(ContextCompat.getColor(UserAdoptionDetails.this, android.R.color.holo_green_dark));
-                    } else if (ADOPTION_NEUTERED.equalsIgnoreCase("no"))   {
-                        txtNeutered.setTextColor(ContextCompat.getColor(UserAdoptionDetails.this, android.R.color.holo_red_dark));
-                    }
-
-                    /* GET THE ADOPTION STATUS */
-                    ADOPTION_STATUS = data.getAdoptionStatus();
-                    txtAdopted.setText(ADOPTION_STATUS);
-                    if (ADOPTION_STATUS.equalsIgnoreCase("Open"))   {
-                        txtAdopted.setTextColor(ContextCompat.getColor(UserAdoptionDetails.this, android.R.color.holo_green_dark));
-                    } else if (ADOPTION_STATUS.equalsIgnoreCase("Adopted")) {
-                        txtAdopted.setTextColor(ContextCompat.getColor(UserAdoptionDetails.this, android.R.color.holo_red_dark));
-                    }
                 } else {
                     Toast.makeText(
                             getApplicationContext(),
@@ -324,8 +232,7 @@ public class UserAdoptionDetails extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(retrofit2.Call<Adoption> call, Throwable t) {
-//                Log.e("TUESDAY FAILURE", t.getMessage());
+            public void onFailure(Call<Adoption> call, Throwable t) {
                 Crashlytics.logException(t);
             }
         });
@@ -338,26 +245,26 @@ public class UserAdoptionDetails extends AppCompatActivity {
         call.enqueue(new Callback<AdoptionImages>() {
             @Override
             public void onResponse(Call<AdoptionImages> call, Response<AdoptionImages> response) {
-                if (response.isSuccessful())    {
+                if (response.isSuccessful() && response.body().getImages() != null)    {
                     arrImages = response.body().getImages();
 
                     /* CHECK FOR ARRAY SIZE */
                     if (arrImages.size() > 0 && arrImages != null)  {
                         /* SET THE ADAPTER TO THE RECYCLER VIEW */
-                        listAdoptionImages.setAdapter(new AdoptionsImagesAdapter(UserAdoptionDetails.this, arrImages));
+                        listAdoptionImages.setAdapter(new AdoptionsImagesAdapter(TestAdoptionDetails.this, arrImages));
 
                         /* SHOW THE RECYCLER VIEW */
                         listAdoptionImages.setVisibility(View.VISIBLE);
-                        txtNoImages.setVisibility(View.GONE);
+                        linlaAdoptionImages.setVisibility(View.GONE);
                     } else {
                         /* HIDE THE RECYCLER VIEW */
                         listAdoptionImages.setVisibility(View.GONE);
-                        txtNoImages.setVisibility(View.GONE);
+                        linlaAdoptionImages.setVisibility(View.GONE);
                     }
                 } else {
                     /* HIDE THE RECYCLER VIEW */
                     listAdoptionImages.setVisibility(View.GONE);
-                    txtNoImages.setVisibility(View.GONE);
+                    linlaAdoptionImages.setVisibility(View.GONE);
                 }
 
                 /* FETCH THE ADOPTION MESSAGES */
@@ -366,7 +273,6 @@ public class UserAdoptionDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<AdoptionImages> call, Throwable t) {
-//                Log.e("TUESDAY FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -379,6 +285,7 @@ public class UserAdoptionDetails extends AppCompatActivity {
         call.enqueue(new Callback<AdoptionMessages>() {
             @Override
             public void onResponse(Call<AdoptionMessages> call, Response<AdoptionMessages> response) {
+                Log.e("ADOPTION MESSAGES", String.valueOf(response.raw()));
                 if (response.isSuccessful() && response.body().getMessages() != null)    {
                     arrMessages = response.body().getMessages();
 
@@ -438,7 +345,7 @@ public class UserAdoptionDetails extends AppCompatActivity {
         listAdoptionImages.setHasFixedSize(true);
 
         /* SET THE ADAPTER */
-        listAdoptionImages.setAdapter(new AdoptionsImagesAdapter(UserAdoptionDetails.this, arrImages));
+        listAdoptionImages.setAdapter(new AdoptionsImagesAdapter(TestAdoptionDetails.this, arrImages));
 
         /* SET THE ADOPTION MESSAGE CONFIGURATION */
         LinearLayoutManager messages = new LinearLayoutManager(this);
@@ -474,86 +381,6 @@ public class UserAdoptionDetails extends AppCompatActivity {
                 break;
         }
         return false;
-    }
-
-    /***** PUBLISH THE ADOPTION MESSAGE *****/
-    private void postMessage() {
-        final ProgressDialog dialogMessage = new ProgressDialog(this);
-        dialog.setMessage("Posting your message....");
-        dialog.setIndeterminate(false);
-        dialog.setCancelable(false);
-        dialog.show();
-
-        String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
-        AdoptionMessagesAPI api = ZenApiClient.getClient().create(AdoptionMessagesAPI.class);
-        retrofit2.Call<AdoptionMessage> call = api.newAdoptionMessage(
-                ADOPTION_ID, POSTER_ID, ADOPTION_MESSAGE, timeStamp
-        );
-        call.enqueue(new retrofit2.Callback<AdoptionMessage>() {
-            @Override
-            public void onResponse(retrofit2.Call<AdoptionMessage> call, retrofit2.Response<AdoptionMessage> response) {
-                if (response.isSuccessful())    {
-                    Toast.makeText(getApplicationContext(), "Message successfully posted", Toast.LENGTH_SHORT).show();
-                    edtComment.setText("");
-                    arrMessages.clear();
-
-                    /* FETCH THE ADOPTION MESSAGES AGAIN */
-                    fetchAdoptionMessages();
-                } else {
-                    Toast.makeText(getApplicationContext(), "There was a problem posting your message....", Toast.LENGTH_SHORT).show();
-                }
-
-                /* DISMISS THE DIALOG */
-                dialogMessage.dismiss();
-            }
-
-            @Override
-            public void onFailure(retrofit2.Call<AdoptionMessage> call, Throwable t) {
-//                Log.e("TUESDAY FAILURE", t.getMessage());
-                Crashlytics.logException(t);
-            }
-        });
-    }
-
-    /***** CHANGE THE ADOPTION STATUS *****/
-    private void updateStatusAdopted(String status) {
-        /* INSTANTIATE THE PROGRESS DIALOG INSTANCE */
-        final ProgressDialog dialogStatus = new ProgressDialog(UserAdoptionDetails.this);
-        dialogStatus.setMessage("Updating the Adoption status....");
-        dialogStatus.setIndeterminate(false);
-        dialogStatus.setCancelable(false);
-        dialogStatus.show();
-
-        AdoptionsAPI api = ZenApiClient.getClient().create(AdoptionsAPI.class);
-        retrofit2.Call<Adoption> call = api.changeAdoptionStatus(ADOPTION_ID, status);
-        call.enqueue(new retrofit2.Callback<Adoption>() {
-            @Override
-            public void onResponse(retrofit2.Call<Adoption> call, retrofit2.Response<Adoption> response) {
-                if (response.isSuccessful())    {
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "The Adoption was updated successfully...",
-                            Toast.LENGTH_SHORT).show();
-
-                    /* FETCH THE ADOPTION DETAILS AGAIN */
-                    fetchAdoptionDetails();
-                } else {
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "Status update error...",
-                            Toast.LENGTH_SHORT).show();
-                }
-
-                /* DISMISS THE DIALOG */
-                dialogStatus.dismiss();
-            }
-
-            @Override
-            public void onFailure(retrofit2.Call<Adoption> call, Throwable t) {
-//                Log.e("TUESDAY FAILURE", t.getMessage());
-                Crashlytics.logException(t);
-            }
-        });
     }
 
     /***** THE ADOPTION MESSAGES ADAPTER *****/
@@ -666,7 +493,7 @@ public class UserAdoptionDetails extends AppCompatActivity {
                     from(parent.getContext()).
                     inflate(R.layout.adoption_message_item_new, parent, false);
 
-            return new MessagesVH(itemView);
+            return new AdoptionMessagesAdapter.MessagesVH(itemView);
         }
 
         class MessagesVH extends RecyclerView.ViewHolder	{
