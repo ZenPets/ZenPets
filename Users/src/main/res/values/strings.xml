@@ -477,6 +477,7 @@
     <string name="adoption_details_no_images">No Images Uploaded</string>
     <!--<string name="adoption_details_posted">Posted %1$s</string>-->
     <string name="adoption_details_posted">Posted on: %1$s (%2$s)</string>
+    <string name="adoption_details_posted_new">Posted %1$s</string>
     <string name="adoption_details_time_stamp">Time Stamp</string>
     <string name="adoption_details_pet_details">Pet Details</string>
     <string name="adoption_details_vaccinated">VACCINATED</string>

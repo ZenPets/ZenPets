@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
@@ -23,6 +24,7 @@ import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.mikepenz.iconics.view.IconicsImageView;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
@@ -93,9 +95,12 @@ public class TestAdoptionDetails extends AppCompatActivity {
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.imgvwAdoptionCover) SimpleDraweeView imgvwAdoptionCover;
     @BindView(R.id.txtAdoptionName) TextView txtAdoptionName;
+    @BindView(R.id.imgvwGender) IconicsImageView imgvwGender;
+    @BindView(R.id.txtAdoptionTimeStamp) TextView txtAdoptionTimeStamp;
+    @BindView(R.id.txtAdoptionBreed) TextView txtAdoptionBreed;
     @BindView(R.id.txtAdoptionDescription) TextView txtAdoptionDescription;
-    @BindView(R.id.txtPetDetails) TextView txtPetDetails;
-    @BindView(R.id.txtTimeStamp) TextView txtTimeStamp;
+//    @BindView(R.id.txtPetDetails) TextView txtPetDetails;
+//    @BindView(R.id.txtTimeStamp) TextView txtTimeStamp;
     @BindView(R.id.linlaAdoptionImages) LinearLayout linlaAdoptionImages;
     @BindView(R.id.listAdoptionImages) RecyclerView listAdoptionImages;
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
@@ -150,13 +155,13 @@ public class TestAdoptionDetails extends AppCompatActivity {
                     /* SET THE BREED NAME */
                     BREED_NAME = data.getBreedName();
 
-                    /* SET THE PET DETAILS */
-                    if (BREED_NAME != null  && PET_TYPE_NAME != null)   {
-                        String breed = data.getBreedName();
-                        String petType = data.getPetTypeName();
-                        String combinedDetails = "Species: \"" + petType + "\" | Breed: \"" + breed + "\"";
-                        txtPetDetails.setText(combinedDetails);
-                    }
+//                    /* SET THE PET DETAILS */
+//                    if (BREED_NAME != null  && PET_TYPE_NAME != null)   {
+//                        String breed = data.getBreedName();
+//                        String petType = data.getPetTypeName();
+//                        String combinedDetails = "Species: \"" + petType + "\" | Breed: \"" + breed + "\"";
+//                        txtPetDetails.setText(combinedDetails);
+//                    }
 
                     /* SET THE USER ID */
                     USER_ID = data.getUserID();
@@ -196,11 +201,25 @@ public class TestAdoptionDetails extends AppCompatActivity {
                     ADOPTION_DESCRIPTION = data.getAdoptionDescription();
                     txtAdoptionDescription.setText(ADOPTION_DESCRIPTION);
 
-                    /* GET THE ADOPTION DETAILS */
-                    ADOPTION_GENDER = data.getAdoptionGender();
-                    BREED_NAME = data.getBreedName();
-                    String strPetDetails = "The pet is a " + ADOPTION_GENDER + ", " + BREED_NAME;
-                    txtPetDetails.setText(strPetDetails);
+                    /* SET THE PET'S GENDER */
+                    if (data.getAdoptionGender().equalsIgnoreCase("male"))  {
+                        imgvwGender.setIcon("faw-mars");
+                        imgvwGender.setColor(ContextCompat.getColor(TestAdoptionDetails.this, android.R.color.holo_blue_dark));
+                    } else if (data.getAdoptionGender().equalsIgnoreCase("female")) {
+                        imgvwGender.setIcon("faw-venus");
+                        imgvwGender.setColor(ContextCompat.getColor(TestAdoptionDetails.this, android.R.color.holo_red_dark));
+                    }
+
+                    /* SET THE PET'S BREED */
+                    if (data.getBreedName() != null)    {
+                        txtAdoptionBreed.setText(data.getBreedName());
+                    }
+
+//                    /* GET THE ADOPTION DETAILS */
+//                    ADOPTION_GENDER = data.getAdoptionGender();
+//                    BREED_NAME = data.getBreedName();
+//                    String strPetDetails = "The pet is a " + ADOPTION_GENDER + ", " + BREED_NAME;
+//                    txtPetDetails.setText(strPetDetails);
 
                     /* GET THE TIME STAMP */
                     String adoptionTimeStamp = data.getAdoptionTimeStamp();
@@ -218,7 +237,8 @@ public class TestAdoptionDetails extends AppCompatActivity {
                     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                     Date currentTimeZone = calendar.getTime();
                     String strDate = sdf.format(currentTimeZone);
-                    txtTimeStamp.setText(getString(R.string.adoption_details_posted, strDate, strPrettyDate));
+//                    txtTimeStamp.setText(getString(R.string.adoption_details_posted, strDate, strPrettyDate));
+                    txtAdoptionTimeStamp.setText(getString(R.string.adoption_details_posted_new, strPrettyDate));
                 } else {
                     Toast.makeText(
                             getApplicationContext(),

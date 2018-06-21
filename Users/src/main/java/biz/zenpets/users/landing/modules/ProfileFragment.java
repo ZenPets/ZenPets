@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import biz.zenpets.users.R;
 import biz.zenpets.users.creator.pet.NewPetCreator;
 import biz.zenpets.users.details.profile.ProfileDetails;
-import biz.zenpets.users.user.adoptions.UserAdoptions;
+import biz.zenpets.users.user.adoptions.TestUserAdoptions;
 import biz.zenpets.users.user.appointments.UserAppointments;
 import biz.zenpets.users.user.questions.UserQuestions;
 import biz.zenpets.users.utils.AppPrefs;
@@ -102,7 +102,7 @@ public class ProfileFragment extends Fragment {
 
     /** SHOW THE USER'S ADOPTION LISTINGS **/
     @OnClick(R.id.linlaMyAdoptions) void showUserAdoptions()    {
-        Intent intent = new Intent(getActivity(), UserAdoptions.class);
+        Intent intent = new Intent(getActivity(), TestUserAdoptions.class);
         startActivity(intent);
     }
 

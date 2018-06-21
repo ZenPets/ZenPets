@@ -59,6 +59,10 @@ public interface AdoptionsAPI {
     @GET("listUserAdoptions")
     Call<Adoptions> listUserAdoptions(@Query("userID") String userID);
 
+    /** FETCH ALL USER ADOPTION LISTING (TEST) **/
+    @GET("listTestUserAdoptions")
+    Call<Adoptions> listTestUserAdoptions(@Query("userID") String userID);
+
     /** FETCH AN ADOPTION'S DETAILS **/
     @GET("fetchAdoptionDetails")
     Call<Adoption> fetchAdoptionDetails(@Query("adoptionID") String adoptionID);

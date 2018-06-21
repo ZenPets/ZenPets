@@ -46,8 +46,7 @@
                     <FrameLayout
                         android:id="@+id/fralaAdoptionDetails"
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_height="180dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -68,23 +67,71 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom|center"
                             android:background="#A6000000"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/txtAdoptionName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingStart="11dp"
-                                android:paddingLeft="11dp"
-                                android:paddingTop="15dp"
+                                android:gravity="start|center"
+                                android:paddingBottom="5dp"
                                 android:paddingEnd="11dp"
+                                android:paddingLeft="11dp"
                                 android:paddingRight="11dp"
-                                android:paddingBottom="15dp"
+                                android:paddingStart="11dp"
+                                android:paddingTop="10dp"
                                 android:text="@string/user_adoption_item_name"
                                 android:textColor="@android:color/primary_text_dark"
                                 android:textSize="14sp"
-                                app:fontFamily="@font/montserrat_regular" />
+                                app:fontFamily="@font/roboto_medium" />
+
+                            <TextView
+                                android:id="@+id/txtAdoptionBreed"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="start|center"
+                                android:paddingBottom="5dp"
+                                android:paddingEnd="11dp"
+                                android:paddingLeft="11dp"
+                                android:paddingRight="11dp"
+                                android:paddingStart="11dp"
+                                android:paddingTop="5dp"
+                                android:text="BREED"
+                                android:textColor="@android:color/primary_text_dark"
+                                android:textSize="12sp"
+                                app:fontFamily="@font/roboto_regular" />
                         </LinearLayout>
+
+                        <com.mikepenz.iconics.view.IconicsImageView
+                            android:id="@+id/imgvwGender"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top|end"
+                            android:layout_margin="5dp"
+                            android:adjustViewBounds="true"
+                            android:background="#CCDCDCDC"
+                            android:padding="11dp"
+                            app:iiv_color="@android:color/holo_blue_dark"
+                            app:iiv_icon="cmd_gender_male_female"
+                            app:iiv_size="16dp" />
+
+                        <TextView
+                            android:id="@+id/txtAdoptionTimeStamp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top|start"
+                            android:layout_margin="5dp"
+                            android:background="#CCDCDCDC"
+                            android:paddingBottom="5dp"
+                            android:paddingEnd="11dp"
+                            android:paddingLeft="11dp"
+                            android:paddingRight="11dp"
+                            android:paddingStart="11dp"
+                            android:paddingTop="5dp"
+                            android:text="Posted On: "
+                            android:textColor="@color/primary_text"
+                            android:textSize="12sp"
+                            app:fontFamily="@font/roboto_condensed_regular" />
                     </FrameLayout>
 
                     <LinearLayout
@@ -102,13 +149,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adjustViewBounds="true"
-                            android:paddingStart="5dp"
-                            android:paddingLeft="5dp"
-                            android:paddingTop="5dp"
-                            android:paddingEnd="11dp"
-                            android:paddingRight="11dp"
                             android:paddingBottom="5dp"
-                            app:iiv_color="@color/secondary_text"
+                            android:paddingEnd="11dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="11dp"
+                            android:paddingStart="5dp"
+                            android:paddingTop="5dp"
+                            app:iiv_color="@color/tertiary_text"
                             app:iiv_icon="gmd_description"
                             app:iiv_size="16dp" />
 
@@ -120,20 +167,19 @@
                             android:ellipsize="end"
                             android:gravity="start|center"
                             android:maxLines="3"
-                            android:paddingStart="5dp"
-                            android:paddingLeft="5dp"
-                            android:paddingTop="5dp"
-                            android:paddingEnd="11dp"
-                            android:paddingRight="11dp"
                             android:paddingBottom="5dp"
+                            android:paddingEnd="11dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="11dp"
+                            android:paddingStart="5dp"
                             android:text="@string/adoption_details_description"
                             android:textColor="@color/secondary_text"
-                            android:textSize="13sp"
-                            app:fontFamily="@font/montserrat_regular" />
+                            android:textSize="14sp"
+                            app:fontFamily="@font/roboto_regular" />
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/linlaPetBreed"
+                    <!--<LinearLayout
+                        android:id="@+id/linlaTimestamp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -149,43 +195,6 @@
                             android:adjustViewBounds="true"
                             android:padding="11dp"
                             app:iiv_color="@color/secondary_text"
-                            app:iiv_icon="fou_paw"
-                            app:iiv_size="16dp" />
-
-                        <TextView
-                            android:id="@+id/txtPetDetails"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="start|center"
-                            android:paddingStart="5dp"
-                            android:paddingLeft="5dp"
-                            android:paddingTop="5dp"
-                            android:paddingEnd="11dp"
-                            android:paddingRight="11dp"
-                            android:paddingBottom="5dp"
-                            android:text="@string/adoption_details_pet_details"
-                            android:textColor="@color/secondary_text"
-                            android:textSize="12sp"
-                            app:fontFamily="@font/montserrat_regular" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/linlaTimestamp"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/linlaPetBreed">
-
-                        <com.mikepenz.iconics.view.IconicsImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
-                            android:padding="11dp"
-                            app:iiv_color="@color/secondary_text"
                             app:iiv_icon="faw_clock"
                             app:iiv_size="16dp" />
 
@@ -194,17 +203,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="start|center"
-                            android:paddingStart="5dp"
-                            android:paddingLeft="5dp"
-                            android:paddingTop="5dp"
-                            android:paddingEnd="11dp"
-                            android:paddingRight="11dp"
                             android:paddingBottom="5dp"
+                            android:paddingEnd="11dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="11dp"
+                            android:paddingStart="5dp"
+                            android:paddingTop="5dp"
                             android:text="@string/adoption_details_time_stamp"
                             android:textColor="@color/secondary_text"
                             android:textSize="12sp"
                             app:fontFamily="@font/montserrat_regular" />
-                    </LinearLayout>
+                    </LinearLayout>-->
 
                     <LinearLayout
                         android:id="@+id/linlaAdoptionImages"
@@ -215,7 +224,7 @@
                         android:orientation="horizontal"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/linlaTimestamp">
+                        app:layout_constraintTop_toBottomOf="@+id/linlaDescription">
 
                         <com.mikepenz.iconics.view.IconicsImageView
                             android:layout_width="wrap_content"
@@ -233,12 +242,12 @@
                             android:layout_gravity="center"
                             android:cacheColorHint="@android:color/transparent"
                             android:fadingEdge="none"
-                            android:paddingStart="5dp"
-                            android:paddingLeft="5dp"
-                            android:paddingTop="5dp"
-                            android:paddingEnd="11dp"
-                            android:paddingRight="11dp"
                             android:paddingBottom="5dp"
+                            android:paddingEnd="11dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="11dp"
+                            android:paddingStart="5dp"
+                            android:paddingTop="5dp"
                             android:persistentDrawingCache="scrolling"
                             android:scrollbars="horizontal"
                             android:visibility="visible" />
@@ -251,12 +260,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start|center"
-                android:paddingStart="10dp"
-                android:paddingLeft="10dp"
-                android:paddingTop="5dp"
-                android:paddingEnd="10dp"
-                android:paddingRight="10dp"
                 android:paddingBottom="5dp"
+                android:paddingEnd="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
                 android:text="@string/adoption_details_messages"
                 android:textColor="@color/secondary_text"
                 android:textSize="16sp" />
@@ -289,10 +298,10 @@
                 <android.support.v7.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="150dp"
-                    android:layout_marginLeft="140dp"
                     android:layout_marginEnd="140dp"
+                    android:layout_marginLeft="140dp"
                     android:layout_marginRight="140dp"
+                    android:layout_marginStart="150dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside"
                     android:src="@drawable/empty_graphic" />
@@ -314,9 +323,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -333,10 +342,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
                 android:background="@null"
                 android:gravity="start"
                 android:hint="@string/adoption_details_new_message_hint"
