@@ -1,360 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/linlaAdoptionContainer"
+    android:id="@+id/cardAdoptionContainer"
+    style="@style/ZenPetsCards"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_margin="10dp"
+    app:contentPadding="5dp">
 
-    <android.support.v7.widget.CardView
-        style="@style/ZenPetsCards"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:layout_height="180dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/imgvwAdoptionCover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:scaleType="center"
+            app:actualImageScaleType="center"
+            app:failureImageScaleType="center"
+            app:placeholderImage="@drawable/zen_pets_graphic"
+            app:placeholderImageScaleType="center" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:background="#A6000000"
             android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/txtAdoptionName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:gravity="start|center"
+                android:paddingStart="11dp"
+                android:paddingLeft="11dp"
+                android:paddingTop="15dp"
+                android:paddingEnd="11dp"
+                android:paddingRight="11dp"
+                android:paddingBottom="5dp"
+                android:text="@string/user_adoption_item_name"
+                android:textColor="@android:color/primary_text_dark"
+                android:textSize="14sp"
+                app:fontFamily="@font/roboto_medium" />
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/txtAdoptionName"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:paddingBottom="5dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="11dp"
-                    android:paddingStart="11dp"
-                    android:paddingTop="5dp"
-                    android:text="@string/adoption_details_name"
-                    android:textColor="@color/secondary_text"
-                    android:textSize="14sp"
-                    app:fontFamily="@font/montserrat_bold" />
-
-                <com.mikepenz.iconics.view.IconicsImageView
-                    android:id="@+id/imgvwGender"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="5dp"
-                    android:adjustViewBounds="true"
-                    android:background="#CCDCDCDC"
-                    android:padding="11dp"
-                    app:iiv_color="@android:color/holo_blue_dark"
-                    app:iiv_icon="faw_venus"
-                    app:iiv_size="16dp" />
-            </LinearLayout>
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/txtAdoptionBreed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/txtAdoptionDescription"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:gravity="start|center"
-                    android:maxLines="3"
-                    android:paddingBottom="5dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="11dp"
-                    android:paddingStart="11dp"
-                    android:paddingTop="5dp"
-                    android:text="@string/adoption_details_description"
-                    android:textColor="@color/secondary_text"
-                    android:textSize="13sp"
-                    app:fontFamily="@font/montserrat_regular" />
-
-                <!--<com.mikepenz.iconics.view.IconicsImageView
-                    android:id="@+id/imgvwGender"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="5dp"
-                    android:adjustViewBounds="true"
-                    android:background="#CCDCDCDC"
-                    android:padding="11dp"
-                    app:iiv_color="@android:color/holo_blue_dark"
-                    app:iiv_icon="faw_venus"
-                    app:iiv_size="16dp" />-->
-            </LinearLayout>
-
-            <!--<LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="top|center"
-                android:orientation="horizontal">
-
-                <com.mikepenz.iconics.view.IconicsImageView
-                    android:layout_width="47dp"
-                    android:layout_height="47dp"
-                    android:adjustViewBounds="true"
-                    android:padding="11dp"
-                    app:iiv_color="@color/tertiary_text"
-                    app:iiv_icon="gmd_collections"
-                    app:iiv_size="18dp" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/txtNoImages"
-                    fontPath="fonts/Montserrat-Light.otf"
-                    android:layout_width="0dp"
-                    android:layout_height="?attr/actionBarSize"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:gravity="start|center"
-                    android:maxLines="1"
-                    android:paddingBottom="5dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="11dp"
-                    android:paddingStart="5dp"
-                    android:paddingTop="5dp"
-                    android:text="@string/adoption_details_no_images"
-                    android:textColor="@color/tertiary_text"
-                    android:textSize="14sp"
-                    android:visibility="gone" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/listAdoptionImages"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:cacheColorHint="@android:color/transparent"
-                    android:fadingEdge="none"
-                    android:paddingBottom="5dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="11dp"
-                    android:paddingStart="5dp"
-                    android:paddingTop="5dp"
-                    android:persistentDrawingCache="scrolling"
-                    android:scrollbars="horizontal"
-                    android:visibility="visible" />
-            </LinearLayout>-->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.mikepenz.iconics.view.IconicsImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:padding="11dp"
-                    app:iiv_color="@color/tertiary_text"
-                    app:iiv_icon="fou_paw"
-                    app:iiv_size="16dp" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/txtPetDetails"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start|center"
-                    android:paddingBottom="5dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="11dp"
-                    android:paddingStart="5dp"
-                    android:paddingTop="5dp"
-                    android:text="@string/adoption_details_pet_details"
-                    android:textColor="@color/secondary_text"
-                    android:textSize="12sp"
-                    app:fontFamily="@font/montserrat_regular" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.mikepenz.iconics.view.IconicsImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:padding="11dp"
-                    app:iiv_color="@color/tertiary_text"
-                    app:iiv_icon="faw_clock"
-                    app:iiv_size="16dp" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/txtTimeStamp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start|center"
-                    android:paddingBottom="5dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="11dp"
-                    android:paddingStart="5dp"
-                    android:paddingTop="5dp"
-                    android:text="@string/adoption_details_time_stamp"
-                    android:textColor="@color/secondary_text"
-                    android:textSize="12sp"
-                    app:fontFamily="@font/montserrat_regular" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.25dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="2dp"
-                android:background="@drawable/fixed_divider_horizontal_bright" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingTop="5dp">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="3dp"
-                        android:text="@string/adoption_details_vaccinated"
-                        android:textColor="@color/secondary_text"
-                        android:textSize="12sp"
-                        app:fontFamily="@font/montserrat_regular" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/txtVaccinated"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="3dp"
-                        android:textColor="@color/secondary_text"
-                        android:textSize="12sp"
-                        app:fontFamily="@font/lato_bold" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="0.25dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/fixed_divider_horizontal_bright" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="3dp"
-                        android:text="@string/adoption_details_dewormed"
-                        android:textColor="@color/secondary_text"
-                        android:textSize="12sp"
-                        app:fontFamily="@font/montserrat_regular" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/txtDewormed"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="3dp"
-                        android:textColor="@color/secondary_text"
-                        android:textSize="12sp"
-                        app:fontFamily="@font/lato_bold" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="0.25dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/fixed_divider_horizontal_bright" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="3dp"
-                        android:text="@string/adoption_details_neutered"
-                        android:textColor="@color/secondary_text"
-                        android:textSize="12sp"
-                        app:fontFamily="@font/montserrat_regular" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/txtNeutered"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="3dp"
-                        android:textColor="@color/secondary_text"
-                        android:textSize="12sp"
-                        app:fontFamily="@font/lato_bold" />
-                </LinearLayout>
-
-                <!--<View
-                    android:layout_width="0.25dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/fixed_divider_horizontal_bright" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="3dp"
-                        android:text="@string/adoption_details_adopted"
-                        android:textColor="@color/secondary_text"
-                        android:textSize="12sp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/txtAdopted"
-                        style="@style/LightBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="3dp"
-                        android:textColor="@color/secondary_text"
-                        android:textSize="12sp" />
-                </LinearLayout>-->
-            </LinearLayout>
+                android:gravity="start|center"
+                android:paddingStart="11dp"
+                android:paddingLeft="11dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="11dp"
+                android:paddingRight="11dp"
+                android:paddingBottom="5dp"
+                android:text="BREED"
+                android:textColor="@android:color/primary_text_dark"
+                android:textSize="12sp"
+                app:fontFamily="@font/roboto_regular" />
         </LinearLayout>
-    </android.support.v7.widget.CardView>
-</LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|top"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:id="@+id/imgvwGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:adjustViewBounds="true"
+                android:background="#CCDCDCDC"
+                android:padding="11dp"
+                app:iiv_color="@android:color/holo_blue_dark"
+                app:iiv_icon="cmd_gender_male_female"
+                app:iiv_size="16dp" />
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:id="@+id/imgvwOptions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:background="#CCDCDCDC"
+                android:padding="11dp"
+                app:iiv_color="@color/secondary_text"
+                app:iiv_icon="faw_ellipsis_v"
+                app:iiv_size="16dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtAdoptionTimeStamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|start"
+            android:layout_margin="5dp"
+            android:background="#CCDCDCDC"
+            android:paddingStart="11dp"
+            android:paddingLeft="11dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="11dp"
+            android:paddingRight="11dp"
+            android:paddingBottom="5dp"
+            android:text="Posted On: "
+            android:textColor="@color/primary_text"
+            android:textSize="12sp"
+            app:fontFamily="@font/roboto_regular" />
+    </FrameLayout>
+</android.support.v7.widget.CardView>

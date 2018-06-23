@@ -8,7 +8,7 @@ android {
     defaultConfig {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         applicationId "biz.zenpets.users"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 27
         multiDexEnabled true
         versionCode 20170927
@@ -64,7 +64,7 @@ dependencies {
     }
 
     /** RAZOR PAY SDK **/
-    implementation 'com.razorpay:checkout:1.4.7'
+    implementation 'com.razorpay:checkout:1.4.8'
 
     /** OK HTTP **/
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'

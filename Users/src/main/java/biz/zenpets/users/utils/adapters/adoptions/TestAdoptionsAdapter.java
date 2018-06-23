@@ -126,7 +126,6 @@ public class TestAdoptionsAdapter extends RecyclerView.Adapter<TestAdoptionsAdap
         return new AdoptionsVH(itemView);
     }
 
-    @SuppressWarnings("deprecation")
     class AdoptionsVH extends RecyclerView.ViewHolder	{
         CardView cardAdoptionContainer;
         SimpleDraweeView imgvwAdoptionCover;

@@ -118,7 +118,7 @@ public class UserAdoptionDetails extends AppCompatActivity {
     /** CHANGE THE ADOPTION STATUS **/
     @OnClick(R.id.imgvwAdoptionOptions) protected void changeStatus()   {
         PopupMenu pm = new PopupMenu(this, imgvwAdoptionOptions);
-        pm.getMenuInflater().inflate(R.menu.pm_adoption_status, pm.getMenu());
+        pm.getMenuInflater().inflate(R.menu.pm_adoption_options, pm.getMenu());
         pm.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

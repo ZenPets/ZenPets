@@ -48,7 +48,9 @@
     <string name="menu_profile">Profile</string>
     <string name="menu_delete">Delete</string>
     <string name="menu_filter">Filter</string>
+    <string name="menu_adoption_details">Details</string>
     <string name="menu_adoption_status">Change Status</string>
+    <string name="menu_adoption_promote">Promote Listing</string>
     <string name="menu_menu">Menu</string>
     <string name="menu_question">Q &amp; A</string>
 

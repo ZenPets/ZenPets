@@ -28,8 +28,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/ZenPets"
-        tools:replace="android:allowBackup, android:supportsRtl, android:theme"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:allowBackup, android:supportsRtl, android:theme">
         <activity
             android:name=".SplashScreen"
             android:screenOrientation="sensorPortrait"
@@ -183,10 +183,10 @@
             android:name=".doctors.DoctorsList"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
+        <!--<activity
             android:name=".doctors.NewDoctorsList"
             android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="stateHidden|adjustPan" />-->
         <activity
             android:name=".utils.helpers.classes.FilterLocationActivity"
             android:screenOrientation="sensorPortrait"
@@ -261,6 +261,10 @@
             android:name=".details.adoptions.TestAdoptionDetails"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".adoptions.promote.PromoteAdoptionActivity"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <!-- FILTER ADOPTIONS -->
         <activity
@@ -285,10 +289,10 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <!-- KENNELS -->
-        <activity
+        <!--<activity
             android:name=".kennels.KennelsList"
             android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="stateHidden|adjustPan" />-->
         <activity
             android:name=".kennels.NewKennelsList"
             android:screenOrientation="sensorPortrait"
