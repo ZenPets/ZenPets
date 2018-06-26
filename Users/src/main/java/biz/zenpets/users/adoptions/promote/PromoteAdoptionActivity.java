@@ -55,7 +55,7 @@ public class PromoteAdoptionActivity extends AppCompatActivity implements Paymen
     @BindView(R.id.groupOptions) RadioGroup groupOptions;
 
     /** THE STRINGS TO HOLD THE SELECTED OPTIONS **/
-    String PROMOTION_OPTION_ID = null;
+    String PROMOTION_OPTION_ID = "1";
     String PROMOTION_DAYS = "7";
     String PROMOTION_CHARGES = "70";
     String PROMOTION_FROM = null;
@@ -181,7 +181,7 @@ public class PromoteAdoptionActivity extends AppCompatActivity implements Paymen
         String strUrl = "https://" + apiKey + ":" + apiSecret + "@api.razorpay.com/v1/payments/" + razorPaymentID + "/capture";
         OkHttpClient client = new OkHttpClient();
         RequestBody body = new FormBody.Builder()
-                .add("amount", "100")
+                .add("amount", String.valueOf(Integer.parseInt(PROMOTION_CHARGES) * 100))
                 .build();
         Request request = new Request.Builder()
                 .header("Authorization", strCredentials)
@@ -247,12 +247,14 @@ public class PromoteAdoptionActivity extends AppCompatActivity implements Paymen
                                 Log.e("END DATE", PROMOTION_TO);
 
                                 /* CREATE THE ADOPTION PROMOTION RECORD */
-                                createPromotionRecord(razorPaymentID);
+                                createPromotionRecord(razorPaymentID, PROMOTION_FROM, PROMOTION_TO);
                             } else {
-                                Toast.makeText(getApplicationContext(), "An error occurred...", Toast.LENGTH_SHORT).show();
+                                Log.e("CAPTURE FAILED", "The payment was not captured successfully...");
+//                                Toast.makeText(getApplicationContext(), "An error occurred...", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(getApplicationContext(), "An error occurred...", Toast.LENGTH_SHORT).show();
+                            Log.e("CAPTURE FAILED", "The payment was not captured successfully...");
+//                                Toast.makeText(getApplicationContext(), "An error occurred...", Toast.LENGTH_SHORT).show();
                         }
                     }
                 } catch (JSONException e) {
@@ -265,18 +267,20 @@ public class PromoteAdoptionActivity extends AppCompatActivity implements Paymen
     }
 
     /** CREATE THE ADOPTION PROMOTION RECORD **/
-    private void createPromotionRecord(String razorPaymentID) {
+    private void createPromotionRecord(String razorPaymentID, String promotionFrom, String promotionTo) {
         String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
         PromotionAPI api = ZenApiClient.getClient().create(PromotionAPI.class);
         retrofit2.Call<Promotion> call = api.publishAdoptionPromotion(
                 ADOPTION_ID, PROMOTION_OPTION_ID, razorPaymentID,
-                PROMOTION_FROM, PROMOTION_TO, timeStamp);
+                promotionFrom, promotionTo, timeStamp);
         call.enqueue(new retrofit2.Callback<Promotion>() {
             @Override
             public void onResponse(retrofit2.Call<Promotion> call, retrofit2.Response<Promotion> response) {
                 Promotion promotion = response.body();
                 if (promotion != null)  {
                     Log.e("PROMOTION ID", promotion.getPromotedID());
+                } else {
+                    Log.e("FAILED", "Failed to create the Promotion record...");
                 }
             }
 
