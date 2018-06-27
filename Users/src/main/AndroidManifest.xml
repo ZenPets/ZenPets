@@ -257,6 +257,10 @@
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
+            android:name=".adoptions.TestAdoptionsList"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
             android:name=".details.adoptions.AdoptionDetails"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />

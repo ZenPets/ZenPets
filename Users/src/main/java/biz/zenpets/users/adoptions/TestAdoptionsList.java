@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -41,14 +42,14 @@ import java.util.List;
 import java.util.Locale;
 
 import biz.zenpets.users.R;
-import biz.zenpets.users.utils.adapters.adoptions.TestAdoptionsAdapter;
-import biz.zenpets.users.utils.adapters.adoptions.promoted.PromotedAdoptionsAdapter;
+import biz.zenpets.users.utils.adapters.adoptions.NewAdoptionsAdapter;
 import biz.zenpets.users.utils.helpers.classes.FilterAdoptionsActivity;
+import biz.zenpets.users.utils.helpers.classes.PaginationScrollListener;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.models.adoptions.adoption.Adoption;
+import biz.zenpets.users.utils.models.adoptions.adoption.AdoptionPages;
 import biz.zenpets.users.utils.models.adoptions.adoption.Adoptions;
 import biz.zenpets.users.utils.models.adoptions.adoption.AdoptionsAPI;
-import biz.zenpets.users.utils.models.adoptions.promotion.Promotion;
 import biz.zenpets.users.utils.models.location.City;
 import biz.zenpets.users.utils.models.location.LocationsAPI;
 import butterknife.BindView;
@@ -58,7 +59,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AdoptionsList extends AppCompatActivity {
+public class TestAdoptionsList extends AppCompatActivity {
 
     /** A FUSED LOCATION PROVIDER CLIENT INSTANCE**/
     private FusedLocationProviderClient locationProviderClient;
@@ -76,8 +77,16 @@ public class AdoptionsList extends AppCompatActivity {
     /** THE ADOPTION DATA MODEL INSTANCE **/
     Adoption data;
 
-    /** THE PROMOTED ADOPTIONS AND ADOPTIONS ARRAY LIST INSTANCE **/
-    private ArrayList<Promotion> arrPromoted = new ArrayList<>();
+    private static final int PAGE_START = 1;
+    private boolean isLoading = false;
+    private boolean isLastPage = false;
+    private int TOTAL_PAGES = 0;
+    private int currentPage = PAGE_START;
+
+    /** THE PROMOTED ADOPTIONS ADAPTER AND ADOPTIONS ARRAY LIST INSTANCES **/
+//    PromotedAdoptionsAdapter promotedAdoptionsAdapter;
+//    private ArrayList<Promotion> arrPromoted = new ArrayList<>();
+    NewAdoptionsAdapter adoptionsAdapter;
     private ArrayList<Adoption> arrAdoptions = new ArrayList<>();
 
     /** THE ADOPTION FILTER STRINGS **/
@@ -89,12 +98,12 @@ public class AdoptionsList extends AppCompatActivity {
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
     @BindView(R.id.listPromoted) RecyclerView listPromoted;
     @BindView(R.id.listAdoptions) RecyclerView listAdoptions;
-//    @BindView(R.id.progressLoading) ProgressBar progressLoading;
+    @BindView(R.id.progressLoading) ProgressBar progressLoading;
     @BindView(R.id.linlaEmpty) LinearLayout linlaEmpty;
 
     /** FILTER THE ADOPTION LISTINGS **/
     @OnClick(R.id.fabFilterAdoptions) protected void filterAdoptions()  {
-        Intent intent = new Intent(AdoptionsList.this, FilterAdoptionsActivity.class);
+        Intent intent = new Intent(TestAdoptionsList.this, FilterAdoptionsActivity.class);
         intent.putExtra("PET_GENDER", FILTER_PET_GENDER);
         intent.putExtra("PET_SPECIES", FILTER_PET_SPECIES);
         startActivityForResult(intent, 101);
@@ -106,8 +115,12 @@ public class AdoptionsList extends AppCompatActivity {
         setContentView(R.layout.adoptions_list);
         ButterKnife.bind(this);
 
+        /* INSTANTIATE THE ADAPTERS */
+//        promotedAdoptionsAdapter = new PromotedAdoptionsAdapter(TestAdoptionsList.this, arrPromoted);
+        adoptionsAdapter = new NewAdoptionsAdapter(TestAdoptionsList.this, arrAdoptions);
+
         /* INSTANTIATE THE LOCATION CLIENT */
-        locationProviderClient = LocationServices.getFusedLocationProviderClient(AdoptionsList.this);
+        locationProviderClient = LocationServices.getFusedLocationProviderClient(TestAdoptionsList.this);
 
         /* FETCH THE USER'S LOCATION */
         getUsersLocation();
@@ -122,58 +135,21 @@ public class AdoptionsList extends AppCompatActivity {
     /* FETCH THE ADOPTION LISTINGS */
     private void fetchAdoptions() {
         AdoptionsAPI api = ZenApiClient.getClient().create(AdoptionsAPI.class);
-        Call<Adoptions> call = api.fetchTestAdoptions(FINAL_CITY_ID, FILTER_PET_SPECIES, FILTER_PET_GENDER, "1");
+        Call<Adoptions> call = api.fetchTestAdoptions(FINAL_CITY_ID, FILTER_PET_SPECIES, FILTER_PET_GENDER, String.valueOf(currentPage));
         call.enqueue(new Callback<Adoptions>() {
             @Override
             public void onResponse(Call<Adoptions> call, Response<Adoptions> response) {
                 Log.e("ADOPTIONS LIST", String.valueOf(response.raw()));
-                try {
-                    String strResult = new Gson().toJson(response.body());
-                    JSONObject JORoot = new JSONObject(strResult);
-                    Log.e("ROOT", String.valueOf(JORoot));
-                    if (JORoot.has("error") && JORoot.getString("error").equalsIgnoreCase("false")) {
-                        JSONArray JAAdoptions = JORoot.getJSONArray("adoptions");
-                        JSONArray JAPromoted = JORoot.getJSONArray("promotions");
-                        Log.e("PROMOTED", String.valueOf(JAPromoted));
-                        for (int i = 0; i < JAAdoptions.length(); i++) {
-                            JSONObject JOAdoptions = JAAdoptions.getJSONObject(i);
-                            Log.e("ADOPTIONS", String.valueOf(JOAdoptions));
-                        }
-                    }
-                    linlaProgress.setVisibility(View.GONE);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-//                if (response.isSuccessful() && response.body().getAdoptions() != null)    {
-//                    arrAdoptions = response.body().getAdoptions();
-//
-//                    /* CHECK THE ARRAY LIST SIZE AND SHOW THE APPROPRIATE LAYOUT */
-//                    if (arrAdoptions.size() > 0)    {
-//                        /* SET THE ADAPTER TO THE ADOPTIONS RECYCLER */
-//                        listAdoptions.setAdapter(new TestAdoptionsAdapter(AdoptionsList.this, arrAdoptions));
-//
-//                        /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
-//                        listAdoptions.setVisibility(View.VISIBLE);
-//                        linlaEmpty.setVisibility(View.GONE);
-//
-//                        /* HIDE THE PROGRESS BAR AFTER LOADING THE DATA */
-//                        linlaProgress.setVisibility(View.GONE);
-//                    } else {
-//                        /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
-//                        linlaEmpty.setVisibility(View.VISIBLE);
-//                        listAdoptions.setVisibility(View.GONE);
-//
-//                        /* HIDE THE PROGRESS BAR AFTER LOADING THE DATA */
-//                        linlaProgress.setVisibility(View.GONE);
-//                    }
-//                } else {
-//                    /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
-//                    linlaEmpty.setVisibility(View.VISIBLE);
-//                    listAdoptions.setVisibility(View.GONE);
-//
-//                    /* HIDE THE PROGRESS BAR AFTER LOADING THE DATA */
-//                    linlaProgress.setVisibility(View.GONE);
-//                }
+                /* PROCESS THE RESPONSE */
+                arrAdoptions = processResult(response);
+
+                ArrayList<Adoption> adoptions = arrAdoptions;
+                linlaProgress.setVisibility(View.GONE);
+                progressLoading.setVisibility(View.GONE);
+                adoptionsAdapter.addAll(adoptions);
+
+                if (currentPage <= TOTAL_PAGES) adoptionsAdapter.addLoadingFooter();
+                else isLastPage = true;
             }
 
             @Override
@@ -184,10 +160,170 @@ public class AdoptionsList extends AppCompatActivity {
         });
     }
 
+    /** FETCH THE NEXT SET OF ADOPTION LISTINGS **/
+    private void fetchNextAdoptionsPage() {
+        progressLoading.setVisibility(View.VISIBLE);
+        AdoptionsAPI api = ZenApiClient.getClient().create(AdoptionsAPI.class);
+        Call<Adoptions> call = api.fetchTestAdoptions(FINAL_CITY_ID, FILTER_PET_SPECIES, FILTER_PET_GENDER, String.valueOf(currentPage));
+        call.enqueue(new Callback<Adoptions>() {
+            @Override
+            public void onResponse(Call<Adoptions> call, Response<Adoptions> response) {
+                Log.e("ADOPTIONS LIST", String.valueOf(response.raw()));
+                /* PROCESS THE RESPONSE */
+                arrAdoptions = processResult(response);
+
+                adoptionsAdapter.removeLoadingFooter();
+                isLoading = false;
+
+                /* PROCESS THE RESULT AND CAST IN THE ARRAY LIST */
+                ArrayList<Adoption> adoptions = arrAdoptions;
+                adoptionsAdapter.addAll(adoptions);
+
+                if (currentPage != TOTAL_PAGES) adoptionsAdapter.addLoadingFooter();
+                else isLastPage = true;
+
+                progressLoading.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<Adoptions> call, Throwable t) {
+//                Log.e("TUESDAY FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
+    }
+
+    private ArrayList<Adoption> processResult(Response<Adoptions> response) {
+        ArrayList<Adoption> adoptions = new ArrayList<>();
+        try {
+            String strResult = new Gson().toJson(response.body());
+            JSONObject JORoot = new JSONObject(strResult);
+            if (JORoot.has("error") && JORoot.getString("error").equalsIgnoreCase("false")) {
+                JSONArray JAAdoptions = JORoot.getJSONArray("adoptions");
+                for (int i = 0; i < JAAdoptions.length(); i++) {
+                    JSONObject JOAdoptions = JAAdoptions.getJSONObject(i);
+//                    Log.e("ADOPTIONS", String.valueOf(JOAdoptions));
+                    data = new Adoption();
+
+                    /* GET THE ADOPTION ID */
+                    if (JOAdoptions.has("adoptionID"))  {
+                        data.setAdoptionID(JOAdoptions.getString("adoptionID"));
+                    } else {
+                        data.setAdoptionID(null);
+                    }
+
+                    /* GET THE PET TYPE ID */
+                    if (JOAdoptions.has("petTypeID"))   {
+                        data.setPetTypeID(JOAdoptions.getString("petTypeID"));
+                    } else {
+                        data.setPetTypeID(null);
+                    }
+
+                    /* GET THE PET TYPE NAME */
+                    if (JOAdoptions.has("petTypeName")) {
+                        data.setPetTypeName(JOAdoptions.getString("petTypeName"));
+                    } else {
+                        data.setPetTypeName(null);
+                    }
+
+                    /* GET THE BREED ID */
+                    if (JOAdoptions.has("breedID")) {
+                        data.setBreedID(JOAdoptions.getString("breedID"));
+                    }  else {
+                        data.setBreedID(null);
+                    }
+
+                    /* GET THE BREED NAME */
+                    if (JOAdoptions.has("breedName"))   {
+                        data.setBreedName(JOAdoptions.getString("breedName"));
+                    } else {
+                        data.setBreedName(null);
+                    }
+
+                    /* GET THE USER ID */
+                    if (JOAdoptions.has("userID"))  {
+                        data.setUserID(JOAdoptions.getString("userID"));
+                    } else {
+                        data.setUserID(null);
+                    }
+
+                    /* GET THE USER'S NAME */
+                    if (JOAdoptions.has("userName"))    {
+                        data.setUserName(JOAdoptions.getString("userName"));
+                    } else {
+                        data.setUserName(null);
+                    }
+
+                    /* GET THE CITY ID */
+                    if (JOAdoptions.has("cityID"))  {
+                        data.setCityID(JOAdoptions.getString("cityID"));
+                    } else {
+                        data.setCityID(null);
+                    }
+
+                    /* GET THE CITY NAME */
+                    if (JOAdoptions.has("cityName"))    {
+                        data.setCityName(JOAdoptions.getString("cityName"));
+                    } else {
+                        data.setCityName(null);
+                    }
+
+                    /* GET THE ADOPTION NAME */
+                    if (JOAdoptions.has("adoptionName"))    {
+                        data.setAdoptionName(JOAdoptions.getString("adoptionName"));
+                    } else {
+                        data.setAdoptionName(null);
+                    }
+
+                    /* GET THE ADOPTION COVER PHOTO */
+                    if (JOAdoptions.has("adoptionCoverPhoto"))  {
+                        data.setAdoptionCoverPhoto(JOAdoptions.getString("adoptionCoverPhoto"));
+                    } else {
+                        data.setAdoptionCoverPhoto(null);
+                    }
+
+                    /* GET THE ADOPTION DESCRIPTION */
+                    if (JOAdoptions.has("adoptionDescription")) {
+                        data.setAdoptionDescription(JOAdoptions.getString("adoptionDescription"));
+                    } else {
+                        data.setAdoptionDescription(null);
+                    }
+
+                    /* GET THE ADOPTION GENDER */
+                    if (JOAdoptions.has("adoptionGender"))  {
+                        data.setAdoptionGender(JOAdoptions.getString("adoptionGender"));
+                    } else {
+                        data.setAdoptionGender(null);
+                    }
+
+                    /* GET THE ADOPTION TIME STAMP */
+                    if (JOAdoptions.has("adoptionTimeStamp"))   {
+                        data.setAdoptionTimeStamp(JOAdoptions.getString("adoptionTimeStamp"));
+                    } else {
+                        data.setAdoptionTimeStamp(null);
+                    }
+
+                    /* GET THE ADOPTION STATUS */
+                    if (JOAdoptions.has("adoptionStatus"))  {
+                        data.setAdoptionStatus(JOAdoptions.getString("adoptionStatus"));
+                    } else {
+                        data.setAdoptionStatus(null);
+                    }
+
+                    /* ADD THE COLLECTED DATA TO THE ARRAY LIST */
+                    adoptions.add(data);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return adoptions;
+    }
+
     /***** FETCH THE USER'S LOCATION *****/
     private void getUsersLocation() {
         /* CHECK FOR PERMISSION STATUS */
-        if (ContextCompat.checkSelfPermission(AdoptionsList.this,
+        if (ContextCompat.checkSelfPermission(TestAdoptionsList.this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED)   {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION))    {
@@ -212,7 +348,7 @@ public class AdoptionsList extends AppCompatActivity {
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                 dialog.cancel();
                                 ActivityCompat.requestPermissions(
-                                        AdoptionsList.this,
+                                        TestAdoptionsList.this,
                                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, ACCESS_FINE_LOCATION_CONSTANT);
                             }
                         }).show();
@@ -241,7 +377,7 @@ public class AdoptionsList extends AppCompatActivity {
 
     /***** FETCH THE LOCATION USING A GEOCODER *****/
     private void fetchLocation() {
-        Geocoder geocoder = new Geocoder(AdoptionsList.this, Locale.getDefault());
+        Geocoder geocoder = new Geocoder(TestAdoptionsList.this, Locale.getDefault());
         try {
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
             if (addresses.size() > 0)   {
@@ -263,8 +399,8 @@ public class AdoptionsList extends AppCompatActivity {
     /***** FETCH THE CITY ID *****/
     private void fetchCityID() {
         /* SHOW THE PROGRESS WHILE FETCHING THE DATA */
-//        progressLoading.setVisibility(View.VISIBLE);
-        linlaProgress.setVisibility(View.VISIBLE);
+        progressLoading.setVisibility(View.VISIBLE);
+//        linlaProgress.setVisibility(View.VISIBLE);
 
         LocationsAPI api = ZenApiClient.getClient().create(LocationsAPI.class);
         Call<City> call = api.getCityID(DETECTED_CITY);
@@ -277,25 +413,28 @@ public class AdoptionsList extends AppCompatActivity {
                     /* GET THE CITY ID */
                     FINAL_CITY_ID = city.getCityID();
                     if (FINAL_CITY_ID != null)  {
-                        /* FETCH THE ADOPTION LISTINGS */
+                        /* FETCH THE TOTAL NUMBER OF PAGES */
+                        fetchTotalPages();
+
+                        /* FETCH THE FIRST LIST OF ADOPTION LISTINGS */
                         fetchAdoptions();
                     } else {
-                        new MaterialDialog.Builder(AdoptionsList.this)
+                        new MaterialDialog.Builder(TestAdoptionsList.this)
                                 .title("Location not Served!")
                                 .content("We currently do not serve this City. but fear not. We will have you covered shortly.")
                                 .positiveText("OKAY")
                                 .theme(Theme.LIGHT)
-                                .icon(ContextCompat.getDrawable(AdoptionsList.this, R.drawable.ic_info_outline_black_24dp))
+                                .icon(ContextCompat.getDrawable(TestAdoptionsList.this, R.drawable.ic_info_outline_black_24dp))
                                 .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
                                 .show();
                     }
                 } else {
-                    new MaterialDialog.Builder(AdoptionsList.this)
+                    new MaterialDialog.Builder(TestAdoptionsList.this)
                             .title("Location not Served!")
                             .content("We currently do not serve this City. but fear not. We will have you covered shortly.")
                             .positiveText("OKAY")
                             .theme(Theme.LIGHT)
-                            .icon(ContextCompat.getDrawable(AdoptionsList.this, R.drawable.ic_info_outline_black_24dp))
+                            .icon(ContextCompat.getDrawable(TestAdoptionsList.this, R.drawable.ic_info_outline_black_24dp))
                             .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
                             .show();
                 }
@@ -338,7 +477,7 @@ public class AdoptionsList extends AppCompatActivity {
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                 dialog.cancel();
                                 ActivityCompat.requestPermissions(
-                                        AdoptionsList.this,
+                                        TestAdoptionsList.this,
                                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, ACCESS_FINE_LOCATION_CONSTANT);
                             }
                         }).show();
@@ -378,18 +517,44 @@ public class AdoptionsList extends AppCompatActivity {
         listAdoptions.setHasFixedSize(true);
 
         /* INSTANTIATE AND SET THE ADOPTIONS ADAPTER */
-        listAdoptions.setAdapter(new TestAdoptionsAdapter(AdoptionsList.this, arrAdoptions));
+        listAdoptions.setAdapter(adoptionsAdapter);
 
-        /* SET THE CONFIGURATION FOR THE PROMOTED ADOPTIONS LIST */
-        LinearLayoutManager managerPromoted = new LinearLayoutManager(this);
-        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        managerPromoted.setAutoMeasureEnabled(true);
-        listPromoted.setLayoutManager(managerPromoted);
-        listPromoted.setHasFixedSize(true);
-        listPromoted.setNestedScrollingEnabled(false);
+//        /* SET THE CONFIGURATION FOR THE PROMOTED ADOPTIONS LIST */
+//        LinearLayoutManager managerPromoted = new LinearLayoutManager(this);
+//        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+//        managerPromoted.setAutoMeasureEnabled(true);
+//        listPromoted.setLayoutManager(managerPromoted);
+//        listPromoted.setHasFixedSize(true);
+//        listPromoted.setNestedScrollingEnabled(false);
+//
+//        /* CONFIGURE THE ADAPTER */
+//        listPromoted.setAdapter(new PromotedAdoptionsAdapter(TestAdoptionsList.this, arrPromoted));
 
-        /* CONFIGURE THE ADAPTER */
-        listPromoted.setAdapter(new PromotedAdoptionsAdapter(AdoptionsList.this, arrPromoted));
+        listAdoptions.addOnScrollListener(new PaginationScrollListener(manager) {
+            @Override
+            protected void loadMoreItems() {
+                isLoading = true;
+                currentPage += 1;
+
+                /* FETCH THE NEXT SET OF ADOPTION LISTINGS */
+                fetchNextAdoptionsPage();
+            }
+
+            @Override
+            public int getTotalPageCount() {
+                return TOTAL_PAGES;
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+        });
     }
 
     @Override
@@ -419,5 +584,26 @@ public class AdoptionsList extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    /** FETCH THE TOTAL NUMBER OF PAGES **/
+    private void fetchTotalPages() {
+        AdoptionsAPI api = ZenApiClient.getClient().create(AdoptionsAPI.class);
+        Call<AdoptionPages> call = api.fetchAdoptionPages(FINAL_CITY_ID, FILTER_PET_SPECIES, FILTER_PET_GENDER);
+        call.enqueue(new Callback<AdoptionPages>() {
+            @Override
+            public void onResponse(Call<AdoptionPages> call, Response<AdoptionPages> response) {
+                if (response.body() != null && response.body().getTotalPages() != null) {
+                    TOTAL_PAGES = Integer.parseInt(response.body().getTotalPages());
+                    Log.e("TOTAL PAGES", String.valueOf(TOTAL_PAGES));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AdoptionPages> call, Throwable t) {
+                Log.e("PAGES FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
 }

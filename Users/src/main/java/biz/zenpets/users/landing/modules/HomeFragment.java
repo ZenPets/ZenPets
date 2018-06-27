@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import biz.zenpets.users.R;
-import biz.zenpets.users.adoptions.AdoptionsList;
+import biz.zenpets.users.adoptions.TestAdoptionsList;
 import biz.zenpets.users.doctors.DoctorsList;
 import biz.zenpets.users.kennels.NewKennelsList;
 import biz.zenpets.users.trainers.TrainersList;
@@ -31,7 +31,7 @@ public class HomeFragment extends Fragment {
 
     /** SHOW THE LIST OF ADOPTIONS **/
     @OnClick(R.id.linlaAdopt) void showAdoptions()  {
-        Intent intent = new Intent(getActivity(), AdoptionsList.class);
+        Intent intent = new Intent(getActivity(), TestAdoptionsList.class);
         startActivity(intent);
     }
 

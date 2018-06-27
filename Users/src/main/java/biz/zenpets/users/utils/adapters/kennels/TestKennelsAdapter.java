@@ -234,7 +234,6 @@ package biz.zenpets.users.utils.adapters.kennels;
 //        }
 //    }
 //
-//
 //    protected class LoadingVH extends RecyclerView.ViewHolder {
 //        LoadingVH(View itemView) {
 //            super(itemView);

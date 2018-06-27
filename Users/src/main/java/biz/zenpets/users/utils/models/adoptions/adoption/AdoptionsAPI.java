@@ -46,6 +46,14 @@ public interface AdoptionsAPI {
     Call<Adoptions> fetchAdoptions(
             @Query("cityID") String cityID,
             @Query("petTypeName") String petTypeName,
+            @Query("adoptionGender") String adoptionGender,
+            @Query("pageNumber") String pageNumber);
+
+    /** FETCH ALL ADOPTION IN THE SELECTED CITY (TEST) **/
+    @GET("fetchAdoptionPages")
+    Call<AdoptionPages> fetchAdoptionPages(
+            @Query("cityID") String cityID,
+            @Query("petTypeName") String petTypeName,
             @Query("adoptionGender") String adoptionGender);
 
     /** FETCH ALL ADOPTION IN THE SELECTED CITY (TEST) **/
@@ -53,7 +61,8 @@ public interface AdoptionsAPI {
     Call<Adoptions> fetchTestAdoptions(
             @Query("cityID") String cityID,
             @Query("petTypeName") String petTypeName,
-            @Query("adoptionGender") String adoptionGender);
+            @Query("adoptionGender") String adoptionGender,
+            @Query("pageNumber") String pageNumber);
 
     /** FETCH ALL USER ADOPTION LISTING **/
     @GET("listUserAdoptions")
