@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +28,9 @@ import java.util.Locale;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.details.adoptions.TestAdoptionDetails;
+import biz.zenpets.users.utils.adapters.adoptions.promoted.PromotedAdoptionsAdapter;
 import biz.zenpets.users.utils.models.adoptions.adoption.Adoption;
+import biz.zenpets.users.utils.models.adoptions.promotion.Promotion;
 
 @SuppressWarnings("ConstantConditions")
 public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -40,6 +45,10 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     /***** ARRAY LIST TO GET DATA FROM THE ACTIVITY *****/
     private final ArrayList<Adoption> arrAdoptions;
+    private ArrayList<Promotion> arrPromotions = new ArrayList<>();
+
+    /** THE CLINIC IMAGES ADAPTER AND ARRAY LIST **/
+    private PromotedAdoptionsAdapter adapter;
 
     public NewAdoptionsAdapter(Activity activity, ArrayList<Adoption> arrAdoptions) {
 
@@ -57,6 +66,11 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         switch (getItemViewType(position)) {
             case ITEM:
                 final AdoptionsVH vh = (AdoptionsVH) holder;
+
+                arrPromotions = data.getPromotions();
+                if (arrPromotions.size() > 0)    {
+                    Log.e("PROMOTIONS SIZE", String.valueOf(arrPromotions.size()));
+                }
 
                 /* SET THE ADOPTION COVER PHOTO */
                 String strAdoptionCover = data.getAdoptionCoverPhoto();
@@ -79,14 +93,16 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     vh.txtAdoptionName.setText(activity.getString(R.string.adoption_details_unnamed));
                 }
         
-//                /* SET THE PET'S GENDER */
-//                if (data.getAdoptionGender().equalsIgnoreCase("male"))  {
-//                    vh.imgvwGender.setIcon("faw-mars");
-//                    vh.imgvwGender.setColor(ContextCompat.getColor(activity, android.R.color.holo_blue_dark));
-//                } else if (data.getAdoptionGender().equalsIgnoreCase("female")) {
-//                    vh.imgvwGender.setIcon("faw-venus");
-//                    vh.imgvwGender.setColor(ContextCompat.getColor(activity, android.R.color.holo_red_dark));
-//                }
+                /* SET THE PET'S GENDER */
+                if (data.getAdoptionGender() != null)   {
+                    if (data.getAdoptionGender().equalsIgnoreCase("male"))  {
+                        vh.imgvwGender.setIcon("faw-mars");
+                        vh.imgvwGender.setColor(ContextCompat.getColor(activity, android.R.color.holo_blue_dark));
+                    } else if (data.getAdoptionGender().equalsIgnoreCase("female")) {
+                        vh.imgvwGender.setIcon("faw-venus");
+                        vh.imgvwGender.setColor(ContextCompat.getColor(activity, android.R.color.holo_red_dark));
+                    }
+                }
         
                 /* SET THE PET'S BREED */
                 if (data.getBreedName() != null)    {
@@ -205,6 +221,7 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     protected class AdoptionsVH extends RecyclerView.ViewHolder {
+        RecyclerView listPromoted;
         CardView cardAdoptionContainer;
         SimpleDraweeView imgvwAdoptionCover;
         TextView txtAdoptionName;
@@ -214,12 +231,25 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         AdoptionsVH(View v) {
             super(v);
+            listPromoted = v.findViewById(R.id.listPromoted);
             cardAdoptionContainer = v.findViewById(R.id.cardAdoptionContainer);
             imgvwAdoptionCover = v.findViewById(R.id.imgvwAdoptionCover);
             txtAdoptionName = v.findViewById(R.id.txtAdoptionName);
             txtAdoptionBreed = v.findViewById(R.id.txtAdoptionBreed);
             imgvwGender = v.findViewById(R.id.imgvwGender);
             txtAdoptionTimeStamp = v.findViewById(R.id.txtAdoptionTimeStamp);
+
+            /* CONFIGURE THE RECYCLER VIEW */
+            LinearLayoutManager llmAppointments = new LinearLayoutManager(activity);
+            llmAppointments.setOrientation(LinearLayoutManager.HORIZONTAL);
+            llmAppointments.setAutoMeasureEnabled(true);
+            listPromoted.setLayoutManager(llmAppointments);
+            listPromoted.setHasFixedSize(true);
+            listPromoted.setNestedScrollingEnabled(false);
+
+            /* CONFIGURE THE ADAPTER */
+            adapter = new PromotedAdoptionsAdapter(activity, arrPromotions);
+            listPromoted.setAdapter(adapter);
         }
     }
 

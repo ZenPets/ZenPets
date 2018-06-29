@@ -1,24 +1,15 @@
 package biz.zenpets.users.utils.models.kennels.kennels;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
 public class Kennels {
 
-    @SerializedName("error")
-    @Expose
-    private Boolean error;
-    @SerializedName("totalPages")
-    @Expose
-    private Integer totalPages;
-    @SerializedName("pageNumber")
-    @Expose
-    private Integer pageNumber;
-    @SerializedName("kennels")
-    @Expose
-    private ArrayList<Kennel> kennels = null;
+    @SerializedName("error") private Boolean error;
+    @SerializedName("totalPages") private Integer totalPages;
+    @SerializedName("pageNumber") private Integer pageNumber;
+    @SerializedName("kennels") private ArrayList<Kennel> kennels = null;
 
     public Boolean getError() {
         return error;

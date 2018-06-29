@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -20,12 +19,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.landing.modules.HomeFragment;
@@ -79,50 +72,6 @@ public class LandingActivity extends AppCompatActivity {
 
         /* CREATE THE NOTIFICATION CHANNEL */
         createNotificationChannel();
-
-//        String[] arrCity = getApp().getCityDetails();
-//        String CITY_ID = arrCity[0];
-//        String CITY_NAME = arrCity[1];
-//
-//        String[] arrLocality = getApp().getLocalityDetails();
-//        String LOCALITY_ID = arrLocality[0];
-//        String LOCALITY_NAME = arrLocality[1];
-//
-//        Log.e("CITY ID", CITY_ID);
-//        Log.e("CITY NAME", CITY_NAME);
-//        Log.e("LOCALITY ID", LOCALITY_ID);
-//        Log.e("LOCALITY_NAME", LOCALITY_NAME);
-//        Log.e("LATITUDE", getApp().getOriginLatitude());
-//        Log.e("LONGITUDE", getApp().getOriginLongitude());
-
-//        Date date = new Date();
-//        String strStart = date.toString();
-//        Log.e("START DATE", strStart);
-//        SimpleDateFormat formatStart = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
-//        Date dateFrom = null;
-//        try {
-//            dateFrom = formatStart.parse(strStart);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        Log.e("START DATE", String.valueOf(dateFrom));
-        try {
-            /* CALCULATE THE START DATE */
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            Date date = new Date();
-            String strDateFrom = format.format(date);
-            Log.e("START DATE", strDateFrom);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(format.parse(strDateFrom));
-
-            /* CALCULATE THE END DATE */
-            calendar.add(Calendar.DATE, 7);
-            Date dateEnd = new Date(calendar.getTimeInMillis());
-            String strDateTo = format.format(dateEnd);
-            Log.e("END DATE", strDateTo);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
     }
 
     /***** FETCH THE USER'S PROFILE *****/

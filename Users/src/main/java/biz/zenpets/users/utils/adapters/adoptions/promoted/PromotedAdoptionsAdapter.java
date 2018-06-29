@@ -51,7 +51,7 @@ public class PromotedAdoptionsAdapter extends RecyclerView.Adapter<PromotedAdopt
 
         View itemView = LayoutInflater.
                 from(parent.getContext()).
-                inflate(R.layout.adoptions_item_new, parent, false);
+                inflate(R.layout.promoted_adoption_item, parent, false);
 
         return new AdoptionsVH(itemView);
     }

@@ -11,8 +11,8 @@
         android:glEsVersion="0x00020000"
         android:required="true" />
 
-    <uses-sdk android:targetSdkVersion="27" android:minSdkVersion="14"
-        tools:overrideLibrary="com.razorpay"/>
+    <!--<uses-sdk android:targetSdkVersion="27" android:minSdkVersion="16"
+        tools:overrideLibrary="com.razorpay"/>-->
 
     <uses-permission android:name="biz.zenpets.users.permission.MAPS_RECEIVE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />

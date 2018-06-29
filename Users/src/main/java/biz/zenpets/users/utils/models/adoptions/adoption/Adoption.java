@@ -2,6 +2,10 @@ package biz.zenpets.users.utils.models.adoptions.adoption;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
+import biz.zenpets.users.utils.models.adoptions.promotion.Promotion;
+
 public class Adoption {
 
     @SerializedName("error") private Boolean error;
@@ -18,12 +22,13 @@ public class Adoption {
     @SerializedName("adoptionCoverPhoto") private String adoptionCoverPhoto;
     @SerializedName("adoptionDescription") private String adoptionDescription;
     @SerializedName("adoptionGender") private String adoptionGender;
-    @SerializedName("adoptionVaccinated") private String adoptionVaccinated;
-    @SerializedName("adoptionDewormed") private String adoptionDewormed;
-    @SerializedName("adoptionNeutered") private String adoptionNeutered;
+//    @SerializedName("adoptionVaccinated") private String adoptionVaccinated;
+//    @SerializedName("adoptionDewormed") private String adoptionDewormed;
+//    @SerializedName("adoptionNeutered") private String adoptionNeutered;
     @SerializedName("adoptionTimeStamp") private String adoptionTimeStamp;
     @SerializedName("adoptionPrettyDate") private String adoptionPrettyDate;
     @SerializedName("adoptionStatus") private String adoptionStatus;
+    @SerializedName("promotions") private ArrayList<Promotion> promotions = new ArrayList<>();
 
     public Boolean getError() {
         return error;
@@ -137,30 +142,6 @@ public class Adoption {
         this.adoptionGender = adoptionGender;
     }
 
-    public String getAdoptionVaccinated() {
-        return adoptionVaccinated;
-    }
-
-    public void setAdoptionVaccinated(String adoptionVaccinated) {
-        this.adoptionVaccinated = adoptionVaccinated;
-    }
-
-    public String getAdoptionDewormed() {
-        return adoptionDewormed;
-    }
-
-    public void setAdoptionDewormed(String adoptionDewormed) {
-        this.adoptionDewormed = adoptionDewormed;
-    }
-
-    public String getAdoptionNeutered() {
-        return adoptionNeutered;
-    }
-
-    public void setAdoptionNeutered(String adoptionNeutered) {
-        this.adoptionNeutered = adoptionNeutered;
-    }
-
     public String getAdoptionTimeStamp() {
         return adoptionTimeStamp;
     }
@@ -183,5 +164,13 @@ public class Adoption {
 
     public void setAdoptionStatus(String adoptionStatus) {
         this.adoptionStatus = adoptionStatus;
+    }
+
+    public ArrayList<Promotion> getPromotions() {
+        return promotions;
+    }
+
+    public void setPromotions(ArrayList<Promotion> promotions) {
+        this.promotions = promotions;
     }
 }

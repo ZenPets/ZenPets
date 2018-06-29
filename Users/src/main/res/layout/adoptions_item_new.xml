@@ -1,100 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cardAdoptionContainer"
-    style="@style/ZenPetsCards"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    app:contentPadding="5dp">
+    android:orientation="vertical">
 
-    <FrameLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listPromoted"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content"
+        android:cacheColorHint="@android:color/transparent"
+        android:fadingEdge="none"
+        android:persistentDrawingCache="scrolling"
+        android:scrollbars="none" />
 
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/imgvwAdoptionCover"
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardAdoptionContainer"
+        style="@style/ZenPetsCards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:contentPadding="5dp">
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:scaleType="center"
-            app:actualImageScaleType="center"
-            app:failureImageScaleType="center"
-            app:placeholderImage="@drawable/zen_pets_graphic"
-            app:placeholderImageScaleType="center" />
+            android:layout_height="180dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:background="#A6000000"
-            android:orientation="vertical">
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/imgvwAdoptionCover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:scaleType="center"
+                app:actualImageScaleType="center"
+                app:failureImageScaleType="center"
+                app:placeholderImage="@drawable/zen_pets_graphic"
+                app:placeholderImageScaleType="center" />
 
-            <TextView
-                android:id="@+id/txtAdoptionName"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start|center"
-                android:paddingBottom="5dp"
-                android:paddingEnd="11dp"
-                android:paddingLeft="11dp"
-                android:paddingRight="11dp"
-                android:paddingStart="11dp"
-                android:paddingTop="15dp"
-                android:text="@string/user_adoption_item_name"
-                android:textColor="@android:color/primary_text_dark"
-                android:textSize="14sp"
-                app:fontFamily="@font/roboto_medium" />
+                android:layout_gravity="bottom|center"
+                android:background="#A6000000"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtAdoptionName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:paddingStart="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingTop="15dp"
+                    android:paddingEnd="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingBottom="5dp"
+                    android:text="@string/user_adoption_item_name"
+                    android:textColor="@android:color/primary_text_dark"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/roboto_medium" />
+
+                <TextView
+                    android:id="@+id/txtAdoptionBreed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:paddingStart="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingBottom="5dp"
+                    android:text="BREED"
+                    android:textColor="@android:color/primary_text_dark"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/roboto_regular" />
+            </LinearLayout>
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:id="@+id/imgvwGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_margin="5dp"
+                android:adjustViewBounds="true"
+                android:background="#CCDCDCDC"
+                android:padding="11dp"
+                app:iiv_color="@android:color/holo_blue_dark"
+                app:iiv_icon="cmd_gender_male_female"
+                app:iiv_size="16dp" />
 
             <TextView
-                android:id="@+id/txtAdoptionBreed"
-                android:layout_width="match_parent"
+                android:id="@+id/txtAdoptionTimeStamp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="start|center"
-                android:paddingBottom="5dp"
-                android:paddingEnd="11dp"
-                android:paddingLeft="11dp"
-                android:paddingRight="11dp"
+                android:layout_gravity="top|start"
+                android:layout_margin="5dp"
+                android:background="#CCDCDCDC"
                 android:paddingStart="11dp"
+                android:paddingLeft="11dp"
                 android:paddingTop="5dp"
-                android:text="BREED"
-                android:textColor="@android:color/primary_text_dark"
+                android:paddingEnd="11dp"
+                android:paddingRight="11dp"
+                android:paddingBottom="5dp"
+                android:text="Posted On: "
+                android:textColor="@color/primary_text"
                 android:textSize="12sp"
                 app:fontFamily="@font/roboto_regular" />
-        </LinearLayout>
-
-        <com.mikepenz.iconics.view.IconicsImageView
-            android:id="@+id/imgvwGender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
-            android:layout_margin="5dp"
-            android:adjustViewBounds="true"
-            android:background="#CCDCDCDC"
-            android:padding="11dp"
-            app:iiv_color="@android:color/holo_blue_dark"
-            app:iiv_icon="cmd_gender_male_female"
-            app:iiv_size="16dp" />
-
-        <TextView
-            android:id="@+id/txtAdoptionTimeStamp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|start"
-            android:layout_margin="5dp"
-            android:background="#CCDCDCDC"
-            android:paddingBottom="5dp"
-            android:paddingEnd="11dp"
-            android:paddingLeft="11dp"
-            android:paddingRight="11dp"
-            android:paddingStart="11dp"
-            android:paddingTop="5dp"
-            android:text="Posted On: "
-            android:textColor="@color/primary_text"
-            android:textSize="12sp"
-            app:fontFamily="@font/roboto_regular" />
-    </FrameLayout>
-</android.support.v7.widget.CardView>
+        </FrameLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

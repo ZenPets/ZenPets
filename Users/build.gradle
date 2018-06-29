@@ -64,7 +64,7 @@ dependencies {
     }
 
     /** RAZOR PAY SDK **/
-    implementation 'com.razorpay:checkout:1.4.8'
+    implementation 'com.razorpay:checkout:1.4.7'
 
     /** OK HTTP **/
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'

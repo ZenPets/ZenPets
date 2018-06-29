@@ -16,7 +16,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -50,6 +49,7 @@ import biz.zenpets.users.utils.models.adoptions.adoption.Adoption;
 import biz.zenpets.users.utils.models.adoptions.adoption.AdoptionPages;
 import biz.zenpets.users.utils.models.adoptions.adoption.Adoptions;
 import biz.zenpets.users.utils.models.adoptions.adoption.AdoptionsAPI;
+import biz.zenpets.users.utils.models.adoptions.promotion.Promotion;
 import biz.zenpets.users.utils.models.location.City;
 import biz.zenpets.users.utils.models.location.LocationsAPI;
 import butterknife.BindView;
@@ -74,7 +74,8 @@ public class TestAdoptionsList extends AppCompatActivity {
     /** PERMISSION REQUEST CONSTANTS **/
     private static final int ACCESS_FINE_LOCATION_CONSTANT = 200;
 
-    /** THE ADOPTION DATA MODEL INSTANCE **/
+    /** THE PROMOTION DATA MODEL AND ADOPTION DATA MODEL INSTANCES **/
+    Promotion promotion;
     Adoption data;
 
     private static final int PAGE_START = 1;
@@ -84,9 +85,8 @@ public class TestAdoptionsList extends AppCompatActivity {
     private int currentPage = PAGE_START;
 
     /** THE PROMOTED ADOPTIONS ADAPTER AND ADOPTIONS ARRAY LIST INSTANCES **/
-//    PromotedAdoptionsAdapter promotedAdoptionsAdapter;
-//    private ArrayList<Promotion> arrPromoted = new ArrayList<>();
     NewAdoptionsAdapter adoptionsAdapter;
+    ArrayList<Promotion> arrPromotions = new ArrayList<>();
     private ArrayList<Adoption> arrAdoptions = new ArrayList<>();
 
     /** THE ADOPTION FILTER STRINGS **/
@@ -96,7 +96,7 @@ public class TestAdoptionsList extends AppCompatActivity {
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.txtLocation) AppCompatTextView txtLocation;
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
-    @BindView(R.id.listPromoted) RecyclerView listPromoted;
+//    @BindView(R.id.listPromoted) RecyclerView listPromoted;
     @BindView(R.id.listAdoptions) RecyclerView listAdoptions;
     @BindView(R.id.progressLoading) ProgressBar progressLoading;
     @BindView(R.id.linlaEmpty) LinearLayout linlaEmpty;
@@ -139,12 +139,20 @@ public class TestAdoptionsList extends AppCompatActivity {
         call.enqueue(new Callback<Adoptions>() {
             @Override
             public void onResponse(Call<Adoptions> call, Response<Adoptions> response) {
-                Log.e("ADOPTIONS LIST", String.valueOf(response.raw()));
+//                Log.e("ADOPTIONS LIST", String.valueOf(response.raw()));
                 /* PROCESS THE RESPONSE */
-                arrAdoptions = processResult(response);
+//                arrAdoptions = processResult(response);
+                Object[] objects = processResult(response);
+                arrAdoptions = (ArrayList<Adoption>) objects[0];
+                arrPromotions = (ArrayList<Promotion>) objects[1];
+//                Log.e("ADOPTIONS SIZE", String.valueOf(arrAdoptions.size()));
+//                Log.e("PROMOTIONS SIZE", String.valueOf(arrPromotions.size()));
 
                 ArrayList<Adoption> adoptions = arrAdoptions;
-                linlaProgress.setVisibility(View.GONE);
+                ArrayList<Promotion> promotions = arrPromotions;
+                Adoption adoption = new Adoption();
+                adoption.setPromotions(arrPromotions);
+                adoptions.add(adoption);
                 progressLoading.setVisibility(View.GONE);
                 adoptionsAdapter.addAll(adoptions);
 
@@ -154,7 +162,6 @@ public class TestAdoptionsList extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Adoptions> call, Throwable t) {
-//                Log.e("TUESDAY FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -168,15 +175,21 @@ public class TestAdoptionsList extends AppCompatActivity {
         call.enqueue(new Callback<Adoptions>() {
             @Override
             public void onResponse(Call<Adoptions> call, Response<Adoptions> response) {
-                Log.e("ADOPTIONS LIST", String.valueOf(response.raw()));
+//                Log.e("ADOPTIONS LIST", String.valueOf(response.raw()));
                 /* PROCESS THE RESPONSE */
-                arrAdoptions = processResult(response);
+//                arrAdoptions = processResult(response);
+                Object[] objects = processResult(response);
+                arrAdoptions = (ArrayList<Adoption>) objects[0];
+                arrPromotions = (ArrayList<Promotion>) objects[1];
+//                Log.e("ADOPTIONS SIZE", String.valueOf(arrAdoptions.size()));
+//                Log.e("PROMOTIONS SIZE", String.valueOf(arrPromotions.size()));
 
                 adoptionsAdapter.removeLoadingFooter();
                 isLoading = false;
 
-                /* PROCESS THE RESULT AND CAST IN THE ARRAY LIST */
                 ArrayList<Adoption> adoptions = arrAdoptions;
+                ArrayList<Promotion> promotions = arrPromotions;
+                progressLoading.setVisibility(View.GONE);
                 adoptionsAdapter.addAll(adoptions);
 
                 if (currentPage != TOTAL_PAGES) adoptionsAdapter.addLoadingFooter();
@@ -187,19 +200,150 @@ public class TestAdoptionsList extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Adoptions> call, Throwable t) {
-//                Log.e("TUESDAY FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
     }
 
-    private ArrayList<Adoption> processResult(Response<Adoptions> response) {
+    private Object[] processResult(Response<Adoptions> response) {
         ArrayList<Adoption> adoptions = new ArrayList<>();
+        ArrayList<Promotion> promotions = new ArrayList<>();
         try {
             String strResult = new Gson().toJson(response.body());
             JSONObject JORoot = new JSONObject(strResult);
+//            Log.e("ROOT", String.valueOf(JORoot));
             if (JORoot.has("error") && JORoot.getString("error").equalsIgnoreCase("false")) {
                 JSONArray JAAdoptions = JORoot.getJSONArray("adoptions");
+                JSONArray JAPromotions = JORoot.getJSONArray("promotions");
+                for (int j = 0; j < JAPromotions.length(); j++) {
+                    JSONObject JOPromotions = JAPromotions.getJSONObject(j);
+//                    Log.e("PROMOTIONS", String.valueOf(JOPromotions));
+                    promotion = new Promotion();
+
+                    /* GET THE PROMOTION ID */
+                    if (JOPromotions.has("promotedID")) {
+                        promotion.setPromotedID(JOPromotions.getString("promotedID"));
+                    } else {
+                        promotion.setPromotedID(null);
+                    }
+
+                    /* GET THE ADOPTION ID */
+                    if (JOPromotions.has("adoptionID")) {
+                        promotion.setAdoptionID(JOPromotions.getString("adoptionID"));
+                    } else {
+                        promotion.setAdoptionID(null);
+                    }
+
+                    /* GET THE OPTION ID */
+                    if (JOPromotions.has("optionID"))   {
+                        promotion.setOptionID(JOPromotions.getString("optionID"));
+                    } else {
+                        promotion.setOptionID(null);
+                    }
+
+                    /* GET THE PAYMENT ID */
+                    if (JOPromotions.has("paymentID"))  {
+                        promotion.setPaymentID(JOPromotions.getString("paymentID"));
+                    } else {
+                        promotion.setPaymentID(null);
+                    }
+
+                    /* GET THE PROMOTED FROM DATE */
+                    if (JOPromotions.has("promotedFrom"))   {
+                        promotion.setPromotedFrom(JOPromotions.getString("promotedFrom"));
+                    } else {
+                        promotion.setPromotedFrom(null);
+                    }
+
+                    /* GET THE PROMOTED TO DATE */
+                    if (JOPromotions.has("promotedTo")) {
+                        promotion.setPromotedTo(JOPromotions.getString("promotedTo"));
+                    } else {
+                        promotion.setPromotedTo(null);
+                    }
+
+                    /* GET THE PROMOTED TIME STAMP */
+                    if (JOPromotions.has("promotedTimestamp"))  {
+                        promotion.setPromotedTimestamp(JOPromotions.getString("promotedTimestamp"));
+                    } else {
+                        promotion.setPromotedTimestamp(null);
+                    }
+
+                    /* GET THE PET TYPE ID AND NAME */
+                    if (JOPromotions.has("petTypeID") && JOPromotions.has("petTypeName")) {
+                        promotion.setPetTypeID(JOPromotions.getString("petTypeID"));
+                        promotion.setPetTypeName(JOPromotions.getString("petTypeName"));
+                    } else {
+                        promotion.setPetTypeID(null);
+                        promotion.setPetTypeName(null);
+                    }
+
+                    /* GET THE BREED ID AND NAME */
+                    if (JOPromotions.has("breedID") && JOPromotions.has("breedName")) {
+                        promotion.setBreedID(JOPromotions.getString("breedID"));
+                        promotion.setBreedName(JOPromotions.getString("breedName"));
+                    } else {
+                        promotion.setBreedID(null);
+                        promotion.setBreedName(null);
+                    }
+
+                    /* GET THE USER ID AND NAME */
+                    if (JOPromotions.has("userID") && JOPromotions.has("userName")) {
+                        promotion.setUserID(JOPromotions.getString("userID"));
+                        promotion.setUserName(JOPromotions.getString("userName"));
+                    } else {
+                        promotion.setUserID(null);
+                        promotion.setUserName(null);
+                    }
+
+                    /* GET THE CITY ID AND NAME */
+                    if (JOPromotions.has("cityID") && JOPromotions.has("cityName")) {
+                        promotion.setCityID(JOPromotions.getString("cityID"));
+                        promotion.setCityName(JOPromotions.getString("cityName"));
+                    } else {
+                        promotion.setCityID(null);
+                        promotion.setCityName(null);
+                    }
+
+                    /* GET THE ADOPTION NAME */
+                    if (JOPromotions.has("adoptionName"))  {
+                        promotion.setAdoptionName(JOPromotions.getString("adoptionName"));
+                    } else {
+                        promotion.setAdoptionName(null);
+                    }
+
+                    /* GET THE ADOPTION COVER PHOTO */
+                    if (JOPromotions.has("adoptionCoverPhoto"))  {
+                        promotion.setAdoptionCoverPhoto(JOPromotions.getString("adoptionCoverPhoto"));
+                    } else {
+                        promotion.setAdoptionCoverPhoto(null);
+                    }
+
+                    /* GET THE ADOPTION DESCRIPTION */
+                    if (JOPromotions.has("adoptionDescription"))  {
+                        promotion.setAdoptionDescription(JOPromotions.getString("adoptionDescription"));
+                    } else {
+                        promotion.setAdoptionDescription(null);
+                    }
+
+                    /* GET THE ADOPTION GENDER */
+                    if (JOPromotions.has("adoptionGender"))  {
+                        promotion.setAdoptionGender(JOPromotions.getString("adoptionGender"));
+                    } else {
+                        promotion.setAdoptionGender(null);
+                    }
+
+                    /* GET THE ADOPTION TIME STAMP */
+                    if (JOPromotions.has("adoptionTimeStamp"))  {
+                        promotion.setAdoptionTimeStamp(JOPromotions.getString("adoptionTimeStamp"));
+                    } else {
+                        promotion.setAdoptionTimeStamp(null);
+                    }
+
+                    /* ADD THE COLLECTED DATA TO THE ARRAY LIST */
+                    promotions.add(promotion);
+                }
+
                 for (int i = 0; i < JAAdoptions.length(); i++) {
                     JSONObject JOAdoptions = JAAdoptions.getJSONObject(i);
 //                    Log.e("ADOPTIONS", String.valueOf(JOAdoptions));
@@ -290,7 +434,9 @@ public class TestAdoptionsList extends AppCompatActivity {
                     }
 
                     /* GET THE ADOPTION GENDER */
-                    if (JOAdoptions.has("adoptionGender"))  {
+                    if (JOAdoptions.has("adoptionGender")
+                            && !JOAdoptions.getString("adoptionGender").equalsIgnoreCase("null")
+                            && JOAdoptions.getString("adoptionGender") != null)  {
                         data.setAdoptionGender(JOAdoptions.getString("adoptionGender"));
                     } else {
                         data.setAdoptionGender(null);
@@ -317,7 +463,8 @@ public class TestAdoptionsList extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return adoptions;
+        return new Object[]{adoptions, promotions};
+//        return adoptions;
     }
 
     /***** FETCH THE USER'S LOCATION *****/
@@ -595,13 +742,12 @@ public class TestAdoptionsList extends AppCompatActivity {
             public void onResponse(Call<AdoptionPages> call, Response<AdoptionPages> response) {
                 if (response.body() != null && response.body().getTotalPages() != null) {
                     TOTAL_PAGES = Integer.parseInt(response.body().getTotalPages());
-                    Log.e("TOTAL PAGES", String.valueOf(TOTAL_PAGES));
+//                    Log.e("TOTAL PAGES", String.valueOf(TOTAL_PAGES));
                 }
             }
 
             @Override
             public void onFailure(Call<AdoptionPages> call, Throwable t) {
-                Log.e("PAGES FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

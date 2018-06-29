@@ -42,7 +42,6 @@ import java.util.Locale;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.utils.adapters.adoptions.TestAdoptionsAdapter;
-import biz.zenpets.users.utils.adapters.adoptions.promoted.PromotedAdoptionsAdapter;
 import biz.zenpets.users.utils.helpers.classes.FilterAdoptionsActivity;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.models.adoptions.adoption.Adoption;
@@ -87,7 +86,7 @@ public class AdoptionsList extends AppCompatActivity {
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.txtLocation) AppCompatTextView txtLocation;
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
-    @BindView(R.id.listPromoted) RecyclerView listPromoted;
+//    @BindView(R.id.listPromoted) RecyclerView listPromoted;
     @BindView(R.id.listAdoptions) RecyclerView listAdoptions;
 //    @BindView(R.id.progressLoading) ProgressBar progressLoading;
     @BindView(R.id.linlaEmpty) LinearLayout linlaEmpty;
@@ -380,16 +379,16 @@ public class AdoptionsList extends AppCompatActivity {
         /* INSTANTIATE AND SET THE ADOPTIONS ADAPTER */
         listAdoptions.setAdapter(new TestAdoptionsAdapter(AdoptionsList.this, arrAdoptions));
 
-        /* SET THE CONFIGURATION FOR THE PROMOTED ADOPTIONS LIST */
-        LinearLayoutManager managerPromoted = new LinearLayoutManager(this);
-        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        managerPromoted.setAutoMeasureEnabled(true);
-        listPromoted.setLayoutManager(managerPromoted);
-        listPromoted.setHasFixedSize(true);
-        listPromoted.setNestedScrollingEnabled(false);
-
-        /* CONFIGURE THE ADAPTER */
-        listPromoted.setAdapter(new PromotedAdoptionsAdapter(AdoptionsList.this, arrPromoted));
+//        /* SET THE CONFIGURATION FOR THE PROMOTED ADOPTIONS LIST */
+//        LinearLayoutManager managerPromoted = new LinearLayoutManager(this);
+//        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+//        managerPromoted.setAutoMeasureEnabled(true);
+//        listPromoted.setLayoutManager(managerPromoted);
+//        listPromoted.setHasFixedSize(true);
+//        listPromoted.setNestedScrollingEnabled(false);
+//
+//        /* CONFIGURE THE ADAPTER */
+//        listPromoted.setAdapter(new PromotedAdoptionsAdapter(AdoptionsList.this, arrPromoted));
     }
 
     @Override

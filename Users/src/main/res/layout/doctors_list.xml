@@ -104,15 +104,6 @@
 
     <include layout="@layout/zen_progress" />
 
-    <!--<android.support.v7.widget.RecyclerView
-        android:id="@+id/listSponsored"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:cacheColorHint="@android:color/transparent"
-        android:fadingEdge="none"
-        android:persistentDrawingCache="scrolling"
-        android:scrollbars="none" />-->
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/listDoctors"
         android:layout_width="fill_parent"

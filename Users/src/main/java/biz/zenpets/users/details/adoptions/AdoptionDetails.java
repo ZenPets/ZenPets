@@ -243,32 +243,32 @@ public class AdoptionDetails extends AppCompatActivity {
                     String strDate = sdf.format(currentTimeZone);
                     txtTimeStamp.setText(getString(R.string.adoption_details_posted, strDate, strPrettyDate));
 
-                    /* GET THE VACCINATION STATUS */
-                    ADOPTION_VACCINATION = data.getAdoptionVaccinated();
-                    txtVaccinated.setText(ADOPTION_VACCINATION);
-                    if (ADOPTION_VACCINATION.equalsIgnoreCase("yes"))  {
-                        txtVaccinated.setTextColor(ContextCompat.getColor(AdoptionDetails.this, android.R.color.holo_green_dark));
-                    } else if (ADOPTION_VACCINATION.equalsIgnoreCase("no"))    {
-                        txtVaccinated.setTextColor(ContextCompat.getColor(AdoptionDetails.this, android.R.color.holo_red_dark));
-                    }
+//                    /* GET THE VACCINATION STATUS */
+//                    ADOPTION_VACCINATION = data.getAdoptionVaccinated();
+//                    txtVaccinated.setText(ADOPTION_VACCINATION);
+//                    if (ADOPTION_VACCINATION.equalsIgnoreCase("yes"))  {
+//                        txtVaccinated.setTextColor(ContextCompat.getColor(AdoptionDetails.this, android.R.color.holo_green_dark));
+//                    } else if (ADOPTION_VACCINATION.equalsIgnoreCase("no"))    {
+//                        txtVaccinated.setTextColor(ContextCompat.getColor(AdoptionDetails.this, android.R.color.holo_red_dark));
+//                    }
 
-                    /* GET THE DEWORMED STATUS */
-                    ADOPTION_DEWORMED = data.getAdoptionDewormed();
-                    txtDewormed.setText(ADOPTION_DEWORMED);
-                    if (ADOPTION_DEWORMED.equalsIgnoreCase("yes")) {
-                        txtDewormed.setTextColor(ContextCompat.getColor(AdoptionDetails.this, android.R.color.holo_green_dark));
-                    } else if (ADOPTION_DEWORMED.equalsIgnoreCase("no"))   {
-                        txtDewormed.setTextColor(ContextCompat.getColor(AdoptionDetails.this, android.R.color.holo_red_dark));
-                    }
+//                    /* GET THE DEWORMED STATUS */
+//                    ADOPTION_DEWORMED = data.getAdoptionDewormed();
+//                    txtDewormed.setText(ADOPTION_DEWORMED);
+//                    if (ADOPTION_DEWORMED.equalsIgnoreCase("yes")) {
+//                        txtDewormed.setTextColor(ContextCompat.getColor(AdoptionDetails.this, android.R.color.holo_green_dark));
+//                    } else if (ADOPTION_DEWORMED.equalsIgnoreCase("no"))   {
+//                        txtDewormed.setTextColor(ContextCompat.getColor(AdoptionDetails.this, android.R.color.holo_red_dark));
+//                    }
 
-                    /* GET THE NEUTERED STATUS */
-                    ADOPTION_NEUTERED = data.getAdoptionNeutered();
-                    txtNeutered.setText(ADOPTION_NEUTERED);
-                    if (ADOPTION_NEUTERED.equalsIgnoreCase("yes")) {
-                        txtNeutered.setTextColor(ContextCompat.getColor(AdoptionDetails.this, android.R.color.holo_green_dark));
-                    } else if (ADOPTION_NEUTERED.equalsIgnoreCase("no"))   {
-                        txtNeutered.setTextColor(ContextCompat.getColor(AdoptionDetails.this, android.R.color.holo_red_dark));
-                    }
+//                    /* GET THE NEUTERED STATUS */
+//                    ADOPTION_NEUTERED = data.getAdoptionNeutered();
+//                    txtNeutered.setText(ADOPTION_NEUTERED);
+//                    if (ADOPTION_NEUTERED.equalsIgnoreCase("yes")) {
+//                        txtNeutered.setTextColor(ContextCompat.getColor(AdoptionDetails.this, android.R.color.holo_green_dark));
+//                    } else if (ADOPTION_NEUTERED.equalsIgnoreCase("no"))   {
+//                        txtNeutered.setTextColor(ContextCompat.getColor(AdoptionDetails.this, android.R.color.holo_red_dark));
+//                    }
 
 //                    /* GET THE ADOPTION STATUS */
 //                    ADOPTION_STATUS = data.getAdoptionStatus();
