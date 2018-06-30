@@ -149,7 +149,6 @@ public class TestAdoptionsList extends AppCompatActivity {
 //                Log.e("PROMOTIONS SIZE", String.valueOf(arrPromotions.size()));
 
                 ArrayList<Adoption> adoptions = arrAdoptions;
-                ArrayList<Promotion> promotions = arrPromotions;
                 Adoption adoption = new Adoption();
                 adoption.setPromotions(arrPromotions);
                 adoptions.add(adoption);

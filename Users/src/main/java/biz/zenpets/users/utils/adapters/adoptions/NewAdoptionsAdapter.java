@@ -8,7 +8,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +38,8 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final Activity activity;
 
     private static final int ITEM = 0;
-    private static final int LOADING = 1;
+    private static final int PROMOTED = 1;
+    private static final int LOADING = 2;
 
     private boolean isLoadingAdded = false;
 
@@ -60,17 +60,28 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if (position == 0)  {
+            return PROMOTED;
+        }
+        return super.getItemViewType(position);
+    }
+
+    @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
         final Adoption data = arrAdoptions.get(position);
 
         switch (getItemViewType(position)) {
-            case ITEM:
-                final AdoptionsVH vh = (AdoptionsVH) holder;
+            case PROMOTED:
+                PromotedVH promoted = (PromotedVH) holder;
 
                 arrPromotions = data.getPromotions();
                 if (arrPromotions.size() > 0)    {
-                    Log.e("PROMOTIONS SIZE", String.valueOf(arrPromotions.size()));
+//                    Log.e("PROMOTIONS SIZE", String.valueOf(arrPromotions.size()));
                 }
+                break;
+            case ITEM:
+                final AdoptionsVH vh = (AdoptionsVH) holder;
 
                 /* SET THE ADOPTION COVER PHOTO */
                 String strAdoptionCover = data.getAdoptionCoverPhoto();
@@ -148,11 +159,21 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case ITEM:
                 viewHolder = getViewHolder(parent, inflater);
                 break;
+            case PROMOTED:
+                viewHolder = getPromotedViewHolder(parent, inflater);
+                break;
             case LOADING:
                 View v2 = inflater.inflate(R.layout.endless_item_progress, parent, false);
                 viewHolder = new LoadingVH(v2);
                 break;
         }
+        return viewHolder;
+    }
+
+    private RecyclerView.ViewHolder getPromotedViewHolder(ViewGroup parent, LayoutInflater inflater) {
+        RecyclerView.ViewHolder viewHolder;
+        View v1 = inflater.inflate(R.layout.promoted_adoption_item, parent, false);
+        viewHolder = new PromotedVH(v1);
         return viewHolder;
     }
 
@@ -220,24 +241,12 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return arrAdoptions.get(position);
     }
 
-    protected class AdoptionsVH extends RecyclerView.ViewHolder {
+    protected class PromotedVH extends RecyclerView.ViewHolder {
         RecyclerView listPromoted;
-        CardView cardAdoptionContainer;
-        SimpleDraweeView imgvwAdoptionCover;
-        TextView txtAdoptionName;
-        TextView txtAdoptionBreed;
-        IconicsImageView imgvwGender;
-        TextView txtAdoptionTimeStamp;
 
-        AdoptionsVH(View v) {
+        public PromotedVH(View v) {
             super(v);
             listPromoted = v.findViewById(R.id.listPromoted);
-            cardAdoptionContainer = v.findViewById(R.id.cardAdoptionContainer);
-            imgvwAdoptionCover = v.findViewById(R.id.imgvwAdoptionCover);
-            txtAdoptionName = v.findViewById(R.id.txtAdoptionName);
-            txtAdoptionBreed = v.findViewById(R.id.txtAdoptionBreed);
-            imgvwGender = v.findViewById(R.id.imgvwGender);
-            txtAdoptionTimeStamp = v.findViewById(R.id.txtAdoptionTimeStamp);
 
             /* CONFIGURE THE RECYCLER VIEW */
             LinearLayoutManager llmAppointments = new LinearLayoutManager(activity);
@@ -250,6 +259,25 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             /* CONFIGURE THE ADAPTER */
             adapter = new PromotedAdoptionsAdapter(activity, arrPromotions);
             listPromoted.setAdapter(adapter);
+        }
+    }
+
+    protected class AdoptionsVH extends RecyclerView.ViewHolder {
+        CardView cardAdoptionContainer;
+        SimpleDraweeView imgvwAdoptionCover;
+        TextView txtAdoptionName;
+        TextView txtAdoptionBreed;
+        IconicsImageView imgvwGender;
+        TextView txtAdoptionTimeStamp;
+
+        AdoptionsVH(View v) {
+            super(v);
+            cardAdoptionContainer = v.findViewById(R.id.cardAdoptionContainer);
+            imgvwAdoptionCover = v.findViewById(R.id.imgvwAdoptionCover);
+            txtAdoptionName = v.findViewById(R.id.txtAdoptionName);
+            txtAdoptionBreed = v.findViewById(R.id.txtAdoptionBreed);
+            imgvwGender = v.findViewById(R.id.imgvwGender);
+            txtAdoptionTimeStamp = v.findViewById(R.id.txtAdoptionTimeStamp);
         }
     }
 

@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txtClinicName"
                 style="@style/CondensedRegular"
                 android:layout_width="match_parent"
