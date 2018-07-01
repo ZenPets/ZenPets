@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,13 +60,15 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.arrAdoptions = arrAdoptions;
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        if (position == 0)  {
-            return PROMOTED;
-        }
-        return super.getItemViewType(position);
-    }
+//    @Override
+//    public int getItemViewType(int position) {
+//        Log.e("POSITION", String.valueOf(position));
+//        if (position % 5 == 0)   {
+//            return PROMOTED;
+//        } else {
+//            return ITEM;
+//        }
+//    }
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
@@ -77,7 +80,9 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 arrPromotions = data.getPromotions();
                 if (arrPromotions.size() > 0)    {
-//                    Log.e("PROMOTIONS SIZE", String.valueOf(arrPromotions.size()));
+                    Log.e("PROMOTIONS SIZE", String.valueOf(arrPromotions.size()));
+                    adapter = new PromotedAdoptionsAdapter(activity, arrPromotions);
+                    promoted.listPromoted.setAdapter(adapter);
                 }
                 break;
             case ITEM:
@@ -172,8 +177,8 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private RecyclerView.ViewHolder getPromotedViewHolder(ViewGroup parent, LayoutInflater inflater) {
         RecyclerView.ViewHolder viewHolder;
-        View v1 = inflater.inflate(R.layout.promoted_adoption_item, parent, false);
-        viewHolder = new PromotedVH(v1);
+        View v2 = inflater.inflate(R.layout.promoted_adoption_list, parent, false);
+        viewHolder = new PromotedVH(v2);
         return viewHolder;
     }
 
@@ -244,7 +249,7 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     protected class PromotedVH extends RecyclerView.ViewHolder {
         RecyclerView listPromoted;
 
-        public PromotedVH(View v) {
+        PromotedVH(View v) {
             super(v);
             listPromoted = v.findViewById(R.id.listPromoted);
 
