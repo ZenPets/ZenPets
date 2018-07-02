@@ -44,6 +44,8 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private boolean isLoadingAdded = false;
 
+    private int currentPage = 0;
+
     /***** ARRAY LIST TO GET DATA FROM THE ACTIVITY *****/
     private final ArrayList<Adoption> arrAdoptions;
     private ArrayList<Promotion> arrPromotions = new ArrayList<>();
@@ -60,15 +62,17 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.arrAdoptions = arrAdoptions;
     }
 
-//    @Override
-//    public int getItemViewType(int position) {
-//        Log.e("POSITION", String.valueOf(position));
-//        if (position % 5 == 0)   {
-//            return PROMOTED;
-//        } else {
-//            return ITEM;
-//        }
-//    }
+    @Override
+    public int getItemViewType(int position) {
+        Log.e("POSITION", String.valueOf(position));
+        if (position == 0)  {
+            return PROMOTED;
+        } else if (position > 0 && position % 5 == 0)   {
+            return PROMOTED;
+        } else {
+            return ITEM;
+        }
+    }
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
@@ -76,7 +80,28 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         switch (getItemViewType(position)) {
             case PROMOTED:
-                PromotedVH promoted = (PromotedVH) holder;
+                final PromotedVH promoted = (PromotedVH) holder;
+                Log.e("CURRENT PAGE", String.valueOf(currentPage));
+
+//                PromotionAPI api = ZenApiClient.getClient().create(PromotionAPI.class);
+//                Call<Promotions> call = api.fetchPromotedAdoptions(data.getCityID(), String.valueOf(currentPage));
+//                call.enqueue(new Callback<Promotions>() {
+//                    @Override
+//                    public void onResponse(Call<Promotions> call, Response<Promotions> response) {
+//                        if (response.body() != null && response.body().getPromotions() != null) {
+//                            arrPromotions = response.body().getPromotions();
+//                            if (arrPromotions.size() > 0)   {
+//                                Log.e("PROMOTIONS SIZE", String.valueOf(arrPromotions.size()));
+//                                adapter = new PromotedAdoptionsAdapter(activity, arrPromotions);
+//                                promoted.listPromoted.setAdapter(adapter);
+//                            }
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<Promotions> call, Throwable t) {
+//                    }
+//                });
 
                 arrPromotions = data.getPromotions();
                 if (arrPromotions.size() > 0)    {
@@ -154,6 +179,14 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
+    private int getRealPosition(int position) {
+        if (5 == 0) {
+            return position;
+        } else {
+            return position - position / 5;
+        }
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -192,10 +225,16 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
-        return arrAdoptions == null ? 0 : arrAdoptions.size();
+//        return arrAdoptions == null ? 0 : arrAdoptions.size();
+        int additionalContent = 0;
+        if (arrAdoptions.size() > 0 && 5 > 0 && arrAdoptions.size() > 5) {
+            additionalContent = arrAdoptions.size() / 5;
+        }
+        return arrAdoptions.size() + additionalContent;
     }
 
-    public void addAll(ArrayList<Adoption> arrAdoptions) {
+    public void addAll(ArrayList<Adoption> arrAdoptions, int currentPage) {
+        this.currentPage = currentPage;
         for (Adoption adoption : arrAdoptions) {
             add(adoption);
         }

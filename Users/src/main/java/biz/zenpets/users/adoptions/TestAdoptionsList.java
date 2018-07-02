@@ -16,6 +16,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -139,7 +140,7 @@ public class TestAdoptionsList extends AppCompatActivity {
         call.enqueue(new Callback<Adoptions>() {
             @Override
             public void onResponse(Call<Adoptions> call, Response<Adoptions> response) {
-//                Log.e("ADOPTIONS LIST", String.valueOf(response.raw()));
+                Log.e("ADOPTIONS LIST", String.valueOf(response.raw()));
                 /* PROCESS THE RESPONSE */
 //                arrAdoptions = processResult(response);
                 Object[] objects = processResult(response);
@@ -153,7 +154,7 @@ public class TestAdoptionsList extends AppCompatActivity {
                 adoption.setPromotions(arrPromotions);
                 adoptions.add(adoption);
                 progressLoading.setVisibility(View.GONE);
-                adoptionsAdapter.addAll(adoptions);
+                adoptionsAdapter.addAll(adoptions, currentPage);
 
                 if (currentPage <= TOTAL_PAGES) adoptionsAdapter.addLoadingFooter();
                 else isLastPage = true;
@@ -187,9 +188,11 @@ public class TestAdoptionsList extends AppCompatActivity {
                 isLoading = false;
 
                 ArrayList<Adoption> adoptions = arrAdoptions;
-                ArrayList<Promotion> promotions = arrPromotions;
+                Adoption adoption = new Adoption();
+                adoption.setPromotions(arrPromotions);
+                adoptions.add(adoption);
                 progressLoading.setVisibility(View.GONE);
-                adoptionsAdapter.addAll(adoptions);
+                adoptionsAdapter.addAll(adoptions, currentPage);
 
                 if (currentPage != TOTAL_PAGES) adoptionsAdapter.addLoadingFooter();
                 else isLastPage = true;
