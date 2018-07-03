@@ -142,19 +142,19 @@ public class TestAdoptionsList extends AppCompatActivity {
             public void onResponse(Call<Adoptions> call, Response<Adoptions> response) {
                 Log.e("ADOPTIONS LIST", String.valueOf(response.raw()));
                 /* PROCESS THE RESPONSE */
-//                arrAdoptions = processResult(response);
-                Object[] objects = processResult(response);
-                arrAdoptions = (ArrayList<Adoption>) objects[0];
-                arrPromotions = (ArrayList<Promotion>) objects[1];
+                arrAdoptions = processResult(response);
+//                Object[] objects = processResult(response);
+//                arrAdoptions = (ArrayList<Adoption>) objects[0];
+//                arrPromotions = (ArrayList<Promotion>) objects[1];
 //                Log.e("ADOPTIONS SIZE", String.valueOf(arrAdoptions.size()));
 //                Log.e("PROMOTIONS SIZE", String.valueOf(arrPromotions.size()));
 
                 ArrayList<Adoption> adoptions = arrAdoptions;
-                Adoption adoption = new Adoption();
-                adoption.setPromotions(arrPromotions);
-                adoptions.add(adoption);
+//                Adoption adoption = new Adoption();
+//                adoption.setPromotions(arrPromotions);
+//                adoptions.add(adoption);
                 progressLoading.setVisibility(View.GONE);
-                adoptionsAdapter.addAll(adoptions, currentPage);
+                adoptionsAdapter.addAll(adoptions/*, currentPage*/);
 
                 if (currentPage <= TOTAL_PAGES) adoptionsAdapter.addLoadingFooter();
                 else isLastPage = true;
@@ -177,10 +177,10 @@ public class TestAdoptionsList extends AppCompatActivity {
             public void onResponse(Call<Adoptions> call, Response<Adoptions> response) {
 //                Log.e("ADOPTIONS LIST", String.valueOf(response.raw()));
                 /* PROCESS THE RESPONSE */
-//                arrAdoptions = processResult(response);
-                Object[] objects = processResult(response);
-                arrAdoptions = (ArrayList<Adoption>) objects[0];
-                arrPromotions = (ArrayList<Promotion>) objects[1];
+                arrAdoptions = processResult(response);
+//                Object[] objects = processResult(response);
+//                arrAdoptions = (ArrayList<Adoption>) objects[0];
+//                arrPromotions = (ArrayList<Promotion>) objects[1];
 //                Log.e("ADOPTIONS SIZE", String.valueOf(arrAdoptions.size()));
 //                Log.e("PROMOTIONS SIZE", String.valueOf(arrPromotions.size()));
 
@@ -188,11 +188,11 @@ public class TestAdoptionsList extends AppCompatActivity {
                 isLoading = false;
 
                 ArrayList<Adoption> adoptions = arrAdoptions;
-                Adoption adoption = new Adoption();
-                adoption.setPromotions(arrPromotions);
-                adoptions.add(adoption);
-                progressLoading.setVisibility(View.GONE);
-                adoptionsAdapter.addAll(adoptions, currentPage);
+//                Adoption adoption = new Adoption();
+//                adoption.setPromotions(arrPromotions);
+//                adoptions.add(adoption);
+//                progressLoading.setVisibility(View.GONE);
+                adoptionsAdapter.addAll(adoptions/*, currentPage*/);
 
                 if (currentPage != TOTAL_PAGES) adoptionsAdapter.addLoadingFooter();
                 else isLastPage = true;
@@ -207,149 +207,287 @@ public class TestAdoptionsList extends AppCompatActivity {
         });
     }
 
-    private Object[] processResult(Response<Adoptions> response) {
+    private ArrayList<Adoption> processResult(Response<Adoptions> response) {
         ArrayList<Adoption> adoptions = new ArrayList<>();
         ArrayList<Promotion> promotions = new ArrayList<>();
         try {
             String strResult = new Gson().toJson(response.body());
             JSONObject JORoot = new JSONObject(strResult);
-//            Log.e("ROOT", String.valueOf(JORoot));
+            Log.e("ROOT", String.valueOf(JORoot));
             if (JORoot.has("error") && JORoot.getString("error").equalsIgnoreCase("false")) {
                 JSONArray JAAdoptions = JORoot.getJSONArray("adoptions");
-                JSONArray JAPromotions = JORoot.getJSONArray("promotions");
-                for (int j = 0; j < JAPromotions.length(); j++) {
-                    JSONObject JOPromotions = JAPromotions.getJSONObject(j);
-//                    Log.e("PROMOTIONS", String.valueOf(JOPromotions));
-                    promotion = new Promotion();
-
-                    /* GET THE PROMOTION ID */
-                    if (JOPromotions.has("promotedID")) {
-                        promotion.setPromotedID(JOPromotions.getString("promotedID"));
-                    } else {
-                        promotion.setPromotedID(null);
-                    }
-
-                    /* GET THE ADOPTION ID */
-                    if (JOPromotions.has("adoptionID")) {
-                        promotion.setAdoptionID(JOPromotions.getString("adoptionID"));
-                    } else {
-                        promotion.setAdoptionID(null);
-                    }
-
-                    /* GET THE OPTION ID */
-                    if (JOPromotions.has("optionID"))   {
-                        promotion.setOptionID(JOPromotions.getString("optionID"));
-                    } else {
-                        promotion.setOptionID(null);
-                    }
-
-                    /* GET THE PAYMENT ID */
-                    if (JOPromotions.has("paymentID"))  {
-                        promotion.setPaymentID(JOPromotions.getString("paymentID"));
-                    } else {
-                        promotion.setPaymentID(null);
-                    }
-
-                    /* GET THE PROMOTED FROM DATE */
-                    if (JOPromotions.has("promotedFrom"))   {
-                        promotion.setPromotedFrom(JOPromotions.getString("promotedFrom"));
-                    } else {
-                        promotion.setPromotedFrom(null);
-                    }
-
-                    /* GET THE PROMOTED TO DATE */
-                    if (JOPromotions.has("promotedTo")) {
-                        promotion.setPromotedTo(JOPromotions.getString("promotedTo"));
-                    } else {
-                        promotion.setPromotedTo(null);
-                    }
-
-                    /* GET THE PROMOTED TIME STAMP */
-                    if (JOPromotions.has("promotedTimestamp"))  {
-                        promotion.setPromotedTimestamp(JOPromotions.getString("promotedTimestamp"));
-                    } else {
-                        promotion.setPromotedTimestamp(null);
-                    }
-
-                    /* GET THE PET TYPE ID AND NAME */
-                    if (JOPromotions.has("petTypeID") && JOPromotions.has("petTypeName")) {
-                        promotion.setPetTypeID(JOPromotions.getString("petTypeID"));
-                        promotion.setPetTypeName(JOPromotions.getString("petTypeName"));
-                    } else {
-                        promotion.setPetTypeID(null);
-                        promotion.setPetTypeName(null);
-                    }
-
-                    /* GET THE BREED ID AND NAME */
-                    if (JOPromotions.has("breedID") && JOPromotions.has("breedName")) {
-                        promotion.setBreedID(JOPromotions.getString("breedID"));
-                        promotion.setBreedName(JOPromotions.getString("breedName"));
-                    } else {
-                        promotion.setBreedID(null);
-                        promotion.setBreedName(null);
-                    }
-
-                    /* GET THE USER ID AND NAME */
-                    if (JOPromotions.has("userID") && JOPromotions.has("userName")) {
-                        promotion.setUserID(JOPromotions.getString("userID"));
-                        promotion.setUserName(JOPromotions.getString("userName"));
-                    } else {
-                        promotion.setUserID(null);
-                        promotion.setUserName(null);
-                    }
-
-                    /* GET THE CITY ID AND NAME */
-                    if (JOPromotions.has("cityID") && JOPromotions.has("cityName")) {
-                        promotion.setCityID(JOPromotions.getString("cityID"));
-                        promotion.setCityName(JOPromotions.getString("cityName"));
-                    } else {
-                        promotion.setCityID(null);
-                        promotion.setCityName(null);
-                    }
-
-                    /* GET THE ADOPTION NAME */
-                    if (JOPromotions.has("adoptionName"))  {
-                        promotion.setAdoptionName(JOPromotions.getString("adoptionName"));
-                    } else {
-                        promotion.setAdoptionName(null);
-                    }
-
-                    /* GET THE ADOPTION COVER PHOTO */
-                    if (JOPromotions.has("adoptionCoverPhoto"))  {
-                        promotion.setAdoptionCoverPhoto(JOPromotions.getString("adoptionCoverPhoto"));
-                    } else {
-                        promotion.setAdoptionCoverPhoto(null);
-                    }
-
-                    /* GET THE ADOPTION DESCRIPTION */
-                    if (JOPromotions.has("adoptionDescription"))  {
-                        promotion.setAdoptionDescription(JOPromotions.getString("adoptionDescription"));
-                    } else {
-                        promotion.setAdoptionDescription(null);
-                    }
-
-                    /* GET THE ADOPTION GENDER */
-                    if (JOPromotions.has("adoptionGender"))  {
-                        promotion.setAdoptionGender(JOPromotions.getString("adoptionGender"));
-                    } else {
-                        promotion.setAdoptionGender(null);
-                    }
-
-                    /* GET THE ADOPTION TIME STAMP */
-                    if (JOPromotions.has("adoptionTimeStamp"))  {
-                        promotion.setAdoptionTimeStamp(JOPromotions.getString("adoptionTimeStamp"));
-                    } else {
-                        promotion.setAdoptionTimeStamp(null);
-                    }
-
-                    /* ADD THE COLLECTED DATA TO THE ARRAY LIST */
-                    promotions.add(promotion);
-                }
+//                JSONArray JAPromotions = JORoot.getJSONArray("promotions");
+//                for (int j = 0; j < JAPromotions.length(); j++) {
+//                    JSONObject JOPromotions = JAPromotions.getJSONObject(j);
+////                    Log.e("PROMOTIONS", String.valueOf(JOPromotions));
+//                    promotion = new Promotion();
+//
+//                    /* GET THE PROMOTION ID */
+//                    if (JOPromotions.has("promotedID")) {
+//                        promotion.setPromotedID(JOPromotions.getString("promotedID"));
+//                    } else {
+//                        promotion.setPromotedID(null);
+//                    }
+//
+//                    /* GET THE ADOPTION ID */
+//                    if (JOPromotions.has("adoptionID")) {
+//                        promotion.setAdoptionID(JOPromotions.getString("adoptionID"));
+//                    } else {
+//                        promotion.setAdoptionID(null);
+//                    }
+//
+//                    /* GET THE OPTION ID */
+//                    if (JOPromotions.has("optionID"))   {
+//                        promotion.setOptionID(JOPromotions.getString("optionID"));
+//                    } else {
+//                        promotion.setOptionID(null);
+//                    }
+//
+//                    /* GET THE PAYMENT ID */
+//                    if (JOPromotions.has("paymentID"))  {
+//                        promotion.setPaymentID(JOPromotions.getString("paymentID"));
+//                    } else {
+//                        promotion.setPaymentID(null);
+//                    }
+//
+//                    /* GET THE PROMOTED FROM DATE */
+//                    if (JOPromotions.has("promotedFrom"))   {
+//                        promotion.setPromotedFrom(JOPromotions.getString("promotedFrom"));
+//                    } else {
+//                        promotion.setPromotedFrom(null);
+//                    }
+//
+//                    /* GET THE PROMOTED TO DATE */
+//                    if (JOPromotions.has("promotedTo")) {
+//                        promotion.setPromotedTo(JOPromotions.getString("promotedTo"));
+//                    } else {
+//                        promotion.setPromotedTo(null);
+//                    }
+//
+//                    /* GET THE PROMOTED TIME STAMP */
+//                    if (JOPromotions.has("promotedTimestamp"))  {
+//                        promotion.setPromotedTimestamp(JOPromotions.getString("promotedTimestamp"));
+//                    } else {
+//                        promotion.setPromotedTimestamp(null);
+//                    }
+//
+//                    /* GET THE PET TYPE ID AND NAME */
+//                    if (JOPromotions.has("petTypeID") && JOPromotions.has("petTypeName")) {
+//                        promotion.setPetTypeID(JOPromotions.getString("petTypeID"));
+//                        promotion.setPetTypeName(JOPromotions.getString("petTypeName"));
+//                    } else {
+//                        promotion.setPetTypeID(null);
+//                        promotion.setPetTypeName(null);
+//                    }
+//
+//                    /* GET THE BREED ID AND NAME */
+//                    if (JOPromotions.has("breedID") && JOPromotions.has("breedName")) {
+//                        promotion.setBreedID(JOPromotions.getString("breedID"));
+//                        promotion.setBreedName(JOPromotions.getString("breedName"));
+//                    } else {
+//                        promotion.setBreedID(null);
+//                        promotion.setBreedName(null);
+//                    }
+//
+//                    /* GET THE USER ID AND NAME */
+//                    if (JOPromotions.has("userID") && JOPromotions.has("userName")) {
+//                        promotion.setUserID(JOPromotions.getString("userID"));
+//                        promotion.setUserName(JOPromotions.getString("userName"));
+//                    } else {
+//                        promotion.setUserID(null);
+//                        promotion.setUserName(null);
+//                    }
+//
+//                    /* GET THE CITY ID AND NAME */
+//                    if (JOPromotions.has("cityID") && JOPromotions.has("cityName")) {
+//                        promotion.setCityID(JOPromotions.getString("cityID"));
+//                        promotion.setCityName(JOPromotions.getString("cityName"));
+//                    } else {
+//                        promotion.setCityID(null);
+//                        promotion.setCityName(null);
+//                    }
+//
+//                    /* GET THE ADOPTION NAME */
+//                    if (JOPromotions.has("adoptionName"))  {
+//                        promotion.setAdoptionName(JOPromotions.getString("adoptionName"));
+//                    } else {
+//                        promotion.setAdoptionName(null);
+//                    }
+//
+//                    /* GET THE ADOPTION COVER PHOTO */
+//                    if (JOPromotions.has("adoptionCoverPhoto"))  {
+//                        promotion.setAdoptionCoverPhoto(JOPromotions.getString("adoptionCoverPhoto"));
+//                    } else {
+//                        promotion.setAdoptionCoverPhoto(null);
+//                    }
+//
+//                    /* GET THE ADOPTION DESCRIPTION */
+//                    if (JOPromotions.has("adoptionDescription"))  {
+//                        promotion.setAdoptionDescription(JOPromotions.getString("adoptionDescription"));
+//                    } else {
+//                        promotion.setAdoptionDescription(null);
+//                    }
+//
+//                    /* GET THE ADOPTION GENDER */
+//                    if (JOPromotions.has("adoptionGender"))  {
+//                        promotion.setAdoptionGender(JOPromotions.getString("adoptionGender"));
+//                    } else {
+//                        promotion.setAdoptionGender(null);
+//                    }
+//
+//                    /* GET THE ADOPTION TIME STAMP */
+//                    if (JOPromotions.has("adoptionTimeStamp"))  {
+//                        promotion.setAdoptionTimeStamp(JOPromotions.getString("adoptionTimeStamp"));
+//                    } else {
+//                        promotion.setAdoptionTimeStamp(null);
+//                    }
+//
+//                    /* ADD THE COLLECTED DATA TO THE ARRAY LIST */
+//                    promotions.add(promotion);
+//                }
 
                 for (int i = 0; i < JAAdoptions.length(); i++) {
                     JSONObject JOAdoptions = JAAdoptions.getJSONObject(i);
 //                    Log.e("ADOPTIONS", String.valueOf(JOAdoptions));
                     data = new Adoption();
+
+                    /* GET THE PROMOTED ADOPTIONS */
+                    JSONArray JAPromotions = JOAdoptions.getJSONArray("promotions");
+                    Log.e("PROMOTIONS", String.valueOf(JAPromotions));
+                    if (JAPromotions.length() > 0)  {
+                        for (int j = 0; j < JAPromotions.length(); j++) {
+                            JSONObject JOPromotions = JAPromotions.getJSONObject(j);
+                            Log.e("PROMOTIONS", String.valueOf(JOPromotions));
+                            promotion = new Promotion();
+
+                            /* GET THE PROMOTION ID */
+                            if (JOPromotions.has("promotedID")) {
+                                promotion.setPromotedID(JOPromotions.getString("promotedID"));
+                            } else {
+                                promotion.setPromotedID(null);
+                            }
+
+                            /* GET THE ADOPTION ID */
+                            if (JOPromotions.has("adoptionID")) {
+                                promotion.setAdoptionID(JOPromotions.getString("adoptionID"));
+                            } else {
+                                promotion.setAdoptionID(null);
+                            }
+
+                            /* GET THE OPTION ID */
+                            if (JOPromotions.has("optionID"))   {
+                                promotion.setOptionID(JOPromotions.getString("optionID"));
+                            } else {
+                                promotion.setOptionID(null);
+                            }
+
+                            /* GET THE PAYMENT ID */
+                            if (JOPromotions.has("paymentID"))  {
+                                promotion.setPaymentID(JOPromotions.getString("paymentID"));
+                            } else {
+                                promotion.setPaymentID(null);
+                            }
+
+                            /* GET THE PROMOTED FROM DATE */
+                            if (JOPromotions.has("promotedFrom"))   {
+                                promotion.setPromotedFrom(JOPromotions.getString("promotedFrom"));
+                            } else {
+                                promotion.setPromotedFrom(null);
+                            }
+
+                            /* GET THE PROMOTED TO DATE */
+                            if (JOPromotions.has("promotedTo")) {
+                                promotion.setPromotedTo(JOPromotions.getString("promotedTo"));
+                            } else {
+                                promotion.setPromotedTo(null);
+                            }
+
+                            /* GET THE PROMOTED TIME STAMP */
+                            if (JOPromotions.has("promotedTimestamp"))  {
+                                promotion.setPromotedTimestamp(JOPromotions.getString("promotedTimestamp"));
+                            } else {
+                                promotion.setPromotedTimestamp(null);
+                            }
+
+                            /* GET THE PET TYPE ID AND NAME */
+                            if (JOPromotions.has("petTypeID") && JOPromotions.has("petTypeName")) {
+                                promotion.setPetTypeID(JOPromotions.getString("petTypeID"));
+                                promotion.setPetTypeName(JOPromotions.getString("petTypeName"));
+                            } else {
+                                promotion.setPetTypeID(null);
+                                promotion.setPetTypeName(null);
+                            }
+
+                            /* GET THE BREED ID AND NAME */
+                            if (JOPromotions.has("breedID") && JOPromotions.has("breedName")) {
+                                promotion.setBreedID(JOPromotions.getString("breedID"));
+                                promotion.setBreedName(JOPromotions.getString("breedName"));
+                            } else {
+                                promotion.setBreedID(null);
+                                promotion.setBreedName(null);
+                            }
+
+                            /* GET THE USER ID AND NAME */
+                            if (JOPromotions.has("userID") && JOPromotions.has("userName")) {
+                                promotion.setUserID(JOPromotions.getString("userID"));
+                                promotion.setUserName(JOPromotions.getString("userName"));
+                            } else {
+                                promotion.setUserID(null);
+                                promotion.setUserName(null);
+                            }
+
+                            /* GET THE CITY ID AND NAME */
+                            if (JOPromotions.has("cityID") && JOPromotions.has("cityName")) {
+                                promotion.setCityID(JOPromotions.getString("cityID"));
+                                promotion.setCityName(JOPromotions.getString("cityName"));
+                            } else {
+                                promotion.setCityID(null);
+                                promotion.setCityName(null);
+                            }
+
+                            /* GET THE ADOPTION NAME */
+                            if (JOPromotions.has("adoptionName"))  {
+                                promotion.setAdoptionName(JOPromotions.getString("adoptionName"));
+                            } else {
+                                promotion.setAdoptionName(null);
+                            }
+
+                            /* GET THE ADOPTION COVER PHOTO */
+                            if (JOPromotions.has("adoptionCoverPhoto"))  {
+                                promotion.setAdoptionCoverPhoto(JOPromotions.getString("adoptionCoverPhoto"));
+                            } else {
+                                promotion.setAdoptionCoverPhoto(null);
+                            }
+
+                            /* GET THE ADOPTION DESCRIPTION */
+                            if (JOPromotions.has("adoptionDescription"))  {
+                                promotion.setAdoptionDescription(JOPromotions.getString("adoptionDescription"));
+                            } else {
+                                promotion.setAdoptionDescription(null);
+                            }
+
+                            /* GET THE ADOPTION GENDER */
+                            if (JOPromotions.has("adoptionGender"))  {
+                                promotion.setAdoptionGender(JOPromotions.getString("adoptionGender"));
+                            } else {
+                                promotion.setAdoptionGender(null);
+                            }
+
+                            /* GET THE ADOPTION TIME STAMP */
+                            if (JOPromotions.has("adoptionTimeStamp"))  {
+                                promotion.setAdoptionTimeStamp(JOPromotions.getString("adoptionTimeStamp"));
+                            } else {
+                                promotion.setAdoptionTimeStamp(null);
+                            }
+
+                            /* ADD THE COLLECTED DATA TO THE ARRAY LIST */
+                            promotions.add(promotion);
+                        }
+                        data.setPromotions(promotions);
+                        Log.e("PROMOTIONS SIZE", String.valueOf(promotions.size()));
+                    } else {
+                        data.setPromotions(null);
+                    }
 
                     /* GET THE ADOPTION ID */
                     if (JOAdoptions.has("adoptionID"))  {
@@ -465,8 +603,8 @@ public class TestAdoptionsList extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return new Object[]{adoptions, promotions};
-//        return adoptions;
+//        return new Object[]{adoptions, promotions};
+        return adoptions;
     }
 
     /***** FETCH THE USER'S LOCATION *****/

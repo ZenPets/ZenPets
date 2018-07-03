@@ -33,7 +33,7 @@ public class PromotedAdoptionsAdapter extends RecyclerView.Adapter<PromotedAdopt
 
     @Override
     public int getItemCount() {
-        return arrPromoted.size();
+        return arrPromoted == null ? 0 : arrPromoted.size();
     }
 
     @Override

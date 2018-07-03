@@ -8,7 +8,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +43,7 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private boolean isLoadingAdded = false;
 
-    private int currentPage = 0;
+//    private int currentPage = 0;
 
     /***** ARRAY LIST TO GET DATA FROM THE ACTIVITY *****/
     private final ArrayList<Adoption> arrAdoptions;
@@ -62,130 +61,145 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.arrAdoptions = arrAdoptions;
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        Log.e("POSITION", String.valueOf(position));
-        if (position == 0)  {
-            return PROMOTED;
-        } else if (position > 0 && position % 5 == 0)   {
-            return PROMOTED;
-        } else {
-            return ITEM;
-        }
-    }
+//    @Override
+//    public int getItemViewType(int position) {
+////        Log.e("POSITION", String.valueOf(position));
+//        if (position == 0)  {
+//            return PROMOTED;
+//        } else if (position > 0 && position % 5 == 0)   {
+//            return PROMOTED;
+//        } else {
+//            return ITEM;
+//        }
+//    }
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
         final Adoption data = arrAdoptions.get(position);
 
         switch (getItemViewType(position)) {
-            case PROMOTED:
-                final PromotedVH promoted = (PromotedVH) holder;
-                Log.e("CURRENT PAGE", String.valueOf(currentPage));
-
-//                PromotionAPI api = ZenApiClient.getClient().create(PromotionAPI.class);
-//                Call<Promotions> call = api.fetchPromotedAdoptions(data.getCityID(), String.valueOf(currentPage));
-//                call.enqueue(new Callback<Promotions>() {
-//                    @Override
-//                    public void onResponse(Call<Promotions> call, Response<Promotions> response) {
-//                        if (response.body() != null && response.body().getPromotions() != null) {
-//                            arrPromotions = response.body().getPromotions();
-//                            if (arrPromotions.size() > 0)   {
-//                                Log.e("PROMOTIONS SIZE", String.valueOf(arrPromotions.size()));
-//                                adapter = new PromotedAdoptionsAdapter(activity, arrPromotions);
-//                                promoted.listPromoted.setAdapter(adapter);
-//                            }
-//                        }
-//                    }
+//            case PROMOTED:
+//                final PromotedVH promoted = (PromotedVH) holder;
+////                Log.e("CURRENT PAGE", String.valueOf(currentPage));
 //
-//                    @Override
-//                    public void onFailure(Call<Promotions> call, Throwable t) {
-//                    }
-//                });
-
-                arrPromotions = data.getPromotions();
-                if (arrPromotions.size() > 0)    {
-                    Log.e("PROMOTIONS SIZE", String.valueOf(arrPromotions.size()));
-                    adapter = new PromotedAdoptionsAdapter(activity, arrPromotions);
-                    promoted.listPromoted.setAdapter(adapter);
-                }
-                break;
+////                PromotionAPI api = ZenApiClient.getClient().create(PromotionAPI.class);
+////                Call<Promotions> call = api.fetchPromotedAdoptions(data.getCityID(), String.valueOf(currentPage));
+////                call.enqueue(new Callback<Promotions>() {
+////                    @Override
+////                    public void onResponse(Call<Promotions> call, Response<Promotions> response) {
+////                        if (response.body() != null && response.body().getPromotions() != null) {
+////                            arrPromotions = response.body().getPromotions();
+////                            if (arrPromotions.size() > 0)   {
+////                                Log.e("PROMOTIONS SIZE", String.valueOf(arrPromotions.size()));
+////                                adapter = new PromotedAdoptionsAdapter(activity, arrPromotions);
+////                                promoted.listPromoted.setAdapter(adapter);
+////                            }
+////                        }
+////                    }
+////
+////                    @Override
+////                    public void onFailure(Call<Promotions> call, Throwable t) {
+////                    }
+////                });
+//
+//                arrPromotions = data.getPromotions();
+//                if (arrPromotions != null && arrPromotions.size() > 0)    {
+////                    Log.e("PROMOTIONS SIZE", String.valueOf(arrPromotions.size()));
+//                    adapter = new PromotedAdoptionsAdapter(activity, arrPromotions);
+//                    promoted.listPromoted.setAdapter(adapter);
+//                }
+//                break;
             case ITEM:
                 final AdoptionsVH vh = (AdoptionsVH) holder;
 
-                /* SET THE ADOPTION COVER PHOTO */
-                String strAdoptionCover = data.getAdoptionCoverPhoto();
-                if (strAdoptionCover != null
-                        && !strAdoptionCover.equalsIgnoreCase("")
-                        && !strAdoptionCover.equalsIgnoreCase("null")) {
-                    Uri uri = Uri.parse(strAdoptionCover);
-                    vh.imgvwAdoptionCover.setImageURI(uri);
+                arrPromotions = data.getPromotions();
+                if (arrPromotions != null && arrPromotions.size() > 0)    {
+                    /* SHOW THE LIST OF PROMOTED ADOPTIONS AND HIDE THE ADOPTION ITEM */
+//                    Log.e("PROMOTIONS SIZE", String.valueOf(arrPromotions.size()));
+                    adapter = new PromotedAdoptionsAdapter(activity, arrPromotions);
+                    vh.listPromoted.setAdapter(adapter);
+                    vh.listPromoted.setVisibility(View.VISIBLE);
+                    vh.cardAdoptionContainer.setVisibility(View.GONE);
                 } else {
-                    ImageRequest request = ImageRequestBuilder
-                            .newBuilderWithResourceId(R.drawable.empty_graphic)
-                            .build();
-                    vh.imgvwAdoptionCover.setImageURI(request.getSourceUri());
-                }
-        
-                /* SET THE ADOPTION NAME */
-                if (data.getAdoptionName() != null && !data.getAdoptionName().equalsIgnoreCase("")) {
-                    vh.txtAdoptionName.setText(data.getAdoptionName());
-                } else {
-                    vh.txtAdoptionName.setText(activity.getString(R.string.adoption_details_unnamed));
-                }
-        
-                /* SET THE PET'S GENDER */
-                if (data.getAdoptionGender() != null)   {
-                    if (data.getAdoptionGender().equalsIgnoreCase("male"))  {
-                        vh.imgvwGender.setIcon("faw-mars");
-                        vh.imgvwGender.setColor(ContextCompat.getColor(activity, android.R.color.holo_blue_dark));
-                    } else if (data.getAdoptionGender().equalsIgnoreCase("female")) {
-                        vh.imgvwGender.setIcon("faw-venus");
-                        vh.imgvwGender.setColor(ContextCompat.getColor(activity, android.R.color.holo_red_dark));
-                    }
-                }
-        
-                /* SET THE PET'S BREED */
-                if (data.getBreedName() != null)    {
-                    vh.txtAdoptionBreed.setText(data.getBreedName());
-                }
 
-                /* SET THE TIMESTAMP (DATE OF CREATION )*/
-                if (data.getAdoptionTimeStamp() != null)    {
-                    String adoptionTimeStamp = data.getAdoptionTimeStamp();
-                    long lngTimeStamp = Long.parseLong(adoptionTimeStamp) * 1000;
-        
-                    /* GET THE PRETTY DATE */
-                    Calendar calPretty = Calendar.getInstance(Locale.getDefault());
-                    calPretty.setTimeInMillis(lngTimeStamp);
-                    Date date = calPretty.getTime();
-                    PrettyTime prettyTime = new PrettyTime();
-                    String strPrettyDate = prettyTime.format(date);
-                    vh.txtAdoptionTimeStamp.setText(activity.getString(R.string.adoption_details_posted_new, strPrettyDate));
-                }
-        
-                /* SHOW THE ADOPTION DETAILS */
-                vh.cardAdoptionContainer.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(activity, TestAdoptionDetails.class);
-                        intent.putExtra("ADOPTION_ID", data.getAdoptionID());
-                        activity.startActivity(intent);
+                    /* SET THE ADOPTION COVER PHOTO */
+                    String strAdoptionCover = data.getAdoptionCoverPhoto();
+                    if (strAdoptionCover != null
+                            && !strAdoptionCover.equalsIgnoreCase("")
+                            && !strAdoptionCover.equalsIgnoreCase("null")) {
+                        Uri uri = Uri.parse(strAdoptionCover);
+                        vh.imgvwAdoptionCover.setImageURI(uri);
+                    } else {
+                        ImageRequest request = ImageRequestBuilder
+                                .newBuilderWithResourceId(R.drawable.empty_graphic)
+                                .build();
+                        vh.imgvwAdoptionCover.setImageURI(request.getSourceUri());
                     }
-                });
+
+                    /* SET THE ADOPTION NAME */
+                    if (data.getAdoptionName() != null && !data.getAdoptionName().equalsIgnoreCase("")) {
+                        vh.txtAdoptionName.setText(data.getAdoptionName());
+                    } else {
+                        vh.txtAdoptionName.setText(activity.getString(R.string.adoption_details_unnamed));
+                    }
+
+                    /* SET THE PET'S GENDER */
+                    if (data.getAdoptionGender() != null)   {
+                        if (data.getAdoptionGender().equalsIgnoreCase("male"))  {
+                            vh.imgvwGender.setIcon("faw-mars");
+                            vh.imgvwGender.setColor(ContextCompat.getColor(activity, android.R.color.holo_blue_dark));
+                        } else if (data.getAdoptionGender().equalsIgnoreCase("female")) {
+                            vh.imgvwGender.setIcon("faw-venus");
+                            vh.imgvwGender.setColor(ContextCompat.getColor(activity, android.R.color.holo_red_dark));
+                        }
+                    }
+
+                    /* SET THE PET'S BREED */
+                    if (data.getBreedName() != null)    {
+                        vh.txtAdoptionBreed.setText(data.getBreedName());
+                    }
+
+                    /* SET THE TIMESTAMP (DATE OF CREATION )*/
+                    if (data.getAdoptionTimeStamp() != null)    {
+                        String adoptionTimeStamp = data.getAdoptionTimeStamp();
+                        long lngTimeStamp = Long.parseLong(adoptionTimeStamp) * 1000;
+
+                        /* GET THE PRETTY DATE */
+                        Calendar calPretty = Calendar.getInstance(Locale.getDefault());
+                        calPretty.setTimeInMillis(lngTimeStamp);
+                        Date date = calPretty.getTime();
+                        PrettyTime prettyTime = new PrettyTime();
+                        String strPrettyDate = prettyTime.format(date);
+                        vh.txtAdoptionTimeStamp.setText(activity.getString(R.string.adoption_details_posted_new, strPrettyDate));
+                    }
+
+                    /* SHOW THE ADOPTION DETAILS */
+                    vh.cardAdoptionContainer.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(activity, TestAdoptionDetails.class);
+                            intent.putExtra("ADOPTION_ID", data.getAdoptionID());
+                            activity.startActivity(intent);
+                        }
+                    });
+
+                    /* SHOW THE ADOPTION ITEM AND HIDE THE LIST OF PROMOTED ADOPTION */
+                    vh.cardAdoptionContainer.setVisibility(View.VISIBLE);
+                    vh.listPromoted.setVisibility(View.GONE);
+                }
                 break;
             case LOADING:
                 break;
         }
     }
 
-    private int getRealPosition(int position) {
-        if (5 == 0) {
-            return position;
-        } else {
-            return position - position / 5;
-        }
-    }
+//    private int getRealPosition(int position) {
+//        if (5 == 0) {
+//            return position;
+//        } else {
+//            return position - position / 5;
+//        }
+//    }
 
     @NonNull
     @Override
@@ -197,9 +211,9 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case ITEM:
                 viewHolder = getViewHolder(parent, inflater);
                 break;
-            case PROMOTED:
-                viewHolder = getPromotedViewHolder(parent, inflater);
-                break;
+//            case PROMOTED:
+//                viewHolder = getPromotedViewHolder(parent, inflater);
+//                break;
             case LOADING:
                 View v2 = inflater.inflate(R.layout.endless_item_progress, parent, false);
                 viewHolder = new LoadingVH(v2);
@@ -225,16 +239,16 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
-//        return arrAdoptions == null ? 0 : arrAdoptions.size();
-        int additionalContent = 0;
-        if (arrAdoptions.size() > 0 && 5 > 0 && arrAdoptions.size() > 5) {
-            additionalContent = arrAdoptions.size() / 5;
-        }
-        return arrAdoptions.size() + additionalContent;
+        return arrAdoptions == null ? 0 : arrAdoptions.size();
+//        int additionalContent = 0;
+//        if (arrAdoptions.size() > 0 && 5 > 0 && arrAdoptions.size() > 5) {
+//            additionalContent = arrAdoptions.size() / 5;
+//        }
+//        return arrAdoptions.size() + additionalContent;
     }
 
-    public void addAll(ArrayList<Adoption> arrAdoptions, int currentPage) {
-        this.currentPage = currentPage;
+    public void addAll(ArrayList<Adoption> arrAdoptions/*, int currentPage*/) {
+//        this.currentPage = currentPage;
         for (Adoption adoption : arrAdoptions) {
             add(adoption);
         }
@@ -307,6 +321,7 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     protected class AdoptionsVH extends RecyclerView.ViewHolder {
+        RecyclerView listPromoted;
         CardView cardAdoptionContainer;
         SimpleDraweeView imgvwAdoptionCover;
         TextView txtAdoptionName;
@@ -316,12 +331,25 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         AdoptionsVH(View v) {
             super(v);
+            listPromoted = v.findViewById(R.id.listPromoted);
             cardAdoptionContainer = v.findViewById(R.id.cardAdoptionContainer);
             imgvwAdoptionCover = v.findViewById(R.id.imgvwAdoptionCover);
             txtAdoptionName = v.findViewById(R.id.txtAdoptionName);
             txtAdoptionBreed = v.findViewById(R.id.txtAdoptionBreed);
             imgvwGender = v.findViewById(R.id.imgvwGender);
             txtAdoptionTimeStamp = v.findViewById(R.id.txtAdoptionTimeStamp);
+
+            /* CONFIGURE THE RECYCLER VIEW */
+            LinearLayoutManager llmAppointments = new LinearLayoutManager(activity);
+            llmAppointments.setOrientation(LinearLayoutManager.HORIZONTAL);
+            llmAppointments.setAutoMeasureEnabled(true);
+            listPromoted.setLayoutManager(llmAppointments);
+            listPromoted.setHasFixedSize(true);
+            listPromoted.setNestedScrollingEnabled(false);
+
+            /* CONFIGURE THE ADAPTER */
+            adapter = new PromotedAdoptionsAdapter(activity, arrPromotions);
+            listPromoted.setAdapter(adapter);
         }
     }
 
