@@ -255,7 +255,7 @@ class NewDoctorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             /* CONFIGURE THE RECYCLER VIEW */
             LinearLayoutManager manager = new LinearLayoutManager(activity);
             manager.setOrientation(LinearLayoutManager.HORIZONTAL);
-//            manager.setAutoMeasureEnabled(true);
+            manager.setAutoMeasureEnabled(true);
             listClinicImages.setLayoutManager(manager);
             listClinicImages.setHasFixedSize(true);
             listClinicImages.setNestedScrollingEnabled(false);

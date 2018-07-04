@@ -78,37 +78,6 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         final Adoption data = arrAdoptions.get(position);
 
         switch (getItemViewType(position)) {
-//            case PROMOTED:
-//                final PromotedVH promoted = (PromotedVH) holder;
-////                Log.e("CURRENT PAGE", String.valueOf(currentPage));
-//
-////                PromotionAPI api = ZenApiClient.getClient().create(PromotionAPI.class);
-////                Call<Promotions> call = api.fetchPromotedAdoptions(data.getCityID(), String.valueOf(currentPage));
-////                call.enqueue(new Callback<Promotions>() {
-////                    @Override
-////                    public void onResponse(Call<Promotions> call, Response<Promotions> response) {
-////                        if (response.body() != null && response.body().getPromotions() != null) {
-////                            arrPromotions = response.body().getPromotions();
-////                            if (arrPromotions.size() > 0)   {
-////                                Log.e("PROMOTIONS SIZE", String.valueOf(arrPromotions.size()));
-////                                adapter = new PromotedAdoptionsAdapter(activity, arrPromotions);
-////                                promoted.listPromoted.setAdapter(adapter);
-////                            }
-////                        }
-////                    }
-////
-////                    @Override
-////                    public void onFailure(Call<Promotions> call, Throwable t) {
-////                    }
-////                });
-//
-//                arrPromotions = data.getPromotions();
-//                if (arrPromotions != null && arrPromotions.size() > 0)    {
-////                    Log.e("PROMOTIONS SIZE", String.valueOf(arrPromotions.size()));
-//                    adapter = new PromotedAdoptionsAdapter(activity, arrPromotions);
-//                    promoted.listPromoted.setAdapter(adapter);
-//                }
-//                break;
             case ITEM:
                 final AdoptionsVH vh = (AdoptionsVH) holder;
 

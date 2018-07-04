@@ -25,4 +25,8 @@ public interface PromotionAPI {
     Call<Promotions> fetchPromotedAdoptions(
             @Query("cityID") String cityID,
             @Query("pageNumber") String pageNumber);
+
+    /** CHECK IF AND ADOPTION IS BEING PROMOTED **/
+    @GET("promotionExists")
+    Call<PromotionExistsData> promotionExists(@Query("adoptionID") String adoptionID);
 }

@@ -6,13 +6,16 @@ import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
@@ -28,7 +31,13 @@ import java.util.Locale;
 import biz.zenpets.users.R;
 import biz.zenpets.users.adoptions.promote.PromoteAdoptionActivity;
 import biz.zenpets.users.details.adoptions.UserAdoptionDetails;
+import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.models.adoptions.adoption.Adoption;
+import biz.zenpets.users.utils.models.adoptions.promotion.PromotionAPI;
+import biz.zenpets.users.utils.models.adoptions.promotion.PromotionExistsData;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TestUserAdoptionsAdapter extends RecyclerView.Adapter<TestUserAdoptionsAdapter.AdoptionsVH> {
 
@@ -122,9 +131,33 @@ public class TestUserAdoptionsAdapter extends RecyclerView.Adapter<TestUserAdopt
                             case R.id.menuStatus:
                                 break;
                             case R.id.menuPromote:
-                                Intent intentPromote = new Intent(activity, PromoteAdoptionActivity.class);
-                                intentPromote.putExtra("ADOPTION_ID", data.getAdoptionID());
-                                activity.startActivity(intentPromote);
+                                /* CHECK IF THE ADOPTION IS BEING PROMOTED */
+                                PromotionAPI api = ZenApiClient.getClient().create(PromotionAPI.class);
+                                Call<PromotionExistsData> call = api.promotionExists(data.getAdoptionID());
+                                call.enqueue(new Callback<PromotionExistsData>() {
+                                    @Override
+                                    public void onResponse(Call<PromotionExistsData> call, Response<PromotionExistsData> response) {
+                                        PromotionExistsData body = response.body();
+                                        if (body != null)   {
+                                            String message = body.getMessage();
+                                            if (message != null)    {
+                                                if (message.equalsIgnoreCase("Promotion record exists..."))   {
+                                                    Toast.makeText(activity, "This Adoption listing is already being promoted...", Toast.LENGTH_LONG).show();
+                                                } else if (message.equalsIgnoreCase("Promotion record doesn't exist..."))    {
+                                                    Intent intentPromote = new Intent(activity, PromoteAdoptionActivity.class);
+                                                    intentPromote.putExtra("ADOPTION_ID", data.getAdoptionID());
+                                                    activity.startActivity(intentPromote);
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<PromotionExistsData> call, Throwable t) {
+                                        Log.e("CHECK FAILURE", t.getMessage());
+                                        Crashlytics.logException(t);
+                                    }
+                                });
                                 break;
                             default:
                                 break;
