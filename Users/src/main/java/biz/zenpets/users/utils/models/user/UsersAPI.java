@@ -56,4 +56,8 @@ public interface UsersAPI {
     Call<UserData> updateUserToken(
             @Field("userID") String userID,
             @Field("userToken") String userToken);
+
+    /** FETCH A USER'S TOKEN (FOR NOTIFICATIONS) **/
+    @GET("fetchUserToken")
+    Call<UserData> fetchUserToken(@Query("userID") String userID);
 }

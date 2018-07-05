@@ -38,12 +38,9 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final Activity activity;
 
     private static final int ITEM = 0;
-    private static final int PROMOTED = 1;
     private static final int LOADING = 2;
 
     private boolean isLoadingAdded = false;
-
-//    private int currentPage = 0;
 
     /***** ARRAY LIST TO GET DATA FROM THE ACTIVITY *****/
     private final ArrayList<Adoption> arrAdoptions;
@@ -61,18 +58,6 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.arrAdoptions = arrAdoptions;
     }
 
-//    @Override
-//    public int getItemViewType(int position) {
-////        Log.e("POSITION", String.valueOf(position));
-//        if (position == 0)  {
-//            return PROMOTED;
-//        } else if (position > 0 && position % 5 == 0)   {
-//            return PROMOTED;
-//        } else {
-//            return ITEM;
-//        }
-//    }
-
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
         final Adoption data = arrAdoptions.get(position);
@@ -84,7 +69,6 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 arrPromotions = data.getPromotions();
                 if (arrPromotions != null && arrPromotions.size() > 0)    {
                     /* SHOW THE LIST OF PROMOTED ADOPTIONS AND HIDE THE ADOPTION ITEM */
-//                    Log.e("PROMOTIONS SIZE", String.valueOf(arrPromotions.size()));
                     adapter = new PromotedAdoptionsAdapter(activity, arrPromotions);
                     vh.listPromoted.setAdapter(adapter);
                     vh.listPromoted.setVisibility(View.VISIBLE);
@@ -162,14 +146,6 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-//    private int getRealPosition(int position) {
-//        if (5 == 0) {
-//            return position;
-//        } else {
-//            return position - position / 5;
-//        }
-//    }
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -180,21 +156,11 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case ITEM:
                 viewHolder = getViewHolder(parent, inflater);
                 break;
-//            case PROMOTED:
-//                viewHolder = getPromotedViewHolder(parent, inflater);
-//                break;
             case LOADING:
                 View v2 = inflater.inflate(R.layout.endless_item_progress, parent, false);
                 viewHolder = new LoadingVH(v2);
                 break;
         }
-        return viewHolder;
-    }
-
-    private RecyclerView.ViewHolder getPromotedViewHolder(ViewGroup parent, LayoutInflater inflater) {
-        RecyclerView.ViewHolder viewHolder;
-        View v2 = inflater.inflate(R.layout.promoted_adoption_list, parent, false);
-        viewHolder = new PromotedVH(v2);
         return viewHolder;
     }
 
@@ -209,15 +175,9 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public int getItemCount() {
         return arrAdoptions == null ? 0 : arrAdoptions.size();
-//        int additionalContent = 0;
-//        if (arrAdoptions.size() > 0 && 5 > 0 && arrAdoptions.size() > 5) {
-//            additionalContent = arrAdoptions.size() / 5;
-//        }
-//        return arrAdoptions.size() + additionalContent;
     }
 
-    public void addAll(ArrayList<Adoption> arrAdoptions/*, int currentPage*/) {
-//        this.currentPage = currentPage;
+    public void addAll(ArrayList<Adoption> arrAdoptions) {
         for (Adoption adoption : arrAdoptions) {
             add(adoption);
         }
@@ -266,27 +226,6 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public Adoption getItem(int position) {
         return arrAdoptions.get(position);
-    }
-
-    protected class PromotedVH extends RecyclerView.ViewHolder {
-        RecyclerView listPromoted;
-
-        PromotedVH(View v) {
-            super(v);
-            listPromoted = v.findViewById(R.id.listPromoted);
-
-            /* CONFIGURE THE RECYCLER VIEW */
-            LinearLayoutManager llmAppointments = new LinearLayoutManager(activity);
-            llmAppointments.setOrientation(LinearLayoutManager.HORIZONTAL);
-            llmAppointments.setAutoMeasureEnabled(true);
-            listPromoted.setLayoutManager(llmAppointments);
-            listPromoted.setHasFixedSize(true);
-            listPromoted.setNestedScrollingEnabled(false);
-
-            /* CONFIGURE THE ADAPTER */
-            adapter = new PromotedAdoptionsAdapter(activity, arrPromotions);
-            listPromoted.setAdapter(adapter);
-        }
     }
 
     protected class AdoptionsVH extends RecyclerView.ViewHolder {

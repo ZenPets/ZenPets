@@ -1,6 +1,7 @@
 package biz.zenpets.users.details.adoptions;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,11 +12,13 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +31,6 @@ import com.mikepenz.iconics.view.IconicsImageView;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -46,8 +48,10 @@ import biz.zenpets.users.utils.models.adoptions.images.AdoptionImagesAPI;
 import biz.zenpets.users.utils.models.adoptions.messages.AdoptionMessage;
 import biz.zenpets.users.utils.models.adoptions.messages.AdoptionMessages;
 import biz.zenpets.users.utils.models.adoptions.messages.AdoptionMessagesAPI;
+import biz.zenpets.users.utils.models.adoptions.notifications.AdoptionNotificationAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,6 +67,12 @@ public class TestAdoptionDetails extends AppCompatActivity {
 
     /** THE LOGGED IN / POSTER'S USER ID **/
     private String POSTER_ID = null;
+
+    /** THE USER TOKEN **/
+    String USER_TOKEN = null;
+
+    /** AN ARRAY LIST INSTANCE TO HOLD THE LIST OF USERS PARTICIPATING IN THE ADOPTION LISTING **/
+    ArrayList<AdoptionMessage> arrUsers = new ArrayList<>();
 
     /** THE ADOPTION DETAILS DATA **/
     private String PET_TYPE_ID = null;
@@ -82,6 +92,9 @@ public class TestAdoptionDetails extends AppCompatActivity {
     private String ADOPTION_NEUTERED = null;
     private String ADOPTION_TIMESTAMP = null;
     private String ADOPTION_STATUS = null;
+
+    /** THE ADOPTION MESSAGE **/
+    private String ADOPTION_MESSAGE = null;
 
     /** THE PROGRESS DIALOG INSTANCE **/
     private ProgressDialog dialog;
@@ -107,6 +120,27 @@ public class TestAdoptionDetails extends AppCompatActivity {
     @BindView(R.id.listMessages) RecyclerView listMessages;
     @BindView(R.id.linlaEmpty) LinearLayout linlaEmpty;
     @BindView(R.id.edtComment) AppCompatEditText edtComment;
+
+    /** PUBLISH A NEW MESSAGE **/
+    @OnClick(R.id.imgbtnComment) void newMessage()  {
+        /* HIDE THE KEYBOARD */
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(edtComment.getWindowToken(), 0);
+        }
+
+        /* COLLECT THE ADOPTION MESSAGE */
+        ADOPTION_MESSAGE = edtComment.getText().toString().trim();
+
+        /* VALIDATE THE MESSAGE IS NOT NULL */
+        if (TextUtils.isEmpty(ADOPTION_MESSAGE)) {
+            edtComment.setError("Please type a message....");
+            edtComment.requestFocus();
+        } else  {
+            /* PUBLISH THE ADOPTION MESSAGE */
+            postMessage();
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -232,11 +266,11 @@ public class TestAdoptionDetails extends AppCompatActivity {
                     PrettyTime prettyTime = new PrettyTime();
                     String strPrettyDate = prettyTime.format(date);
 
-                    Calendar calendar = Calendar.getInstance(Locale.getDefault());
-                    calendar.setTimeInMillis(lngTimeStamp);
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-                    Date currentTimeZone = calendar.getTime();
-                    String strDate = sdf.format(currentTimeZone);
+//                    Calendar calendar = Calendar.getInstance(Locale.getDefault());
+//                    calendar.setTimeInMillis(lngTimeStamp);
+//                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+//                    Date currentTimeZone = calendar.getTime();
+//                    String strDate = sdf.format(currentTimeZone);
 //                    txtTimeStamp.setText(getString(R.string.adoption_details_posted, strDate, strPrettyDate));
                     txtAdoptionTimeStamp.setText(getString(R.string.adoption_details_posted_new, strPrettyDate));
                 } else {
@@ -401,6 +435,66 @@ public class TestAdoptionDetails extends AppCompatActivity {
                 break;
         }
         return false;
+    }
+
+    /***** PUBLISH THE ADOPTION MESSAGE *****/
+    private void postMessage() {
+        final ProgressDialog dialogMessage = new ProgressDialog(this);
+        dialog.setMessage("Posting your message....");
+        dialog.setIndeterminate(false);
+        dialog.setCancelable(false);
+        dialog.show();
+
+        String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
+        AdoptionMessagesAPI api = ZenApiClient.getClient().create(AdoptionMessagesAPI.class);
+        Call<AdoptionMessage> call = api.newAdoptionMessage(
+                ADOPTION_ID, POSTER_ID, ADOPTION_MESSAGE, timeStamp
+        );
+        call.enqueue(new Callback<AdoptionMessage>() {
+            @Override
+            public void onResponse(Call<AdoptionMessage> call, Response<AdoptionMessage> response) {
+                if (response.isSuccessful())    {
+                    /* FETCH A LIST OF PARTICIPATING USERS */
+                    fetchUsersList();
+                    Toast.makeText(getApplicationContext(), "Message successfully posted", Toast.LENGTH_SHORT).show();
+                    edtComment.setText("");
+                    arrMessages.clear();
+
+                    /* FETCH THE ADOPTION MESSAGES AGAIN */
+                    fetchAdoptionMessages();
+                } else {
+                    Toast.makeText(getApplicationContext(), "There was a problem posting your message....", Toast.LENGTH_SHORT).show();
+                }
+
+                /* DISMISS THE DIALOG */
+                dialogMessage.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<AdoptionMessage> call, Throwable t) {
+                Crashlytics.logException(t);
+            }
+        });
+    }
+
+    /** FETCH A LIST OF PARTICIPATING USERS **/
+    private void fetchUsersList() {
+        AdoptionNotificationAPI api = ZenApiClient.getClient().create(AdoptionNotificationAPI.class);
+        Call<AdoptionMessages> call = api.fetchAdoptionParticipants(ADOPTION_ID, USER_ID);
+        call.enqueue(new Callback<AdoptionMessages>() {
+            @Override
+            public void onResponse(Call<AdoptionMessages> call, Response<AdoptionMessages> response) {
+                Log.e("RAW", String.valueOf(response.raw()));
+                arrUsers = response.body().getMessages();
+                Log.e("SIZE", String.valueOf(arrUsers.size()));
+            }
+
+            @Override
+            public void onFailure(Call<AdoptionMessages> call, Throwable t) {
+                Log.e("USERS FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
 
     /***** THE ADOPTION MESSAGES ADAPTER *****/

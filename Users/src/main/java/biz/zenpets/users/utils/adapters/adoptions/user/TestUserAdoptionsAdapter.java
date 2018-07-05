@@ -3,7 +3,6 @@ package biz.zenpets.users.utils.adapters.adoptions.user;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -16,8 +15,6 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
@@ -146,26 +143,6 @@ public class TestUserAdoptionsAdapter extends RecyclerView.Adapter<TestUserAdopt
                                             if (message != null)    {
                                                 if (message.equalsIgnoreCase("Promotion record exists..."))   {
                                                     Toast.makeText(activity, "This Adoption listing is already being promoted...", Toast.LENGTH_LONG).show();
-
-//                                                    /* GET THE PROMOTION OPTION ID */
-//                                                    String optionID = body.getOptionID();
-//
-//                                                    /* GET THE PROMOTED FROM AND TO DATES */
-//                                                    String promotedFrom = body.getPromotedFrom();
-//                                                    String promotedTo = body.getPromotedTo();
-//
-//                                                    /* SHOW THE "ALREADY PROMOTED" VIEW */
-//                                                    MaterialDialog dialog = new MaterialDialog.Builder(activity)
-//                                                            .title("Active Promotion")
-//                                                            .customView(R.layout.adoption_active_promotion, true)
-//                                                            .positiveText("Got It")
-//                                                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-//                                                                @Override
-//                                                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-//                                                                    dialog.dismiss();
-//                                                                }
-//                                                            }).build();
-//                                                    dialog.show();
                                                 } else if (message.equalsIgnoreCase("Promotion record doesn't exist..."))    {
                                                     Intent intentPromote = new Intent(activity, PromoteAdoptionActivity.class);
                                                     intentPromote.putExtra("ADOPTION_ID", data.getAdoptionID());
