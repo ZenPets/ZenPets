@@ -3,6 +3,9 @@ package biz.zenpets.users.utils.models.adoptions.promotion;
 import com.google.gson.annotations.SerializedName;
 
 public class Promotion {
+
+    @SerializedName("error") private Boolean error;
+    @SerializedName("message") private String message;
     @SerializedName("promotedID") private String promotedID;
     @SerializedName("adoptionID") private String adoptionID;
     @SerializedName("optionID") private String optionID;
@@ -24,6 +27,22 @@ public class Promotion {
     @SerializedName("adoptionGender") private String adoptionGender;
     @SerializedName("adoptionTimeStamp") private String adoptionTimeStamp;
     @SerializedName("adoptionStatus") private String adoptionStatus;
+
+    public Boolean getError() {
+        return error;
+    }
+
+    public void setError(Boolean error) {
+        this.error = error;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public String getPromotedID() {
         return promotedID;

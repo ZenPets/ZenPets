@@ -28,5 +28,5 @@ public interface PromotionAPI {
 
     /** CHECK IF AND ADOPTION IS BEING PROMOTED **/
     @GET("promotionExists")
-    Call<PromotionExistsData> promotionExists(@Query("adoptionID") String adoptionID);
+    Call<Promotion> promotionExists(@Query("adoptionID") String adoptionID);
 }
