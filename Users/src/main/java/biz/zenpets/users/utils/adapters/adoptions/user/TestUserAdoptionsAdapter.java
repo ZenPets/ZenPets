@@ -142,7 +142,7 @@ public class TestUserAdoptionsAdapter extends RecyclerView.Adapter<TestUserAdopt
                                             String message = body.getMessage();
                                             if (message != null)    {
                                                 if (message.equalsIgnoreCase("Promotion record exists..."))   {
-                                                    Toast.makeText(activity, "This Adoption listing is already being promoted...", Toast.LENGTH_LONG).show();
+                                                    Toast.makeText(activity, "Nope. This Adoption listing is already being promoted...", Toast.LENGTH_LONG).show();
                                                 } else if (message.equalsIgnoreCase("Promotion record doesn't exist..."))    {
                                                     Intent intentPromote = new Intent(activity, PromoteAdoptionActivity.class);
                                                     intentPromote.putExtra("ADOPTION_ID", data.getAdoptionID());
