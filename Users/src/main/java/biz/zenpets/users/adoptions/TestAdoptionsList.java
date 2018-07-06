@@ -16,7 +16,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -193,7 +192,7 @@ public class TestAdoptionsList extends AppCompatActivity {
         try {
             String strResult = new Gson().toJson(response.body());
             JSONObject JORoot = new JSONObject(strResult);
-            Log.e("ROOT", String.valueOf(JORoot));
+//            Log.e("ROOT", String.valueOf(JORoot));
             if (JORoot.has("error") && JORoot.getString("error").equalsIgnoreCase("false")) {
                 JSONArray JAAdoptions = JORoot.getJSONArray("adoptions");
                 for (int i = 0; i < JAAdoptions.length(); i++) {
@@ -202,11 +201,11 @@ public class TestAdoptionsList extends AppCompatActivity {
 
                     /* GET THE PROMOTED ADOPTIONS */
                     JSONArray JAPromotions = JOAdoptions.getJSONArray("promotions");
-                    Log.e("PROMOTIONS", String.valueOf(JAPromotions));
+//                    Log.e("PROMOTIONS", String.valueOf(JAPromotions));
                     if (JAPromotions.length() > 0)  {
                         for (int j = 0; j < JAPromotions.length(); j++) {
                             JSONObject JOPromotions = JAPromotions.getJSONObject(j);
-                            Log.e("PROMOTIONS", String.valueOf(JOPromotions));
+//                            Log.e("PROMOTIONS", String.valueOf(JOPromotions));
                             promotion = new Promotion();
 
                             /* GET THE PROMOTION ID */
@@ -333,7 +332,7 @@ public class TestAdoptionsList extends AppCompatActivity {
                             promotions.add(promotion);
                         }
                         data.setPromotions(promotions);
-                        Log.e("PROMOTIONS SIZE", String.valueOf(promotions.size()));
+//                        Log.e("PROMOTIONS SIZE", String.valueOf(promotions.size()));
                     } else {
                         data.setPromotions(null);
                     }

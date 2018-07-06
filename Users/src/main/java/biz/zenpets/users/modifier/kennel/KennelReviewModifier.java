@@ -14,7 +14,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -103,7 +102,7 @@ public class KennelReviewModifier extends AppCompatActivity {
         call.enqueue(new Callback<KennelReview>() {
             @Override
             public void onResponse(@NonNull Call<KennelReview> call, @NonNull Response<KennelReview> response) {
-                Log.e("REVIEW DETAILS", String.valueOf(response.raw()));
+//                Log.e("REVIEW DETAILS", String.valueOf(response.raw()));
                 KennelReview review = response.body();
                 if (review != null) {
 

@@ -8,6 +8,7 @@ public class AdoptionMessage {
     @SerializedName("adoptionID") private String adoptionID;
     @SerializedName("userID") private String userID;
     @SerializedName("userName") private String userName;
+    @SerializedName("userToken") private String userToken;
     @SerializedName("userDisplayProfile") private String userDisplayProfile;
     @SerializedName("messageText") private String messageText;
     @SerializedName("messageTimeStamp") private String messageTimeStamp;
@@ -42,6 +43,14 @@ public class AdoptionMessage {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getUserToken() {
+        return userToken;
+    }
+
+    public void setUserToken(String userToken) {
+        this.userToken = userToken;
     }
 
     public String getUserDisplayProfile() {

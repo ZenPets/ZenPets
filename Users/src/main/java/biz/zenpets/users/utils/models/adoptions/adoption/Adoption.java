@@ -16,6 +16,7 @@ public class Adoption {
     @SerializedName("breedName") private String breedName;
     @SerializedName("userID") private String userID;
     @SerializedName("userName") private String userName;
+    @SerializedName("userDisplayProfile") private String userDisplayProfile;
     @SerializedName("cityID") private String cityID;
     @SerializedName("cityName") private String cityName;
     @SerializedName("adoptionName") private String adoptionName;
@@ -92,6 +93,14 @@ public class Adoption {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getUserDisplayProfile() {
+        return userDisplayProfile;
+    }
+
+    public void setUserDisplayProfile(String userDisplayProfile) {
+        this.userDisplayProfile = userDisplayProfile;
     }
 
     public String getCityID() {

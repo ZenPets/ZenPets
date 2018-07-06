@@ -13,7 +13,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,6 +47,7 @@ import biz.zenpets.users.utils.models.adoptions.images.AdoptionImagesAPI;
 import biz.zenpets.users.utils.models.adoptions.messages.AdoptionMessage;
 import biz.zenpets.users.utils.models.adoptions.messages.AdoptionMessages;
 import biz.zenpets.users.utils.models.adoptions.messages.AdoptionMessagesAPI;
+import biz.zenpets.users.utils.models.adoptions.notifications.AdoptionNotification;
 import biz.zenpets.users.utils.models.adoptions.notifications.AdoptionNotificationAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,9 +68,6 @@ public class TestAdoptionDetails extends AppCompatActivity {
     /** THE LOGGED IN / POSTER'S USER ID **/
     private String POSTER_ID = null;
 
-    /** THE USER TOKEN **/
-    String USER_TOKEN = null;
-
     /** AN ARRAY LIST INSTANCE TO HOLD THE LIST OF USERS PARTICIPATING IN THE ADOPTION LISTING **/
     ArrayList<AdoptionMessage> arrUsers = new ArrayList<>();
 
@@ -81,15 +78,13 @@ public class TestAdoptionDetails extends AppCompatActivity {
     private String BREED_NAME = null;
     private String USER_ID = null;
     private String USER_NAME = null;
+    private String USER_DISPLAY_PROFILE = null;
     private String CITY_ID = null;
     private String CITY_NAME = null;
     private String ADOPTION_NAME = null;
     String ADOPTION_COVER_PHOTO = null;
     private String ADOPTION_DESCRIPTION = null;
     private String ADOPTION_GENDER = null;
-    private String ADOPTION_VACCINATION = null;
-    private String ADOPTION_DEWORMED = null;
-    private String ADOPTION_NEUTERED = null;
     private String ADOPTION_TIMESTAMP = null;
     private String ADOPTION_STATUS = null;
 
@@ -150,6 +145,7 @@ public class TestAdoptionDetails extends AppCompatActivity {
 
         /* GET THE LOGGED IN / POSTER'S USER ID */
         POSTER_ID = getApp().getUserID();
+//        Log.e("USER (POSTER) ID", POSTER_ID);
 
         /* GE THE INCOMING DATA */
         getIncomingData();
@@ -202,6 +198,9 @@ public class TestAdoptionDetails extends AppCompatActivity {
 
                     /* SET THE USER NAME */
                     USER_NAME = data.getUserName();
+
+                    /* GET THE USER'S DISPLAY PROFILE */
+                    USER_DISPLAY_PROFILE = data.getUserDisplayProfile();
 
                     /* GET THE CITY ID */
                     CITY_ID = data.getCityID();
@@ -309,7 +308,7 @@ public class TestAdoptionDetails extends AppCompatActivity {
 
                         /* SHOW THE RECYCLER VIEW */
                         listAdoptionImages.setVisibility(View.VISIBLE);
-                        linlaAdoptionImages.setVisibility(View.GONE);
+                        linlaAdoptionImages.setVisibility(View.VISIBLE);
                     } else {
                         /* HIDE THE RECYCLER VIEW */
                         listAdoptionImages.setVisibility(View.GONE);
@@ -339,7 +338,7 @@ public class TestAdoptionDetails extends AppCompatActivity {
         call.enqueue(new Callback<AdoptionMessages>() {
             @Override
             public void onResponse(Call<AdoptionMessages> call, Response<AdoptionMessages> response) {
-                Log.e("ADOPTION MESSAGES", String.valueOf(response.raw()));
+//                Log.e("ADOPTION MESSAGES", String.valueOf(response.raw()));
                 if (response.isSuccessful() && response.body().getMessages() != null)    {
                     arrMessages = response.body().getMessages();
 
@@ -479,19 +478,37 @@ public class TestAdoptionDetails extends AppCompatActivity {
 
     /** FETCH A LIST OF PARTICIPATING USERS **/
     private void fetchUsersList() {
-        AdoptionNotificationAPI api = ZenApiClient.getClient().create(AdoptionNotificationAPI.class);
-        Call<AdoptionMessages> call = api.fetchAdoptionParticipants(ADOPTION_ID, USER_ID);
+        final AdoptionNotificationAPI api = ZenApiClient.getClient().create(AdoptionNotificationAPI.class);
+        Call<AdoptionMessages> call = api.fetchAdoptionParticipants(ADOPTION_ID, POSTER_ID);
         call.enqueue(new Callback<AdoptionMessages>() {
             @Override
             public void onResponse(Call<AdoptionMessages> call, Response<AdoptionMessages> response) {
-                Log.e("RAW", String.valueOf(response.raw()));
                 arrUsers = response.body().getMessages();
-                Log.e("SIZE", String.valueOf(arrUsers.size()));
+                if (arrUsers.size() > 0)    {
+                    /* SEND A NOTIFICATION */
+                    for (int i = 0; i < arrUsers.size(); i++) {
+                        Call<AdoptionNotification> notificationCall = api.sendAdoptionReplyNotification(
+                                arrUsers.get(i).getUserToken(), "New reply from " + USER_NAME, ADOPTION_MESSAGE,
+                                "Adoption", ADOPTION_ID, USER_ID, USER_NAME, USER_DISPLAY_PROFILE
+                        );
+                        notificationCall.enqueue(new Callback<AdoptionNotification>() {
+                            @Override
+                            public void onResponse(Call<AdoptionNotification> call, Response<AdoptionNotification> response) {
+                            }
+
+                            @Override
+                            public void onFailure(Call<AdoptionNotification> call, Throwable t) {
+//                                Log.e("ADOPTION PUSH FAILURE", t.getMessage());
+                                Crashlytics.logException(t);
+                            }
+                        });
+                    }
+                }
             }
 
             @Override
             public void onFailure(Call<AdoptionMessages> call, Throwable t) {
-                Log.e("USERS FAILURE", t.getMessage());
+//                Log.e("USERS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -521,7 +538,7 @@ public class TestAdoptionDetails extends AppCompatActivity {
             /* CHECK IF THE USER IS ALSO THE MESSAGE POSTER */
             String userID = data.getUserID();
 
-            if (userID.equals(USER_ID))    {
+            if (userID.equals(POSTER_ID))    {
                 /* SHOW THE OUTGOING MESSAGE CONTAINER AND HIDE THE INCOMING MESSAGE CONTAINER */
                 holder.linlaOutgoing.setVisibility(View.VISIBLE);
                 holder.linlaIncoming.setVisibility(View.GONE);

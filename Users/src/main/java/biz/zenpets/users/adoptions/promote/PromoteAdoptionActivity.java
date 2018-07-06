@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -147,11 +146,11 @@ public class PromoteAdoptionActivity extends AppCompatActivity implements Paymen
             preFill.put("email", "siddharth.lele@gmail.com");
             preFill.put("contact", "8087471157");
             options.put("prefill", preFill);
-            Log.e("JSON", String.valueOf(options));
+//            Log.e("JSON", String.valueOf(options));
 
             checkout.open(activity, options);
         } catch (Exception e) {
-            Log.e("PAYMENT FAILURE", e.getMessage());
+//            Log.e("PAYMENT FAILURE", e.getMessage());
             Toast.makeText(getApplicationContext(), "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT)
                     .show();
             e.printStackTrace();
@@ -163,13 +162,13 @@ public class PromoteAdoptionActivity extends AppCompatActivity implements Paymen
     @Override
     public void onPaymentSuccess(String razorPaymentID) {
         try {
-            Log.e("PAYMENT ID", "The Payment was successfully completed with the ID: " + razorPaymentID);
+//            Log.e("PAYMENT ID", "The Payment was successfully completed with the ID: " + razorPaymentID);
             Toast.makeText(this, "Payment Successful: " + razorPaymentID, Toast.LENGTH_SHORT).show();
 
             /* TESTING THE PAYMENT CAPTURE API */
             testCapture(razorPaymentID);
         } catch (Exception e) {
-            Log.e("PAYMENT SUCCESS EXCEPTION", e.getMessage());
+//            Log.e("PAYMENT SUCCESS EXCEPTION", e.getMessage());
         }
     }
 
@@ -188,18 +187,18 @@ public class PromoteAdoptionActivity extends AppCompatActivity implements Paymen
                 .url(strUrl)
                 .post(body)
                 .build();
-        Log.e("REQUEST", String.valueOf(request));
+//        Log.e("REQUEST", String.valueOf(request));
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e("FAILURE", e.getMessage());
+//                Log.e("FAILURE", e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 /* CHECK IF THE PAYMENT WAS CAPTURED SUCCESSFULLY */
                 checkCaptureStatus(razorPaymentID);
-                Log.e("RESPONSE", String.valueOf(response));
+//                Log.e("RESPONSE", String.valueOf(response));
             }
         });
     }
@@ -225,7 +224,7 @@ public class PromoteAdoptionActivity extends AppCompatActivity implements Paymen
                 try {
                     String strResult = response.body().string();
                     JSONObject JORoot = new JSONObject(strResult);
-                    Log.e("ROOT", String.valueOf(JORoot));
+//                    Log.e("ROOT", String.valueOf(JORoot));
                     if (JORoot.has("error_code") && JORoot.getString("error_code").equalsIgnoreCase("null")) {
                         /* CHECK THE CAPTURED STATUS */
                         if (JORoot.has("captured")) {
@@ -236,7 +235,7 @@ public class PromoteAdoptionActivity extends AppCompatActivity implements Paymen
                                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                                 Date date = new Date();
                                 PROMOTION_FROM = format.format(date);
-                                Log.e("START DATE", PROMOTION_FROM);
+//                                Log.e("START DATE", PROMOTION_FROM);
                                 Calendar calendar = Calendar.getInstance();
                                 calendar.setTime(format.parse(PROMOTION_FROM));
 
@@ -244,16 +243,16 @@ public class PromoteAdoptionActivity extends AppCompatActivity implements Paymen
                                 calendar.add(Calendar.DATE, Integer.parseInt(PROMOTION_DAYS));
                                 Date dateEnd = new Date(calendar.getTimeInMillis());
                                 PROMOTION_TO = format.format(dateEnd);
-                                Log.e("END DATE", PROMOTION_TO);
+//                                Log.e("END DATE", PROMOTION_TO);
 
                                 /* CREATE THE ADOPTION PROMOTION RECORD */
                                 createPromotionRecord(razorPaymentID, PROMOTION_FROM, PROMOTION_TO);
                             } else {
-                                Log.e("CAPTURE FAILED", "The payment was not captured successfully...");
+//                                Log.e("CAPTURE FAILED", "The payment was not captured successfully...");
 //                                Toast.makeText(getApplicationContext(), "An error occurred...", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Log.e("CAPTURE FAILED", "The payment was not captured successfully...");
+//                            Log.e("CAPTURE FAILED", "The payment was not captured successfully...");
 //                                Toast.makeText(getApplicationContext(), "An error occurred...", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -278,15 +277,15 @@ public class PromoteAdoptionActivity extends AppCompatActivity implements Paymen
             public void onResponse(retrofit2.Call<Promotion> call, retrofit2.Response<Promotion> response) {
                 Promotion promotion = response.body();
                 if (promotion != null)  {
-                    Log.e("PROMOTION ID", promotion.getPromotedID());
+//                    Log.e("PROMOTION ID", promotion.getPromotedID());
                 } else {
-                    Log.e("FAILED", "Failed to create the Promotion record...");
+//                    Log.e("FAILED", "Failed to create the Promotion record...");
                 }
             }
 
             @Override
             public void onFailure(retrofit2.Call<Promotion> call, Throwable t) {
-                Log.e("PUBLISH FAILURE", t.getMessage());
+//                Log.e("PUBLISH FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -297,7 +296,7 @@ public class PromoteAdoptionActivity extends AppCompatActivity implements Paymen
         try {
             Toast.makeText(this, "Payment failed: " + code + " " + response, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Log.e("PAYMENT ERROR EXCEPTION", e.getMessage());
+//            Log.e("PAYMENT ERROR EXCEPTION", e.getMessage());
         }
     }
 

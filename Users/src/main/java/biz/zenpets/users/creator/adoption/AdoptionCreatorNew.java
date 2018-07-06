@@ -23,7 +23,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -268,7 +267,7 @@ public class AdoptionCreatorNew extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Breeds> call, Throwable t) {
-                Log.e("BREEDS FAILURE", t.getMessage());
+//                Log.e("BREEDS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -646,7 +645,7 @@ public class AdoptionCreatorNew extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Adoption> call, Throwable t) {
-                Log.e("ADOPTION FAILURE", t.getMessage());
+//                Log.e("ADOPTION FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

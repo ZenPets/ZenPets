@@ -16,7 +16,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -125,18 +124,18 @@ public class AdoptionsList extends AppCompatActivity {
         call.enqueue(new Callback<Adoptions>() {
             @Override
             public void onResponse(Call<Adoptions> call, Response<Adoptions> response) {
-                Log.e("ADOPTIONS LIST", String.valueOf(response.raw()));
+//                Log.e("ADOPTIONS LIST", String.valueOf(response.raw()));
                 try {
                     String strResult = new Gson().toJson(response.body());
                     JSONObject JORoot = new JSONObject(strResult);
-                    Log.e("ROOT", String.valueOf(JORoot));
+//                    Log.e("ROOT", String.valueOf(JORoot));
                     if (JORoot.has("error") && JORoot.getString("error").equalsIgnoreCase("false")) {
                         JSONArray JAAdoptions = JORoot.getJSONArray("adoptions");
                         JSONArray JAPromoted = JORoot.getJSONArray("promotions");
-                        Log.e("PROMOTED", String.valueOf(JAPromoted));
+//                        Log.e("PROMOTED", String.valueOf(JAPromoted));
                         for (int i = 0; i < JAAdoptions.length(); i++) {
                             JSONObject JOAdoptions = JAAdoptions.getJSONObject(i);
-                            Log.e("ADOPTIONS", String.valueOf(JOAdoptions));
+//                            Log.e("ADOPTIONS", String.valueOf(JOAdoptions));
                         }
                     }
                     linlaProgress.setVisibility(View.GONE);

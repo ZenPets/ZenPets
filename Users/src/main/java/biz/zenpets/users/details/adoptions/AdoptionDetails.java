@@ -13,7 +13,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -344,7 +343,7 @@ public class AdoptionDetails extends AppCompatActivity {
         call.enqueue(new Callback<AdoptionMessages>() {
             @Override
             public void onResponse(Call<AdoptionMessages> call, Response<AdoptionMessages> response) {
-                Log.e("ADOPTION MESSAGES", String.valueOf(response.raw()));
+//                Log.e("ADOPTION MESSAGES", String.valueOf(response.raw()));
                 if (response.isSuccessful() && response.body().getMessages() != null)    {
                     arrMessages = response.body().getMessages();
                     

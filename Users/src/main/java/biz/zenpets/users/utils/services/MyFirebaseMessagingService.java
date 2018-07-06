@@ -11,6 +11,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import biz.zenpets.users.details.adoptions.TestAdoptionDetails;
 import biz.zenpets.users.details.trainers.enquiry.TrainerEnquiryActivity;
 import biz.zenpets.users.utils.AppPrefs;
 
@@ -66,19 +67,34 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void handleDataMessage(JSONObject json) {
         try {
             JSONObject data = json.getJSONObject("data");
+//            Log.e("DATA", String.valueOf(data));
             String notificationTitle = data.getString("notificationTitle");
             String notificationMessage = data.getString("notificationMessage");
             JSONObject payload = data.getJSONObject("payload");
             String strReference = null;
+
+            /* STRINGS FOR MESSAGES FROM TRAINERS */
             String strTrainerID = null;
             String strModuleID = null;
             String strTrainingMasterID = null;
+
+            /* STRINGS FOR REPLIES ON ADOPTIONS */
+            String strAdoptionID = null;
+//            String strUserID = null;
+//            String strUserName = null;
+//            String strUserDisplayProfile = null;
+
             if (payload.has("notificationReference")) {
                 strReference = payload.getString("notificationReference");
                 if (strReference.equalsIgnoreCase("Enquiry"))   {
                     strTrainerID = payload.getString("trainerID");
                     strModuleID = payload.getString("moduleID");
                     strTrainingMasterID = payload.getString("trainingMasterID");
+                } else if (strReference.equalsIgnoreCase("Adoption"))   {
+                    strAdoptionID = payload.getString("adoptionID");
+//                    strUserID = payload.getString("userID");
+//                    strUserName = payload.getString("userName");
+//                    strUserDisplayProfile = payload.getString("userDisplayProfile");
                 }
             }
 
@@ -87,6 +103,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 intent.putExtra("TRAINER_ID", strTrainerID);
                 intent.putExtra("MODULE_ID", strModuleID);
                 intent.putExtra("TRAINING_MASTER_ID", strTrainingMasterID);
+                showNotificationMessage(getApplicationContext(), notificationTitle, notificationMessage, intent);
+            } else if (strReference.equalsIgnoreCase("Adoption"))   {
+                Intent intent = new Intent(getApplicationContext(), TestAdoptionDetails.class);
+                intent.putExtra("ADOPTION_ID", strAdoptionID);
                 showNotificationMessage(getApplicationContext(), notificationTitle, notificationMessage, intent);
             }
         } catch (JSONException e) {

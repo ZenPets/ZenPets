@@ -1,6 +1,7 @@
 package biz.zenpets.users.utils.adapters.adoptions.user;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
@@ -30,9 +31,10 @@ import java.util.Locale;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.adoptions.promote.PromoteAdoptionActivity;
-import biz.zenpets.users.details.adoptions.UserAdoptionDetails;
+import biz.zenpets.users.details.adoptions.TestUserAdoptionDetails;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.models.adoptions.adoption.Adoption;
+import biz.zenpets.users.utils.models.adoptions.adoption.AdoptionsAPI;
 import biz.zenpets.users.utils.models.adoptions.promotion.Promotion;
 import biz.zenpets.users.utils.models.adoptions.promotion.PromotionAPI;
 import retrofit2.Call;
@@ -120,6 +122,13 @@ public class TestUserAdoptionsAdapter extends RecyclerView.Adapter<TestUserAdopt
             public void onClick(View v) {
                 PopupMenu pm = new PopupMenu(activity, holder.imgvwOptions);
                 pm.getMenuInflater().inflate(R.menu.pm_adoption_options, pm.getMenu());
+                if (data.getAdoptionStatus().equalsIgnoreCase("Adopted"))   {
+                    pm.getMenu().findItem(R.id.menuStatus).setEnabled(false);
+                    pm.getMenu().findItem(R.id.menuPromote).setEnabled(false);
+                } else {
+                    pm.getMenu().findItem(R.id.menuStatus).setEnabled(true);
+                    pm.getMenu().findItem(R.id.menuPromote).setEnabled(true);
+                }
                 pm.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -129,6 +138,41 @@ public class TestUserAdoptionsAdapter extends RecyclerView.Adapter<TestUserAdopt
                             case R.id.menuDetails:
                                 break;
                             case R.id.menuStatus:
+                                /* INSTANTIATE THE PROGRESS DIALOG INSTANCE */
+                                final ProgressDialog dialogStatus = new ProgressDialog(activity);
+                                dialogStatus.setMessage("Updating the Adoption status....");
+                                dialogStatus.setIndeterminate(false);
+                                dialogStatus.setCancelable(false);
+                                dialogStatus.show();
+
+                                AdoptionsAPI apiStatus = ZenApiClient.getClient().create(AdoptionsAPI.class);
+                                Call<Adoption> callStatus = apiStatus.changeAdoptionStatus(data.getAdoptionID(), "Adopted");
+                                callStatus.enqueue(new Callback<Adoption>() {
+                                    @Override
+                                    public void onResponse(Call<Adoption> call, Response<Adoption> response) {
+                                        if (response.isSuccessful())    {
+                                            data.setAdoptionStatus("Adopted");
+                                            Toast.makeText(
+                                                    activity,
+                                                    "The Adoption was updated successfully...",
+                                                    Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(
+                                                    activity,
+                                                    "Status update error...",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+
+                                        /* DISMISS THE DIALOG */
+                                        dialogStatus.dismiss();
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Adoption> call, Throwable t) {
+                                        Log.e("STATUS FAILURE", t.getMessage());
+                                        Crashlytics.logException(t);
+                                    }
+                                });
                                 break;
                             case R.id.menuPromote:
                                 /* CHECK IF THE ADOPTION IS BEING PROMOTED */
@@ -154,7 +198,7 @@ public class TestUserAdoptionsAdapter extends RecyclerView.Adapter<TestUserAdopt
 
                                     @Override
                                     public void onFailure(Call<Promotion> call, Throwable t) {
-                                        Log.e("CHECK FAILURE", t.getMessage());
+//                                        Log.e("CHECK FAILURE", t.getMessage());
                                         Crashlytics.logException(t);
                                     }
                                 });
@@ -173,7 +217,7 @@ public class TestUserAdoptionsAdapter extends RecyclerView.Adapter<TestUserAdopt
         holder.cardAdoptionContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(activity, UserAdoptionDetails.class);
+                Intent intent = new Intent(activity, TestUserAdoptionDetails.class);
                 intent.putExtra("ADOPTION_ID", data.getAdoptionID());
                 activity.startActivity(intent);
             }

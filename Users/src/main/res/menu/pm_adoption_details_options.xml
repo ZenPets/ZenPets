@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menuEdit"
+        android:title="@string/menu_edit"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menuStatus"
+        android:title="@string/menu_adoption_status"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menuPromote"
+        android:title="@string/menu_adoption_promote"
+        app:showAsAction="ifRoom" />
+</menu>
