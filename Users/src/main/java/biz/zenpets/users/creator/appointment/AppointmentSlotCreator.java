@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -469,7 +470,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
         }
 
         @Override
-        public void onBindViewHolder(final ZenCalendarAdapter.CalendarVH holder, int position) {
+        public void onBindViewHolder(@NonNull final ZenCalendarAdapter.CalendarVH holder, int position) {
             final ZenCalendarData data = arrDates.get(position);
 
             /* SET THE SELECTION AND MARK WITH DRAWABLE */
@@ -609,8 +610,9 @@ public class AppointmentSlotCreator extends AppCompatActivity
             });
         }
 
+        @NonNull
         @Override
-        public ZenCalendarAdapter.CalendarVH onCreateViewHolder(ViewGroup parent, int i) {
+        public ZenCalendarAdapter.CalendarVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
             View itemView = LayoutInflater.
                     from(parent.getContext()).

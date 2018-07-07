@@ -1,6 +1,6 @@
 package biz.zenpets.users.utils.models.pets.breeds;
 
-public class BreedsData {
+class BreedsData {
 
     private String breedID;
     private String petTypeID;

@@ -2,6 +2,7 @@ package biz.zenpets.users.utils.helpers.classes.location;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
@@ -188,7 +189,7 @@ public class CountrySelectorActivity extends AppCompatActivity implements Search
         }
 
         @Override
-        public void onBindViewHolder(final CountriesVH holder, final int position) {
+        public void onBindViewHolder(@NonNull final CountriesVH holder, final int position) {
             final Country data = mFilteredList.get(position);
 
             /* SET THE COUNTRY NAME */
@@ -213,8 +214,9 @@ public class CountrySelectorActivity extends AppCompatActivity implements Search
             });
         }
 
+        @NonNull
         @Override
-        public CountriesVH onCreateViewHolder(ViewGroup parent, int i) {
+        public CountriesVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
             View itemView = LayoutInflater.
                     from(parent.getContext()).

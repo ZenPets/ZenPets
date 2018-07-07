@@ -72,6 +72,7 @@ public class MedicalRecordsImagesAdapter extends RecyclerView.Adapter<MedicalRec
         });
     }
 
+    @NonNull
     @Override
     public ImagesVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 

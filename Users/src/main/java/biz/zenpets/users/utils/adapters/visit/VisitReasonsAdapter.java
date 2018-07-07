@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.utils.models.visit.Reason;
-import biz.zenpets.users.utils.models.visit.Reason;
 
 public class VisitReasonsAdapter extends ArrayAdapter<Reason> {
 

@@ -2,6 +2,7 @@ package biz.zenpets.users.utils.adapters.trainers.enquiry;
 
 import android.app.Activity;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +47,7 @@ public class TrainingEnquiryAdapter extends RecyclerView.Adapter<TrainingEnquiry
     }
 
     @Override
-    public void onBindViewHolder(final MessagesVH holder, final int position) {
+    public void onBindViewHolder(@NonNull final MessagesVH holder, final int position) {
         EnquiryMessage message = arrMessages.get(position);
 
         /* CHECK IF THE MESSAGE IS FROM THE TRAINER OR THE USER */
@@ -125,8 +126,9 @@ public class TrainingEnquiryAdapter extends RecyclerView.Adapter<TrainingEnquiry
         }
     }
 
+    @NonNull
     @Override
-    public MessagesVH onCreateViewHolder(ViewGroup parent, int i) {
+    public MessagesVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
         View itemView = LayoutInflater.
                 from(parent.getContext()).

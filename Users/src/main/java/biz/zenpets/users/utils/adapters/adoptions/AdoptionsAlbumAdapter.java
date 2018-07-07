@@ -2,6 +2,7 @@ package biz.zenpets.users.utils.adapters.adoptions;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -38,7 +39,7 @@ public class AdoptionsAlbumAdapter extends RecyclerView.Adapter<AdoptionsAlbumAd
     }
 
     @Override
-    public void onBindViewHolder(AlbumsVH holder, int position) {
+    public void onBindViewHolder(@NonNull AlbumsVH holder, int position) {
         final AdoptionAlbumData td = arrAlbums.get(position);
 
         /* SET THE CLINIC IMAGE **/
@@ -53,8 +54,9 @@ public class AdoptionsAlbumAdapter extends RecyclerView.Adapter<AdoptionsAlbumAd
         holder.txtImageNumber.setText(strNumber);
     }
 
+    @NonNull
     @Override
-    public AlbumsVH onCreateViewHolder(ViewGroup parent, int i) {
+    public AlbumsVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
         View itemView = LayoutInflater.
                 from(parent.getContext()).

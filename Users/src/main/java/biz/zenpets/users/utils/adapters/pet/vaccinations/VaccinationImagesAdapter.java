@@ -3,6 +3,7 @@ package biz.zenpets.users.utils.adapters.pet.vaccinations;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +42,7 @@ public class VaccinationImagesAdapter extends RecyclerView.Adapter<VaccinationIm
     }
 
     @Override
-    public void onBindViewHolder(final ImagesVH holder, int position) {
+    public void onBindViewHolder(@NonNull final ImagesVH holder, int position) {
         VaccinationImage data = arrImages.get(position);
 
         /* SET THE VACCINATION IMAGE **/
@@ -71,8 +72,9 @@ public class VaccinationImagesAdapter extends RecyclerView.Adapter<VaccinationIm
         });
     }
 
+    @NonNull
     @Override
-    public ImagesVH onCreateViewHolder(ViewGroup parent, int i) {
+    public ImagesVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
         View itemView = LayoutInflater.
                 from(parent.getContext()).

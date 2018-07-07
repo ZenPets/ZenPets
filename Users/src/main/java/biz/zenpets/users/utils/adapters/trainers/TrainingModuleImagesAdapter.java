@@ -2,6 +2,7 @@ package biz.zenpets.users.utils.adapters.trainers;
 
 import android.app.Activity;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +40,7 @@ public class TrainingModuleImagesAdapter extends RecyclerView.Adapter<TrainingMo
     }
 
     @Override
-    public void onBindViewHolder(final ImagesVH holder, int position) {
+    public void onBindViewHolder(@NonNull final ImagesVH holder, int position) {
         final ModuleImage data = arrImages.get(position);
 
         /* SET THE TRAINING MODULE IMAGE **/
@@ -69,8 +70,9 @@ public class TrainingModuleImagesAdapter extends RecyclerView.Adapter<TrainingMo
         });
     }
 
+    @NonNull
     @Override
-    public ImagesVH onCreateViewHolder(ViewGroup parent, int i) {
+    public ImagesVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
         View itemView = LayoutInflater.
                 from(parent.getContext()).

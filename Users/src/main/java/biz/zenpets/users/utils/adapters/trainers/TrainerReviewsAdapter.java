@@ -86,7 +86,7 @@ public class TrainerReviewsAdapter extends RecyclerView.Adapter<TrainerReviewsAd
 
         View itemView = LayoutInflater.
                 from(parent.getContext()).
-                inflate(R.layout.trainer_reviews_item, parent, false);
+                inflate(R.layout.trainer_reviews_subset_item, parent, false);
 
         return new ReviewsVH(itemView);
     }

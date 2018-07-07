@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -75,7 +76,7 @@ public class TestUserAdoptionDetails extends AppCompatActivity {
     private String POSTER_ID = null;
 
     /** AN ARRAY LIST INSTANCE TO HOLD THE LIST OF USERS PARTICIPATING IN THE ADOPTION LISTING **/
-    ArrayList<AdoptionMessage> arrUsers = new ArrayList<>();
+    private ArrayList<AdoptionMessage> arrUsers = new ArrayList<>();
 
     /** THE ADOPTION DETAILS DATA **/
     private String PET_TYPE_ID = null;
@@ -88,7 +89,7 @@ public class TestUserAdoptionDetails extends AppCompatActivity {
     private String CITY_ID = null;
     private String CITY_NAME = null;
     private String ADOPTION_NAME = null;
-    String ADOPTION_COVER_PHOTO = null;
+    private String ADOPTION_COVER_PHOTO = null;
     private String ADOPTION_DESCRIPTION = null;
     private String ADOPTION_GENDER = null;
     private String ADOPTION_TIMESTAMP = null;
@@ -619,7 +620,7 @@ public class TestUserAdoptionDetails extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(AdoptionMessagesAdapter.MessagesVH holder, final int position) {
+        public void onBindViewHolder(@NonNull AdoptionMessagesAdapter.MessagesVH holder, final int position) {
             AdoptionMessage data = arrMessages.get(position);
 
             /* CHECK IF THE USER IS ALSO THE MESSAGE POSTER */
@@ -704,8 +705,9 @@ public class TestUserAdoptionDetails extends AppCompatActivity {
             }
         }
 
+        @NonNull
         @Override
-        public AdoptionMessagesAdapter.MessagesVH onCreateViewHolder(ViewGroup parent, int i) {
+        public AdoptionMessagesAdapter.MessagesVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
             View itemView = LayoutInflater.
                     from(parent.getContext()).
@@ -717,12 +719,12 @@ public class TestUserAdoptionDetails extends AppCompatActivity {
         class MessagesVH extends RecyclerView.ViewHolder	{
 
             final LinearLayout linlaIncoming;
-            SimpleDraweeView imgvwIncomingProfile;
+            final SimpleDraweeView imgvwIncomingProfile;
             final AppCompatTextView txtIncomingMessage;
             final AppCompatTextView txtIncomingUserName;
             final AppCompatTextView txtIncomingTimeStamp;
             final LinearLayout linlaOutgoing;
-            SimpleDraweeView imgvwOutgoingProfile;
+            final SimpleDraweeView imgvwOutgoingProfile;
             final AppCompatTextView txtOutgoingMessage;
             final AppCompatTextView txtOutgoingUserName;
             final AppCompatTextView txtOutgoingTimeStamp;

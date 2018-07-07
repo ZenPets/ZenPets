@@ -2,6 +2,7 @@ package biz.zenpets.users.user.appointments.modules;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -66,7 +67,7 @@ public class UpcomingAppointments extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         /* CAST THE LAYOUT TO A NEW VIEW INSTANCE **/
         View view = inflater.inflate(R.layout.user_appointments_upcoming_list, container, false);
         ButterKnife.bind(this, view);
@@ -88,7 +89,7 @@ public class UpcomingAppointments extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         /* GET THE CURRENT DATE */

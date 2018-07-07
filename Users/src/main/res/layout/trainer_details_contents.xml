@@ -403,7 +403,7 @@
                     android:paddingRight="11dp"
                     android:paddingStart="11dp"
                     android:paddingTop="5dp"
-                    android:text="@string/doctor_details_no_reviews"
+                    android:text="There are no reviews for this Trainer Yet..."
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp" />
             </LinearLayout>

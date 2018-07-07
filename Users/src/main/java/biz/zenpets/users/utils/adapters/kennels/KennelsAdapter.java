@@ -166,7 +166,7 @@ public class KennelsAdapter extends RecyclerView.Adapter<KennelsAdapter.KennelsV
         final TextView txtKennelName;
         final TextView txtKennelAddress;
         final TextView txtPetCapacity;
-        TextView txtKennelLikes;
+        final TextView txtKennelLikes;
         final RatingBar kennelRating;
         final TextView txtKennelDistance;
 

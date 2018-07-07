@@ -2,6 +2,7 @@ package biz.zenpets.users.utils.adapters.appointment.creator;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -38,7 +39,7 @@ public class AfternoonCreatorAdapter extends RecyclerView.Adapter<AfternoonCreat
     }
 
     @Override
-    public void onBindViewHolder(SlotsVH holder, final int position) {
+    public void onBindViewHolder(@NonNull SlotsVH holder, final int position) {
         final AfternoonTimeSlotsData data = arrSlots.get(position);
 
         /* SET THE APPOINTMENT TIME */
@@ -71,8 +72,9 @@ public class AfternoonCreatorAdapter extends RecyclerView.Adapter<AfternoonCreat
         });
     }
 
+    @NonNull
     @Override
-    public SlotsVH onCreateViewHolder(ViewGroup parent, int i) {
+    public SlotsVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
         View itemView = LayoutInflater.
                 from(parent.getContext()).

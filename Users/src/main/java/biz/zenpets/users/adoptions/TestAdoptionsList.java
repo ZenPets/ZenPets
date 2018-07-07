@@ -75,8 +75,8 @@ public class TestAdoptionsList extends AppCompatActivity {
     private static final int ACCESS_FINE_LOCATION_CONSTANT = 200;
 
     /** THE PROMOTION DATA MODEL AND ADOPTION DATA MODEL INSTANCES **/
-    Promotion promotion;
-    Adoption data;
+    private Promotion promotion;
+    private Adoption data;
 
     private static final int PAGE_START = 1;
     private boolean isLoading = false;
@@ -85,7 +85,7 @@ public class TestAdoptionsList extends AppCompatActivity {
     private int currentPage = PAGE_START;
 
     /** THE PROMOTED ADOPTIONS ADAPTER AND ADOPTIONS ARRAY LIST INSTANCES **/
-    NewAdoptionsAdapter adoptionsAdapter;
+    private NewAdoptionsAdapter adoptionsAdapter;
     private ArrayList<Adoption> arrAdoptions = new ArrayList<>();
 
     /** THE ADOPTION FILTER STRINGS **/

@@ -63,7 +63,7 @@ public class PrescriptionsFragment extends Fragment {
     @BindView(R.id.txtEmpty) AppCompatTextView txtEmpty;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         /* CAST THE LAYOUT TO A NEW VIEW INSTANCE **/
         View view = inflater.inflate(R.layout.pet_prescriptions_fragment_list, container, false);
         ButterKnife.bind(this, view);
@@ -85,7 +85,7 @@ public class PrescriptionsFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         /* CONFIGURE THE RECYCLER VIEW */
@@ -219,7 +219,7 @@ public class PrescriptionsFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(final RecordsVH holder, final int position) {
+        public void onBindViewHolder(@NonNull final RecordsVH holder, final int position) {
             final Prescription data = arrRecords.get(position);
 
             /* SET THE RECORD NOTES */
@@ -357,8 +357,9 @@ public class PrescriptionsFragment extends Fragment {
                     }).show();
         }
 
+        @NonNull
         @Override
-        public RecordsVH onCreateViewHolder(ViewGroup parent, int i) {
+        public RecordsVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
             View itemView = LayoutInflater.
                     from(parent.getContext()).

@@ -424,7 +424,7 @@ public class FilterLocationActivity extends AppCompatActivity implements SearchV
         }
 
         @Override
-        public void onBindViewHolder(LocalitiesSearchAdapter.LocalitiesVH holder, final int position) {
+        public void onBindViewHolder(@NonNull LocalitiesSearchAdapter.LocalitiesVH holder, final int position) {
             final Locality data = mFilteredList.get(position);
 
             /* SET THE LOCALITY NAME */
@@ -446,8 +446,9 @@ public class FilterLocationActivity extends AppCompatActivity implements SearchV
             });
         }
 
+        @NonNull
         @Override
-        public LocalitiesSearchAdapter.LocalitiesVH onCreateViewHolder(ViewGroup parent, int i) {
+        public LocalitiesSearchAdapter.LocalitiesVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
             View itemView = LayoutInflater.
                     from(parent.getContext()).

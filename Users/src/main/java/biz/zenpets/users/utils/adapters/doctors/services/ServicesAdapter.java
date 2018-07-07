@@ -37,6 +37,7 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Servic
             holder.txtServiceName.setText(data.getDoctorServiceName());
     }
 
+    @NonNull
     @Override
     public ServicesVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 

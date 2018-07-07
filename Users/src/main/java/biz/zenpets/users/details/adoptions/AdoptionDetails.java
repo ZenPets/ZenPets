@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -497,7 +498,7 @@ public class AdoptionDetails extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(MessagesVH holder, final int position) {
+        public void onBindViewHolder(@NonNull MessagesVH holder, final int position) {
             AdoptionMessage data = arrMessages.get(position);
 
             /* CHECK IF THE USER IS ALSO THE MESSAGE POSTER */
@@ -582,8 +583,9 @@ public class AdoptionDetails extends AppCompatActivity {
             }
         }
 
+        @NonNull
         @Override
-        public MessagesVH onCreateViewHolder(ViewGroup parent, int i) {
+        public MessagesVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
             View itemView = LayoutInflater.
                     from(parent.getContext()).
@@ -595,12 +597,12 @@ public class AdoptionDetails extends AppCompatActivity {
         class MessagesVH extends RecyclerView.ViewHolder	{
 
             final LinearLayout linlaIncoming;
-            SimpleDraweeView imgvwIncomingProfile;
+            final SimpleDraweeView imgvwIncomingProfile;
             final AppCompatTextView txtIncomingMessage;
             final AppCompatTextView txtIncomingUserName;
             final AppCompatTextView txtIncomingTimeStamp;
             final LinearLayout linlaOutgoing;
-            SimpleDraweeView imgvwOutgoingProfile;
+            final SimpleDraweeView imgvwOutgoingProfile;
             final AppCompatTextView txtOutgoingMessage;
             final AppCompatTextView txtOutgoingUserName;
             final AppCompatTextView txtOutgoingTimeStamp;

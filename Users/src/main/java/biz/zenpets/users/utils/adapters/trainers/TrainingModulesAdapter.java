@@ -19,7 +19,6 @@ import com.crashlytics.android.Crashlytics;
 import java.util.ArrayList;
 
 import biz.zenpets.users.R;
-import biz.zenpets.users.details.trainers.TrainingModuleDetails;
 import biz.zenpets.users.details.trainers.enquiry.TrainerEnquiryActivity;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.models.trainers.modules.Module;

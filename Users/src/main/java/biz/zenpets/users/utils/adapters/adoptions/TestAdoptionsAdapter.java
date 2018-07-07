@@ -127,12 +127,12 @@ public class TestAdoptionsAdapter extends RecyclerView.Adapter<TestAdoptionsAdap
     }
 
     class AdoptionsVH extends RecyclerView.ViewHolder	{
-        CardView cardAdoptionContainer;
-        SimpleDraweeView imgvwAdoptionCover;
-        TextView txtAdoptionName;
-        TextView txtAdoptionBreed;
-        IconicsImageView imgvwGender;
-        TextView txtAdoptionTimeStamp;
+        final CardView cardAdoptionContainer;
+        final SimpleDraweeView imgvwAdoptionCover;
+        final TextView txtAdoptionName;
+        final TextView txtAdoptionBreed;
+        final IconicsImageView imgvwGender;
+        final TextView txtAdoptionTimeStamp;
 
         AdoptionsVH(View v) {
             super(v);

@@ -224,18 +224,18 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    public Adoption getItem(int position) {
+    private Adoption getItem(int position) {
         return arrAdoptions.get(position);
     }
 
-    protected class AdoptionsVH extends RecyclerView.ViewHolder {
-        RecyclerView listPromoted;
-        CardView cardAdoptionContainer;
-        SimpleDraweeView imgvwAdoptionCover;
-        TextView txtAdoptionName;
-        TextView txtAdoptionBreed;
-        IconicsImageView imgvwGender;
-        TextView txtAdoptionTimeStamp;
+    class AdoptionsVH extends RecyclerView.ViewHolder {
+        final RecyclerView listPromoted;
+        final CardView cardAdoptionContainer;
+        final SimpleDraweeView imgvwAdoptionCover;
+        final TextView txtAdoptionName;
+        final TextView txtAdoptionBreed;
+        final IconicsImageView imgvwGender;
+        final TextView txtAdoptionTimeStamp;
 
         AdoptionsVH(View v) {
             super(v);
@@ -261,7 +261,7 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    protected class LoadingVH extends RecyclerView.ViewHolder {
+    class LoadingVH extends RecyclerView.ViewHolder {
         LoadingVH(View itemView) {
             super(itemView);
         }

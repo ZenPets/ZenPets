@@ -293,6 +293,12 @@
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
+        <!-- TRAINER REVIEWS -->
+        <activity
+            android:name=".details.trainers.reviews.TrainerReviewsActivity"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
         <!-- TRAINING ENQUIRY -->
         <activity
             android:name=".details.trainers.enquiry.TrainerEnquiryActivity"

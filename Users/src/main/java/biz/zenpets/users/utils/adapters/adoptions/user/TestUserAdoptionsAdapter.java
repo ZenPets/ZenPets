@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -64,7 +65,7 @@ public class TestUserAdoptionsAdapter extends RecyclerView.Adapter<TestUserAdopt
     }
 
     @Override
-    public void onBindViewHolder(final AdoptionsVH holder, final int position) {
+    public void onBindViewHolder(@NonNull final AdoptionsVH holder, final int position) {
         final Adoption data = arrAdoptions.get(position);
 
         /* SET THE ADOPTION COVER PHOTO */
@@ -224,8 +225,9 @@ public class TestUserAdoptionsAdapter extends RecyclerView.Adapter<TestUserAdopt
         });
     }
 
+    @NonNull
     @Override
-    public AdoptionsVH onCreateViewHolder(ViewGroup parent, int i) {
+    public AdoptionsVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
         View itemView = LayoutInflater.
                 from(parent.getContext()).
@@ -235,13 +237,13 @@ public class TestUserAdoptionsAdapter extends RecyclerView.Adapter<TestUserAdopt
     }
 
     class AdoptionsVH extends RecyclerView.ViewHolder	{
-        CardView cardAdoptionContainer;
-        SimpleDraweeView imgvwAdoptionCover;
-        TextView txtAdoptionName;
-        TextView txtAdoptionBreed;
-        IconicsImageView imgvwGender;
-        IconicsImageView imgvwOptions;
-        TextView txtAdoptionTimeStamp;
+        final CardView cardAdoptionContainer;
+        final SimpleDraweeView imgvwAdoptionCover;
+        final TextView txtAdoptionName;
+        final TextView txtAdoptionBreed;
+        final IconicsImageView imgvwGender;
+        final IconicsImageView imgvwOptions;
+        final TextView txtAdoptionTimeStamp;
 
         AdoptionsVH(View v) {
             super(v);

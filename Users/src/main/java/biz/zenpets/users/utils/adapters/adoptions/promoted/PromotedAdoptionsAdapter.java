@@ -154,11 +154,11 @@ public class PromotedAdoptionsAdapter extends RecyclerView.Adapter<PromotedAdopt
     }
 
     class AdoptionsVH extends RecyclerView.ViewHolder	{
-        SimpleDraweeView imgvwAdoptionCover;
-        TextView txtAdoptionName;
-        TextView txtAdoptionDescription;
-        TextView txtPetDetails;
-        TextView txtTimeStamp;
+        final SimpleDraweeView imgvwAdoptionCover;
+        final TextView txtAdoptionName;
+        final TextView txtAdoptionDescription;
+        final TextView txtPetDetails;
+        final TextView txtTimeStamp;
 //        LinearLayout linlaAdoptionImages;
 //        RecyclerView listAdoptionImages;
 

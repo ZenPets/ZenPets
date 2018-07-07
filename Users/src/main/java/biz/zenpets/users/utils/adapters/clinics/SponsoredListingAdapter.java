@@ -1,6 +1,7 @@
 package biz.zenpets.users.utils.adapters.clinics;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -36,7 +37,7 @@ public class SponsoredListingAdapter extends RecyclerView.Adapter<SponsoredListi
     }
 
     @Override
-    public void onBindViewHolder(ClinicsVH holder, final int position) {
+    public void onBindViewHolder(@NonNull ClinicsVH holder, final int position) {
         final DoctorsData data = arrDoctors.get(position);
 
         /* SET THE CLINIC NAME */
@@ -57,8 +58,9 @@ public class SponsoredListingAdapter extends RecyclerView.Adapter<SponsoredListi
         holder.txtClinicCharges.setText(data.getDoctorCharges());
     }
 
+    @NonNull
     @Override
-    public ClinicsVH onCreateViewHolder(ViewGroup parent, int i) {
+    public ClinicsVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
         View itemView = LayoutInflater.
                 from(parent.getContext()).

@@ -1,4 +1,4 @@
-package biz.zenpets.users.details.doctors.reviews;
+package biz.zenpets.users.details.trainers.reviews;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -33,48 +34,48 @@ import java.util.Locale;
 import biz.zenpets.users.R;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
-import biz.zenpets.users.utils.models.reviews.Review;
-import biz.zenpets.users.utils.models.reviews.Reviews;
-import biz.zenpets.users.utils.models.reviews.ReviewsAPI;
-import biz.zenpets.users.utils.models.reviews.votes.ReviewVote;
-import biz.zenpets.users.utils.models.reviews.votes.ReviewVotes;
-import biz.zenpets.users.utils.models.reviews.votes.ReviewVotesAPI;
+import biz.zenpets.users.utils.models.trainers.reviews.TrainerReview;
+import biz.zenpets.users.utils.models.trainers.reviews.TrainerReviews;
+import biz.zenpets.users.utils.models.trainers.reviews.TrainerReviewsAPI;
+import biz.zenpets.users.utils.models.trainers.reviews.votes.TrainerReviewVote;
+import biz.zenpets.users.utils.models.trainers.reviews.votes.TrainerReviewVotes;
+import biz.zenpets.users.utils.models.trainers.reviews.votes.TrainerReviewVotesAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DoctorReviews extends AppCompatActivity {
+public class TrainerReviewsActivity extends AppCompatActivity {
 
     private AppPrefs getApp()	{
         return (AppPrefs) getApplication();
     }
 
-    /** THE INCOMING DOCTOR ID **/
-    private String DOCTOR_ID = null;
+    /* THE INCOMING TRAINER ID  AND NAME */
+    private String TRAINER_ID = null;
+    private String TRAINER_NAME = null;
 
-    /** THE LOGGED IN USER'S ID **/
+    /* THE LOGGED IN USER'S ID */
     private String USER_ID = null;
 
-    /** THE REVIEWS ARRAY LIST **/
-    private ArrayList<Review> arrReviews = new ArrayList<>();
+    /** THE TRAINER REVIEWS ARRAY LIST **/
+    private ArrayList<TrainerReview> arrReviews = new ArrayList<>();
 
     /** THE HELPFUL REVIEW VOTES **/
     private String HELPFUL_REVIEW_VOTES = null;
     private String NON_HELPFUL_REVIEW_VOTES = null;
-
+    
     /** CAST THE LAYOUT ELEMENTS **/
-    @BindView(R.id.txtFeedback) AppCompatTextView txtFeedback;
-    @BindView(R.id.txtDoctorName) AppCompatTextView txtDoctorName;
+    @BindView(R.id.txtTrainerName) TextView txtTrainerName;
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
-    @BindView(R.id.listDoctorReviews) RecyclerView listDoctorReviews;
+    @BindView(R.id.listTrainerReviews) RecyclerView listTrainerReviews;
     @BindView(R.id.linlaEmpty) LinearLayout linlaEmpty;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.doctor_reviews_list);
+        setContentView(R.layout.trainer_reviews_list);
         ButterKnife.bind(this);
 
         /* GET THE LOGGED IN USER'S ID */
@@ -90,23 +91,59 @@ public class DoctorReviews extends AppCompatActivity {
         configTB();
     }
 
+    /** FETCH THE TRAINER'S REVIEWS **/
+    private void fetchTrainerReviews() {
+        TrainerReviewsAPI api = ZenApiClient.getClient().create(TrainerReviewsAPI.class);
+        Call<TrainerReviews> call = api.fetchTrainerReviews(TRAINER_ID);
+        call.enqueue(new Callback<TrainerReviews>() {
+            @Override
+            public void onResponse(Call<TrainerReviews> call, Response<TrainerReviews> response) {
+                if (response.body() != null && response.body().getReviews() != null)    {
+                    arrReviews = response.body().getReviews();
+                    if (arrReviews.size() > 0)    {
+                        /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY REVIEWS VIEW */
+                        linlaEmpty.setVisibility(View.GONE);
+                        listTrainerReviews.setVisibility(View.VISIBLE);
+
+                        /* SET THE REVIEWS ADAPTER TO THE RECYCLER VIEW */
+                        listTrainerReviews.setAdapter(new AllReviewsAdapter(arrReviews));
+                    } else {
+                        /* SHOW THE NO REVIEWS LAYOUT */
+                        linlaEmpty.setVisibility(View.VISIBLE);
+                        listTrainerReviews.setVisibility(View.GONE);
+                    }
+                } else {
+                    /* SHOW THE NO REVIEWS LAYOUT */
+                    linlaEmpty.setVisibility(View.VISIBLE);
+                    listTrainerReviews.setVisibility(View.GONE);
+                }
+
+                /* HIDE THE PROGRESS AFTER FETCHING THE REVIEWS */
+                linlaProgress.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<TrainerReviews> call, Throwable t) {
+                Crashlytics.logException(t);
+            }
+        });
+    }
+
     /* GET THE INCOMING DATA */
     private void getIncomingData() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null
-                && bundle.containsKey("DOCTOR_ID")
-                && bundle.containsKey("DOCTOR_PREFIX")
-                && bundle.containsKey("DOCTOR_NAME")) {
-            DOCTOR_ID = bundle.getString("DOCTOR_ID");
-            String DOCTOR_PREFIX = bundle.getString("DOCTOR_PREFIX");
-            String DOCTOR_NAME = bundle.getString("DOCTOR_NAME");
-            if (DOCTOR_ID != null && DOCTOR_PREFIX != null && DOCTOR_NAME != null)  {
-                /* SET THE DOCTOR'S NAME */
-                txtDoctorName.setText(getString(R.string.review_doctor_placeholder, DOCTOR_PREFIX, DOCTOR_NAME));
+                && bundle.containsKey("TRAINER_ID")
+                && bundle.containsKey("TRAINER_NAME")) {
+            TRAINER_ID = bundle.getString("TRAINER_ID");
+            TRAINER_NAME = bundle.getString("TRAINER_NAME");
+            if (TRAINER_ID != null && TRAINER_NAME != null)  {
+                /* SET THE TRAINER'S NAME */
+                txtTrainerName.setText(TRAINER_NAME);
 
-                /* SHOW THE PROGRESS AND FETCH THE DOCTOR'S REVIEWS */
+                /* SHOW THE PROGRESS AND FETCH THE TRAINER'S REVIEWS */
                 linlaProgress.setVisibility(View.VISIBLE);
-                fetchDoctorReviews();
+                fetchTrainerReviews();
             } else {
                 Toast.makeText(getApplicationContext(), "Failed to get required information", Toast.LENGTH_LONG).show();
                 finish();
@@ -117,55 +154,16 @@ public class DoctorReviews extends AppCompatActivity {
         }
     }
 
-    /***** FETCH THE DOCTOR'S REVIEWS *****/
-    private void fetchDoctorReviews() {
-        ReviewsAPI api = ZenApiClient.getClient().create(ReviewsAPI.class);
-        Call<Reviews> call = api.fetchDoctorReviews(DOCTOR_ID);
-        call.enqueue(new Callback<Reviews>() {
-            @Override
-            public void onResponse(Call<Reviews> call, Response<Reviews> response) {
-                /* GET THE REVIEWS */
-                arrReviews = response.body().getReviews();
-
-                /* CHECK FOR RESULTS */
-                if (arrReviews != null && arrReviews.size() > 0)    {
-                    /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
-                    listDoctorReviews.setVisibility(View.VISIBLE);
-                    linlaEmpty.setVisibility(View.GONE);
-
-                    /* SET THE ADAPTER TO THE RECYCLER VIEW */
-                    listDoctorReviews.setAdapter(new AllReviewsAdapter(arrReviews));
-
-                    /* HIDE THE PROGRESS AFTER FETCHING THE REVIEWS */
-                    linlaProgress.setVisibility(View.GONE);
-                } else {
-                    /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
-                    linlaEmpty.setVisibility(View.VISIBLE);
-                    listDoctorReviews.setVisibility(View.GONE);
-
-                    /* HIDE THE PROGRESS AFTER FETCHING THE REVIEWS */
-                    linlaProgress.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Reviews> call, Throwable t) {
-//                Log.e("REVIEWS FAILURE", t.getMessage());
-                Crashlytics.logException(t);
-            }
-        });
-    }
-
     /***** CONFIGURE THE RECYCLER VIEW *****/
     private void configRecycler() {
         /* SET THE CONFIGURATION */
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
-        listDoctorReviews.setLayoutManager(manager);
-        listDoctorReviews.setHasFixedSize(true);
+        listTrainerReviews.setLayoutManager(manager);
+        listTrainerReviews.setHasFixedSize(true);
 
         /* SET THE ADAPTER */
-        listDoctorReviews.setAdapter(new AllReviewsAdapter(arrReviews));
+//        listTrainerReviews.setAdapter(new AllReviewsAdapter(arrReviews));
     }
 
     /***** CONFIGURE THE TOOLBAR *****/
@@ -195,9 +193,9 @@ public class DoctorReviews extends AppCompatActivity {
     private class AllReviewsAdapter extends RecyclerView.Adapter<AllReviewsAdapter.ReviewsVH> {
 
         /***** ARRAY LIST TO GET DATA FROM THE ACTIVITY *****/
-        private final ArrayList<Review> reviews;
+        private final ArrayList<TrainerReview> reviews;
 
-        private AllReviewsAdapter(ArrayList<Review> arrReviews) {
+        private AllReviewsAdapter(ArrayList<TrainerReview> arrReviews) {
             /* CAST THE CONTENTS OF THE ARRAY LIST IN THE METHOD TO THE LOCAL INSTANCE */
             this.reviews = arrReviews;
         }
@@ -208,8 +206,8 @@ public class DoctorReviews extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull final ReviewsVH holder, final int position) {
-            final Review data = reviews.get(position);
+        public void onBindViewHolder(@NonNull final AllReviewsAdapter.ReviewsVH holder, final int position) {
+            final TrainerReview data = reviews.get(position);
 
             /* SET THE RECOMMEND STATUS */
             String strRecommendStatus = data.getRecommendStatus();
@@ -232,14 +230,9 @@ public class DoctorReviews extends AppCompatActivity {
                 holder.imgvwUserProfile.setImageURI(request.getSourceUri());
             }
 
-            /* SET THE VISIT REASON */
-            if (data.getVisitReason() != null)  {
-                holder.txtVisitReason.setText("Visited for " + data.getVisitReason());
-            }
-
             /* SET THE VISIT EXPERIENCE */
-            if (data.getDoctorExperience() != null) {
-                holder.txtVisitExperience.setText(data.getDoctorExperience());
+            if (data.getTrainerExperience() != null) {
+                holder.txtVisitExperience.setText(data.getTrainerExperience());
             }
 
             /* SET THE USER NAME */
@@ -260,27 +253,27 @@ public class DoctorReviews extends AppCompatActivity {
             }
 
             /* GET THE NUMBER OF HELPFUL VOTES */
-            fetchHelpfulVotes(holder.txtHelpfulYes, data.getReviewID());
+            fetchHelpfulVotes(holder.txtHelpfulYes, data.getTrainerReviewID());
 
             /* GET THE NUMBER OF NON HELPFUL VOTES */
-            fetchNotHelpfulVotes(holder.txtHelpfulNo, data.getReviewID());
+            fetchNotHelpfulVotes(holder.txtHelpfulNo, data.getTrainerReviewID());
 
             /* ADD A HELPFUL VOTE */
             holder.txtHelpfulYes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ReviewVotesAPI api = ZenApiClient.getClient().create(ReviewVotesAPI.class);
-                    Call<ReviewVote> call = api.checkUserReviewVote(data.getReviewID(), USER_ID);
-                    call.enqueue(new Callback<ReviewVote>() {
+                    TrainerReviewVotesAPI api = ZenApiClient.getClient().create(TrainerReviewVotesAPI.class);
+                    Call<TrainerReviewVote> call = api.checkUserTrainerReviewVote(data.getTrainerReviewID(), USER_ID);
+                    call.enqueue(new Callback<TrainerReviewVote>() {
                         @Override
-                        public void onResponse(Call<ReviewVote> call, Response<ReviewVote> response) {
-                            ReviewVote vote = response.body();
+                        public void onResponse(Call<TrainerReviewVote> call, Response<TrainerReviewVote> response) {
+                            TrainerReviewVote vote = response.body();
                             /* PROCESS THE HELPFUL RESULT */
-                            processHelpfulResult(vote, holder.txtHelpfulYes, holder.txtHelpfulNo, data.getReviewID());
+                            processHelpfulResult(vote, holder.txtHelpfulYes, holder.txtHelpfulNo, data.getTrainerReviewID());
                         }
 
                         @Override
-                        public void onFailure(Call<ReviewVote> call, Throwable t) {
+                        public void onFailure(Call<TrainerReviewVote> call, Throwable t) {
                             Crashlytics.logException(t);
                         }
                     });
@@ -291,18 +284,18 @@ public class DoctorReviews extends AppCompatActivity {
             holder.txtHelpfulNo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ReviewVotesAPI api = ZenApiClient.getClient().create(ReviewVotesAPI.class);
-                    Call<ReviewVote> call = api.checkUserReviewVote(data.getReviewID(), USER_ID);
-                    call.enqueue(new Callback<ReviewVote>() {
+                    TrainerReviewVotesAPI api = ZenApiClient.getClient().create(TrainerReviewVotesAPI.class);
+                    Call<TrainerReviewVote> call = api.checkUserTrainerReviewVote(data.getTrainerReviewID(), USER_ID);
+                    call.enqueue(new Callback<TrainerReviewVote>() {
                         @Override
-                        public void onResponse(Call<ReviewVote> call, Response<ReviewVote> response) {
-                            ReviewVote vote = response.body();
+                        public void onResponse(Call<TrainerReviewVote> call, Response<TrainerReviewVote> response) {
+                            TrainerReviewVote vote = response.body();
                             /* PROCESS THE NOT NOT HELPFUL RESULT */
-                            processNotHelpfulResult(vote, holder.txtHelpfulYes, holder.txtHelpfulNo, data.getReviewID());
+                            processNotHelpfulResult(vote, holder.txtHelpfulYes, holder.txtHelpfulNo, data.getTrainerReviewID());
                         }
 
                         @Override
-                        public void onFailure(Call<ReviewVote> call, Throwable t) {
+                        public void onFailure(Call<TrainerReviewVote> call, Throwable t) {
 //                            Log.e("CHECK VOTE FAILURE", t.getMessage());
                             Crashlytics.logException(t);
                         }
@@ -313,13 +306,13 @@ public class DoctorReviews extends AppCompatActivity {
 
         @NonNull
         @Override
-        public ReviewsVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+        public AllReviewsAdapter.ReviewsVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
             View itemView = LayoutInflater.
                     from(parent.getContext()).
                     inflate(R.layout.doctor_reviews_item_new, parent, false);
 
-            return new ReviewsVH(itemView);
+            return new AllReviewsAdapter.ReviewsVH(itemView);
         }
 
         class ReviewsVH extends RecyclerView.ViewHolder	{
@@ -350,7 +343,7 @@ public class DoctorReviews extends AppCompatActivity {
 
     /***** PROCESS THE HELPFUL RESULT *****/
     private void processHelpfulResult(
-            ReviewVote vote,
+            TrainerReviewVote vote,
             final AppCompatTextView txtHelpfulYes,
             final AppCompatTextView txtHelpfulNo,
             final String reviewID) {
@@ -363,12 +356,12 @@ public class DoctorReviews extends AppCompatActivity {
                         "You have already marked this Review as helpful",
                         Toast.LENGTH_SHORT).show();
             } else {
-                ReviewVotesAPI apiUpdate = ZenApiClient.getClient().create(ReviewVotesAPI.class);
-                Call<ReviewVote> callUpdate = apiUpdate.updateReviewVoteYes(
+                TrainerReviewVotesAPI apiUpdate = ZenApiClient.getClient().create(TrainerReviewVotesAPI.class);
+                Call<TrainerReviewVote> callUpdate = apiUpdate.updateTrainerReviewVoteYes(
                         reviewVoteID, "Yes");
-                callUpdate.enqueue(new Callback<ReviewVote>() {
+                callUpdate.enqueue(new Callback<TrainerReviewVote>() {
                     @Override
-                    public void onResponse(Call<ReviewVote> call, Response<ReviewVote> response) {
+                    public void onResponse(Call<TrainerReviewVote> call, Response<TrainerReviewVote> response) {
                         if (response.isSuccessful())    {
                             /* GET THE NUMBER OF HELPFUL VOTES */
                             fetchHelpfulVotes(txtHelpfulYes, reviewID);
@@ -384,20 +377,20 @@ public class DoctorReviews extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<ReviewVote> call, Throwable t) {
+                    public void onFailure(Call<TrainerReviewVote> call, Throwable t) {
                         Crashlytics.logException(t);
                     }
                 });
             }
         } else {
             String reviewVoteTimestamp = String.valueOf(System.currentTimeMillis() / 1000);
-            ReviewVotesAPI apiNew = ZenApiClient.getClient().create(ReviewVotesAPI.class);
-            Call<ReviewVote> callNew = apiNew.newReviewVote(
+            TrainerReviewVotesAPI apiNew = ZenApiClient.getClient().create(TrainerReviewVotesAPI.class);
+            Call<TrainerReviewVote> callNew = apiNew.newTrainerReviewVote(
                     reviewID, USER_ID, "Yes", reviewVoteTimestamp
             );
-            callNew.enqueue(new Callback<ReviewVote>() {
+            callNew.enqueue(new Callback<TrainerReviewVote>() {
                 @Override
-                public void onResponse(Call<ReviewVote> call, Response<ReviewVote> response) {
+                public void onResponse(Call<TrainerReviewVote> call, Response<TrainerReviewVote> response) {
                     if (response.isSuccessful())    {
                         /* GET THE NUMBER OF HELPFUL VOTES */
                         fetchHelpfulVotes(txtHelpfulYes, reviewID);
@@ -413,7 +406,7 @@ public class DoctorReviews extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<ReviewVote> call, Throwable t) {
+                public void onFailure(Call<TrainerReviewVote> call, Throwable t) {
                     Crashlytics.logException(t);
                 }
             });
@@ -422,13 +415,13 @@ public class DoctorReviews extends AppCompatActivity {
 
     /***** GET AND SET THE NUMBER OF HELPFUL VOTES *****/
     private void fetchHelpfulVotes(final AppCompatTextView txtHelpfulYes, String reviewID) {
-        ReviewVotesAPI api = ZenApiClient.getClient().create(ReviewVotesAPI.class);
-        Call<ReviewVotes> call = api.fetchPositiveReviewVotes(reviewID, "Yes");
-        call.enqueue(new Callback<ReviewVotes>() {
+        TrainerReviewVotesAPI api = ZenApiClient.getClient().create(TrainerReviewVotesAPI.class);
+        Call<TrainerReviewVotes> call = api.fetchPositiveTrainerReviewVotes(reviewID, "Yes");
+        call.enqueue(new Callback<TrainerReviewVotes>() {
             @Override
-            public void onResponse(Call<ReviewVotes> call, Response<ReviewVotes> response) {
+            public void onResponse(Call<TrainerReviewVotes> call, Response<TrainerReviewVotes> response) {
                 if (response.isSuccessful())    {
-                    ArrayList<ReviewVote> arrYes = response.body().getVotes();
+                    ArrayList<TrainerReviewVote> arrYes = response.body().getVotes();
                     if (arrYes != null && arrYes.size() > 0)    {
                         HELPFUL_REVIEW_VOTES = String.valueOf(arrYes.size());
                     } else {
@@ -446,7 +439,7 @@ public class DoctorReviews extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ReviewVotes> call, Throwable t) {
+            public void onFailure(Call<TrainerReviewVotes> call, Throwable t) {
                 Crashlytics.logException(t);
             }
         });
@@ -454,7 +447,7 @@ public class DoctorReviews extends AppCompatActivity {
 
     /***** PROCESS THE NOT HELPFUL RESULT *****/
     private void processNotHelpfulResult(
-            ReviewVote vote,
+            TrainerReviewVote vote,
             final AppCompatTextView txtHelpfulYes,
             final AppCompatTextView txtHelpfulNo,
             final String reviewID) {
@@ -467,12 +460,12 @@ public class DoctorReviews extends AppCompatActivity {
                         "You have already voted this reply as not helpful",
                         Toast.LENGTH_SHORT).show();
             } else {
-                ReviewVotesAPI apiUpdate = ZenApiClient.getClient().create(ReviewVotesAPI.class);
-                Call<ReviewVote> callUpdate = apiUpdate.updateReviewVoteNo(
+                TrainerReviewVotesAPI apiUpdate = ZenApiClient.getClient().create(TrainerReviewVotesAPI.class);
+                Call<TrainerReviewVote> callUpdate = apiUpdate.updateTrainerReviewVoteNo(
                         reviewVoteID, "No");
-                callUpdate.enqueue(new Callback<ReviewVote>() {
+                callUpdate.enqueue(new Callback<TrainerReviewVote>() {
                     @Override
-                    public void onResponse(Call<ReviewVote> call, Response<ReviewVote> response) {
+                    public void onResponse(Call<TrainerReviewVote> call, Response<TrainerReviewVote> response) {
                         if (response.isSuccessful())    {
                             /* GET THE NUMBER OF HELPFUL VOTES */
                             fetchHelpfulVotes(txtHelpfulYes, reviewID);
@@ -488,20 +481,20 @@ public class DoctorReviews extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<ReviewVote> call, Throwable t) {
+                    public void onFailure(Call<TrainerReviewVote> call, Throwable t) {
                         Crashlytics.logException(t);
                     }
                 });
             }
         } else {
             String reviewVoteTimestamp = String.valueOf(System.currentTimeMillis() / 1000);
-            ReviewVotesAPI apiNew = ZenApiClient.getClient().create(ReviewVotesAPI.class);
-            Call<ReviewVote> callNew = apiNew.newReviewVote(
+            TrainerReviewVotesAPI apiNew = ZenApiClient.getClient().create(TrainerReviewVotesAPI.class);
+            Call<TrainerReviewVote> callNew = apiNew.newTrainerReviewVote(
                     reviewID, USER_ID, "No", reviewVoteTimestamp
             );
-            callNew.enqueue(new Callback<ReviewVote>() {
+            callNew.enqueue(new Callback<TrainerReviewVote>() {
                 @Override
-                public void onResponse(Call<ReviewVote> call, Response<ReviewVote> response) {
+                public void onResponse(Call<TrainerReviewVote> call, Response<TrainerReviewVote> response) {
                     if (response.isSuccessful())    {
                         /* GET THE NUMBER OF HELPFUL VOTES */
                         fetchHelpfulVotes(txtHelpfulYes, reviewID);
@@ -517,7 +510,7 @@ public class DoctorReviews extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<ReviewVote> call, Throwable t) {
+                public void onFailure(Call<TrainerReviewVote> call, Throwable t) {
                     Crashlytics.logException(t);
                 }
             });
@@ -526,13 +519,13 @@ public class DoctorReviews extends AppCompatActivity {
 
     /***** GET THE NUMBER OF NOT HELPFUL VOTES *****/
     private void fetchNotHelpfulVotes(final AppCompatTextView txtHelpfulNo, String reviewID) {
-        ReviewVotesAPI api = ZenApiClient.getClient().create(ReviewVotesAPI.class);
-        Call<ReviewVotes> call = api.fetchNegativeReviewVotes(reviewID, "No");
-        call.enqueue(new Callback<ReviewVotes>() {
+        TrainerReviewVotesAPI api = ZenApiClient.getClient().create(TrainerReviewVotesAPI.class);
+        Call<TrainerReviewVotes> call = api.fetchNegativeTrainerReviewVotes(reviewID, "No");
+        call.enqueue(new Callback<TrainerReviewVotes>() {
             @Override
-            public void onResponse(Call<ReviewVotes> call, Response<ReviewVotes> response) {
+            public void onResponse(Call<TrainerReviewVotes> call, Response<TrainerReviewVotes> response) {
                 if (response.isSuccessful())    {
-                    ArrayList<ReviewVote> arrNo = response.body().getVotes();
+                    ArrayList<TrainerReviewVote> arrNo = response.body().getVotes();
                     if (arrNo != null && arrNo.size() > 0)  {
                         NON_HELPFUL_REVIEW_VOTES = String.valueOf(arrNo.size());
                     } else {
@@ -550,7 +543,7 @@ public class DoctorReviews extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ReviewVotes> call, Throwable t) {
+            public void onFailure(Call<TrainerReviewVotes> call, Throwable t) {
                 Crashlytics.logException(t);
             }
         });

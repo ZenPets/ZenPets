@@ -89,8 +89,8 @@ public class AdoptionCreatorNew extends AppCompatActivity {
     }
 
     /** THE LOGGED IN USER'S ID, USER_AUTH_ID, AND CITY ID **/
-    String USER_ID = null;
-    String USER_AUTH_ID = null;
+    private String USER_ID = null;
+    private String USER_AUTH_ID = null;
     private String CITY_ID = null;
 
     /** CAST THE LAYOUT ELEMENTS **/
@@ -109,7 +109,7 @@ public class AdoptionCreatorNew extends AppCompatActivity {
     private static final int ACCESS_STORAGE_CONSTANT = 201;
 
     /** BOOLEAN TO CHECK IF USER IS SELECTING A COVER PHOTO (FALSE) OR ADOPTION IMAGES (TRUE) **/
-    boolean blnSource = false;
+    private boolean blnSource = false;
 
     /** THE BREEDS ARRAY LIST **/
     private ArrayList<Breed> arrBreeds = new ArrayList<>();
@@ -125,14 +125,14 @@ public class AdoptionCreatorNew extends AppCompatActivity {
 
     /** THE OBJECTS TO HOLD THE ADOPTION DETAILS **/
     private String ADOPTION_ID = null;
-    String ADOPTION_PET_TYPE_ID = "1";
-    String ADOPTION_BREED_ID = null;
-    String ADOPTION_GENDER = "Male";
-    String ADOPTION_NAME = null;
-    String ADOPTION_DESCRIPTION = null;
-    Uri ADOPTION_COVER_URI = null;
-    String FILE_NAME = null;
-    String ADOPTION_COVER_URL = null;
+    private String ADOPTION_PET_TYPE_ID = "1";
+    private String ADOPTION_BREED_ID = null;
+    private String ADOPTION_GENDER = "Male";
+    private String ADOPTION_NAME = null;
+    private String ADOPTION_DESCRIPTION = null;
+    private Uri ADOPTION_COVER_URI = null;
+    private String FILE_NAME = null;
+    private String ADOPTION_COVER_URL = null;
 
     /** SELECT THE ADOPTION COVER PHOTO **/
     @OnClick(R.id.imgvwAdoptionCover) void selectCover()    {

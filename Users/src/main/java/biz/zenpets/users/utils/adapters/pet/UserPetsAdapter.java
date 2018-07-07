@@ -3,6 +3,7 @@ package biz.zenpets.users.utils.adapters.pet;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
@@ -46,7 +47,7 @@ public class UserPetsAdapter extends RecyclerView.Adapter<UserPetsAdapter.PetsVH
     }
 
     @Override
-    public void onBindViewHolder(final PetsVH holder, final int position) {
+    public void onBindViewHolder(@NonNull final PetsVH holder, final int position) {
         final Pet data = arrPets.get(position);
 
         /* SET THE PET'S NAME */
@@ -103,8 +104,9 @@ public class UserPetsAdapter extends RecyclerView.Adapter<UserPetsAdapter.PetsVH
         });
     }
 
+    @NonNull
     @Override
-    public PetsVH onCreateViewHolder(ViewGroup parent, int i) {
+    public PetsVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
         View itemView = LayoutInflater.
                 from(parent.getContext()).

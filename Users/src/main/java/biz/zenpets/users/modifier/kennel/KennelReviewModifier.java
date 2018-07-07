@@ -43,7 +43,7 @@ import retrofit2.Response;
 public class KennelReviewModifier extends AppCompatActivity {
 
     /** THE INCOMING REVIEW ID **/
-    String REVIEW_ID = null;
+    private String REVIEW_ID = null;
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.imgvwKennelCoverPhoto) SimpleDraweeView imgvwKennelCoverPhoto;
@@ -58,9 +58,9 @@ public class KennelReviewModifier extends AppCompatActivity {
     @BindView(R.id.txtTermsOfService) TextView txtTermsOfService;
 
     /** STRINGS TO HOLD THE COLLECTED REVIEW INFORMATION **/
-    String RECOMMEND_STATUS = null;
-    String KENNEL_RATING = null;
-    String KENNEL_EXPERIENCE = null;
+    private String RECOMMEND_STATUS = null;
+    private String KENNEL_RATING = null;
+    private String KENNEL_EXPERIENCE = null;
 
     /** A PROGRESS DIALOG INSTANCE **/
     private ProgressDialog dialog;

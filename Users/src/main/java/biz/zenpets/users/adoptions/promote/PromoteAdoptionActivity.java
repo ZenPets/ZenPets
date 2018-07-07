@@ -45,7 +45,7 @@ import okhttp3.Response;
 public class PromoteAdoptionActivity extends AppCompatActivity implements PaymentResultListener {
 
     /** THE INCOMING ADOPTION ID **/
-    String ADOPTION_ID = null;
+    private String ADOPTION_ID = null;
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.imgvwAdoptionCover) SimpleDraweeView imgvwAdoptionCover;
@@ -54,11 +54,11 @@ public class PromoteAdoptionActivity extends AppCompatActivity implements Paymen
     @BindView(R.id.groupOptions) RadioGroup groupOptions;
 
     /** THE STRINGS TO HOLD THE SELECTED OPTIONS **/
-    String PROMOTION_OPTION_ID = "1";
-    String PROMOTION_DAYS = "7";
-    String PROMOTION_CHARGES = "70";
-    String PROMOTION_FROM = null;
-    String PROMOTION_TO = null;
+    private String PROMOTION_OPTION_ID = "1";
+    private String PROMOTION_DAYS = "7";
+    private String PROMOTION_CHARGES = "70";
+    private String PROMOTION_FROM = null;
+    private String PROMOTION_TO = null;
 
     /** CONFIRM THE ADOPTION'S PROMOTION **/
     @OnClick(R.id.btnConfirmPromotion) void confirmPromotion()  {

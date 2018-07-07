@@ -2,6 +2,7 @@ package biz.zenpets.users.utils.helpers.classes.location;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
@@ -204,7 +205,7 @@ public class CitySelectorActivity extends AppCompatActivity implements SearchVie
         }
 
         @Override
-        public void onBindViewHolder(final CitiesVH holder, final int position) {
+        public void onBindViewHolder(@NonNull final CitiesVH holder, final int position) {
             final City data = mFilteredList.get(position);
 
             /* SET THE CITY NAME */
@@ -225,8 +226,9 @@ public class CitySelectorActivity extends AppCompatActivity implements SearchVie
             });
         }
 
+        @NonNull
         @Override
-        public CitiesVH onCreateViewHolder(ViewGroup parent, int i) {
+        public CitiesVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
             View itemView = LayoutInflater.
                     from(parent.getContext()).

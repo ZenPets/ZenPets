@@ -45,7 +45,7 @@ public class PastAppointmentsAdapter extends RecyclerView.Adapter<PastAppointmen
     }
 
     @Override
-    public void onBindViewHolder(AppointmentsVH holder, final int position) {
+    public void onBindViewHolder(@NonNull AppointmentsVH holder, final int position) {
         final Appointment data = arrAppointments.get(position);
 
         /* GET THE APPOINTMENT DATE AND TIME AND FORMAT IT */
@@ -133,8 +133,9 @@ public class PastAppointmentsAdapter extends RecyclerView.Adapter<PastAppointmen
 //        });
     }
 
+    @NonNull
     @Override
-    public AppointmentsVH onCreateViewHolder(ViewGroup parent, int i) {
+    public AppointmentsVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
         View itemView = LayoutInflater.
                 from(parent.getContext()).

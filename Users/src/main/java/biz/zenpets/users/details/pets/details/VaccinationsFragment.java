@@ -75,7 +75,7 @@ public class VaccinationsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         /* CAST THE LAYOUT TO A NEW VIEW INSTANCE **/
         View view = inflater.inflate(R.layout.pet_vaccinations_fragment_list, container, false);
         ButterKnife.bind(this, view);
@@ -97,7 +97,7 @@ public class VaccinationsFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         /* CONFIGURE THE RECYCLER VIEW */
@@ -282,7 +282,7 @@ public class VaccinationsFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(final VaccinationsAdapter.RecordsVH holder, final int position) {
+        public void onBindViewHolder(@NonNull final VaccinationsAdapter.RecordsVH holder, final int position) {
             final Vaccination data = arrVaccinations.get(position);
 
             /* SET THE VACCINE NAME */
@@ -476,8 +476,9 @@ public class VaccinationsFragment extends Fragment {
                     }).show();
         }
 
+        @NonNull
         @Override
-        public VaccinationsAdapter.RecordsVH onCreateViewHolder(ViewGroup parent, int i) {
+        public VaccinationsAdapter.RecordsVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
             View itemView = LayoutInflater.
                     from(parent.getContext()).

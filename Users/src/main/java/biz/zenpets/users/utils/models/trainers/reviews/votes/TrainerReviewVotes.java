@@ -1,13 +1,13 @@
-package biz.zenpets.users.utils.models.reviews.votes;
+package biz.zenpets.users.utils.models.trainers.reviews.votes;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class ReviewVotes {
+public class TrainerReviewVotes {
 
     @SerializedName("error") private Boolean error;
-    @SerializedName("votes") private ArrayList<ReviewVote> votes = null;
+    @SerializedName("votes") private ArrayList<TrainerReviewVote> votes = null;
 
     public Boolean getError() {
         return error;
@@ -17,11 +17,11 @@ public class ReviewVotes {
         this.error = error;
     }
 
-    public ArrayList<ReviewVote> getVotes() {
+    public ArrayList<TrainerReviewVote> getVotes() {
         return votes;
     }
 
-    public void setVotes(ArrayList<ReviewVote> votes) {
+    public void setVotes(ArrayList<TrainerReviewVote> votes) {
         this.votes = votes;
     }
 }

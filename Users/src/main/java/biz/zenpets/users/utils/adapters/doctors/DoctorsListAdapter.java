@@ -3,6 +3,7 @@ package biz.zenpets.users.utils.adapters.doctors;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -75,7 +76,7 @@ public class DoctorsListAdapter extends RecyclerView.Adapter<DoctorsListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(final DoctorsVH holder, final int position) {
+    public void onBindViewHolder(@NonNull final DoctorsVH holder, final int position) {
         final Doctor data = arrDoctors.get(position);
 
         /* SET THE CLINIC NAME */
@@ -246,8 +247,9 @@ public class DoctorsListAdapter extends RecyclerView.Adapter<DoctorsListAdapter.
         });
     }
 
+    @NonNull
     @Override
-    public DoctorsVH onCreateViewHolder(ViewGroup parent, int i) {
+    public DoctorsVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
         View itemView = LayoutInflater.
                 from(parent.getContext()).

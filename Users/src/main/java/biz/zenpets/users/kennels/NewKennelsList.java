@@ -89,7 +89,7 @@ public class NewKennelsList extends AppCompatActivity
     private SearchView searchView;
 
     /** THE KENNEL DATA MODEL INSTANCE **/
-    Kennel data;
+    private Kennel data;
 
     /** THE KENNELS ADAPTER AND ARRAY LIST INSTANCE **/
     private KennelsAdapter kennelsAdapter;

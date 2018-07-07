@@ -76,7 +76,7 @@ public class AdoptionsList extends AppCompatActivity {
 
     /** THE PROMOTED ADOPTIONS AND ADOPTIONS ARRAY LIST INSTANCE **/
     private ArrayList<Promotion> arrPromoted = new ArrayList<>();
-    private ArrayList<Adoption> arrAdoptions = new ArrayList<>();
+    private final ArrayList<Adoption> arrAdoptions = new ArrayList<>();
 
     /** THE ADOPTION FILTER STRINGS **/
     private String FILTER_PET_GENDER = null;

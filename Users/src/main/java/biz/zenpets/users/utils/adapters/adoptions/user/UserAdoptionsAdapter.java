@@ -1,6 +1,7 @@
 package biz.zenpets.users.utils.adapters.adoptions.user;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +35,7 @@ public class UserAdoptionsAdapter extends RecyclerView.Adapter<UserAdoptionsAdap
     }
 
     @Override
-    public void onBindViewHolder(AdoptionsVH holder, final int position) {
+    public void onBindViewHolder(@NonNull AdoptionsVH holder, final int position) {
         final Adoption data = arrAdoptions.get(position);
 
 //        /* SET THE PET'S GENDER */
@@ -123,8 +124,9 @@ public class UserAdoptionsAdapter extends RecyclerView.Adapter<UserAdoptionsAdap
 //        });
     }
 
+    @NonNull
     @Override
-    public AdoptionsVH onCreateViewHolder(ViewGroup parent, int i) {
+    public AdoptionsVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
         View itemView = LayoutInflater.
                 from(parent.getContext()).

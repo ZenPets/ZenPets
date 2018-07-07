@@ -1,5 +1,6 @@
 package biz.zenpets.users.details.trainers;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 
 import biz.zenpets.users.R;
+import biz.zenpets.users.details.trainers.reviews.TrainerReviewsActivity;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.adapters.trainers.TrainerReviewsAdapter;
 import biz.zenpets.users.utils.adapters.trainers.TrainingModulesAdapter;
@@ -50,6 +52,7 @@ import biz.zenpets.users.utils.models.trainers.reviews.TrainerReviewsAPI;
 import biz.zenpets.users.utils.models.trainers.reviews.TrainerReviewsCount;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -58,6 +61,9 @@ public class TrainerDetails extends AppCompatActivity {
 
     /** THE INCOMING TRAINER ID **/
     private String TRAINER_ID = null;
+
+    /** THE TRAINER'S NAME **/
+    private String TRAINER_NAME = null;
 
     /** THE TRAINER REVIEWS ARRAY LIST **/
     private ArrayList<TrainerReview> arrReviewsSubset = new ArrayList<>();
@@ -89,6 +95,14 @@ public class TrainerDetails extends AppCompatActivity {
     @BindView(R.id.txtAllReviews) AppCompatTextView txtAllReviews;
     @BindView(R.id.linlaNoReviews) LinearLayout linlaNoReviews;
 
+    /** SHOW ALL TRAINER REVIEWS **/
+    @OnClick(R.id.txtAllReviews) void showAllReviews()  {
+        Intent intent = new Intent(this, TrainerReviewsActivity.class);
+        intent.putExtra("TRAINER_ID", TRAINER_ID);
+        intent.putExtra("TRAINER_NAME", TRAINER_NAME);
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,11 +129,11 @@ public class TrainerDetails extends AppCompatActivity {
         listTrainingModules.setVisibility(View.GONE);
         fetchTrainingModules();
 
-        /* SHOW THE PROGRESS AND FETCH THE FIRST 3 REVIEWS FOR THE DOCTOR */
+        /* SHOW THE PROGRESS AND FETCH THE FIRST 3 TRAINER REVIEWS */
         linlaReviewsProgress.setVisibility(View.VISIBLE);
         listReviews.setVisibility(View.GONE);
         fetchReviewCount();
-        fetchDoctorReviews();
+        fetchTrainerReviews();
 
         /* CONFIGURE THE APP BAR LAYOUT */
         appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -159,7 +173,7 @@ public class TrainerDetails extends AppCompatActivity {
                 Trainer data = response.body();
                 if (data != null)   {
                     /* GET AND SET THE TRAINER'S NAME */
-                    String TRAINER_NAME = data.getTrainerName();
+                    TRAINER_NAME = data.getTrainerName();
                     if (TRAINER_NAME != null)   {
                         txtTrainerName.setText(TRAINER_NAME);
                         toolbarLayout.setTitleEnabled(false);
@@ -369,8 +383,8 @@ public class TrainerDetails extends AppCompatActivity {
         });
     }
 
-    /***** FETCH THE DOCTOR'S REVIEWS *****/
-    private void fetchDoctorReviews() {
+    /***** FETCH THE TRAINER'S REVIEWS SUBSET *****/
+    private void fetchTrainerReviews() {
         TrainerReviewsAPI api = ZenApiClient.getClient().create(TrainerReviewsAPI.class);
         Call<TrainerReviews> call = api.fetchTrainerReviewsSubset(TRAINER_ID);
         call.enqueue(new Callback<TrainerReviews>() {

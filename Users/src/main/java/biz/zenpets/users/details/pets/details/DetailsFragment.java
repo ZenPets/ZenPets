@@ -2,6 +2,7 @@ package biz.zenpets.users.details.pets.details;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatTextView;
@@ -49,7 +50,7 @@ public class DetailsFragment extends Fragment implements FetchPetDetailsInterfac
     @BindView(R.id.txtNeutered) AppCompatTextView txtNeutered;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         /* CAST THE LAYOUT TO A NEW VIEW INSTANCE **/
         View view = inflater.inflate(R.layout.pet_details_fragment, container, false);
         ButterKnife.bind(this, view);
@@ -71,7 +72,7 @@ public class DetailsFragment extends Fragment implements FetchPetDetailsInterfac
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         /* GET THE INCOMING DATA */
