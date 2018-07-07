@@ -192,6 +192,8 @@ public class TestUserAdoptionDetails extends AppCompatActivity {
                                         } else if (message.equalsIgnoreCase("Promotion record doesn't exist..."))    {
                                             Intent intentPromote = new Intent(TestUserAdoptionDetails.this, PromoteAdoptionActivity.class);
                                             intentPromote.putExtra("ADOPTION_ID", ADOPTION_ID);
+                                            intentPromote.putExtra("ADOPTION_NAME", ADOPTION_NAME);
+                                            intentPromote.putExtra("ADOPTION_COVER_PHOTO", ADOPTION_COVER_PHOTO);
                                             startActivity(intentPromote);
                                         }
                                     }
@@ -282,14 +284,6 @@ public class TestUserAdoptionDetails extends AppCompatActivity {
 
                     /* SET THE BREED NAME */
                     BREED_NAME = data.getBreedName();
-
-//                    /* SET THE PET DETAILS */
-//                    if (BREED_NAME != null  && PET_TYPE_NAME != null)   {
-//                        String breed = data.getBreedName();
-//                        String petType = data.getPetTypeName();
-//                        String combinedDetails = "Species: \"" + petType + "\" | Breed: \"" + breed + "\"";
-//                        txtPetDetails.setText(combinedDetails);
-//                    }
 
                     /* SET THE USER ID */
                     USER_ID = data.getUserID();

@@ -130,16 +130,32 @@ public class MyPublicQuestions extends Fragment {
         call.enqueue(new Callback<Consultations>() {
             @Override
             public void onResponse(Call<Consultations> call, Response<Consultations> response) {
-                arrConsultations = response.body().getConsultations();
+                if (response.body() != null && response.body().getConsultations() != null)  {
+                    arrConsultations = response.body().getConsultations();
 
-                /* CHECK IF THERE ARE RESULTS TO DISPLAY */
-                if (arrConsultations.size() > 0)    {
-                    /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
-                    listMyConsultations.setVisibility(View.VISIBLE);
-                    linlaEmpty.setVisibility(View.GONE);
+                    /* CHECK IF THERE ARE RESULTS TO DISPLAY */
+                    if (arrConsultations.size() > 0)    {
+                        /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
+                        listMyConsultations.setVisibility(View.VISIBLE);
+                        linlaEmpty.setVisibility(View.GONE);
 
-                    /* SET THE ADAPTER TO THE RECYCLER VIEW */
-                    listMyConsultations.setAdapter(new UserQuestionsAdapter(getActivity(), arrConsultations));
+                        /* SET THE ADAPTER TO THE RECYCLER VIEW */
+                        listMyConsultations.setAdapter(new UserQuestionsAdapter(getActivity(), arrConsultations));
+                    } else {
+                        /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
+                        linlaEmpty.setVisibility(View.VISIBLE);
+                        listMyConsultations.setVisibility(View.GONE);
+
+                        /* SET THE APPROPRIATE ERROR MESSAGE */
+                        String errorMessage;
+                        if (PROBLEM_ID == null) {
+                            errorMessage = getString(R.string.user_public_question_empty);
+                            txtEmpty.setText(errorMessage);
+                        } else {
+                            errorMessage = getString(R.string.user_public_question_empty_filtered);
+                            txtEmpty.setText(errorMessage);
+                        }
+                    }
                 } else {
                     /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
                     linlaEmpty.setVisibility(View.VISIBLE);

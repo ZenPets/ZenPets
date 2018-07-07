@@ -221,18 +221,15 @@ public class ProfileFragment extends Fragment {
 
                         /* SET THE ADAPTER TO THE RECYCLER VIEW */
                         listUserPets.setAdapter(new UserPetsAdapter(getActivity(), arrPets));
-
-                        /* HIDE THE PROGRESS AFTER FETCHING THE DATA */
-                        linlaProgress.setVisibility(View.GONE);
                     } else {
                         /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
                         linlaEmptyPets.setVisibility(View.VISIBLE);
                         listUserPets.setVisibility(View.GONE);
-
-                        /* HIDE THE PROGRESS AFTER FETCHING THE DATA */
-                        linlaProgress.setVisibility(View.GONE);
                     }
                 }
+
+                /* HIDE THE PROGRESS AFTER FETCHING THE DATA */
+                linlaProgress.setVisibility(View.GONE);
             }
 
             @Override

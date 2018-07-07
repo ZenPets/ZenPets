@@ -2,11 +2,11 @@ package biz.zenpets.users;
 
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.app.AppCompatActivity;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,7 +31,7 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     /** CAST THE LAYOUT ELEMENT/S **/
-    @BindView(R.id.txtAppName) AppCompatTextView txtAppName;
+    @BindView(R.id.txtAppName) TextView txtAppName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

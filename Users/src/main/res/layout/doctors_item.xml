@@ -36,7 +36,7 @@
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:padding="11dp"
-                        app:iiv_color="@color/primary_dark"
+                        app:iiv_color="@color/primary_text"
                         app:iiv_icon="faw_user_md"
                         app:iiv_size="16dp" />
 
@@ -71,7 +71,7 @@
                         android:paddingRight="11dp"
                         android:paddingStart="11dp"
                         android:paddingTop="5dp"
-                        app:iiv_color="@color/accent"
+                        app:iiv_color="@color/secondary_text"
                         app:iiv_icon="faw_hospital"
                         app:iiv_size="16dp" />
 

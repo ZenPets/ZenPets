@@ -109,7 +109,7 @@
                             android:text="@string/adoption_details_description"
                             android:textColor="@color/secondary_text"
                             android:textSize="13sp"
-                            app:fontFamily="@font/lato_regular" />
+                            app:fontFamily="@font/roboto_regular" />
 
                         <com.mikepenz.iconics.view.IconicsImageView
                             android:id="@+id/imgvwGender"
@@ -212,7 +212,7 @@
                             android:text="@string/adoption_details_pet_details"
                             android:textColor="@color/secondary_text"
                             android:textSize="12sp"
-                            app:fontFamily="@font/lato_regular" />
+                            app:fontFamily="@font/roboto_regular" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -244,7 +244,7 @@
                             android:text="@string/adoption_details_time_stamp"
                             android:textColor="@color/secondary_text"
                             android:textSize="12sp"
-                            app:fontFamily="@font/lato_regular" />
+                            app:fontFamily="@font/roboto_regular" />
                     </LinearLayout>
 
                     <View
@@ -278,7 +278,7 @@
                                 android:text="@string/adoption_details_vaccinated"
                                 android:textColor="@color/secondary_text"
                                 android:textSize="12sp"
-                                app:fontFamily="@font/lato_regular" />
+                                app:fontFamily="@font/roboto_regular" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/txtVaccinated"
@@ -287,7 +287,7 @@
                                 android:padding="3dp"
                                 android:textColor="@color/secondary_text"
                                 android:textSize="12sp"
-                                app:fontFamily="@font/lato_bold" />
+                                app:fontFamily="@font/roboto_medium" />
                         </LinearLayout>
 
                         <View
@@ -311,7 +311,7 @@
                                 android:text="@string/adoption_details_dewormed"
                                 android:textColor="@color/secondary_text"
                                 android:textSize="12sp"
-                                app:fontFamily="@font/lato_regular" />
+                                app:fontFamily="@font/roboto_regular" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/txtDewormed"
@@ -320,7 +320,7 @@
                                 android:padding="3dp"
                                 android:textColor="@color/secondary_text"
                                 android:textSize="12sp"
-                                app:fontFamily="@font/lato_bold" />
+                                app:fontFamily="@font/roboto_medium" />
                         </LinearLayout>
 
                         <View
@@ -344,7 +344,7 @@
                                 android:text="@string/adoption_details_neutered"
                                 android:textColor="@color/secondary_text"
                                 android:textSize="12sp"
-                                app:fontFamily="@font/lato_regular" />
+                                app:fontFamily="@font/roboto_regular" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/txtNeutered"
@@ -353,7 +353,7 @@
                                 android:padding="3dp"
                                 android:textColor="@color/secondary_text"
                                 android:textSize="12sp"
-                                app:fontFamily="@font/lato_bold" />
+                                app:fontFamily="@font/roboto_medium" />
                         </LinearLayout>
 
                         <!--<View

@@ -2,6 +2,7 @@ package biz.zenpets.users.adoptions.promote;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
 
@@ -44,13 +47,14 @@ import okhttp3.Response;
 
 public class PromoteAdoptionActivity extends AppCompatActivity implements PaymentResultListener {
 
-    /** THE INCOMING ADOPTION ID **/
+    /** THE INCOMING ADOPTION ID, NAME AND COVER PHOTO **/
     private String ADOPTION_ID = null;
+    private String ADOPTION_NAME = null;
+    private String ADOPTION_COVER_PHOTO = null;
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.imgvwAdoptionCover) SimpleDraweeView imgvwAdoptionCover;
     @BindView(R.id.txtAdoptionName) TextView txtAdoptionName;
-    @BindView(R.id.txtAdoptionDetails) TextView txtAdoptionDetails;
     @BindView(R.id.groupOptions) RadioGroup groupOptions;
 
     /** THE STRINGS TO HOLD THE SELECTED OPTIONS **/
@@ -107,17 +111,30 @@ public class PromoteAdoptionActivity extends AppCompatActivity implements Paymen
         });
     }
 
-    /** FETCH THE ADOPTION DETAILS **/
-    private void fetchAdoptionDetails() {
-    }
-
     private void getIncomingData() {
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null && bundle.containsKey("ADOPTION_ID"))    {
+        if (bundle != null
+                && bundle.containsKey("ADOPTION_ID")
+                && bundle.containsKey("ADOPTION_NAME")
+                && bundle.containsKey("ADOPTION_COVER_PHOTO"))    {
             ADOPTION_ID = bundle.getString("ADOPTION_ID");
-            if (ADOPTION_ID != null)    {
-                /* FETCH THE ADOPTION DETAILS */
-                fetchAdoptionDetails();
+            ADOPTION_NAME = bundle.getString("ADOPTION_NAME");
+            ADOPTION_COVER_PHOTO = bundle.getString("ADOPTION_COVER_PHOTO");
+            if (ADOPTION_ID != null && ADOPTION_NAME != null && ADOPTION_COVER_PHOTO != null)    {
+                /* SET THE ADOPTION NAME */
+                txtAdoptionName.setText(ADOPTION_NAME);
+
+                /* SET THE ADOPTION COVER PHOTO */
+                if (!ADOPTION_COVER_PHOTO.equalsIgnoreCase("")
+                        && !ADOPTION_COVER_PHOTO.equalsIgnoreCase("null")) {
+                    Uri uri = Uri.parse(ADOPTION_COVER_PHOTO);
+                    imgvwAdoptionCover.setImageURI(uri);
+                } else {
+                    ImageRequest request = ImageRequestBuilder
+                            .newBuilderWithResourceId(R.drawable.empty_graphic)
+                            .build();
+                    imgvwAdoptionCover.setImageURI(request.getSourceUri());
+                }
             } else {
                 Toast.makeText(getApplicationContext(), "Failed to get required info...", Toast.LENGTH_SHORT).show();
                 finish();

@@ -41,7 +41,7 @@
             android:text="@string/appointment_creator_doctor_name"
             android:textColor="@color/secondary_text"
             android:textSize="14sp"
-            app:fontFamily="@font/lato_bold" />
+            app:fontFamily="@font/roboto_bold" />
     </LinearLayout>
 
     <include layout="@layout/zen_progress" />
@@ -96,7 +96,7 @@
                 android:text="There was an error fetching the Clinic/s this Doctor practices at."
                 android:textColor="@color/secondary_text"
                 android:textSize="14sp"
-                app:fontFamily="@font/lato_regular" />
+                app:fontFamily="@font/roboto_condensed_light" />
         </LinearLayout>
     </FrameLayout>
 </LinearLayout>

@@ -43,7 +43,7 @@
                 android:text="@string/doctor_details_doc_education"
                 android:textColor="@color/secondary_text"
                 android:textSize="12sp"
-                app:fontFamily="@font/lato_regular" />
+                app:fontFamily="@font/roboto_regular" />
         </LinearLayout>
 
         <LinearLayout
@@ -84,7 +84,7 @@
                     android:text="@string/doctor_details_doc_experience"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
-                    app:fontFamily="@font/lato_regular" />
+                    app:fontFamily="@font/roboto_regular" />
             </LinearLayout>
 
             <LinearLayout
@@ -118,7 +118,7 @@
                     android:text="@string/doctor_details_doc_votes"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
-                    app:fontFamily="@font/lato_regular" />
+                    app:fontFamily="@font/roboto_regular" />
             </LinearLayout>
         </LinearLayout>
 
@@ -153,7 +153,7 @@
                 android:text="@string/doctor_details_consultation_fees"
                 android:textColor="@color/secondary_text"
                 android:textSize="12sp"
-                app:fontFamily="@font/lato_regular" />
+                app:fontFamily="@font/roboto_regular" />
 
             <com.mikepenz.iconics.view.IconicsImageView
                 android:id="@+id/imgvwChargesInfo"
@@ -209,11 +209,11 @@
                         android:text="@string/doctor_details_clinic_name"
                         android:textColor="@color/secondary_text"
                         android:textSize="15sp"
-                        app:fontFamily="@font/lato_bold" />
+                        app:fontFamily="@font/roboto_medium" />
 
                     <android.support.v7.widget.AppCompatRatingBar
                         android:id="@+id/clinicRating"
-                        style="?android:attr/ratingBarStyleSmall"
+                        style="@style/RatingBar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="4dp"
@@ -239,7 +239,7 @@
                     android:text="@string/doctor_details_clinic_address"
                     android:textColor="@color/tertiary_text"
                     android:textSize="12sp"
-                    app:fontFamily="@font/lato_regular" />
+                    app:fontFamily="@font/roboto_regular" />
 
                 <com.google.android.gms.maps.MapView
                     android:id="@+id/clinicMap"
@@ -299,7 +299,7 @@
                         android:textColor="#18AA9E"
                         android:textSize="10sp"
                         android:visibility="visible"
-                        app:fontFamily="@font/lato_regular" />
+                        app:fontFamily="@font/roboto_regular" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txtTimingsMorning"
@@ -316,7 +316,7 @@
                         android:textColor="@color/secondary_text"
                         android:textSize="12sp"
                         android:visibility="visible"
-                        app:fontFamily="@font/lato_bold" />
+                        app:fontFamily="@font/roboto_medium" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txtMorningClosed"
@@ -330,7 +330,7 @@
                         android:textColor="#FD745E"
                         android:textSize="12sp"
                         android:visibility="gone"
-                        app:fontFamily="@font/lato_regular" />
+                        app:fontFamily="@font/roboto_regular" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -353,7 +353,7 @@
                         android:textColor="#18AA9E"
                         android:textSize="10sp"
                         android:visibility="visible"
-                        app:fontFamily="@font/lato_regular" />
+                        app:fontFamily="@font/roboto_regular" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txtTimingAfternoon"
@@ -370,7 +370,7 @@
                         android:textColor="@color/secondary_text"
                         android:textSize="12sp"
                         android:visibility="visible"
-                        app:fontFamily="@font/lato_bold" />
+                        app:fontFamily="@font/roboto_medium" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txtAfternoonClosed"
@@ -384,7 +384,7 @@
                         android:textColor="#FD745E"
                         android:textSize="12sp"
                         android:visibility="gone"
-                        app:fontFamily="@font/lato_regular" />
+                        app:fontFamily="@font/roboto_regular" />
                 </LinearLayout>
 
                 <android.support.v7.widget.AppCompatTextView
@@ -401,7 +401,7 @@
                     android:text="@string/doctor_details_all_timings"
                     android:textColor="@color/accent"
                     android:textSize="15sp"
-                    app:fontFamily="@font/lato_bold" />
+                    app:fontFamily="@font/roboto_medium" />
             </LinearLayout>
         </LinearLayout>
 
@@ -438,7 +438,7 @@
                     android:text="@string/doctor_details_reviews_label"
                     android:textColor="@color/primary_text"
                     android:textSize="15sp"
-                    app:fontFamily="@font/lato_bold" />
+                    app:fontFamily="@font/roboto_medium" />
 
                 <LinearLayout
                     android:id="@+id/linlaReviewsProgress"
@@ -462,7 +462,7 @@
                         android:text="@string/common_loading"
                         android:textColor="@color/secondary_text"
                         android:textSize="14sp"
-                        app:fontFamily="@font/lato_regular" />
+                        app:fontFamily="@font/roboto_regular" />
                 </LinearLayout>
 
                 <android.support.v7.widget.RecyclerView
@@ -490,7 +490,7 @@
                     android:text="@string/doctor_details_all_reviews"
                     android:textColor="@color/accent"
                     android:textSize="15sp"
-                    app:fontFamily="@font/lato_bold" />
+                    app:fontFamily="@font/roboto_medium" />
             </LinearLayout>
 
             <LinearLayout
@@ -552,7 +552,7 @@
                     android:text="SERVICES"
                     android:textColor="@color/primary_text"
                     android:textSize="15sp"
-                    app:fontFamily="@font/lato_bold" />
+                    app:fontFamily="@font/roboto_medium" />
 
                 <LinearLayout
                     android:id="@+id/linlaServicesProgress"
@@ -576,7 +576,7 @@
                         android:text="@string/common_loading"
                         android:textColor="@color/secondary_text"
                         android:textSize="14sp"
-                        app:fontFamily="@font/lato_regular" />
+                        app:fontFamily="@font/roboto_regular" />
                 </LinearLayout>
 
                 <android.support.v7.widget.RecyclerView
@@ -594,6 +594,7 @@
                     android:id="@+id/txtAllServices"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
                     android:gravity="start|center"
                     android:paddingBottom="5dp"
                     android:paddingEnd="11dp"
@@ -604,7 +605,7 @@
                     android:text="SEE ALL SERVICES"
                     android:textColor="@color/accent"
                     android:textSize="15sp"
-                    app:fontFamily="@font/lato_bold" />
+                    app:fontFamily="@font/roboto_medium" />
             </LinearLayout>
 
             <LinearLayout
@@ -653,6 +654,7 @@
                 android:id="@+id/linlaClinicImages"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
                 android:layout_weight="1"
                 android:gravity="top|center"
                 android:orientation="vertical"
@@ -692,7 +694,7 @@
                     android:text="@string/doctor_details_no_image"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
-                    app:fontFamily="@font/lato_light" />
+                    app:fontFamily="@font/roboto_light" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

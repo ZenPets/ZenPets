@@ -50,10 +50,15 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
                     android:adjustViewBounds="true"
-                    android:padding="11dp"
-                    app:iiv_color="@color/tertiary_text"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="5dp"
+                    android:paddingTop="5dp"
+                    app:iiv_color="@color/secondary_text"
                     app:iiv_icon="gmd_description"
-                    app:iiv_size="18dp" />
+                    app:iiv_size="16dp" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/txtConsultationDescription"
@@ -106,7 +111,7 @@
                         android:layout_marginLeft="2dp"
                         android:layout_marginRight="2dp"
                         android:padding="2dp"
-                        app:iiv_color="@color/primary"
+                        app:iiv_color="@color/secondary_text"
                         app:iiv_icon="faw_clock"
                         app:iiv_size="10dp" />
 
@@ -138,7 +143,7 @@
                         android:layout_marginLeft="2dp"
                         android:layout_marginRight="2dp"
                         android:padding="2dp"
-                        app:iiv_color="@color/primary"
+                        app:iiv_color="@color/secondary_text"
                         app:iiv_icon="ion_ios_eye"
                         app:iiv_size="10dp" />
 
@@ -170,7 +175,7 @@
                         android:layout_marginLeft="2dp"
                         android:layout_marginRight="2dp"
                         android:padding="2dp"
-                        app:iiv_color="@color/primary"
+                        app:iiv_color="@color/secondary_text"
                         app:iiv_icon="ion_reply"
                         app:iiv_size="10dp" />
 

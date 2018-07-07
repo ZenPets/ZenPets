@@ -91,16 +91,22 @@ public class TestUserAdoptions extends AppCompatActivity {
         call.enqueue(new Callback<Adoptions>() {
             @Override
             public void onResponse(Call<Adoptions> call, Response<Adoptions> response) {
-                arrAdoptions = response.body().getAdoptions();
+                if (response.body() != null && response.body().getAdoptions() != null)  {
+                    arrAdoptions = response.body().getAdoptions();
 
-                /* CHECK THE ARRAY LIST SIZE AND SHOW THE APPROPRIATE LAYOUT */
-                if (arrAdoptions.size() > 0)    {
-                    /* SET THE ADAPTER TO THE ADOPTIONS RECYCLER */
-                    listAdoptions.setAdapter(new TestUserAdoptionsAdapter(TestUserAdoptions.this, arrAdoptions));
+                    /* CHECK THE ARRAY LIST SIZE AND SHOW THE APPROPRIATE LAYOUT */
+                    if (arrAdoptions.size() > 0)    {
+                        /* SET THE ADAPTER TO THE ADOPTIONS RECYCLER */
+                        listAdoptions.setAdapter(new TestUserAdoptionsAdapter(TestUserAdoptions.this, arrAdoptions));
 
-                    /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
-                    listAdoptions.setVisibility(View.VISIBLE);
-                    linlaEmpty.setVisibility(View.GONE);
+                        /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
+                        listAdoptions.setVisibility(View.VISIBLE);
+                        linlaEmpty.setVisibility(View.GONE);
+                    } else {
+                        /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
+                        linlaEmpty.setVisibility(View.VISIBLE);
+                        listAdoptions.setVisibility(View.GONE);
+                    }
                 } else {
                     /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
                     linlaEmpty.setVisibility(View.VISIBLE);

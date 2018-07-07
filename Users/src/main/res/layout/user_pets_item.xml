@@ -39,7 +39,7 @@
                     android:adjustViewBounds="true"
                     android:background="#CCDCDCDC"
                     android:padding="6dp"
-                    app:iiv_color="@color/secondary_text"
+                    app:iiv_color="@android:color/secondary_text_light"
                     app:iiv_icon="faw_ellipsis_v"
                     app:iiv_size="16dp" />
 

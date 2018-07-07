@@ -191,6 +191,8 @@ public class TestUserAdoptionsAdapter extends RecyclerView.Adapter<TestUserAdopt
                                                 } else if (message.equalsIgnoreCase("Promotion record doesn't exist..."))    {
                                                     Intent intentPromote = new Intent(activity, PromoteAdoptionActivity.class);
                                                     intentPromote.putExtra("ADOPTION_ID", data.getAdoptionID());
+                                                    intentPromote.putExtra("ADOPTION_NAME", data.getAdoptionName());
+                                                    intentPromote.putExtra("ADOPTION_COVER_PHOTO", data.getAdoptionCoverPhoto());
                                                     activity.startActivity(intentPromote);
                                                 }
                                             }

@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- THE PRIMARY COLORS (LIGHT) -->
-    <!--<color name="primary">#2C3E50</color>
-    <color name="primary_dark">#283949</color>
-    &lt;!&ndash;<color name="accent">#f57f17</color>&ndash;&gt;
-    <color name="accent">#f44336</color>-->
-
-    <color name="primary">#01718D</color>
-    <color name="primary_dark">#026689</color>
+    <color name="primary">#2B2A30</color>
+    <color name="primary_dark">#232228</color>
     <!--<color name="accent">#f57f17</color>-->
-    <color name="accent">#f44336</color>
+    <!--<color name="accent">#f44336</color>-->
+    <!--<color name="accent">#026689</color>-->
+    <color name="accent">#A5D27D</color>
+
 
     <!-- THE TEXT COLORS (LIGHT) -->
     <color name="primary_text">@android:color/primary_text_dark</color>
@@ -18,12 +16,12 @@
 
     <!-- THE APP BG (LIGHT) -->
     <!--<color name="app_bg">#F9F9F9</color>-->
-    <color name="app_bg">#026689</color>
+    <color name="app_bg">#232228</color>
 
     <!-- THE CARD BG (LIGHT) -->
     <!--<color name="card_bg">#FFFFFF</color>-->
 
-    <color name="card_bg">#DAD2BF</color>
+    <color name="card_bg">#2B2A30</color>
 
     <!-- SIDE BAR BG COLOR (LIGHT) -->
     <color name="side_bar_bg">#312C40</color>
