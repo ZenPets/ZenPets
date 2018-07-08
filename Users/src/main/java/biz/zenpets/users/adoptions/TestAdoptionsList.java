@@ -16,6 +16,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -73,10 +74,6 @@ public class TestAdoptionsList extends AppCompatActivity {
 
     /** PERMISSION REQUEST CONSTANTS **/
     private static final int ACCESS_FINE_LOCATION_CONSTANT = 200;
-
-    /** THE PROMOTION DATA MODEL AND ADOPTION DATA MODEL INSTANCES **/
-    private Promotion promotion;
-    private Adoption data;
 
     private static final int PAGE_START = 1;
     private boolean isLoading = false;
@@ -136,7 +133,7 @@ public class TestAdoptionsList extends AppCompatActivity {
         call.enqueue(new Callback<Adoptions>() {
             @Override
             public void onResponse(Call<Adoptions> call, Response<Adoptions> response) {
-//                Log.e("ADOPTIONS LIST", String.valueOf(response.raw()));
+                Log.e("ADOPTIONS LIST", String.valueOf(response.raw()));
                 /* PROCESS THE RESPONSE */
                 arrAdoptions = processResult(response);
 
@@ -163,7 +160,7 @@ public class TestAdoptionsList extends AppCompatActivity {
         call.enqueue(new Callback<Adoptions>() {
             @Override
             public void onResponse(Call<Adoptions> call, Response<Adoptions> response) {
-//                Log.e("ADOPTIONS LIST", String.valueOf(response.raw()));
+                Log.e("ADOPTIONS LIST", String.valueOf(response.raw()));
                 /* PROCESS THE RESPONSE */
                 arrAdoptions = processResult(response);
 
@@ -197,7 +194,7 @@ public class TestAdoptionsList extends AppCompatActivity {
                 JSONArray JAAdoptions = JORoot.getJSONArray("adoptions");
                 for (int i = 0; i < JAAdoptions.length(); i++) {
                     JSONObject JOAdoptions = JAAdoptions.getJSONObject(i);
-                    data = new Adoption();
+                    Adoption data = new Adoption();
 
                     /* GET THE PROMOTED ADOPTIONS */
                     JSONArray JAPromotions = JOAdoptions.getJSONArray("promotions");
@@ -206,7 +203,7 @@ public class TestAdoptionsList extends AppCompatActivity {
                         for (int j = 0; j < JAPromotions.length(); j++) {
                             JSONObject JOPromotions = JAPromotions.getJSONObject(j);
 //                            Log.e("PROMOTIONS", String.valueOf(JOPromotions));
-                            promotion = new Promotion();
+                            Promotion promotion = new Promotion();
 
                             /* GET THE PROMOTION ID */
                             if (JOPromotions.has("promotedID")) {
@@ -692,17 +689,54 @@ public class TestAdoptionsList extends AppCompatActivity {
                     FILTER_PET_SPECIES = bundle.getString("PET_SPECIES");
                     if (FILTER_PET_SPECIES != null && FILTER_PET_SPECIES.equalsIgnoreCase("Both"))    {
                         FILTER_PET_SPECIES = null;
-                        arrAdoptions.clear();
+
+                        /* CLEAR THH ARRAY LIST AND THE ADAPTER */
+//                        arrAdoptions.clear();
+                        adoptionsAdapter.clear();
+
+                        /* RESET THE PAGE NUMBER AND TOTAL PAGES */
+                        currentPage = PAGE_START;
+                        TOTAL_PAGES = 0;
+
+                        /* FETCH THE LIST OF ADOPTIONS AGAIN */
                         fetchAdoptions();
                     }
+
                     if (FILTER_PET_SPECIES != null && FILTER_PET_GENDER != null)    {
-                        arrAdoptions.clear();
+
+                        /* CLEAR THH ARRAY LIST AND THE ADAPTER */
+//                        arrAdoptions.clear();
+                        adoptionsAdapter.clear();
+
+                        /* RESET THE PAGE NUMBER AND TOTAL PAGES */
+                        currentPage = PAGE_START;
+                        TOTAL_PAGES = 0;
+
+                        /* FETCH THE LIST OF ADOPTIONS AGAIN */
                         fetchAdoptions();
                     } else if (FILTER_PET_SPECIES != null && FILTER_PET_GENDER == null) {
-                        arrAdoptions.clear();
+
+                        /* CLEAR THH ARRAY LIST AND THE ADAPTER */
+//                        arrAdoptions.clear();
+                        adoptionsAdapter.clear();
+
+                        /* RESET THE PAGE NUMBER AND TOTAL PAGES */
+                        currentPage = PAGE_START;
+                        TOTAL_PAGES = 0;
+
+                        /* FETCH THE LIST OF ADOPTIONS AGAIN */
                         fetchAdoptions();
                     } else if (FILTER_PET_SPECIES == null && FILTER_PET_GENDER != null) {
-                        arrAdoptions.clear();
+
+                        /* CLEAR THH ARRAY LIST AND THE ADAPTER */
+//                        arrAdoptions.clear();
+                        adoptionsAdapter.clear();
+
+                        /* RESET THE PAGE NUMBER AND TOTAL PAGES */
+                        currentPage = PAGE_START;
+                        TOTAL_PAGES = 0;
+
+                        /* FETCH THE LIST OF ADOPTIONS AGAIN */
                         fetchAdoptions();
                     }
                 }

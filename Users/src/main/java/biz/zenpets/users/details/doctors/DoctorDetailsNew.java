@@ -21,6 +21,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -733,6 +734,7 @@ public class DoctorDetailsNew extends AppCompatActivity {
         call.enqueue(new Callback<Timing>() {
             @Override
             public void onResponse(Call<Timing> call, Response<Timing> response) {
+                Log.e("RESPONSE", String.valueOf(response.raw()));
                 Timing timing = response.body();
                 if (timing != null) {
                     SUN_MOR_FROM = timing.getSunMorFrom();
@@ -795,98 +797,112 @@ public class DoctorDetailsNew extends AppCompatActivity {
                 }
 
                 /* SET THE SUNDAY MORNING TIMINGS */
-                if (SUN_MOR_FROM != null && SUN_MOR_TO != null) {
+                if (SUN_MOR_FROM != null && !SUN_MOR_FROM.equalsIgnoreCase("null") && !SUN_MOR_FROM.equalsIgnoreCase("")
+                        && SUN_MOR_TO != null && !SUN_MOR_TO.equalsIgnoreCase("null") && !SUN_MOR_TO.equalsIgnoreCase("")) {
                     txtSunMorning.setText(getString(R.string.doctor_details_timings_placeholder, SUN_MOR_FROM, SUN_MOR_TO));
                 } else {
                     txtSunMorning.setText(R.string.doctor_details_timings_closed);
                 }
 
                 /* SET THE SUNDAY AFTERNOON TIMINGS */
-                if (SUN_AFT_FROM != null && SUN_AFT_TO != null) {
+                if (SUN_AFT_FROM != null && !SUN_AFT_FROM.equalsIgnoreCase("null") && !SUN_AFT_FROM.equalsIgnoreCase("")
+                        && SUN_AFT_TO != null && !SUN_AFT_TO.equalsIgnoreCase("null") && !SUN_AFT_TO.equalsIgnoreCase("")) {
                     txtSunAfternoon.setText(getString(R.string.doctor_details_timings_placeholder, SUN_AFT_FROM, SUN_AFT_TO));
                 } else {
                     txtSunAfternoon.setText(R.string.doctor_details_timings_closed);
                 }
 
                 /* SET THE MONDAY MORNING TIMINGS */
-                if (MON_MOR_FROM != null && MON_MOR_TO != null) {
+                if (MON_MOR_FROM != null && !MON_MOR_FROM.equalsIgnoreCase("null") && !MON_MOR_FROM.equalsIgnoreCase("")
+                        && MON_MOR_TO != null && !MON_MOR_TO.equalsIgnoreCase("null") && !MON_MOR_TO.equalsIgnoreCase("")) {
                     txtMonMorning.setText(getString(R.string.doctor_details_timings_placeholder, MON_MOR_FROM, MON_MOR_TO));
                 } else {
                     txtMonMorning.setText(R.string.doctor_details_timings_closed);
                 }
 
                 /* SET THE MONDAY AFTERNOON TIMINGS */
-                if (MON_AFT_FROM != null && MON_AFT_TO != null) {
+                if (MON_AFT_FROM != null && !MON_AFT_FROM.equalsIgnoreCase("null") && !MON_AFT_FROM.equalsIgnoreCase("")
+                        && MON_AFT_TO != null && !MON_AFT_TO.equalsIgnoreCase("null") && !MON_AFT_TO.equalsIgnoreCase("")) {
                     txtMonAfternoon.setText(getString(R.string.doctor_details_timings_placeholder, MON_AFT_FROM, MON_AFT_TO));
                 } else {
                     txtMonAfternoon.setText(R.string.doctor_details_timings_closed);
                 }
 
                 /* SET THE TUESDAY MORNING TIMINGS */
-                if (TUE_MOR_FROM != null && TUE_MOR_TO != null) {
+                if (TUE_MOR_FROM != null && !TUE_MOR_FROM.equalsIgnoreCase("null") && !TUE_MOR_FROM.equalsIgnoreCase("")
+                        && TUE_MOR_TO != null && !TUE_MOR_TO.equalsIgnoreCase("null") && !TUE_MOR_TO.equalsIgnoreCase("")) {
                     txtTueMorning.setText(getString(R.string.doctor_details_timings_placeholder, TUE_MOR_FROM, TUE_MOR_TO));
                 } else {
                     txtTueMorning.setText(R.string.doctor_details_timings_closed);
                 }
 
                 /* SET THE TUESDAY AFTERNOON TIMINGS */
-                if (TUE_AFT_FROM != null && TUE_AFT_TO != null) {
+                if (TUE_AFT_FROM != null && !TUE_AFT_FROM.equalsIgnoreCase("null") && !TUE_AFT_FROM.equalsIgnoreCase("")
+                        && TUE_AFT_TO != null && !TUE_AFT_TO.equalsIgnoreCase("null") && !TUE_AFT_TO.equalsIgnoreCase("")) {
                     txtTueAfternoon.setText(getString(R.string.doctor_details_timings_placeholder, TUE_AFT_FROM, TUE_AFT_TO));
                 } else {
                     txtTueAfternoon.setText(R.string.doctor_details_timings_closed);
                 }
 
                 /* SET THE WEDNESDAY MORNING TIMINGS */
-                if (WED_MOR_FROM != null && WED_MOR_TO != null) {
+                if (WED_MOR_FROM != null && !WED_MOR_FROM.equalsIgnoreCase("null") && !WED_MOR_FROM.equalsIgnoreCase("")
+                        && WED_MOR_TO != null && !WED_MOR_TO.equalsIgnoreCase("null") && !WED_MOR_TO.equalsIgnoreCase("")) {
                     txtWedMorning.setText(getString(R.string.doctor_details_timings_placeholder, WED_MOR_FROM, WED_MOR_TO));
                 } else {
                     txtWedMorning.setText(R.string.doctor_details_timings_closed);
                 }
 
                 /* SET THE WEDNESDAY AFTERNOON TIMINGS */
-                if (WED_AFT_FROM != null && WED_AFT_TO != null) {
+                if (WED_AFT_FROM != null && !WED_AFT_FROM.equalsIgnoreCase("null") && !WED_AFT_FROM.equalsIgnoreCase("")
+                        && WED_AFT_TO != null && !WED_AFT_TO.equalsIgnoreCase("null") && !WED_AFT_TO.equalsIgnoreCase("")) {
                     txtWedAfternoon.setText(getString(R.string.doctor_details_timings_placeholder, WED_AFT_FROM, WED_AFT_TO));
                 } else {
                     txtWedAfternoon.setText(R.string.doctor_details_timings_closed);
                 }
 
                 /* SET THE THURSDAY MORNING TIMINGS */
-                if (THU_MOR_FROM != null && THU_MOR_TO != null)   {
+                if (THU_MOR_FROM != null && !THU_MOR_FROM.equalsIgnoreCase("null") && !THU_MOR_FROM.equalsIgnoreCase("")
+                        && THU_MOR_TO != null && !THU_MOR_TO.equalsIgnoreCase("null") && !THU_MOR_TO.equalsIgnoreCase(""))   {
                     txtThuMorning.setText(getString(R.string.doctor_details_timings_placeholder, THU_MOR_FROM, THU_MOR_TO));
                 } else {
                     txtThuMorning.setText(R.string.doctor_details_timings_closed);
                 }
 
                 /* SET THE THURSDAY AFTERNOON TIMINGS */
-                if (THU_AFT_FROM != null && THU_AFT_TO != null) {
+                if (THU_AFT_FROM != null && !THU_AFT_FROM.equalsIgnoreCase("null") && !THU_AFT_FROM.equalsIgnoreCase("")
+                        && THU_AFT_TO != null && !THU_AFT_TO.equalsIgnoreCase("null") && !THU_AFT_TO.equalsIgnoreCase("")) {
                     txtThuAfternoon.setText(getString(R.string.doctor_details_timings_placeholder, THU_AFT_FROM, THU_AFT_TO));
                 } else {
                     txtThuAfternoon.setText(R.string.doctor_details_timings_closed);
                 }
 
                 /* SET THE FRIDAY MORNING TIMINGS */
-                if (FRI_MOR_FROM != null && FRI_MOR_TO != null) {
+                if (FRI_MOR_FROM != null && !FRI_MOR_FROM.equalsIgnoreCase("null") && !FRI_MOR_FROM.equalsIgnoreCase("")
+                        && FRI_MOR_TO != null && !FRI_MOR_TO.equalsIgnoreCase("null") && !FRI_MOR_TO.equalsIgnoreCase("")) {
                     txtFriMorning.setText(getString(R.string.doctor_details_timings_placeholder, FRI_MOR_FROM, FRI_MOR_TO));
                 } else {
                     txtFriMorning.setText(R.string.doctor_details_timings_closed);
                 }
 
                 /* SET THE FRIDAY AFTERNOON TIMINGS */
-                if (FRI_AFT_FROM != null && FRI_AFT_TO != null) {
+                if (FRI_AFT_FROM != null && !FRI_AFT_FROM.equalsIgnoreCase("null") && !FRI_AFT_FROM.equalsIgnoreCase("")
+                        && FRI_AFT_TO != null && !FRI_AFT_TO.equalsIgnoreCase("null") && !FRI_AFT_TO.equalsIgnoreCase("")) {
                     txtFriAfternoon.setText(getString(R.string.doctor_details_timings_placeholder, FRI_AFT_FROM, FRI_AFT_FROM));
                 } else {
                     txtFriAfternoon.setText(R.string.doctor_details_timings_closed);
                 }
 
                 /* SET THE SATURDAY MORNING TIMINGS */
-                if (SAT_MOR_FROM != null && SAT_MOR_TO != null) {
+                if (SAT_MOR_FROM != null && !SAT_MOR_FROM.equalsIgnoreCase("null") && !SAT_MOR_FROM.equalsIgnoreCase("")
+                        && SAT_MOR_TO != null && !SAT_MOR_TO.equalsIgnoreCase("null") && !SAT_MOR_TO.equalsIgnoreCase("")) {
                     txtSatMorning.setText(getString(R.string.doctor_details_timings_placeholder, SAT_MOR_FROM, SAT_MOR_TO));
                 } else {
                     txtSatMorning.setText(R.string.doctor_details_timings_closed);
                 }
 
                 /* SET THE SATURDAY AFTERNOON TIMINGS */
-                if (SAT_AFT_FROM != null && SAT_AFT_TO != null) {
+                if (SAT_AFT_FROM != null && !SAT_AFT_FROM.equalsIgnoreCase("null") && !SAT_AFT_FROM.equalsIgnoreCase("")
+                        && SAT_AFT_TO != null && !SAT_AFT_TO.equalsIgnoreCase("null") && !SAT_AFT_TO.equalsIgnoreCase("")) {
                     txtSatAfternoon.setText(getString(R.string.doctor_details_timings_placeholder, SAT_AFT_FROM, SAT_AFT_TO));
                 } else {
                     txtSatAfternoon.setText(R.string.doctor_details_timings_closed);

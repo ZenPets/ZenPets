@@ -129,7 +129,7 @@
                             android:paddingStart="11dp"
                             android:paddingTop="5dp"
                             android:text="Posted On: "
-                            android:textColor="@color/primary_text"
+                            android:textColor="@color/primary_dark"
                             android:textSize="12sp"
                             app:fontFamily="@font/roboto_condensed_regular" />
                     </FrameLayout>
@@ -155,7 +155,7 @@
                             android:paddingRight="11dp"
                             android:paddingStart="5dp"
                             android:paddingTop="5dp"
-                            app:iiv_color="@color/tertiary_text"
+                            app:iiv_color="@color/secondary_text"
                             app:iiv_icon="gmd_description"
                             app:iiv_size="16dp" />
 
@@ -235,7 +235,7 @@
                             android:paddingRight="11dp"
                             android:paddingStart="5dp"
                             android:paddingTop="11dp"
-                            app:iiv_color="@color/tertiary_text"
+                            app:iiv_color="@color/secondary_text"
                             app:iiv_icon="gmd_collections"
                             app:iiv_size="16dp" />
 
@@ -253,6 +253,9 @@
                             android:paddingStart="5dp"
                             android:paddingTop="5dp"
                             android:persistentDrawingCache="scrolling"
+                            android:scrollbarSize="3dp"
+                            android:scrollbarThumbHorizontal="@color/primary_dark"
+                            android:scrollbarThumbVertical="@color/primary_dark"
                             android:scrollbars="horizontal"
                             android:visibility="visible" />
                     </LinearLayout>
