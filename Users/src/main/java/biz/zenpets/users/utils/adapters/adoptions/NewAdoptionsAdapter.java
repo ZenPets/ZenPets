@@ -74,7 +74,6 @@ public class NewAdoptionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     vh.listPromoted.setVisibility(View.VISIBLE);
                     vh.cardAdoptionContainer.setVisibility(View.GONE);
                 } else {
-
                     /* SET THE ADOPTION COVER PHOTO */
                     String strAdoptionCover = data.getAdoptionCoverPhoto();
                     if (strAdoptionCover != null

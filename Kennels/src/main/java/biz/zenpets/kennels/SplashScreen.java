@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import biz.zenpets.kennels.credentials.LoginActivity;
-import biz.zenpets.kennels.landing.LandingActivity;
+import biz.zenpets.kennels.landing.NewLandingActivity;
 import biz.zenpets.kennels.utils.AppPrefs;
 import biz.zenpets.kennels.utils.models.account.Account;
 import biz.zenpets.kennels.utils.models.account.AccountsAPI;
@@ -95,7 +95,7 @@ public class SplashScreen extends AppCompatActivity {
                     getApp().setKennelOwnerID(KENNEL_OWNER_ID);
 
                     /* SHOW THE LANDING ACTIVITY */
-                    Intent showLanding = new Intent(SplashScreen.this, LandingActivity.class);
+                    Intent showLanding = new Intent(SplashScreen.this, NewLandingActivity.class);
                     showLanding.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(showLanding);
                     finish();
@@ -104,7 +104,7 @@ public class SplashScreen extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Account> call, Throwable t) {
-                Log.e("KENNEL OWNERS FAILURE", t.getMessage());
+//                Log.e("KENNEL OWNERS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

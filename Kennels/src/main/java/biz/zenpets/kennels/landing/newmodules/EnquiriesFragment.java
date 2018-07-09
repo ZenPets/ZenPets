@@ -1,4 +1,4 @@
-package biz.zenpets.kennels.landing.modules;
+package biz.zenpets.kennels.landing.newmodules;
 
 import android.support.v4.app.Fragment;
 

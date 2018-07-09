@@ -23,8 +23,8 @@
                 android:layout_height="47dp"
                 android:adjustViewBounds="true"
                 app:iiv_color="?attr/colorPrimary"
-                app:iiv_icon="faw_user_md"
-                app:iiv_size="20dp" />
+                app:iiv_icon="gmd_store"
+                app:iiv_size="25dp" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -60,7 +60,7 @@
                     android:text="Manage your kennels"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
-                    app:fontFamily="@font/roboto_condensed_regular" />
+                    app:fontFamily="@font/roboto_regular" />
             </LinearLayout>
 
             <com.mikepenz.iconics.view.IconicsImageView
@@ -99,8 +99,8 @@
                 android:layout_height="47dp"
                 android:adjustViewBounds="true"
                 app:iiv_color="?attr/colorPrimary"
-                app:iiv_icon="ion_ios_paw"
-                app:iiv_size="20dp" />
+                app:iiv_icon="faw_thumbs_up"
+                app:iiv_size="25dp" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -136,7 +136,7 @@
                     android:text="Keep track of reviews by Pet Parents"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
-                    app:fontFamily="@font/roboto_condensed_regular" />
+                    app:fontFamily="@font/roboto_regular" />
             </LinearLayout>
 
             <com.mikepenz.iconics.view.IconicsImageView
@@ -175,8 +175,8 @@
                 android:layout_height="47dp"
                 android:adjustViewBounds="true"
                 app:iiv_color="?attr/colorPrimary"
-                app:iiv_icon="faw_cut"
-                app:iiv_size="20dp" />
+                app:iiv_icon="gmd_folder_shared"
+                app:iiv_size="25dp" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -212,7 +212,7 @@
                     android:text="A record of all your clients"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
-                    app:fontFamily="@font/roboto_condensed_regular" />
+                    app:fontFamily="@font/roboto_regular" />
             </LinearLayout>
 
             <com.mikepenz.iconics.view.IconicsImageView
@@ -251,8 +251,8 @@
                 android:layout_height="47dp"
                 android:adjustViewBounds="true"
                 app:iiv_color="?attr/colorPrimary"
-                app:iiv_icon="gmd_store"
-                app:iiv_size="20dp" />
+                app:iiv_icon="faw_chart_line"
+                app:iiv_size="25dp" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -288,7 +288,235 @@
                     android:text="How are your kennels doing?"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
-                    app:fontFamily="@font/roboto_condensed_regular" />
+                    app:fontFamily="@font/roboto_regular" />
+            </LinearLayout>
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:adjustViewBounds="true"
+                android:padding="11dp"
+                app:iiv_color="@color/secondary_text"
+                app:iiv_icon="gmd_chevron_right"
+                app:iiv_size="12dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.50dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/fixed_divider_horizontal_bright" />
+
+        <LinearLayout
+            android:id="@+id/linlaSettings"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:layout_width="47dp"
+                android:layout_height="47dp"
+                android:adjustViewBounds="true"
+                app:iiv_color="?attr/colorPrimary"
+                app:iiv_icon="faw_cogs"
+                app:iiv_size="25dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    android:text="Settings"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="15sp"
+                    app:fontFamily="@font/roboto_medium" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:paddingBottom="2dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="2dp"
+                    android:text="Manage Zen Pets Settings"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/roboto_regular" />
+            </LinearLayout>
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:adjustViewBounds="true"
+                android:padding="11dp"
+                app:iiv_color="@color/secondary_text"
+                app:iiv_icon="gmd_chevron_right"
+                app:iiv_size="12dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.50dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/fixed_divider_horizontal_bright" />
+
+        <LinearLayout
+            android:id="@+id/linlaHelp"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:layout_width="47dp"
+                android:layout_height="47dp"
+                android:adjustViewBounds="true"
+                app:iiv_color="?attr/colorPrimary"
+                app:iiv_icon="faw_question_circle2"
+                app:iiv_size="25dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    android:text="Help"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="15sp"
+                    app:fontFamily="@font/roboto_medium" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:paddingBottom="2dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="2dp"
+                    android:text="Need help with something?"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/roboto_regular" />
+            </LinearLayout>
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:adjustViewBounds="true"
+                android:padding="11dp"
+                app:iiv_color="@color/secondary_text"
+                app:iiv_icon="gmd_chevron_right"
+                app:iiv_size="12dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.50dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/fixed_divider_horizontal_bright" />
+
+        <LinearLayout
+            android:id="@+id/linlaFeedback"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:layout_width="47dp"
+                android:layout_height="47dp"
+                android:adjustViewBounds="true"
+                app:iiv_color="?attr/colorPrimary"
+                app:iiv_icon="faw_exclamation_circle"
+                app:iiv_size="25dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    android:text="Feedback"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="15sp"
+                    app:fontFamily="@font/roboto_medium" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:paddingBottom="2dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="2dp"
+                    android:text="Find some bugs? Thought of new features?"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/roboto_regular" />
             </LinearLayout>
 
             <com.mikepenz.iconics.view.IconicsImageView

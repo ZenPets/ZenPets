@@ -1,61 +1,23 @@
-package biz.zenpets.users.landing.modules;
+package biz.zenpets.kennels.landing.newmodules;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import biz.zenpets.users.R;
-import biz.zenpets.users.adoptions.TestAdoptionsList;
-import biz.zenpets.users.doctors.DoctorsList;
-import biz.zenpets.users.kennels.TestKennelsList;
-import biz.zenpets.users.trainers.TrainersList;
+import biz.zenpets.kennels.R;
+import biz.zenpets.kennels.utils.TypefaceSpan;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class HomeFragment extends Fragment {
-
-    /** SHOW THE LIST OF DOCTORS **/
-    @OnClick(R.id.linlaAppointment) void showDoctors()   {
-        Intent intent = new Intent(getActivity(), DoctorsList.class);
-        startActivity(intent);
-    }
-
-    /** SHOW THE LIST OF ADOPTIONS **/
-    @OnClick(R.id.linlaAdopt) void showAdoptions()  {
-        Intent intent = new Intent(getActivity(), TestAdoptionsList.class);
-        startActivity(intent);
-    }
-
-    /** SHOW THE LIST OF GROOMERS **/
-    @OnClick(R.id.linlaGroomers) void showGroomers()    {
-        Toast.makeText(getActivity(), "Coming real soon...", Toast.LENGTH_SHORT).show();
-    }
-
-    /** SHOW THE LIST OF PET KENNELS **/
-    @OnClick(R.id.linlaPetKennels) void showPetHostels() {
-        Intent intent = new Intent(getActivity(), TestKennelsList.class);
-        startActivity(intent);
-    }
-
-    /** SHOW THE LIST OF HOME BOARDINGS **/
-    @OnClick(R.id.linlaHomeBoarding) void showHomeBoardings()   {
-        Toast.makeText(getActivity(), "Coming real soon...", Toast.LENGTH_SHORT).show();
-    }
-
-    /** SHOW THE LIST OF TRAINERS **/
-    @OnClick(R.id.linlaTrainers) protected void showTrainers()  {
-        Intent intent = new Intent(getActivity(), TrainersList.class);
-        startActivity(intent);
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,7 +46,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        /* CONFIGURE THE TOOLBAR **/
+        /* CONFIGURE THE TOOLBAR */
         configTB();
     }
 
@@ -93,13 +55,13 @@ public class HomeFragment extends Fragment {
         Toolbar myToolbar = getActivity().findViewById(R.id.myToolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(myToolbar);
         String strTitle = "Zen Pets - Home";
-//        SpannableString s = new SpannableString(strTitle);
-//        s.setSpan(new TypefaceSpan(getActivity()), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        SpannableString s = new SpannableString(strTitle);
+        s.setSpan(new TypefaceSpan(getActivity()), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(strTitle);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(s);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(null);
     }
 

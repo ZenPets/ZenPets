@@ -17,12 +17,10 @@ package biz.zenpets.users.utils.adapters.kennels;
 //    /** THE LAT LNG INSTANCE **/
 //    LatLng LATLNG_ORIGIN = null;
 //
-//    public TestKennelsAdapter(Context context) {
+//    public TestKennelsAdapter(Context context, ArrayList<Kennel> arrKennels, LatLng LATLNG_ORIGIN) {
 //        this.context = context;
-//        this.arrKennels = new ArrayList<>();
-//        String LATITUDE = getApp().getOriginLatitude();
-//        String LONGITUDE = getApp().getOriginLongitude();
-//        LATLNG_ORIGIN = new LatLng(Double.valueOf(LATITUDE), Double.valueOf(LONGITUDE));
+//        this.arrKennels = arrKennels;
+//        this.LATLNG_ORIGIN = LATLNG_ORIGIN;
 //    }
 //
 //    @NonNull
@@ -91,64 +89,6 @@ package biz.zenpets.users.utils.adapters.kennels;
 //                    kennelsVH.txtPetCapacity.setText(context.getString(R.string.kennel_list_kennel_capacity_placeholder, data.getKennelPetCapacity()));
 //                } else {
 //                    kennelsVH.txtPetCapacity.setText(context.getString(R.string.kennel_list_kennel_capacity_zero));
-//                }
-//
-////                /* SET THE KENNEL'S DISTANCE FROM THE USER'S LOCATION */
-////                if (data.getKennelDistance() != null)   {
-////                    String distance = data.getKennelDistance();
-////                    String strTilde = context.getString(R.string.generic_tilde);
-////                    kennelsVH.txtKennelDistance.setText(context.getString(R.string.doctor_list_clinic_distance_placeholder, strTilde, distance));
-////                }
-//
-//
-//                /* SET THE KENNEL'S DISTANCE FROM THE USER'S CURRENT LOCATION */
-//                if (data.getKennelLatitude() != null && data.getKennelLongitude() != null)  {
-//                    Double latitude = Double.valueOf(data.getKennelLatitude());
-//                    Double longitude = Double.valueOf(data.getKennelLongitude());
-//                    LatLng LATLNG_DESTINATION = new LatLng(latitude, longitude);
-//                    String strOrigin = LATLNG_ORIGIN.latitude + "," + LATLNG_ORIGIN.longitude;
-//                    String strDestination = LATLNG_DESTINATION.latitude + "," + LATLNG_DESTINATION.longitude;
-//                    String strSensor = "false";
-//                    String strKey = context.getString(R.string.google_directions_api_key);
-//                    DistanceAPI api = ZenDistanceClient.getClient().create(DistanceAPI.class);
-//                    Call<String> call = api.json(strOrigin, strDestination, strSensor, strKey);
-//                    call.enqueue(new Callback<String>() {
-//                        @Override
-//                        public void onResponse(Call<String> call, Response<String> response) {
-//                            try {
-//                                String strDistance = response.body();
-//                                JSONObject JORootDistance = new JSONObject(strDistance);
-//                                JSONArray array = JORootDistance.getJSONArray("routes");
-//                                JSONObject JORoutes = array.getJSONObject(0);
-//                                JSONArray JOLegs= JORoutes.getJSONArray("legs");
-//                                JSONObject JOSteps = JOLegs.getJSONObject(0);
-//                                JSONObject JODistance = JOSteps.getJSONObject("distance");
-//                                if (JODistance.has("text")) {
-//                                    String distance = JODistance.getString("text");
-//                                    String strTilde = context.getString(R.string.generic_tilde);
-//                                    kennelsVH.txtKennelDistance.setText(context.getString(R.string.doctor_list_clinic_distance_placeholder, strTilde, distance));
-//                                } else {
-//                                    String distance = "Unknown";
-//                                    String strInfinity = context.getString(R.string.generic_infinity);
-//                                    kennelsVH.txtKennelDistance.setText(context.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
-//                                }
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<String> call, Throwable t) {
-//                            Crashlytics.logException(t);
-//                            String distance = "Unknown";
-//                            String strInfinity = context.getString(R.string.generic_infinity);
-//                            kennelsVH.txtKennelDistance.setText(context.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
-//                        }
-//                    });
-//                } else {
-//                    String distance = "Unknown";
-//                    String strInfinity = context.getString(R.string.generic_infinity);
-//                    kennelsVH.txtKennelDistance.setText(context.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
 //                }
 //                break;
 //            case LOADING:

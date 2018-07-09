@@ -91,7 +91,7 @@ public class KennelDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Kennel> call, Throwable t) {
-                Log.e("DETAILS FAILURE", t.getMessage());
+//                Log.e("DETAILS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

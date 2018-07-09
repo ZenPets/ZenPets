@@ -21,7 +21,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -734,7 +733,7 @@ public class DoctorDetailsNew extends AppCompatActivity {
         call.enqueue(new Callback<Timing>() {
             @Override
             public void onResponse(Call<Timing> call, Response<Timing> response) {
-                Log.e("RESPONSE", String.valueOf(response.raw()));
+//                Log.e("RESPONSE", String.valueOf(response.raw()));
                 Timing timing = response.body();
                 if (timing != null) {
                     SUN_MOR_FROM = timing.getSunMorFrom();

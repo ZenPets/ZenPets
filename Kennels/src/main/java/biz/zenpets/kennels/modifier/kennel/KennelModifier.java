@@ -193,7 +193,7 @@ public class KennelModifier extends AppCompatActivity {
         call.enqueue(new Callback<Kennel>() {
             @Override
             public void onResponse(Call<Kennel> call, Response<Kennel> response) {
-                Log.e("RAW", String.valueOf(response.raw()));
+//                Log.e("RAW", String.valueOf(response.raw()));
                 Kennel kennel = response.body();
                 if (kennel != null) {
 
@@ -311,7 +311,7 @@ public class KennelModifier extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Kennel> call, Throwable t) {
-                Log.e("DETAILS FAILURE", t.getMessage());
+//                Log.e("DETAILS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -465,7 +465,7 @@ public class KennelModifier extends AppCompatActivity {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Uri downloadURL = taskSnapshot.getDownloadUrl();
-                Log.e("URL", String.valueOf(downloadURL));
+//                Log.e("URL", String.valueOf(downloadURL));
                 KENNEL_COVER_PHOTO = String.valueOf(downloadURL);
                 if (KENNEL_COVER_PHOTO != null)    {
                     /* UPDATE THE KENNEL'S LISTING */
@@ -483,7 +483,7 @@ public class KennelModifier extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 progressDialog.dismiss();
-                Log.e("UPLOAD EXCEPTION", e.toString());
+//                Log.e("UPLOAD EXCEPTION", e.toString());
                 Crashlytics.logException(e);
             }
         });
@@ -517,7 +517,7 @@ public class KennelModifier extends AppCompatActivity {
             public void onFailure(Call<Kennel> call, Throwable t) {
                 progressDialog.dismiss();
                 Crashlytics.logException(t);
-                Log.e("UPDATE FAILURE", t.getMessage());
+//                Log.e("UPDATE FAILURE", t.getMessage());
             }
         });
     }
@@ -708,7 +708,7 @@ public class KennelModifier extends AppCompatActivity {
 
                 /* GET THE FINAL URI */
                 KENNEL_COVER_PHOTO_URI = Uri.fromFile(file);
-                Log.e("URI", String.valueOf(KENNEL_COVER_PHOTO_URI));
+//                Log.e("URI", String.valueOf(KENNEL_COVER_PHOTO_URI));
             } catch (IOException e) {
                 e.printStackTrace();
             }

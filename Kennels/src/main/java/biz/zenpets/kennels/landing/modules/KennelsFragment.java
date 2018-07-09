@@ -147,7 +147,7 @@ public class KennelsFragment extends Fragment {
         call.enqueue(new Callback<Kennels>() {
             @Override
             public void onResponse(Call<Kennels> call, Response<Kennels> response) {
-                Log.e("RAW", String.valueOf(response.raw()));
+//                Log.e("RAW", String.valueOf(response.raw()));
                 if (response.body() != null && response.body().getKennels() != null)    {
                     arrKennels = response.body().getKennels();
                     if (arrKennels.size() > 0)  {
@@ -174,7 +174,7 @@ public class KennelsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Kennels> call, Throwable t) {
-                Log.e("KENNELS FAILURE", t.getMessage());
+//                Log.e("KENNELS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -335,7 +335,7 @@ public class KennelsFragment extends Fragment {
 
                                 @Override
                                 public void onFailure(Call<Kennel> call, Throwable t) {
-                                    Log.e("DELETE FAILURE", t.getMessage());
+//                                    Log.e("DELETE FAILURE", t.getMessage());
                                     Crashlytics.logException(t);
                                 }
                             });

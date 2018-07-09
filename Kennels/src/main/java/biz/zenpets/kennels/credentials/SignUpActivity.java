@@ -65,7 +65,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import biz.zenpets.kennels.R;
-import biz.zenpets.kennels.landing.LandingActivity;
+import biz.zenpets.kennels.landing.NewLandingActivity;
 import biz.zenpets.kennels.utils.TypefaceSpan;
 import biz.zenpets.kennels.utils.adapters.location.CitiesAdapter;
 import biz.zenpets.kennels.utils.adapters.location.StatesAdapter;
@@ -210,7 +210,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<StatesData> call, Throwable t) {
-                Log.e("FAILURE", t.getMessage());
+//                Log.e("FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -235,7 +235,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<CitiesData> call, Throwable t) {
-                Log.e("FAILURE", t.getMessage());
+//                Log.e("FAILURE", t.getMessage());
                 Crashlytics.logException(t);
 
             }
@@ -546,7 +546,7 @@ public class SignUpActivity extends AppCompatActivity {
 //                    Log.e("MESSAGE", message);
                     if (message.equalsIgnoreCase("Kennel Owner's account exists..."))   {
                         progressDialog.dismiss();
-                        Intent intent = new Intent(SignUpActivity.this, LandingActivity.class);
+                        Intent intent = new Intent(SignUpActivity.this, NewLandingActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         finish();
@@ -559,7 +559,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Account> call, Throwable t) {
-                Log.e("EXISTS FAILURE", t.getMessage());
+//                Log.e("EXISTS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -574,7 +574,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Uri downloadURL = taskSnapshot.getDownloadUrl();
-                Log.e("URL", String.valueOf(downloadURL));
+//                Log.e("URL", String.valueOf(downloadURL));
                 KENNEL_OWNER_DISPLAY_PROFILE = String.valueOf(downloadURL);
                 if (KENNEL_OWNER_DISPLAY_PROFILE != null)    {
                     /* CREATE THE NEW KENNEL OWNER'S ACCOUNT */
@@ -591,7 +591,7 @@ public class SignUpActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e("UPLOAD EXCEPTION", e.toString());
+//                Log.e("UPLOAD EXCEPTION", e.toString());
                 Crashlytics.logException(e);
             }
         });
@@ -648,7 +648,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Account> call, Throwable t) {
-                Log.e("SIGN UP FAILURE", t.getMessage());
+//                Log.e("SIGN UP FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

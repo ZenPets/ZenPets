@@ -140,7 +140,7 @@ public class ReviewsFragment extends Fragment {
         call.enqueue(new Callback<Reviews>() {
             @Override
             public void onResponse(Call<Reviews> call, Response<Reviews> response) {
-                Log.e("REVIEWS RAW", String.valueOf(response.raw()));
+//                Log.e("REVIEWS RAW", String.valueOf(response.raw()));
                 if (response.body() != null && response.body().getReviews() != null)    {
                     arrReviews = response.body().getReviews();
                     if (arrReviews.size() > 0)    {
@@ -200,7 +200,7 @@ public class ReviewsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Kennels> call, Throwable t) {
-                Log.e("KENNELS FAILURE", t.getMessage());
+//                Log.e("KENNELS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

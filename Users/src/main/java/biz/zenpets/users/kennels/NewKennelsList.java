@@ -480,7 +480,7 @@ public class NewKennelsList extends AppCompatActivity
     /** GET THE LIST OF KENNELS **/
     private void fetchKennels() {
         KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-        Call<Kennels> call = api.fetchKennelsListByCity(FINAL_CITY_ID);
+        Call<Kennels> call = api.fetchKennelsListByCity(FINAL_CITY_ID, "1");
         call.enqueue(new Callback<Kennels>() {
             @Override
             public void onResponse(Call<Kennels> call, Response<Kennels> response) {

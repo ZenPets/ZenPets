@@ -1,15 +1,18 @@
-package biz.zenpets.users.utils.models.kennels.kennels;
+package biz.zenpets.users.utils.models.kennels.promotion;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-
-import biz.zenpets.users.utils.models.kennels.promotion.Promotion;
-
-public class Kennel {
+public class Promotion {
 
     @SerializedName("error") private Boolean error;
+    @SerializedName("message") private String message;
+    @SerializedName("promotedID") private String promotedID;
     @SerializedName("kennelID") private String kennelID;
+    @SerializedName("optionID") private String optionID;
+    @SerializedName("paymentID") private String paymentID;
+    @SerializedName("promotedFrom") private String promotedFrom;
+    @SerializedName("promotedTo") private String promotedTo;
+    @SerializedName("promotedTimestamp") private String promotedTimestamp;
     @SerializedName("kennelOwnerID") private String kennelOwnerID;
     @SerializedName("kennelOwnerName") private String kennelOwnerName;
     @SerializedName("kennelOwnerDisplayProfile") private String kennelOwnerDisplayProfile;
@@ -34,7 +37,6 @@ public class Kennel {
     @SerializedName("kennelLikes") private String kennelLikes;
     @SerializedName("kennelVotes") private String kennelVotes;
     @SerializedName("kennelLikesPercent") private String kennelLikesPercent;
-    @SerializedName("promotions") private ArrayList<Promotion> promotions = new ArrayList<>();
 
     public Boolean getError() {
         return error;
@@ -44,12 +46,68 @@ public class Kennel {
         this.error = error;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getPromotedID() {
+        return promotedID;
+    }
+
+    public void setPromotedID(String promotedID) {
+        this.promotedID = promotedID;
+    }
+
     public String getKennelID() {
         return kennelID;
     }
 
     public void setKennelID(String kennelID) {
         this.kennelID = kennelID;
+    }
+
+    public String getOptionID() {
+        return optionID;
+    }
+
+    public void setOptionID(String optionID) {
+        this.optionID = optionID;
+    }
+
+    public String getPaymentID() {
+        return paymentID;
+    }
+
+    public void setPaymentID(String paymentID) {
+        this.paymentID = paymentID;
+    }
+
+    public String getPromotedFrom() {
+        return promotedFrom;
+    }
+
+    public void setPromotedFrom(String promotedFrom) {
+        this.promotedFrom = promotedFrom;
+    }
+
+    public String getPromotedTo() {
+        return promotedTo;
+    }
+
+    public void setPromotedTo(String promotedTo) {
+        this.promotedTo = promotedTo;
+    }
+
+    public String getPromotedTimestamp() {
+        return promotedTimestamp;
+    }
+
+    public void setPromotedTimestamp(String promotedTimestamp) {
+        this.promotedTimestamp = promotedTimestamp;
     }
 
     public String getKennelOwnerID() {
@@ -242,13 +300,5 @@ public class Kennel {
 
     public void setKennelLikesPercent(String kennelLikesPercent) {
         this.kennelLikesPercent = kennelLikesPercent;
-    }
-
-    public ArrayList<Promotion> getPromotions() {
-        return promotions;
-    }
-
-    public void setPromotions(ArrayList<Promotion> promotions) {
-        this.promotions = promotions;
     }
 }

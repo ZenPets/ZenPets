@@ -29,9 +29,9 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import biz.zenpets.kennels.R;
 import biz.zenpets.kennels.landing.modules.ClientsFragment;
 import biz.zenpets.kennels.landing.modules.DashboardFragment;
-import biz.zenpets.kennels.landing.modules.EnquiriesFragment;
+import biz.zenpets.kennels.landing.newmodules.EnquiriesFragment;
 import biz.zenpets.kennels.landing.modules.KennelsFragment;
-import biz.zenpets.kennels.landing.modules.ProfileFragment;
+import biz.zenpets.kennels.landing.newmodules.ProfileFragment;
 import biz.zenpets.kennels.landing.modules.ReportsFragment;
 import biz.zenpets.kennels.landing.modules.ReviewsFragment;
 import biz.zenpets.kennels.landing.others.FeedbackFragment;
@@ -280,7 +280,7 @@ public class LandingActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Account> call, Throwable t) {
-                Log.e("KENNEL OWNER PROFILE", t.getMessage());
+//                Log.e("KENNEL OWNER PROFILE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

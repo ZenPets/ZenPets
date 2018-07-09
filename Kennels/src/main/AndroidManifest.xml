@@ -58,6 +58,10 @@
             android:name=".landing.LandingActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".landing.NewLandingActivity"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <!-- KENNEL -->
         <activity

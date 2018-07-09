@@ -3,7 +3,7 @@ package biz.zenpets.users.utils.models.kennels.kennels;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-class KennelPages {
+public class KennelPages {
 
     @SerializedName("totalKennels") @Expose private String totalKennels;
     @SerializedName("totalPages") @Expose private String totalPages;

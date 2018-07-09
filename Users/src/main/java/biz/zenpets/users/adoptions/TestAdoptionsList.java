@@ -16,7 +16,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -133,7 +132,7 @@ public class TestAdoptionsList extends AppCompatActivity {
         call.enqueue(new Callback<Adoptions>() {
             @Override
             public void onResponse(Call<Adoptions> call, Response<Adoptions> response) {
-                Log.e("ADOPTIONS LIST", String.valueOf(response.raw()));
+//                Log.e("ADOPTIONS LIST", String.valueOf(response.raw()));
                 /* PROCESS THE RESPONSE */
                 arrAdoptions = processResult(response);
 
@@ -160,7 +159,7 @@ public class TestAdoptionsList extends AppCompatActivity {
         call.enqueue(new Callback<Adoptions>() {
             @Override
             public void onResponse(Call<Adoptions> call, Response<Adoptions> response) {
-                Log.e("ADOPTIONS LIST", String.valueOf(response.raw()));
+//                Log.e("ADOPTIONS LIST", String.valueOf(response.raw()));
                 /* PROCESS THE RESPONSE */
                 arrAdoptions = processResult(response);
 
@@ -183,6 +182,7 @@ public class TestAdoptionsList extends AppCompatActivity {
         });
     }
 
+    /** PROCESS THE ADOPTION RESULTS **/
     private ArrayList<Adoption> processResult(Response<Adoptions> response) {
         ArrayList<Adoption> adoptions = new ArrayList<>();
         ArrayList<Promotion> promotions = new ArrayList<>();
@@ -447,6 +447,8 @@ public class TestAdoptionsList extends AppCompatActivity {
             }
         } catch (JSONException e) {
             e.printStackTrace();
+//            Log.e("EXCEPTION", e.getMessage());
+            Crashlytics.logException(e);
         }
         return adoptions;
     }

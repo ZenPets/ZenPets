@@ -40,7 +40,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //                Log.e("JSON", String.valueOf(json));
                 handleDataMessage(json);
             } catch (Exception e) {
-                Log.e(TAG, "Exception: " + e.getMessage());
+//                Log.e(TAG, "Exception: " + e.getMessage());
                 Crashlytics.logException(e);
             }
         }
@@ -89,10 +89,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //                showNotificationMessage(getApplicationContext(), notificationTitle, notificationMessage, intent);
 //            }
         } catch (JSONException e) {
-            Log.e(TAG, "Json Exception: " + e.getMessage());
+//            Log.e(TAG, "Json Exception: " + e.getMessage());
             Crashlytics.logException(e);
         } catch (Exception e) {
-            Log.e(TAG, "Exception: " + e.getMessage());
+//            Log.e(TAG, "Exception: " + e.getMessage());
             Crashlytics.logException(e);
         }
     }

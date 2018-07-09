@@ -14,7 +14,9 @@ public interface KennelsAPI {
 
     /** FETCH A LIST OF KENNELS (FOR PET PARENTS) **/
     @GET("fetchKennelsListByCity")
-    Call<Kennels> fetchKennelsListByCity(@Query("cityID") String cityID);
+    Call<Kennels> fetchKennelsListByCity(
+            @Query("cityID") String cityID,
+            @Query("pageNumber") String pageNumber);
 
     /** FETCH A LIST OF KENNELS (FOR PET PARENTS) **/
     @GET("fetchKennelsListByCityTest")

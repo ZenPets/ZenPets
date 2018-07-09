@@ -24,7 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import biz.zenpets.kennels.R;
-import biz.zenpets.kennels.landing.LandingActivity;
+import biz.zenpets.kennels.landing.NewLandingActivity;
 import biz.zenpets.kennels.utils.AppPrefs;
 import biz.zenpets.kennels.utils.models.account.Account;
 import biz.zenpets.kennels.utils.models.account.AccountsAPI;
@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                     getApp().setKennelOwnerID(KENNEL_OWNER_ID);
 
                     /* SHOW THE LANDING ACTIVITY */
-                    Intent showLanding = new Intent(LoginActivity.this, LandingActivity.class);
+                    Intent showLanding = new Intent(LoginActivity.this, NewLandingActivity.class);
                     showLanding.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(showLanding);
                     finish();
@@ -128,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Account> call, Throwable t) {
-                Log.e("KENNEL OWNERS FAILURE", t.getMessage());
+//                Log.e("KENNEL OWNERS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

@@ -15,7 +15,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -171,7 +170,7 @@ public class TestUserAdoptionDetails extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Call<Adoption> call, Throwable t) {
-                                Log.e("STATUS FAILURE", t.getMessage());
+//                                Log.e("STATUS FAILURE", t.getMessage());
                                 Crashlytics.logException(t);
                             }
                         });
