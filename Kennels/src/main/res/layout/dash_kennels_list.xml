@@ -9,6 +9,8 @@
         android:layout_height="fill_parent"
         android:orientation="vertical">
 
+        <include layout="@layout/zen_toolbar" />
+
         <include layout="@layout/zen_progress" />
 
         <android.support.v7.widget.RecyclerView

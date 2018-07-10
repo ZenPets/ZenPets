@@ -1,5 +1,6 @@
 package biz.zenpets.kennels.landing.newmodules;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,10 +15,42 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import biz.zenpets.kennels.R;
+import biz.zenpets.kennels.kennels.KennelsList;
 import biz.zenpets.kennels.utils.TypefaceSpan;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class HomeFragment extends Fragment {
+
+    /** SHOW THE LIST OF KENNELS **/
+    @OnClick(R.id.linlaKennels) void showKennels()  {
+        Intent intent = new Intent(getActivity(), KennelsList.class);
+        startActivity(intent);
+    }
+
+    /** SHOW THE LIST OF REVIEWS **/
+    @OnClick(R.id.linlaReviews) void showReviews()  {
+    }
+
+    /** SHOW THE LIST OF CLIENTS **/
+    @OnClick(R.id.linlaClients) void showClients()  {
+    }
+
+    /** SHOW THE REPORTS FOR THE LISTED KENNELS **/
+    @OnClick(R.id.linlaReports) void showReports()  {
+    }
+
+    /** SHOW THE SETTINGS PAGES **/
+    @OnClick(R.id.linlaSettings) void  showSettings()   {
+    }
+
+    /** SHOW THE HELP PAGE **/
+    @OnClick(R.id.linlaHelp) void showHelp()    {
+    }
+
+    /** SHOW THE FEEDBACK PAGE **/
+    @OnClick(R.id.linlaFeedback) void showFeedback()    {
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

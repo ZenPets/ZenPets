@@ -65,6 +65,14 @@
 
         <!-- KENNEL -->
         <activity
+            android:name=".kennels.KennelsList"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".creator.kennel.KennelCreator"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
             android:name=".modifier.kennel.KennelModifier"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
