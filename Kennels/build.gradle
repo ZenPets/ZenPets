@@ -46,7 +46,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:15.0.1'
 
     /** CONSTRAINT LAYOUT **/
-    implementation 'com.android.support.constraint:constraint-layout:1.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
 
     /** FIREBASE **/
     implementation 'com.google.firebase:firebase-auth:15.1.0'
@@ -54,6 +54,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:15.0.2'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.2'
     implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
+
+    /** RAZOR PAY SDK **/
+    implementation 'com.razorpay:checkout:1.4.7'
 
     /** FRESCO **/
     implementation 'com.facebook.fresco:fresco:1.9.0'
@@ -64,9 +67,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.4.0'
-
-    /** VOLLEY **/
-    implementation 'com.android.volley:volley:1.1.0'
 
     /** OK HTTP **/
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'

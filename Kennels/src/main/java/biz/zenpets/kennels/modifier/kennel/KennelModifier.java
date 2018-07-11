@@ -62,6 +62,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import biz.zenpets.kennels.R;
+import biz.zenpets.kennels.utils.AppPrefs;
 import biz.zenpets.kennels.utils.adapters.capacity.PetCapacityAdapter;
 import biz.zenpets.kennels.utils.models.helpers.ZenApiClient;
 import biz.zenpets.kennels.utils.models.kennels.Kennel;
@@ -77,6 +78,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class KennelModifier extends AppCompatActivity {
+
+    private AppPrefs getApp()	{
+        return (AppPrefs) getApplication();
+    }
+
+    /** THE KENNEL OWNER DETAILS **/
+    String KENNEL_OWNER_ID = null;
 
     /** THE INCOMING KENNEL ID **/
     String KENNEL_ID = null;
@@ -158,6 +166,9 @@ public class KennelModifier extends AppCompatActivity {
                 .setCopyTakenPhotosToPublicGalleryAppFolder(true)
                 .setCopyPickedImagesToPublicGalleryAppFolder(true)
                 .setAllowMultiplePickInGallery(false);
+
+        /* GET THE KENNEL OWNER'S ID */
+        KENNEL_OWNER_ID = getApp().getKennelOwnerID();
 
         /* CONFIGURE THE TOOLBAR */
         configTB();
@@ -430,7 +441,7 @@ public class KennelModifier extends AppCompatActivity {
 
         /* CHECK IF THE KENNEL COVER IS BEING UPDATE AND THEN SET THE KENNEL COVER FILE NAME */
         if (KENNEL_COVER_PHOTO_URI != null && !TextUtils.isEmpty(KENNEL_NAME)) {
-            KENNEL_COVER_PHOTO_FILE_NAME = KENNEL_ID + "_" + KENNEL_NAME.replaceAll(" ", "_").toLowerCase().trim();
+            KENNEL_COVER_PHOTO_FILE_NAME = KENNEL_OWNER_ID + "_" + KENNEL_NAME.replaceAll(" ", "_").toLowerCase().trim();
 
             /* SHOW THE PROGRESS DIALOG **/
             progressDialog = new ProgressDialog(this);

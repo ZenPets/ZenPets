@@ -68,6 +68,13 @@
     <string name="terms_part_3">&#160;and the&#160;</string>
     <string name="terms_part_4">Privacy Policy</string>
 
+    <!-- KENNEL CREATOR -->
+    <string name="kennel_creator_limit_exceed_message">Kennel Owners on Zen Pets are allotted 2 Kennel Listings. To add additional Kennels over and above the permitted 2, you will be charged Rs. 1,000 (per additional listing).
+        \n\nIf you wish to add an additional Kennel, you will be directed to the payment gateway. On successful payment, the Kennel will be published on the Zen Pets platform. The new Kennel, after payment confirmation, will be valid for 1 year from the date of successful payment</string>
+    <string name="kennel_creator_limit_exceed_payment_message">You will be redirected to the Payment Gateway to process the payment for the additional Kennel listing. As a reminder, the cost of adding additional Kennels is Rs. 1,000 (per additional listing).
+        \n\nOn successful payment, the Kennel will be published on the Zen Pets platform. The new Kennel, after payment confirmation, will be valid for 1 year from the date of successful payment.
+    \n\nTo continue, press the \"PAY NOW\" button. Else, press the \"CANCEL\" button.</string>
+
     <!-- KENNEL LIST ITEM STRINGS -->
     <string name="kennel_list_kennel_name_label">KENNEL NAME</string>
     <string name="kennel_list_kennel_address_label">KENNEL ADDRESS</string>

@@ -41,6 +41,7 @@ import biz.zenpets.kennels.utils.AppPrefs;
 import biz.zenpets.kennels.utils.TypefaceSpan;
 import biz.zenpets.kennels.utils.models.helpers.ZenApiClient;
 import biz.zenpets.kennels.utils.models.kennels.Kennel;
+import biz.zenpets.kennels.utils.models.kennels.KennelPages;
 import biz.zenpets.kennels.utils.models.kennels.Kennels;
 import biz.zenpets.kennels.utils.models.kennels.KennelsAPI;
 import butterknife.BindView;
@@ -72,12 +73,14 @@ public class KennelsList extends AppCompatActivity {
 
     /** ADD A NEW KENNEL (FAB) **/
     @OnClick(R.id.fabNewKennel) void newFabKennel() {
-        Intent intent = new Intent(KennelsList.this, KennelCreator.class);
-        startActivityForResult(intent, 101);
+        /* CHECK TOTAL KENNELS CREATED BY CURRENT KENNEL OWNER */
+        checkPublishedKennels();
     }
 
     /** ADD A NEW KENNEL (EMPTY LAYOUT) **/
     @OnClick(R.id.linlaEmpty) void newKennel()  {
+        /* CHECK TOTAL KENNELS CREATED BY CURRENT KENNEL OWNER */
+        checkPublishedKennels();
     }
 
     @Override
@@ -197,6 +200,51 @@ public class KennelsList extends AppCompatActivity {
                 break;
         }
         return false;
+    }
+
+    /** CHECK TOTAL KENNELS CREATED BY CURRENT KENNEL OWNER **/
+    private void checkPublishedKennels() {
+        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
+        Call<KennelPages> call = api.fetchOwnerKennels(KENNEL_OWNER_ID);
+        call.enqueue(new Callback<KennelPages>() {
+            @Override
+            public void onResponse(Call<KennelPages> call, Response<KennelPages> response) {
+                if (response.body() != null)    {
+                    int publishedKennels = Integer.parseInt(response.body().getTotalKennels());
+                    if (publishedKennels < 2)   {
+                        Intent intent = new Intent(KennelsList.this, KennelCreator.class);
+                        startActivityForResult(intent, 101);
+                    } else if (publishedKennels > 2){
+                        new MaterialDialog.Builder(KennelsList.this)
+                                .icon(ContextCompat.getDrawable(KennelsList.this, R.drawable.ic_info_black_24dp))
+                                .title("Exceeding Kennel Limit")
+                                .content(getString(R.string.kennel_creator_limit_exceed_message))
+                                .cancelable(false)
+                                .positiveText("Sure Thing")
+                                .negativeText("Not Now")
+                                .theme(Theme.LIGHT)
+                                .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        Intent intent = new Intent(KennelsList.this, KennelCreator.class);
+                                        startActivityForResult(intent, 101);
+                                    }
+                                })
+                                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        dialog.dismiss();
+                                    }
+                                }).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<KennelPages> call, Throwable t) {
+            }
+        });
     }
 
     /** THE KENNELS ADAPTER **/

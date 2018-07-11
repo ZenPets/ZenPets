@@ -87,6 +87,12 @@
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
+        <!-- LOCATION PICKER -->
+        <activity
+            android:name=".utils.helpers.LocationPickerActivity"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
         <!-- LEGAL -->
         <activity
             android:name=".utils.legal.PrivacyPolicyActivity"

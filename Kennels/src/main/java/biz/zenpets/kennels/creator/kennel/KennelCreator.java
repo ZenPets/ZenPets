@@ -2,10 +2,14 @@ package biz.zenpets.kennels.creator.kennel;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,6 +25,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,24 +36,42 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.razorpay.Checkout;
+import com.razorpay.PaymentResultListener;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import biz.zenpets.kennels.R;
+import biz.zenpets.kennels.utils.AppPrefs;
 import biz.zenpets.kennels.utils.TypefaceSpan;
+import biz.zenpets.kennels.utils.adapters.capacity.PetCapacityAdapter;
 import biz.zenpets.kennels.utils.adapters.location.CitiesAdapter;
 import biz.zenpets.kennels.utils.adapters.location.StatesAdapter;
+import biz.zenpets.kennels.utils.helpers.LocationPickerActivity;
 import biz.zenpets.kennels.utils.models.helpers.ZenApiClient;
+import biz.zenpets.kennels.utils.models.kennels.Kennel;
+import biz.zenpets.kennels.utils.models.kennels.KennelPages;
+import biz.zenpets.kennels.utils.models.kennels.KennelsAPI;
 import biz.zenpets.kennels.utils.models.location.CitiesData;
 import biz.zenpets.kennels.utils.models.location.CityData;
 import biz.zenpets.kennels.utils.models.location.LocationAPI;
@@ -64,12 +87,23 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class KennelCreator extends AppCompatActivity {
+public class KennelCreator extends AppCompatActivity implements PaymentResultListener {
+
+    private AppPrefs getApp()	{
+        return (AppPrefs) getApplication();
+    }
+
+    /** THE KENNEL OWNER DETAILS **/
+    String KENNEL_OWNER_ID = null;
 
     /** PERMISSION REQUEST CONSTANT **/
     private static final int ACCESS_STORAGE_CONSTANT = 201;
 
+    /** THE LOCATION REQUEST CODE **/
+    private final int REQUEST_LOCATION = 1;
+
     /** DATA TYPES TO HOLD THE KENNEL DETAILS **/
+    String KENNEL_ID = null;
     String KENNEL_NAME = null;
     String KENNEL_COVER_PHOTO = null;
     Uri KENNEL_COVER_PHOTO_URI = null;
@@ -77,11 +111,8 @@ public class KennelCreator extends AppCompatActivity {
     String KENNEL_ADDRESS = null;
     String KENNEL_PIN_CODE = null;
     String COUNTRY_ID = "51";
-    String COUNTRY_NAME = null;
     String STATE_ID = null;
-    String STATE_NAME = null;
     String CITY_ID = null;
-    String CITY_NAME = null;
     Double KENNEL_LATITUDE = null;
     Double KENNEL_LONGITUDE = null;
     String KENNEL_PHONE_PREFIX_1 = "91";
@@ -90,11 +121,20 @@ public class KennelCreator extends AppCompatActivity {
     String KENNEL_PHONE_NUMBER_2 = null;
     String KENNEL_PET_CAPACITY = null;
 
+    /** ADDITIONAL KENNEL CHARGES **/
+    String ADDITIONAL_KENNEL_COST = "1000";
+
     /** THE STATES ADAPTER AND ARRAY LIST **/
     private ArrayList<StateData> arrStates = new ArrayList<>();
 
     /** CITIES ADAPTER AND ARRAY LIST **/
     private ArrayList<CityData> arrCities = new ArrayList<>();
+
+    /** A PET CAPACITY LIST INSTANCE **/
+    private List<String> arrCapacity = new ArrayList<>();
+
+    /** A PROGRESS DIALOG INSTANCE **/
+    private ProgressDialog progressDialog;
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
@@ -116,6 +156,8 @@ public class KennelCreator extends AppCompatActivity {
 
     /** SELECT THE KENNEL'S LOCATION ON THE MAP **/
     @OnClick(R.id.btnLocationPicker) void selectLocation()  {
+        Intent intent = new Intent(this, LocationPickerActivity.class);
+        startActivityForResult(intent, REQUEST_LOCATION);
     }
 
     /** PICK THE KENNEL'S COVER PHOTO **/
@@ -137,6 +179,12 @@ public class KennelCreator extends AppCompatActivity {
                 .setCopyTakenPhotosToPublicGalleryAppFolder(true)
                 .setCopyPickedImagesToPublicGalleryAppFolder(true)
                 .setAllowMultiplePickInGallery(false);
+
+        /* PRELOAD A CHECK OUT */
+        Checkout.preload(KennelCreator.this);
+
+        /* GET THE KENNEL OWNER'S ID */
+        KENNEL_OWNER_ID = getApp().getKennelOwnerID();
 
         /* CONFIGURE THE TOOLBAR */
         configTB();
@@ -169,6 +217,26 @@ public class KennelCreator extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 CITY_ID = arrCities.get(position).getCityID();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        /* POPULATE THE PET CAPACITY SPINNER */
+        String[] strServes = getResources().getStringArray(R.array.pet_capacity);
+        arrCapacity = Arrays.asList(strServes);
+        spnPetCapacity.setAdapter(new PetCapacityAdapter(
+                KennelCreator.this,
+                R.layout.pet_capacity_row,
+                arrCapacity));
+
+        /* SELECT THE PET CAPACITY */
+        spnPetCapacity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                KENNEL_PET_CAPACITY = arrCapacity.get(position);
             }
 
             @Override
@@ -233,6 +301,229 @@ public class KennelCreator extends AppCompatActivity {
         KENNEL_PIN_CODE = edtPinCode.getText().toString().trim();
         KENNEL_PHONE_NUMBER_1 = edtPhoneNumber1.getText().toString().trim();
         KENNEL_PHONE_NUMBER_2 = edtPhoneNumber2.getText().toString().trim();
+
+        /* GENERATE THE FILE NAME */
+        if (!(KENNEL_COVER_PHOTO_URI == null) && !TextUtils.isEmpty(KENNEL_NAME))    {
+            KENNEL_COVER_PHOTO_FILE_NAME = KENNEL_OWNER_ID + "_" + KENNEL_NAME.replaceAll(" ", "_").toLowerCase().trim();
+        } else {
+            KENNEL_COVER_PHOTO_FILE_NAME = null;
+        }
+
+        /* VERIFY THE KENNEL DETAILS */
+        if (TextUtils.isEmpty(KENNEL_NAME)) {
+            inputKennelName.setError("Provide the Kennel's name");
+            inputKennelName.setErrorEnabled(true);
+            inputKennelName.requestFocus();
+            inputAddress.setErrorEnabled(false);
+            inputPinCode.setErrorEnabled(false);
+            inputPhoneNumber1.setErrorEnabled(false);
+        } else if (TextUtils.isEmpty(KENNEL_ADDRESS))   {
+            inputAddress.setError("Provide the Kennel's address");
+            inputAddress.setErrorEnabled(true);
+            inputAddress.requestFocus();
+            inputKennelName.setErrorEnabled(false);
+            inputPinCode.setErrorEnabled(false);
+            inputPhoneNumber1.setErrorEnabled(false);
+        } else if (TextUtils.isEmpty(KENNEL_PIN_CODE))  {
+            inputPinCode.setError("Provide the Pin Code");
+            inputPinCode.setErrorEnabled(true);
+            inputPinCode.requestFocus();
+            inputKennelName.setErrorEnabled(false);
+            inputAddress.setErrorEnabled(false);
+            inputPhoneNumber1.setErrorEnabled(false);
+        } else if (TextUtils.isEmpty(KENNEL_PHONE_NUMBER_1))    {
+            inputPhoneNumber1.setError("Provide the Phone Number");
+            inputPhoneNumber1.setErrorEnabled(true);
+            inputPhoneNumber1.requestFocus();
+            inputKennelName.setErrorEnabled(false);
+            inputAddress.setErrorEnabled(false);
+            inputPinCode.setErrorEnabled(false);
+        } else if (KENNEL_LATITUDE == null || KENNEL_LONGITUDE == null) {
+            inputKennelName.setErrorEnabled(false);
+            inputAddress.setErrorEnabled(false);
+            inputPinCode.setErrorEnabled(false);
+            inputPhoneNumber1.setErrorEnabled(false);
+            Toast.makeText(getApplicationContext(), "Please mark the Kennel's location on the Map", Toast.LENGTH_LONG).show();
+        } else if (KENNEL_COVER_PHOTO_FILE_NAME == null)    {
+            inputKennelName.setErrorEnabled(false);
+            inputAddress.setErrorEnabled(false);
+            inputPinCode.setErrorEnabled(false);
+            inputPhoneNumber1.setErrorEnabled(false);
+            Toast.makeText(getApplicationContext(), "Please select the Kennel's Cover Photo.", Toast.LENGTH_LONG).show();
+        } else {
+            inputKennelName.setErrorEnabled(false);
+            inputAddress.setErrorEnabled(false);
+            inputPinCode.setErrorEnabled(false);
+            inputPhoneNumber1.setErrorEnabled(false);
+
+            /* UPLOAD THE KENNEL'S COVER PHOTO  */
+            uploadKennelCover();
+        }
+    }
+
+    /** UPLOAD THE KENNEL'S COVER PHOTO  **/
+    private void uploadKennelCover() {
+        /* SHOW THE PROGRESS DIALOG **/
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Updating the Kennel's listing...");
+        progressDialog.setIndeterminate(false);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference refStorage = storageReference.child("Kennel Covers").child(KENNEL_COVER_PHOTO_FILE_NAME);
+        refStorage.putFile(KENNEL_COVER_PHOTO_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Uri downloadURL = taskSnapshot.getDownloadUrl();
+//                Log.e("URL", String.valueOf(downloadURL));
+                KENNEL_COVER_PHOTO = String.valueOf(downloadURL);
+                if (KENNEL_COVER_PHOTO != null)    {
+                    /* UPLOAD THE NEW KENNEL LISTING */
+                    uploadKennelListing();
+                } else {
+                    progressDialog.dismiss();
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "Problem publishing your new Kennel...",
+                            Toast.LENGTH_LONG).show();
+                }
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progressDialog.dismiss();
+                Log.e("UPLOAD EXCEPTION", e.toString());
+                Crashlytics.logException(e);
+            }
+        });
+    }
+
+    /** UPLOAD THE NEW KENNEL LISTING **/
+    private void uploadKennelListing() {
+        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
+        Call<Kennel> call = api.registerNewKennel(
+                KENNEL_OWNER_ID, KENNEL_NAME, KENNEL_COVER_PHOTO, KENNEL_ADDRESS, KENNEL_PIN_CODE,
+                COUNTRY_ID, STATE_ID, CITY_ID, String.valueOf(KENNEL_LATITUDE), String.valueOf(KENNEL_LONGITUDE),
+                KENNEL_PHONE_PREFIX_1, KENNEL_PHONE_NUMBER_1, KENNEL_PHONE_PREFIX_2, KENNEL_PHONE_NUMBER_2,
+                KENNEL_PET_CAPACITY
+        );
+        call.enqueue(new Callback<Kennel>() {
+            @Override
+            public void onResponse(Call<Kennel> call, Response<Kennel> response) {
+                if (response.isSuccessful())    {
+                    /* GET THE KENNEL ID */
+                    KENNEL_ID = response.body().getKennelID();
+
+                    /* CHECK TOTAL KENNELS CREATED BY CURRENT KENNEL OWNER */
+                    checkPublishedKennels();
+                } else {
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), "Update failed...", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Kennel> call, Throwable t) {
+                progressDialog.dismiss();
+                Crashlytics.logException(t);
+                Log.e("PUBLISH FAILURE", t.getMessage());
+            }
+        });
+    }
+
+    /** CHECK TOTAL KENNELS CREATED BY CURRENT KENNEL OWNER **/
+    private void checkPublishedKennels() {
+        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
+        Call<KennelPages> call = api.fetchOwnerKennels(KENNEL_OWNER_ID);
+        call.enqueue(new Callback<KennelPages>() {
+            @Override
+            public void onResponse(Call<KennelPages> call, Response<KennelPages> response) {
+                if (response.body() != null)    {
+                    int publishedKennels = Integer.parseInt(response.body().getTotalKennels());
+                    if (publishedKennels < 2)   {
+                        progressDialog.dismiss();
+                        Intent success = new Intent();
+                        setResult(RESULT_OK, success);
+                        Toast.makeText(getApplicationContext(), "Updated successfully...", Toast.LENGTH_LONG).show();
+                        finish();
+                    } else if (publishedKennels > 2){
+                        new MaterialDialog.Builder(KennelCreator.this)
+                                .icon(ContextCompat.getDrawable(KennelCreator.this, R.drawable.ic_info_black_24dp))
+                                .title("Exceeding Kennel Limit")
+                                .content(getString(R.string.kennel_creator_limit_exceed_payment_message))
+                                .cancelable(false)
+                                .positiveText("Pay Now")
+                                .negativeText("Cancel")
+                                .theme(Theme.LIGHT)
+                                .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        /* START THE PAYMENT PROCESS */
+                                        startPaymentProcess();
+                                    }
+                                })
+                                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        dialog.dismiss();
+                                    }
+                                }).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<KennelPages> call, Throwable t) {
+                Log.e("CHECK KENNELS FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
+    }
+
+    /** START THE PAYMENT PROCESS **/
+    private void startPaymentProcess() {
+        final Activity activity = this;
+        final Checkout checkout = new Checkout();
+        int icon = R.mipmap.ic_launcher;
+        checkout.setImage(icon);
+        checkout.setFullScreenDisable(true);
+        try {
+            JSONObject options = new JSONObject();
+            options.put("name", "Zen Pets");
+            options.put("description", "Additional Kennel Listing");
+            options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
+            options.put("currency", "INR");
+            options.put("amount", Integer.parseInt(ADDITIONAL_KENNEL_COST) * 100);
+            JSONObject preFill = new JSONObject();
+            preFill.put("email", "siddharth.lele@gmail.com");
+            preFill.put("contact", "8087471157");
+            options.put("prefill", preFill);
+
+            checkout.open(activity, options);
+        } catch (Exception e) {
+//            Log.e("PAYMENT FAILURE", e.getMessage());
+            Toast.makeText(getApplicationContext(), "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT)
+                    .show();
+            e.printStackTrace();
+            Crashlytics.logException(e);
+        }
+    }
+
+    @Override
+    public void onPaymentSuccess(String razorPaymentID) {
+        try {
+            Toast.makeText(this, "Payment Successful: " + razorPaymentID, Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Log.e("PAYMENT EXCEPTION", e.getMessage());
+            Crashlytics.logException(e);
+        }
+    }
+
+    @Override
+    public void onPaymentError(int i, String s) {
     }
 
     /***** CONFIGURE THE TOOLBAR *****/
@@ -278,6 +569,32 @@ public class KennelCreator extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_LOCATION) {
+                Bundle bundle = data.getExtras();
+                if (bundle != null) {
+                    KENNEL_LATITUDE = bundle.getDouble("LATITUDE");
+                    KENNEL_LONGITUDE = bundle.getDouble("LONGITUDE");
+                }
+
+                /* GET THE APPROXIMATE ADDRESS FOR DISPLAY */
+                try {
+                    Geocoder geocoder;
+                    List<Address> addresses;
+                    geocoder = new Geocoder(this, Locale.getDefault());
+                    addresses = geocoder.getFromLocation(KENNEL_LATITUDE, KENNEL_LONGITUDE, 1);
+                    String address = addresses.get(0).getAddressLine(0);
+                    if (!TextUtils.isEmpty(address)) {
+                        txtLocation.setText(address);
+                    } else {
+                        // TODO: DISPLAY THE COORDINATES INSTEAD
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
         EasyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
             @Override

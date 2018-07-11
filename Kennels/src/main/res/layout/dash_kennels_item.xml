@@ -48,7 +48,7 @@
                     android:text="@string/kennel_list_kennel_name_label"
                     android:textColor="@android:color/primary_text_dark"
                     android:textSize="14sp"
-                    app:fontFamily="@font/lato_bold" />
+                    app:fontFamily="@font/roboto_medium" />
 
                 <com.mikepenz.iconics.view.IconicsImageView
                     android:id="@+id/imgvwKennelOptions"
@@ -65,42 +65,6 @@
                     app:iiv_icon="faw_ellipsis_v"
                     app:iiv_size="16dp" />
             </FrameLayout>
-
-            <!--<LinearLayout
-                android:id="@+id/linlaKennelName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:id="@+id/txtKennelName"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/roboto_condensed_regular"
-                    android:text="@string/kennel_list_kennel_name_label"
-                    android:textColor="@color/primary_text"
-                    android:textSize="14sp" />
-
-                <com.mikepenz.iconics.view.IconicsImageView
-                    android:id="@+id/imgvwKennelOptions"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:padding="5dp"
-                    app:iiv_color="@color/secondary_text"
-                    app:iiv_icon="faw_ellipsis_v"
-                    app:iiv_size="16dp" />
-            </LinearLayout>-->
 
             <LinearLayout
                 android:id="@+id/linlaKennelAddress"
@@ -138,25 +102,8 @@
                     android:text="@string/kennel_list_kennel_address_label"
                     android:textColor="@color/secondary_text"
                     android:textSize="14sp"
-                    app:fontFamily="@font/roboto_condensed_regular" />
+                    app:fontFamily="@font/roboto_regular" />
             </LinearLayout>
-
-            <!--<TextView
-                android:id="@+id/txtKennelAddress"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/roboto_condensed_regular"
-                android:text="@string/kennel_list_kennel_address_label"
-                android:textColor="@color/secondary_text"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="@+id/fralaKennelDetails"
-                app:layout_constraintStart_toStartOf="@+id/fralaKennelDetails"
-                app:layout_constraintTop_toBottomOf="@+id/fralaKennelDetails" />-->
 
             <LinearLayout
                 android:id="@+id/linlaPetStats"
@@ -191,9 +138,26 @@
                     android:gravity="start|center"
                     android:text="@string/kennel_list_kennel_capacity_label"
                     android:textColor="@color/secondary_text"
-                    android:textSize="13sp"
-                    app:fontFamily="@font/roboto_condensed_regular" />
+                    android:textSize="14sp"
+                    app:fontFamily="@font/roboto_regular" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtPromoteKennel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center|end"
+                android:padding="11dp"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
+                android:text="PROMOTE KENNEL"
+                android:textColor="@color/accent"
+                android:textSize="15sp"
+                app:fontFamily="@font/roboto_medium"
+                app:layout_constraintEnd_toEndOf="@+id/linlaPetStats"
+                app:layout_constraintStart_toStartOf="@+id/linlaPetStats"
+                app:layout_constraintTop_toBottomOf="@+id/linlaPetStats" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

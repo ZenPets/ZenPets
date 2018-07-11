@@ -61,4 +61,8 @@ public interface KennelsAPI {
     /** FETCH THE KENNEL RECORD DETAILS **/
     @GET("fetchKennelDetails")
     Call<Kennel> fetchKennelDetails(@Query("kennelID") String kennelID);
+
+    /** FETCH THE KENNEL RECORD DETAILS **/
+    @GET("fetchOwnerKennels")
+    Call<KennelPages> fetchOwnerKennels(@Query("kennelOwnerID") String kennelOwnerID);
 }
