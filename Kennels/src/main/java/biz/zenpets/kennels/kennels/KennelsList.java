@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -211,10 +212,12 @@ public class KennelsList extends AppCompatActivity {
             public void onResponse(Call<KennelPages> call, Response<KennelPages> response) {
                 if (response.body() != null)    {
                     int publishedKennels = Integer.parseInt(response.body().getTotalKennels());
+                    Log.e("KENNELS", String.valueOf(publishedKennels));
                     if (publishedKennels < 2)   {
                         Intent intent = new Intent(KennelsList.this, KennelCreator.class);
+                        intent.putExtra("LISTING_TYPE", "FREE");
                         startActivityForResult(intent, 101);
-                    } else if (publishedKennels > 2){
+                    } else {
                         new MaterialDialog.Builder(KennelsList.this)
                                 .icon(ContextCompat.getDrawable(KennelsList.this, R.drawable.ic_info_black_24dp))
                                 .title("Exceeding Kennel Limit")
@@ -228,6 +231,7 @@ public class KennelsList extends AppCompatActivity {
                                     @Override
                                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                         Intent intent = new Intent(KennelsList.this, KennelCreator.class);
+                                        intent.putExtra("LISTING_TYPE", "PAID");
                                         startActivityForResult(intent, 101);
                                     }
                                 })

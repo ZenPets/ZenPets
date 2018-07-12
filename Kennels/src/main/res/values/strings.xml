@@ -4,6 +4,10 @@
     <!-- GOOGLE MAPS API KEY -->
     <string name="google_maps_api_key">AIzaSyBW_52FTXhgeW_Z_GHLHxcG1lRVAej5W28</string>
 
+    <!-- RAZOR PAY API KEYS -->
+    <string name="razor_pay_api_key_id">rzp_test_ySDpAnHqFLEgk3</string>
+    <string name="razor_pay_api_key_secret">Pt4op0fbrZtMCJT0idcdBi67</string>
+
     <!-- SPLASH SCREEN -->
     <string name="splash_title">ZEN PETS</string>
 

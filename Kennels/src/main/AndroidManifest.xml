@@ -110,5 +110,10 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <!-- RAZOR PAY -->
+        <meta-data
+            android:name="com.razorpay.ApiKey"
+            android:value="@string/razor_pay_api_key_id" />
     </application>
 </manifest>

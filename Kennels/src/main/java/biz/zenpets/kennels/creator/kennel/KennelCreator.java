@@ -26,7 +26,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -51,13 +50,18 @@ import com.google.firebase.storage.UploadTask;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -81,6 +85,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.zelory.compressor.Compressor;
+import okhttp3.Credentials;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import pl.aprilapps.easyphotopicker.DefaultCallback;
 import pl.aprilapps.easyphotopicker.EasyImage;
 import retrofit2.Call;
@@ -96,6 +105,9 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
     /** THE KENNEL OWNER DETAILS **/
     String KENNEL_OWNER_ID = null;
 
+    /** THE INCOMING LISTING TYPE **/
+    String LISTING_TYPE = null;
+
     /** PERMISSION REQUEST CONSTANT **/
     private static final int ACCESS_STORAGE_CONSTANT = 201;
 
@@ -104,6 +116,7 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
 
     /** DATA TYPES TO HOLD THE KENNEL DETAILS **/
     String KENNEL_ID = null;
+    String KENNEL_CHARGES_ID = "1";
     String KENNEL_NAME = null;
     String KENNEL_COVER_PHOTO = null;
     Uri KENNEL_COVER_PHOTO_URI = null;
@@ -120,6 +133,8 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
     String KENNEL_PHONE_PREFIX_2 = "91";
     String KENNEL_PHONE_NUMBER_2 = null;
     String KENNEL_PET_CAPACITY = null;
+    private String KENNEL_VALID_FROM = null;
+    private String KENNEL_VALID_TO = null;
 
     /** ADDITIONAL KENNEL CHARGES **/
     String ADDITIONAL_KENNEL_COST = "1000";
@@ -172,6 +187,12 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.kennel_creator);
         ButterKnife.bind(this);
+
+        /* GET THE INCOMING LISTING TYPE */
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null && bundle.containsKey("LISTING_TYPE"))   {
+            LISTING_TYPE = bundle.getString("LISTING_TYPE");
+        }
 
         /* THE EASY IMAGE CONFIGURATION */
         EasyImage.configuration(this)
@@ -243,48 +264,25 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-    }
 
-    /** FETCH THE LIST OF STATES **/
-    private void fetchStates() {
-        LocationAPI api = ZenApiClient.getClient().create(LocationAPI.class);
-        Call<StatesData> call = api.allStates(COUNTRY_ID);
-        call.enqueue(new Callback<StatesData>() {
-            @Override
-            public void onResponse(Call<StatesData> call, Response<StatesData> response) {
-                arrStates = response.body().getStates();
+        /* GET THE VALID FROM AND TO DATES */
+        try {
+            /* CALCULATE THE KENNEL VALID FROM DATE */
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            Date date = new Date();
+            KENNEL_VALID_FROM = format.format(date);
+//            Log.e("VALID FROM", KENNEL_VALID_FROM);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(format.parse(KENNEL_VALID_FROM));
 
-                /* SET THE ADAPTER TO THE STATES SPINNER */
-                spnState.setAdapter(new StatesAdapter(KennelCreator.this, arrStates));
-            }
-
-            @Override
-            public void onFailure(Call<StatesData> call, Throwable t) {
-//                Log.e("STATES FAILURE", t.getMessage());
-                Crashlytics.logException(t);
-            }
-        });
-    }
-
-    /** FETCH THE LIST OF CITIES **/
-    private void fetchCities() {
-        LocationAPI api = ZenApiClient.getClient().create(LocationAPI.class);
-        Call<CitiesData> call = api.allCities(STATE_ID);
-        call.enqueue(new Callback<CitiesData>() {
-            @Override
-            public void onResponse(Call<CitiesData> call, Response<CitiesData> response) {
-                arrCities = response.body().getCities();
-
-                /* SET THE ADAPTER TO THE CITIES SPINNER */
-                spnCity.setAdapter(new CitiesAdapter(KennelCreator.this, arrCities));
-            }
-
-            @Override
-            public void onFailure(Call<CitiesData> call, Throwable t) {
-//                Log.e("CITIES FAILURE", t.getMessage());
-                Crashlytics.logException(t);
-            }
-        });
+            /* CALCULATE THE END DATE */
+            calendar.add(Calendar.YEAR, 1);
+            Date dateEnd = new Date(calendar.getTimeInMillis());
+            KENNEL_VALID_TO = format.format(dateEnd);
+//            Log.e("VALID TO", KENNEL_VALID_TO);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     /** CHECK KENNEL DETAILS **/
@@ -365,7 +363,7 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
     private void uploadKennelCover() {
         /* SHOW THE PROGRESS DIALOG **/
         progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Updating the Kennel's listing...");
+        progressDialog.setMessage("Publishing the new Kennel...");
         progressDialog.setIndeterminate(false);
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -394,7 +392,7 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
             @Override
             public void onFailure(@NonNull Exception e) {
                 progressDialog.dismiss();
-                Log.e("UPLOAD EXCEPTION", e.toString());
+//                Log.e("UPLOAD EXCEPTION", e.toString());
                 Crashlytics.logException(e);
             }
         });
@@ -402,12 +400,17 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
 
     /** UPLOAD THE NEW KENNEL LISTING **/
     private void uploadKennelListing() {
+        if (LISTING_TYPE.equalsIgnoreCase("Free"))  {
+            KENNEL_CHARGES_ID = "1";
+        } else {
+            KENNEL_CHARGES_ID = "2";
+        }
         KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
         Call<Kennel> call = api.registerNewKennel(
-                KENNEL_OWNER_ID, KENNEL_NAME, KENNEL_COVER_PHOTO, KENNEL_ADDRESS, KENNEL_PIN_CODE,
+                KENNEL_OWNER_ID, KENNEL_CHARGES_ID, KENNEL_NAME, KENNEL_COVER_PHOTO, KENNEL_ADDRESS, KENNEL_PIN_CODE,
                 COUNTRY_ID, STATE_ID, CITY_ID, String.valueOf(KENNEL_LATITUDE), String.valueOf(KENNEL_LONGITUDE),
                 KENNEL_PHONE_PREFIX_1, KENNEL_PHONE_NUMBER_1, KENNEL_PHONE_PREFIX_2, KENNEL_PHONE_NUMBER_2,
-                KENNEL_PET_CAPACITY
+                KENNEL_PET_CAPACITY, KENNEL_VALID_FROM, KENNEL_VALID_TO
         );
         call.enqueue(new Callback<Kennel>() {
             @Override
@@ -428,7 +431,7 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
             public void onFailure(Call<Kennel> call, Throwable t) {
                 progressDialog.dismiss();
                 Crashlytics.logException(t);
-                Log.e("PUBLISH FAILURE", t.getMessage());
+//                Log.e("PUBLISH FAILURE", t.getMessage());
             }
         });
     }
@@ -446,7 +449,7 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
                         progressDialog.dismiss();
                         Intent success = new Intent();
                         setResult(RESULT_OK, success);
-                        Toast.makeText(getApplicationContext(), "Updated successfully...", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Kennel published successfully...", Toast.LENGTH_LONG).show();
                         finish();
                     } else if (publishedKennels > 2){
                         new MaterialDialog.Builder(KennelCreator.this)
@@ -477,7 +480,7 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
 
             @Override
             public void onFailure(Call<KennelPages> call, Throwable t) {
-                Log.e("CHECK KENNELS FAILURE", t.getMessage());
+//                Log.e("CHECK KENNELS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -504,7 +507,6 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
 
             checkout.open(activity, options);
         } catch (Exception e) {
-//            Log.e("PAYMENT FAILURE", e.getMessage());
             Toast.makeText(getApplicationContext(), "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT)
                     .show();
             e.printStackTrace();
@@ -516,14 +518,118 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
     public void onPaymentSuccess(String razorPaymentID) {
         try {
             Toast.makeText(this, "Payment Successful: " + razorPaymentID, Toast.LENGTH_SHORT).show();
+
+            /* CAPTURE THE KENNEL PAYMENT */
+            captureKennelPayment(razorPaymentID);
         } catch (Exception e) {
-            Log.e("PAYMENT EXCEPTION", e.getMessage());
             Crashlytics.logException(e);
         }
     }
 
     @Override
-    public void onPaymentError(int i, String s) {
+    public void onPaymentError(int code, String response) {
+        try {
+            Toast.makeText(this, "Payment failed: " + code + " " + response, Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Crashlytics.logException(e);
+        }
+    }
+
+    /** CAPTURE THE KENNEL PAYMENT **/
+    private void captureKennelPayment(final String razorPaymentID) {
+        String apiKey = getString(R.string.razor_pay_api_key_id);
+        String apiSecret = getString(R.string.razor_pay_api_key_secret);
+        String strCredentials = Credentials.basic(apiKey, apiSecret);
+        String strUrl = "https://" + apiKey + ":" + apiSecret + "@api.razorpay.com/v1/payments/" + razorPaymentID + "/capture";
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = new FormBody.Builder()
+                .add("amount", String.valueOf(Integer.parseInt(ADDITIONAL_KENNEL_COST) * 100))
+                .build();
+        Request request = new Request.Builder()
+                .header("Authorization", strCredentials)
+                .url(strUrl)
+                .post(body)
+                .build();
+//        Log.e("REQUEST", String.valueOf(request));
+        client.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(okhttp3.Call call, IOException e) {
+//                Log.e("FAILURE", e.getMessage());
+            }
+
+            @Override
+            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                /* CHECK IF THE PAYMENT WAS CAPTURED SUCCESSFULLY */
+                checkCaptureStatus(razorPaymentID);
+//                Log.e("RESPONSE", String.valueOf(response));
+            }
+        });
+    }
+
+    /** CHECK IF THE PAYMENT WAS CAPTURED SUCCESSFULLY **/
+    private void checkCaptureStatus(final String razorPaymentID) {
+        String apiKey = getString(R.string.razor_pay_api_key_id);
+        String apiSecret = getString(R.string.razor_pay_api_key_secret);
+        String strCredentials = Credentials.basic(apiKey, apiSecret);
+        String URL_CHECK_CAPTURE = "https://" + apiKey + ":" + apiSecret + "@api.razorpay.com/v1/payments/" + razorPaymentID;
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .header("Authorization", strCredentials)
+                .url(URL_CHECK_CAPTURE)
+                .build();
+        client.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(okhttp3.Call call, IOException e) {
+            }
+
+            @Override
+            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                try {
+                    String strResult = response.body().string();
+                    JSONObject JORoot = new JSONObject(strResult);
+                    if (JORoot.has("error_code") && JORoot.getString("error_code").equalsIgnoreCase("null")) {
+                        /* CHECK THE CAPTURED STATUS */
+                        if (JORoot.has("captured")) {
+                            String CAPTURED_STATUS = JORoot.getString("captured");
+                            if (CAPTURED_STATUS.equalsIgnoreCase("true"))   {
+                                /* UPDATE THE KENNEL PAYMENT */
+                                updateKennelPayment(razorPaymentID);
+                            } else {
+//                                Log.e("CAPTURE FAILED", "The payment was not captured successfully...");
+                                Toast.makeText(getApplicationContext(), "An error occurred...", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+//                            Log.e("CAPTURE FAILED", "The payment was not captured successfully...");
+                            Toast.makeText(getApplicationContext(), "An error occurred...", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /** UPDATE THE KENNEL PAYMENT **/
+    private void updateKennelPayment(String razorPaymentID) {
+        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
+        Call<Kennel> call = api.updateKennelPayment(KENNEL_ID, razorPaymentID);
+        call.enqueue(new Callback<Kennel>() {
+            @Override
+            public void onResponse(Call<Kennel> call, Response<Kennel> response) {
+                progressDialog.dismiss();
+                Intent success = new Intent();
+                setResult(RESULT_OK, success);
+                Toast.makeText(getApplicationContext(), "Kennel published successfully...", Toast.LENGTH_LONG).show();
+                finish();
+            }
+
+            @Override
+            public void onFailure(Call<Kennel> call, Throwable t) {
+//                Log.e("PAYMENT UPDATE FAILURE",t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
 
     /***** CONFIGURE THE TOOLBAR *****/
@@ -637,16 +743,16 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
 
                 /* GET THE FINAL URI */
                 KENNEL_COVER_PHOTO_URI = Uri.fromFile(file);
-                Log.e("URI", String.valueOf(KENNEL_COVER_PHOTO_URI));
+//                Log.e("URI", String.valueOf(KENNEL_COVER_PHOTO_URI));
             } catch (IOException e) {
                 e.printStackTrace();
                 Crashlytics.logException(e);
-                Log.e("EXCEPTION", e.getMessage());
+//                Log.e("EXCEPTION", e.getMessage());
             }
         } catch (IOException e) {
             e.printStackTrace();
             Crashlytics.logException(e);
-            Log.e("EXCEPTION", e.getMessage());
+//            Log.e("EXCEPTION", e.getMessage());
         }
     }
 
@@ -777,5 +883,47 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
                         }).show();
             }
         }
+    }
+
+    /** FETCH THE LIST OF STATES **/
+    private void fetchStates() {
+        LocationAPI api = ZenApiClient.getClient().create(LocationAPI.class);
+        Call<StatesData> call = api.allStates(COUNTRY_ID);
+        call.enqueue(new Callback<StatesData>() {
+            @Override
+            public void onResponse(Call<StatesData> call, Response<StatesData> response) {
+                arrStates = response.body().getStates();
+
+                /* SET THE ADAPTER TO THE STATES SPINNER */
+                spnState.setAdapter(new StatesAdapter(KennelCreator.this, arrStates));
+            }
+
+            @Override
+            public void onFailure(Call<StatesData> call, Throwable t) {
+//                Log.e("STATES FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
+    }
+
+    /** FETCH THE LIST OF CITIES **/
+    private void fetchCities() {
+        LocationAPI api = ZenApiClient.getClient().create(LocationAPI.class);
+        Call<CitiesData> call = api.allCities(STATE_ID);
+        call.enqueue(new Callback<CitiesData>() {
+            @Override
+            public void onResponse(Call<CitiesData> call, Response<CitiesData> response) {
+                arrCities = response.body().getCities();
+
+                /* SET THE ADAPTER TO THE CITIES SPINNER */
+                spnCity.setAdapter(new CitiesAdapter(KennelCreator.this, arrCities));
+            }
+
+            @Override
+            public void onFailure(Call<CitiesData> call, Throwable t) {
+//                Log.e("CITIES FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
 }

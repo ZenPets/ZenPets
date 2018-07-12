@@ -14,6 +14,7 @@ public interface KennelsAPI {
     @FormUrlEncoded
     Call<Kennel> registerNewKennel(
             @Field("kennelOwnerID") String kennelOwnerID,
+            @Field("kennelChargesID") String kennelChargesID,
             @Field("kennelName") String kennelName,
             @Field("kennelCoverPhoto") String kennelCoverPhoto,
             @Field("kennelAddress") String kennelAddress,
@@ -27,7 +28,9 @@ public interface KennelsAPI {
             @Field("kennelPhoneNumber1") String kennelPhoneNumber1,
             @Field("kennelPhonePrefix2") String kennelPhonePrefix2,
             @Field("kennelPhoneNumber2") String kennelPhoneNumber2,
-            @Field("kennelPetCapacity") String kennelPetCapacity);
+            @Field("kennelPetCapacity") String kennelPetCapacity,
+            @Field("kennelValidFrom") String kennelValidFrom,
+            @Field("kennelValidTo") String kennelValidTo);
 
     /** UPDATE A KENNEL'S LISTING **/
     @POST("updateKennel")
@@ -48,6 +51,13 @@ public interface KennelsAPI {
             @Field("kennelPhonePrefix2") String kennelPhonePrefix2,
             @Field("kennelPhoneNumber2") String kennelPhoneNumber2,
             @Field("kennelPetCapacity") String kennelPetCapacity);
+
+    /** UPDATE A KENNEL'S PAYMENT **/
+    @POST("updateKennelPayment")
+    @FormUrlEncoded
+    Call<Kennel> updateKennelPayment(
+            @Field("kennelID") String kennelID,
+            @Field("paymentID") String paymentID);
 
     /** FETCH A LIST OF KENNELS (KENNEL MANAGER) **/
     @GET("fetchKennelsListByOwner")
