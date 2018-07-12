@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import biz.zenpets.users.utils.models.kennels.promotion.Promotion;
 
 public class Kennel {
-
     @SerializedName("error") private Boolean error;
+    @SerializedName("message") private String message;
     @SerializedName("kennelID") private String kennelID;
     @SerializedName("kennelOwnerID") private String kennelOwnerID;
+    @SerializedName("kennelChargesID") private String kennelChargesID;
+    @SerializedName("paymentID") private String paymentID;
     @SerializedName("kennelOwnerName") private String kennelOwnerName;
     @SerializedName("kennelOwnerDisplayProfile") private String kennelOwnerDisplayProfile;
     @SerializedName("kennelName") private String kennelName;
@@ -25,15 +27,14 @@ public class Kennel {
     @SerializedName("cityName") private String cityName;
     @SerializedName("kennelLatitude") private String kennelLatitude;
     @SerializedName("kennelLongitude") private String kennelLongitude;
-    @SerializedName("kennelDistance") private String kennelDistance;
     @SerializedName("kennelPhonePrefix1") private String kennelPhonePrefix1;
     @SerializedName("kennelPhoneNumber1") private String kennelPhoneNumber1;
     @SerializedName("kennelPhonePrefix2") private String kennelPhonePrefix2;
     @SerializedName("kennelPhoneNumber2") private String kennelPhoneNumber2;
     @SerializedName("kennelPetCapacity") private String kennelPetCapacity;
-    @SerializedName("kennelLikes") private String kennelLikes;
-    @SerializedName("kennelVotes") private String kennelVotes;
-    @SerializedName("kennelLikesPercent") private String kennelLikesPercent;
+    @SerializedName("kennelValidFrom") private String kennelValidFrom;
+    @SerializedName("kennelValidTo") private String kennelValidTo;
+    @SerializedName("kennelVerified") private String kennelVerified;
     @SerializedName("promotions") private ArrayList<Promotion> promotions = new ArrayList<>();
 
     public Boolean getError() {
@@ -42,6 +43,14 @@ public class Kennel {
 
     public void setError(Boolean error) {
         this.error = error;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public String getKennelID() {
@@ -58,6 +67,22 @@ public class Kennel {
 
     public void setKennelOwnerID(String kennelOwnerID) {
         this.kennelOwnerID = kennelOwnerID;
+    }
+
+    public String getKennelChargesID() {
+        return kennelChargesID;
+    }
+
+    public void setKennelChargesID(String kennelChargesID) {
+        this.kennelChargesID = kennelChargesID;
+    }
+
+    public String getPaymentID() {
+        return paymentID;
+    }
+
+    public void setPaymentID(String paymentID) {
+        this.paymentID = paymentID;
     }
 
     public String getKennelOwnerName() {
@@ -172,14 +197,6 @@ public class Kennel {
         this.kennelLongitude = kennelLongitude;
     }
 
-    public String getKennelDistance() {
-        return kennelDistance;
-    }
-
-    public void setKennelDistance(String kennelDistance) {
-        this.kennelDistance = kennelDistance;
-    }
-
     public String getKennelPhonePrefix1() {
         return kennelPhonePrefix1;
     }
@@ -220,28 +237,28 @@ public class Kennel {
         this.kennelPetCapacity = kennelPetCapacity;
     }
 
-    public String getKennelLikes() {
-        return kennelLikes;
+    public String getKennelValidFrom() {
+        return kennelValidFrom;
     }
 
-    public void setKennelLikes(String kennelLikes) {
-        this.kennelLikes = kennelLikes;
+    public void setKennelValidFrom(String kennelValidFrom) {
+        this.kennelValidFrom = kennelValidFrom;
     }
 
-    public String getKennelVotes() {
-        return kennelVotes;
+    public String getKennelValidTo() {
+        return kennelValidTo;
     }
 
-    public void setKennelVotes(String kennelVotes) {
-        this.kennelVotes = kennelVotes;
+    public void setKennelValidTo(String kennelValidTo) {
+        this.kennelValidTo = kennelValidTo;
     }
 
-    public String getKennelLikesPercent() {
-        return kennelLikesPercent;
+    public String getKennelVerified() {
+        return kennelVerified;
     }
 
-    public void setKennelLikesPercent(String kennelLikesPercent) {
-        this.kennelLikesPercent = kennelLikesPercent;
+    public void setKennelVerified(String kennelVerified) {
+        this.kennelVerified = kennelVerified;
     }
 
     public ArrayList<Promotion> getPromotions() {

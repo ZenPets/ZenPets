@@ -7,6 +7,8 @@ public class Kennel {
     @SerializedName("message") private String message;
     @SerializedName("kennelID") private String kennelID;
     @SerializedName("kennelOwnerID") private String kennelOwnerID;
+    @SerializedName("kennelChargesID") private String kennelChargesID;
+    @SerializedName("paymentID") private String paymentID;
     @SerializedName("kennelOwnerName") private String kennelOwnerName;
     @SerializedName("kennelOwnerDisplayProfile") private String kennelOwnerDisplayProfile;
     @SerializedName("kennelName") private String kennelName;
@@ -26,6 +28,9 @@ public class Kennel {
     @SerializedName("kennelPhonePrefix2") private String kennelPhonePrefix2;
     @SerializedName("kennelPhoneNumber2") private String kennelPhoneNumber2;
     @SerializedName("kennelPetCapacity") private String kennelPetCapacity;
+    @SerializedName("kennelValidFrom") private String kennelValidFrom;
+    @SerializedName("kennelValidTo") private String kennelValidTo;
+    @SerializedName("kennelVerified") private String kennelVerified;
 
     public Boolean getError() {
         return error;
@@ -57,6 +62,22 @@ public class Kennel {
 
     public void setKennelOwnerID(String kennelOwnerID) {
         this.kennelOwnerID = kennelOwnerID;
+    }
+
+    public String getKennelChargesID() {
+        return kennelChargesID;
+    }
+
+    public void setKennelChargesID(String kennelChargesID) {
+        this.kennelChargesID = kennelChargesID;
+    }
+
+    public String getPaymentID() {
+        return paymentID;
+    }
+
+    public void setPaymentID(String paymentID) {
+        this.paymentID = paymentID;
     }
 
     public String getKennelOwnerName() {
@@ -209,5 +230,29 @@ public class Kennel {
 
     public void setKennelPetCapacity(String kennelPetCapacity) {
         this.kennelPetCapacity = kennelPetCapacity;
+    }
+
+    public String getKennelValidFrom() {
+        return kennelValidFrom;
+    }
+
+    public void setKennelValidFrom(String kennelValidFrom) {
+        this.kennelValidFrom = kennelValidFrom;
+    }
+
+    public String getKennelValidTo() {
+        return kennelValidTo;
+    }
+
+    public void setKennelValidTo(String kennelValidTo) {
+        this.kennelValidTo = kennelValidTo;
+    }
+
+    public String getKennelVerified() {
+        return kennelVerified;
+    }
+
+    public void setKennelVerified(String kennelVerified) {
+        this.kennelVerified = kennelVerified;
     }
 }
