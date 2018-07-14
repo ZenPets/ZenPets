@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:map="http://schemas.android.com/tools"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,19 +14,188 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:padding="11dp"
+                app:iiv_color="@color/secondary_text"
+                app:iiv_icon="faw_thumbs_up"
+                app:iiv_size="16dp" />
+
+            <TextView
+                android:id="@+id/txtVotes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start|center"
+                android:paddingBottom="5dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="5dp"
+                android:text="92% (200 votes)"
+                android:textColor="@color/secondary_text"
+                android:textSize="12sp"
+                app:fontFamily="@font/roboto_regular" />
+
+            <RatingBar
+                android:id="@+id/kennelRating"
+                style="@style/RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="4dp"
+                android:numStars="5"
+                android:rating="2" />
+        </LinearLayout>
+
+        <!--<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:padding="11dp"
+                app:iiv_color="@color/secondary_text"
+                app:iiv_icon="faw_credit_card"
+                app:iiv_size="16dp" />
+
+            <TextView
+                android:id="@+id/txtKennelCharges"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start|center"
+                android:paddingBottom="5dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="5dp"
+                android:text="@string/doctor_details_consultation_fees"
+                android:textColor="@color/secondary_text"
+                android:textSize="12sp"
+                app:fontFamily="@font/roboto_regular" />
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:id="@+id/imgvwChargesInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:padding="11dp"
+                app:iiv_color="@color/secondary_text"
+                app:iiv_icon="gmd-info"
+                app:iiv_size="16dp" />
+        </LinearLayout>-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/linlaPhoneNumber1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:padding="11dp"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="gmd_phone"
+                    app:iiv_size="16dp" />
+
+                <TextView
+                    android:id="@+id/txtPhoneNumber1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoLink="phone"
+                    android:fontFamily="@font/roboto_regular"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    android:text="Phone Number 1"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linlaPhoneNumber2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:padding="11dp"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="gmd_phone"
+                    app:iiv_size="16dp" />
+
+                <TextView
+                    android:id="@+id/txtPhoneNumber2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoLink="phone"
+                    android:fontFamily="@font/roboto_regular"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    android:text="Phone Number 2"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
             android:gravity="start|top"
             android:orientation="horizontal">
 
             <com.mikepenz.iconics.view.IconicsImageView
-                android:layout_width="47dp"
-                android:layout_height="47dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:padding="11dp"
                 app:iiv_color="@color/secondary_text"
-                app:iiv_icon="faw_hospital_o"
-                app:iiv_size="20dp" />
+                app:iiv_icon="faw_building"
+                app:iiv_size="16dp" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -36,41 +204,25 @@
                 android:gravity="top|center"
                 android:orientation="vertical">
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/txtClinicName"
-                    style="@style/CondensedBold"
-                    android:layout_width="fill_parent"
-                    android:layout_height="47dp"
-                    android:gravity="start|center"
-                    android:paddingBottom="5dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="11dp"
-                    android:paddingStart="11dp"
-                    android:paddingTop="5dp"
-                    android:text="CLINIC NAME"
-                    android:textColor="@color/primary_text"
-                    android:textSize="16sp" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/txtClinicAddress"
-                    style="@style/CondensedRegular"
-                    android:layout_width="fill_parent"
+                <TextView
+                    android:id="@+id/txtKennelAddress"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start|center"
-                    android:paddingBottom="5dp"
+                    android:paddingBottom="8dp"
                     android:paddingEnd="11dp"
                     android:paddingLeft="11dp"
                     android:paddingRight="11dp"
                     android:paddingStart="11dp"
-                    android:paddingTop="5dp"
-                    android:text="CLINIC ADDRESS"
+                    android:paddingTop="8dp"
+                    android:text="@string/kennel_details_address"
                     android:textColor="@color/secondary_text"
-                    android:textSize="15sp" />
+                    android:textSize="14sp"
+                    app:fontFamily="@font/roboto_regular" />
 
                 <com.google.android.gms.maps.MapView
-                    android:id="@+id/clinicMap"
-                    android:layout_width="fill_parent"
+                    android:id="@+id/kennelMap"
+                    android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:layout_gravity="center"
                     android:paddingBottom="5dp"
@@ -79,112 +231,40 @@
                     android:paddingRight="11dp"
                     android:paddingStart="11dp"
                     android:paddingTop="5dp"
-                    map:cameraZoom="18"
-                    map:mapType="normal" />
+                    app:cameraZoom="18"
+                    app:mapType="normal" />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:baselineAligned="false"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="start|center"
-                android:orientation="horizontal">
-
-                <com.mikepenz.iconics.view.IconicsImageView
-                    android:layout_width="47dp"
-                    android:layout_height="47dp"
-                    android:adjustViewBounds="true"
-                    android:padding="11dp"
-                    app:iiv_color="@color/secondary_text"
-                    app:iiv_icon="faw_phone_square"
-                    app:iiv_size="20dp" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/txtPhone1"
-                    style="@style/LightBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start|center"
-                    android:paddingBottom="5dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="11dp"
-                    android:paddingStart="11dp"
-                    android:paddingTop="5dp"
-                    android:text="Phone 1"
-                    android:textColor="@color/secondary_text"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="start|center"
-                android:orientation="horizontal">
-
-                <com.mikepenz.iconics.view.IconicsImageView
-                    android:layout_width="47dp"
-                    android:layout_height="47dp"
-                    android:adjustViewBounds="true"
-                    android:padding="11dp"
-                    app:iiv_color="@color/secondary_text"
-                    app:iiv_icon="faw_phone_square"
-                    app:iiv_size="20dp" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/txtPhone2"
-                    style="@style/LightBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start|center"
-                    android:paddingBottom="5dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="11dp"
-                    android:paddingStart="11dp"
-                    android:paddingTop="5dp"
-                    android:text="Phone 2"
-                    android:textColor="@color/secondary_text"
-                    android:textSize="14sp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:gravity="top|center"
+            android:layout_marginTop="3dp"
+            android:gravity="top"
             android:orientation="horizontal">
 
             <com.mikepenz.iconics.view.IconicsImageView
-                android:layout_width="47dp"
-                android:layout_height="47dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:padding="11dp"
+                android:paddingBottom="8dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="8dp"
                 app:iiv_color="@color/secondary_text"
-                app:iiv_icon="faw_user_md"
-                app:iiv_size="20dp" />
+                app:iiv_icon="gmd_rate_review"
+                app:iiv_size="16dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <android.support.v7.widget.AppCompatTextView
-                    style="@style/CondensedBold"
-                    android:layout_width="fill_parent"
-                    android:layout_height="47dp"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="start|center"
                     android:paddingBottom="5dp"
                     android:paddingEnd="11dp"
@@ -192,165 +272,229 @@
                     android:paddingRight="11dp"
                     android:paddingStart="11dp"
                     android:paddingTop="5dp"
-                    android:text="DOCTORS"
-                    android:textColor="@color/secondary_text"
-                    android:textSize="16sp" />
+                    android:text="REVIEWS"
+                    android:textColor="@color/primary_text"
+                    android:textSize="15sp"
+                    app:fontFamily="@font/roboto_medium" />
 
                 <LinearLayout
-                    android:id="@+id/linlaDoctors"
+                    android:id="@+id/linlaReviewsProgress"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="top|center"
-                    android:orientation="vertical"
-                    android:visibility="visible">
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/listDoctors"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:cacheColorHint="@android:color/transparent"
-                        android:fadingEdge="none"
-                        android:persistentDrawingCache="scrolling"
-                        android:scrollbarSize="5dp"
-                        android:scrollbarThumbVertical="@color/primary_dark"
-                        android:scrollbars="none" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linlaNoDoctors"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="top|center"
-                    android:orientation="vertical"
+                    android:layout_height="110dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal"
                     android:visibility="gone">
 
-                    <android.support.v7.widget.AppCompatTextView
-                        style="@style/LightBold"
-                        android:layout_width="fill_parent"
+                    <ProgressBar
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="start|center"
-                        android:paddingBottom="5dp"
-                        android:paddingEnd="11dp"
-                        android:paddingLeft="11dp"
-                        android:paddingRight="11dp"
-                        android:paddingStart="11dp"
-                        android:paddingTop="5dp"
-                        android:text="This Clinic doesn't have any Doctors yet. Or, there was an error..."
-                        android:textColor="@color/secondary_text"
-                        android:textSize="15sp" />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
+                        android:padding="5dp" />
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:gravity="top|center"
-            android:orientation="horizontal">
-
-            <com.mikepenz.iconics.view.IconicsImageView
-                android:layout_width="47dp"
-                android:layout_height="47dp"
-                android:adjustViewBounds="true"
-                android:padding="11dp"
-                app:iiv_color="@color/secondary_text"
-                app:iiv_icon="gmd_collections"
-                app:iiv_size="20dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/linlaClinicImages"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="top|center"
-                    android:orientation="vertical"
-                    android:visibility="visible">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        style="@style/CondensedBold"
-                        android:layout_width="fill_parent"
-                        android:layout_height="47dp"
-                        android:gravity="start|center"
-                        android:paddingBottom="5dp"
-                        android:paddingEnd="11dp"
-                        android:paddingLeft="11dp"
-                        android:paddingRight="11dp"
-                        android:paddingStart="11dp"
-                        android:paddingTop="5dp"
-                        android:text="CLINIC PICTURES"
-                        android:textColor="@color/secondary_text"
-                        android:textSize="16sp" />
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/listClinicImages"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:cacheColorHint="@android:color/transparent"
-                        android:fadingEdge="none"
-                        android:persistentDrawingCache="scrolling"
-                        android:scrollbarSize="5dp"
-                        android:scrollbarThumbVertical="@color/primary_dark"
-                        android:scrollbars="none" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linlaNoClinicImages"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="top|center"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        style="@style/LightBold"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="start|center"
-                        android:paddingBottom="5dp"
-                        android:paddingEnd="11dp"
-                        android:paddingLeft="11dp"
-                        android:paddingRight="11dp"
-                        android:paddingStart="11dp"
-                        android:paddingTop="5dp"
-                        android:text="This Clinic doesn't have any pictures to show yet..."
-                        android:textColor="@color/secondary_text"
-                        android:textSize="15sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="end|center"
-                    android:orientation="horizontal">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/txtManageImages"
-                        style="@style/CondensedBold"
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="start|center"
-                        android:paddingBottom="15dp"
-                        android:paddingEnd="11dp"
-                        android:paddingLeft="11dp"
-                        android:paddingRight="11dp"
-                        android:paddingStart="11dp"
-                        android:paddingTop="15dp"
-                        android:text="MANAGE CLINIC IMAGES"
-                        android:textColor="@color/primary_dark"
-                        android:textSize="15sp" />
+                        android:padding="2dp"
+                        android:text="@string/loading_message"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/roboto_condensed_regular" />
                 </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/listReviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:cacheColorHint="@android:color/transparent"
+                    android:fadingEdge="none"
+                    android:persistentDrawingCache="scrolling"
+                    android:scrollbars="none"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/txtAllReviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="end|center"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    android:text="SEE ALL REVIEWS"
+                    android:textColor="@color/accent"
+                    android:textSize="15sp"
+                    app:fontFamily="@font/roboto_medium" />
+
+                <LinearLayout
+                    android:id="@+id/linlaNoReviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top|center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="110dp"
+                        android:layout_marginLeft="110dp"
+                        android:layout_marginRight="110dp"
+                        android:layout_marginStart="110dp"
+                        android:layout_marginTop="5dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/empty_graphic" />
+
+                    <TextView
+                        android:id="@+id/txtEmpty"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:padding="11dp"
+                        android:text="There are no reviews for this Kennel yet..."
+                        android:textColor="@color/secondary_text"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/roboto_light" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:gravity="top"
+            android:orientation="horizontal">
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:paddingBottom="8dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="8dp"
+                app:iiv_color="@color/secondary_text"
+                app:iiv_icon="gmd_collections"
+                app:iiv_size="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    android:text="KENNEL IMAGES"
+                    android:textColor="@color/primary_text"
+                    android:textSize="15sp"
+                    app:fontFamily="@font/roboto_medium" />
+
+                <LinearLayout
+                    android:id="@+id/linlaImagesProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:padding="2dp"
+                        android:text="@string/loading_message"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/roboto_condensed_regular" />
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/listKennelImages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:cacheColorHint="@android:color/transparent"
+                    android:fadingEdge="none"
+                    android:persistentDrawingCache="scrolling"
+                    android:scrollbars="none"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/linlaNoImages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top|center"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="110dp"
+                        android:layout_marginLeft="110dp"
+                        android:layout_marginRight="110dp"
+                        android:layout_marginStart="110dp"
+                        android:layout_marginTop="5dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/empty_graphic" />
+
+                    <TextView
+                        android:id="@+id/txtEmptyImages"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:padding="11dp"
+                        android:text="You haven't added any Images for this Kennel yet..."
+                        android:textColor="@color/secondary_text"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/roboto_light" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txtManageImages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="end|center"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    android:text="MANAGE IMAGES"
+                    android:textColor="@color/accent"
+                    android:textSize="15sp"
+                    app:fontFamily="@font/roboto_medium" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

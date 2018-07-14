@@ -48,7 +48,7 @@
 
             <RatingBar
                 android:id="@+id/kennelRating"
-                style="?android:attr/ratingBarStyleSmall"
+                style="@style/RatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"

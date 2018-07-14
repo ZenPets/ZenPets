@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -111,7 +112,7 @@ public class KennelsList extends AppCompatActivity {
         call.enqueue(new Callback<Kennels>() {
             @Override
             public void onResponse(Call<Kennels> call, Response<Kennels> response) {
-//                Log.e("RAW", String.valueOf(response.raw()));
+                Log.e("RAW", String.valueOf(response.raw()));
                 if (response.body() != null && response.body().getKennels() != null)    {
                     arrKennels = response.body().getKennels();
                     if (arrKennels.size() > 0)  {
@@ -278,6 +279,20 @@ public class KennelsList extends AppCompatActivity {
         public void onBindViewHolder(@NonNull final KennelsAdapter.KennelsVH holder, final int position) {
             final Kennel data = arrKennelsAdapter.get(position);
 
+            /* CHECK FOR ALERTS */
+            String kennelChargesID = data.getKennelChargesID();
+            if (kennelChargesID.equalsIgnoreCase("2"))    {
+                if (data.getPaymentID() != null
+                        && !data.getPaymentID().equalsIgnoreCase("null")
+                        && !data.getPaymentID().equalsIgnoreCase(""))  {
+                    holder.imgvwKennelAlert.setVisibility(View.GONE);
+                } else {
+                    holder.imgvwKennelAlert.setVisibility(View.VISIBLE);
+                }
+            } else {
+                holder.imgvwKennelAlert.setVisibility(View.GONE);
+            }
+
             /* SET THE KENNEL COVER PHOTO */
             String strKennelCoverPhoto = data.getKennelCoverPhoto();
             if (strKennelCoverPhoto != null
@@ -311,6 +326,51 @@ public class KennelsList extends AppCompatActivity {
             } else {
                 holder.txtPetCapacity.setText(activity.getString(R.string.kennel_list_kennel_capacity_zero));
             }
+
+            /* SET THE KENNEL VALIDITY DATES */
+            if (data.getKennelValidFrom() != null && data.getKennelValidTo() != null)   {
+                String kennelValidFrom = data.getKennelValidFrom();
+                String kennelValidTo = data.getKennelValidTo();
+                holder.txtKennelValidity.setText(getString(R.string.kennel_list_kennel_validity_label_placeholder, kennelValidFrom, kennelValidTo));
+            }
+
+            /* SHOW THE UNPAID KENNEL LISTING ALERT */
+            holder.imgvwKennelAlert.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new MaterialDialog.Builder(activity)
+                            .icon(ContextCompat.getDrawable(activity, R.drawable.ic_info_black_24dp))
+                            .title(getString(R.string.kennel_list_unpaid_alert_title))
+                            .content(getString(R.string.kennel_list_unpaid_alert_message))
+                            .cancelable(false)
+                            .positiveText("Process Payment")
+                            .negativeText("Cancel")
+                            .theme(Theme.LIGHT)
+                            .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    dialog.dismiss();
+                                }
+                            }).show();
+                }
+            });
+
+            /* SHOW THE KENNEL DETAILS */
+            holder.cardKennelDetails.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intentDetails = new Intent(activity, KennelDetails.class);
+                    intentDetails.putExtra("KENNEL_ID", data.getKennelID());
+                    startActivity(intentDetails);
+                }
+            });
 
             /* SHOW THE KENNEL OPTIONS POPUP MENU */
             holder.imgvwKennelOptions.setOnClickListener(new View.OnClickListener() {
@@ -407,20 +467,26 @@ public class KennelsList extends AppCompatActivity {
 
         class KennelsVH extends RecyclerView.ViewHolder	{
 
+            CardView cardKennelDetails;
             SimpleDraweeView imgvwKennelCoverPhoto;
             TextView txtKennelName;
             IconicsImageView imgvwKennelOptions;
+            IconicsImageView imgvwKennelAlert;
             TextView txtKennelAddress;
             TextView txtPetCapacity;
+            TextView txtKennelValidity;
 
             KennelsVH(View v) {
                 super(v);
 
+                cardKennelDetails = v.findViewById(R.id.cardKennelDetails);
                 imgvwKennelCoverPhoto = v.findViewById(R.id.imgvwKennelCoverPhoto);
                 txtKennelName = v.findViewById(R.id.txtKennelName);
                 imgvwKennelOptions = v.findViewById(R.id.imgvwKennelOptions);
+                imgvwKennelAlert = v.findViewById(R.id.imgvwKennelAlert);
                 txtKennelAddress = v.findViewById(R.id.txtKennelAddress);
                 txtPetCapacity = v.findViewById(R.id.txtPetCapacity);
+                txtKennelValidity = v.findViewById(R.id.txtKennelValidity);
             }
         }
     }

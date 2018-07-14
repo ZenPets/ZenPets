@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cardKennelDetails"
         style="@style/ZenPetsCards"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,14 +65,28 @@
                     app:iiv_color="@color/secondary_text"
                     app:iiv_icon="faw_ellipsis_v"
                     app:iiv_size="16dp" />
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:id="@+id/imgvwKennelAlert"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|start"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:adjustViewBounds="true"
+                    android:background="#CCDCDCDC"
+                    android:padding="11dp"
+                    app:iiv_color="@android:color/holo_red_dark"
+                    app:iiv_icon="faw_exclamation_triangle"
+                    app:iiv_size="16dp" />
             </FrameLayout>
 
             <LinearLayout
                 android:id="@+id/linlaKennelAddress"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:gravity="top|center"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="@+id/fralaKennelDetails"
@@ -99,6 +114,11 @@
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:gravity="start|center"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
                     android:text="@string/kennel_list_kennel_address_label"
                     android:textColor="@color/secondary_text"
                     android:textSize="14sp"
@@ -112,7 +132,6 @@
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingBottom="11dp"
                 app:layout_constraintEnd_toEndOf="@+id/linlaKennelAddress"
                 app:layout_constraintStart_toStartOf="@+id/linlaKennelAddress"
                 app:layout_constraintTop_toBottomOf="@+id/linlaKennelAddress">
@@ -136,28 +155,60 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start|center"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
                     android:text="@string/kennel_list_kennel_capacity_label"
                     android:textColor="@color/secondary_text"
                     android:textSize="14sp"
                     app:fontFamily="@font/roboto_regular" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/txtPromoteKennel"
+            <LinearLayout
+                android:id="@+id/linlaValidity"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:layout_marginTop="8dp"
-                android:gravity="center|end"
-                android:padding="11dp"
-                android:paddingBottom="15dp"
-                android:paddingTop="15dp"
-                android:text="PROMOTE KENNEL"
-                android:textColor="@color/accent"
-                android:textSize="15sp"
-                app:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="@+id/linlaPetStats"
                 app:layout_constraintStart_toStartOf="@+id/linlaPetStats"
-                app:layout_constraintTop_toBottomOf="@+id/linlaPetStats" />
+                app:layout_constraintTop_toBottomOf="@+id/linlaPetStats">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    app:iiv_color="@color/primary_dark"
+                    app:iiv_icon="faw_calendar_alt"
+                    app:iiv_size="14dp" />
+
+                <TextView
+                    android:id="@+id/txtKennelValidity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    android:text="@string/kennel_list_kennel_validity_label"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/roboto_regular" />
+            </LinearLayout>
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

@@ -86,6 +86,11 @@
     <string name="kennel_list_kennel_capacity_label">PET CAPACITY</string>
     <string name="kennel_list_kennel_capacity_zero">0 Pets</string>
     <string name="kennel_list_kennel_capacity_placeholder">Kennel has a capacity to hold %1$s Pets</string>
+    <string name="kennel_list_kennel_validity_label">KENNEL VALIDITY</string>
+    <string name="kennel_list_kennel_validity_label_placeholder">Valid From: <b>%1$s</b> to <b>%2$s</b></string>
+    <string name="kennel_list_unpaid_alert_title">Unpaid Kennel Listing</string>
+    <string name="kennel_list_unpaid_alert_message">This is an additional Kennel listing over an above the allotted 2 Kennel Listings.
+        \n\nTo list the Kennel and make it visible to Pet Parents, press the \"PROCESS PAYMENT\". Else, press the \"CANCEL\" button.</string>
 
     <!-- KENNEL FEEDBACK LIST -->
     <string name="reviews_list_empty">There are no reviews / feedback for you, yet.
@@ -98,4 +103,10 @@
     <string name="review_subset_time_stamp">2 Months</string>
     <string name="review_reply_from_label"><b>Reply from Siddharth Lele</b> on 6/6/2018</string>
     <string name="review_reply_from_title">Replied on </string>
+
+    <!-- KENNEL DETAILS -->
+    <string name="kennel_details_name">KENNEL NAME</string>
+    <string name="kennel_details_address">KENNEL ADDRESS</string>
+    <string name="kennel_details_address_placeholder">%1$s, %2$s - %3$s</string>
+    <string name="kennel_details_all_reviews_placeholder">SEE ALL REVIEWS (%1$s)</string>
 </resources>
