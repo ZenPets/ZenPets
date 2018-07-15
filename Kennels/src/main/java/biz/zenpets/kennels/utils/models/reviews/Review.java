@@ -3,8 +3,8 @@ package biz.zenpets.kennels.utils.models.reviews;
 import com.google.gson.annotations.SerializedName;
 
 public class Review {
-
     @SerializedName("error") private Boolean error;
+    @SerializedName("message") private String message;
     @SerializedName("kennelReviewID") private String kennelReviewID;
     @SerializedName("kennelID") private String kennelID;
     @SerializedName("kennelOwnerName") private String kennelOwnerName;
@@ -19,7 +19,8 @@ public class Review {
     @SerializedName("kennelReviewTimestamp") private String kennelReviewTimestamp;
     @SerializedName("kennelReplyStatus") private String kennelReplyStatus;
     @SerializedName("kennelReplyText") private String kennelReplyText;
-    @SerializedName("kennelReplyTimestamp") private String kennelReplyTimestamp;
+    @SerializedName("kennelReplyPublished") private String kennelReplyPublished;
+    @SerializedName("kennelReplyUpdated") private String kennelReplyUpdated;
 
     public Boolean getError() {
         return error;
@@ -27,6 +28,14 @@ public class Review {
 
     public void setError(Boolean error) {
         this.error = error;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public String getKennelReviewID() {
@@ -141,11 +150,19 @@ public class Review {
         this.kennelReplyText = kennelReplyText;
     }
 
-    public String getKennelReplyTimestamp() {
-        return kennelReplyTimestamp;
+    public String getKennelReplyPublished() {
+        return kennelReplyPublished;
     }
 
-    public void setKennelReplyTimestamp(String kennelReplyTimestamp) {
-        this.kennelReplyTimestamp = kennelReplyTimestamp;
+    public void setKennelReplyPublished(String kennelReplyPublished) {
+        this.kennelReplyPublished = kennelReplyPublished;
+    }
+
+    public String getKennelReplyUpdated() {
+        return kennelReplyUpdated;
+    }
+
+    public void setKennelReplyUpdated(String kennelReplyUpdated) {
+        this.kennelReplyUpdated = kennelReplyUpdated;
     }
 }

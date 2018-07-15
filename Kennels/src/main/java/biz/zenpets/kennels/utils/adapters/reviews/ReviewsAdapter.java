@@ -108,10 +108,10 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
             if (kennelReplyStatus.equalsIgnoreCase("0"))    {
                 holder.txtReplyStatus.setVisibility(View.GONE);
                 holder.txtReply.setVisibility(View.GONE);
-//                holder.imgvwEditReply.setVisibility(View.GONE);
+                holder.imgvwEditReply.setVisibility(View.GONE);
             } else if (kennelReplyStatus.equalsIgnoreCase("1")) {
                 String replyText = data.getKennelReplyText();
-                Date dateReply = new Date(Long.parseLong(data.getKennelReplyTimestamp()) * 1000L);
+                Date dateReply = new Date(Long.parseLong(data.getKennelReplyPublished()) * 1000L);
                 SimpleDateFormat sdfReply = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                 String replyTimestamp = sdfReply.format(dateReply);
                 String strReplyFrom = activity.getString(R.string.review_reply_from_title) + " ";
@@ -122,12 +122,12 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
                 holder.txtReply.setText(replyText);
                 holder.txtReplyStatus.setVisibility(View.VISIBLE);
                 holder.txtReply.setVisibility(View.VISIBLE);
-//                holder.imgvwEditReply.setVisibility(View.VISIBLE);
+                holder.imgvwEditReply.setVisibility(View.VISIBLE);
             }
         } else {
             holder.txtReplyStatus.setVisibility(View.GONE);
             holder.txtReply.setVisibility(View.GONE);
-//            holder.imgvwEditReply.setVisibility(View.GONE);
+            holder.imgvwEditReply.setVisibility(View.GONE);
         }
 
 //        /* EDIT THE REPLY */
@@ -207,7 +207,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
         TextView txtKennelExperience;
         TextView txtReplyStatus;
         TextView txtReply;
-//        IconicsImageView imgvwEditReply;
+        IconicsImageView imgvwEditReply;
 
         ReviewsVH(View v) {
             super(v);
@@ -220,7 +220,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
             txtKennelExperience = v.findViewById(R.id.txtKennelExperience);
             txtReplyStatus = v.findViewById(R.id.txtReplyStatus);
             txtReply = v.findViewById(R.id.txtReply);
-//            imgvwEditReply = v.findViewById(R.id.imgvwEditReply);
+            imgvwEditReply = v.findViewById(R.id.imgvwEditReply);
         }
     }
 }
