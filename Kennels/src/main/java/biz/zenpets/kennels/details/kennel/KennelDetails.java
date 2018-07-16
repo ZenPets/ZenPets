@@ -1,5 +1,6 @@
 package biz.zenpets.kennels.details.kennel;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -33,6 +34,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 
 import biz.zenpets.kennels.R;
+import biz.zenpets.kennels.modifier.images.KennelImageManager;
 import biz.zenpets.kennels.utils.adapters.images.KennelImagesAdapter;
 import biz.zenpets.kennels.utils.adapters.reviews.ReviewsAdapter;
 import biz.zenpets.kennels.utils.models.helpers.ZenApiClient;
@@ -95,6 +97,10 @@ public class KennelDetails extends AppCompatActivity {
 
     /** MANAGE KENNEL IMAGES **/
     @OnClick(R.id.txtManageImages) void manageImages()  {
+        Intent intent = new Intent(KennelDetails.this, KennelImageManager.class);
+        intent.putExtra("KENNEL_ID", KENNEL_ID);
+        intent.putExtra("KENNEL_NAME", txtKennelName.getText().toString().trim());
+        startActivityForResult(intent, 101);
     }
 
     @Override
@@ -109,8 +115,8 @@ public class KennelDetails extends AppCompatActivity {
         /* CONFIGURE THE RECYCLER VIEW */
         configRecycler();
 
-        /* GET THE INCOMING DATA */
-        getIncomingData();
+//        /* GET THE INCOMING DATA */
+//        getIncomingData();
 
         /* CONFIGURE THE APP BAR LAYOUT */
         appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -413,6 +419,9 @@ public class KennelDetails extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         kennelMap.onResume();
+
+        /* GET THE INCOMING DATA */
+        getIncomingData();
     }
 
     @Override

@@ -80,6 +80,10 @@
             android:name=".details.kennel.KennelDetails"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".modifier.images.KennelImageManager"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <!-- REVIEWS -->
         <activity

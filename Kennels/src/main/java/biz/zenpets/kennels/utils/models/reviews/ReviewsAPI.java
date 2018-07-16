@@ -21,11 +21,20 @@ public interface ReviewsAPI {
     @GET("fetchKennelReviews")
     Call<Reviews> fetchKennelReviews(@Query("kennelID") String kennelID);
 
+    /** POST A REPLY ON A REVIEW **/
+    @POST("postKennelReviewReply")
+    @FormUrlEncoded
+    Call<Review> postKennelReviewReply(
+            @Field("kennelReviewID") String kennelReviewID,
+            @Field("kennelReplyStatus") String kennelReplyStatus,
+            @Field("kennelReplyText") String kennelReplyText,
+            @Field("kennelReplyPublished") String kennelReplyPublished);
+
     /** UPDATE A KENNEL OWNER'S REPLY **/
     @POST("updateKennelReviewReply")
     @FormUrlEncoded
     Call<Review> updateKennelReviewReply(
             @Field("kennelReviewID") String kennelReviewID,
             @Field("kennelReplyText") String kennelReplyText,
-            @Field("kennelReplyTimestamp") String kennelReplyTimestamp);
+            @Field("kennelReplyUpdated") String kennelReplyUpdated);
 }

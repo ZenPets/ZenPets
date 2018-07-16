@@ -177,7 +177,6 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
 
     /** PICK THE KENNEL'S COVER PHOTO **/
     @OnClick(R.id.imgvwKennelCoverPhoto) void selectCoverPhoto()    {
-
         /* CHECK STORAGE PERMISSION */
         checkStoragePermission();
     }

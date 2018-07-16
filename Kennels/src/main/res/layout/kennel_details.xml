@@ -69,8 +69,7 @@
                         app:placeholderImageScaleType="center"
                         app:roundAsCircle="true"
                         app:roundingBorderColor="@color/semiTransparentDark"
-                        app:roundingBorderWidth="2dp"
-                        app:srcCompat="@drawable/ic_person_black_24dp" />
+                        app:roundingBorderWidth="2dp" />
 
                     <TextView
                         android:id="@+id/txtKennelName"
