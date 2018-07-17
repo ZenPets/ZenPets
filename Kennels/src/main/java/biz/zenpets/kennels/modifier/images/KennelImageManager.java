@@ -28,6 +28,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -81,7 +82,7 @@ public class KennelImageManager extends AppCompatActivity {
     private View kennelConfirmation;
 
     /** THE IMAGE VIEW INSTANCE IN THE CUSTOM DIALOG **/
-    private AppCompatImageView imgvwKennelImage;
+    private ImageView imgvwKennelImage;
 
     /** A PROGRESS DIALOG INSTANCE **/
     private ProgressDialog progressDialog;
@@ -301,7 +302,7 @@ public class KennelImageManager extends AppCompatActivity {
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         /* SHOW THE PROGRESS DIALOG */
                         progressDialog = new ProgressDialog(KennelImageManager.this);
-                        progressDialog.setMessage("Please wait while we add the new Clinic image...");
+                        progressDialog.setMessage("Adding the new Kennel image...");
                         progressDialog.setIndeterminate(false);
                         progressDialog.setCancelable(false);
                         progressDialog.show();

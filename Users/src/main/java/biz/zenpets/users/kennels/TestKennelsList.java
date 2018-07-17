@@ -2,6 +2,7 @@ package biz.zenpets.users.kennels;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -98,14 +99,8 @@ public class TestKennelsList extends AppCompatActivity {
         setContentView(R.layout.kennels_list);
         ButterKnife.bind(this);
 
-        /* INSTANTIATE THE KENNELS ADAPTER */
-        kennelsAdapter = new NewTestKennelsAdapter(TestKennelsList.this, arrKennels, LATLNG_ORIGIN);
-
         /* INSTANTIATE THE LOCATION CLIENT */
         locationProviderClient = LocationServices.getFusedLocationProviderClient(TestKennelsList.this);
-
-        /* CONFIGURE THE RECYCLER VIEW **/
-        configRecycler();
 
         /* CONFIGURE THE ACTIONBAR */
         configAB();
@@ -117,7 +112,11 @@ public class TestKennelsList extends AppCompatActivity {
     /** FETCH THE FIRST LIST OF KENNELS **/
     private void fetchKennels() {
         KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-        Call<Kennels> call = api.fetchKennelsListByCity(FINAL_CITY_ID, String.valueOf(currentPage));
+        Call<Kennels> call = api.fetchKennelsListByCity(
+                FINAL_CITY_ID,
+                String.valueOf(currentPage),
+                String.valueOf(LATLNG_ORIGIN.latitude),
+                String.valueOf(LATLNG_ORIGIN.longitude));
         call.enqueue(new Callback<Kennels>() {
             @Override
             public void onResponse(Call<Kennels> call, Response<Kennels> response) {
@@ -146,7 +145,11 @@ public class TestKennelsList extends AppCompatActivity {
     private void fetchNextKennels() {
         progressLoading.setVisibility(View.VISIBLE);
         KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-        Call<Kennels> call = api.fetchKennelsListByCity(FINAL_CITY_ID, String.valueOf(currentPage));
+        Call<Kennels> call = api.fetchKennelsListByCity(
+                FINAL_CITY_ID,
+                String.valueOf(currentPage),
+                String.valueOf(LATLNG_ORIGIN.latitude),
+                String.valueOf(LATLNG_ORIGIN.longitude));
         call.enqueue(new Callback<Kennels>() {
             @Override
             public void onResponse(Call<Kennels> call, Response<Kennels> response) {
@@ -187,7 +190,7 @@ public class TestKennelsList extends AppCompatActivity {
                 if (JAKennels.length() > 0) {
                     Kennel data;
                     for (int i = 0; i < JAKennels.length(); i++) {
-                        JSONObject JOKennels = JAKennels.getJSONObject(i);
+                        final JSONObject JOKennels = JAKennels.getJSONObject(i);
                         data = new Kennel();
 
                         /* GET THE PROMOTED KENNELS */
@@ -349,6 +352,22 @@ public class TestKennelsList extends AppCompatActivity {
                                     promotion.setCityName(null);
                                 }
 
+                                /* GET THE KENNEL LATITUDE AND LONGITUDE */
+                                if (JOPromotions.has("kennelLatitude") && JOPromotions.has("kennelLongitude"))   {
+                                    promotion.setKennelLatitude(JOPromotions.getString("kennelLatitude"));
+                                    promotion.setKennelLongitude(JOPromotions.getString("kennelLongitude"));
+                                } else {
+                                    promotion.setKennelLatitude(null);
+                                    promotion.setKennelLongitude(null);
+                                }
+
+                                /* GET THE KENNEL DISTANCE */
+                                if (JOPromotions.has("kennelDistance")) {
+                                    promotion.setKennelDistance(JOPromotions.getString("kennelDistance"));
+                                } else {
+                                    promotion.setKennelDistance(null);
+                                }
+
                                 /* GET THE KENNEL'S PHONE PREFIX #1*/
                                 if (JOPromotions.has("kennelPhonePrefix1"))    {
                                     promotion.setKennelPhonePrefix1(JOPromotions.getString("kennelPhonePrefix1"));
@@ -393,8 +412,10 @@ public class TestKennelsList extends AppCompatActivity {
                         }
 
                         /* GET THE KENNEL ID */
+                        String kennelID = null;
                         if (JOKennels.has("kennelID"))  {
-                            data.setKennelID(JOKennels.getString("kennelID"));
+                            kennelID = JOKennels.getString("kennelID");
+                            data.setKennelID(kennelID);
                         } else {
                             data.setKennelID(null);
                         }
@@ -492,6 +513,22 @@ public class TestKennelsList extends AppCompatActivity {
                             data.setCityName(null);
                         }
 
+                        /* GET THE KENNEL LATITUDE AND LONGITUDE */
+                        if (JOKennels.has("kennelLatitude") && JOKennels.has("kennelLongitude"))   {
+                            data.setKennelLatitude(JOKennels.getString("kennelLatitude"));
+                            data.setKennelLongitude(JOKennels.getString("kennelLongitude"));
+                        } else {
+                            data.setKennelLatitude(null);
+                            data.setKennelLongitude(null);
+                        }
+
+                        /* GET THE KENNEL DISTANCE */
+                        if (JOKennels.has("kennelDistance")) {
+                            data.setKennelDistance(JOKennels.getString("kennelDistance"));
+                        } else {
+                            data.setKennelDistance(null);
+                        }
+
                         /* GET THE KENNEL'S PHONE PREFIX #1*/
                         if (JOKennels.has("kennelPhonePrefix1"))    {
                             data.setKennelPhonePrefix1(JOKennels.getString("kennelPhonePrefix1"));
@@ -525,6 +562,45 @@ public class TestKennelsList extends AppCompatActivity {
                             data.setKennelPetCapacity(JOKennels.getString("kennelPetCapacity"));
                         } else {
                             data.setKennelPetCapacity(null);
+                        }
+
+                        /* GET THE TOTAL REVIEWS, POSITIVE, AND FINALLY, CALCULATE THE PERCENTAGES */
+                        if (JOKennels.has("kennelReviews")
+                                && JOKennels.has("kennelPositives"))  {
+                            String kennelReviews = JOKennels.getString("kennelReviews");
+                            String kennelPositives = JOKennels.getString("kennelPositives");
+
+                            int TOTAL_VOTES = Integer.parseInt(kennelReviews);
+                            int TOTAL_LIKES = Integer.parseInt(kennelPositives);
+
+                            /* CALCULATE THE PERCENTAGE OF LIKES */
+                            double percentLikes = ((double)TOTAL_LIKES / TOTAL_VOTES) * 100;
+                            int finalPercentLikes = (int)percentLikes;
+                            String strLikesPercentage = String.valueOf(finalPercentLikes) + "%";
+
+                            /* GET THE TOTAL NUMBER OF REVIEWS / VOTES */
+                            Resources resReviews = getResources();
+                            String reviewQuantity = null;
+                            if (TOTAL_VOTES == 0)   {
+                                reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
+                            } else if (TOTAL_VOTES == 1)    {
+                                reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
+                            } else if (TOTAL_VOTES > 1) {
+                                reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
+                            }
+                            String strVotes = reviewQuantity;
+                            String open = getString(R.string.doctor_list_votes_open);
+                            String close = getString(R.string.doctor_list_votes_close);
+                            data.setKennelVoteStats(getString(R.string.doctor_list_votes_placeholder, strLikesPercentage, open, strVotes, close));
+                        } else {
+                            data.setKennelReviews("0");
+                        }
+
+                        /* GET THE AVERAGE KENNEL RATING */
+                        if (JOKennels.has("kennelRating"))  {
+                            data.setKennelRating(JOKennels.getString("kennelRating"));
+                        } else {
+                            data.setKennelRating("0");
                         }
 
                         /* ADD THE COLLECTED DATA TO THE ARRAY LIST */
@@ -587,6 +663,12 @@ public class TestKennelsList extends AppCompatActivity {
 
                                 /* GET THE ORIGIN LATLNG */
                                 LATLNG_ORIGIN = new LatLng(location.getLatitude(), location.getLongitude());
+
+                                /* INSTANTIATE THE KENNELS ADAPTER */
+                                kennelsAdapter = new NewTestKennelsAdapter(TestKennelsList.this, arrKennels);
+
+                                /* CONFIGURE THE RECYCLER VIEW **/
+                                configRecycler();
 
                                 /* FETCH THE LOCATION USING A GEOCODER */
                                 fetchLocation();

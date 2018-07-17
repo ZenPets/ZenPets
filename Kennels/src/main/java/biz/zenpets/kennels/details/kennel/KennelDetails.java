@@ -5,12 +5,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -35,6 +37,7 @@ import java.util.ArrayList;
 
 import biz.zenpets.kennels.R;
 import biz.zenpets.kennels.modifier.images.KennelImageManager;
+import biz.zenpets.kennels.modifier.kennel.KennelCoverUpdater;
 import biz.zenpets.kennels.utils.adapters.images.KennelImagesAdapter;
 import biz.zenpets.kennels.utils.adapters.reviews.ReviewsAdapter;
 import biz.zenpets.kennels.utils.models.helpers.ZenApiClient;
@@ -88,7 +91,35 @@ public class KennelDetails extends AppCompatActivity {
     @BindView(R.id.linlaNoImages) LinearLayout linlaNoImages;
 
     /** EDIT THE KENNEL COVER PHOTO **/
-    @OnClick(R.id.linlaLogoEdit) void ediCoverPhoto()    {
+    @OnClick(R.id.linlaCoverEdit) void ediCoverPhoto()    {
+        final BottomSheetDialog sheetDialog = new BottomSheetDialog(KennelDetails.this);
+        View view = getLayoutInflater().inflate(R.layout.cover_updater_sheet, null);
+        sheetDialog.setContentView(view);
+        sheetDialog.show();
+
+        /* CAST THE CHOOSER ELEMENTS */
+        LinearLayout linlaUpload = view.findViewById(R.id.linlaUpload);
+//        LinearLayout linlaView = view.findViewById(R.id.linlaView);
+
+        /* UPLOAD A NEW CLINIC LOGO */
+        linlaUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sheetDialog.dismiss();
+                Intent intent = new Intent(KennelDetails.this, KennelCoverUpdater.class);
+                intent.putExtra("KENNEL_ID", KENNEL_ID);
+                intent.putExtra("KENNEL_NAME", txtKennelName.getText().toString().trim());
+                startActivityForResult(intent, 101);
+            }
+        });
+
+//        /* SELECT A CAMERA IMAGE */
+//        linlaView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                sheetDialog.dismiss();
+//            }
+//        });
     }
 
     /** SHOW ALL REVIEWS **/
@@ -413,6 +444,18 @@ public class KennelDetails extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setTitle(null);
         getSupportActionBar().setSubtitle(null);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                break;
+            default:
+                break;
+        }
+        return false;
     }
 
     @Override

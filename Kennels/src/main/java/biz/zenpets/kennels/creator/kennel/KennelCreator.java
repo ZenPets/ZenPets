@@ -102,7 +102,7 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
         return (AppPrefs) getApplication();
     }
 
-    /** THE KENNEL OWNER DETAILS **/
+    /** THE KENNEL OWNER ID **/
     String KENNEL_OWNER_ID = null;
 
     /** THE INCOMING LISTING TYPE **/

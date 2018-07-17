@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="11dp"
-        android:text="Do you want to upload this image for the selected Clinic?"
+        android:text="Do you want to upload this image for the Kennel?"
         android:textColor="@color/secondary_text"
         android:textSize="15sp"
         app:fontFamily="@font/roboto_regular" />

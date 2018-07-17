@@ -3,9 +3,9 @@
     <!-- DELETE A KENNEL RECORD -->
     <string name="delete_kennel_title">Delete Kennel?</string>
     <string name="delete_kennel_content">Are you sure you want to delete the Kennel titled \"%1$s\"?
-        Deleting this will also delete any images you have uploaded
-        along with any reviews that may have been posted for this Kennel by Pet Parents.
-        \n\nPLEASE NOTE: If the Kennel is being Promoted / Advertised, it will also be deleted. You can, however, modify / edit the Kennel to update it\'s details.
+        Deleting this will also delete any images you have uploaded,
+        along with any reviews that may have been posted for this Kennel by Pet Parents, enquiries from Pet Parents, etc.
+        \n\nPLEASE NOTE: If \"%1$s\" is currently being Promoted / Advertised, it will also be deleted. You can, however, modify / edit the Kennel to update it\'s details.
         \n\nDeleting this is permanent and as soon as the Kennel is deleted, it will no longer be shown to Pet Parents in the Zen Pets application.
-        \n\nIf you still wish to delete the Kennel Listing anyway, press the \"Delete\" button to confirm deletion.</string>
+        \n\nIf you still wish to delete \"%1$s\" anyway, press the \"Delete\" button to confirm deletion.</string>
 </resources>

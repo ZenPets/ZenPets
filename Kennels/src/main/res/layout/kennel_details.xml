@@ -107,10 +107,11 @@
                 </android.support.constraint.ConstraintLayout>
 
                 <LinearLayout
-                    android:id="@+id/linlaLogoEdit"
+                    android:id="@+id/linlaCoverEdit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|end"
+                    android:layout_marginTop="?attr/actionBarSize"
                     android:background="#33FFFFFF"
                     android:gravity="center"
                     android:orientation="horizontal"
@@ -128,7 +129,8 @@
                         app:iiv_icon="faw_camera"
                         app:iiv_size="20dp" />
 
-                    <android.support.v7.widget.AppCompatTextView
+                    <TextView
+                        android:id="@+id/txtCoverEdit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"

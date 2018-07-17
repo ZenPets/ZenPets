@@ -9,14 +9,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.utils.adapters.kennels.promoted.PromotedAdoptionsAdapter;
@@ -40,19 +41,13 @@ public class NewTestKennelsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     /** THE CLINIC IMAGES ADAPTER AND ARRAY LIST **/
     private PromotedAdoptionsAdapter adapter;
 
-    /** A LATLNG INSTANCE **/
-    LatLng LATLNG_ORIGIN;
-
-    public NewTestKennelsAdapter(Activity activity, ArrayList<Kennel> arrKennels, LatLng LATLNG_ORIGIN) {
+    public NewTestKennelsAdapter(Activity activity, ArrayList<Kennel> arrKennels) {
 
         /* CAST THE ACTIVITY IN THE GLOBAL ACTIVITY INSTANCE */
         this.activity = activity;
 
         /* CAST THE CONTENTS OF THE ARRAY LIST IN THE METHOD TO THE LOCAL INSTANCE */
         this.arrKennels = arrKennels;
-
-        /* CAST THE LATLNG VALUES TO THE GLOBAL INSTANCE */
-        this.LATLNG_ORIGIN = LATLNG_ORIGIN;
     }
 
     @Override
@@ -96,7 +91,12 @@ public class NewTestKennelsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     String kennelPinCode = data.getKennelPinCode();
                     vh.txtKennelAddress.setText(activity.getString(R.string.kennel_list_kennel_address_placeholder, strKennelAddress, cityName, kennelPinCode));
 
-                    /* SET THE CAPACITY OF LARGE SIZE PETS */
+                    /* SET THE KENNEL DISTANCE */
+                    String kennelDistance = data.getKennelDistance();
+                    String strTilde = activity.getString(R.string.generic_tilde);
+                    vh.txtKennelDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strTilde, kennelDistance));
+
+                    /* SET THE PET CAPACITY */
                     if (data.getKennelPetCapacity() != null
                             && !data.getKennelPetCapacity().equalsIgnoreCase("")
                             && !data.getKennelPetCapacity().equalsIgnoreCase("null")) {
@@ -105,7 +105,14 @@ public class NewTestKennelsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         vh.txtPetCapacity.setText(activity.getString(R.string.kennel_list_kennel_capacity_zero));
                     }
 
-                    /* SHOW THE ADOPTION ITEM AND HIDE THE LIST OF PROMOTED ADOPTION */
+                    /* SET THE REVIEW VOTE STATS */
+                    vh.txtKennelLikes.setText(data.getKennelVoteStats());
+
+                    /* SET THE AVERAGE KENNEL RATING */
+                    Double dblRating = Double.valueOf(data.getKennelRating());
+                    vh.kennelRating.setRating(Float.parseFloat(String.format("%.2f", dblRating, Locale.getDefault())));
+
+                    /* SHOW THE KENNEL ITEM AND HIDE THE LIST OF PROMOTED ADOPTION */
                     vh.cardKennel.setVisibility(View.VISIBLE);
                     vh.listPromoted.setVisibility(View.GONE);
                 } else {
@@ -209,6 +216,7 @@ public class NewTestKennelsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         TextView txtKennelAddress;
         TextView txtPetCapacity;
         TextView txtKennelLikes;
+        RatingBar kennelRating;
         TextView txtKennelDistance;
 
         KennelsVH(View v) {
@@ -221,13 +229,14 @@ public class NewTestKennelsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             txtKennelAddress = v.findViewById(R.id.txtKennelAddress);
             txtPetCapacity = v.findViewById(R.id.txtPetCapacity);
             txtKennelLikes = v.findViewById(R.id.txtKennelLikes);
+            kennelRating = v.findViewById(R.id.kennelRating);
             txtKennelDistance = v.findViewById(R.id.txtKennelDistance);
 
             /* CONFIGURE THE RECYCLER VIEW */
-            LinearLayoutManager llmAppointments = new LinearLayoutManager(activity);
-            llmAppointments.setOrientation(LinearLayoutManager.HORIZONTAL);
-            llmAppointments.setAutoMeasureEnabled(true);
-            listPromoted.setLayoutManager(llmAppointments);
+            LinearLayoutManager manager = new LinearLayoutManager(activity);
+            manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            manager.setAutoMeasureEnabled(true);
+            listPromoted.setLayoutManager(manager);
             listPromoted.setHasFixedSize(true);
             listPromoted.setNestedScrollingEnabled(false);
 

@@ -27,6 +27,7 @@ public class Kennel {
     @SerializedName("cityName") private String cityName;
     @SerializedName("kennelLatitude") private String kennelLatitude;
     @SerializedName("kennelLongitude") private String kennelLongitude;
+    @SerializedName("kennelDistance") private String kennelDistance;
     @SerializedName("kennelPhonePrefix1") private String kennelPhonePrefix1;
     @SerializedName("kennelPhoneNumber1") private String kennelPhoneNumber1;
     @SerializedName("kennelPhonePrefix2") private String kennelPhonePrefix2;
@@ -35,6 +36,11 @@ public class Kennel {
     @SerializedName("kennelValidFrom") private String kennelValidFrom;
     @SerializedName("kennelValidTo") private String kennelValidTo;
     @SerializedName("kennelVerified") private String kennelVerified;
+    @SerializedName("kennelReviews") private String kennelReviews;
+    @SerializedName("kennelPositives") private String kennelPositives;
+    @SerializedName("kennelNegatives") private String kennelNegatives;
+    @SerializedName("kennelVoteStats") private String kennelVoteStats;
+    @SerializedName("kennelRating") private String kennelRating;
     @SerializedName("promotions") private ArrayList<Promotion> promotions = new ArrayList<>();
 
     public Boolean getError() {
@@ -197,6 +203,14 @@ public class Kennel {
         this.kennelLongitude = kennelLongitude;
     }
 
+    public String getKennelDistance() {
+        return kennelDistance;
+    }
+
+    public void setKennelDistance(String kennelDistance) {
+        this.kennelDistance = kennelDistance;
+    }
+
     public String getKennelPhonePrefix1() {
         return kennelPhonePrefix1;
     }
@@ -259,6 +273,46 @@ public class Kennel {
 
     public void setKennelVerified(String kennelVerified) {
         this.kennelVerified = kennelVerified;
+    }
+
+    public String getKennelReviews() {
+        return kennelReviews;
+    }
+
+    public void setKennelReviews(String kennelReviews) {
+        this.kennelReviews = kennelReviews;
+    }
+
+    public String getKennelPositives() {
+        return kennelPositives;
+    }
+
+    public void setKennelPositives(String kennelPositives) {
+        this.kennelPositives = kennelPositives;
+    }
+
+    public String getKennelNegatives() {
+        return kennelNegatives;
+    }
+
+    public void setKennelNegatives(String kennelNegatives) {
+        this.kennelNegatives = kennelNegatives;
+    }
+
+    public String getKennelVoteStats() {
+        return kennelVoteStats;
+    }
+
+    public void setKennelVoteStats(String kennelVoteStats) {
+        this.kennelVoteStats = kennelVoteStats;
+    }
+
+    public String getKennelRating() {
+        return kennelRating;
+    }
+
+    public void setKennelRating(String kennelRating) {
+        this.kennelRating = kennelRating;
     }
 
     public ArrayList<Promotion> getPromotions() {

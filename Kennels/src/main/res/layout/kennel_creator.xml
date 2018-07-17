@@ -36,7 +36,7 @@
                 android:text="CREATE A NEW KENNEL LISTING"
                 android:textColor="@color/secondary_text"
                 android:textSize="14sp"
-                app:fontFamily="@font/roboto_regular"
+                app:fontFamily="@font/roboto_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -79,7 +79,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start|top"
-                    android:hint="Provide the Kennel's Mailing Address"
+                    android:hint="Provide the Kennel's Postal Address"
                     android:inputType="textPostalAddress|textCapSentences|textMultiLine"
                     android:lines="5"
                     android:maxLines="8"

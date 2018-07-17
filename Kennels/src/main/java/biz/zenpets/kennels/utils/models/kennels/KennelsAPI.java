@@ -52,6 +52,13 @@ public interface KennelsAPI {
             @Field("kennelPhoneNumber2") String kennelPhoneNumber2,
             @Field("kennelPetCapacity") String kennelPetCapacity);
 
+    /** UPDATE A KENNEL'S COVER PHOTO **/
+    @POST("updateKennelCoverPhoto")
+    @FormUrlEncoded
+    Call<Kennel> updateKennelCoverPhoto(
+            @Field("kennelID") String kennelID,
+            @Field("kennelCoverPhoto") String kennelCoverPhoto);
+
     /** UPDATE A KENNEL'S PAYMENT **/
     @POST("updateKennelPayment")
     @FormUrlEncoded

@@ -441,7 +441,7 @@ public class KennelDetails extends AppCompatActivity {
 
     /** FETCH THE KENNEL'S FEEDBACK **/
     private void fetchKennelFeedback() {
-        Call<KennelReviews> callYes = apiReview.fetchPositiveKennelReviews(KENNEL_ID, "Yes");
+        Call<KennelReviews> callYes = apiReview.fetchPositiveKennelReviews(KENNEL_ID);
         callYes.enqueue(new Callback<KennelReviews>() {
             @Override
             public void onResponse(Call<KennelReviews> call, Response<KennelReviews> response) {
@@ -451,7 +451,7 @@ public class KennelDetails extends AppCompatActivity {
                     TOTAL_VOTES = TOTAL_VOTES + arrReview.size();
 
                     /* GET THE TOTAL NUMBER OF NEGATIVE REVIEWS */
-                    Call<KennelReviews> callNo = apiReview.fetchNegativeKennelReviews(KENNEL_ID, "No");
+                    Call<KennelReviews> callNo = apiReview.fetchNegativeKennelReviews(KENNEL_ID);
                     callNo.enqueue(new Callback<KennelReviews>() {
                         @Override
                         public void onResponse(Call<KennelReviews> call, Response<KennelReviews> response) {

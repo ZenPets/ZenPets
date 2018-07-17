@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import biz.zenpets.kennels.R;
 import biz.zenpets.kennels.creator.kennel.KennelCreator;
 import biz.zenpets.kennels.details.kennel.KennelDetails;
+import biz.zenpets.kennels.modifier.images.KennelImageManager;
 import biz.zenpets.kennels.modifier.kennel.KennelModifier;
 import biz.zenpets.kennels.utils.AppPrefs;
 import biz.zenpets.kennels.utils.TypefaceSpan;
@@ -386,6 +387,12 @@ public class KennelsList extends AppCompatActivity {
                                     Intent intentDetails = new Intent(activity, KennelDetails.class);
                                     intentDetails.putExtra("KENNEL_ID", data.getKennelID());
                                     startActivity(intentDetails);
+                                    break;
+                                case R.id.menuImages:
+                                    Intent intentImages = new Intent(activity, KennelImageManager.class);
+                                    intentImages.putExtra("KENNEL_ID", data.getKennelID());
+                                    intentImages.putExtra("KENNEL_NAME", data.getKennelName());
+                                    startActivity(intentImages);
                                     break;
                                 case R.id.menuEdit:
                                     Intent intentEdit = new Intent(activity, KennelModifier.class);

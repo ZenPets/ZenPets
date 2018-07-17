@@ -34,15 +34,11 @@ public interface KennelReviewsAPI {
 
     /** FETCH ALL POSITIVE REVIEWS OF A KENNEL **/
     @GET("fetchPositiveKennelReviews")
-    Call<KennelReviews> fetchPositiveKennelReviews(
-            @Query("kennelID") String kennelID,
-            @Query("kennelRecommendStatus") String kennelRecommendStatus);
+    Call<KennelReviews> fetchPositiveKennelReviews(@Query("kennelID") String kennelID);
 
     /** FETCH ALL NEGATIVE REVIEWS OF A KENNEL **/
     @GET("fetchNegativeKennelReviews")
-    Call<KennelReviews> fetchNegativeKennelReviews(
-            @Query("kennelID") String kennelID,
-            @Query("kennelRecommendStatus") String kennelRecommendStatus);
+    Call<KennelReviews> fetchNegativeKennelReviews(@Query("kennelID") String kennelID);
 
     /** FETCH THE DETAILS OF A REVIEW LEFT FOR A KENNEL **/
     @GET("fetchKennelReviewDetails")
