@@ -120,18 +120,41 @@ public class TestKennelsList extends AppCompatActivity {
         call.enqueue(new Callback<Kennels>() {
             @Override
             public void onResponse(Call<Kennels> call, Response<Kennels> response) {
-//                Log.e("KENNELS LIST", String.valueOf(response.raw()));
-                /* PROCESS THE RESPONSE */
-                arrKennels = processResult(response);
+                if (response.body() != null && response.body().getKennels() != null)    {
+//                    Log.e("KENNELS LIST", String.valueOf(response.raw()));
+                    /* PROCESS THE RESPONSE */
+                    arrKennels = processResult(response);
+                    if (arrKennels.size() > 0)  {
+                        ArrayList<Kennel> kennels = arrKennels;
+//                        Log.e("KENNELS SIZE", String.valueOf(kennels.size()));
+                        progressLoading.setVisibility(View.GONE);
+                        if (kennels != null && kennels.size() > 0)
+                            kennelsAdapter.addAll(kennels);
 
-                ArrayList<Kennel> kennels = arrKennels;
-//                Log.e("KENNELS SIZE", String.valueOf(kennels.size()));
-                progressLoading.setVisibility(View.GONE);
-                if (kennels != null && kennels.size() > 0)
-                    kennelsAdapter.addAll(kennels);
+                        if (currentPage <= TOTAL_PAGES) kennelsAdapter.addLoadingFooter();
+                        else isLastPage = true;
+                    } else {
+                        /* MARK THE LAST PAGE FLAG TO "TRUE" */
+                        isLastPage = true;
 
-                if (currentPage <= TOTAL_PAGES) kennelsAdapter.addLoadingFooter();
-                else isLastPage = true;
+                        /* HIDE THE PROGRESS */
+                        progressLoading.setVisibility(View.GONE);
+
+                        /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
+                        linlaEmpty.setVisibility(View.VISIBLE);
+                        listKennels.setVisibility(View.GONE);
+                    }
+                } else {
+                    /* MARK THE LAST PAGE FLAG TO "TRUE" */
+                    isLastPage = true;
+
+                    /* HIDE THE PROGRESS */
+                    progressLoading.setVisibility(View.GONE);
+
+                    /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
+                    linlaEmpty.setVisibility(View.VISIBLE);
+                    listKennels.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -412,10 +435,8 @@ public class TestKennelsList extends AppCompatActivity {
                         }
 
                         /* GET THE KENNEL ID */
-                        String kennelID = null;
                         if (JOKennels.has("kennelID"))  {
-                            kennelID = JOKennels.getString("kennelID");
-                            data.setKennelID(kennelID);
+                            data.setKennelID(JOKennels.getString("kennelID"));
                         } else {
                             data.setKennelID(null);
                         }

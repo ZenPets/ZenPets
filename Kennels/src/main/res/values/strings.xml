@@ -88,6 +88,9 @@
     <string name="kennel_list_kennel_capacity_placeholder">Kennel has a capacity to hold %1$s Pets</string>
     <string name="kennel_list_kennel_validity_label">KENNEL VALIDITY</string>
     <string name="kennel_list_kennel_validity_label_placeholder">Valid From: <b>%1$s</b> to <b>%2$s</b></string>
+    <string name="kennel_list_votes_open">(</string>
+    <string name="kennel_list_votes_close">)</string>
+    <string name="kennel_list_votes_placeholder">%1$s %2$s%3$s%4$s</string>
     <string name="kennel_list_unpaid_alert_title">Unpaid Kennel Listing</string>
     <string name="kennel_list_unpaid_alert_message">This is an additional Kennel listing over an above the allotted 2 Kennel Listings.
         \n\nTo list the Kennel and make it visible to Pet Parents, press the \"PROCESS PAYMENT\". Else, press the \"CANCEL\" button.</string>

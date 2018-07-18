@@ -2,6 +2,7 @@ package biz.zenpets.kennels.kennels;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,9 +33,15 @@ import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.google.gson.Gson;
 import com.mikepenz.iconics.view.IconicsImageView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Locale;
 
 import biz.zenpets.kennels.R;
 import biz.zenpets.kennels.creator.kennel.KennelCreator;
@@ -115,8 +123,10 @@ public class KennelsList extends AppCompatActivity {
             public void onResponse(Call<Kennels> call, Response<Kennels> response) {
                 Log.e("RAW", String.valueOf(response.raw()));
                 if (response.body() != null && response.body().getKennels() != null)    {
-                    arrKennels = response.body().getKennels();
+                    arrKennels = processResult(response);
+//                    arrKennels = response.body().getKennels();
                     if (arrKennels.size() > 0)  {
+
                         /* SET THE ADAPTER TO THE RECYCLER VIEW */
                         listKennels.setAdapter(new KennelsAdapter(KennelsList.this, arrKennels));
 
@@ -144,6 +154,251 @@ public class KennelsList extends AppCompatActivity {
                 Crashlytics.logException(t);
             }
         });
+    }
+
+    /** PROCESS THE KENNEL RESULTS **/
+    private ArrayList<Kennel> processResult(Response<Kennels> response) {
+        ArrayList<Kennel> kennels = new ArrayList<>();
+        try {
+            String strResult = new Gson().toJson(response.body());
+            JSONObject JORoot = new JSONObject(strResult);
+            if (JORoot.has("error") && JORoot.getString("error").equalsIgnoreCase("false")) {
+                JSONArray JAKennels = JORoot.getJSONArray("kennels");
+                if (JAKennels.length() > 0) {
+                    Kennel data;
+                    for (int i = 0; i < JAKennels.length(); i++) {
+                        final JSONObject JOKennels = JAKennels.getJSONObject(i);
+                        data = new Kennel();
+
+                        /* GET THE KENNEL ID */
+                        if (JOKennels.has("kennelID"))  {
+                            data.setKennelID(JOKennels.getString("kennelID"));
+                        } else {
+                            data.setKennelID(null);
+                        }
+
+                        /* GET THE KENNEL COVER PHOTO */
+                        if (JOKennels.has("kennelCoverPhoto")
+                                && !JOKennels.getString("kennelCoverPhoto").equalsIgnoreCase("")
+                                && !JOKennels.getString("kennelCoverPhoto").equalsIgnoreCase("null"))  {
+                            data.setKennelCoverPhoto(JOKennels.getString("kennelCoverPhoto"));
+                        } else {
+                            data.setKennelCoverPhoto(null);
+                        }
+
+                        /* GET THE KENNEL NAME */
+                        if (JOKennels.has("kennelName"))    {
+                            data.setKennelName(JOKennels.getString("kennelName"));
+                        } else {
+                            data.setKennelName(null);
+                        }
+
+                        /* GET THE KENNEL OWNER'S ID */
+                        if (JOKennels.has("kennelOwnerID")) {
+                            data.setKennelOwnerID(JOKennels.getString("kennelOwnerID"));
+                        } else {
+                            data.setKennelOwnerID(null);
+                        }
+
+                        /* GET THE KENNEL CHARGES ID */
+                        if (JOKennels.has("kennelChargesID")) {
+                            data.setKennelChargesID(JOKennels.getString("kennelChargesID"));
+                        } else {
+                            data.setKennelChargesID(null);
+                        }
+
+                        /* GET THE PAYMENT ID */
+                        if (JOKennels.has("paymentID")) {
+                            data.setPaymentID(JOKennels.getString("paymentID"));
+                        } else {
+                            data.setPaymentID(null);
+                        }
+
+                        /* GET THE KENNEL OWNER'S NAME */
+                        if (JOKennels.has("kennelOwnerName"))   {
+                            data.setKennelOwnerName(JOKennels.getString("kennelOwnerName"));
+                        } else {
+                            data.setKennelOwnerName(null);
+                        }
+
+                        /* GET THE KENNEL OWNER'S DISPLAY PROFILE */
+                        if (JOKennels.has("kennelOwnerDisplayProfile")) {
+                            data.setKennelOwnerDisplayProfile(JOKennels.getString("kennelOwnerDisplayProfile"));
+                        } else {
+                            data.setKennelOwnerDisplayProfile(null);
+                        }
+
+                        /* GET THE KENNEL ADDRESS */
+                        if (JOKennels.has("kennelAddress")) {
+                            data.setKennelAddress(JOKennels.getString("kennelAddress"));
+                        } else {
+                            data.setKennelAddress(null);
+                        }
+
+                        /* GET THE KENNEL PIN CODE */
+                        if (JOKennels.has("kennelPinCode")) {
+                            data.setKennelPinCode(JOKennels.getString("kennelPinCode"));
+                        } else {
+                            data.setKennelPinCode(null);
+                        }
+
+                        /* GET THE KENNEL COUNTY ID */
+                        if (JOKennels.has("countryID")) {
+                            data.setCountryID(JOKennels.getString("countryID"));
+                        } else {
+                            data.setCountryID(null);
+                        }
+
+                        /* GET THE KENNEL COUNTRY NAME */
+                        if (JOKennels.has("countryName"))   {
+                            data.setCountryName(JOKennels.getString("countryName"));
+                        } else {
+                            data.setCountryName(null);
+                        }
+
+                        /* GET THE KENNEL STATE ID */
+                        if (JOKennels.has("stateID"))   {
+                            data.setStateID(JOKennels.getString("stateID"));
+                        } else {
+                            data.setStateID(null);
+                        }
+
+                        /* GET THE KENNEL STATE NAME */
+                        if (JOKennels.has("stateName")) {
+                            data.setStateName(JOKennels.getString("stateName"));
+                        } else {
+                            data.setStateName(null);
+                        }
+
+                        /* GET THE KENNEL CITY ID */
+                        if (JOKennels.has("cityID"))    {
+                            data.setCityID(JOKennels.getString("cityID"));
+                        } else {
+                            data.setCityID(null);
+                        }
+
+                        /* GET THE KENNEL CITY NAME */
+                        if (JOKennels.has("cityName"))  {
+                            data.setCityName(JOKennels.getString("cityName"));
+                        } else {
+                            data.setCityName(null);
+                        }
+
+                        /* GET THE KENNEL LATITUDE AND LONGITUDE */
+                        if (JOKennels.has("kennelLatitude") && JOKennels.has("kennelLongitude"))   {
+                            data.setKennelLatitude(JOKennels.getString("kennelLatitude"));
+                            data.setKennelLongitude(JOKennels.getString("kennelLongitude"));
+                        } else {
+                            data.setKennelLatitude(null);
+                            data.setKennelLongitude(null);
+                        }
+
+                        /* GET THE KENNEL'S PHONE PREFIX #1*/
+                        if (JOKennels.has("kennelPhonePrefix1"))    {
+                            data.setKennelPhonePrefix1(JOKennels.getString("kennelPhonePrefix1"));
+                        } else {
+                            data.setKennelPhonePrefix1(null);
+                        }
+
+                        /* GET THE KENNEL'S PHONE NUMBER #1*/
+                        if (JOKennels.has("kennelPhoneNumber1"))    {
+                            data.setKennelPhoneNumber1(JOKennels.getString("kennelPhoneNumber1"));
+                        } else {
+                            data.setKennelPhoneNumber1(null);
+                        }
+
+                        /* GET THE KENNEL'S PHONE PREFIX #2*/
+                        if (JOKennels.has("kennelPhonePrefix2"))    {
+                            data.setKennelPhonePrefix2(JOKennels.getString("kennelPhonePrefix2"));
+                        } else {
+                            data.setKennelPhonePrefix2(null);
+                        }
+
+                        /* GET THE KENNEL'S PHONE NUMBER #2*/
+                        if (JOKennels.has("kennelPhoneNumber2"))    {
+                            data.setKennelPhoneNumber2(JOKennels.getString("kennelPhoneNumber2"));
+                        } else {
+                            data.setKennelPhoneNumber1(null);
+                        }
+
+                        /* GET THE KENNEL'S PET CAPACITY */
+                        if (JOKennels.has("kennelPetCapacity"))    {
+                            data.setKennelPetCapacity(JOKennels.getString("kennelPetCapacity"));
+                        } else {
+                            data.setKennelPetCapacity(null);
+                        }
+
+                        /* GET THE KENNEL'S VALIDITY FROM DATE */
+                        if (JOKennels.has("kennelValidFrom"))    {
+                            data.setKennelValidFrom(JOKennels.getString("kennelValidFrom"));
+                        } else {
+                            data.setKennelValidFrom(null);
+                        }
+
+                        /* GET THE KENNEL'S VALIDITY TO DATE */
+                        if (JOKennels.has("kennelValidTo"))    {
+                            data.setKennelValidTo(JOKennels.getString("kennelValidTo"));
+                        } else {
+                            data.setKennelValidTo(null);
+                        }
+
+                        /* GET THE KENNEL'S VERIFIED STATUS */
+                        if (JOKennels.has("kennelVerified"))    {
+                            data.setKennelVerified(JOKennels.getString("kennelVerified"));
+                        } else {
+                            data.setKennelVerified(null);
+                        }
+
+                        /* GET THE TOTAL REVIEWS, POSITIVE, AND FINALLY, CALCULATE THE PERCENTAGES */
+                        if (JOKennels.has("kennelReviews")
+                                && JOKennels.has("kennelPositives"))  {
+                            String kennelReviews = JOKennels.getString("kennelReviews");
+                            String kennelPositives = JOKennels.getString("kennelPositives");
+
+                            int TOTAL_VOTES = Integer.parseInt(kennelReviews);
+                            int TOTAL_LIKES = Integer.parseInt(kennelPositives);
+
+                            /* CALCULATE THE PERCENTAGE OF LIKES */
+                            double percentLikes = ((double)TOTAL_LIKES / TOTAL_VOTES) * 100;
+                            int finalPercentLikes = (int)percentLikes;
+                            String strLikesPercentage = String.valueOf(finalPercentLikes) + "%";
+
+                            /* GET THE TOTAL NUMBER OF REVIEWS / VOTES */
+                            Resources resReviews = getResources();
+                            String reviewQuantity = null;
+                            if (TOTAL_VOTES == 0)   {
+                                reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
+                            } else if (TOTAL_VOTES == 1)    {
+                                reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
+                            } else if (TOTAL_VOTES > 1) {
+                                reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
+                            }
+                            String strVotes = reviewQuantity;
+                            String open = getString(R.string.kennel_list_votes_open);
+                            String close = getString(R.string.kennel_list_votes_close);
+                            data.setKennelVoteStats(getString(R.string.kennel_list_votes_placeholder, strLikesPercentage, open, strVotes, close));
+                        } else {
+                            data.setKennelReviews("0");
+                        }
+
+                        /* GET THE AVERAGE KENNEL RATING */
+                        if (JOKennels.has("kennelRating"))  {
+                            data.setKennelRating(JOKennels.getString("kennelRating"));
+                        } else {
+                            data.setKennelRating("0");
+                        }
+
+                        /* ADD THE COLLECTED DATA TO THE ARRAY LIST */
+                        kennels.add(data);
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+//            Log.e("EXCEPTION", e.getMessage());
+            Crashlytics.logException(e);
+        }
+        return kennels;
     }
 
     @Override
@@ -328,6 +583,13 @@ public class KennelsList extends AppCompatActivity {
                 holder.txtPetCapacity.setText(activity.getString(R.string.kennel_list_kennel_capacity_zero));
             }
 
+            /* SET THE REVIEW VOTE STATS */
+            holder.txtKennelLikes.setText(data.getKennelVoteStats());
+
+            /* SET THE AVERAGE KENNEL RATING */
+            Double dblRating = Double.valueOf(data.getKennelRating());
+            holder.kennelRating.setRating(Float.parseFloat(String.format("%.2f", dblRating, Locale.getDefault())));
+
             /* SET THE KENNEL VALIDITY DATES */
             if (data.getKennelValidFrom() != null && data.getKennelValidTo() != null)   {
                 String kennelValidFrom = data.getKennelValidFrom();
@@ -482,6 +744,8 @@ public class KennelsList extends AppCompatActivity {
             TextView txtKennelAddress;
             TextView txtPetCapacity;
             TextView txtKennelValidity;
+            TextView txtKennelLikes;
+            RatingBar kennelRating;
 
             KennelsVH(View v) {
                 super(v);
@@ -494,6 +758,8 @@ public class KennelsList extends AppCompatActivity {
                 txtKennelAddress = v.findViewById(R.id.txtKennelAddress);
                 txtPetCapacity = v.findViewById(R.id.txtPetCapacity);
                 txtKennelValidity = v.findViewById(R.id.txtKennelValidity);
+                txtKennelLikes = v.findViewById(R.id.txtKennelLikes);
+                kennelRating = v.findViewById(R.id.kennelRating);
             }
         }
     }

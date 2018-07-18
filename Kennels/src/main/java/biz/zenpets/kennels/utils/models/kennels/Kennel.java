@@ -31,6 +31,10 @@ public class Kennel {
     @SerializedName("kennelValidFrom") private String kennelValidFrom;
     @SerializedName("kennelValidTo") private String kennelValidTo;
     @SerializedName("kennelVerified") private String kennelVerified;
+    @SerializedName("kennelReviews") private String kennelReviews;
+    @SerializedName("kennelPositives") private String kennelPositives;
+    @SerializedName("kennelVoteStats") private String kennelVoteStats;
+    @SerializedName("kennelRating") private String kennelRating;
 
     public Boolean getError() {
         return error;
@@ -254,5 +258,37 @@ public class Kennel {
 
     public void setKennelVerified(String kennelVerified) {
         this.kennelVerified = kennelVerified;
+    }
+
+    public String getKennelReviews() {
+        return kennelReviews;
+    }
+
+    public void setKennelReviews(String kennelReviews) {
+        this.kennelReviews = kennelReviews;
+    }
+
+    public String getKennelPositives() {
+        return kennelPositives;
+    }
+
+    public void setKennelPositives(String kennelPositives) {
+        this.kennelPositives = kennelPositives;
+    }
+
+    public String getKennelVoteStats() {
+        return kennelVoteStats;
+    }
+
+    public void setKennelVoteStats(String kennelVoteStats) {
+        this.kennelVoteStats = kennelVoteStats;
+    }
+
+    public String getKennelRating() {
+        return kennelRating;
+    }
+
+    public void setKennelRating(String kennelRating) {
+        this.kennelRating = kennelRating;
     }
 }

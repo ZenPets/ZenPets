@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- NUMBER OF REVIEWS -->
+    <plurals name="votes">
+        <item quantity="zero">0 votes</item>
+        <item quantity="one">1 vote</item>
+        <item quantity="other">%d votes</item>
+    </plurals>
+
+    <!-- NUMBER OF LIKES -->
+    <plurals name="likes">
+        <item quantity="zero">0 Likes</item>
+        <item quantity="one">1 Like</item>
+        <item quantity="other">%d Likes</item>
+    </plurals>
+
+    <!-- NUMBER OF VIEWS -->
+    <plurals name="views">
+        <item quantity="zero">0 Views</item>
+        <item quantity="one">1 View</item>
+        <item quantity="other">%d Views</item>
+    </plurals>
+
+    <!-- NUMBER OF VIEWS -->
+    <plurals name="replies">
+        <item quantity="zero">0 Replies</item>
+        <item quantity="one">1 Reply</item>
+        <item quantity="other">%d Replies</item>
+    </plurals>
+
+    <!-- PET AGE -->
+    <plurals name="age">
+        <item quantity="zero">0 Years</item>
+        <item quantity="one">1 Year</item>
+        <item quantity="other">%d Years</item>
+    </plurals>
+
+    <!-- NUMBER OF MODULES -->
+    <plurals name="training_modules">
+        <item quantity="zero">0 Modules</item>
+        <item quantity="one">1 Module</item>
+        <item quantity="other">%d Modules</item>
+    </plurals>
+    <!-- DAYS -->
+    <plurals name="days">
+        <item quantity="one">1 day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+
+    <!-- MONTHS -->
+    <plurals name="months">
+        <item quantity="one">1 Month</item>
+        <item quantity="other">%d Months</item>
+    </plurals>
+
+    <!-- SESSIONS -->
+    <plurals name="sessions">
+        <item quantity="one">1 Session</item>
+        <item quantity="other">%d Sessions</item>
+    </plurals>
+</resources>

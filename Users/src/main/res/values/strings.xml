@@ -344,7 +344,7 @@
     <string name="kennel_list_tb_title">Find Kennels</string>
     <string name="kennel_list_tb_location_label">LOCATION</string>
     <string name="kennel_list_tb_location">City</string>
-    <string name="kennel_list_empty">There are no open Kennels listed in your city at this moment :-(
+    <string name="kennel_list_empty">There are no Kennels listed in your city yet :-(
     \n\nBut hang in there. We are working hard to get Kennels listed on Zen Pets.</string>
 
     <!-- KENNEL LIST ITEM STRINGS -->

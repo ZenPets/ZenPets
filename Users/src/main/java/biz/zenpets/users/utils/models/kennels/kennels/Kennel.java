@@ -38,7 +38,6 @@ public class Kennel {
     @SerializedName("kennelVerified") private String kennelVerified;
     @SerializedName("kennelReviews") private String kennelReviews;
     @SerializedName("kennelPositives") private String kennelPositives;
-    @SerializedName("kennelNegatives") private String kennelNegatives;
     @SerializedName("kennelVoteStats") private String kennelVoteStats;
     @SerializedName("kennelRating") private String kennelRating;
     @SerializedName("promotions") private ArrayList<Promotion> promotions = new ArrayList<>();
@@ -289,14 +288,6 @@ public class Kennel {
 
     public void setKennelPositives(String kennelPositives) {
         this.kennelPositives = kennelPositives;
-    }
-
-    public String getKennelNegatives() {
-        return kennelNegatives;
-    }
-
-    public void setKennelNegatives(String kennelNegatives) {
-        this.kennelNegatives = kennelNegatives;
     }
 
     public String getKennelVoteStats() {
