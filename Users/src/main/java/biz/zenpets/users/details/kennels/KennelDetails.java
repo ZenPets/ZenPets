@@ -15,15 +15,16 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,14 +35,6 @@ import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
@@ -51,15 +44,17 @@ import biz.zenpets.users.details.kennels.reviews.KennelReviewCreator;
 import biz.zenpets.users.details.kennels.reviews.KennelReviewsActivity;
 import biz.zenpets.users.modifier.kennel.KennelReviewModifier;
 import biz.zenpets.users.utils.AppPrefs;
+import biz.zenpets.users.utils.adapters.kennels.images.KennelImagesAdapter;
 import biz.zenpets.users.utils.adapters.kennels.reviews.KennelReviewsAdapter;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
+import biz.zenpets.users.utils.models.kennels.images.KennelImage;
+import biz.zenpets.users.utils.models.kennels.images.KennelImages;
+import biz.zenpets.users.utils.models.kennels.images.KennelImagesAPI;
 import biz.zenpets.users.utils.models.kennels.kennels.Kennel;
 import biz.zenpets.users.utils.models.kennels.kennels.KennelsAPI;
-import biz.zenpets.users.utils.models.kennels.reviews.KennelRating;
 import biz.zenpets.users.utils.models.kennels.reviews.KennelReview;
 import biz.zenpets.users.utils.models.kennels.reviews.KennelReviews;
 import biz.zenpets.users.utils.models.kennels.reviews.KennelReviewsAPI;
-import biz.zenpets.users.utils.models.kennels.reviews.KennelReviewsCount;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -79,19 +74,22 @@ public class KennelDetails extends AppCompatActivity {
     /** THE INCOMING KENNEL ID **/
     private String KENNEL_ID = null;
 
+    /** THE INCOMING ORIGIN LATITUDE AND LONGITUDE **/
+    String ORIGIN_LATITUDE = null;
+    String ORIGIN_LONGITUDE = null;
+
     /** A KENNEL API AND KENNEL REVIEWS API INSTANCE **/
     private final KennelsAPI apiKennel = ZenApiClient.getClient().create(KennelsAPI.class);
     private final KennelReviewsAPI apiReview = ZenApiClient.getClient().create(KennelReviewsAPI.class);
-
-    /** THE TOTAL VOTES, TOTAL LIKES AND TOTAL DISLIKES **/
-    private int TOTAL_VOTES = 0;
-    private int TOTAL_LIKES = 0;
 
     /** PERMISSION REQUEST CONSTANTS **/
     private static final int CALL_PHONE_CONSTANT = 200;
 
     /** THE REVIEWS ADAPTER AND ARRAY LISTS **/
     private ArrayList<KennelReview> arrReviewsSubset = new ArrayList<>();
+
+    /** THE KENNEL IMAGES ARRAY LIST INSTANCE **/
+    private ArrayList<KennelImage> arrImages = new ArrayList<>();
 
     /** DATA TYPES TO HOLD THE KENNEL DETAILS **/
     private String KENNEL_COVER_PHOTO = null;
@@ -105,6 +103,7 @@ public class KennelDetails extends AppCompatActivity {
     private String KENNEL_PIN_CODE = null;
     private Double KENNEL_LATITUDE = null;
     private Double KENNEL_LONGITUDE = null;
+    String KENNEL_DISTANCE = null;
     private String KENNEL_PHONE_NUMBER_1 = null;
     private String KENNEL_PHONE_NUMBER_2 = null;
 
@@ -112,26 +111,29 @@ public class KennelDetails extends AppCompatActivity {
     @BindView(R.id.appBar) AppBarLayout appBar;
     @BindView(R.id.toolbarLayout) CollapsingToolbarLayout toolbarLayout;
     @BindView(R.id.imgvwKennelCoverPhoto) SimpleDraweeView imgvwKennelCoverPhoto;
-    @BindView(R.id.txtKennelName) TextView txtKennelName;
     @BindView(R.id.imgvwKennelOwnerDisplayProfile) SimpleDraweeView imgvwKennelOwnerDisplayProfile;
+    @BindView(R.id.txtKennelName) TextView txtKennelName;
     @BindView(R.id.txtKennelOwnerName) TextView txtKennelOwnerName;
     @BindView(R.id.txtVotes) TextView txtVotes;
-    @BindView(R.id.kennelRating) AppCompatRatingBar kennelRating;
-    @BindView(R.id.txtKennelCharges) TextView txtKennelCharges;
+    @BindView(R.id.kennelRating) RatingBar kennelRating;
     @BindView(R.id.linlaPhoneNumber1) LinearLayout linlaPhoneNumber1;
     @BindView(R.id.txtPhoneNumber1) TextView txtPhoneNumber1;
     @BindView(R.id.linlaPhoneNumber2) LinearLayout linlaPhoneNumber2;
     @BindView(R.id.txtPhoneNumber2) TextView txtPhoneNumber2;
     @BindView(R.id.txtKennelAddress) TextView txtKennelAddress;
-    @BindView(R.id.kennelMap) MapView kennelMap;
+//    @BindView(R.id.kennelMap) MapView kennelMap;
+//    @BindView(R.id.txtKennelDistance) TextView txtKennelDistance;
     @BindView(R.id.linlaReviewsProgress) LinearLayout linlaReviewsProgress;
     @BindView(R.id.listReviews) RecyclerView listReviews;
     @BindView(R.id.txtAllReviews) TextView txtAllReviews;
     @BindView(R.id.linlaNoReviews) LinearLayout linlaNoReviews;
+    @BindView(R.id.linlaImagesProgress) LinearLayout linlaImagesProgress;
+    @BindView(R.id.listKennelImages) RecyclerView listKennelImages;
+    @BindView(R.id.linlaNoImages) LinearLayout linlaNoImages;
 
-    /** SHOW THE CHARGES INFO **/
-    @OnClick(R.id.imgvwChargesInfo) void showChargesInfo()  {
-    }
+//    /** SHOW THE CHARGES INFO **/
+//    @OnClick(R.id.imgvwChargesInfo) void showChargesInfo()  {
+//    }
 
     /** SHOW ALL THE KENNEL REVIEWS **/
     @OnClick(R.id.txtAllReviews) void showAllReviews()  {
@@ -146,9 +148,9 @@ public class KennelDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.kennel_details);
         ButterKnife.bind(this);
-        kennelMap.onCreate(savedInstanceState != null ? savedInstanceState.getBundle("kennel_map_save_state") : null);
-        kennelMap.onResume();
-        kennelMap.setClickable(false);
+//        kennelMap.onCreate(savedInstanceState != null ? savedInstanceState.getBundle("kennel_map_save_state") : null);
+//        kennelMap.onResume();
+//        kennelMap.setClickable(false);
 
         /* GET THE USER'S ID */
         USER_ID = getApp().getUserID();
@@ -189,11 +191,11 @@ public class KennelDetails extends AppCompatActivity {
 
     /** FETCH THE KENNEL DETAILS **/
     private void fetchKennelDetails() {
-        Call<Kennel> call = apiKennel.fetchKennelDetails(KENNEL_ID);
+        Call<Kennel> call = apiKennel.fetchKennelDetails(KENNEL_ID, ORIGIN_LATITUDE, ORIGIN_LONGITUDE);
         call.enqueue(new Callback<Kennel>() {
             @Override
             public void onResponse(Call<Kennel> call, Response<Kennel> response) {
-//                Log.e("RAW RESPONSE", String.valueOf(response.raw()));
+                Log.e("RAW RESPONSE", String.valueOf(response.raw()));
                 Kennel data = response.body();
                 if (data != null)   {
 
@@ -274,59 +276,100 @@ public class KennelDetails extends AppCompatActivity {
                     /* GET AND SET THE CLINIC LATITUDE AND LONGITUDE ON THE MAP */
                     KENNEL_LATITUDE = Double.valueOf(data.getKennelLatitude());
                     KENNEL_LONGITUDE = Double.valueOf(data.getKennelLongitude());
-                    if (KENNEL_LATITUDE != null && KENNEL_LONGITUDE != null) {
-                        final LatLng latLng = new LatLng(KENNEL_LATITUDE, KENNEL_LONGITUDE);
-                        kennelMap.getMapAsync(new OnMapReadyCallback() {
-                            @Override
-                            public void onMapReady(GoogleMap googleMap) {
-                                googleMap.getUiSettings().setMapToolbarEnabled(false);
-                                googleMap.getUiSettings().setAllGesturesEnabled(false);
-                                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                                googleMap.setBuildingsEnabled(true);
-                                googleMap.setTrafficEnabled(false);
-                                googleMap.setIndoorEnabled(false);
-                                MarkerOptions options = new MarkerOptions();
-                                options.position(latLng);
-                                options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                                Marker mMarker = googleMap.addMarker(options);
-                                googleMap.addMarker(options);
+//                    if (KENNEL_LATITUDE != null && KENNEL_LONGITUDE != null) {
+//                        final LatLng latLng = new LatLng(KENNEL_LATITUDE, KENNEL_LONGITUDE);
+//                        kennelMap.getMapAsync(new OnMapReadyCallback() {
+//                            @Override
+//                            public void onMapReady(GoogleMap googleMap) {
+//                                googleMap.getUiSettings().setMapToolbarEnabled(false);
+//                                googleMap.getUiSettings().setAllGesturesEnabled(false);
+//                                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+//                                googleMap.setBuildingsEnabled(true);
+//                                googleMap.setTrafficEnabled(false);
+//                                googleMap.setIndoorEnabled(false);
+//                                MarkerOptions options = new MarkerOptions();
+//                                options.position(latLng);
+//                                options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+//                                Marker mMarker = googleMap.addMarker(options);
+//                                googleMap.addMarker(options);
+//
+//                                /* MOVE THE MAP CAMERA */
+//                                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mMarker.getPosition(), 10));
+//                                googleMap.animateCamera(CameraUpdateFactory.zoomTo(18), 2000, null);
+//
+//                                /* SHOW THE MAP DETAILS AND DIRECTIONS */
+////                                googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+////                                    @Override
+////                                    public void onMapClick(LatLng latLng) {
+////                                        Intent intent = new Intent(getApplicationContext(), MapDetails.class);
+////                                        intent.putExtra("DOCTOR_ID", DOCTOR_ID);
+////                                        intent.putExtra("DOCTOR_NAME", DOCTOR_PREFIX + " " + DOCTOR_NAME);
+////                                        intent.putExtra("KENNEL_PHONE_NUMBER_1", KENNEL_PHONE_NUMBER_1);
+////                                        intent.putExtra("CLINIC_ID", CLINIC_ID);
+////                                        intent.putExtra("CLINIC_NAME", CLINIC_NAME);
+////                                        intent.putExtra("CLINIC_LATITUDE", KENNEL_LATITUDE);
+////                                        intent.putExtra("CLINIC_LONGITUDE", KENNEL_LONGITUDE);
+////                                        intent.putExtra("CLINIC_ADDRESS", CLINIC_ADDRESS);
+////                                        startActivity(intent);
+////                                    }
+////                                });
+//                            }
+//                        });
+//                    }
 
-                                /* MOVE THE MAP CAMERA */
-                                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mMarker.getPosition(), 10));
-                                googleMap.animateCamera(CameraUpdateFactory.zoomTo(18), 2000, null);
+//                    /* GET THE KENNEL DISTANCE */
+//                    KENNEL_DISTANCE = data.getKennelDistance();
+//                    String strTilde = getString(R.string.generic_tilde);
+//                    txtKennelDistance.setText(getString(R.string.doctor_list_clinic_distance_placeholder, strTilde, KENNEL_DISTANCE));
 
-                                /* SHOW THE MAP DETAILS AND DIRECTIONS */
-//                                googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-//                                    @Override
-//                                    public void onMapClick(LatLng latLng) {
-//                                        Intent intent = new Intent(getApplicationContext(), MapDetails.class);
-//                                        intent.putExtra("DOCTOR_ID", DOCTOR_ID);
-//                                        intent.putExtra("DOCTOR_NAME", DOCTOR_PREFIX + " " + DOCTOR_NAME);
-//                                        intent.putExtra("KENNEL_PHONE_NUMBER_1", KENNEL_PHONE_NUMBER_1);
-//                                        intent.putExtra("CLINIC_ID", CLINIC_ID);
-//                                        intent.putExtra("CLINIC_NAME", CLINIC_NAME);
-//                                        intent.putExtra("CLINIC_LATITUDE", KENNEL_LATITUDE);
-//                                        intent.putExtra("CLINIC_LONGITUDE", KENNEL_LONGITUDE);
-//                                        intent.putExtra("CLINIC_ADDRESS", CLINIC_ADDRESS);
-//                                        startActivity(intent);
-//                                    }
-//                                });
-                            }
-                        });
+                    /* GET THE REVIEW COUNT */
+                    String countReviews = data.getKennelReviews();
+                    txtAllReviews.setText(getString(R.string.doctor_details_all_reviews_placeholder, String.valueOf(countReviews)));
+
+                    /* GET THE TOTAL REVIEWS, POSITIVE, AND FINALLY, CALCULATE THE PERCENTAGES */
+                    String kennelReviews = data.getKennelReviews();
+                    String kennelPositives = data.getKennelPositives();
+
+                    int TOTAL_VOTES = Integer.parseInt(kennelReviews);
+                    int TOTAL_LIKES = Integer.parseInt(kennelPositives);
+
+                    /* CALCULATE THE PERCENTAGE OF LIKES */
+                    double percentLikes = ((double)TOTAL_LIKES / TOTAL_VOTES) * 100;
+                    int finalPercentLikes = (int)percentLikes;
+                    String strLikesPercentage = String.valueOf(finalPercentLikes) + "%";
+
+                    /* GET THE TOTAL NUMBER OF REVIEWS / VOTES */
+                    Resources resReviews = getResources();
+                    String reviewQuantity = null;
+                    if (TOTAL_VOTES == 0)   {
+                        reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
+                    } else if (TOTAL_VOTES == 1)    {
+                        reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
+                    } else if (TOTAL_VOTES > 1) {
+                        reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
+                    }
+                    String strVotes = reviewQuantity;
+                    String open = getString(R.string.doctor_list_votes_open);
+                    String close = getString(R.string.doctor_list_votes_close);
+                    txtVotes.setText(getString(R.string.doctor_list_votes_placeholder, strLikesPercentage, open, strVotes, close));
+
+                    /* SET THE AVERAGE KENNEL RATING */
+                    if (data.getKennelRating() != null && !data.getKennelRating().equalsIgnoreCase("null")) {
+                        Float dblRating = Float.valueOf(data.getKennelRating());
+                        kennelRating.setRating(dblRating);
+                    } else {
+                        kennelRating.setRating(0);
                     }
 
                     /* SHOW THE PROGRESS AND FETCH THE FIRST 3 REVIEWS FOR THE DOCTOR */
                     linlaReviewsProgress.setVisibility(View.VISIBLE);
                     listReviews.setVisibility(View.GONE);
                     txtAllReviews.setVisibility(View.GONE);
-                    fetchReviewCount();
                     fetchKennelReviews();
 
-                    /* FETCH THE KENNEL'S RATING */
-                    fetchKennelRatings();
-
-                    /* FETCH THE KENNEL'S FEEDBACK */
-                    fetchKennelFeedback();
+                    /* SHOW THE IMAGES PROGRESS AND FETCH THE LIST OF KENNEL IMAGES */
+                    linlaImagesProgress.setVisibility(View.VISIBLE);
+                    fetchKennelImages();
                 } else {
                     Toast.makeText(getApplicationContext(), "Failed to get required info...", Toast.LENGTH_SHORT).show();
                     finish();
@@ -341,43 +384,13 @@ public class KennelDetails extends AppCompatActivity {
         });
     }
 
-    /***** FETCH THE DOCTOR'S REVIEWS COUNT *****/
-    private void fetchReviewCount() {
-        Call<KennelReviewsCount> call = apiReview.fetchKennelReviewCount(KENNEL_ID);
-        call.enqueue(new Callback<KennelReviewsCount>() {
-            @Override
-            public void onResponse(Call<KennelReviewsCount> call, Response<KennelReviewsCount> response) {
-                KennelReviewsCount count = response.body();
-                if (count != null)  {
-                    int countReviews = Integer.parseInt(count.getTotalReviews());
-                    if (countReviews > 0)   {
-                        txtAllReviews.setText(getString(R.string.doctor_details_all_reviews_placeholder, String.valueOf(countReviews)));
-                        txtAllReviews.setVisibility(View.VISIBLE);
-                    } else {
-                        txtAllReviews.setText(getString(R.string.doctor_details_all_reviews));
-                        txtAllReviews.setVisibility(View.GONE);
-                    }
-                } else {
-                    txtAllReviews.setText(getString(R.string.doctor_details_all_reviews));
-                    txtAllReviews.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<KennelReviewsCount> call, Throwable t) {
-//                Log.e("COUNT FAILURE", t.getMessage());
-                Crashlytics.logException(t);
-            }
-        });
-    }
-
     /***** FETCH THE KENNEL'S REVIEWS *****/
     private void fetchKennelReviews() {
         Call<KennelReviews> call = apiReview.fetchKennelReviewsSubset(KENNEL_ID);
         call.enqueue(new Callback<KennelReviews>() {
             @Override
             public void onResponse(Call<KennelReviews> call, Response<KennelReviews> response) {
-//                Log.e("REVIEWS RAW", String.valueOf(response.raw()));
+                Log.e("REVIEWS RAW", String.valueOf(response.raw()));
                 if (response.body() != null && response.body().getReviews() != null)    {
                     arrReviewsSubset = response.body().getReviews();
                     if (arrReviewsSubset.size() > 0)    {
@@ -412,92 +425,39 @@ public class KennelDetails extends AppCompatActivity {
         });
     }
 
-    /** FETCH THE KENNEL'S RATING **/
-    private void fetchKennelRatings() {
-        Call<KennelRating> call = apiReview.fetchKennelRatings(KENNEL_ID);
-        call.enqueue(new Callback<KennelRating>() {
+    /** FETCH THE LIST OF KENNEL IMAGES **/
+    private void fetchKennelImages() {
+        KennelImagesAPI api = ZenApiClient.getClient().create(KennelImagesAPI.class);
+        Call<KennelImages> call = api.fetchKennelImages(KENNEL_ID);
+        call.enqueue(new Callback<KennelImages>() {
             @Override
-            public void onResponse(Call<KennelRating> call, Response<KennelRating> response) {
-                KennelRating rating = response.body();
-                if (rating != null) {
-                    String strRating = rating.getAvgKennelRating();
-                    if (strRating != null && !strRating.equalsIgnoreCase("null")) {
-                        kennelRating.setRating(Float.parseFloat(strRating));
+            public void onResponse(Call<KennelImages> call, Response<KennelImages> response) {
+                if (response.body() != null && response.body().getImages() != null) {
+                    arrImages = response.body().getImages();
+                    if (arrImages.size() > 0) {
+                        /* SET THE SERVICES ADAPTER TO THE RECYCLER VIEW */
+                        listKennelImages.setAdapter(new KennelImagesAdapter(KennelDetails.this, arrImages));
+
+                        /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY IMAGES VIEW */
+                        linlaNoImages.setVisibility(View.GONE);
+                        listKennelImages.setVisibility(View.VISIBLE);
                     } else {
-                        kennelRating.setRating(0);
+                        /* SHOW THE NO IMAGES LAYOUT */
+                        linlaNoImages.setVisibility(View.VISIBLE);
+                        listKennelImages.setVisibility(View.GONE);
                     }
                 } else {
-                    kennelRating.setRating(0);
+                    /* SHOW THE NO IMAGES LAYOUT */
+                    linlaNoImages.setVisibility(View.VISIBLE);
+                    listKennelImages.setVisibility(View.GONE);
                 }
+
+                /* HIDE THE IMAGES PROGRESS AFTER FETCHING THE DATA */
+                linlaImagesProgress.setVisibility(View.GONE);
             }
 
             @Override
-            public void onFailure(Call<KennelRating> call, Throwable t) {
-//                Log.e("RATINGS FAILURE", t.getMessage());
-                Crashlytics.logException(t);
-            }
-        });
-    }
-
-    /** FETCH THE KENNEL'S FEEDBACK **/
-    private void fetchKennelFeedback() {
-        Call<KennelReviews> callYes = apiReview.fetchPositiveKennelReviews(KENNEL_ID);
-        callYes.enqueue(new Callback<KennelReviews>() {
-            @Override
-            public void onResponse(Call<KennelReviews> call, Response<KennelReviews> response) {
-                if (response.body() != null && response.body().getReviews() != null)    {
-                    ArrayList<KennelReview> arrReview = response.body().getReviews();
-                    TOTAL_LIKES = arrReview.size();
-                    TOTAL_VOTES = TOTAL_VOTES + arrReview.size();
-
-                    /* GET THE TOTAL NUMBER OF NEGATIVE REVIEWS */
-                    Call<KennelReviews> callNo = apiReview.fetchNegativeKennelReviews(KENNEL_ID);
-                    callNo.enqueue(new Callback<KennelReviews>() {
-                        @Override
-                        public void onResponse(Call<KennelReviews> call, Response<KennelReviews> response) {
-                            if (response.body() != null && response.body().getReviews() != null)    {
-                                ArrayList<KennelReview> arrReview = response.body().getReviews();
-                                TOTAL_VOTES = TOTAL_VOTES + arrReview.size();
-
-                                /* CALCULATE THE PERCENTAGE OF LIKES */
-                                double percentLikes = ((double)TOTAL_LIKES / TOTAL_VOTES) * 100;
-                                int finalPercentLikes = (int)percentLikes;
-                                String strLikesPercentage = String.valueOf(finalPercentLikes) + "%";
-
-                                /* GET THE TOTAL NUMBER OF REVIEWS / VOTES */
-                                Resources resReviews = AppPrefs.context().getResources();
-                                String reviewQuantity = null;
-                                if (TOTAL_VOTES == 0)   {
-                                    reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
-                                } else if (TOTAL_VOTES == 1)    {
-                                    reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
-                                } else if (TOTAL_VOTES > 1) {
-                                    reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
-                                }
-                                String strVotes = reviewQuantity;
-                                String open = getString(R.string.doctor_list_votes_open);
-                                String close = getString(R.string.doctor_list_votes_close);
-                                txtVotes.setText(getString(R.string.doctor_list_votes_placeholder, strLikesPercentage, open, strVotes, close));
-                            } else {
-                                String strVotes = "0";
-                                String strLikesPercentage = "0%";
-                                String open = getString(R.string.doctor_list_votes_open);
-                                String close = getString(R.string.doctor_list_votes_close);
-                                txtVotes.setText(getString(R.string.doctor_list_votes_placeholder, strLikesPercentage, open, strVotes, close));
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<KennelReviews> call, Throwable t) {
-                            Crashlytics.logException(t);
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onFailure(Call<KennelReviews> call, Throwable t) {
-                Crashlytics.logException(t);
+            public void onFailure(Call<KennelImages> call, Throwable t) {
             }
         });
     }
@@ -505,9 +465,16 @@ public class KennelDetails extends AppCompatActivity {
     /** GET THE INCOMING DATA **/
     private void getIncomingData() {
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null && bundle.containsKey("KENNEL_ID"))  {
+        if (bundle != null
+                && bundle.containsKey("KENNEL_ID")
+                && bundle.containsKey("ORIGIN_LATITUDE")
+                && bundle.containsKey("ORIGIN_LONGITUDE"))  {
             KENNEL_ID = bundle.getString("KENNEL_ID");
-            if (KENNEL_ID != null)  {
+            ORIGIN_LATITUDE = bundle.getString("ORIGIN_LATITUDE");
+            ORIGIN_LONGITUDE = bundle.getString("ORIGIN_LONGITUDE");
+            if (KENNEL_ID != null && ORIGIN_LATITUDE != null && ORIGIN_LONGITUDE != null)  {
+                Log.e("LATITUDE", ORIGIN_LATITUDE);
+                Log.e("LONGITUDE", ORIGIN_LONGITUDE);
                 /* FETCH THE KENNEL DETAILS */
                 fetchKennelDetails();
             } else {
@@ -591,40 +558,40 @@ public class KennelDetails extends AppCompatActivity {
         return false;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        kennelMap.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        kennelMap.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        kennelMap.onStop();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        kennelMap.onDestroy();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        kennelMap.onLowMemory();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        kennelMap.onResume();
+//    }
+//
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        kennelMap.onPause();
+//    }
+//
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//        kennelMap.onStop();
+//    }
+//
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        kennelMap.onDestroy();
+//    }
+//
+//    @Override
+//    public void onLowMemory() {
+//        super.onLowMemory();
+//        kennelMap.onLowMemory();
+//    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         Bundle bundle = new Bundle(outState);
-        kennelMap.onSaveInstanceState(bundle);
+//        kennelMap.onSaveInstanceState(bundle);
         outState.putBundle("kennel_map_save_state", bundle);
         super.onSaveInstanceState(outState);
     }
@@ -751,6 +718,14 @@ public class KennelDetails extends AppCompatActivity {
         listReviews.setHasFixedSize(true);
         listReviews.setNestedScrollingEnabled(false);
         listReviews.setAdapter(new KennelReviewsAdapter(KennelDetails.this, arrReviewsSubset));
+
+        LinearLayoutManager llmKennelImages = new LinearLayoutManager(this);
+        llmKennelImages.setOrientation(LinearLayoutManager.HORIZONTAL);
+        llmKennelImages.isAutoMeasureEnabled();
+        listKennelImages.setLayoutManager(llmKennelImages);
+        listKennelImages.setHasFixedSize(true);
+        listKennelImages.setNestedScrollingEnabled(false);
+        listKennelImages.setAdapter(new KennelImagesAdapter(KennelDetails.this, arrImages));
     }
 
     @Override

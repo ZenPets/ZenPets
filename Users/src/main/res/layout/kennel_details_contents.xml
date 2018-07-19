@@ -46,9 +46,9 @@
                 android:textSize="12sp"
                 app:fontFamily="@font/roboto_regular" />
 
-            <android.support.v7.widget.AppCompatRatingBar
+            <RatingBar
                 android:id="@+id/kennelRating"
-                style="?android:attr/ratingBarStyleSmall"
+                style="@style/RatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -59,7 +59,7 @@
                 android:rating="2" />
         </LinearLayout>
 
-        <LinearLayout
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
@@ -101,7 +101,7 @@
                 app:iiv_color="@color/secondary_text"
                 app:iiv_icon="gmd-info"
                 app:iiv_size="16dp" />
-        </LinearLayout>
+        </LinearLayout>-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -219,134 +219,37 @@
                     android:textSize="14sp"
                     app:fontFamily="@font/roboto_regular" />
 
-                <com.google.android.gms.maps.MapView
-                    android:id="@+id/kennelMap"
+                <!--<FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:layout_gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="11dp"
-                    android:paddingStart="11dp"
-                    android:paddingTop="5dp"
-                    app:cameraZoom="18"
-                    app:mapType="normal" />
-            </LinearLayout>
-        </LinearLayout>
+                    android:layout_height="150dp">
 
-        <!--<LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:gravity="top|center"
-            android:orientation="horizontal">
-
-            <com.mikepenz.iconics.view.IconicsImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:padding="11dp"
-                app:iiv_color="@color/secondary_text"
-                app:iiv_icon="faw_cogs"
-                app:iiv_size="16dp" />
-
-            <LinearLayout
-                android:id="@+id/linlaTrainingModules"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="visible">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start|center"
-                    android:padding="11dp"
-                    android:text="TRAINING MODULES"
-                    android:textColor="@color/primary_text"
-                    android:textSize="15sp"
-                    app:fontFamily="@font/lato_bold" />
-
-                <LinearLayout
-                    android:id="@+id/linlaTrainingModulesProgress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <ProgressBar
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp" />
+                    <com.google.android.gms.maps.MapView
+                        android:id="@+id/kennelMap"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        app:cameraZoom="18"
+                        app:mapType="normal" />
 
                     <TextView
+                        android:id="@+id/txtKennelDistance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="start|center"
-                        android:padding="2dp"
-                        android:text="@string/common_loading"
-                        android:textColor="@color/secondary_text"
-                        android:textSize="14sp"
-                        app:fontFamily="@font/lato_regular" />
-                </LinearLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/listTrainingModules"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:cacheColorHint="@android:color/transparent"
-                    android:fadingEdge="none"
-                    android:persistentDrawingCache="scrolling"
-                    android:scrollbars="none"
-                    android:visibility="visible" />
-
-                <TextView
-                    android:id="@+id/txtAllTrainingModules"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start|center"
-                    android:paddingBottom="5dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="11dp"
-                    android:paddingStart="11dp"
-                    android:paddingTop="5dp"
-                    android:text="SEE ALL MODULES"
-                    android:textColor="@color/accent"
-                    android:textSize="15sp"
-                    app:fontFamily="@font/lato_bold" />
+                        android:layout_gravity="top|end"
+                        android:background="#CCDCDCDC"
+                        android:paddingBottom="6dp"
+                        android:paddingEnd="4dp"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp"
+                        android:paddingStart="4dp"
+                        android:paddingTop="6dp"
+                        android:text="@string/doctor_item_clinic_distance"
+                        android:textColor="@android:color/secondary_text_light"
+                        android:textSize="13sp"
+                        app:fontFamily="@font/roboto_condensed_bold" />
+                </FrameLayout>-->
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linlaNoTrainingModules"
-                android:layout_width="0dp"
-                android:layout_height="47dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start|center"
-                    android:paddingBottom="5dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="11dp"
-                    android:paddingStart="11dp"
-                    android:paddingTop="5dp"
-                    android:text="No Training Modules have been published by this Trainer yet..."
-                    android:textColor="@color/secondary_text"
-                    android:textSize="12sp" />
-            </LinearLayout>
-        </LinearLayout>-->
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -472,6 +375,122 @@
                         android:gravity="center"
                         android:padding="11dp"
                         android:text="There are no reviews for this Kennel yet..."
+                        android:textColor="@color/secondary_text"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/roboto_light" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:gravity="top"
+            android:orientation="horizontal">
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:paddingBottom="8dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="8dp"
+                app:iiv_color="@color/secondary_text"
+                app:iiv_icon="gmd_collections"
+                app:iiv_size="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    android:text="KENNEL IMAGES"
+                    android:textColor="@color/primary_text"
+                    android:textSize="15sp"
+                    app:fontFamily="@font/roboto_medium" />
+
+                <LinearLayout
+                    android:id="@+id/linlaImagesProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:padding="2dp"
+                        android:text="@string/common_loading"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/roboto_condensed_regular" />
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/listKennelImages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="15dp"
+                    android:cacheColorHint="@android:color/transparent"
+                    android:fadingEdge="none"
+                    android:persistentDrawingCache="scrolling"
+                    android:scrollbars="none"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/linlaNoImages"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:gravity="top|center"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="110dp"
+                        android:layout_marginLeft="110dp"
+                        android:layout_marginRight="110dp"
+                        android:layout_marginStart="110dp"
+                        android:layout_marginTop="5dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/empty_graphic" />
+
+                    <TextView
+                        android:id="@+id/txtEmptyImages"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:padding="11dp"
+                        android:text="No Images have been uploaded for this Kennel yet..."
                         android:textColor="@color/secondary_text"
                         android:textSize="14sp"
                         app:fontFamily="@font/roboto_light" />

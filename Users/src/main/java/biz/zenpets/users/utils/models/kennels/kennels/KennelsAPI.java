@@ -38,5 +38,8 @@ public interface KennelsAPI {
 
     /** FETCH THE KENNEL'S DETAILS **/
     @GET("fetchKennelDetails")
-    Call<Kennel> fetchKennelDetails(@Query("kennelID") String kennelID);
+    Call<Kennel> fetchKennelDetails(
+            @Query("kennelID") String kennelID,
+            @Query("originLat") String originLat,
+            @Query("originLon") String originLon);
 }

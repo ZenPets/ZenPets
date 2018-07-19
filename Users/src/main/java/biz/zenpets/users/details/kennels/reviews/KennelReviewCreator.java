@@ -107,7 +107,7 @@ public class KennelReviewCreator extends AppCompatActivity {
     /** FETCH THE KENNEL'S DETAILS **/
     private void fetchKennelDetails() {
         KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-        Call<Kennel> call = api.fetchKennelDetails(KENNEL_ID);
+        Call<Kennel> call = api.fetchKennelDetails(KENNEL_ID, null, null);
         call.enqueue(new Callback<Kennel>() {
             @Override
             public void onResponse(Call<Kennel> call, Response<Kennel> response) {

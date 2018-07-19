@@ -1,11 +1,13 @@
 package biz.zenpets.users.utils.adapters.kennels;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +17,12 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import biz.zenpets.users.R;
+import biz.zenpets.users.details.kennels.KennelDetails;
 import biz.zenpets.users.utils.adapters.kennels.promoted.PromotedAdoptionsAdapter;
 import biz.zenpets.users.utils.models.kennels.kennels.Kennel;
 import biz.zenpets.users.utils.models.kennels.promotion.Promotion;
@@ -41,13 +44,20 @@ public class NewTestKennelsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     /** THE CLINIC IMAGES ADAPTER AND ARRAY LIST **/
     private PromotedAdoptionsAdapter adapter;
 
-    public NewTestKennelsAdapter(Activity activity, ArrayList<Kennel> arrKennels) {
+    /** A LATLNG INSTANCE TO HOLD THE CURRENT COORDINATES **/
+    private LatLng LATLNG_ORIGIN;
+
+    public NewTestKennelsAdapter(Activity activity, ArrayList<Kennel> arrKennels, LatLng LATLNG_ORIGIN) {
 
         /* CAST THE ACTIVITY IN THE GLOBAL ACTIVITY INSTANCE */
         this.activity = activity;
 
         /* CAST THE CONTENTS OF THE ARRAY LIST IN THE METHOD TO THE LOCAL INSTANCE */
         this.arrKennels = arrKennels;
+
+        /* CAST THE CONTENTS OF THE LATLNG INSTANCE TO THE LOCAL INSTANCE */
+        this.LATLNG_ORIGIN = LATLNG_ORIGIN;
+        Log.e("LAT LNG", String.valueOf(LATLNG_ORIGIN));
     }
 
     @Override
@@ -109,8 +119,22 @@ public class NewTestKennelsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     vh.txtKennelLikes.setText(data.getKennelVoteStats());
 
                     /* SET THE AVERAGE KENNEL RATING */
-                    Double dblRating = Double.valueOf(data.getKennelRating());
-                    vh.kennelRating.setRating(Float.parseFloat(String.format("%.2f", dblRating, Locale.getDefault())));
+                    Float dblRating = Float.valueOf(data.getKennelRating());
+                    vh.kennelRating.setRating(dblRating);
+
+                    /* SHOW THE KENNEL DETAILS */
+                    vh.cardKennel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+//                            Log.e("LATITUDE", String.valueOf(LATLNG_ORIGIN.latitude));
+//                            Log.e("LONGITUDE", String.valueOf(LATLNG_ORIGIN.longitude));
+                            Intent intent = new Intent(activity, KennelDetails.class);
+                            intent.putExtra("KENNEL_ID", data.getKennelID());
+                            intent.putExtra("ORIGIN_LATITUDE", String.valueOf(LATLNG_ORIGIN.latitude));
+                            intent.putExtra("ORIGIN_LONGITUDE", String.valueOf(LATLNG_ORIGIN.longitude));
+                            activity.startActivity(intent);
+                        }
+                    });
 
                     /* SHOW THE KENNEL ITEM AND HIDE THE LIST OF PROMOTED ADOPTION */
                     vh.cardKennel.setVisibility(View.VISIBLE);

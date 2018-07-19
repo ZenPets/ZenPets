@@ -686,7 +686,7 @@ public class TestKennelsList extends AppCompatActivity {
                                 LATLNG_ORIGIN = new LatLng(location.getLatitude(), location.getLongitude());
 
                                 /* INSTANTIATE THE KENNELS ADAPTER */
-                                kennelsAdapter = new NewTestKennelsAdapter(TestKennelsList.this, arrKennels);
+                                kennelsAdapter = new NewTestKennelsAdapter(TestKennelsList.this, arrKennels, LATLNG_ORIGIN);
 
                                 /* CONFIGURE THE RECYCLER VIEW **/
                                 configRecycler();

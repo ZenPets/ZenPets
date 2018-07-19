@@ -89,6 +89,23 @@
                         app:layout_constraintStart_toEndOf="@+id/imgvwKennelOwnerDisplayProfile"
                         app:layout_constraintTop_toTopOf="@+id/imgvwKennelOwnerDisplayProfile" />
 
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:id="@+id/imgvwOwnerIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:adjustViewBounds="true"
+                        android:padding="11dp"
+                        app:iiv_color="@color/secondary_text"
+                        app:iiv_icon="faw_user2"
+                        app:iiv_size="16dp"
+                        app:layout_constraintStart_toEndOf="@+id/imgvwKennelOwnerDisplayProfile"
+                        app:layout_constraintTop_toBottomOf="@+id/txtKennelName" />
+
                     <TextView
                         android:id="@+id/txtKennelOwnerName"
                         android:layout_width="0dp"
@@ -97,43 +114,15 @@
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
                         android:text="KENNEL OWNER'S NAME"
                         android:textColor="@android:color/secondary_text_dark"
                         android:textSize="14sp"
                         app:fontFamily="@font/roboto_condensed_regular"
+                        app:layout_constraintBottom_toBottomOf="@+id/imgvwOwnerIcon"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imgvwKennelOwnerDisplayProfile"
-                        app:layout_constraintTop_toBottomOf="@+id/txtKennelName" />
+                        app:layout_constraintStart_toEndOf="@+id/imgvwOwnerIcon"
+                        app:layout_constraintTop_toTopOf="@+id/imgvwOwnerIcon" />
                 </android.support.constraint.ConstraintLayout>
-
-                <!--<LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:background="#A6000000"
-                    android:gravity="center|bottom"
-                    android:orientation="horizontal"
-                    android:paddingBottom="25dp"
-                    android:paddingTop="25dp">
-
-                    <TextView
-                        android:id="@+id/txtKennelName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:gravity="start|center"
-                        android:paddingBottom="5dp"
-                        android:paddingEnd="11dp"
-                        android:paddingLeft="11dp"
-                        android:paddingRight="11dp"
-                        android:paddingStart="11dp"
-                        android:paddingTop="5dp"
-                        android:text="@string/kennel_details_name"
-                        android:textColor="@android:color/primary_text_dark"
-                        android:textSize="16sp"
-                        app:fontFamily="@font/roboto_condensed_bold" />
-                </LinearLayout>-->
             </FrameLayout>
 
             <android.support.v7.widget.Toolbar

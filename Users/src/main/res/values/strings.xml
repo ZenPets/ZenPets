@@ -579,4 +579,8 @@
     <string name="module_format_group_placeholder">Pets are trained in groups of %1$s</string>
     <string name="module_fees">Training Module Fees</string>
     <string name="module_fees_placeholder">The Training Fee is: ₹ %1$s</string>
+
+    <!-- KENNEL REVIEW STRINGS -->
+    <string name="review_reply_from_label"><b>Reply from Siddharth Lele</b> on 6/6/2018</string>
+    <string name="review_reply_from_title">Replied on </string>
 </resources>

@@ -1,7 +1,6 @@
 package biz.zenpets.users.utils.adapters.kennels.reviews;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -11,9 +10,6 @@ import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.request.ImageRequest;
-import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.mikepenz.iconics.view.IconicsImageView;
 
 import java.text.SimpleDateFormat;
@@ -23,6 +19,7 @@ import java.util.Locale;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.utils.models.kennels.reviews.KennelReview;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class KennelReviewsAdapter extends RecyclerView.Adapter<KennelReviewsAdapter.ReviewsVH> {
 
@@ -47,20 +44,46 @@ public class KennelReviewsAdapter extends RecyclerView.Adapter<KennelReviewsAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ReviewsVH holder, final int position) {
+    public void onBindViewHolder(@NonNull final ReviewsVH holder, final int position) {
         KennelReview data = arrReviews.get(position);
 
-        /* SET THE USER'S DISPLAY PROFILE */
-        String userDisplayProfile = data.getUserDisplayProfile();
-        if (userDisplayProfile != null) {
-            Uri uri = Uri.parse(userDisplayProfile);
-            holder.imgvwUserDisplayProfile.setImageURI(uri);
-        } else {
-            ImageRequest request = ImageRequestBuilder
-                    .newBuilderWithResourceId(R.drawable.ic_person_black_24dp)
-                    .build();
-            holder.imgvwUserDisplayProfile.setImageURI(request.getSourceUri());
-        }
+//        /* SET THE USER'S DISPLAY PROFILE */
+//        final String userDisplayProfile = data.getUserDisplayProfile();
+//        if (userDisplayProfile != null) {
+//            Picasso.with(activity)
+//                    .load(userDisplayProfile)
+//                    .into(holder.imgvwUserDisplayProfile, new Callback() {
+//                        @Override
+//                        public void onSuccess() {
+//                        }
+//
+//                        @Override
+//                        public void onError() {
+//                            Picasso.with(activity)
+//                                    .load(userDisplayProfile)
+//                                    .error(R.drawable.ic_person_black_24dp)
+//                                    .into(holder.imgvwUserDisplayProfile, new Callback() {
+//                                        @Override
+//                                        public void onSuccess() {
+//                                        }
+//
+//                                        @Override
+//                                        public void onError() {
+//                                            Log.e("Picasso","Could not fetch image");
+//                                        }
+//                                    });
+//                        }
+//                    });
+//        }
+//        if (userDisplayProfile != null) {
+//            Uri uri = Uri.parse(userDisplayProfile);
+//            holder.imgvwUserDisplayProfile.setImageURI(uri);
+//        } else {
+//            ImageRequest request = ImageRequestBuilder
+//                    .newBuilderWithResourceId(R.drawable.ic_person_black_24dp)
+//                    .build();
+//            holder.imgvwUserDisplayProfile.setImageURI(request.getSourceUri());
+//        }
 
         /* SET THE USER NAME */
         if (data.getUserName() != null) {
@@ -110,7 +133,7 @@ public class KennelReviewsAdapter extends RecyclerView.Adapter<KennelReviewsAdap
 
     class ReviewsVH extends RecyclerView.ViewHolder	{
 
-        final SimpleDraweeView imgvwUserDisplayProfile;
+        final CircleImageView imgvwUserDisplayProfile;
         final TextView txtUserName;
         final RatingBar kennelRating;
         final TextView txtTimestamp;
