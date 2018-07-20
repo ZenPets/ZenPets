@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -32,9 +33,16 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.crashlytics.android.Crashlytics;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.request.ImageRequest;
-import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -58,6 +66,7 @@ import biz.zenpets.users.utils.models.kennels.reviews.KennelReviewsAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -110,8 +119,8 @@ public class KennelDetails extends AppCompatActivity {
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.appBar) AppBarLayout appBar;
     @BindView(R.id.toolbarLayout) CollapsingToolbarLayout toolbarLayout;
-    @BindView(R.id.imgvwKennelCoverPhoto) SimpleDraweeView imgvwKennelCoverPhoto;
-    @BindView(R.id.imgvwKennelOwnerDisplayProfile) SimpleDraweeView imgvwKennelOwnerDisplayProfile;
+    @BindView(R.id.imgvwKennelCoverPhoto) ImageView imgvwKennelCoverPhoto;
+    @BindView(R.id.imgvwKennelOwnerDisplayProfile) CircleImageView imgvwKennelOwnerDisplayProfile;
     @BindView(R.id.txtKennelName) TextView txtKennelName;
     @BindView(R.id.txtKennelOwnerName) TextView txtKennelOwnerName;
     @BindView(R.id.txtVotes) TextView txtVotes;
@@ -121,8 +130,8 @@ public class KennelDetails extends AppCompatActivity {
     @BindView(R.id.linlaPhoneNumber2) LinearLayout linlaPhoneNumber2;
     @BindView(R.id.txtPhoneNumber2) TextView txtPhoneNumber2;
     @BindView(R.id.txtKennelAddress) TextView txtKennelAddress;
-//    @BindView(R.id.kennelMap) MapView kennelMap;
-//    @BindView(R.id.txtKennelDistance) TextView txtKennelDistance;
+    @BindView(R.id.kennelMap) MapView kennelMap;
+    @BindView(R.id.txtKennelDistance) TextView txtKennelDistance;
     @BindView(R.id.linlaReviewsProgress) LinearLayout linlaReviewsProgress;
     @BindView(R.id.listReviews) RecyclerView listReviews;
     @BindView(R.id.txtAllReviews) TextView txtAllReviews;
@@ -148,9 +157,9 @@ public class KennelDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.kennel_details);
         ButterKnife.bind(this);
-//        kennelMap.onCreate(savedInstanceState != null ? savedInstanceState.getBundle("kennel_map_save_state") : null);
-//        kennelMap.onResume();
-//        kennelMap.setClickable(false);
+        kennelMap.onCreate(savedInstanceState != null ? savedInstanceState.getBundle("kennel_map_save_state") : null);
+        kennelMap.onResume();
+        kennelMap.setClickable(false);
 
         /* GET THE USER'S ID */
         USER_ID = getApp().getUserID();
@@ -195,22 +204,43 @@ public class KennelDetails extends AppCompatActivity {
         call.enqueue(new Callback<Kennel>() {
             @Override
             public void onResponse(Call<Kennel> call, Response<Kennel> response) {
-                Log.e("RAW RESPONSE", String.valueOf(response.raw()));
+//                Log.e("RAW RESPONSE", String.valueOf(response.raw()));
                 Kennel data = response.body();
                 if (data != null)   {
 
                     /* GET AND SET THE KENNEL'S COVER PHOTO */
                     KENNEL_COVER_PHOTO = data.getKennelCoverPhoto();
-                    if (KENNEL_COVER_PHOTO != null
-                            && !KENNEL_COVER_PHOTO.equalsIgnoreCase("")
-                            && !KENNEL_COVER_PHOTO.equalsIgnoreCase("null"))    {
-                        Uri uriClinic = Uri.parse(KENNEL_COVER_PHOTO);
-                        imgvwKennelCoverPhoto.setImageURI(uriClinic);
-                    } else {
-                        ImageRequest request = ImageRequestBuilder
-                                .newBuilderWithResourceId(R.drawable.ic_business_black_24dp)
-                                .build();
-                        imgvwKennelCoverPhoto.setImageURI(request.getSourceUri());
+//                    Log.e("COVER PHOTO", KENNEL_COVER_PHOTO);
+                    if (KENNEL_COVER_PHOTO != null) {
+                        Picasso.with(KennelDetails.this)
+                                .load(KENNEL_COVER_PHOTO)
+                                .networkPolicy(NetworkPolicy.OFFLINE)
+                                .fit()
+                                .centerCrop()
+                                .into(imgvwKennelCoverPhoto, new com.squareup.picasso.Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        Picasso.with(KennelDetails.this)
+                                                .load(KENNEL_COVER_PHOTO)
+                                                .fit()
+                                                .centerCrop()
+                                                .error(R.drawable.ic_business_black_24dp)
+                                                .into(imgvwKennelCoverPhoto, new com.squareup.picasso.Callback() {
+                                                    @Override
+                                                    public void onSuccess() {
+                                                    }
+
+                                                    @Override
+                                                    public void onError() {
+//                                                        Log.e("Picasso","Could not fetch image");
+                                                    }
+                                                });
+                                    }
+                                });
                     }
 
                     /* GET AND SET THE KENNEL NAME */
@@ -226,16 +256,36 @@ public class KennelDetails extends AppCompatActivity {
 
                     /* GET AND SET THE KENNEL OWNER'S DISPLAY PROFILE */
                     KENNEL_OWNER_DISPLAY_PROFILE = data.getKennelOwnerDisplayProfile();
-                    if (KENNEL_OWNER_DISPLAY_PROFILE != null
-                            && !KENNEL_OWNER_DISPLAY_PROFILE.equalsIgnoreCase("")
-                            && !KENNEL_OWNER_DISPLAY_PROFILE.equalsIgnoreCase("null"))    {
-                        Uri uriProfile = Uri.parse(KENNEL_OWNER_DISPLAY_PROFILE);
-                        imgvwKennelOwnerDisplayProfile.setImageURI(uriProfile);
-                    } else {
-                        ImageRequest request = ImageRequestBuilder
-                                .newBuilderWithResourceId(R.drawable.ic_person_black_24dp)
-                                .build();
-                        imgvwKennelOwnerDisplayProfile.setImageURI(request.getSourceUri());
+                    if (KENNEL_OWNER_DISPLAY_PROFILE != null) {
+                        Picasso.with(KennelDetails.this)
+                                .load(KENNEL_OWNER_DISPLAY_PROFILE)
+                                .networkPolicy(NetworkPolicy.OFFLINE)
+                                .fit()
+                                .centerCrop()
+                                .into(imgvwKennelOwnerDisplayProfile, new com.squareup.picasso.Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        Picasso.with(KennelDetails.this)
+                                                .load(KENNEL_OWNER_DISPLAY_PROFILE)
+                                                .fit()
+                                                .centerCrop()
+                                                .error(R.drawable.ic_person_black_24dp)
+                                                .into(imgvwKennelOwnerDisplayProfile, new com.squareup.picasso.Callback() {
+                                                    @Override
+                                                    public void onSuccess() {
+                                                    }
+
+                                                    @Override
+                                                    public void onError() {
+//                                                        Log.e("Picasso","Could not fetch image");
+                                                    }
+                                                });
+                                    }
+                                });
                     }
 
                     /* GET AND SET THE KENNEL OWNER'S NAME */
@@ -276,51 +326,51 @@ public class KennelDetails extends AppCompatActivity {
                     /* GET AND SET THE CLINIC LATITUDE AND LONGITUDE ON THE MAP */
                     KENNEL_LATITUDE = Double.valueOf(data.getKennelLatitude());
                     KENNEL_LONGITUDE = Double.valueOf(data.getKennelLongitude());
-//                    if (KENNEL_LATITUDE != null && KENNEL_LONGITUDE != null) {
-//                        final LatLng latLng = new LatLng(KENNEL_LATITUDE, KENNEL_LONGITUDE);
-//                        kennelMap.getMapAsync(new OnMapReadyCallback() {
-//                            @Override
-//                            public void onMapReady(GoogleMap googleMap) {
-//                                googleMap.getUiSettings().setMapToolbarEnabled(false);
-//                                googleMap.getUiSettings().setAllGesturesEnabled(false);
-//                                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-//                                googleMap.setBuildingsEnabled(true);
-//                                googleMap.setTrafficEnabled(false);
-//                                googleMap.setIndoorEnabled(false);
-//                                MarkerOptions options = new MarkerOptions();
-//                                options.position(latLng);
-//                                options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-//                                Marker mMarker = googleMap.addMarker(options);
-//                                googleMap.addMarker(options);
-//
-//                                /* MOVE THE MAP CAMERA */
-//                                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mMarker.getPosition(), 10));
-//                                googleMap.animateCamera(CameraUpdateFactory.zoomTo(18), 2000, null);
-//
-//                                /* SHOW THE MAP DETAILS AND DIRECTIONS */
-////                                googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-////                                    @Override
-////                                    public void onMapClick(LatLng latLng) {
-////                                        Intent intent = new Intent(getApplicationContext(), MapDetails.class);
-////                                        intent.putExtra("DOCTOR_ID", DOCTOR_ID);
-////                                        intent.putExtra("DOCTOR_NAME", DOCTOR_PREFIX + " " + DOCTOR_NAME);
-////                                        intent.putExtra("KENNEL_PHONE_NUMBER_1", KENNEL_PHONE_NUMBER_1);
-////                                        intent.putExtra("CLINIC_ID", CLINIC_ID);
-////                                        intent.putExtra("CLINIC_NAME", CLINIC_NAME);
-////                                        intent.putExtra("CLINIC_LATITUDE", KENNEL_LATITUDE);
-////                                        intent.putExtra("CLINIC_LONGITUDE", KENNEL_LONGITUDE);
-////                                        intent.putExtra("CLINIC_ADDRESS", CLINIC_ADDRESS);
-////                                        startActivity(intent);
-////                                    }
-////                                });
-//                            }
-//                        });
-//                    }
+                    if (KENNEL_LATITUDE != null && KENNEL_LONGITUDE != null) {
+                        final LatLng latLng = new LatLng(KENNEL_LATITUDE, KENNEL_LONGITUDE);
+                        kennelMap.getMapAsync(new OnMapReadyCallback() {
+                            @Override
+                            public void onMapReady(GoogleMap googleMap) {
+                                googleMap.getUiSettings().setMapToolbarEnabled(false);
+                                googleMap.getUiSettings().setAllGesturesEnabled(false);
+                                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                                googleMap.setBuildingsEnabled(true);
+                                googleMap.setTrafficEnabled(false);
+                                googleMap.setIndoorEnabled(false);
+                                MarkerOptions options = new MarkerOptions();
+                                options.position(latLng);
+                                options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                                Marker mMarker = googleMap.addMarker(options);
+                                googleMap.addMarker(options);
 
-//                    /* GET THE KENNEL DISTANCE */
-//                    KENNEL_DISTANCE = data.getKennelDistance();
-//                    String strTilde = getString(R.string.generic_tilde);
-//                    txtKennelDistance.setText(getString(R.string.doctor_list_clinic_distance_placeholder, strTilde, KENNEL_DISTANCE));
+                                /* MOVE THE MAP CAMERA */
+                                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mMarker.getPosition(), 10));
+                                googleMap.animateCamera(CameraUpdateFactory.zoomTo(18), 2000, null);
+
+                                /* SHOW THE MAP DETAILS AND DIRECTIONS */
+//                                googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+//                                    @Override
+//                                    public void onMapClick(LatLng latLng) {
+//                                        Intent intent = new Intent(getApplicationContext(), MapDetails.class);
+//                                        intent.putExtra("DOCTOR_ID", DOCTOR_ID);
+//                                        intent.putExtra("DOCTOR_NAME", DOCTOR_PREFIX + " " + DOCTOR_NAME);
+//                                        intent.putExtra("KENNEL_PHONE_NUMBER_1", KENNEL_PHONE_NUMBER_1);
+//                                        intent.putExtra("CLINIC_ID", CLINIC_ID);
+//                                        intent.putExtra("CLINIC_NAME", CLINIC_NAME);
+//                                        intent.putExtra("CLINIC_LATITUDE", KENNEL_LATITUDE);
+//                                        intent.putExtra("CLINIC_LONGITUDE", KENNEL_LONGITUDE);
+//                                        intent.putExtra("CLINIC_ADDRESS", CLINIC_ADDRESS);
+//                                        startActivity(intent);
+//                                    }
+//                                });
+                            }
+                        });
+                    }
+
+                    /* GET THE KENNEL DISTANCE */
+                    KENNEL_DISTANCE = data.getKennelDistance();
+                    String strTilde = getString(R.string.generic_tilde);
+                    txtKennelDistance.setText(getString(R.string.doctor_list_clinic_distance_placeholder, strTilde, KENNEL_DISTANCE));
 
                     /* GET THE REVIEW COUNT */
                     String countReviews = data.getKennelReviews();
@@ -360,16 +410,6 @@ public class KennelDetails extends AppCompatActivity {
                     } else {
                         kennelRating.setRating(0);
                     }
-
-                    /* SHOW THE PROGRESS AND FETCH THE FIRST 3 REVIEWS FOR THE DOCTOR */
-                    linlaReviewsProgress.setVisibility(View.VISIBLE);
-                    listReviews.setVisibility(View.GONE);
-                    txtAllReviews.setVisibility(View.GONE);
-                    fetchKennelReviews();
-
-                    /* SHOW THE IMAGES PROGRESS AND FETCH THE LIST OF KENNEL IMAGES */
-                    linlaImagesProgress.setVisibility(View.VISIBLE);
-                    fetchKennelImages();
                 } else {
                     Toast.makeText(getApplicationContext(), "Failed to get required info...", Toast.LENGTH_SHORT).show();
                     finish();
@@ -473,10 +513,20 @@ public class KennelDetails extends AppCompatActivity {
             ORIGIN_LATITUDE = bundle.getString("ORIGIN_LATITUDE");
             ORIGIN_LONGITUDE = bundle.getString("ORIGIN_LONGITUDE");
             if (KENNEL_ID != null && ORIGIN_LATITUDE != null && ORIGIN_LONGITUDE != null)  {
-                Log.e("LATITUDE", ORIGIN_LATITUDE);
-                Log.e("LONGITUDE", ORIGIN_LONGITUDE);
+//                Log.e("LATITUDE", ORIGIN_LATITUDE);
+//                Log.e("LONGITUDE", ORIGIN_LONGITUDE);
                 /* FETCH THE KENNEL DETAILS */
                 fetchKennelDetails();
+
+                /* SHOW THE PROGRESS AND FETCH THE FIRST 3 REVIEWS FOR THE DOCTOR */
+                linlaReviewsProgress.setVisibility(View.VISIBLE);
+                listReviews.setVisibility(View.GONE);
+                txtAllReviews.setVisibility(View.GONE);
+                fetchKennelReviews();
+
+                /* SHOW THE IMAGES PROGRESS AND FETCH THE LIST OF KENNEL IMAGES */
+                linlaImagesProgress.setVisibility(View.VISIBLE);
+                fetchKennelImages();
             } else {
                 Toast.makeText(getApplicationContext(), "Failed to get required info...", Toast.LENGTH_SHORT).show();
                 finish();
@@ -558,40 +608,40 @@ public class KennelDetails extends AppCompatActivity {
         return false;
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        kennelMap.onResume();
-//    }
-//
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//        kennelMap.onPause();
-//    }
-//
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//        kennelMap.onStop();
-//    }
-//
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        kennelMap.onDestroy();
-//    }
-//
-//    @Override
-//    public void onLowMemory() {
-//        super.onLowMemory();
-//        kennelMap.onLowMemory();
-//    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        kennelMap.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        kennelMap.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        kennelMap.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        kennelMap.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        kennelMap.onLowMemory();
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         Bundle bundle = new Bundle(outState);
-//        kennelMap.onSaveInstanceState(bundle);
+        kennelMap.onSaveInstanceState(bundle);
         outState.putBundle("kennel_map_save_state", bundle);
         super.onSaveInstanceState(outState);
     }
@@ -719,10 +769,10 @@ public class KennelDetails extends AppCompatActivity {
         listReviews.setNestedScrollingEnabled(false);
         listReviews.setAdapter(new KennelReviewsAdapter(KennelDetails.this, arrReviewsSubset));
 
-        LinearLayoutManager llmKennelImages = new LinearLayoutManager(this);
-        llmKennelImages.setOrientation(LinearLayoutManager.HORIZONTAL);
-        llmKennelImages.isAutoMeasureEnabled();
-        listKennelImages.setLayoutManager(llmKennelImages);
+        LinearLayoutManager llmClinicImages = new LinearLayoutManager(this);
+        llmClinicImages.setOrientation(LinearLayoutManager.HORIZONTAL);
+        llmClinicImages.isAutoMeasureEnabled();
+        listKennelImages.setLayoutManager(llmClinicImages);
         listKennelImages.setHasFixedSize(true);
         listKennelImages.setNestedScrollingEnabled(false);
         listKennelImages.setAdapter(new KennelImagesAdapter(KennelDetails.this, arrImages));

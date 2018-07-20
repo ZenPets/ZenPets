@@ -219,7 +219,7 @@
                     android:textSize="14sp"
                     app:fontFamily="@font/roboto_regular" />
 
-                <!--<FrameLayout
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="150dp">
 
@@ -247,7 +247,7 @@
                         android:textColor="@android:color/secondary_text_light"
                         android:textSize="13sp"
                         app:fontFamily="@font/roboto_condensed_bold" />
-                </FrameLayout>-->
+                </FrameLayout>
             </LinearLayout>
         </LinearLayout>
 
@@ -299,7 +299,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <ProgressBar
                         android:layout_width="wrap_content"
@@ -351,7 +351,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="top|center"
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -430,7 +430,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <ProgressBar
                         android:layout_width="wrap_content"
@@ -467,7 +467,7 @@
                     android:layout_marginBottom="15dp"
                     android:gravity="top|center"
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="wrap_content"

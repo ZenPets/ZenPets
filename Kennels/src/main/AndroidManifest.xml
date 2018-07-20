@@ -91,6 +91,10 @@
 
         <!-- REVIEWS -->
         <activity
+            android:name=".reviews.ReviewsList"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
             android:name=".details.review.ReviewDetails"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />

@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import biz.zenpets.kennels.R;
 import biz.zenpets.kennels.kennels.KennelsList;
+import biz.zenpets.kennels.reviews.ReviewsList;
 import biz.zenpets.kennels.utils.TypefaceSpan;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -30,6 +31,8 @@ public class HomeFragment extends Fragment {
 
     /** SHOW THE LIST OF REVIEWS **/
     @OnClick(R.id.linlaReviews) void showReviews()  {
+        Intent intent = new Intent(getActivity(), ReviewsList.class);
+        startActivity(intent);
     }
 
     /** SHOW THE LIST OF CLIENTS **/

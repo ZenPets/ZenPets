@@ -117,7 +117,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
                 && !kennelReplyStatus.equalsIgnoreCase("")
                 && !kennelReplyStatus.equalsIgnoreCase("null"))    {
             if (kennelReplyStatus.equalsIgnoreCase("0"))    {
-                holder.imgvwPostReply.setVisibility(View.VISIBLE);
+//                holder.imgvwPostReply.setVisibility(View.VISIBLE);
                 holder.txtReplyStatus.setVisibility(View.GONE);
                 holder.txtReply.setVisibility(View.GONE);
                 holder.imgvwEditReply.setVisibility(View.GONE);
@@ -132,25 +132,25 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
                 builder.append(replyTimestamp);
                 holder.txtReplyStatus.setText(builder);
                 holder.txtReply.setText(replyText);
-                holder.imgvwPostReply.setVisibility(View.GONE);
+//                holder.imgvwPostReply.setVisibility(View.GONE);
                 holder.txtReplyStatus.setVisibility(View.VISIBLE);
                 holder.txtReply.setVisibility(View.VISIBLE);
                 holder.imgvwEditReply.setVisibility(View.VISIBLE);
             }
         } else {
-            holder.imgvwPostReply.setVisibility(View.VISIBLE);
+//            holder.imgvwPostReply.setVisibility(View.VISIBLE);
             holder.txtReplyStatus.setVisibility(View.GONE);
             holder.txtReply.setVisibility(View.GONE);
             holder.imgvwEditReply.setVisibility(View.GONE);
         }
 
-        /* POST A REPLY */
-        holder.imgvwPostReply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                postReply(data.getKennelReviewID(), position);
-            }
-        });
+//        /* POST A REPLY */
+//        holder.imgvwPostReply.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                postReply(data.getKennelReviewID(), position);
+//            }
+//        });
 
         /* EDIT A REPLY */
         holder.imgvwEditReply.setOnClickListener(new View.OnClickListener() {
@@ -277,7 +277,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
         TextView txtTimestamp;
         IconicsImageView imgvwLikeStatus;
         TextView txtKennelExperience;
-        IconicsImageView imgvwPostReply;
+//        IconicsImageView imgvwPostReply;
         TextView txtReplyStatus;
         TextView txtReply;
         IconicsImageView imgvwEditReply;
@@ -291,7 +291,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
             txtTimestamp = v.findViewById(R.id.txtTimestamp);
             imgvwLikeStatus = v.findViewById(R.id.imgvwLikeStatus);
             txtKennelExperience = v.findViewById(R.id.txtKennelExperience);
-            imgvwPostReply = v.findViewById(R.id.imgvwPostReply);
+//            imgvwPostReply = v.findViewById(R.id.imgvwPostReply);
             txtReplyStatus = v.findViewById(R.id.txtReplyStatus);
             txtReply = v.findViewById(R.id.txtReply);
             imgvwEditReply = v.findViewById(R.id.imgvwEditReply);

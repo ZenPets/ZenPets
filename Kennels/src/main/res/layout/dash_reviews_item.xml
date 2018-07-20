@@ -141,7 +141,7 @@
                 app:layout_constraintStart_toStartOf="@+id/txtReplyStatus"
                 app:layout_constraintTop_toBottomOf="@+id/txtReplyStatus" />
 
-            <com.mikepenz.iconics.view.IconicsImageView
+            <!--<com.mikepenz.iconics.view.IconicsImageView
                 android:id="@+id/imgvwPostReply"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -155,6 +155,27 @@
                 app:iiv_color="@color/secondary_text"
                 app:iiv_icon="faw_reply"
                 app:iiv_size="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txtReplyStatus" />-->
+
+            <TextView
+                android:id="@+id/txtPostReply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_reply_black_16dp"
+                android:drawablePadding="6dp"
+                android:drawableRight="@drawable/ic_reply_black_16dp"
+                android:gravity="end|center"
+                android:paddingBottom="5dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="4dp"
+                android:text="Post a reply"
+                android:textColor="@color/secondary_text"
+                android:textSize="12sp"
+                app:fontFamily="@font/roboto_regular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/txtReplyStatus" />
 

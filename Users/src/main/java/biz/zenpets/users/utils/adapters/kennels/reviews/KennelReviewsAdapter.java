@@ -1,9 +1,13 @@
 package biz.zenpets.users.utils.adapters.kennels.reviews;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +15,9 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.mikepenz.iconics.view.IconicsImageView;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,45 +52,40 @@ public class KennelReviewsAdapter extends RecyclerView.Adapter<KennelReviewsAdap
 
     @Override
     public void onBindViewHolder(@NonNull final ReviewsVH holder, final int position) {
-        KennelReview data = arrReviews.get(position);
+        final KennelReview data = arrReviews.get(position);
 
-//        /* SET THE USER'S DISPLAY PROFILE */
-//        final String userDisplayProfile = data.getUserDisplayProfile();
-//        if (userDisplayProfile != null) {
-//            Picasso.with(activity)
-//                    .load(userDisplayProfile)
-//                    .into(holder.imgvwUserDisplayProfile, new Callback() {
-//                        @Override
-//                        public void onSuccess() {
-//                        }
-//
-//                        @Override
-//                        public void onError() {
-//                            Picasso.with(activity)
-//                                    .load(userDisplayProfile)
-//                                    .error(R.drawable.ic_person_black_24dp)
-//                                    .into(holder.imgvwUserDisplayProfile, new Callback() {
-//                                        @Override
-//                                        public void onSuccess() {
-//                                        }
-//
-//                                        @Override
-//                                        public void onError() {
+        /* SET THE USER'S DISPLAY PROFILE */
+        final String userDisplayProfile = data.getUserDisplayProfile();
+        if (userDisplayProfile != null) {
+            Picasso.with(activity)
+                    .load(userDisplayProfile)
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .noFade()
+                    .resize(400, 400)
+                    .into(holder.imgvwUserDisplayProfile, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                        }
+
+                        @Override
+                        public void onError() {
+                            Picasso.with(activity)
+                                    .load(userDisplayProfile)
+                                    .noFade()
+                                    .error(R.drawable.ic_person_black_24dp)
+                                    .into(holder.imgvwUserDisplayProfile, new Callback() {
+                                        @Override
+                                        public void onSuccess() {
+                                        }
+
+                                        @Override
+                                        public void onError() {
 //                                            Log.e("Picasso","Could not fetch image");
-//                                        }
-//                                    });
-//                        }
-//                    });
-//        }
-//        if (userDisplayProfile != null) {
-//            Uri uri = Uri.parse(userDisplayProfile);
-//            holder.imgvwUserDisplayProfile.setImageURI(uri);
-//        } else {
-//            ImageRequest request = ImageRequestBuilder
-//                    .newBuilderWithResourceId(R.drawable.ic_person_black_24dp)
-//                    .build();
-//            holder.imgvwUserDisplayProfile.setImageURI(request.getSourceUri());
-//        }
+                                        }
+                                    });
+                        }
+                    });
+        }
 
         /* SET THE USER NAME */
         if (data.getUserName() != null) {
@@ -118,6 +120,33 @@ public class KennelReviewsAdapter extends RecyclerView.Adapter<KennelReviewsAdap
         if (data.getKennelExperience() != null) {
             holder.txtKennelExperience.setText(data.getKennelExperience());
         }
+
+        /* CHECK IF A REPLY HAS BEEN POSTED */
+        String kennelReplyStatus = data.getKennelReplyStatus();
+        if (kennelReplyStatus != null
+                && !kennelReplyStatus.equalsIgnoreCase("")
+                && !kennelReplyStatus.equalsIgnoreCase("null"))    {
+            if (kennelReplyStatus.equalsIgnoreCase("0"))    {
+                holder.txtReplyStatus.setVisibility(View.GONE);
+                holder.txtReply.setVisibility(View.GONE);
+            } else if (kennelReplyStatus.equalsIgnoreCase("1")) {
+                String replyText = data.getKennelReplyText();
+                Date dateReply = new Date(Long.parseLong(data.getKennelReplyPublished()) * 1000L);
+                SimpleDateFormat sdfReply = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                String replyTimestamp = sdfReply.format(dateReply);
+                String strReplyFrom = activity.getString(R.string.review_reply_from_title) + " ";
+                SpannableStringBuilder builder = new SpannableStringBuilder(strReplyFrom);
+                builder.setSpan(new StyleSpan(Typeface.BOLD), 0, strReplyFrom.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                builder.append(replyTimestamp);
+                holder.txtReplyStatus.setText(builder);
+                holder.txtReply.setText(replyText);
+                holder.txtReplyStatus.setVisibility(View.VISIBLE);
+                holder.txtReply.setVisibility(View.VISIBLE);
+            }
+        } else {
+            holder.txtReplyStatus.setVisibility(View.GONE);
+            holder.txtReply.setVisibility(View.GONE);
+        }
     }
 
     @NonNull
@@ -133,12 +162,14 @@ public class KennelReviewsAdapter extends RecyclerView.Adapter<KennelReviewsAdap
 
     class ReviewsVH extends RecyclerView.ViewHolder	{
 
-        final CircleImageView imgvwUserDisplayProfile;
-        final TextView txtUserName;
-        final RatingBar kennelRating;
-        final TextView txtTimestamp;
-        final IconicsImageView imgvwLikeStatus;
-        final TextView txtKennelExperience;
+        CircleImageView imgvwUserDisplayProfile;
+        TextView txtUserName;
+        RatingBar kennelRating;
+        TextView txtTimestamp;
+        IconicsImageView imgvwLikeStatus;
+        TextView txtKennelExperience;
+        TextView txtReplyStatus;
+        TextView txtReply;
 
         ReviewsVH(View v) {
             super(v);
@@ -149,6 +180,8 @@ public class KennelReviewsAdapter extends RecyclerView.Adapter<KennelReviewsAdap
             txtTimestamp = v.findViewById(R.id.txtTimestamp);
             imgvwLikeStatus = v.findViewById(R.id.imgvwLikeStatus);
             txtKennelExperience = v.findViewById(R.id.txtKennelExperience);
+            txtReplyStatus = v.findViewById(R.id.txtReplyStatus);
+            txtReply = v.findViewById(R.id.txtReply);
         }
     }
 }

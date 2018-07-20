@@ -3,10 +3,11 @@ package biz.zenpets.users.utils.models.kennels.reviews;
 import com.google.gson.annotations.SerializedName;
 
 public class KennelReview {
-
     @SerializedName("error") private Boolean error;
+    @SerializedName("message") private String message;
     @SerializedName("kennelReviewID") private String kennelReviewID;
     @SerializedName("kennelID") private String kennelID;
+    @SerializedName("kennelOwnerName") private String kennelOwnerName;
     @SerializedName("kennelName") private String kennelName;
     @SerializedName("kennelCoverPhoto") private String kennelCoverPhoto;
     @SerializedName("userID") private String userID;
@@ -18,7 +19,8 @@ public class KennelReview {
     @SerializedName("kennelReviewTimestamp") private String kennelReviewTimestamp;
     @SerializedName("kennelReplyStatus") private String kennelReplyStatus;
     @SerializedName("kennelReplyText") private String kennelReplyText;
-    @SerializedName("kennelReplyTimestamp") private String kennelReplyTimestamp;
+    @SerializedName("kennelReplyPublished") private String kennelReplyPublished;
+    @SerializedName("kennelReplyUpdated") private String kennelReplyUpdated;
 
     public Boolean getError() {
         return error;
@@ -26,6 +28,14 @@ public class KennelReview {
 
     public void setError(Boolean error) {
         this.error = error;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public String getKennelReviewID() {
@@ -42,6 +52,14 @@ public class KennelReview {
 
     public void setKennelID(String kennelID) {
         this.kennelID = kennelID;
+    }
+
+    public String getKennelOwnerName() {
+        return kennelOwnerName;
+    }
+
+    public void setKennelOwnerName(String kennelOwnerName) {
+        this.kennelOwnerName = kennelOwnerName;
     }
 
     public String getKennelName() {
@@ -132,11 +150,19 @@ public class KennelReview {
         this.kennelReplyText = kennelReplyText;
     }
 
-    public String getKennelReplyTimestamp() {
-        return kennelReplyTimestamp;
+    public String getKennelReplyPublished() {
+        return kennelReplyPublished;
     }
 
-    public void setKennelReplyTimestamp(String kennelReplyTimestamp) {
-        this.kennelReplyTimestamp = kennelReplyTimestamp;
+    public void setKennelReplyPublished(String kennelReplyPublished) {
+        this.kennelReplyPublished = kennelReplyPublished;
+    }
+
+    public String getKennelReplyUpdated() {
+        return kennelReplyUpdated;
+    }
+
+    public void setKennelReplyUpdated(String kennelReplyUpdated) {
+        this.kennelReplyUpdated = kennelReplyUpdated;
     }
 }

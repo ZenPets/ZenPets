@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/zen_toolbar" />
+
     <Spinner
         android:id="@+id/spnKennels"
         android:layout_width="match_parent"

@@ -1,15 +1,15 @@
 package biz.zenpets.users.utils.adapters.kennels.images;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.request.ImageRequest;
-import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -43,15 +43,37 @@ public class KennelImagesAdapter extends RecyclerView.Adapter<KennelImagesAdapte
         final KennelImage data = arrImages.get(position);
 
         /* SET THE KENNEL IMAGE **/
-        String kennelImageURL = data.getKennelImageURL();
+        final String kennelImageURL = data.getKennelImageURL();
         if (kennelImageURL != null) {
-            Uri uri = Uri.parse(kennelImageURL);
-            holder.imgvwKennelImage.setImageURI(uri);
-        } else {
-            ImageRequest request = ImageRequestBuilder
-                    .newBuilderWithResourceId(R.drawable.ic_business_black_48dp)
-                    .build();
-            holder.imgvwKennelImage.setImageURI(request.getSourceUri());
+            Picasso.with(activity)
+                    .load(kennelImageURL)
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .fit()
+                    .centerCrop()
+                    .into(holder.imgvwKennelImage, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                        }
+
+                        @Override
+                        public void onError() {
+                            Picasso.with(activity)
+                                    .load(kennelImageURL)
+                                    .fit()
+                                    .centerCrop()
+                                    .error(R.drawable.ic_person_black_24dp)
+                                    .into(holder.imgvwKennelImage, new Callback() {
+                                        @Override
+                                        public void onSuccess() {
+                                        }
+
+                                        @Override
+                                        public void onError() {
+//                                            Log.e("Picasso","Could not fetch image");
+                                        }
+                                    });
+                        }
+                    });
         }
     }
 
@@ -66,7 +88,7 @@ public class KennelImagesAdapter extends RecyclerView.Adapter<KennelImagesAdapte
     }
 
     class ImagesVH extends RecyclerView.ViewHolder   {
-        final SimpleDraweeView imgvwKennelImage;
+        final ImageView imgvwKennelImage;
 
         ImagesVH(View v) {
             super(v);
