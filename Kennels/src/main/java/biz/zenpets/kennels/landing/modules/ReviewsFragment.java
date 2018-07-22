@@ -53,10 +53,10 @@ public class ReviewsFragment extends Fragment {
     String KENNEL_ID = null;
 
     /** AN ARRAY LIST TO STORE THE LIST OF KENNELS **/
-    ReviewsAdapter reviewsAdapter;
     ArrayList<Kennel> arrKennels = new ArrayList<>();
 
     /** THE REVIEWS ADAPTER AND ARRAY LISTS **/
+    ReviewsAdapter reviewsAdapter;
     private ArrayList<Review> arrReviews = new ArrayList<>();
 
     /** CAST THE LAYOUT ELEMENTS **/
