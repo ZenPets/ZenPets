@@ -64,7 +64,7 @@
                 android:stepSize="1" />
 
             <TextView
-                android:id="@+id/txtTimestamp"
+                android:id="@+id/txtTimeStamp"
                 app:layout_constraintBottom_toBottomOf="@+id/kennelRating"
                 app:layout_constraintEnd_toStartOf="@+id/imgvwLikeStatus"
                 app:layout_constraintStart_toEndOf="@+id/kennelRating"

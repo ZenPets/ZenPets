@@ -2,15 +2,22 @@ package biz.zenpets.kennels.utils.adapters.enquiries;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import biz.zenpets.kennels.R;
 import biz.zenpets.kennels.utils.models.enquiries.Enquiry;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class KennelEnquiriesAdapter extends RecyclerView.Adapter<KennelEnquiriesAdapter.EnquiriesVH> {
 
@@ -38,11 +45,49 @@ public class KennelEnquiriesAdapter extends RecyclerView.Adapter<KennelEnquiries
     public void onBindViewHolder(@NonNull final EnquiriesVH holder, int position) {
         final Enquiry data = arrEnquiries.get(position);
 
+        /* SET THE USER'S DISPLAY PROFILE */
+        final String userDisplayProfile = data.getUserDisplayProfile();
+        if (userDisplayProfile != null) {
+            Picasso.with(activity)
+                    .load(userDisplayProfile)
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .noFade()
+                    .resize(400, 400)
+                    .into(holder.imgvwUserDisplayProfile, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                        }
+
+                        @Override
+                        public void onError() {
+                            Picasso.with(activity)
+                                    .load(userDisplayProfile)
+                                    .noFade()
+                                    .error(R.drawable.ic_person_black_24dp)
+                                    .into(holder.imgvwUserDisplayProfile, new Callback() {
+                                        @Override
+                                        public void onSuccess() {
+                                        }
+
+                                        @Override
+                                        public void onError() {
+//                                            Log.e("Picasso","Could not fetch image");
+                                        }
+                                    });
+                        }
+                    });
+        }
+
+        /* SET THE USER NAME */
+        if (data.getUserName() != null) {
+            holder.txtUserName.setText(data.getUserName());
+        }
+
 //        /* SET THE TRAINING MODULE */
 //        String trainingModule = data.getTrainerModuleName();
 //        String sourceString = "<b>" + trainingModule + "</b>";
 //        if (sourceString != null) {
-//            holder.txtTrainingModule.setText(Html.fromHtml(activity.getString(R.string.te_training_module_placeholder, sourceString)));
+//            holder.imgvwUserDisplayProfile.setText(Html.fromHtml(activity.getString(R.string.te_training_module_placeholder, sourceString)));
 //        }
 //
 //        /* FETCH THE LATEST MESSAGE RECEIVED FROM THE USERS */
@@ -59,8 +104,8 @@ public class KennelEnquiriesAdapter extends RecyclerView.Adapter<KennelEnquiries
 //                    String trainingSlaveMessage = enquiry.getTrainingSlaveMessage();
 //                    if (trainingSlaveMessage != null)   {
 ////                        Log.e("MESSAGE", trainingSlaveMessage);
-//                        holder.txtUsersMessage.setText(trainingSlaveMessage);
-//                        holder.txtUsersMessage.setTextColor(ContextCompat.getColor(activity, android.R.color.primary_text_light));
+//                        holder.txtUserName.setText(trainingSlaveMessage);
+//                        holder.txtUserName.setTextColor(ContextCompat.getColor(activity, android.R.color.primary_text_light));
 //                    }
 //
 //                    /* GET AND SET THE ENQUIRY MESSAGE TIME STAMP */
@@ -71,14 +116,14 @@ public class KennelEnquiriesAdapter extends RecyclerView.Adapter<KennelEnquiries
 //                    calendar.setTimeInMillis(lngTimeStamp);
 //                    Date date = calendar.getTime();
 //                    PrettyTime prettyTime = new PrettyTime();
-//                    holder.txtUserTimeStamp.setText(prettyTime.format(date));
+//                    holder.txtUnreadCount.setText(prettyTime.format(date));
 //                } else {
 //                    /* SET THE EMPTY MESSAGE TEXT */
-//                    holder.txtUsersMessage.setText("The User has opened an Enquiry window for the Training Module but hasn't sent a message yet...");
-//                    holder.txtUsersMessage.setTextColor(ContextCompat.getColor(activity, android.R.color.holo_red_dark));
+//                    holder.txtUserName.setText("The User has opened an Enquiry window for the Training Module but hasn't sent a message yet...");
+//                    holder.txtUserName.setTextColor(ContextCompat.getColor(activity, android.R.color.holo_red_dark));
 //
 //                    /* SET THE EMPTY TIME STAMP */
-//                    holder.txtUserTimeStamp.setText("N.A.");
+//                    holder.txtUnreadCount.setText("N.A.");
 //                }
 //            }
 //
@@ -140,7 +185,7 @@ public class KennelEnquiriesAdapter extends RecyclerView.Adapter<KennelEnquiries
 //        });
 //
 //        /* SHOW THE ENQUIRY CONVERSATION AND DETAILS */
-//        holder.cardEnquiryContainer.setOnClickListener(new View.OnClickListener() {
+//        holder.cardEnquiryDetails.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
 //                Intent intent = new Intent(activity, TrainerEnquiryActivity.class);
@@ -163,23 +208,21 @@ public class KennelEnquiriesAdapter extends RecyclerView.Adapter<KennelEnquiries
     }
 
     class EnquiriesVH extends RecyclerView.ViewHolder   {
-//        CardView cardEnquiryContainer;
-//        TextView txtTrainingModule;
-//        TextView txtUsersMessage;
-//        SimpleDraweeView imgvwUserDisplayProfile;
-//        TextView txtUserName;
-//        TextView txtUserTimeStamp;
-//        TextView txtMessageCount;
+        CardView cardEnquiryDetails;
+        CircleImageView imgvwUserDisplayProfile;
+        TextView txtUserName;
+        TextView txtTimeStamp;
+        TextView txtEnquiryMessage;
+        TextView txtUnreadCount;
 
         EnquiriesVH(View v) {
             super(v);
-//            cardEnquiryContainer = v.findViewById(R.id.cardEnquiryContainer);
-//            txtTrainingModule = v.findViewById(R.id.txtTrainingModule);
-//            txtUsersMessage = v.findViewById(R.id.txtUsersMessage);
-//            imgvwUserDisplayProfile = v.findViewById(R.id.imgvwUserDisplayProfile);
-//            txtUserName = v.findViewById(R.id.txtUserName);
-//            txtUserTimeStamp = v.findViewById(R.id.txtUserTimeStamp);
-//            txtMessageCount = v.findViewById(R.id.txtMessageCount);
+            cardEnquiryDetails = v.findViewById(R.id.cardEnquiryDetails);
+            imgvwUserDisplayProfile = v.findViewById(R.id.imgvwUserDisplayProfile);
+            txtUserName = v.findViewById(R.id.txtUserName);
+            txtTimeStamp = v.findViewById(R.id.txtTimeStamp);
+            txtEnquiryMessage = v.findViewById(R.id.txtEnquiryMessage);
+            txtUnreadCount = v.findViewById(R.id.txtUnreadCount);
         }
     }
 }
