@@ -1,23 +1,39 @@
 package biz.zenpets.kennels.utils.adapters.enquiries;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.squareup.picasso.Callback;
+import com.crashlytics.android.Crashlytics;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import biz.zenpets.kennels.R;
+import biz.zenpets.kennels.enquiry.KennelEnquiryActivity;
+import biz.zenpets.kennels.utils.AppPrefs;
+import biz.zenpets.kennels.utils.models.enquiries.EnquiriesAPI;
 import biz.zenpets.kennels.utils.models.enquiries.Enquiry;
+import biz.zenpets.kennels.utils.models.enquiries.UnreadCount;
+import biz.zenpets.kennels.utils.models.helpers.ZenApiClient;
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class KennelEnquiriesAdapter extends RecyclerView.Adapter<KennelEnquiriesAdapter.EnquiriesVH> {
 
@@ -53,7 +69,7 @@ public class KennelEnquiriesAdapter extends RecyclerView.Adapter<KennelEnquiries
                     .networkPolicy(NetworkPolicy.OFFLINE)
                     .noFade()
                     .resize(400, 400)
-                    .into(holder.imgvwUserDisplayProfile, new Callback() {
+                    .into(holder.imgvwUserDisplayProfile, new com.squareup.picasso.Callback() {
                         @Override
                         public void onSuccess() {
                         }
@@ -64,7 +80,7 @@ public class KennelEnquiriesAdapter extends RecyclerView.Adapter<KennelEnquiries
                                     .load(userDisplayProfile)
                                     .noFade()
                                     .error(R.drawable.ic_person_black_24dp)
-                                    .into(holder.imgvwUserDisplayProfile, new Callback() {
+                                    .into(holder.imgvwUserDisplayProfile, new com.squareup.picasso.Callback() {
                                         @Override
                                         public void onSuccess() {
                                         }
@@ -83,118 +99,80 @@ public class KennelEnquiriesAdapter extends RecyclerView.Adapter<KennelEnquiries
             holder.txtUserName.setText(data.getUserName());
         }
 
-//        /* SET THE TRAINING MODULE */
-//        String trainingModule = data.getTrainerModuleName();
-//        String sourceString = "<b>" + trainingModule + "</b>";
-//        if (sourceString != null) {
-//            holder.imgvwUserDisplayProfile.setText(Html.fromHtml(activity.getString(R.string.te_training_module_placeholder, sourceString)));
-//        }
+        /* FETCH THE LATEST MESSAGE RECEIVED FROM THE USERS */
+        String kennelEnquiryID = data.getKennelEnquiryID();
+        String userID = data.getUserID();
+        EnquiriesAPI api = ZenApiClient.getClient().create(EnquiriesAPI.class);
+        Call<Enquiry> call = api.fetchLastKennelEnquiryDetails(kennelEnquiryID, userID);
+        call.enqueue(new Callback<Enquiry>() {
+            @Override
+            public void onResponse(Call<Enquiry> call, Response<Enquiry> response) {
+                Enquiry enquiry = response.body();
+                if (!enquiry.getError())    {
+                    /* GET AND SET THE ENQUIRY MESSAGE */
+                    String kennelEnquiryMessage = enquiry.getKennelEnquiryMessage();
+                    holder.txtEnquiryMessage.setText(kennelEnquiryMessage);
+
+                    /* GET AND SET THE ENQUIRY MESSAGE TIME STAMP */
+                    String messageTimeStamp = enquiry.getKennelEnquiryTimestamp();
+                    long lngTimeStamp = Long.parseLong(messageTimeStamp) * 1000;
+                    Calendar calendar = Calendar.getInstance(Locale.getDefault());
+                    calendar.setTimeInMillis(lngTimeStamp);
+                    Date date = calendar.getTime();
+                    PrettyTime prettyTime = new PrettyTime();
+                    holder.txtTimeStamp.setText(prettyTime.format(date));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Enquiry> call, Throwable t) {
+                Log.e("LATEST FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
+
+        /* GET THE NUMBER OF MESSAGES BY THE ENQUIRING USERS */
+        api = ZenApiClient.getClient().create(EnquiriesAPI.class);
+        Call<UnreadCount> callCount = api.fetchKennelEnquiryUnreadCount(kennelEnquiryID, userID);
+        callCount.enqueue(new Callback<UnreadCount>() {
+            @Override
+            public void onResponse(Call<UnreadCount> call, Response<UnreadCount> response) {
+                UnreadCount count = response.body();
+                if (count != null)  {
+                    int messageCount = Integer.parseInt(count.getUnreadMessages());
+                    Resources resModules = AppPrefs.context().getResources();
+                    String strFinalCount = null;
+                    if (messageCount == 0)   {
+                        strFinalCount = resModules.getQuantityString(R.plurals.unread_enquiry_messages, messageCount, messageCount);
+                    } else if (messageCount == 1)    {
+                        strFinalCount = resModules.getQuantityString(R.plurals.unread_enquiry_messages, messageCount, messageCount);
+                    } else if (messageCount > 1) {
+                        strFinalCount = resModules.getQuantityString(R.plurals.unread_enquiry_messages, messageCount, messageCount);
+                    }
+                    holder.txtUnreadCount.setText(activity.getString(R.string.ke_unread_message_count_placeholder, strFinalCount));
+                } else {
+                    holder.txtUnreadCount.setText(activity.getString(R.string.ke_unread_message_count_placeholder));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UnreadCount> call, Throwable t) {
+                Log.e("UNREAD COUNT FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
 //
-//        /* FETCH THE LATEST MESSAGE RECEIVED FROM THE USERS */
-//        String trainingMasterID = data.getTrainingMasterID();
-//        String userID = data.getUserID();
-//        EnquiriesAPI api = ZenApiClient.getClient().create(EnquiriesAPI.class);
-//        Call<Enquiry> call = api.fetchLastTrainingEnquiryDetails(trainingMasterID, userID);
-//        call.enqueue(new Callback<Enquiry>() {
-//            @Override
-//            public void onResponse(Call<Enquiry> call, Response<Enquiry> response) {
-//                Enquiry enquiry = response.body();
-//                if (!enquiry.getError())    {
-//                    /* GET AND SET THE ENQUIRY MESSAGE */
-//                    String trainingSlaveMessage = enquiry.getTrainingSlaveMessage();
-//                    if (trainingSlaveMessage != null)   {
-////                        Log.e("MESSAGE", trainingSlaveMessage);
-//                        holder.txtUserName.setText(trainingSlaveMessage);
-//                        holder.txtUserName.setTextColor(ContextCompat.getColor(activity, android.R.color.primary_text_light));
-//                    }
-//
-//                    /* GET AND SET THE ENQUIRY MESSAGE TIME STAMP */
-//                    String messageTimeStamp = enquiry.getTrainerSlaveTimestamp();
-////                    Log.e("TS", messageTimeStamp);
-//                    long lngTimeStamp = Long.parseLong(messageTimeStamp) * 1000;
-//                    Calendar calendar = Calendar.getInstance(Locale.getDefault());
-//                    calendar.setTimeInMillis(lngTimeStamp);
-//                    Date date = calendar.getTime();
-//                    PrettyTime prettyTime = new PrettyTime();
-//                    holder.txtUnreadCount.setText(prettyTime.format(date));
-//                } else {
-//                    /* SET THE EMPTY MESSAGE TEXT */
-//                    holder.txtUserName.setText("The User has opened an Enquiry window for the Training Module but hasn't sent a message yet...");
-//                    holder.txtUserName.setTextColor(ContextCompat.getColor(activity, android.R.color.holo_red_dark));
-//
-//                    /* SET THE EMPTY TIME STAMP */
-//                    holder.txtUnreadCount.setText("N.A.");
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Enquiry> call, Throwable t) {
-////                Log.e("LATEST FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
-//            }
-//        });
-//
-//        /* SET THE USER'S DISPLAY PROFILE */
-//        String strUserDisplayProfile = data.getUserDisplayProfile();
-//        if (strUserDisplayProfile != null)    {
-//            Uri uri = Uri.parse(strUserDisplayProfile);
-//            holder.imgvwUserDisplayProfile.setImageURI(uri);
-//        } else {
-//            ImageRequest request = ImageRequestBuilder
-//                    .newBuilderWithResourceId(R.drawable.user_placeholder)
-//                    .build();
-//            holder.imgvwUserDisplayProfile.setImageURI(request.getSourceUri());
-//        }
-//
-//        /* SET THE USER'S NAME */
-//        String strUserName = data.getUserName();
-//        if (strUserName != null)    {
-//            holder.txtUserName.setText(strUserName);
-//        }
-//
-//
-//        /* GET THE NUMBER OF MESSAGES BY THE ENQUIRING USERS */
-//        api = ZenApiClient.getClient().create(EnquiriesAPI.class);
-//        Call<MessagesCount> callCount = api.fetchEnquiryUserMessagesCount(trainingMasterID, userID);
-//        callCount.enqueue(new Callback<MessagesCount>() {
-//            @Override
-//            public void onResponse(Call<MessagesCount> call, Response<MessagesCount> response) {
-//                MessagesCount count = response.body();
-//                if (count != null)  {
-//                    int messageCount = Integer.parseInt(count.getTotalMessages());
-//                    Resources resModules = AppPrefs.context().getResources();
-//                    String strFinalCount = null;
-//                    if (messageCount == 0)   {
-//                        strFinalCount = resModules.getQuantityString(R.plurals.enquiry_message, messageCount, messageCount);
-//                    } else if (messageCount == 1)    {
-//                        strFinalCount = resModules.getQuantityString(R.plurals.enquiry_message, messageCount, messageCount);
-//                    } else if (messageCount > 1) {
-//                        strFinalCount = resModules.getQuantityString(R.plurals.enquiry_message, messageCount, messageCount);
-//                    }
-//                    holder.txtMessageCount.setText(activity.getString(R.string.te_message_count_placeholder, strFinalCount));
-//                } else {
-//                    holder.txtMessageCount.setText(activity.getString(R.string.te_message_count_zero_messages));
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<MessagesCount> call, Throwable t) {
-////                Log.e("COUNT FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
-//            }
-//        });
-//
-//        /* SHOW THE ENQUIRY CONVERSATION AND DETAILS */
-//        holder.cardEnquiryDetails.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(activity, TrainerEnquiryActivity.class);
-//                intent.putExtra("TRAINER_ID", data.getTrainerID());
-//                intent.putExtra("MODULE_ID", data.getTrainerModuleID());
-//                intent.putExtra("TRAINING_MASTER_ID", data.getTrainingMasterID());
-//                activity.startActivity(intent);
-//            }
-//        });
+        /* SHOW THE ENQUIRY CONVERSATION AND DETAILS */
+        holder.enquiryContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, KennelEnquiryActivity.class);
+                intent.putExtra("KENNEL_ID", data.getKennelID());
+                intent.putExtra("KENNEL_NAME", data.getKennelName());
+                intent.putExtra("ENQUIRY_ID", data.getKennelEnquiryID());
+                activity.startActivity(intent);
+            }
+        });
     }
 
     @NonNull
@@ -208,7 +186,7 @@ public class KennelEnquiriesAdapter extends RecyclerView.Adapter<KennelEnquiries
     }
 
     class EnquiriesVH extends RecyclerView.ViewHolder   {
-        CardView cardEnquiryDetails;
+        ConstraintLayout enquiryContainer;
         CircleImageView imgvwUserDisplayProfile;
         TextView txtUserName;
         TextView txtTimeStamp;
@@ -217,7 +195,7 @@ public class KennelEnquiriesAdapter extends RecyclerView.Adapter<KennelEnquiries
 
         EnquiriesVH(View v) {
             super(v);
-            cardEnquiryDetails = v.findViewById(R.id.cardEnquiryDetails);
+            enquiryContainer = v.findViewById(R.id.enquiryContainer);
             imgvwUserDisplayProfile = v.findViewById(R.id.imgvwUserDisplayProfile);
             txtUserName = v.findViewById(R.id.txtUserName);
             txtTimeStamp = v.findViewById(R.id.txtTimeStamp);

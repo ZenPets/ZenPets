@@ -112,4 +112,15 @@
     <string name="kennel_details_address">KENNEL ADDRESS</string>
     <string name="kennel_details_address_placeholder">%1$s, %2$s - %3$s</string>
     <string name="kennel_details_all_reviews_placeholder">SEE ALL REVIEWS (%1$s)</string>
+
+    <!-- KENNEL ENQUIRY ITEM STRINGS -->
+    <string name="ke_unread_message_count_placeholder">%1$s</string>
+
+    <!-- ENQUIRY DETAILS -->
+    <string name="enquiry_details_new_message_hint">Type a message</string>
+    <string name="ed_incoming_message">This is an incoming message…</string>
+    <string name="ed_user_name">User\'s Name</string>
+    <string name="ed_outgoing_message">This is an outgoing message…</string>
+    <string name="ed_trainer_name">Trainer\'s Name</string>
+    <string name="ed_message_time_stamp">11:15 PM</string>
 </resources>

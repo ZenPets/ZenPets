@@ -99,6 +99,12 @@
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
+        <!-- ENQUIRY -->
+        <activity
+            android:name=".enquiry.KennelEnquiryActivity"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
         <!-- LOCATION PICKER -->
         <activity
             android:name=".utils.helpers.LocationPickerActivity"

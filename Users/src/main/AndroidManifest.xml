@@ -309,11 +309,11 @@
         <!--<activity
             android:name=".kennels.KennelsList"
             android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />-->
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".kennels.NewKennelsList"
             android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="stateHidden|adjustPan" />-->
         <activity
             android:name=".kennels.TestKennelsList"
             android:screenOrientation="sensorPortrait"
@@ -334,6 +334,12 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".modifier.kennel.KennelReviewModifier"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <!-- KENNEL ENQUIRY -->
+        <activity
+            android:name=".details.kennels.enquiry.KennelEnquiryActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
@@ -388,16 +394,20 @@
             android:value="@string/razor_pay_api_key_id" />
 
         <!-- FIREBASE CLOUD MESSAGING -->
-        <service android:name=".utils.services.MyFirebaseMessagingService">
+        <service
+            android:name=".utils.services.MyFirebaseMessagingService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <!--<service android:name=".utils.services.MyFirebaseInstanceIDService">
+        <service
+            android:name=".utils.services.MyFirebaseInstanceIDService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
-        </service>-->
+        </service>
         <!--<service
             android:name=".utils.services.MyJobService"
             android:exported="false">

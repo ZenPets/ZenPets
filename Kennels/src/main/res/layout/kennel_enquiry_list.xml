@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="4dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/myToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primary"
+            android:minHeight="?attr/actionBarSize"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:contentInsetStartWithNavigation="0dp"
+            app:navigationIcon="@drawable/ic_apps_white_24dp"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:titleTextAppearance="@style/Toolbar.TitleText" />
+    </android.support.v7.widget.CardView>
+
+    <include layout="@layout/zen_progress" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/listMessages"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:cacheColorHint="@android:color/transparent"
+                android:fadingEdge="none"
+                android:persistentDrawingCache="scrolling"
+                android:scrollbarSize="3dp"
+                android:scrollbarThumbVertical="@color/primary_dark"
+                android:scrollbars="vertical"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/linlaEmpty"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="110dp"
+                    android:layout_marginLeft="110dp"
+                    android:layout_marginRight="110dp"
+                    android:layout_marginStart="110dp"
+                    android:layout_marginTop="5dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/empty_graphic" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:text="There are no messages to display here. You can start a conversation with the Kennel Owner to ask any questions or queries you may have about the Kennel."
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/roboto_condensed_light" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/input"
+            android:minHeight="?attr/actionBarSize"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edtMessage"
+                style="@style/NormalRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:background="@null"
+                android:gravity="start"
+                android:text="Testing a Kennel Owner's reply to a User's Kennel Enquiry message"
+                android:hint="Type a message"
+                android:inputType="textCapSentences|textAutoCorrect|textAutoComplete|textMultiLine"
+                android:padding="5dp"
+                android:textColor="#333333"
+                android:textColorHint="#78797d"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/imgbtnPostMessage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/input_circle_normal"
+            android:src="@drawable/input_send" />
+    </LinearLayout>
+</LinearLayout>

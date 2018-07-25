@@ -33,6 +33,10 @@ public interface AccountsAPI {
     @GET("fetchKennelOwnerID")
     Call<Account> fetchKennelOwnerID(@Query("kennelOwnerAuthID") String kennelOwnerAuthID);
 
+    /** FETCH THE KENNEL OWNER'S PROFILE **/
+    @GET("fetchKennelOwnerProfile")
+    Call<Account> fetchKennelOwnerProfile(@Query("kennelOwnerID") String kennelOwnerID);
+
     /** FETCH KENNEL OWNER'S PROFILE USING THEIR AUTH ID **/
     @GET("fetchKennelOwnerProfileAuthID")
     Call<Account> fetchKennelOwnerProfileAuthID(@Query("kennelOwnerAuthID") String kennelOwnerAuthID);

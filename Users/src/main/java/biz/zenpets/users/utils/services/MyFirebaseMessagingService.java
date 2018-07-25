@@ -3,6 +3,7 @@ package biz.zenpets.users.utils.services;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -12,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import biz.zenpets.users.details.adoptions.TestAdoptionDetails;
+import biz.zenpets.users.details.kennels.enquiry.KennelEnquiryActivity;
 import biz.zenpets.users.details.trainers.enquiry.TrainerEnquiryActivity;
 import biz.zenpets.users.utils.AppPrefs;
 
@@ -25,7 +27,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-
         if (remoteMessage == null)
             return;
 
@@ -67,7 +68,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void handleDataMessage(JSONObject json) {
         try {
             JSONObject data = json.getJSONObject("data");
-//            Log.e("DATA", String.valueOf(data));
+            Log.e("DATA", String.valueOf(data));
             String notificationTitle = data.getString("notificationTitle");
             String notificationMessage = data.getString("notificationMessage");
             JSONObject payload = data.getJSONObject("payload");
@@ -84,6 +85,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //            String strUserName = null;
 //            String strUserDisplayProfile = null;
 
+            /* STRINGS FOR REPLIES ON KENNEL ENQUIRIES */
+            String strKennelEnquiryID = null;
+            String strKennelID = null;
+            String strKennelName = null;
+            String strKennelCoverPhoto = null;
+            String strKennelOwnerID = null;
+
             if (payload.has("notificationReference")) {
                 strReference = payload.getString("notificationReference");
                 if (strReference.equalsIgnoreCase("Enquiry"))   {
@@ -95,6 +103,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //                    strUserID = payload.getString("userID");
 //                    strUserName = payload.getString("userName");
 //                    strUserDisplayProfile = payload.getString("userDisplayProfile");
+                } else if (strReference.equalsIgnoreCase("Kennel Enquiry")) {
+                    strKennelEnquiryID = payload.getString("kennelEnquiryID");
+                    strKennelID = payload.getString("kennelID");
+                    strKennelName = payload.getString("kennelName");
+                    strKennelCoverPhoto = payload.getString("kennelCoverPhoto");
+                    strKennelOwnerID = payload.getString("kennelOwnerID");
                 }
             }
 
@@ -107,6 +121,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             } else if (strReference.equalsIgnoreCase("Adoption"))   {
                 Intent intent = new Intent(getApplicationContext(), TestAdoptionDetails.class);
                 intent.putExtra("ADOPTION_ID", strAdoptionID);
+                showNotificationMessage(getApplicationContext(), notificationTitle, notificationMessage, intent);
+            } else if (strReference.equalsIgnoreCase("Kennel Enquiry")) {
+                Intent intent = new Intent(getApplicationContext(), KennelEnquiryActivity.class);
+                intent.putExtra("KENNEL_ID", strKennelID);
+                intent.putExtra("KENNEL_NAME", strKennelName);
+                intent.putExtra("KENNEL_COVER_PHOTO", strKennelCoverPhoto);
+                intent.putExtra("ENQUIRY_ID", strKennelEnquiryID);
+                intent.putExtra("KENNEL_OWNER_ID", strKennelOwnerID);
                 showNotificationMessage(getApplicationContext(), notificationTitle, notificationMessage, intent);
             }
         } catch (JSONException e) {

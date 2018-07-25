@@ -3,8 +3,8 @@ package biz.zenpets.trainers.utils.models.trainers.enquiries;
 import com.google.gson.annotations.SerializedName;
 
 public class EnquiryMessage {
-
     @SerializedName("error") private Boolean error;
+    @SerializedName("message") private String message;
     @SerializedName("trainingSlaveID") private String trainingSlaveID;
     @SerializedName("trainingMasterID") private String trainingMasterID;
     @SerializedName("trainerID") private String trainerID;
@@ -24,6 +24,14 @@ public class EnquiryMessage {
 
     public void setError(Boolean error) {
         this.error = error;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public String getTrainingSlaveID() {

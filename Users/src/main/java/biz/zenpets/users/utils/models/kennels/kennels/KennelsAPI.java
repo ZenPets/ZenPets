@@ -6,12 +6,6 @@ import retrofit2.http.Query;
 
 public interface KennelsAPI {
 
-//    /** FETCH A LIST OF KENNELS (FOR PET PARENTS) **/
-//    @GET("fetchKennelsListByCity")
-//    Call<Kennels> fetchKennelsListByCity(
-//            @Query("cityID") String cityID,
-//            @Query("pageNumber") String pageNumber);
-
     /** FETCH A LIST OF KENNELS (FOR PET PARENTS) **/
     @GET("fetchKennelsListByCity")
     Call<Kennels> fetchKennelsListByCity(
@@ -42,4 +36,8 @@ public interface KennelsAPI {
             @Query("kennelID") String kennelID,
             @Query("originLat") String originLat,
             @Query("originLon") String originLon);
+
+    /** FETCH THE KENNEL OWNER'S PROFILE **/
+    @GET("fetchKennelOwnerProfile")
+    Call<Account> fetchKennelOwnerProfile(@Query("kennelOwnerID") String kennelOwnerID);
 }

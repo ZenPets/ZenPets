@@ -7,6 +7,13 @@
         <item quantity="other">%d votes</item>
     </plurals>
 
+    <!-- UNREAD ENQUIRY MESSAGES -->
+    <plurals name="unread_enquiry_messages">
+        <item quantity="zero">0 New Messages</item>
+        <item quantity="one">1 New Message</item>
+        <item quantity="other">%d New Messages</item>
+    </plurals>
+
     <!-- NUMBER OF LIKES -->
     <plurals name="likes">
         <item quantity="zero">0 Likes</item>

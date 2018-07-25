@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -196,5 +197,8 @@ public class EnquiriesFragment extends Fragment {
 
         /* SET THE ADAPTER TO THE RECYCLER VIEW */
         listKennelEnquiries.setAdapter(new KennelEnquiriesAdapter(getActivity(), arrEnquiries));
+
+        DividerItemDecoration decoration = new DividerItemDecoration(getActivity(), manager.getOrientation());
+        listKennelEnquiries.addItemDecoration(decoration);
     }
 }

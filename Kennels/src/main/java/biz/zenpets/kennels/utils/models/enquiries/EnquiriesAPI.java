@@ -21,4 +21,10 @@ public interface EnquiriesAPI {
     Call<Enquiry> fetchLastKennelEnquiryDetails(
             @Query("kennelEnquiryID") String kennelEnquiryID,
             @Query("userID") String userID);
+
+    /** GET NUMBER OF UNREAD MESSAGES IN AN ENQUIRY  **/
+    @GET("fetchKennelEnquiryUnreadCount")
+    Call<UnreadCount> fetchKennelEnquiryUnreadCount(
+            @Query("kennelEnquiryID") String kennelEnquiryID,
+            @Query("userID") String userID);
 }
