@@ -3,7 +3,6 @@ package biz.zenpets.users.utils.models.trainers.enquiry;
 import com.google.gson.annotations.SerializedName;
 
 public class TrainingEnquiry {
-
     @SerializedName("error") private Boolean error;
     @SerializedName("trainingMasterID") private String trainingMasterID;
     @SerializedName("trainerModuleID") private String trainerModuleID;

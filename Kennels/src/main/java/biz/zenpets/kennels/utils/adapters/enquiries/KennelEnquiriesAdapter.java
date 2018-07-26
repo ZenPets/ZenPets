@@ -168,7 +168,6 @@ public class KennelEnquiriesAdapter extends RecyclerView.Adapter<KennelEnquiries
             public void onClick(View v) {
                 Intent intent = new Intent(activity, KennelEnquiryActivity.class);
                 intent.putExtra("KENNEL_ID", data.getKennelID());
-                intent.putExtra("KENNEL_NAME", data.getKennelName());
                 intent.putExtra("ENQUIRY_ID", data.getKennelEnquiryID());
                 activity.startActivity(intent);
             }

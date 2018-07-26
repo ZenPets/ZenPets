@@ -22,7 +22,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,12 +34,6 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
-import com.crashlytics.android.Crashlytics;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -307,60 +300,60 @@ public class KennelImageManager extends AppCompatActivity {
                         progressDialog.setCancelable(false);
                         progressDialog.show();
 
-                        /* GET THE TIME STAMP */
-                        String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
-                        String FILE_NAME = "KENNEL_" + KENNEL_ID + "_" + timestamp;
-                        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-                        final StorageReference refStorage = storageReference.child("Kennel Images").child(FILE_NAME);
-                        refStorage.putFile(KENNEL_IMAGE_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Uri downloadURL = taskSnapshot.getDownloadUrl();
-                                KENNEL_IMAGE_URL = String.valueOf(downloadURL);
-                                if (KENNEL_IMAGE_URL != null)    {
-                                    KennelImagesAPI api = ZenApiClient.getClient().create(KennelImagesAPI.class);
-                                    Call<KennelImage> call = api.newKennelImage(KENNEL_ID, KENNEL_IMAGE_URL);
-                                    call.enqueue(new Callback<KennelImage>() {
-                                        @Override
-                                        public void onResponse(Call<KennelImage> call, Response<KennelImage> response) {
-                                            if (response.isSuccessful())    {
-                                                /* DISMISS THE DIALOG */
-                                                progressDialog.dismiss();
-                                                Toast.makeText(getApplicationContext(), "Image successfully published....", Toast.LENGTH_LONG).show();
-
-                                                /* CLEAR THE ARRAY */
-                                                if (arrImages != null)
-                                                    arrImages.clear();
-
-                                                /* FETCH THE KENNEL IMAGES (AGAIN) */
-                                                fetchKennelImages();
-                                            } else {
-                                                /* DISMISS THE DIALOG */
-                                                progressDialog.dismiss();
-                                                Toast.makeText(getApplicationContext(), "Error publishing image...", Toast.LENGTH_LONG).show();
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onFailure(Call<KennelImage> call, Throwable t) {
-                                            Log.e("IMAGE FAILURE", t.getMessage());
-                                            Crashlytics.logException(t);
-                                        }
-                                    });
-                                } else {
-                                    Toast.makeText(
-                                            getApplicationContext(),
-                                            "There was an error posting this image. Please try again...",
-                                            Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-//                                Log.e("UPLOAD EXCEPTION", e.toString());
-                                Crashlytics.logException(e);
-                            }
-                        });
+//                        /* GET THE TIME STAMP */
+//                        String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
+//                        String FILE_NAME = "KENNEL_" + KENNEL_ID + "_" + timestamp;
+//                        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+//                        final StorageReference refStorage = storageReference.child("Kennel Images").child(FILE_NAME);
+//                        refStorage.putFile(KENNEL_IMAGE_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                            @Override
+//                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                                Uri downloadURL = taskSnapshot.getDownloadUrl();
+//                                KENNEL_IMAGE_URL = String.valueOf(downloadURL);
+//                                if (KENNEL_IMAGE_URL != null)    {
+//                                    KennelImagesAPI api = ZenApiClient.getClient().create(KennelImagesAPI.class);
+//                                    Call<KennelImage> call = api.newKennelImage(KENNEL_ID, KENNEL_IMAGE_URL);
+//                                    call.enqueue(new Callback<KennelImage>() {
+//                                        @Override
+//                                        public void onResponse(Call<KennelImage> call, Response<KennelImage> response) {
+//                                            if (response.isSuccessful())    {
+//                                                /* DISMISS THE DIALOG */
+//                                                progressDialog.dismiss();
+//                                                Toast.makeText(getApplicationContext(), "Image successfully published....", Toast.LENGTH_LONG).show();
+//
+//                                                /* CLEAR THE ARRAY */
+//                                                if (arrImages != null)
+//                                                    arrImages.clear();
+//
+//                                                /* FETCH THE KENNEL IMAGES (AGAIN) */
+//                                                fetchKennelImages();
+//                                            } else {
+//                                                /* DISMISS THE DIALOG */
+//                                                progressDialog.dismiss();
+//                                                Toast.makeText(getApplicationContext(), "Error publishing image...", Toast.LENGTH_LONG).show();
+//                                            }
+//                                        }
+//
+//                                        @Override
+//                                        public void onFailure(Call<KennelImage> call, Throwable t) {
+//                                            Log.e("IMAGE FAILURE", t.getMessage());
+//                                            Crashlytics.logException(t);
+//                                        }
+//                                    });
+//                                } else {
+//                                    Toast.makeText(
+//                                            getApplicationContext(),
+//                                            "There was an error posting this image. Please try again...",
+//                                            Toast.LENGTH_LONG).show();
+//                                }
+//                            }
+//                        }).addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception e) {
+////                                Log.e("UPLOAD EXCEPTION", e.toString());
+//                                Crashlytics.logException(e);
+//                            }
+//                        });
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {

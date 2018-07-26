@@ -1,19 +1,13 @@
 package biz.zenpets.users.details.kennels;
 
-import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -48,6 +42,7 @@ import java.util.ArrayList;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.creator.profile.ProfileEditor;
+import biz.zenpets.users.details.kennels.enquiry.KennelEnquiryActivity;
 import biz.zenpets.users.details.kennels.reviews.KennelReviewCreator;
 import biz.zenpets.users.details.kennels.reviews.KennelReviewsActivity;
 import biz.zenpets.users.modifier.kennel.KennelReviewModifier;
@@ -90,9 +85,6 @@ public class KennelDetails extends AppCompatActivity {
     /** A KENNEL API AND KENNEL REVIEWS API INSTANCE **/
     private final KennelsAPI apiKennel = ZenApiClient.getClient().create(KennelsAPI.class);
     private final KennelReviewsAPI apiReview = ZenApiClient.getClient().create(KennelReviewsAPI.class);
-
-    /** PERMISSION REQUEST CONSTANTS **/
-    private static final int CALL_PHONE_CONSTANT = 200;
 
     /** THE REVIEWS ADAPTER AND ARRAY LISTS **/
     private ArrayList<KennelReview> arrReviewsSubset = new ArrayList<>();
@@ -561,42 +553,13 @@ public class KennelDetails extends AppCompatActivity {
             case android.R.id.home:
                 this.finish();
                 break;
-            case R.id.menuCall:
-                if (ContextCompat.checkSelfPermission(KennelDetails.this,
-                        Manifest.permission.CALL_PHONE)
-                        != PackageManager.PERMISSION_GRANTED)   {
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CALL_PHONE))    {
-                        /* SHOW THE DIALOG */
-                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                        builder.setCancelable(false);
-                        builder.setIcon(R.drawable.ic_info_outline_black_24dp);
-                        builder.setTitle("Permission Required");
-                        builder.setMessage("\nZen Pets requires the permission to call the Doctor's phone number. \n\nFor a seamless experience, we recommend granting Zen Pets this permission.");
-                        builder.setPositiveButton("Grant Permission", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                                ActivityCompat.requestPermissions(
-                                        KennelDetails.this,
-                                        new String[]{Manifest.permission.CALL_PHONE}, CALL_PHONE_CONSTANT);
-                            }
-                        });
-                        builder.setNegativeButton("Not Now", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                        builder.show();
-                    } else {
-                        ActivityCompat.requestPermissions(this,
-                                new String[]{Manifest.permission.CALL_PHONE},
-                                CALL_PHONE_CONSTANT);
-                    }
-                } else {
-                    /* CALL THE PHONE NUMBER */
-                    callPhone();
-                }
+            case R.id.menuEnquire:
+                Intent intent = new Intent(KennelDetails.this, KennelEnquiryActivity.class);
+                intent.putExtra("KENNEL_ID", KENNEL_ID);
+                intent.putExtra("KENNEL_NAME", KENNEL_NAME);
+                intent.putExtra("KENNEL_COVER_PHOTO", KENNEL_COVER_PHOTO);
+                intent.putExtra("KENNEL_OWNER_ID", KENNEL_OWNER_ID);
+                startActivity(intent);
                 break;
             case R.id.menuFeedback:
                 /* CHECK IF THE USER HAS POSTED A REVIEW FOR THIS KENNEL */
@@ -644,21 +607,6 @@ public class KennelDetails extends AppCompatActivity {
         kennelMap.onSaveInstanceState(bundle);
         outState.putBundle("kennel_map_save_state", bundle);
         super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == CALL_PHONE_CONSTANT)   {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)    {
-                /* CALL THE PHONE NUMBER */
-                callPhone();
-            } else {
-                /* DIAL THE PHONE NUMBER */
-                dialPhone();
-            }
-        }
     }
 
     /** CHECK IF THE USER HAS POSTED A REVIEW FOR THIS KENNEL **/
@@ -710,53 +658,6 @@ public class KennelDetails extends AppCompatActivity {
                 Crashlytics.logException(t);
             }
         });
-    }
-
-    /***** CALL THE PHONE NUMBER *****/
-    private void callPhone() {
-        if (ContextCompat.checkSelfPermission(KennelDetails.this,
-                Manifest.permission.CALL_PHONE)
-                != PackageManager.PERMISSION_GRANTED)   {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CALL_PHONE))    {
-                /* SHOW THE DIALOG */
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setCancelable(false);
-                builder.setIcon(R.drawable.ic_info_outline_black_24dp);
-                builder.setTitle("Permission Required");
-                builder.setMessage("\nZen Pets requires the permission to call the Kennel's phone number. \n\nFor a seamless experience, we recommend granting Zen Pets this permission.");
-                builder.setPositiveButton("Grant Permission", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                        ActivityCompat.requestPermissions(
-                                KennelDetails.this,
-                                new String[]{Manifest.permission.CALL_PHONE}, CALL_PHONE_CONSTANT);
-                    }
-                });
-                builder.setNegativeButton("Not Now", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                builder.show();
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.CALL_PHONE},
-                        CALL_PHONE_CONSTANT);
-            }
-        } else {
-            String myData= "tel:" + KENNEL_PHONE_NUMBER_1;
-            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(myData));
-            startActivity(intent);
-        }
-    }
-
-    /***** DIAL THE PHONE NUMBER *****/
-    private void dialPhone() {
-        String myData= "tel:" + KENNEL_PHONE_NUMBER_1;
-        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(myData));
-        startActivity(intent);
     }
 
     /** CONFIGURE THE RECYCLER VIEW **/

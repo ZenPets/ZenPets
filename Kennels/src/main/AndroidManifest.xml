@@ -133,5 +133,21 @@
         <meta-data
             android:name="com.razorpay.ApiKey"
             android:value="@string/razor_pay_api_key_id" />
+
+        <!-- FIREBASE CLOUD MESSAGING -->
+        <service
+            android:name=".utils.services.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <!--<service
+            android:name=".utils.services.MyFirebaseInstanceIDService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>-->
     </application>
 </manifest>

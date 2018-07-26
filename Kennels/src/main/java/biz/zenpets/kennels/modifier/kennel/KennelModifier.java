@@ -48,11 +48,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -470,34 +465,34 @@ public class KennelModifier extends AppCompatActivity {
 
     /***** UPDATE THE KENNEL COVER PHOTO *****/
     private void updateKennelCover() {
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        StorageReference refStorage = storageReference.child("Kennel Covers").child(KENNEL_COVER_PHOTO_FILE_NAME);
-        refStorage.putFile(KENNEL_COVER_PHOTO_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Uri downloadURL = taskSnapshot.getDownloadUrl();
-//                Log.e("URL", String.valueOf(downloadURL));
-                KENNEL_COVER_PHOTO = String.valueOf(downloadURL);
-                if (KENNEL_COVER_PHOTO != null)    {
-                    /* UPDATE THE KENNEL'S LISTING */
-                    updateKennelListing();
-                } else {
-                    progressDialog.dismiss();
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "There was a problem creating your new account. Please try again by clicking the Save button.",
-                            Toast.LENGTH_LONG).show();
-                }
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                progressDialog.dismiss();
-//                Log.e("UPLOAD EXCEPTION", e.toString());
-                Crashlytics.logException(e);
-            }
-        });
+//        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+//        StorageReference refStorage = storageReference.child("Kennel Covers").child(KENNEL_COVER_PHOTO_FILE_NAME);
+//        refStorage.putFile(KENNEL_COVER_PHOTO_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                Uri downloadURL = taskSnapshot.getDownloadUrl();
+////                Log.e("URL", String.valueOf(downloadURL));
+//                KENNEL_COVER_PHOTO = String.valueOf(downloadURL);
+//                if (KENNEL_COVER_PHOTO != null)    {
+//                    /* UPDATE THE KENNEL'S LISTING */
+//                    updateKennelListing();
+//                } else {
+//                    progressDialog.dismiss();
+//                    Toast.makeText(
+//                            getApplicationContext(),
+//                            "There was a problem creating your new account. Please try again by clicking the Save button.",
+//                            Toast.LENGTH_LONG).show();
+//                }
+//
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                progressDialog.dismiss();
+////                Log.e("UPLOAD EXCEPTION", e.toString());
+//                Crashlytics.logException(e);
+//            }
+//        });
     }
 
     /** UPDATE THE KENNEL'S LISTING **/

@@ -3,6 +3,7 @@ package biz.zenpets.kennels.utils.services;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -11,6 +12,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import biz.zenpets.kennels.enquiry.KennelEnquiryActivity;
 import biz.zenpets.kennels.utils.AppPrefs;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
@@ -65,29 +67,28 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void handleDataMessage(JSONObject json) {
         try {
             JSONObject data = json.getJSONObject("data");
+            Log.e("DATA", String.valueOf(data));
             String notificationTitle = data.getString("notificationTitle");
             String notificationMessage = data.getString("notificationMessage");
             JSONObject payload = data.getJSONObject("payload");
+
             String strReference = null;
-            String strTrainerID = null;
-            String strModuleID = null;
-            String strTrainingMasterID = null;
+            String strKennelID = null;
+            String strEnquiryID  = null;
             if (payload.has("notificationReference")) {
                 strReference = payload.getString("notificationReference");
-                if (strReference.equalsIgnoreCase("Enquiry"))   {
-                    strTrainerID = payload.getString("trainerID");
-                    strModuleID = payload.getString("moduleID");
-                    strTrainingMasterID = payload.getString("trainingMasterID");
+                if (strReference.equalsIgnoreCase("Kennel Enquiry"))   {
+                    strKennelID = payload.getString("kennelID");
+                    strEnquiryID = payload.getString("kennelEnquiryID");
                 }
             }
 
-//            if (strReference.equalsIgnoreCase("Enquiry"))   {
-//                Intent intent = new Intent(getApplicationContext(), TrainerEnquiryActivity.class);
-//                intent.putExtra("TRAINER_ID", strTrainerID);
-//                intent.putExtra("MODULE_ID", strModuleID);
-//                intent.putExtra("TRAINING_MASTER_ID", strTrainingMasterID);
-//                showNotificationMessage(getApplicationContext(), notificationTitle, notificationMessage, intent);
-//            }
+            if (strReference.equalsIgnoreCase("Kennel Enquiry"))   {
+                Intent intent = new Intent(getApplicationContext(), KennelEnquiryActivity.class);
+                intent.putExtra("KENNEL_ID", strKennelID);
+                intent.putExtra("ENQUIRY_ID", strEnquiryID);
+                showNotificationMessage(getApplicationContext(), notificationTitle, notificationMessage, intent);
+            }
         } catch (JSONException e) {
 //            Log.e(TAG, "Json Exception: " + e.getMessage());
             Crashlytics.logException(e);

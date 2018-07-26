@@ -19,11 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
-import com.google.gson.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -56,12 +51,12 @@ public class KennelEnquiryActivity extends AppCompatActivity {
     /** THE LOGGED IN KENNEL OWNER'S ID **/
     String KENNEL_OWNER_ID = null;
 
-    /** THE INCOMING KENNEL ID, KENNEL NAME AND ENQUIRY ID **/
+    /** THE INCOMING KENNEL ID AND ENQUIRY ID **/
     String KENNEL_ID = null;
-    String KENNEL_NAME = null;
     String ENQUIRY_ID = null;
 
-    /** THE KENNEL COVER PHOTO **/
+    /** THE KENNEL NAME AND COVER PHOTO **/
+    String KENNEL_NAME = null;
     String KENNEL_COVER_PHOTO = null;
 
     /** THE MESSAGES ARRAY LIST **/
@@ -112,6 +107,9 @@ public class KennelEnquiryActivity extends AppCompatActivity {
         KENNEL_OWNER_ID = getApp().getKennelOwnerID();
         Log.e("OWNER ID", KENNEL_OWNER_ID);
 
+        /* GET THE KENNEL DETAILS */
+        fetchKennelDetails();
+
         /* CONFIGURE THE RECYCLER VIEW */
         configRecycler();
 
@@ -124,152 +122,36 @@ public class KennelEnquiryActivity extends AppCompatActivity {
 
     /** FETCH THE KENNEL ENQUIRY MESSAGES **/
     private void fetchEnquiryMessages() {
+        arrMessages.clear();
         EnquiryMessagesAPI apiEnquiry = ZenApiClient.getClient().create(EnquiryMessagesAPI.class);
         Call<EnquiryMessages> call = apiEnquiry.fetchKennelEnquiryMessages(KENNEL_ID);
         call.enqueue(new Callback<EnquiryMessages>() {
             @Override
             public void onResponse(Call<EnquiryMessages> call, Response<EnquiryMessages> response) {
-                try {
-                    String strResult = new Gson().toJson(response.body());
-                    JSONObject JORoot = new JSONObject(strResult);
-                    if (JORoot.has("error") && JORoot.getString("error").equalsIgnoreCase("false")) {
-                        JSONArray JAMessages = JORoot.getJSONArray("messages");
-//                        Log.e("MESSAGES", String.valueOf(JAMessages));
-
-                        /* THE DATA MODEL INSTANCE */
-                        EnquiryMessage data;
-
-                        for (int i = 0; i < JAMessages.length(); i++) {
-                            JSONObject JOMessages = JAMessages.getJSONObject(i);
-
-                            /* INSTANTIATE THE DATA OBJECT INSTANCE */
-                            data = new EnquiryMessage();
-
-                            /* SET THE KENNEL SLAVE ID */
-                            if (JOMessages.has("kennelSlaveEnquiryID"))  {
-                                data.setKennelSlaveEnquiryID(JOMessages.getString("kennelSlaveEnquiryID"));
-                            } else {
-                                data.setKennelSlaveEnquiryID(null);
-                            }
-
-                            /* SET THE KENNEL MASTER ID */
-                            if (JOMessages.has("kennelEnquiryID")) {
-                                data.setKennelEnquiryID(JOMessages.getString("kennelEnquiryID"));
-                            } else {
-                                data.setKennelEnquiryID(null);
-                            }
-
-                            /* SET THE KENNEL'S ID */
-                            if (JOMessages.has("kennelID"))    {
-                                data.setKennelID(JOMessages.getString("kennelID"));
-                            } else {
-                                data.setKennelID(null);
-                            }
-
-                            /* SET THE KENNEL'S NAME */
-                            if (JOMessages.has("kennelName"))  {
-                                data.setKennelName(JOMessages.getString("kennelName"));
-                            } else {
-                                data.setKennelName(null);
-                            }
-
-                            /* SET THE KENNEL'S COVER PHOTO */
-                            if (JOMessages.has("kennelCoverPhoto"))    {
-                                data.setKennelCoverPhoto(JOMessages.getString("kennelCoverPhoto"));
-                            } else {
-                                data.setKennelCoverPhoto(null);
-                            }
-
-                            /* SET THE KENNEL OWNER'S TOKEN */
-                            if (JOMessages.has("kennelOwnerToken")) {
-                                data.setKennelOwnerToken(JOMessages.getString("kennelOwnerToken"));
-                            } else {
-                                data.setKennelOwnerToken(null);
-                            }
-
-                            /* SET THE USER'S ID */
-                            if (JOMessages.has("userID"))   {
-                                data.setUserID(JOMessages.getString("userID"));
-                                USER_ID = JOMessages.getString("userID");
-//                                Log.e("USER ID", USER_ID);
-                            } else {
-                                data.setUserID(null);
-                            }
-
-                            /* SET THE USER'S NAME */
-                            if (JOMessages.has("userName")) {
-                                data.setUserName(JOMessages.getString("userName"));
-                            } else {
-                                data.setUserName(null);
-                            }
-
-                            /* SET THE USER'S DISPLAY PROFILE */
-                            if (JOMessages.has("userDisplayProfile"))   {
-                                data.setUserDisplayProfile(JOMessages.getString("userDisplayProfile"));
-                            } else {
-                                data.setUserDisplayProfile(null);
-                            }
-
-                            /* SET THE USER'S TOKEN */
-                            if (JOMessages.has("userToken"))    {
-                                data.setUserToken(JOMessages.getString("userToken"));
-                            } else {
-                                data.setUserToken(null);
-                            }
-
-                            /* SET THE ENQUIRY MESSAGE */
-                            if (JOMessages.has("kennelEnquiryMessage")) {
-                                data.setKennelEnquiryMessage(JOMessages.getString("kennelEnquiryMessage"));
-                            } else {
-                                data.setKennelEnquiryMessage(null);
-                            }
-
-                            /* SET THE MESSAGE READ / UNREAD STATUS */
-                            if (JOMessages.has("kennelEnquiryRead"))    {
-                                data.setKennelEnquiryRead(JOMessages.getString("kennelEnquiryRead"));
-                            } else {
-                                data.setKennelEnquiryRead(null);
-                            }
-
-                            /* SET THE ENQUIRY TIME STAMP */
-                            if (JOMessages.has("kennelEnquiryTimestamp"))    {
-                                data.setKennelEnquiryTimestamp(JOMessages.getString("kennelEnquiryTimestamp"));
-                            } else {
-                                data.setKennelEnquiryTimestamp(null);
-                            }
-
-                            /* ADD THE COLLECTED DATA TO THE ARRAY LIST */
-                            arrMessages.add(data);
-                        }
+                Log.e("ENQUIRY RAW", String.valueOf(response.raw()));
+                if (response.body() != null && response.body().getMessages() != null)   {
+                    arrMessages = response.body().getMessages();
+                    if (arrMessages.size() > 0) {
 
                         /* SET THE ADAPTER */
                         listMessages.setAdapter(new KennelMessagesAdapter(KennelEnquiryActivity.this, arrMessages));
-                        listMessages.scrollToPosition(arrMessages.size() - 1);
 
                         /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
                         listMessages.setVisibility(View.VISIBLE);
                         linlaEmpty.setVisibility(View.GONE);
-
-                        /* ENABLE THE REPLY EDIT TEXT */
-                        edtMessage.setEnabled(true);
                     } else {
                         /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
                         linlaEmpty.setVisibility(View.VISIBLE);
                         listMessages.setVisibility(View.GONE);
-
-                        /* DISABLE THE REPLY EDIT TEXT */
-                        edtMessage.setEnabled(false);
                     }
-
-                    /* HIDE THE PROGRESS */
-                    linlaProgress.setVisibility(View.GONE);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Crashlytics.logException(e);
-
-                    /* HIDE THE PROGRESS */
-                    linlaProgress.setVisibility(View.GONE);
+                } else {
+                    /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
+                    linlaEmpty.setVisibility(View.VISIBLE);
+                    listMessages.setVisibility(View.GONE);
                 }
+
+                /* HIDE THE PROGRESS */
+                linlaProgress.setVisibility(View.GONE);
 
                 /* FETCH THE USER'S TOKEN */
                 fetchUserToken();
@@ -311,10 +193,8 @@ public class KennelEnquiryActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null
                 && bundle.containsKey("KENNEL_ID")
-                && bundle.containsKey("KENNEL_NAME")
                 && bundle.containsKey("ENQUIRY_ID")) {
             KENNEL_ID = bundle.getString("KENNEL_ID");
-            KENNEL_NAME = bundle.getString("KENNEL_NAME");
             ENQUIRY_ID = bundle.getString("ENQUIRY_ID");
             if (KENNEL_ID != null && ENQUIRY_ID != null)    {
                 /* SHOW THE PROGRESS AND FETCH THE KENNEL DETAILS */
@@ -340,7 +220,7 @@ public class KennelEnquiryActivity extends AppCompatActivity {
                 if (response.body() != null)    {
                     Kennel kennel = response.body();
 
-                    /* GET THE KENNEL COVER PHOTO */
+                    KENNEL_NAME = kennel.getKennelName();
                     KENNEL_COVER_PHOTO = kennel.getKennelCoverPhoto();
 
                     /* FETCH THE KENNEL ENQUIRY MESSAGES */

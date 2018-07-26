@@ -13,13 +13,13 @@ public interface EnquiryMessagesAPI {
     @GET("fetchKennelEnquiryMessages")
     Call<EnquiryMessages> fetchKennelEnquiryMessages(@Query("kennelEnquiryID") String kennelEnquiryID);
 
-    /** POST A NEW TRAINING ENQUIRY MESSAGE (USER) **/
-    @POST("newEnquiryUserMessage")
+    /** POST A NEW KENNEL ENQUIRY MESSAGE (USER) **/
+    @POST("newKennelEnquiryUserMessage")
     @FormUrlEncoded
-    Call<EnquiryMessage> newEnquiryUserMessage(
-            @Field("trainingMasterID") String trainingMasterID,
-            @Field("trainerID") String trainerID,
+    Call<EnquiryMessage> newKennelEnquiryUserMessage(
+            @Field("kennelEnquiryID") String kennelEnquiryID,
+            @Field("kennelID") String kennelID,
             @Field("userID") String userID,
-            @Field("trainingSlaveMessage") String trainingSlaveMessage,
-            @Field("trainerSlaveTimestamp") String trainerSlaveTimestamp);
+            @Field("kennelEnquiryMessage") String kennelEnquiryMessage,
+            @Field("kennelEnquiryTimestamp") String kennelEnquiryTimestamp);
 }

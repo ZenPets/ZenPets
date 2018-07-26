@@ -31,12 +31,6 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
-import com.crashlytics.android.Crashlytics;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -46,17 +40,11 @@ import java.util.List;
 import biz.zenpets.kennels.R;
 import biz.zenpets.kennels.utils.AppPrefs;
 import biz.zenpets.kennels.utils.TypefaceSpan;
-import biz.zenpets.kennels.utils.models.helpers.ZenApiClient;
-import biz.zenpets.kennels.utils.models.kennels.Kennel;
-import biz.zenpets.kennels.utils.models.kennels.KennelsAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.zelory.compressor.Compressor;
 import pl.aprilapps.easyphotopicker.DefaultCallback;
 import pl.aprilapps.easyphotopicker.EasyImage;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class KennelCoverUpdater extends AppCompatActivity {
 
@@ -348,57 +336,57 @@ public class KennelCoverUpdater extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.show();
 
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        final StorageReference refStorage = storageReference.child("Kennel Covers").child(FILE_NAME);
-        refStorage.putFile(LOGO_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Uri downloadURL = taskSnapshot.getDownloadUrl();
-                LOGO_URL = String.valueOf(downloadURL);
-                if (LOGO_URL != null)    {
-                    /* UPDATE THE KENNEL'S COVER PHOTO*/
-                    KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-                    Call<Kennel> call = api.updateKennelCoverPhoto(KENNEL_ID, LOGO_URL);
-                    call.enqueue(new Callback<Kennel>() {
-                        @Override
-                        public void onResponse(Call<Kennel> call, Response<Kennel> response) {
-                            if (response.isSuccessful())    {
-                                /* DISMISS THE DIALOG AND FINISH THE ACTIVITY */
-                                dialog.dismiss();
-                                Intent success = new Intent();
-                                setResult(RESULT_OK, success);
-                                Toast.makeText(getApplicationContext(), "Cover photo updated...", Toast.LENGTH_LONG).show();
-                                finish();
-                            } else {
-                                dialog.dismiss();
-                                Toast.makeText(
-                                        getApplicationContext(),
-                                        "Failed to update Cover photo...",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<Kennel> call, Throwable t) {
-//                            Log.e("LOGO FAILURE", t.getMessage());
-                            Crashlytics.logException(t);
-                        }
-                    });
-                } else {
-                    dialog.dismiss();
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "Failed to update Cover photo...",
-                            Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-//                Log.e("UPLOAD EXCEPTION", e.toString());
-                Crashlytics.logException(e);
-            }
-        });
+//        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+//        final StorageReference refStorage = storageReference.child("Kennel Covers").child(FILE_NAME);
+//        refStorage.putFile(LOGO_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                Uri downloadURL = taskSnapshot.getDownloadUrl();
+//                LOGO_URL = String.valueOf(downloadURL);
+//                if (LOGO_URL != null)    {
+//                    /* UPDATE THE KENNEL'S COVER PHOTO*/
+//                    KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
+//                    Call<Kennel> call = api.updateKennelCoverPhoto(KENNEL_ID, LOGO_URL);
+//                    call.enqueue(new Callback<Kennel>() {
+//                        @Override
+//                        public void onResponse(Call<Kennel> call, Response<Kennel> response) {
+//                            if (response.isSuccessful())    {
+//                                /* DISMISS THE DIALOG AND FINISH THE ACTIVITY */
+//                                dialog.dismiss();
+//                                Intent success = new Intent();
+//                                setResult(RESULT_OK, success);
+//                                Toast.makeText(getApplicationContext(), "Cover photo updated...", Toast.LENGTH_LONG).show();
+//                                finish();
+//                            } else {
+//                                dialog.dismiss();
+//                                Toast.makeText(
+//                                        getApplicationContext(),
+//                                        "Failed to update Cover photo...",
+//                                        Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<Kennel> call, Throwable t) {
+////                            Log.e("LOGO FAILURE", t.getMessage());
+//                            Crashlytics.logException(t);
+//                        }
+//                    });
+//                } else {
+//                    dialog.dismiss();
+//                    Toast.makeText(
+//                            getApplicationContext(),
+//                            "Failed to update Cover photo...",
+//                            Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+////                Log.e("UPLOAD EXCEPTION", e.toString());
+//                Crashlytics.logException(e);
+//            }
+//        });
     }
 }

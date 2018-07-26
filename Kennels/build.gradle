@@ -49,11 +49,12 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
 
     /** FIREBASE **/
-    implementation 'com.google.firebase:firebase-auth:15.1.0'
-    implementation 'com.google.firebase:firebase-storage:15.0.2'
-    implementation 'com.google.firebase:firebase-messaging:15.0.2'
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.2'
-    implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.google.firebase:firebase-auth:16.0.2'
+    implementation 'com.google.firebase:firebase-storage:16.0.1'
+    implementation 'com.google.firebase:firebase-messaging:17.1.0'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.4'
+//    implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
 
     /** RAZOR PAY SDK **/
     implementation 'com.razorpay:checkout:1.4.7'
