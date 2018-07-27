@@ -47,12 +47,16 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -563,34 +567,38 @@ public class SignUpActivity extends AppCompatActivity {
 
     /***** UPLOAD THE KENNEL OWNER'S DISPLAY PROFILE *****/
     private void uploadDisplayProfile() {
-//        KENNEL_OWNER_DISPLAY_PROFILE_FILE_NAME = KENNEL_OWNER_NAME.replaceAll(" ", "_").toLowerCase().trim() + "_" + user.getUid();
-//        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-//        StorageReference refStorage = storageReference.child("Kennel Profiles").child(KENNEL_OWNER_DISPLAY_PROFILE_FILE_NAME);
-//        refStorage.putFile(KENNEL_OWNER_DISPLAY_PROFILE_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                Uri downloadURL = taskSnapshot.getDownloadUrl();
-////                Log.e("URL", String.valueOf(downloadURL));
-//                KENNEL_OWNER_DISPLAY_PROFILE = String.valueOf(downloadURL);
-//                if (KENNEL_OWNER_DISPLAY_PROFILE != null)    {
-//                    /* CREATE THE NEW KENNEL OWNER'S ACCOUNT */
-//                    createKennelOwnersAccount();
-//                } else {
-//                    progressDialog.dismiss();
-//                    Toast.makeText(
-//                            getApplicationContext(),
-//                            "There was a problem creating your new account. Please try again by clicking the Save button.",
-//                            Toast.LENGTH_LONG).show();
-//                }
-//
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-////                Log.e("UPLOAD EXCEPTION", e.toString());
-//                Crashlytics.logException(e);
-//            }
-//        });
+        KENNEL_OWNER_DISPLAY_PROFILE_FILE_NAME = KENNEL_OWNER_NAME.replaceAll(" ", "_").toLowerCase().trim() + "_" + user.getUid();
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        final StorageReference refStorage = storageReference.child("Kennel Profiles").child(KENNEL_OWNER_DISPLAY_PROFILE_FILE_NAME);
+        UploadTask uploadTask = refStorage.putFile(KENNEL_OWNER_DISPLAY_PROFILE_URI);
+        Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+
+                /* CONTINUE WITH THE TASK TO GET THE IMAGE URL */
+                return refStorage.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    KENNEL_OWNER_DISPLAY_PROFILE = String.valueOf(task.getResult());
+                    if (KENNEL_OWNER_DISPLAY_PROFILE != null)    {
+                        /* CREATE THE NEW KENNEL OWNER'S ACCOUNT */
+                        createKennelOwnersAccount();
+                    } else {
+                        progressDialog.dismiss();
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "There was a problem creating your new account. Please try again by clicking the Save button.",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
     }
 
     /***** CREATE THE NEW KENNEL OWNER'S ACCOUNT *****/

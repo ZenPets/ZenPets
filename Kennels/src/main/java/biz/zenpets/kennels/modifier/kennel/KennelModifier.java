@@ -21,6 +21,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -48,6 +49,12 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -465,34 +472,38 @@ public class KennelModifier extends AppCompatActivity {
 
     /***** UPDATE THE KENNEL COVER PHOTO *****/
     private void updateKennelCover() {
-//        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-//        StorageReference refStorage = storageReference.child("Kennel Covers").child(KENNEL_COVER_PHOTO_FILE_NAME);
-//        refStorage.putFile(KENNEL_COVER_PHOTO_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                Uri downloadURL = taskSnapshot.getDownloadUrl();
-////                Log.e("URL", String.valueOf(downloadURL));
-//                KENNEL_COVER_PHOTO = String.valueOf(downloadURL);
-//                if (KENNEL_COVER_PHOTO != null)    {
-//                    /* UPDATE THE KENNEL'S LISTING */
-//                    updateKennelListing();
-//                } else {
-//                    progressDialog.dismiss();
-//                    Toast.makeText(
-//                            getApplicationContext(),
-//                            "There was a problem creating your new account. Please try again by clicking the Save button.",
-//                            Toast.LENGTH_LONG).show();
-//                }
-//
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                progressDialog.dismiss();
-////                Log.e("UPLOAD EXCEPTION", e.toString());
-//                Crashlytics.logException(e);
-//            }
-//        });
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        final StorageReference refStorage = storageReference.child("Kennel Covers").child(KENNEL_COVER_PHOTO_FILE_NAME);
+        UploadTask uploadTask = refStorage.putFile(KENNEL_COVER_PHOTO_URI);
+        Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+
+                /* CONTINUE WITH THE TASK TO GET THE IMAGE URL */
+                return refStorage.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    KENNEL_COVER_PHOTO = String.valueOf(task.getResult());
+                    Log.e("KENNEL COVER PHOTO", KENNEL_COVER_PHOTO);
+                    if (KENNEL_COVER_PHOTO != null)    {
+                        /* UPDATE THE KENNEL'S LISTING */
+                        updateKennelListing();
+                    } else {
+                        progressDialog.dismiss();
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "Problem publishing your new Kennel...",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
     }
 
     /** UPDATE THE KENNEL'S LISTING **/

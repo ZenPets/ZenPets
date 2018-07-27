@@ -26,6 +26,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -42,6 +43,12 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
 
@@ -362,34 +369,38 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-//        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-//        StorageReference refStorage = storageReference.child("Kennel Covers").child(KENNEL_COVER_PHOTO_FILE_NAME);
-//        refStorage.putFile(KENNEL_COVER_PHOTO_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                Uri downloadURL = taskSnapshot.getDownloadUrl();
-////                Log.e("URL", String.valueOf(downloadURL));
-//                KENNEL_COVER_PHOTO = String.valueOf(downloadURL);
-//                if (KENNEL_COVER_PHOTO != null)    {
-//                    /* UPLOAD THE NEW KENNEL LISTING */
-//                    uploadKennelListing();
-//                } else {
-//                    progressDialog.dismiss();
-//                    Toast.makeText(
-//                            getApplicationContext(),
-//                            "Problem publishing your new Kennel...",
-//                            Toast.LENGTH_LONG).show();
-//                }
-//
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                progressDialog.dismiss();
-////                Log.e("UPLOAD EXCEPTION", e.toString());
-//                Crashlytics.logException(e);
-//            }
-//        });
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        final StorageReference refStorage = storageReference.child("Kennel Covers").child(KENNEL_COVER_PHOTO_FILE_NAME);
+        UploadTask uploadTask = refStorage.putFile(KENNEL_COVER_PHOTO_URI);
+        Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+
+                /* CONTINUE WITH THE TASK TO GET THE IMAGE URL */
+                return refStorage.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    KENNEL_COVER_PHOTO = String.valueOf(task.getResult());
+                    Log.e("KENNEL COVER PHOTO", KENNEL_COVER_PHOTO);
+                    if (KENNEL_COVER_PHOTO != null)    {
+                        /* UPLOAD THE NEW KENNEL LISTING */
+                        uploadKennelListing();
+                    } else {
+                        progressDialog.dismiss();
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "Problem publishing your new Kennel...",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
     }
 
     /** UPLOAD THE NEW KENNEL LISTING **/
@@ -465,6 +476,7 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
                                 .onNegative(new MaterialDialog.SingleButtonCallback() {
                                     @Override
                                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        progressDialog.dismiss();
                                         dialog.dismiss();
                                     }
                                 }).show();
@@ -630,7 +642,7 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
     private void configTB() {
         Toolbar myToolbar = findViewById(R.id.myToolbar);
         setSupportActionBar(myToolbar);
-        String strTitle = "Modify Kennel Listing";
+        String strTitle = "New Kennel";
         SpannableString s = new SpannableString(strTitle);
         s.setSpan(new TypefaceSpan(getApplicationContext()), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
