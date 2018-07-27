@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +77,7 @@ public class KennelEnquiryAdapter extends RecyclerView.Adapter<KennelEnquiryAdap
             /* SET THE KENNEL NAME */
             String kennelName = message.getKennelName();
             if (kennelName != null)    {
-                Log.e("KENNEL NAME", kennelName);
+//                Log.e("KENNEL NAME", kennelName);
                 holder.txtTrainerName.setText(kennelName);
             }
 

@@ -35,7 +35,6 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.crashlytics.android.Crashlytics;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -62,7 +61,6 @@ import biz.zenpets.users.utils.adapters.pet.records.RecordTypesAdapter;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.helpers.pets.records.FetchRecordTypes;
 import biz.zenpets.users.utils.helpers.pets.records.FetchRecordTypesInterface;
-import biz.zenpets.users.utils.helpers.pets.records.PostMedicalImage;
 import biz.zenpets.users.utils.helpers.pets.records.PostMedicalImageInterface;
 import biz.zenpets.users.utils.models.adoptions.AdoptionAlbumData;
 import biz.zenpets.users.utils.models.pets.records.MedicalRecord;
@@ -315,18 +313,18 @@ public class MedicalRecordCreator extends AppCompatActivity
             StorageReference storageReference = FirebaseStorage.getInstance().getReference();
             StorageReference refStorage = storageReference.child("Medical Records").child(FILE_NAME);
             UploadTask uploadTask = refStorage.putFile(uri);
-            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Uri downloadURL = taskSnapshot.getDownloadUrl();
-                    if (downloadURL != null) {
-                        /* INCREMENT THE UPLOAD COUNTER AND UPLOAD THE IMAGE */
-                        IMAGE_UPLOAD_COUNTER++;
-                        new PostMedicalImage(MedicalRecordCreator.this)
-                                .execute(medicalRecordID, String.valueOf(downloadURL));
-                    }
-                }
-            });
+//            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                @Override
+//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                    Uri downloadURL = taskSnapshot.getDownloadUrl();
+//                    if (downloadURL != null) {
+//                        /* INCREMENT THE UPLOAD COUNTER AND UPLOAD THE IMAGE */
+//                        IMAGE_UPLOAD_COUNTER++;
+//                        new PostMedicalImage(MedicalRecordCreator.this)
+//                                .execute(medicalRecordID, String.valueOf(downloadURL));
+//                    }
+//                }
+//            });
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

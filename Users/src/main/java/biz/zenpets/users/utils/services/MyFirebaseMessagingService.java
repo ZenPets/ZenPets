@@ -3,7 +3,6 @@ package biz.zenpets.users.utils.services;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -68,7 +67,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void handleDataMessage(JSONObject json) {
         try {
             JSONObject data = json.getJSONObject("data");
-            Log.e("DATA", String.valueOf(data));
+//            Log.e("DATA", String.valueOf(data));
             String notificationTitle = data.getString("notificationTitle");
             String notificationMessage = data.getString("notificationMessage");
             JSONObject payload = data.getJSONObject("payload");

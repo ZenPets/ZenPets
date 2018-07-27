@@ -1,7 +1,5 @@
 package biz.zenpets.users.utils.services;
 
-import android.util.Log;
-
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
@@ -26,7 +24,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     public void onTokenRefresh() {
         /* GET THE UPDATED TOKEN */
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        Log.e(TAG, "Refreshed token: " + refreshedToken);
+//        Log.e(TAG, "Refreshed token: " + refreshedToken);
 
         /* SET THE DEVICE TOKEN TO SHARED PREFS */
         getApp().setDeviceToken(refreshedToken);

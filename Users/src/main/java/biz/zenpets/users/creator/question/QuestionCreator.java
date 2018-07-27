@@ -36,11 +36,8 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.crashlytics.android.Crashlytics;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -237,37 +234,37 @@ public class QuestionCreator extends AppCompatActivity implements FetchUserPetsI
         /* PUBLISH THE PET PROFILE TO FIREBASE */
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference refStorage = storageReference.child("Consultations").child(FILE_NAME);
-        refStorage.putFile(CONSULTATION_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Uri downloadURL = taskSnapshot.getDownloadUrl();
-                if (downloadURL != null)    {
-                    CONSULTATION_PICTURE = String.valueOf(downloadURL);
-                    if (CONSULTATION_PICTURE != null)    {
-                        /* DISMISS THE DIALOG AND PUBLISH THE QUESTION */
-                        dialog.dismiss();
-                        publishPublicConsultation();
-                    } else {
-                        dialog.dismiss();
-                        Toast.makeText(
-                                getApplicationContext(),
-                                "There was a problem publishing your new Consultation. Please try again by clicking the Save button.",
-                                Toast.LENGTH_LONG).show();
-                    }
-                } else {
-                    dialog.dismiss();
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "There was a problem publishing your new Consultation. Please try again by clicking the Save button.",
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                e.printStackTrace();
-            }
-        });
+//        refStorage.putFile(CONSULTATION_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                Uri downloadURL = taskSnapshot.getDownloadUrl();
+//                if (downloadURL != null)    {
+//                    CONSULTATION_PICTURE = String.valueOf(downloadURL);
+//                    if (CONSULTATION_PICTURE != null)    {
+//                        /* DISMISS THE DIALOG AND PUBLISH THE QUESTION */
+//                        dialog.dismiss();
+//                        publishPublicConsultation();
+//                    } else {
+//                        dialog.dismiss();
+//                        Toast.makeText(
+//                                getApplicationContext(),
+//                                "There was a problem publishing your new Consultation. Please try again by clicking the Save button.",
+//                                Toast.LENGTH_LONG).show();
+//                    }
+//                } else {
+//                    dialog.dismiss();
+//                    Toast.makeText(
+//                            getApplicationContext(),
+//                            "There was a problem publishing your new Consultation. Please try again by clicking the Save button.",
+//                            Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                e.printStackTrace();
+//            }
+//        });
     }
 
     /***** PUBLISH THE NEW PUBLIC CONSULTATION *****/

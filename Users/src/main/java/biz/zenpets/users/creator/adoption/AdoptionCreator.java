@@ -35,7 +35,6 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.crashlytics.android.Crashlytics;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
@@ -370,17 +369,17 @@ public class AdoptionCreator extends AppCompatActivity
             StorageReference storageReference = FirebaseStorage.getInstance().getReference();
             StorageReference refStorage = storageReference.child("Adoptions").child(FILE_NAME);
             UploadTask uploadTask = refStorage.putFile(uri);
-            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Uri downloadURL = taskSnapshot.getDownloadUrl();
-                    if (downloadURL != null) {
-                        /* INCREMENT THE UPLOAD COUNTER AND UPLOAD THE IMAGE */
-                        IMAGE_UPLOAD_COUNTER++;
-                        postImage(String.valueOf(downloadURL));
-                    }
-                }
-            });
+//            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                @Override
+//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                    Uri downloadURL = taskSnapshot.getDownloadUrl();
+//                    if (downloadURL != null) {
+//                        /* INCREMENT THE UPLOAD COUNTER AND UPLOAD THE IMAGE */
+//                        IMAGE_UPLOAD_COUNTER++;
+//                        postImage(String.valueOf(downloadURL));
+//                    }
+//                }
+//            });
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

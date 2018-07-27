@@ -14,4 +14,12 @@ public interface StatisticsAPI {
             @Field("kennelID") String kennelID,
             @Field("userID") String userID,
             @Field("kennelViewedDate") String kennelViewedDate);
+
+    /** PUBLISH A NEW KENNEL DISPLAYED STATUS **/
+    @POST("publishKennelDisplayStatus")
+    @FormUrlEncoded
+    Call<Stat> publishKennelDisplayStatus(
+            @Field("kennelID") String kennelID,
+            @Field("userID") String userID,
+            @Field("kennelDisplayedDate") String kennelDisplayedDate);
 }

@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,7 +37,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.creator.profile.ProfileEditor;
@@ -58,6 +60,8 @@ import biz.zenpets.users.utils.models.kennels.kennels.KennelsAPI;
 import biz.zenpets.users.utils.models.kennels.reviews.KennelReview;
 import biz.zenpets.users.utils.models.kennels.reviews.KennelReviews;
 import biz.zenpets.users.utils.models.kennels.reviews.KennelReviewsAPI;
+import biz.zenpets.users.utils.models.kennels.statistics.Stat;
+import biz.zenpets.users.utils.models.kennels.statistics.StatisticsAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -91,6 +95,9 @@ public class KennelDetails extends AppCompatActivity {
 
     /** THE KENNEL IMAGES ARRAY LIST INSTANCE **/
     private ArrayList<KennelImage> arrImages = new ArrayList<>();
+
+    /** THE CURRENT DATE **/
+    String CURRENT_DATE = null;
 
     /** DATA TYPES TO HOLD THE KENNEL DETAILS **/
     private String KENNEL_COVER_PHOTO = null;
@@ -162,6 +169,12 @@ public class KennelDetails extends AppCompatActivity {
         /* CONFIGURE THE RECYCLER VIEW */
         configRecycler();
 
+        /* GET THE CURRENT DATE IN THE REQUIRED FORMAT */
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        Date date = new Date();
+        CURRENT_DATE = format.format(date);
+//        Log.e("CURRENT DATE", CURRENT_DATE);
+
         /* CONFIGURE THE APP BAR LAYOUT */
         appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
 
@@ -188,6 +201,9 @@ public class KennelDetails extends AppCompatActivity {
 
         /* CONFIGURE THE TOOLBAR */
         configTB();
+
+        /* PUBLISH A NEW KENNEL DISPLAYED STATUS */
+        publishDisplayedStatus();
     }
 
     /** FETCH THE KENNEL DETAILS **/
@@ -422,7 +438,7 @@ public class KennelDetails extends AppCompatActivity {
         call.enqueue(new Callback<KennelReviews>() {
             @Override
             public void onResponse(Call<KennelReviews> call, Response<KennelReviews> response) {
-                Log.e("REVIEWS RAW", String.valueOf(response.raw()));
+//                Log.e("REVIEWS RAW", String.valueOf(response.raw()));
                 if (response.body() != null && response.body().getReviews() != null)    {
                     arrReviewsSubset = response.body().getReviews();
                     if (arrReviewsSubset.size() > 0)    {
@@ -696,5 +712,24 @@ public class KennelDetails extends AppCompatActivity {
                 fetchKennelReviews();
             }
         }
+    }
+
+    /** PUBLISH A NEW KENNEL DISPLAYED STATUS **/
+    private void publishDisplayedStatus() {
+        StatisticsAPI api = ZenApiClient.getClient().create(StatisticsAPI.class);
+        Call<Stat> call = api.publishKennelDisplayStatus(KENNEL_ID, USER_ID, CURRENT_DATE);
+        call.enqueue(new Callback<Stat>() {
+            @Override
+            public void onResponse(Call<Stat> call, Response<Stat> response) {
+//                if (response.body().getMessage() != null)
+//                    Log.e("MESSAGE", response.body().getMessage());
+            }
+
+            @Override
+            public void onFailure(Call<Stat> call, Throwable t) {
+//                Log.e("DISPLAYED FAILED", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
 }

@@ -13,22 +13,35 @@ import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.details.kennels.KennelDetails;
+import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.adapters.kennels.promoted.PromotedAdoptionsAdapter;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.models.kennels.kennels.Kennel;
 import biz.zenpets.users.utils.models.kennels.promotion.Promotion;
+import biz.zenpets.users.utils.models.kennels.statistics.Stat;
 import biz.zenpets.users.utils.models.kennels.statistics.StatisticsAPI;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NewTestKennelsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private AppPrefs getApp()	{
+        return (AppPrefs) AppPrefs.context().getApplicationContext();
+    }
 
     /***** THE ACTIVITY INSTANCE FOR USE IN THE ADAPTER *****/
     private final Activity activity;
@@ -48,6 +61,10 @@ public class NewTestKennelsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     /** A LATLNG INSTANCE TO HOLD THE CURRENT COORDINATES **/
     private LatLng LATLNG_ORIGIN;
 
+    /** GET THE USER ID AND THE CURRENT DATE **/
+    String USER_ID = null;
+    String CURRENT_DATE = null;
+
     public NewTestKennelsAdapter(Activity activity, ArrayList<Kennel> arrKennels, LatLng LATLNG_ORIGIN) {
 
         /* CAST THE ACTIVITY IN THE GLOBAL ACTIVITY INSTANCE */
@@ -58,16 +75,21 @@ public class NewTestKennelsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         /* CAST THE CONTENTS OF THE LATLNG INSTANCE TO THE LOCAL INSTANCE */
         this.LATLNG_ORIGIN = LATLNG_ORIGIN;
-//        Log.e("LAT LNG", String.valueOf(LATLNG_ORIGIN));
+
+        /* GET THE USER ID */
+        USER_ID = getApp().getUserID();
+//        Log.e("USER ID", USER_ID);
+
+        /* GET THE CURRENT DATE IN THE REQUIRED FORMAT */
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        Date date = new Date();
+        CURRENT_DATE = format.format(date);
+//        Log.e("CURRENT DATE", CURRENT_DATE);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
         final Kennel data = arrKennels.get(position);
-
-        /* PUBLISH A NEW KENNEL VIEWED STATUS */
-        StatisticsAPI api = ZenApiClient.getClient().create(StatisticsAPI.class);
-//        Call<Stat> call = api.publishKennelViewStatus(data.getKennelID(), )
 
         switch (getItemViewType(position)) {
             case ITEM:
@@ -131,13 +153,28 @@ public class NewTestKennelsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     vh.cardKennel.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-//                            Log.e("LATITUDE", String.valueOf(LATLNG_ORIGIN.latitude));
-//                            Log.e("LONGITUDE", String.valueOf(LATLNG_ORIGIN.longitude));
                             Intent intent = new Intent(activity, KennelDetails.class);
                             intent.putExtra("KENNEL_ID", data.getKennelID());
                             intent.putExtra("ORIGIN_LATITUDE", String.valueOf(LATLNG_ORIGIN.latitude));
                             intent.putExtra("ORIGIN_LONGITUDE", String.valueOf(LATLNG_ORIGIN.longitude));
                             activity.startActivity(intent);
+                        }
+                    });
+
+                    /* PUBLISH A NEW KENNEL VIEWED STATUS */
+                    StatisticsAPI api = ZenApiClient.getClient().create(StatisticsAPI.class);
+                    Call<Stat> call = api.publishKennelViewStatus(data.getKennelID(), USER_ID, CURRENT_DATE);
+                    call.enqueue(new Callback<Stat>() {
+                        @Override
+                        public void onResponse(Call<Stat> call, Response<Stat> response) {
+//                            if (response.body().getMessage() != null)
+//                                Log.e("MESSAGE", response.body().getMessage());
+                        }
+
+                        @Override
+                        public void onFailure(Call<Stat> call, Throwable t) {
+//                            Log.e("VIEWED FAILED", t.getMessage());
+                            Crashlytics.logException(t);
                         }
                     });
 

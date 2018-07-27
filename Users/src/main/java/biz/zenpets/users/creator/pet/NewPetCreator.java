@@ -38,11 +38,8 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.io.File;
@@ -62,7 +59,6 @@ import biz.zenpets.users.utils.adapters.pet.BreedsAdapter;
 import biz.zenpets.users.utils.adapters.pet.PetTypesAdapter;
 import biz.zenpets.users.utils.helpers.pets.breed.FetchBreedTypes;
 import biz.zenpets.users.utils.helpers.pets.breed.FetchBreedTypesInterface;
-import biz.zenpets.users.utils.helpers.pets.pet.AddNewPet;
 import biz.zenpets.users.utils.helpers.pets.pet.AddNewPetInterface;
 import biz.zenpets.users.utils.helpers.pets.type.PetTypes;
 import biz.zenpets.users.utils.helpers.pets.type.PetTypesInterface;
@@ -270,38 +266,38 @@ public class NewPetCreator extends AppCompatActivity
         /* PUBLISH THE PET PROFILE TO FIREBASE */
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference refStorage = storageReference.child("Pets").child(FILE_NAME);
-        refStorage.putFile(PET_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Uri downloadURL = taskSnapshot.getDownloadUrl();
-                if (downloadURL != null)    {
-                    PET_PROFILE = String.valueOf(downloadURL);
-                    if (PET_PROFILE != null)    {
-                        /* PUBLISH THE NEW PET */
-                        new AddNewPet(NewPetCreator.this).execute(
-                                USER_ID, PET_TYPE_ID, PET_BREED_ID, PET_NAME,
-                                PET_GENDER, PET_DOB, PET_NEUTERED, PET_PROFILE);
-                    } else {
-                        dialog.dismiss();
-                        Toast.makeText(
-                                getApplicationContext(),
-                                "There was a problem adding your new Pet. Please try again by clicking the Save button.",
-                                Toast.LENGTH_LONG).show();
-                    }
-                } else {
-                    dialog.dismiss();
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "There was a problem adding your new Pet. Please try again by clicking the Save button.",
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                e.printStackTrace();
-            }
-        });
+//        refStorage.putFile(PET_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                Uri downloadURL = taskSnapshot.getDownloadUrl();
+//                if (downloadURL != null)    {
+//                    PET_PROFILE = String.valueOf(downloadURL);
+//                    if (PET_PROFILE != null)    {
+//                        /* PUBLISH THE NEW PET */
+//                        new AddNewPet(NewPetCreator.this).execute(
+//                                USER_ID, PET_TYPE_ID, PET_BREED_ID, PET_NAME,
+//                                PET_GENDER, PET_DOB, PET_NEUTERED, PET_PROFILE);
+//                    } else {
+//                        dialog.dismiss();
+//                        Toast.makeText(
+//                                getApplicationContext(),
+//                                "There was a problem adding your new Pet. Please try again by clicking the Save button.",
+//                                Toast.LENGTH_LONG).show();
+//                    }
+//                } else {
+//                    dialog.dismiss();
+//                    Toast.makeText(
+//                            getApplicationContext(),
+//                            "There was a problem adding your new Pet. Please try again by clicking the Save button.",
+//                            Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                e.printStackTrace();
+//            }
+//        });
     }
 
     @Override
