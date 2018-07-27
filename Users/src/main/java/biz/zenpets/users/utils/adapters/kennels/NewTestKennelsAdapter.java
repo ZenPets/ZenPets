@@ -23,8 +23,10 @@ import java.util.ArrayList;
 import biz.zenpets.users.R;
 import biz.zenpets.users.details.kennels.KennelDetails;
 import biz.zenpets.users.utils.adapters.kennels.promoted.PromotedAdoptionsAdapter;
+import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.models.kennels.kennels.Kennel;
 import biz.zenpets.users.utils.models.kennels.promotion.Promotion;
+import biz.zenpets.users.utils.models.kennels.statistics.StatisticsAPI;
 
 public class NewTestKennelsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -62,6 +64,10 @@ public class NewTestKennelsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
         final Kennel data = arrKennels.get(position);
+
+        /* PUBLISH A NEW KENNEL VIEWED STATUS */
+        StatisticsAPI api = ZenApiClient.getClient().create(StatisticsAPI.class);
+//        Call<Stat> call = api.publishKennelViewStatus(data.getKennelID(), )
 
         switch (getItemViewType(position)) {
             case ITEM:
