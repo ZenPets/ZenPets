@@ -127,6 +127,12 @@ dependencies {
 
     /** PICASSO **/
     implementation 'com.squareup.picasso:picasso:2.5.2'
+
+    /** SPARLINE GRAPH LIBRARY **/
+    implementation 'com.robinhood.spark:spark:1.2.0'
+
+    /** MP ANDROID CHART LIBRARY **/
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }
 
 apply plugin: 'com.google.gms.google-services'

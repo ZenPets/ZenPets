@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import biz.zenpets.kennels.R;
 import biz.zenpets.kennels.kennels.KennelsList;
+import biz.zenpets.kennels.reports.ReportsActivity;
 import biz.zenpets.kennels.reviews.ReviewsList;
 import biz.zenpets.kennels.utils.TypefaceSpan;
 import butterknife.ButterKnife;
@@ -41,6 +42,8 @@ public class HomeFragment extends Fragment {
 
     /** SHOW THE REPORTS FOR THE LISTED KENNELS **/
     @OnClick(R.id.linlaReports) void showReports()  {
+        Intent intent = new Intent(getActivity(), ReportsActivity.class);
+        startActivity(intent);
     }
 
     /** SHOW THE SETTINGS PAGES **/

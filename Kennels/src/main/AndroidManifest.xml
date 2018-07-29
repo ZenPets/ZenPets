@@ -99,6 +99,12 @@
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
+        <!-- REPORTS -->
+        <activity
+            android:name=".reports.ReportsActivity"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
         <!-- ENQUIRY -->
         <activity
             android:name=".enquiry.KennelEnquiryActivity"

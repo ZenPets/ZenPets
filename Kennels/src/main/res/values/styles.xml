@@ -19,6 +19,9 @@
         <item name="android:popupMenuStyle">@style/myPopupMenuStyle</item>
         <item name="android:textAppearanceLargePopupMenu">@style/myPopupMenuTextAppearanceSmall
         </item>
+
+        <!-- THE SPARK LINE VIEW STYLE -->
+        <!--<item name="spark_SparkViewStyle">@style/MySparkViewStyle</item>-->
     </style>
 
     <!-- THE SPLASH SCREEN STYLE -->
@@ -142,4 +145,20 @@
         <item name="colorControlNormal">@color/accent</item>
         <item name="colorControlActivated">@color/tertiary_text</item>
     </style>
+
+    <!--<style name="MySparkViewStyle" parent="@style/SparkView">
+        <item name="spark_lineColor">@color/accent</item>
+        <item name="spark_lineWidth">3dp</item>
+        <item name="spark_cornerRadius">5dp</item>
+        <item name="spark_fill">false</item>
+
+        &lt;!&ndash;<item name="spark_baseLineColor">@color/base_line_color</item>
+        <item name="spark_baseLineWidth">@dimen/base_line_width</item>&ndash;&gt;
+
+        <item name="spark_scrubLineColor">@color/primary_dark</item>
+        <item name="spark_scrubLineWidth">3dp</item>
+        <item name="spark_scrubEnabled">true</item>
+
+        <item name="spark_animateChanges">true</item>
+    </style>-->
 </resources>

@@ -315,7 +315,7 @@
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />-->
         <activity
-            android:name=".kennels.TestKennelsList"
+            android:name=".kennels.KennelsList"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <Spinner
+        android:id="@+id/spnKennels"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp" />
+
+    <include layout="@layout/zen_progress" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listKennelEnquiries"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:cacheColorHint="@android:color/transparent"
+        android:fadingEdge="none"
+        android:persistentDrawingCache="scrolling"
+        android:scrollbarSize="3dp"
+        android:scrollbarThumbVertical="@color/primary_dark"
+        android:scrollbars="vertical" />
+
+    <LinearLayout
+        android:id="@+id/linlaEmpty"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="20dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/empty_graphic" />
+
+        <TextView
+            android:id="@+id/txtEmpty"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="There are no Enquiries from Pet Parents yet..."
+            android:textColor="@color/secondary_text"
+            android:textSize="14sp"
+            app:fontFamily="@font/roboto_condensed_regular" />
+    </LinearLayout>
+</LinearLayout>

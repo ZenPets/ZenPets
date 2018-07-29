@@ -94,9 +94,9 @@
                     android:paddingRight="11dp"
                     android:paddingStart="11dp"
                     android:paddingTop="5dp"
-                    app:iiv_color="@color/primary_dark"
+                    app:iiv_color="@color/secondary_text"
                     app:iiv_icon="faw_building2"
-                    app:iiv_size="14dp" />
+                    app:iiv_size="14dp"  />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/txtKennelAddress"
@@ -133,7 +133,7 @@
                     android:paddingRight="11dp"
                     android:paddingStart="11dp"
                     android:paddingTop="5dp"
-                    app:iiv_color="@color/primary_dark"
+                    app:iiv_color="@color/secondary_text"
                     app:iiv_icon="fou_paw"
                     app:iiv_size="14dp" />
 
