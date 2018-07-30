@@ -123,4 +123,8 @@
     <string name="ed_outgoing_message">This is an outgoing message…</string>
     <string name="ed_trainer_name">Trainer\'s Name</string>
     <string name="ed_message_time_stamp">11:15 PM</string>
+
+    <!-- REPORTS STRINGS -->
+    <string name="report_duration_summary">30 days summary…</string>
+    <string name="report_duration_summary_placeholder">%1$s days summary...</string>
 </resources>

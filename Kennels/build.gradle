@@ -133,6 +133,9 @@ dependencies {
 
     /** MP ANDROID CHART LIBRARY **/
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+
+    /** COMPOUND SEGMENTED BUTTON **/
+    implementation'com.github.ceryle:SegmentedButton:v2.0.2'
 }
 
 apply plugin: 'com.google.gms.google-services'

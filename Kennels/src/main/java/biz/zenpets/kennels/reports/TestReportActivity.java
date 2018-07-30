@@ -7,14 +7,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -49,12 +46,11 @@ import biz.zenpets.kennels.utils.models.statistics.KennelViews;
 import biz.zenpets.kennels.utils.models.statistics.KennelViewsAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import co.ceryle.segmentedbutton.SegmentedButtonGroup;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ReportsActivity extends AppCompatActivity {
+public class TestReportActivity extends AppCompatActivity {
 
     private AppPrefs getApp()	{
         return (AppPrefs) getApplication();
@@ -70,9 +66,6 @@ public class ReportsActivity extends AppCompatActivity {
     String END_DATE = null;
     String START_DATE = null;
 
-    /** THE SELECTED DURATION **/
-    int SELECTED_DURATION = 30;
-
     /** AN ARRAY LIST TO STORE THE LIST OF KENNELS **/
     ArrayList<Kennel> arrKennels = new ArrayList<>();
 
@@ -82,8 +75,6 @@ public class ReportsActivity extends AppCompatActivity {
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.spnKennels) Spinner spnKennels;
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
-    @BindView(R.id.groupDurationSelector) SegmentedButtonGroup groupDurationSelector;
-    @BindView(R.id.txtSummaryLabel) TextView txtSummaryLabel;
     @BindView(R.id.kennelViewsChart) LineChart kennelViewsChart;
 
     @Override
@@ -92,8 +83,23 @@ public class ReportsActivity extends AppCompatActivity {
         setContentView(R.layout.dash_reports);
         ButterKnife.bind(this);
 
-        /* GET THE START AND END DATE FOR THE DURATION */
-        calculateDates();
+        /* CALCULATE THE START AND END DATE */
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            Date date = new Date();
+            END_DATE = format.format(date);
+//            Log.e("END DATE", END_DATE);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(format.parse(END_DATE));
+
+            /* CALCULATE THE END DATE */
+            calendar.add(Calendar.DATE, -30);
+            Date dateEnd = new Date(calendar.getTimeInMillis());
+            START_DATE = format.format(dateEnd);
+//            Log.e("START DATE", START_DATE);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         /* GET THE LOGGED IN KENNEL OWNER'S ID */
         KENNEL_OWNER_ID = getApp().getKennelOwnerID();
@@ -124,34 +130,6 @@ public class ReportsActivity extends AppCompatActivity {
 
         /* CONFIGURE THE LINE CHART */
         configLineChart();
-
-        /* CONFIGURE THE TOOLBAR */
-        configTB();
-
-        groupDurationSelector.setOnClickedButtonListener(new SegmentedButtonGroup.OnClickedButtonListener() {
-            @Override
-            public void onClickedButton(int position) {
-                if (position == 0)  {
-                    /* GET THE START AND END DATE FOR THE DURATION AGAIN */
-                    SELECTED_DURATION = 30;
-                    calculateDates();
-                    txtSummaryLabel.setText(getString(R.string.report_duration_summary_placeholder, String.valueOf(SELECTED_DURATION)));
-                    fetchKennelViewStats();
-                } else if (position == 1)   {
-                    /* GET THE START AND END DATE FOR THE DURATION AGAIN */
-                    SELECTED_DURATION = 60;
-                    calculateDates();
-                    txtSummaryLabel.setText(getString(R.string.report_duration_summary_placeholder, String.valueOf(SELECTED_DURATION)));
-                    fetchKennelViewStats();
-                } else if (position == 2)   {
-                    /* GET THE START AND END DATE FOR THE DURATION AGAIN */
-                    SELECTED_DURATION = 90;
-                    calculateDates();
-                    txtSummaryLabel.setText(getString(R.string.report_duration_summary_placeholder, String.valueOf(SELECTED_DURATION)));
-                    fetchKennelViewStats();
-                }
-            }
-        });
     }
 
     /** FETCH THE STATS FOR THE SELECTED DURATION **/
@@ -162,7 +140,6 @@ public class ReportsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<KennelViews> call, Response<KennelViews> response) {
                 Log.e("VIEWS RAW", String.valueOf(response.raw()));
-                Log.e("TOTAL VIEWS", response.body().getTotalViews());
                 if (response.body() != null && response.body().getViews() != null)  {
                     arrViews = response.body().getViews();
                     if (arrViews.size() > 0)    {
@@ -206,7 +183,7 @@ public class ReportsActivity extends AppCompatActivity {
                         dataSet.setFormSize(15.f);
 
                         if (Utils.getSDKInt() >= 18) {
-                            Drawable drawable = ContextCompat.getDrawable(ReportsActivity.this, R.drawable.fade_red);
+                            Drawable drawable = ContextCompat.getDrawable(TestReportActivity.this, R.drawable.fade_red);
                             dataSet.setFillDrawable(drawable);
                         }
                         else {
@@ -267,7 +244,7 @@ public class ReportsActivity extends AppCompatActivity {
                     if (arrKennels.size() > 0) {
                         /* SET THE ADAPTER TO THE KENNELS SPINNER */
                         spnKennels.setAdapter(new KennelsSpinnerAdapter(
-                                ReportsActivity.this,
+                                TestReportActivity.this,
                                 R.layout.pet_capacity_row,
                                 arrKennels));
                     }
@@ -285,30 +262,6 @@ public class ReportsActivity extends AppCompatActivity {
         });
     }
 
-    /***** CONFIGURE THE TOOLBAR *****/
-    private void configTB() {
-        Toolbar myToolbar = findViewById(R.id.myToolbar);
-        setSupportActionBar(myToolbar);
-        String strTitle = "Kennel Reports";
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setTitle(strTitle);
-        getSupportActionBar().setSubtitle(null);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                break;
-            default:
-                break;
-        }
-        return false;
-    }
-
     /** CONFIGURE THE LINE CHART **/
     private void configLineChart() {
         // no description text
@@ -320,8 +273,8 @@ public class ReportsActivity extends AppCompatActivity {
         // enable scaling and dragging
         kennelViewsChart.setDragEnabled(true);
         kennelViewsChart.setScaleEnabled(true);
-        kennelViewsChart.setScaleXEnabled(true);
-        kennelViewsChart.setScaleYEnabled(true);
+         kennelViewsChart.setScaleXEnabled(true);
+         kennelViewsChart.setScaleYEnabled(true);
 
         // if disabled, scaling can be done on x- and y-axis separately
         kennelViewsChart.setPinchZoom(true);
@@ -380,26 +333,5 @@ public class ReportsActivity extends AppCompatActivity {
 
         // modify the legend ...
         l.setForm(Legend.LegendForm.LINE);
-    }
-
-    /** GET THE START AND END DATE FOR THE DURATION **/
-    private void calculateDates() {
-        try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            Date date = new Date();
-            END_DATE = format.format(date);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(format.parse(END_DATE));
-
-            /* CALCULATE THE END DATE */
-            calendar.add(Calendar.DATE, -SELECTED_DURATION);
-            Date dateEnd = new Date(calendar.getTimeInMillis());
-            START_DATE = format.format(dateEnd);
-
-            Log.e("START DATE", START_DATE);
-            Log.e("END DATE", END_DATE);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
     }
 }
