@@ -17,6 +17,7 @@ public class KennelReview {
     @SerializedName("kennelRecommendStatus") private String kennelRecommendStatus;
     @SerializedName("kennelExperience") private String kennelExperience;
     @SerializedName("kennelReviewTimestamp") private String kennelReviewTimestamp;
+    @SerializedName("kennelReviewDate") private String kennelReviewDate;
     @SerializedName("kennelReplyStatus") private String kennelReplyStatus;
     @SerializedName("kennelReplyText") private String kennelReplyText;
     @SerializedName("kennelReplyPublished") private String kennelReplyPublished;
@@ -132,6 +133,14 @@ public class KennelReview {
 
     public void setKennelReviewTimestamp(String kennelReviewTimestamp) {
         this.kennelReviewTimestamp = kennelReviewTimestamp;
+    }
+
+    public String getKennelReviewDate() {
+        return kennelReviewDate;
+    }
+
+    public void setKennelReviewDate(String kennelReviewDate) {
+        this.kennelReviewDate = kennelReviewDate;
     }
 
     public String getKennelReplyStatus() {

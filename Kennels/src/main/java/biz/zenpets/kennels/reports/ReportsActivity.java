@@ -84,6 +84,9 @@ public class ReportsActivity extends AppCompatActivity {
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
     @BindView(R.id.groupDurationSelector) SegmentedButtonGroup groupDurationSelector;
     @BindView(R.id.txtSummaryLabel) TextView txtSummaryLabel;
+    @BindView(R.id.txtViews) TextView txtViews;
+    @BindView(R.id.txtEnquiries) TextView txtEnquiries;
+    @BindView(R.id.txtReviews) TextView txtReviews;
     @BindView(R.id.kennelViewsChart) LineChart kennelViewsChart;
 
     @Override
@@ -162,7 +165,14 @@ public class ReportsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<KennelViews> call, Response<KennelViews> response) {
                 Log.e("VIEWS RAW", String.valueOf(response.raw()));
-                Log.e("TOTAL VIEWS", response.body().getTotalViews());
+                String TOTAL_VIEWS = response.body().getTotalViews();
+                txtViews.setText(TOTAL_VIEWS + " Views");
+                String TOTAL_ENQUIRIES = response.body().getTotalEnquiries();
+                txtEnquiries.setText(TOTAL_ENQUIRIES + " Enquiries");
+                String TOTAL_REVIEWS = response.body().getTotalReviews();
+                txtReviews.setText(TOTAL_REVIEWS + " Reviews");
+
+                /* GET THE KENNEL VIEWS DETAILS */
                 if (response.body() != null && response.body().getViews() != null)  {
                     arrViews = response.body().getViews();
                     if (arrViews.size() > 0)    {

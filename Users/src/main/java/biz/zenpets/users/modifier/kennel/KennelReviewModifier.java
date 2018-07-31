@@ -30,6 +30,10 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import biz.zenpets.users.R;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.models.kennels.reviews.KennelReview;
@@ -257,10 +261,17 @@ public class KennelReviewModifier extends AppCompatActivity {
             dialog.setCancelable(false);
             dialog.show();
 
+            /* GET THE CURRENT TIME STAMP */
             String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
+
+            /* GET THE CURRENT DATE */
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            Date date = new Date();
+            String REVIEW_DATE = format.format(date);
+
             KennelReviewsAPI api = ZenApiClient.getClient().create(KennelReviewsAPI.class);
             Call<KennelReview> call = api.updateKennelReview(
-                    REVIEW_ID, KENNEL_RATING, RECOMMEND_STATUS, KENNEL_EXPERIENCE, timeStamp);
+                    REVIEW_ID, KENNEL_RATING, RECOMMEND_STATUS, KENNEL_EXPERIENCE, timeStamp, REVIEW_DATE);
             call.enqueue(new Callback<KennelReview>() {
                 @Override
                 public void onResponse(Call<KennelReview> call, Response<KennelReview> response) {

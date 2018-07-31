@@ -7,6 +7,8 @@ import java.util.ArrayList;
 public class KennelViews {
     @SerializedName("error") private Boolean error;
     @SerializedName("totalViews") private String totalViews;
+    @SerializedName("totalEnquiries") private String totalEnquiries;
+    @SerializedName("totalReviews") private String totalReviews;
     @SerializedName("views") private ArrayList<KennelView> views = null;
 
     public Boolean getError() {
@@ -23,6 +25,22 @@ public class KennelViews {
 
     public void setTotalViews(String totalViews) {
         this.totalViews = totalViews;
+    }
+
+    public String getTotalEnquiries() {
+        return totalEnquiries;
+    }
+
+    public void setTotalEnquiries(String totalEnquiries) {
+        this.totalEnquiries = totalEnquiries;
+    }
+
+    public String getTotalReviews() {
+        return totalReviews;
+    }
+
+    public void setTotalReviews(String totalReviews) {
+        this.totalReviews = totalReviews;
     }
 
     public ArrayList<KennelView> getViews() {

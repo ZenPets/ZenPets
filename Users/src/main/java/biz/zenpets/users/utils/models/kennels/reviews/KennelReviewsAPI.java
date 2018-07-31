@@ -18,7 +18,8 @@ public interface KennelReviewsAPI {
             @Field("kennelRating") String kennelRating,
             @Field("kennelRecommendStatus") String kennelRecommendStatus,
             @Field("kennelExperience") String kennelExperience,
-            @Field("kennelReviewTimestamp") String kennelReviewTimestamp);
+            @Field("kennelReviewTimestamp") String kennelReviewTimestamp,
+            @Field("kennelReviewDate") String kennelReviewDate);
 
     /** FETCH ALL REVIEWS OF A KENNEL **/
     @GET("fetchKennelReviews")
@@ -62,5 +63,6 @@ public interface KennelReviewsAPI {
             @Field("kennelRating") String kennelRating,
             @Field("kennelRecommendStatus") String kennelRecommendStatus,
             @Field("kennelExperience") String kennelExperience,
-            @Field("kennelReviewTimestamp") String kennelReviewTimestamp);
+            @Field("kennelReviewTimestamp") String kennelReviewTimestamp,
+            @Field("kennelReviewDate") String kennelReviewDate);
 }
