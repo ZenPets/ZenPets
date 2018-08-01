@@ -28,6 +28,20 @@
         <item quantity="other">%d Views</item>
     </plurals>
 
+    <!-- NUMBER OF CLICKS -->
+    <plurals name="clicks">
+        <item quantity="zero">0 Clicks</item>
+        <item quantity="one">1 Click</item>
+        <item quantity="other">%d Clicks</item>
+    </plurals>
+
+    <!-- NUMBER OF ENQUIRIES -->
+    <plurals name="enquiries">
+        <item quantity="zero">0 Enquiries</item>
+        <item quantity="one">1 Enquiry</item>
+        <item quantity="other">%d Enquiries</item>
+    </plurals>
+
     <!-- NUMBER OF VIEWS -->
     <plurals name="replies">
         <item quantity="zero">0 Replies</item>

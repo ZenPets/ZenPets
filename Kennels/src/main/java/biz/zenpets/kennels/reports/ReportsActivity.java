@@ -83,8 +83,8 @@ public class ReportsActivity extends AppCompatActivity {
     @BindView(R.id.spnKennels) Spinner spnKennels;
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
     @BindView(R.id.groupDurationSelector) SegmentedButtonGroup groupDurationSelector;
-    @BindView(R.id.txtSummaryLabel) TextView txtSummaryLabel;
     @BindView(R.id.txtViews) TextView txtViews;
+    @BindView(R.id.txtClicks) TextView txtClicks;
     @BindView(R.id.txtEnquiries) TextView txtEnquiries;
     @BindView(R.id.txtReviews) TextView txtReviews;
     @BindView(R.id.kennelViewsChart) LineChart kennelViewsChart;
@@ -138,19 +138,19 @@ public class ReportsActivity extends AppCompatActivity {
                     /* GET THE START AND END DATE FOR THE DURATION AGAIN */
                     SELECTED_DURATION = 30;
                     calculateDates();
-                    txtSummaryLabel.setText(getString(R.string.report_duration_summary_placeholder, String.valueOf(SELECTED_DURATION)));
+//                    txtSummaryLabel.setText(getString(R.string.report_duration_summary_placeholder, String.valueOf(SELECTED_DURATION)));
                     fetchKennelViewStats();
                 } else if (position == 1)   {
                     /* GET THE START AND END DATE FOR THE DURATION AGAIN */
                     SELECTED_DURATION = 60;
                     calculateDates();
-                    txtSummaryLabel.setText(getString(R.string.report_duration_summary_placeholder, String.valueOf(SELECTED_DURATION)));
+//                    txtSummaryLabel.setText(getString(R.string.report_duration_summary_placeholder, String.valueOf(SELECTED_DURATION)));
                     fetchKennelViewStats();
                 } else if (position == 2)   {
                     /* GET THE START AND END DATE FOR THE DURATION AGAIN */
                     SELECTED_DURATION = 90;
                     calculateDates();
-                    txtSummaryLabel.setText(getString(R.string.report_duration_summary_placeholder, String.valueOf(SELECTED_DURATION)));
+//                    txtSummaryLabel.setText(getString(R.string.report_duration_summary_placeholder, String.valueOf(SELECTED_DURATION)));
                     fetchKennelViewStats();
                 }
             }
@@ -167,6 +167,8 @@ public class ReportsActivity extends AppCompatActivity {
                 Log.e("VIEWS RAW", String.valueOf(response.raw()));
                 String TOTAL_VIEWS = response.body().getTotalViews();
                 txtViews.setText(TOTAL_VIEWS + " Views");
+                String TOTAL_CLICKS = response.body().getTotalClicks();
+                txtClicks.setText(TOTAL_CLICKS + " Clicks");
                 String TOTAL_ENQUIRIES = response.body().getTotalEnquiries();
                 txtEnquiries.setText(TOTAL_ENQUIRIES + " Enquiries");
                 String TOTAL_REVIEWS = response.body().getTotalReviews();
