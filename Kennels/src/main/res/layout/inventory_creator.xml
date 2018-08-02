@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="11dp"
+        android:text="CONFIGURE THE OCCUPANCY FOR THE PET SIZES YOU ACCOMMODATE"
+        android:textColor="@color/primary_text"
+        android:textSize="14sp"
+        app:fontFamily="@font/roboto_medium" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbarSize="3dp"
+        android:scrollbarThumbVertical="@color/primary_dark">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtLargePetsLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="Select the number of Large size Pets you can accommodate"
+                android:textColor="@color/secondary_text"
+                android:textSize="14sp"
+                app:fontFamily="@font/roboto_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Spinner
+                android:id="@+id/spnLargePets"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/txtLargePetsLabel"
+                app:layout_constraintStart_toStartOf="@+id/txtLargePetsLabel"
+                app:layout_constraintTop_toBottomOf="@+id/txtLargePetsLabel" />
+
+            <TextView
+                android:id="@+id/txtMediumPetsLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="Select the number of Medium size Pets you can accommodate"
+                android:textColor="@color/secondary_text"
+                android:textSize="14sp"
+                app:fontFamily="@font/roboto_regular"
+                app:layout_constraintEnd_toEndOf="@+id/spnLargePets"
+                app:layout_constraintStart_toStartOf="@+id/spnLargePets"
+                app:layout_constraintTop_toBottomOf="@+id/spnLargePets" />
+
+            <Spinner
+                android:id="@+id/spnMediumPets"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/txtMediumPetsLabel"
+                app:layout_constraintStart_toStartOf="@+id/txtMediumPetsLabel"
+                app:layout_constraintTop_toBottomOf="@+id/txtMediumPetsLabel" />
+
+            <TextView
+                android:id="@+id/txtSmallPetsLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:text="Select the number of Small size Pets you can accommodate"
+                android:textColor="@color/secondary_text"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/spnMediumPets"
+                app:layout_constraintStart_toStartOf="@+id/spnMediumPets"
+                app:layout_constraintTop_toBottomOf="@+id/spnMediumPets" />
+
+            <Spinner
+                android:id="@+id/spnSmallPets"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/txtSmallPetsLabel"
+                app:layout_constraintStart_toStartOf="@+id/txtSmallPetsLabel"
+                app:layout_constraintTop_toBottomOf="@+id/txtSmallPetsLabel" />
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        android:paddingEnd="11dp"
+        android:paddingLeft="11dp"
+        android:paddingRight="11dp"
+        android:paddingStart="11dp"
+        android:paddingTop="5dp"
+        android:text="Please Note: You can modify the capacities chooses above any time after you have completed the initial configuration."
+        android:textColor="@color/secondary_text"
+        android:textSize="12sp"
+        app:fontFamily="@font/roboto_light" />
+</LinearLayout>

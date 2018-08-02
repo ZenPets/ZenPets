@@ -97,7 +97,7 @@ dependencies {
     implementation "com.mikepenz:iconics-views:2.9.3@aar"
     implementation 'com.mikepenz:google-material-typeface:3.0.1.2.original@aar'
     implementation 'com.mikepenz:material-design-iconic-typeface:2.2.0.4@aar'
-    implementation 'com.mikepenz:fontawesome-typeface:5.0.6.0@aar'
+    implementation 'com.mikepenz:fontawesome-typeface:5.0.13.0@aar'
     implementation 'com.mikepenz:weather-icons-typeface:2.0.10.4@aar'
     implementation 'com.mikepenz:ionicons-typeface:2.0.1.4@aar'
     implementation 'com.mikepenz:community-material-typeface:2.0.46.1@aar'

@@ -89,6 +89,12 @@
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
+        <!-- INVENTORY -->
+        <activity
+            android:name=".inventory.KennelInventory"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
         <!-- REVIEWS -->
         <activity
             android:name=".reviews.ReviewsList"

@@ -87,6 +87,82 @@
             android:background="@drawable/fixed_divider_horizontal_bright" />
 
         <LinearLayout
+            android:id="@+id/linlaInventory"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:layout_width="47dp"
+                android:layout_height="47dp"
+                android:adjustViewBounds="true"
+                app:iiv_color="?attr/colorPrimary"
+                app:iiv_icon="faw_box_open"
+                app:iiv_size="22dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    android:text="Kennel Inventory"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="15sp"
+                    app:fontFamily="@font/roboto_medium" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:paddingBottom="2dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="2dp"
+                    android:text="Manage your Inventory"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/roboto_regular" />
+            </LinearLayout>
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:adjustViewBounds="true"
+                android:padding="11dp"
+                app:iiv_color="@color/secondary_text"
+                app:iiv_icon="gmd_chevron_right"
+                app:iiv_size="12dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.50dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/fixed_divider_horizontal_bright" />
+
+        <LinearLayout
             android:id="@+id/linlaReviews"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -469,7 +545,7 @@
         <LinearLayout
             android:id="@+id/linlaFeedback"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:gravity="center"
             android:orientation="horizontal">
@@ -513,7 +589,7 @@
                     android:paddingRight="11dp"
                     android:paddingStart="11dp"
                     android:paddingTop="2dp"
-                    android:text="Find some bugs? Ideas for new features?"
+                    android:text="What do you think of Zen Pets? Have any feature ideas?"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
                     app:fontFamily="@font/roboto_regular" />

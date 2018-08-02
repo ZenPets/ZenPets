@@ -14,7 +14,7 @@
         <include layout="@layout/zen_progress" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/listKennels"
+            android:id="@+id/listInventory"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_gravity="center"
@@ -54,7 +54,7 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:padding="6dp"
-                android:text="You haven't added any Kennels to your account yet. Tap here to add one now..."
+                android:text="You haven't added any inventory for Kennel yet. Tap here to add one now..."
                 android:textColor="@color/secondary_text"
                 android:textSize="14sp"
                 app:fontFamily="@font/roboto_condensed_regular" />
@@ -62,7 +62,7 @@
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabNewKennel"
+        android:id="@+id/fabNewInventory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

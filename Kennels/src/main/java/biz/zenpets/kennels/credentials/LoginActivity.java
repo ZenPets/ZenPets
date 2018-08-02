@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_activity);
+        setContentView(R.layout.login_activity_new);
         ButterKnife.bind(this);
 
         /* SET THE CUSTOM FONT */

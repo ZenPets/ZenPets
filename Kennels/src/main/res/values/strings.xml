@@ -125,6 +125,8 @@
     <string name="ed_message_time_stamp">11:15 PM</string>
 
     <!-- REPORTS STRINGS -->
+    <string name="rb_total_views">VIEWS</string>
+    <string name="rb_total_views_placeholder">%1$s Views</string>
     <string name="report_duration_summary">30 days summary…</string>
     <string name="report_duration_summary_placeholder">%1$s days summary...</string>
 </resources>

@@ -42,11 +42,11 @@
         <item quantity="other">%d Enquiries</item>
     </plurals>
 
-    <!-- NUMBER OF VIEWS -->
-    <plurals name="replies">
-        <item quantity="zero">0 Replies</item>
-        <item quantity="one">1 Reply</item>
-        <item quantity="other">%d Replies</item>
+    <!-- NUMBER OF REPLIES -->
+    <plurals name="reviews">
+        <item quantity="zero">0 Reviews</item>
+        <item quantity="one">1 Review</item>
+        <item quantity="other">%d Reviews</item>
     </plurals>
 
     <!-- PET AGE -->

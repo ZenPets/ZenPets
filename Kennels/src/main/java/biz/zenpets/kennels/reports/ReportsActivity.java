@@ -1,5 +1,6 @@
 package biz.zenpets.kennels.reports;
 
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.drawable.Drawable;
@@ -165,14 +166,58 @@ public class ReportsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<KennelViews> call, Response<KennelViews> response) {
                 Log.e("VIEWS RAW", String.valueOf(response.raw()));
-                String TOTAL_VIEWS = response.body().getTotalViews();
-                txtViews.setText(TOTAL_VIEWS + " Views");
-                String TOTAL_CLICKS = response.body().getTotalClicks();
-                txtClicks.setText(TOTAL_CLICKS + " Clicks");
-                String TOTAL_ENQUIRIES = response.body().getTotalEnquiries();
-                txtEnquiries.setText(TOTAL_ENQUIRIES + " Enquiries");
-                String TOTAL_REVIEWS = response.body().getTotalReviews();
-                txtReviews.setText(TOTAL_REVIEWS + " Reviews");
+
+                /* GET THE TOTAL VIEWS */
+                int totalViews = Integer.parseInt(response.body().getTotalViews());
+                Resources resViews = AppPrefs.context().getResources();
+                String strFinalViews = null;
+                if (totalViews == 0)   {
+                    strFinalViews = resViews.getQuantityString(R.plurals.views, totalViews, totalViews);
+                } else if (totalViews == 1)    {
+                    strFinalViews = resViews.getQuantityString(R.plurals.views, totalViews, totalViews);
+                } else if (totalViews > 1) {
+                    strFinalViews = resViews.getQuantityString(R.plurals.views, totalViews, totalViews);
+                }
+                txtViews.setText(strFinalViews);
+
+                /* GET THE TOTAL CLICKS */
+                int totalClicks = Integer.parseInt(response.body().getTotalClicks());
+                Resources resClicks = AppPrefs.context().getResources();
+                String strFinalClicks = null;
+                if (totalViews == 0)   {
+                    strFinalClicks = resClicks.getQuantityString(R.plurals.clicks, totalClicks, totalClicks);
+                } else if (totalViews == 1)    {
+                    strFinalClicks = resClicks.getQuantityString(R.plurals.clicks, totalClicks, totalClicks);
+                } else if (totalViews > 1) {
+                    strFinalClicks = resClicks.getQuantityString(R.plurals.clicks, totalClicks, totalClicks);
+                }
+                txtClicks.setText(strFinalClicks);
+
+                /* GET THE TOTAL ENQUIRIES */
+                int totalEnquiries = Integer.parseInt(response.body().getTotalEnquiries());
+                Resources resEnquiries = AppPrefs.context().getResources();
+                String strFinalEnquiries = null;
+                if (totalEnquiries == 0)   {
+                    strFinalEnquiries = resEnquiries.getQuantityString(R.plurals.enquiries, totalEnquiries, totalEnquiries);
+                } else if (totalEnquiries == 1)    {
+                    strFinalEnquiries = resEnquiries.getQuantityString(R.plurals.enquiries, totalEnquiries, totalEnquiries);
+                } else if (totalEnquiries > 1) {
+                    strFinalEnquiries = resEnquiries.getQuantityString(R.plurals.enquiries, totalEnquiries, totalEnquiries);
+                }
+                txtEnquiries.setText(strFinalEnquiries);
+
+                /* GET THE TOTAL REVIEWS */
+                int totalReviews = Integer.parseInt(response.body().getTotalReviews());
+                Resources resReviews = AppPrefs.context().getResources();
+                String strFinalReviews = null;
+                if (totalReviews == 0)   {
+                    strFinalReviews = resReviews.getQuantityString(R.plurals.reviews, totalReviews, totalReviews);
+                } else if (totalReviews == 1)    {
+                    strFinalReviews = resReviews.getQuantityString(R.plurals.reviews, totalReviews, totalReviews);
+                } else if (totalReviews > 1) {
+                    strFinalReviews = resReviews.getQuantityString(R.plurals.reviews, totalReviews, totalReviews);
+                }
+                txtReviews.setText(strFinalReviews);
 
                 /* GET THE KENNEL VIEWS DETAILS */
                 if (response.body() != null && response.body().getViews() != null)  {
