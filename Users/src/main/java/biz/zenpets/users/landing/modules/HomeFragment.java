@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.adoptions.TestAdoptionsList;
+import biz.zenpets.users.boarding.BoardingsList;
 import biz.zenpets.users.doctors.DoctorsList;
 import biz.zenpets.users.kennels.KennelsList;
 import biz.zenpets.users.trainers.TrainersList;
@@ -48,7 +49,8 @@ public class HomeFragment extends Fragment {
 
     /** SHOW THE LIST OF HOME BOARDINGS **/
     @OnClick(R.id.linlaHomeBoarding) void showHomeBoardings()   {
-        Toast.makeText(getActivity(), "Coming real soon...", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), BoardingsList.class);
+        startActivity(intent);
     }
 
     /** SHOW THE LIST OF TRAINERS **/

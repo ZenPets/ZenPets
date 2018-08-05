@@ -343,6 +343,12 @@
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
+        <!-- HOME BOARDING -->
+        <activity
+            android:name=".boarding.BoardingsList"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
         <!-- COUNTRY, STATE, CITY, LOCALITY SELECTOR ACTIVITIES -->
         <activity
             android:name=".utils.helpers.classes.location.CountrySelectorActivity"

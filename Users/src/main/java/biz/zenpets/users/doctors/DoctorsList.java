@@ -16,6 +16,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -233,6 +234,7 @@ public class DoctorsList extends AppCompatActivity
 
                                 /* GET THE ORIGIN LATLNG */
                                 LATLNG_ORIGIN = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
+                                Log.e("LATLNG", String.valueOf(LATLNG_ORIGIN));
 
                                 /* FETCH THE LOCATION USING GEOCODER */
                                 fetchTheLocation();

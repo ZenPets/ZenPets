@@ -99,11 +99,11 @@ public class KennelsList extends AppCompatActivity {
         setContentView(R.layout.kennels_list);
         ButterKnife.bind(this);
 
-        /* INSTANTIATE THE LOCATION CLIENT */
-        locationProviderClient = LocationServices.getFusedLocationProviderClient(KennelsList.this);
-
         /* CONFIGURE THE ACTIONBAR */
         configAB();
+
+        /* INSTANTIATE THE LOCATION CLIENT */
+        locationProviderClient = LocationServices.getFusedLocationProviderClient(KennelsList.this);
 
         /* FETCH THE USER'S LOCATION */
         getUsersLocation();
