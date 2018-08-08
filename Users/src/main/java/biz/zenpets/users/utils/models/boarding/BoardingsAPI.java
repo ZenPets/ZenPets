@@ -1,7 +1,10 @@
 package biz.zenpets.users.utils.models.boarding;
 
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface BoardingsAPI {
@@ -17,4 +20,20 @@ public interface BoardingsAPI {
     /** FETCH THE TOTAL NUMBER OF BOARDING PAGES **/
     @GET("fetchBoardingPages")
     Call<BoardingPages> fetchBoardingPages(@Query("cityID") String cityID);
+
+    /** CHECK IF THE USER HAS ENABLED HOME BOARDING **/
+    @GET("checkBoardingStatus")
+    Call<Boarding> checkBoardingStatus(@Query("userID") String userID);
+
+    /** ENABLE HOME BOARDING ON AN USER'S ACCOUNT **/
+    @POST("enableHomeBoarding")
+    @FormUrlEncoded
+    Call<Boarding> enableHomeBoarding(
+            @Field("userID") String userID,
+            @Field("boardingAddress") String boardingAddress,
+            @Field("boardingPincode") String boardingPincode,
+            @Field("boardingLatitude") String boardingLatitude,
+            @Field("boardingLongitude") String boardingLongitude,
+            @Field("boardingDate") String boardingDate,
+            @Field("boardingActive") String boardingActive);
 }

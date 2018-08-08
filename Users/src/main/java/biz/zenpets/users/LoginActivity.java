@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -145,7 +146,7 @@ public class LoginActivity extends AppCompatActivity
         fbLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-//                Log.e("FB SUCCESS", String.valueOf(loginResult));
+                Log.e("FB SUCCESS", String.valueOf(loginResult));
                 handleFacebookAccessToken(loginResult.getAccessToken());
             }
 
@@ -155,7 +156,7 @@ public class LoginActivity extends AppCompatActivity
 
             @Override
             public void onError(FacebookException error) {
-//                Log.e("FB ERROR", String.valueOf(error));
+                Log.e("FB ERROR", String.valueOf(error.getMessage()));
                 Crashlytics.logException(error);
             }
         });
@@ -258,9 +259,10 @@ public class LoginActivity extends AppCompatActivity
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful())    {
+                            Log.e("FB", String.valueOf(task.getResult()));
                             Toast.makeText(getApplicationContext(), "Facebook login successful", Toast.LENGTH_SHORT).show();
                         } else {
-//                            Log.e("FB EXCEPTION", String.valueOf(task.getException()));
+                            Log.e("FB EXCEPTION", String.valueOf(task.getException()));
                             Crashlytics.logException(task.getException());
                             Toast.makeText(getApplicationContext(), "Facebook sign in failed. Please try again..", Toast.LENGTH_LONG).show();
                         }

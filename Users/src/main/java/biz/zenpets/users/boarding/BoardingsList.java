@@ -1,6 +1,7 @@
 package biz.zenpets.users.boarding;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -51,6 +52,7 @@ import biz.zenpets.users.utils.models.location.City;
 import biz.zenpets.users.utils.models.location.LocationsAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -88,6 +90,13 @@ public class BoardingsList extends AppCompatActivity {
     @BindView(R.id.listBoardings) RecyclerView listBoardings;
     @BindView(R.id.progressLoading) ProgressBar progressLoading;
     @BindView(R.id.linlaEmpty) LinearLayout linlaEmpty;
+    @BindView(R.id.txtEmpty) TextView txtEmpty;
+
+    /** REGISTER THE USER FOR HOME BOARDING **/
+    @OnClick(R.id.txtEmpty) void registerBoarding()    {
+        Intent intent = new Intent(BoardingsList.this, BoardingEnrollment.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -202,6 +211,7 @@ public class BoardingsList extends AppCompatActivity {
                     Boarding data;
                     for (int i = 0; i < JABoardings.length(); i++) {
                         final JSONObject JOBoardings = JABoardings.getJSONObject(i);
+                        Log.e("BOARDING", String.valueOf(JOBoardings));
                         data = new Boarding();
 
                         /* GET THE BOARDING ID */
@@ -430,9 +440,6 @@ public class BoardingsList extends AppCompatActivity {
 
     /***** FETCH THE CITY ID *****/
     private void fetchCityID() {
-        /* SHOW THE PROGRESS WHILE FETCHING THE DATA */
-        progressLoading.setVisibility(View.VISIBLE);
-
         LocationsAPI api = ZenApiClient.getClient().create(LocationsAPI.class);
         Call<City> call = api.getCityID(DETECTED_CITY);
         call.enqueue(new Callback<City>() {
@@ -446,9 +453,6 @@ public class BoardingsList extends AppCompatActivity {
                     if (FINAL_CITY_ID != null)  {
                         /* FETCH THE TOTAL NUMBER OF PAGES */
                         fetchTotalPages();
-
-                        /* FETCH THE FIRST LIST OF BOARDINGS */
-                        fetchBoardings();
                     } else {
                         new MaterialDialog.Builder(BoardingsList.this)
                                 .title("Location not Served!")
@@ -565,6 +569,10 @@ public class BoardingsList extends AppCompatActivity {
                 if (response.body() != null && response.body().getTotalPages() != null) {
                     TOTAL_PAGES = Integer.parseInt(response.body().getTotalPages());
                     Log.e("TOTAL PAGES", String.valueOf(TOTAL_PAGES));
+
+                    /* SHOW THE PROGRESS FETCH THE FIRST LIST OF BOARDINGS */
+                    progressLoading.setVisibility(View.VISIBLE);
+                    fetchBoardings();
                 }
             }
 

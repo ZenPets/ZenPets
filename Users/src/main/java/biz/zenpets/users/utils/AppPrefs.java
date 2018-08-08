@@ -2,13 +2,20 @@ package biz.zenpets.users.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.preference.PreferenceManager;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 import android.support.v7.app.AppCompatDelegate;
+import android.util.Base64;
+import android.util.Log;
 
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.drawee.backends.pipeline.Fresco;
+
+import java.security.MessageDigest;
 
 public class AppPrefs extends MultiDexApplication {
 
@@ -62,16 +69,16 @@ public class AppPrefs extends MultiDexApplication {
         Fresco.initialize(this);
 
         /* GET THE "SHA" FOR FACEBOOK LOGIN */
-//        try {
-//            PackageInfo info = getPackageManager().getPackageInfo("biz.zenpets.users", PackageManager.GET_SIGNATURES);
-//            for (Signature signature: info.signatures)	{
-//                MessageDigest md = MessageDigest.getInstance("SHA");
-//                md.update(signature.toByteArray());
-//                Log.e("FACEBOOK APP SIGNATURE", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo("biz.zenpets.users", PackageManager.GET_SIGNATURES);
+            for (Signature signature: info.signatures)	{
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.e("FACEBOOK APP SIGNATURE", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /***** SET THE LOGGED IN USER'S ID *****/

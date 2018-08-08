@@ -8,10 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RatingBar;
-import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.text.SimpleDateFormat;
@@ -189,7 +186,7 @@ public class BoardingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @NonNull
     private RecyclerView.ViewHolder getViewHolder(ViewGroup parent, LayoutInflater inflater) {
         RecyclerView.ViewHolder viewHolder;
-        View v1 = inflater.inflate(R.layout.kennels_item, parent, false);
+        View v1 = inflater.inflate(R.layout.home_boarding_item, parent, false);
         viewHolder = new BoardingsVH(v1);
         return viewHolder;
     }
@@ -253,25 +250,11 @@ public class BoardingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     class BoardingsVH extends RecyclerView.ViewHolder {
 
         CardView cardBoarding;
-        SimpleDraweeView imgvwKennelCoverPhoto;
-        TextView txtKennelName;
-        TextView txtKennelAddress;
-        TextView txtPetCapacity;
-        TextView txtKennelLikes;
-        RatingBar kennelRating;
-        TextView txtKennelDistance;
 
         BoardingsVH(View v) {
             super(v);
 
-            cardBoarding = v.findViewById(R.id.cardKennel);
-            imgvwKennelCoverPhoto = v.findViewById(R.id.imgvwKennelCoverPhoto);
-            txtKennelName = v.findViewById(R.id.txtKennelName);
-            txtKennelAddress = v.findViewById(R.id.txtKennelAddress);
-            txtPetCapacity = v.findViewById(R.id.txtPetCapacity);
-            txtKennelLikes = v.findViewById(R.id.txtKennelLikes);
-            kennelRating = v.findViewById(R.id.kennelRating);
-            txtKennelDistance = v.findViewById(R.id.txtKennelDistance);
+            cardBoarding = v.findViewById(R.id.cardBoarding);
         }
     }
 

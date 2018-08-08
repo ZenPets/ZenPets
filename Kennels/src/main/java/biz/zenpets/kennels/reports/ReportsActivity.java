@@ -318,7 +318,7 @@ public class ReportsActivity extends AppCompatActivity {
         call.enqueue(new Callback<Kennels>() {
             @Override
             public void onResponse(Call<Kennels> call, Response<Kennels> response) {
-//                Log.e("RAW", String.valueOf(response.raw()));
+                Log.e("RAW", String.valueOf(response.raw()));
                 if (response.body() != null && response.body().getKennels() != null) {
                     arrKennels = response.body().getKennels();
                     if (arrKennels.size() > 0) {

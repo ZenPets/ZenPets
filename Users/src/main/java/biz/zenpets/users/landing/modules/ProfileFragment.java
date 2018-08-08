@@ -1,6 +1,7 @@
 package biz.zenpets.users.landing.modules;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,15 +30,19 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 
 import biz.zenpets.users.R;
+import biz.zenpets.users.boarding.BoardingEnrollment;
 import biz.zenpets.users.creator.pet.NewPetCreator;
 import biz.zenpets.users.details.profile.ProfileDetails;
 import biz.zenpets.users.user.adoptions.TestUserAdoptions;
 import biz.zenpets.users.user.appointments.UserAppointments;
+import biz.zenpets.users.user.boardings.UserHomeBoarding;
 import biz.zenpets.users.user.questions.UserQuestions;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.adapters.pet.UserPetsAdapter;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.helpers.settings.SettingsActivity;
+import biz.zenpets.users.utils.models.boarding.Boarding;
+import biz.zenpets.users.utils.models.boarding.BoardingsAPI;
 import biz.zenpets.users.utils.models.pets.pets.Pet;
 import biz.zenpets.users.utils.models.pets.pets.Pets;
 import biz.zenpets.users.utils.models.pets.pets.PetsAPI;
@@ -69,6 +74,9 @@ public class ProfileFragment extends Fragment {
 
     /** THE PETS ADAPTER AND ARRAY LIST **/
     private ArrayList<Pet> arrPets = new ArrayList<>();
+
+    /** A PROGRESS DIALOG INSTANCE **/
+    private ProgressDialog dialog;
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
@@ -105,6 +113,20 @@ public class ProfileFragment extends Fragment {
     @OnClick(R.id.linlaMyAdoptions) void showUserAdoptions()    {
         Intent intent = new Intent(getActivity(), TestUserAdoptions.class);
         startActivity(intent);
+    }
+
+    /** SHOW THE HOME BOARDING ACTIVITY **/
+    @OnClick(R.id.linlaHomeBoarding) void showHomeBoarding()    {
+
+        /* SHOW THE PROGRESS DIALOG */
+        dialog = new ProgressDialog(getActivity());
+        dialog.setMessage("Loading...");
+        dialog.setIndeterminate(false);
+        dialog.setCancelable(false);
+        dialog.show();
+
+        /* CHECK IS THE USER HAS ALREADY ENROLLED FOR HOME BOARDING */
+        checkBoardingStatus();
     }
 
     /** SHOW THE SETTINGS ACTIVITY **/
@@ -289,5 +311,42 @@ public class ProfileFragment extends Fragment {
             listUserPets.setVisibility(View.GONE);
             fetchPetsList();
         }
+    }
+
+    /** CHECK IS THE USER HAS ALREADY ENROLLED FOR HOME BOARDING **/
+    private void checkBoardingStatus() {
+        BoardingsAPI api = ZenApiClient.getClient().create(BoardingsAPI.class);
+        Call<Boarding> call = api.checkBoardingStatus(USER_ID);
+        call.enqueue(new Callback<Boarding>() {
+            @Override
+            public void onResponse(Call<Boarding> call, Response<Boarding> response) {
+                Boarding boarding = response.body();
+                if (boarding != null)   {
+                    String message = boarding.getMessage();
+                    if (message != null)    {
+                        if (message.equalsIgnoreCase("Home Boarding is enabled for this User"))   {
+
+                            /* DISMISS THE DIALOG */
+                            dialog.dismiss();
+
+                            Intent intent = new Intent(getActivity(), UserHomeBoarding.class);
+                            startActivity(intent);
+
+                        } else if (message.equalsIgnoreCase("User hasn't enabled Home Boarding"))    {
+
+                            /* DISMISS THE DIALOG */
+                            dialog.dismiss();
+
+                            Intent intent = new Intent(getActivity(), BoardingEnrollment.class);
+                            startActivity(intent);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boarding> call, Throwable t) {
+            }
+        });
     }
 }

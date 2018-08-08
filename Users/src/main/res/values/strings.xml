@@ -584,4 +584,16 @@
     <!-- KENNEL REVIEW STRINGS -->
     <string name="review_reply_from_label"><b>Reply from Siddharth Lele</b> on 6/6/2018</string>
     <string name="review_reply_from_title">Replied on </string>
+
+    <!-- HOME BOARDING LIST -->
+    <string name="hb_list_title">Find Home Boardings</string>
+    <string name="hb_list_empty">There are no Home Boardings registered in your City at the moment. :-(
+    \n\nYou could, however, register as a Home Boarding yourself and get the ball rolling. Home Boarding is a novel concept where volunteers look after other Pet Parent\'s Pets while they travel.
+    \n\nTo register as a volunteer Home Boarding, tap here…</string>
+
+    <!-- HOME BOARDING -->
+    <string name="home_boarding_enrol_intro">Home Boarding is a novel concept where you volunteer to look after other Pet Parent\'s Pets for a few days when they need to travel and would prefer a home environment for their Pets instead of leaving them at Kennels.
+        \n\nThis concept is based on the idea of reciprocity where when you need to travel, other Pet Parents can volunteer to look after your Pets when you travel.
+        \n\nTo enrol as a volunteer Home Boarding, click the switch below this…</string>
+    <string name="home_boarding_enroll">Enrol for providing Home Boarding</string>
 </resources>

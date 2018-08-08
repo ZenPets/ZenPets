@@ -24,15 +24,15 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <android.support.v7.widget.AppCompatTextView
-                style="@style/NormalRegular"
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="start|center"
-                android:text="Find Home Boardings"
+                android:text="@string/hb_list_title"
                 android:textColor="@android:color/primary_text_dark"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                app:fontFamily="@font/roboto_medium" />
 
             <LinearLayout
                 android:id="@+id/linlaLocationSelector"
@@ -48,9 +48,8 @@
                 android:gravity="end|center"
                 android:orientation="vertical">
 
-                <android.support.v7.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txtLocationLabel"
-                    style="@style/NormalRegular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="start|center"
@@ -62,11 +61,11 @@
                     android:paddingTop="2dp"
                     android:text="@string/adoption_list_tb_location_label"
                     android:textColor="@android:color/primary_text_dark"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    app:fontFamily="@font/roboto_regular" />
 
-                <android.support.v7.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txtLocation"
-                    style="@style/NormalRegular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -78,7 +77,8 @@
                     android:paddingTop="0dp"
                     android:text="@string/adoption_list_tb_location"
                     android:textColor="@android:color/primary_text_dark"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    app:fontFamily="@font/roboto_regular" />
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.Toolbar>
@@ -115,7 +115,7 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <android.support.v7.widget.AppCompatImageView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="110dp"
@@ -127,8 +127,8 @@
             android:scaleType="centerInside"
             android:src="@drawable/empty_graphic" />
 
-        <android.support.v7.widget.AppCompatTextView
-            style="@style/LightNormal"
+        <TextView
+            android:id="@+id/txtEmpty"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -136,8 +136,9 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:padding="11dp"
-            android:text="@string/adoption_list_empty"
-            android:textColor="@color/tertiary_text"
-            android:textSize="14sp" />
+            android:text="@string/hb_list_empty"
+            android:textColor="@color/secondary_text"
+            android:textSize="14sp"
+            app:fontFamily="@font/roboto_condensed_light" />
     </LinearLayout>
 </LinearLayout>
