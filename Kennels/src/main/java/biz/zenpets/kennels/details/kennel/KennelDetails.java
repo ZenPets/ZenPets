@@ -91,7 +91,7 @@ public class KennelDetails extends AppCompatActivity {
     @BindView(R.id.linlaNoImages) LinearLayout linlaNoImages;
 
     /** EDIT THE KENNEL COVER PHOTO **/
-    @OnClick(R.id.linlaCoverEdit) void ediCoverPhoto()    {
+    @OnClick(R.id.linlaCoverEdit) void editCoverPhoto()    {
         final BottomSheetDialog sheetDialog = new BottomSheetDialog(KennelDetails.this);
         View view = getLayoutInflater().inflate(R.layout.cover_updater_sheet, null);
         sheetDialog.setContentView(view);

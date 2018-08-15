@@ -2,19 +2,18 @@ package biz.zenpets.users.user.boardings;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.utils.AppPrefs;
-import biz.zenpets.users.utils.TypefaceSpan;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.models.boarding.BoardingsAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class UserHomeBoarding extends AppCompatActivity {
 
@@ -30,6 +29,26 @@ public class UserHomeBoarding extends AppCompatActivity {
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
+    @BindView(R.id.layoutHomeDetails) ConstraintLayout layoutHomeDetails;
+    @BindView(R.id.txtHomeType) TextView txtHomeType;
+    @BindView(R.id.txtHomeDogs) TextView txtHomeDogs;
+    @BindView(R.id.txtHomeCats) TextView txtHomeCats;
+    @BindView(R.id.txtHomeSmoking) TextView txtHomeSmoking;
+    @BindView(R.id.txtHomeVaping) TextView txtHomeVaping;
+    @BindView(R.id.layoutEmptyHomeDetails) ConstraintLayout layoutEmptyHomeDetails;
+    @BindView(R.id.layoutAccessDetails) ConstraintLayout layoutAccessDetails;
+    @BindView(R.id.txtAccessCouch) TextView txtAccessCouch;
+    @BindView(R.id.txtAccessBed) TextView txtAccessBed;
+    @BindView(R.id.txtAccessFans) TextView txtAccessFans;
+    @BindView(R.id.layoutEmptyAccessDetails) ConstraintLayout layoutEmptyAccessDetails;
+
+    /** EDIT THE HOME DETAILS **/
+    @OnClick(R.id.imgvwHomeEdit) void editHome()    {
+    }
+
+    /** EDIT THE ACCESS DETAILS **/
+    @OnClick(R.id.imgvwAccessEdit) void editAccess()    {
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,21 +59,5 @@ public class UserHomeBoarding extends AppCompatActivity {
         /* GET THE USER ID**/
         USER_ID = getApp().getUserID();
 
-        /* CONFIGURE THE TOOLBAR */
-        configTB();
-    }
-
-    /***** CONFIGURE THE TOOLBAR *****/
-    private void configTB() {
-        Toolbar myToolbar = findViewById(R.id.myToolbar);
-        setSupportActionBar(myToolbar);
-        String strTitle = "Home Boarding";
-        SpannableString s = new SpannableString(strTitle);
-        s.setSpan(new TypefaceSpan(getApplicationContext()), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setTitle(s);
-        getSupportActionBar().setSubtitle(null);
     }
 }

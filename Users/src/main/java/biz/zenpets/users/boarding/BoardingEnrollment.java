@@ -20,21 +20,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -42,10 +40,17 @@ import java.util.Locale;
 import biz.zenpets.users.R;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.TypefaceSpan;
+import biz.zenpets.users.utils.adapters.location.CitiesAdapter;
+import biz.zenpets.users.utils.adapters.location.StatesAdapter;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.helpers.classes.location.LocationPickerActivity;
 import biz.zenpets.users.utils.models.boarding.Boarding;
 import biz.zenpets.users.utils.models.boarding.BoardingsAPI;
+import biz.zenpets.users.utils.models.location.Cities;
+import biz.zenpets.users.utils.models.location.City;
+import biz.zenpets.users.utils.models.location.LocationsAPI;
+import biz.zenpets.users.utils.models.location.State;
+import biz.zenpets.users.utils.models.location.States;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -53,7 +58,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BoardingEnrollment extends AppCompatActivity {
+import static java.util.Calendar.MONTH;
+
+public class BoardingEnrollment extends AppCompatActivity
+        implements DatePickerDialog.OnDateSetListener {
 
     private AppPrefs getApp()	{
         return (AppPrefs) getApplication();
@@ -65,13 +73,26 @@ public class BoardingEnrollment extends AppCompatActivity {
     /** THE LOCATION REQUEST CODE **/
     private final int REQUEST_LOCATION = 1;
 
+    /** THE STATES ADAPTER AND ARRAY LIST **/
+    private ArrayList<State> arrStates = new ArrayList<>();
+
+    /** CITIES ADAPTER AND ARRAY LIST **/
+    private ArrayList<City> arrCities = new ArrayList<>();
+
     /** THE HOME BOARDING ENROLLMENT DATA **/
     String BOARDING_ID = null;
     String BOARDING_ADDRESS = null;
     String BOARDING_PIN_CODE = null;
+    String COUNTRY_ID = "51";
+    String STATE_ID = null;
+    String CITY_ID = null;
     Double BOARDING_LATITUDE = null;
     Double BOARDING_LONGITUDE = null;
+    String BOARDING_EXPERIENCE = null;
+    String BOARDING_SINCE = null;
+    String BOARDING_PRICE = null;
     String BOARDING_DATE = null;
+    String BOARDING_ACTIVE = "1";
 
     /** A PROGRESS DIALOG INSTANCE **/
     private ProgressDialog dialog;
@@ -81,8 +102,14 @@ public class BoardingEnrollment extends AppCompatActivity {
     @BindView(R.id.edtAddress) TextInputEditText edtAddress;
     @BindView(R.id.inputPinCode) TextInputLayout inputPinCode;
     @BindView(R.id.edtPinCode) TextInputEditText edtPinCode;
+    @BindView(R.id.spnState) Spinner spnState;
+    @BindView(R.id.spnCity) Spinner spnCity;
     @BindView(R.id.txtLocation) TextView txtLocation;
-    @BindView(R.id.mapBoarding) MapView mapBoarding;
+    @BindView(R.id.inputExperience) TextInputLayout inputExperience;
+    @BindView(R.id.edtExperience) TextInputEditText edtExperience;
+    @BindView(R.id.txtSince) TextView txtSince;
+    @BindView(R.id.inputBoardingPrice) TextInputLayout inputBoardingPrice;
+    @BindView(R.id.edtBoardingPrice) TextInputEditText edtBoardingPrice;
 
     /** CHOOSE THE BOARDING'S LOCATION ON A MAP **/
     @OnClick(R.id.btnLocationPicker) void chooseLocation()  {
@@ -90,14 +117,22 @@ public class BoardingEnrollment extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_LOCATION);
     }
 
+    /** SELECT THE "SINCE" DATE **/
+    @OnClick(R.id.btnSinceSelector) void selectSince()  {
+        Calendar now = Calendar.getInstance();
+        DatePickerDialog pickerDialog = DatePickerDialog.newInstance(
+                BoardingEnrollment.this,
+                now.get(Calendar.YEAR),
+                now.get(MONTH),
+                now.get(Calendar.DAY_OF_MONTH));
+        pickerDialog.show(getFragmentManager(), "DatePickerDialog");
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_boarding_enrollment);
         ButterKnife.bind(this);
-        mapBoarding.onCreate(savedInstanceState != null ? savedInstanceState.getBundle("boarding_map_save_state") : null);
-        mapBoarding.onResume();
-        mapBoarding.setClickable(false);
 
         /* GET THE USER ID */
         USER_ID = getApp().getUserID();
@@ -109,6 +144,41 @@ public class BoardingEnrollment extends AppCompatActivity {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         Date date = new Date();
         BOARDING_DATE = format.format(date);
+
+        /* SHOW THE PROGRESS AND FETCH THE LIST OF STATES */
+        fetchStates();
+
+        /* SELECT A STATE */
+        spnState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                STATE_ID = arrStates.get(position).getStateID();
+
+                /* CLEAR THE CITIES ARRAY LIST */
+                arrCities.clear();
+
+                /* FETCH THE LIST OF CITIES */
+                if (STATE_ID != null)   {
+                    fetchCities();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        /* SELECT A CITY */
+        spnCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                CITY_ID = arrCities.get(position).getCityID();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 
     /***** CONFIGURE THE TOOLBAR *****/
@@ -162,6 +232,8 @@ public class BoardingEnrollment extends AppCompatActivity {
         /* COLLECT THE BOARDING DETAILS */
         BOARDING_ADDRESS = edtAddress.getText().toString().trim();
         BOARDING_PIN_CODE = edtPinCode.getText().toString().trim();
+        BOARDING_EXPERIENCE = edtExperience.getText().toString().trim();
+        BOARDING_PRICE = edtBoardingPrice.getText().toString().trim();
 
         /* VERIFY THE KENNEL DETAILS */
         if (TextUtils.isEmpty(BOARDING_ADDRESS))   {
@@ -169,6 +241,8 @@ public class BoardingEnrollment extends AppCompatActivity {
             inputAddress.setErrorEnabled(true);
             inputAddress.requestFocus();
             inputPinCode.setErrorEnabled(false);
+            inputExperience.setErrorEnabled(false);
+            inputBoardingPrice.setErrorEnabled(false);
         } else if (TextUtils.isEmpty(BOARDING_PIN_CODE))  {
             inputPinCode.setError("Provide the Pin Code");
             inputPinCode.setErrorEnabled(true);
@@ -178,6 +252,16 @@ public class BoardingEnrollment extends AppCompatActivity {
             inputAddress.setErrorEnabled(false);
             inputPinCode.setErrorEnabled(false);
             Toast.makeText(getApplicationContext(), "Please mark your location on the Map", Toast.LENGTH_LONG).show();
+        } else if (TextUtils.isEmpty(BOARDING_EXPERIENCE)) {
+            inputExperience.setError("Enter your experience boarding pets");
+            inputExperience.setErrorEnabled(true);
+            inputExperience.requestFocus();
+        } else if (TextUtils.isEmpty(BOARDING_SINCE)) {
+            Toast.makeText(getApplicationContext(), "Select since when you are boarding Pets", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(BOARDING_PRICE))   {
+            inputBoardingPrice.setError("Provide the Per Day price of Boarding");
+            inputBoardingPrice.setErrorEnabled(true);
+            inputBoardingPrice.requestFocus();
         } else {
             /* REGISTER THE USER FOR HOME BOARDING */
             registerHomeBoarding();
@@ -194,9 +278,12 @@ public class BoardingEnrollment extends AppCompatActivity {
 
         String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
         BoardingsAPI api = ZenApiClient.getClient().create(BoardingsAPI.class);
-        Call<Boarding> call = api.enableHomeBoarding(
+        Call<Boarding> call = api.registerHomeBoarding(
                 USER_ID, BOARDING_ADDRESS, BOARDING_PIN_CODE,
-                String.valueOf(BOARDING_LATITUDE), String.valueOf(BOARDING_LONGITUDE), BOARDING_DATE, "1");
+                CITY_ID, STATE_ID, COUNTRY_ID,
+                String.valueOf(BOARDING_LATITUDE), String.valueOf(BOARDING_LONGITUDE),
+                BOARDING_EXPERIENCE, BOARDING_SINCE, BOARDING_PRICE,
+                BOARDING_DATE, BOARDING_ACTIVE);
         call.enqueue(new Callback<Boarding>() {
             @Override
             public void onResponse(Call<Boarding> call, Response<Boarding> response) {
@@ -235,94 +322,85 @@ public class BoardingEnrollment extends AppCompatActivity {
                 if (bundle != null) {
                     BOARDING_LATITUDE = bundle.getDouble("LATITUDE");
                     BOARDING_LONGITUDE = bundle.getDouble("LONGITUDE");
-                    if (BOARDING_LATITUDE != null && BOARDING_LONGITUDE != null) {
-                        final LatLng latLng = new LatLng(BOARDING_LATITUDE, BOARDING_LONGITUDE);
-                        mapBoarding.getMapAsync(new OnMapReadyCallback() {
-                            @Override
-                            public void onMapReady(GoogleMap googleMap) {
-                                googleMap.getUiSettings().setMapToolbarEnabled(false);
-                                googleMap.getUiSettings().setAllGesturesEnabled(false);
-                                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                                googleMap.setBuildingsEnabled(true);
-                                googleMap.setTrafficEnabled(false);
-                                googleMap.setIndoorEnabled(false);
-                                MarkerOptions options = new MarkerOptions();
-                                options.position(latLng);
-                                options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                                Marker mMarker = googleMap.addMarker(options);
-                                googleMap.addMarker(options);
 
-                                /* MOVE THE MAP CAMERA */
-                                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mMarker.getPosition(), 10));
-                                googleMap.animateCamera(CameraUpdateFactory.zoomTo(18), 2000, null);
-                            }
-                        });
-
-                        /* SHOW THE BOARDING MAP */
-                        mapBoarding.setVisibility(View.VISIBLE);
-
-                        /* GET THE APPROXIMATE ADDRESS FOR DISPLAY */
-                        try {
-                            Geocoder geocoder;
-                            List<Address> addresses;
-                            geocoder = new Geocoder(this, Locale.getDefault());
-                            addresses = geocoder.getFromLocation(BOARDING_LATITUDE, BOARDING_LONGITUDE, 1);
-                            String address = addresses.get(0).getAddressLine(0);
-                            if (!TextUtils.isEmpty(address)) {
-                                txtLocation.setText(address);
-                            } else {
-                                // TODO: DISPLAY THE COORDINATES INSTEAD
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                    /* GET THE APPROXIMATE ADDRESS FOR DISPLAY */
+                    try {
+                        Geocoder geocoder;
+                        List<Address> addresses;
+                        geocoder = new Geocoder(this, Locale.getDefault());
+                        addresses = geocoder.getFromLocation(BOARDING_LATITUDE, BOARDING_LONGITUDE, 1);
+                        String address = addresses.get(0).getAddressLine(0);
+                        if (!TextUtils.isEmpty(address)) {
+                            txtLocation.setText(address);
+                        } else {
+                            // TODO: DISPLAY THE COORDINATES INSTEAD
                         }
-                    } else {
-                        /* HIDE THE BOARDING MAP */
-                        mapBoarding.setVisibility(View.GONE);
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 } else {
-                    /* HIDE THE BOARDING MAP */
-                    mapBoarding.setVisibility(View.GONE);
                 }
+            } else {
             }
         }
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mapBoarding.onResume();
+    public void onDateSet(DatePickerDialog view, int year, int month, int date) {
+        /* GET THE SELECTED DATE */
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, date);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+        /* FOR THE DATABASE ONLY !!!! */
+        BOARDING_SINCE = sdf.format(cal.getTime());
+        Log.e("BOARDING SINCE", BOARDING_SINCE);
+
+        /* FOR DISPLAY ONLY !!!! */
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault());
+        String selectedDate = dateFormat.format(cal.getTime());
+        txtSince.setText(selectedDate);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        mapBoarding.onPause();
+    /** FETCH THE LIST OF STATES **/
+    private void fetchStates() {
+        LocationsAPI api = ZenApiClient.getClient().create(LocationsAPI.class);
+        Call<States> call = api.allStates(COUNTRY_ID);
+        call.enqueue(new Callback<States>() {
+            @Override
+            public void onResponse(Call<States> call, Response<States> response) {
+                arrStates = response.body().getStates();
+
+                /* SET THE ADAPTER TO THE STATES SPINNER */
+                spnState.setAdapter(new StatesAdapter(BoardingEnrollment.this, arrStates));
+            }
+
+            @Override
+            public void onFailure(Call<States> call, Throwable t) {
+//                Log.e("STATES FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        mapBoarding.onStop();
-    }
+    /** FETCH THE LIST OF CITIES **/
+    private void fetchCities() {
+        LocationsAPI api = ZenApiClient.getClient().create(LocationsAPI.class);
+        Call<Cities> call = api.allCities(STATE_ID);
+        call.enqueue(new Callback<Cities>() {
+            @Override
+            public void onResponse(Call<Cities> call, Response<Cities> response) {
+                arrCities = response.body().getCities();
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mapBoarding.onDestroy();
-    }
+                /* SET THE ADAPTER TO THE CITIES SPINNER */
+                spnCity.setAdapter(new CitiesAdapter(BoardingEnrollment.this, arrCities));
+            }
 
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mapBoarding.onLowMemory();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        Bundle bundle = new Bundle(outState);
-        mapBoarding.onSaveInstanceState(bundle);
-        outState.putBundle("boarding_map_save_state", bundle);
-        super.onSaveInstanceState(outState);
+            @Override
+            public void onFailure(Call<Cities> call, Throwable t) {
+//                Log.e("CITIES FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
 }

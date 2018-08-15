@@ -1,6 +1,7 @@
 package biz.zenpets.users.utils.adapters.boardings;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.text.SimpleDateFormat;
@@ -77,87 +83,56 @@ public class BoardingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 if (data.getBoardingID() != null)   {
                     Log.e("BOARDING ID", data.getBoardingID());
 
+                    /* SET THE BOARDING'S COVER PHOTO */
+                    String boardingCoverPhoto = data.getBoardingCoverPhoto();
+                    if (boardingCoverPhoto != null
+                            && !boardingCoverPhoto.equalsIgnoreCase("")
+                            && !boardingCoverPhoto.equalsIgnoreCase("null")) {
+                        Uri uri = Uri.parse(boardingCoverPhoto);
+                        vh.imgvwBoardingCoverPhoto.setImageURI(uri);
+                    } else {
+                        ImageRequest request = ImageRequestBuilder
+                                .newBuilderWithResourceId(R.drawable.empty_graphic)
+                                .build();
+                        vh.imgvwBoardingCoverPhoto.setImageURI(request.getSourceUri());
+                    }
+
+                    /* SET THE USER'S NAME */
+                    if (data.getUserName() != null) {
+                        vh.txtUserName.setText(data.getUserName());
+                    }
+
+                    /* SET THE USER'S DISPLAY PROFILE */
+                    String userDisplayProfile = data.getUserDisplayProfile();
+                    if (userDisplayProfile != null
+                            && !userDisplayProfile.equalsIgnoreCase("")
+                            && !userDisplayProfile.equalsIgnoreCase("null"))    {
+                        Uri uri = Uri.parse(userDisplayProfile);
+                        vh.imgvwUserDisplayProfile.setImageURI(uri);
+                    } else {
+                        ImageRequest request = ImageRequestBuilder
+                                .newBuilderWithResourceId(R.drawable.ic_person_black_24dp)
+                                .build();
+                        vh.imgvwUserDisplayProfile.setImageURI(request.getSourceUri());
+                    }
+
+                    /* SET THE BOARDING ADDRESS */
+                    String boardingAddress = data.getBoardingAddress();
+                    String cityName = data.getCityName();
+                    String boardingPincode = data.getBoardingPincode();
+                    ((BoardingsVH) holder).txtBoardingAddress.setText(activity.getString(R.string.doctor_list_address_placeholder, boardingAddress, cityName, boardingPincode));
+
+                    /* SET THE BOARDING DISTANCE */
+                    String boardingDistance = data.getBoardingDistance();
+                    String strTilde = activity.getString(R.string.generic_tilde);
+                    vh.txtBoardingDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strTilde, boardingDistance));
+
                     /* SHOW THE BOARDINGS CARD */
                     vh.cardBoarding.setVisibility(View.VISIBLE);
                 } else {
                     /* HIDE THE BOARDINGS CARD */
                     vh.cardBoarding.setVisibility(View.GONE);
                 }
-
-//                /* SET THE KENNEL COVER PHOTO */
-//                String strKennelCoverPhoto = data.getKennelCoverPhoto();
-//                if (strKennelCoverPhoto != null
-//                        && !strKennelCoverPhoto.equalsIgnoreCase("")
-//                        && !strKennelCoverPhoto.equalsIgnoreCase("null")) {
-//                    Uri uri = Uri.parse(strKennelCoverPhoto);
-//                    vh.imgvwKennelCoverPhoto.setImageURI(uri);
-//                } else {
-//                    ImageRequest request = ImageRequestBuilder
-//                            .newBuilderWithResourceId(R.drawable.empty_graphic)
-//                            .build();
-//                    vh.imgvwKennelCoverPhoto.setImageURI(request.getSourceUri());
-//                }
-//
-//                /* SET THE KENNEL NAME */
-//                if (data.getKennelName() != null) {
-//                    vh.txtKennelName.setText(data.getKennelName());
-//                }
-//
-//                /* SET THE KENNEL ADDRESS */
-//                String strKennelAddress = data.getKennelAddress();
-//                String cityName = data.getCityName();
-//                String kennelPinCode = data.getKennelPinCode();
-//                vh.txtKennelAddress.setText(activity.getString(R.string.kennel_list_kennel_address_placeholder, strKennelAddress, cityName, kennelPinCode));
-//
-//                /* SET THE KENNEL DISTANCE */
-//                String kennelDistance = data.getKennelDistance();
-//                String strTilde = activity.getString(R.string.generic_tilde);
-//                vh.txtKennelDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strTilde, kennelDistance));
-//
-//                /* SET THE PET CAPACITY */
-//                if (data.getKennelPetCapacity() != null
-//                        && !data.getKennelPetCapacity().equalsIgnoreCase("")
-//                        && !data.getKennelPetCapacity().equalsIgnoreCase("null")) {
-//                    vh.txtPetCapacity.setText(activity.getString(R.string.kennel_list_kennel_capacity_placeholder, data.getKennelPetCapacity()));
-//                } else {
-//                    vh.txtPetCapacity.setText(activity.getString(R.string.kennel_list_kennel_capacity_zero));
-//                }
-//
-//                /* SET THE REVIEW VOTE STATS */
-//                vh.txtKennelLikes.setText(data.getKennelVoteStats());
-//
-//                /* SET THE AVERAGE KENNEL RATING */
-//                Float dblRating = Float.valueOf(data.getKennelRating());
-//                vh.kennelRating.setRating(dblRating);
-//
-//                /* SHOW THE KENNEL DETAILS */
-//                vh.cardKennel.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Intent intent = new Intent(activity, KennelDetails.class);
-//                        intent.putExtra("KENNEL_ID", data.getKennelID());
-//                        intent.putExtra("ORIGIN_LATITUDE", String.valueOf(LATLNG_ORIGIN.latitude));
-//                        intent.putExtra("ORIGIN_LONGITUDE", String.valueOf(LATLNG_ORIGIN.longitude));
-//                        activity.startActivity(intent);
-//                    }
-//                });
-//
-//                /* PUBLISH A NEW KENNEL VIEWED STATUS */
-//                StatisticsAPI api = ZenApiClient.getClient().create(StatisticsAPI.class);
-//                Call<Stat> call = api.publishKennelViewStatus(data.getKennelID(), USER_ID, CURRENT_DATE);
-//                call.enqueue(new Callback<Stat>() {
-//                    @Override
-//                    public void onResponse(Call<Stat> call, Response<Stat> response) {
-////                            if (response.body().getMessage() != null)
-////                                Log.e("MESSAGE", response.body().getMessage());
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<Stat> call, Throwable t) {
-////                            Log.e("VIEWED FAILED", t.getMessage());
-//                        Crashlytics.logException(t);
-//                    }
-//                });
 
                 break;
             case LOADING:
@@ -250,11 +225,25 @@ public class BoardingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     class BoardingsVH extends RecyclerView.ViewHolder {
 
         CardView cardBoarding;
+        SimpleDraweeView imgvwBoardingCoverPhoto;
+        SimpleDraweeView imgvwUserDisplayProfile;
+        TextView txtUserName;
+        TextView txtBoardingAddress;
+        TextView txtBoardingLikes;
+        RatingBar boardingRating;
+        TextView txtBoardingDistance;
 
         BoardingsVH(View v) {
             super(v);
 
             cardBoarding = v.findViewById(R.id.cardBoarding);
+            imgvwBoardingCoverPhoto = v.findViewById(R.id.imgvwBoardingCoverPhoto);
+            imgvwUserDisplayProfile = v.findViewById(R.id.imgvwUserDisplayProfile);
+            txtUserName = v.findViewById(R.id.txtUserName);
+            txtBoardingAddress = v.findViewById(R.id.txtBoardingAddress);
+            txtBoardingLikes = v.findViewById(R.id.txtBoardingLikes);
+            boardingRating = v.findViewById(R.id.boardingRating);
+            txtBoardingDistance = v.findViewById(R.id.txtBoardingDistance);
         }
     }
 

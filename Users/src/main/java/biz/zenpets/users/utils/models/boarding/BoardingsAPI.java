@@ -25,15 +25,21 @@ public interface BoardingsAPI {
     @GET("checkBoardingStatus")
     Call<Boarding> checkBoardingStatus(@Query("userID") String userID);
 
-    /** ENABLE HOME BOARDING ON AN USER'S ACCOUNT **/
-    @POST("enableHomeBoarding")
+    /** REGISTER A USER FOR HOME BOARDING **/
+    @POST("registerHomeBoarding")
     @FormUrlEncoded
-    Call<Boarding> enableHomeBoarding(
+    Call<Boarding> registerHomeBoarding(
             @Field("userID") String userID,
             @Field("boardingAddress") String boardingAddress,
             @Field("boardingPincode") String boardingPincode,
+            @Field("cityID") String cityID,
+            @Field("stateID") String stateID,
+            @Field("countryID") String countryID,
             @Field("boardingLatitude") String boardingLatitude,
             @Field("boardingLongitude") String boardingLongitude,
+            @Field("boardingExperience") String boardingExperience,
+            @Field("boardingSince") String boardingSince,
+            @Field("boardingPrice") String boardingPrice,
             @Field("boardingDate") String boardingDate,
             @Field("boardingActive") String boardingActive);
 }

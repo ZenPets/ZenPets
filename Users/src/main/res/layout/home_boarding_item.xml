@@ -1,40 +1,233 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cardBoarding"
-    style="@style/ZenPetsCards"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp">
+    android:orientation="vertical">
 
-    <android.support.constraint.ConstraintLayout
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardBoarding"
+        style="@style/ZenPetsCards"
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_person_black_24dp" />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="@+id/imageView" />
-    </android.support.constraint.ConstraintLayout>
-</android.support.v7.widget.CardView>
+            <FrameLayout
+                android:id="@+id/fralaBoardingDetails"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/imgvwBoardingCoverPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:scaleType="center"
+                    app:actualImageScaleType="center"
+                    app:failureImageScaleType="center"
+                    app:placeholderImage="@drawable/ic_business_black_48dp"
+                    app:placeholderImageScaleType="center" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:background="#A6000000"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/imgvwUserDisplayProfile"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_margin="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:scaleType="centerCrop"
+                        app:placeholderImage="@drawable/beagle"
+                        app:roundAsCircle="true"
+                        app:roundingBorderColor="@color/semiTransparentDark"
+                        app:roundingBorderWidth="4dp" />
+
+                    <TextView
+                        android:id="@+id/txtUserName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:gravity="start|center"
+                        android:paddingBottom="5dp"
+                        android:paddingEnd="11dp"
+                        android:paddingLeft="11dp"
+                        android:paddingRight="11dp"
+                        android:paddingStart="11dp"
+                        android:paddingTop="5dp"
+                        android:text="User's Name"
+                        android:textColor="@android:color/primary_text_dark"
+                        android:textSize="18sp"
+                        app:fontFamily="@font/roboto_medium" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/linlaBoardingAddress"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="top|center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@+id/fralaBoardingDetails"
+                app:layout_constraintStart_toStartOf="@+id/fralaBoardingDetails"
+                app:layout_constraintTop_toBottomOf="@+id/fralaBoardingDetails">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="faw_building2"
+                    app:iiv_size="14dp" />
+
+                <TextView
+                    android:id="@+id/txtBoardingAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="start|center"
+                    android:paddingEnd="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingStart="5dp"
+                    android:text="Boarding Address"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/roboto_regular" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/viewBottomDivider"
+                android:layout_width="match_parent"
+                android:layout_height="0.75dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/fixed_divider_horizontal_bright"
+                app:layout_constraintEnd_toEndOf="@+id/linlaBoardingAddress"
+                app:layout_constraintStart_toStartOf="@+id/linlaBoardingAddress"
+                app:layout_constraintTop_toBottomOf="@+id/linlaBoardingAddress" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="end|center"
+                android:orientation="horizontal"
+                android:padding="6dp"
+                app:layout_constraintEnd_toEndOf="@+id/viewBottomDivider"
+                app:layout_constraintStart_toStartOf="@+id/viewBottomDivider"
+                app:layout_constraintTop_toBottomOf="@+id/viewBottomDivider">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txtBoardingLikes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="3dp"
+                        android:text="@string/doctor_item_likes_percent"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="11sp"
+                        app:fontFamily="@font/roboto_medium" />
+                </LinearLayout>
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="3dp"
+                    android:adjustViewBounds="true"
+                    app:iiv_color="@color/tertiary_text"
+                    app:iiv_icon="oct_primitive_dot"
+                    app:iiv_size="4dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <RatingBar
+                        android:id="@+id/boardingRating"
+                        style="@style/RatingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="4dp"
+                        android:numStars="5"
+                        android:rating="0" />
+                </LinearLayout>
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="3dp"
+                    android:adjustViewBounds="true"
+                    app:iiv_color="@color/tertiary_text"
+                    app:iiv_icon="oct_primitive_dot"
+                    app:iiv_size="4dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txtBoardingDistance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="3dp"
+                        android:text="@string/doctor_item_clinic_distance"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="11sp"
+                        app:fontFamily="@font/roboto_medium" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>
