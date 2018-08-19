@@ -42,4 +42,8 @@ public interface BoardingsAPI {
             @Field("boardingPrice") String boardingPrice,
             @Field("boardingDate") String boardingDate,
             @Field("boardingActive") String boardingActive);
+
+    /** FETCH THE HOME BOARDING DETAILS WITH THE USER'S ID **/
+    @GET("fetchBoardingDetailsByUser")
+    Call<Boarding> fetchBoardingDetailsByUser(@Query("userID") String userID);
 }

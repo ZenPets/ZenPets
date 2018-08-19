@@ -596,4 +596,10 @@
         \n\nThis concept is based on the idea of reciprocity where when you need to travel, other Pet Parents can volunteer to look after your Pets when you travel.
         \n\nTo enrol as a volunteer Home Boarding, click the switch below this…</string>
     <string name="home_boarding_enroll">Enrol for providing Home Boarding</string>
+
+    <!-- HOME BOARDING - USER CONFIGURATION ACTIVITY -->
+    <string name="hbu_small_label">small\n&lt;15kg</string>
+    <string name="hbu_medium_label">medium\n15–25kg</string>
+    <string name="hbu_large_label">large\n25–30kg</string>
+    <string name="hbu_extra_large_label">x large\n&gt;35kg</string>
 </resources>

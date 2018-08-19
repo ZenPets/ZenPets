@@ -77,10 +77,14 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_chat_white_24dp" />
+                            <entry key="height" value="64" />
+                            <entry key="opacityPercent" value="38" />
+                            <entry key="outputName" value="ic_pet_size_disabled_64" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\Siddharth Lele" />
+                            <entry key="sourceFile" value="C:\Users\Siddharth Lele\Downloads\dog-side.svg" />
+                            <entry key="width" value="64" />
                           </map>
                         </option>
                       </PersistentState>

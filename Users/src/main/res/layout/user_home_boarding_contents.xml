@@ -20,6 +20,60 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start|top"
+                android:orientation="horizontal">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:padding="11dp"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="faw_building2"
+                    app:iiv_size="14dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="top|center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtBoardingAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:paddingBottom="5dp"
+                        android:paddingEnd="11dp"
+                        android:paddingLeft="11dp"
+                        android:paddingRight="11dp"
+                        android:paddingStart="11dp"
+                        android:paddingTop="5dp"
+                        android:text="@string/doctor_details_clinic_address"
+                        android:textColor="@color/tertiary_text"
+                        android:textSize="12sp"
+                        app:fontFamily="@font/roboto_regular" />
+
+                    <com.google.android.gms.maps.MapView
+                        android:id="@+id/boardingMap"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center"
+                        android:paddingBottom="5dp"
+                        android:paddingEnd="11dp"
+                        android:paddingLeft="11dp"
+                        android:paddingRight="11dp"
+                        android:paddingStart="11dp"
+                        android:paddingTop="5dp"
+                        app:cameraZoom="18"
+                        app:mapType="normal" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/linlaHome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -275,7 +329,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="16dp"
                         android:fontFamily="@font/roboto_regular"
-                        android:text="Allowed on Beda"
+                        android:text="Allowed on Beds"
                         android:textColor="@color/secondary_text"
                         android:textSize="13sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -345,6 +399,434 @@
                         app:layout_constraintTop_toBottomOf="@+id/imgvwEmptyAccessDetails"
                         app:layout_constraintVertical_bias="0.0" />
                 </android.support.constraint.ConstraintLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linlaPreferences"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingBottom="5dp"
+                        android:paddingEnd="11dp"
+                        android:paddingLeft="11dp"
+                        android:paddingRight="11dp"
+                        android:paddingStart="11dp"
+                        android:paddingTop="5dp"
+                        android:text="PET PREFERENCES"
+                        android:textColor="@color/accent"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/roboto_bold" />
+
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:id="@+id/imgvwPreferencesEdit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:adjustViewBounds="true"
+                        android:padding="11dp"
+                        app:iiv_color="@color/secondary_text"
+                        app:iiv_icon="faw_edit"
+                        app:iiv_size="16dp" />
+                </LinearLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/layoutPreferencesDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/imgvwSmall"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintEnd_toStartOf="@+id/imgvwMedium"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_pet_size_24" />
+
+                    <ImageView
+                        android:id="@+id/imgvwMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintEnd_toStartOf="@+id/imgvwLarge"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/imgvwSmall"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_pet_size_32" />
+
+                    <ImageView
+                        android:id="@+id/imgvwLarge"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintEnd_toStartOf="@+id/imgvwExtraLarge"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/imgvwMedium"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_pet_size_48" />
+
+                    <ImageView
+                        android:id="@+id/imgvwExtraLarge"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/imgvwLarge"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_pet_size_64" />
+
+                    <TextView
+                        android:id="@+id/txtSmallLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="center"
+                        android:text="@string/hbu_small_label"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/imgvwSmall"
+                        app:layout_constraintStart_toStartOf="@+id/imgvwSmall"
+                        app:layout_constraintTop_toBottomOf="@+id/imgvwSmall" />
+
+                    <TextView
+                        android:id="@+id/txtMediumLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="center"
+                        android:text="@string/hbu_medium_label"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/imgvwMedium"
+                        app:layout_constraintStart_toStartOf="@+id/imgvwMedium"
+                        app:layout_constraintTop_toBottomOf="@+id/imgvwMedium" />
+
+                    <TextView
+                        android:id="@+id/txtLargeLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="center"
+                        android:text="@string/hbu_large_label"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/imgvwLarge"
+                        app:layout_constraintStart_toStartOf="@+id/imgvwLarge"
+                        app:layout_constraintTop_toBottomOf="@+id/imgvwLarge" />
+
+                    <TextView
+                        android:id="@+id/txtExtraLargeLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="center"
+                        android:text="@string/hbu_extra_large_label"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/imgvwExtraLarge"
+                        app:layout_constraintStart_toStartOf="@+id/imgvwExtraLarge"
+                        app:layout_constraintTop_toBottomOf="@+id/imgvwExtraLarge"
+                        app:layout_constraintVertical_bias="0.0" />
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/layoutEmptyPreferencesDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/imgvwEmptyPreferencesDetails"
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/empty_graphic" />
+
+                    <TextView
+                        android:id="@+id/txtEmptyPreferencesDetails"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center"
+                        android:text="You haven't configured your Pet Preferences details yet. Click here to add the details..."
+                        android:textColor="@color/secondary_text"
+                        android:textSize="12sp"
+                        app:fontFamily="@font/roboto_light"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imgvwEmptyPreferencesDetails"
+                        app:layout_constraintVertical_bias="0.0" />
+                </android.support.constraint.ConstraintLayout>
+
+                <LinearLayout
+                    android:id="@+id/linlaConditionsAccepted"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingBottom="5dp"
+                            android:paddingEnd="11dp"
+                            android:paddingLeft="11dp"
+                            android:paddingRight="11dp"
+                            android:paddingStart="11dp"
+                            android:paddingTop="5dp"
+                            android:text="CONDITIONS FOR BOARDING"
+                            android:textColor="@color/accent"
+                            android:textSize="14sp"
+                            app:fontFamily="@font/roboto_bold" />
+
+                        <com.mikepenz.iconics.view.IconicsImageView
+                            android:id="@+id/imgvwAcceptedEdit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:adjustViewBounds="true"
+                            android:padding="11dp"
+                            app:iiv_color="@color/secondary_text"
+                            app:iiv_icon="faw_edit"
+                            app:iiv_size="16dp" />
+                    </LinearLayout>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/layoutConditionsAccepted"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/listConditionsAccepted"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="16dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </android.support.constraint.ConstraintLayout>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/layoutEmptyConditionsAccepted"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible">
+
+                        <ImageView
+                            android:id="@+id/imgvwEmptyConditionsAccepted"
+                            android:layout_width="85dp"
+                            android:layout_height="85dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="16dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/empty_graphic" />
+
+                        <TextView
+                            android:id="@+id/txtEmptyConditionsAccepted"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="16dp"
+                            android:gravity="center"
+                            android:text="You haven't configured the Conditions for accepting Pets for Boarding. Click the Edit icon next to the label that reads CONDITIONS ACCEPTED"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="12sp"
+                            app:fontFamily="@font/roboto_light"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/imgvwEmptyConditionsAccepted"
+                            app:layout_constraintVertical_bias="0.0" />
+                    </android.support.constraint.ConstraintLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linlaConditionsNotAccepted"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingBottom="5dp"
+                            android:paddingEnd="11dp"
+                            android:paddingLeft="11dp"
+                            android:paddingRight="11dp"
+                            android:paddingStart="11dp"
+                            android:paddingTop="5dp"
+                            android:text="CONDITIONS FOR NOT BOARDING"
+                            android:textColor="@color/accent"
+                            android:textSize="14sp"
+                            app:fontFamily="@font/roboto_bold" />
+
+                        <com.mikepenz.iconics.view.IconicsImageView
+                            android:id="@+id/imgvwNotAcceptedEdit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:adjustViewBounds="true"
+                            android:padding="11dp"
+                            app:iiv_color="@color/secondary_text"
+                            app:iiv_icon="faw_edit"
+                            app:iiv_size="16dp" />
+                    </LinearLayout>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/layoutConditionsNotAccepted"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/listConditionsNotAccepted"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="16dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </android.support.constraint.ConstraintLayout>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/layoutEmptyConditionsNotAccepted"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible">
+
+                        <ImageView
+                            android:id="@+id/imgvwEmptyConditionsNotAccepted"
+                            android:layout_width="85dp"
+                            android:layout_height="85dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="16dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/empty_graphic" />
+
+                        <TextView
+                            android:id="@+id/txtEmptyConditionsNotAccepted"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="16dp"
+                            android:gravity="center"
+                            android:text="You haven't configured the Conditions for accepting Pets for Boarding. Click the Edit icon next to the label that reads CONDITIONS ACCEPTED"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="12sp"
+                            app:fontFamily="@font/roboto_light"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/imgvwEmptyConditionsNotAccepted"
+                            app:layout_constraintVertical_bias="0.0" />
+                    </android.support.constraint.ConstraintLayout>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
