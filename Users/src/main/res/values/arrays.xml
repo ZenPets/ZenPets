@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string-array name="duration_units">
         <item>Day/s</item>
         <item>Months/s</item>
+    </string-array>
+
+    <string-array name="boarding_unit_types">
+        <item>Choose an option</item>
+        <item>Rented Flat</item>
+        <item>Rented Bungalow</item>
+        <item>Self Owned Flat</item>
+        <item>Self Owned Bungalow</item>
     </string-array>
 </resources>

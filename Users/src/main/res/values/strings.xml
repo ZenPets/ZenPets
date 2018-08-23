@@ -49,6 +49,7 @@
     <string name="menu_profile">Profile</string>
     <string name="menu_delete">Delete</string>
     <string name="menu_filter">Filter</string>
+    <string name="menu_notifications">Notifications</string>
     <string name="menu_adoption_details">Details</string>
     <string name="menu_adoption_status">Change Status</string>
     <string name="menu_adoption_promote">Promote Listing</string>
@@ -602,4 +603,15 @@
     <string name="hbu_medium_label">medium\n15–25kg</string>
     <string name="hbu_large_label">large\n25–30kg</string>
     <string name="hbu_extra_large_label">x large\n&gt;35kg</string>
+
+    <!-- HOME BOARDING HOUSE DETAILS -->
+    <string name="hbud_unit_type">Living in a %1$s</string>
+    <string name="hbud_unit_dogs_no">No Dogs at home</string>
+    <string name="hbud_unit_dogs_yes">You have Dog/s at home</string>
+    <string name="hbud_unit_cats_no">No Cats at home</string>
+    <string name="hbud_unit_cats_yes">You have Cat/s at home</string>
+    <string name="hbud_unit_smoking_yes">Someone at home smokes</string>
+    <string name="hbud_unit_smoking_no">Smoke free home</string>
+    <string name="hbud_unit_vaping_yes">Someone at home vapes</string>
+    <string name="hbud_unit_vaping_no">Vape free Home</string>
 </resources>

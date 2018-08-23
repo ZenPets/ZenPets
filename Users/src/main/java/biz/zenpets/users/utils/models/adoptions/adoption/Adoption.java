@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import biz.zenpets.users.utils.models.adoptions.promotion.Promotion;
 
 public class Adoption {
-
     @SerializedName("error") private Boolean error;
     @SerializedName("adoptionID") private String adoptionID;
     @SerializedName("petTypeID") private String petTypeID;

@@ -7,7 +7,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +23,11 @@ import biz.zenpets.users.boarding.BoardingsList;
 import biz.zenpets.users.doctors.DoctorsList;
 import biz.zenpets.users.kennels.KennelsList;
 import biz.zenpets.users.trainers.TrainersList;
+import biz.zenpets.users.utils.TypefaceSpan;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+@SuppressWarnings("ConstantConditions")
 public class HomeFragment extends Fragment {
 
     /** SHOW THE LIST OF DOCTORS **/
@@ -95,14 +101,20 @@ public class HomeFragment extends Fragment {
         Toolbar myToolbar = getActivity().findViewById(R.id.myToolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(myToolbar);
         String strTitle = "Zen Pets - Home";
-//        SpannableString s = new SpannableString(strTitle);
-//        s.setSpan(new TypefaceSpan(getActivity()), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        SpannableString s = new SpannableString(strTitle);
+        s.setSpan(new TypefaceSpan(getActivity()), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(strTitle);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(s);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(null);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.landing_notifications, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override

@@ -1,0 +1,251 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".user.boardings.NewUserHomeBoarding"
+    tools:showIn="@layout/user_home_boarding_new">
+
+    <include layout="@layout/zen_progress" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="110dp">
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="faw_building2"
+                    app:iiv_size="14dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="top|center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtBoardingAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:paddingBottom="5dp"
+                        android:paddingEnd="11dp"
+                        android:paddingLeft="11dp"
+                        android:paddingRight="11dp"
+                        android:paddingStart="11dp"
+                        android:paddingTop="5dp"
+                        android:text="@string/doctor_details_clinic_address"
+                        android:textColor="@color/tertiary_text"
+                        android:textSize="12sp"
+                        app:fontFamily="@font/roboto_regular" />
+
+                    <com.google.android.gms.maps.MapView
+                        android:id="@+id/boardingMap"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center"
+                        android:paddingBottom="5dp"
+                        android:paddingEnd="11dp"
+                        android:paddingLeft="11dp"
+                        android:paddingRight="11dp"
+                        android:paddingStart="11dp"
+                        android:paddingTop="5dp"
+                        app:cameraZoom="18"
+                        app:mapType="normal" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtHomeDetailsLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingBottom="5dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="5dp"
+                android:text="HOME DETAILS"
+                android:textColor="@color/accent"
+                android:textSize="14sp"
+                app:fontFamily="@font/roboto_bold"
+                app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+                app:layout_constraintStart_toStartOf="@+id/linearLayout2"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+            <Spinner
+                android:id="@+id/spnUnitTypes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/txtUnitTypeLabel"
+                app:layout_constraintStart_toStartOf="@+id/txtUnitTypeLabel"
+                app:layout_constraintTop_toBottomOf="@+id/txtUnitTypeLabel" />
+
+            <TextView
+                android:id="@+id/txtUnitTypeLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingBottom="5dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="5dp"
+                android:text="Select the type of the house you will be Boarding Pets at"
+                app:layout_constraintEnd_toEndOf="@+id/txtHomeDetailsLabel"
+                app:layout_constraintStart_toStartOf="@+id/txtHomeDetailsLabel"
+                app:layout_constraintTop_toBottomOf="@+id/txtHomeDetailsLabel" />
+
+            <CheckBox
+                android:id="@+id/chkbxDogs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="I have my own Pet Dog/s at home"
+                app:layout_constraintEnd_toEndOf="@+id/spnUnitTypes"
+                app:layout_constraintStart_toStartOf="@+id/spnUnitTypes"
+                app:layout_constraintTop_toBottomOf="@+id/spnUnitTypes" />
+
+            <CheckBox
+                android:id="@+id/chkbxCats"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="I have my own Pet Cat/s at home"
+                app:layout_constraintEnd_toEndOf="@+id/chkbxDogs"
+                app:layout_constraintStart_toStartOf="@+id/chkbxDogs"
+                app:layout_constraintTop_toBottomOf="@+id/chkbxDogs" />
+
+            <CheckBox
+                android:id="@+id/chkbxSmoking"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Me or Someone at home smokes"
+                app:layout_constraintEnd_toEndOf="@+id/chkbxCats"
+                app:layout_constraintStart_toStartOf="@+id/chkbxCats"
+                app:layout_constraintTop_toBottomOf="@+id/chkbxCats" />
+
+            <CheckBox
+                android:id="@+id/chkbxVaping"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Me or Someone at home vapes"
+                app:layout_constraintEnd_toEndOf="@+id/chkbxSmoking"
+                app:layout_constraintStart_toStartOf="@+id/chkbxSmoking"
+                app:layout_constraintTop_toBottomOf="@+id/chkbxSmoking" />
+
+            <TextView
+                android:id="@+id/txtHomeAccessLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="16dp"
+                android:paddingBottom="5dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="5dp"
+                android:text="HOME ACCESS DETAILS"
+                android:textColor="@color/accent"
+                android:textSize="14sp"
+                app:fontFamily="@font/roboto_bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chkbxVaping" />
+
+            <CheckBox
+                android:id="@+id/chkbxCouches"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Pets are allowed on Couches, etc"
+                app:layout_constraintEnd_toEndOf="@+id/txtHomeAccessLabel"
+                app:layout_constraintStart_toStartOf="@+id/txtHomeAccessLabel"
+                app:layout_constraintTop_toBottomOf="@+id/txtHomeAccessLabel" />
+
+            <CheckBox
+                android:id="@+id/chkbxBeds"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Pets are allowed on Beds"
+                app:layout_constraintEnd_toEndOf="@+id/chkbxCouches"
+                app:layout_constraintStart_toStartOf="@+id/chkbxCouches"
+                app:layout_constraintTop_toBottomOf="@+id/chkbxCouches" />
+
+            <CheckBox
+                android:id="@+id/chkbxCoolers"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Pets have access to Fans / Coolers / Air Conditioners"
+                app:layout_constraintEnd_toEndOf="@+id/chkbxBeds"
+                app:layout_constraintStart_toStartOf="@+id/chkbxBeds"
+                app:layout_constraintTop_toBottomOf="@+id/chkbxBeds" />
+
+            <TextView
+                android:id="@+id/txtSizePreferencesLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="16dp"
+                android:paddingBottom="5dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="5dp"
+                android:text="PET SIZE PREFERENCES"
+                android:textColor="@color/accent"
+                android:textSize="14sp"
+                app:fontFamily="@font/roboto_bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chkbxCoolers" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

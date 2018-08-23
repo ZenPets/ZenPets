@@ -51,7 +51,7 @@
 
     <!-- SIGN UP / CREATE ACCOUNT TEXT -->
     <string name="sign_up_title">CREATE AN ACCOUNT</string>
-    <string name="sign_up_sub_title">Start using Zen Pets - For Kennels in a few steps</string>
+    <string name="sign_up_sub_title">Start using Zen Pets Kennel Manager in a few steps</string>
     <string name="sign_up_full_name">(*) Provide your Full Name</string>
     <string name="sign_up_email_address_hint">(*) Email address</string>
     <string name="sign_up_password_hint">(*) Password (at least 8 characters)</string>

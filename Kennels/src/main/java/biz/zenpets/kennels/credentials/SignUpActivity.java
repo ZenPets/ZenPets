@@ -2,6 +2,7 @@ package biz.zenpets.kennels.credentials;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +32,7 @@ import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -57,12 +59,22 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.razorpay.Checkout;
+import com.razorpay.PaymentResultListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import biz.zenpets.kennels.R;
 import biz.zenpets.kennels.landing.NewLandingActivity;
@@ -73,6 +85,8 @@ import biz.zenpets.kennels.utils.legal.PrivacyPolicyActivity;
 import biz.zenpets.kennels.utils.legal.SellerAgreementActivity;
 import biz.zenpets.kennels.utils.models.account.Account;
 import biz.zenpets.kennels.utils.models.account.AccountsAPI;
+import biz.zenpets.kennels.utils.models.account.trainer.Trainer;
+import biz.zenpets.kennels.utils.models.account.trainer.TrainersAPI;
 import biz.zenpets.kennels.utils.models.helpers.ZenApiClient;
 import biz.zenpets.kennels.utils.models.location.CitiesData;
 import biz.zenpets.kennels.utils.models.location.CityData;
@@ -83,13 +97,21 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.zelory.compressor.Compressor;
+import okhttp3.Credentials;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import pl.aprilapps.easyphotopicker.DefaultCallback;
 import pl.aprilapps.easyphotopicker.EasyImage;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity implements PaymentResultListener {
+
+    /** THE INCOMING SELECTION **/
+    Boolean blnSelection = false;
 
     /** A FIREBASE AUTH INSTANCE **/
     private FirebaseAuth auth;
@@ -125,6 +147,11 @@ public class SignUpActivity extends AppCompatActivity {
     private Uri KENNEL_OWNER_DISPLAY_PROFILE_URI = null;
     String KENNEL_OWNER_DISPLAY_PROFILE_FILE_NAME = null;
     private String KENNEL_OWNER_DISPLAY_PROFILE = null;
+    private String VALID_FROM = null;
+    private String VALID_TO = null;
+    private int KENNEL_CHARGES = 1500;
+    private int KENNEL_FINAL_CHARGES = 1500;
+    private String PAYMENT_ID = null;
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
@@ -159,6 +186,27 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.sign_up);
         ButterKnife.bind(this);
 
+        /* PRELOAD THE CHECK OUT INSTANCE */
+        Checkout.preload(SignUpActivity.this);
+
+        /* GET THE INCOMING SELECTION */
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null && bundle.containsKey("OPTION_CHOICE"))   {
+            blnSelection = bundle.getBoolean("OPTION_CHOICE");
+            Log.e("SELECTION", String.valueOf(blnSelection));
+            if (blnSelection)   {
+                /* CALCULATE THE FINAL CHARGES AFTER DISCOUNT */
+                KENNEL_FINAL_CHARGES = (int) (KENNEL_CHARGES - (KENNEL_CHARGES * .25));
+                Log.e("KENNEL CHARGES", String.valueOf(KENNEL_CHARGES));
+                Log.e("KENNEL FINAL CHARGES", String.valueOf(KENNEL_FINAL_CHARGES));
+            } else {
+                KENNEL_CHARGES = 1500;
+                KENNEL_FINAL_CHARGES = 1500;
+                Log.e("KENNEL CHARGES", String.valueOf(KENNEL_CHARGES));
+                Log.e("KENNEL FINAL CHARGES", String.valueOf(KENNEL_FINAL_CHARGES));
+            }
+        }
+
         /* THE EASY IMAGE CONFIGURATION */
         EasyImage.configuration(this)
                 .setImagesFolderName("Zen Pets")
@@ -171,6 +219,25 @@ public class SignUpActivity extends AppCompatActivity {
 
         /* SET THE TERMS OF SERVICE TEXT **/
         setTermsAndConditions(txtTermsOfService);
+
+        /* GENERATE THE VALID FROM AND VALID TO DATES */
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            Date date = new Date();
+            VALID_FROM = format.format(date);
+            Log.e("VALID FROM", VALID_FROM);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(format.parse(VALID_FROM));
+
+            /* CALCULATE THE END DATE */
+            calendar.add(Calendar.MONTH, 15);
+            Date dateEnd = new Date(calendar.getTimeInMillis());
+            VALID_TO = format.format(dateEnd);
+            Log.e("VALID TO", VALID_TO);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         /* CONFIGURE THE ACTIONBAR */
         configAB();
@@ -470,7 +537,7 @@ public class SignUpActivity extends AppCompatActivity {
             inputPhoneNumber.setErrorEnabled(false);
             inputAddress.setErrorEnabled(false);
             inputPinCode.setErrorEnabled(false);
-        } else if (KENNEL_OWNER_DISPLAY_PROFILE_URI == null)  {
+        } /*else if (KENNEL_OWNER_DISPLAY_PROFILE_URI == null)  {
             Toast.makeText(getApplicationContext(), "Select a Profile Picture", Toast.LENGTH_LONG).show();
             imgvwProfilePicture.requestFocus();
             inputFullName.setErrorEnabled(false);
@@ -480,7 +547,7 @@ public class SignUpActivity extends AppCompatActivity {
             inputPhoneNumber.setErrorEnabled(false);
             inputAddress.setErrorEnabled(false);
             inputPinCode.setErrorEnabled(false);
-        } else {
+        }*/ else {
             /* DISABLE ALL ERRORS */
             inputFullName.setErrorEnabled(false);
             inputEmailAddress.setErrorEnabled(false);
@@ -490,8 +557,102 @@ public class SignUpActivity extends AppCompatActivity {
             inputAddress.setErrorEnabled(false);
             inputPinCode.setErrorEnabled(false);
 
-            /* CREATE THE NEW ACCOUNT */
-            createAccount();
+            if (blnSelection)   {
+                /* VERIFY THAT THE USER IS REGISTERED AS A PET TRAINER */
+                verifyTrainerAccount();
+            } else {
+                /* START THE PAYMENT PROCESS */
+                startPaymentProcess();
+            }
+        }
+    }
+
+    /** VERIFY THAT THE USER IS REGISTERED AS A PET TRAINER **/
+    private void verifyTrainerAccount() {
+        TrainersAPI api = ZenApiClient.getClient().create(TrainersAPI.class);
+        Call<Trainer> call = api.trainerExists(KENNEL_OWNER_EMAIL_ADDRESS);
+        call.enqueue(new Callback<Trainer>() {
+            @Override
+            public void onResponse(Call<Trainer> call, Response<Trainer> response) {
+                String message = response.body().getMessage();
+                if (message != null)    {
+                    Log.e("MESSAGE", message);
+                    if (message.equalsIgnoreCase("Trainer exists..."))   {
+                        /* START THE PAYMENT PROCESS */
+                        startPaymentProcess();
+                    } else if (message.equalsIgnoreCase("Trainer doesn't exist..."))    {
+                        /* DISPLAY THE FAILURE PROMPT */
+                        displayFailurePrompt();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Trainer> call, Throwable t) {
+                Log.e("EXISTS FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
+    }
+
+    /** DISPLAY THE FAILURE PROMPT **/
+    private void displayFailurePrompt() {
+        new MaterialDialog.Builder(SignUpActivity.this)
+                .icon(ContextCompat.getDrawable(SignUpActivity.this, R.drawable.ic_info_black_24dp))
+                .title(getString(R.string.trainer_failed_title))
+                .cancelable(true)
+                .content(getString(R.string.trainer_failed_message))
+                .positiveText(getString(R.string.trainer_failed_try_again))
+                .negativeText(getString(R.string.trainer_failed_continue))
+                .theme(Theme.LIGHT)
+                .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        /* DISMISS THE DIALOG */
+                        dialog.dismiss();
+                    }
+                })
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        /* DISMISS THE DIALOG */
+                        dialog.dismiss();
+
+                        /* SET THE DEFAULT CHARGES WITHOUT DISCOUNT */
+                        KENNEL_CHARGES = 1500;
+                        KENNEL_FINAL_CHARGES = 1500;
+
+                        /* START THE PAYMENT PROCESS */
+                        startPaymentProcess();
+                    }
+                }).show();
+    }
+
+    /** START THE PAYMENT PROCESS **/
+    private void startPaymentProcess() {
+        final Activity activity = this;
+        final Checkout checkout = new Checkout();
+        int icon = R.mipmap.ic_launcher;
+        checkout.setImage(icon);
+        checkout.setFullScreenDisable(true);
+        try {
+            JSONObject options = new JSONObject();
+            options.put("name", "Zen Pets");
+            options.put("description", "Kennel Manager Annual Charges");
+            options.put("currency", "INR");
+            options.put("amount", KENNEL_FINAL_CHARGES * 100);
+            JSONObject preFill = new JSONObject();
+            preFill.put("email", KENNEL_OWNER_EMAIL_ADDRESS);
+            preFill.put("contact", KENNEL_OWNER_PHONE_NUMBER);
+            options.put("prefill", preFill);
+
+            checkout.open(activity, options);
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT)
+                    .show();
+            e.printStackTrace();
+            Crashlytics.logException(e);
         }
     }
 
@@ -848,5 +1009,120 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         EasyImage.clearConfiguration(this);
+    }
+
+    @Override
+    public void onPaymentSuccess(String razorPaymentID) {
+        try {
+            Toast.makeText(this, "Payment Successful: " + razorPaymentID, Toast.LENGTH_SHORT).show();
+
+            /* CAPTURE THE KENNEL PAYMENT */
+            captureKennelPayment(razorPaymentID);
+        } catch (Exception e) {
+            Crashlytics.logException(e);
+        }
+    }
+
+    @Override
+    public void onPaymentError(int code, String response) {
+        try {
+            Toast.makeText(this, "Payment failed: " + code + " " + response, Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Log.e("PAYMENT ERROR EXCEPTION", e.getMessage());
+        }
+    }
+
+    /** CAPTURE THE KENNEL PAYMENT **/
+    private void captureKennelPayment(final String razorPaymentID) {
+        String apiKey = getString(R.string.razor_pay_api_key_id);
+        String apiSecret = getString(R.string.razor_pay_api_key_secret);
+        String strCredentials = Credentials.basic(apiKey, apiSecret);
+        String strUrl = "https://" + apiKey + ":" + apiSecret + "@api.razorpay.com/v1/payments/" + razorPaymentID + "/capture";
+        Log.e("CAPTURE URL", strUrl);
+        Log.e("AMOUNT", String.valueOf(KENNEL_FINAL_CHARGES * 100));
+        OkHttpClient client = new OkHttpClient();
+        String strAmount = String.valueOf(KENNEL_FINAL_CHARGES * 100);
+        Log.e("STR AMOUNT", strAmount);
+        RequestBody body = new FormBody.Builder()
+                .add("amount", String.valueOf(KENNEL_FINAL_CHARGES * 100))
+                .build();
+        Request request = new Request.Builder()
+                .header("Authorization", strCredentials)
+                .url(strUrl)
+                .post(body)
+                .build();
+        Log.e("REQUEST", String.valueOf(request));
+        client.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(okhttp3.Call call, IOException e) {
+//                Log.e("FAILURE", e.getMessage());
+            }
+
+            @Override
+            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                /* CHECK IF THE PAYMENT WAS CAPTURED SUCCESSFULLY */
+                checkCaptureStatus(razorPaymentID);
+//                Log.e("RESPONSE", String.valueOf(response));
+            }
+        });
+    }
+
+    /** CHECK IF THE PAYMENT WAS CAPTURED SUCCESSFULLY **/
+    private void checkCaptureStatus(final String razorPaymentID) {
+        String apiKey = getString(R.string.razor_pay_api_key_id);
+        String apiSecret = getString(R.string.razor_pay_api_key_secret);
+        String strCredentials = Credentials.basic(apiKey, apiSecret);
+        String URL_CHECK_CAPTURE = "https://" + apiKey + ":" + apiSecret + "@api.razorpay.com/v1/payments/" + razorPaymentID;
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .header("Authorization", strCredentials)
+                .url(URL_CHECK_CAPTURE)
+                .build();
+        Log.e("CAPTURE URL", URL_CHECK_CAPTURE);
+        client.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(okhttp3.Call call, IOException e) {
+            }
+
+            @Override
+            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                try {
+                    String strResult = response.body().string();
+                    JSONObject JORoot = new JSONObject(strResult);
+                    Log.e("ROOT", String.valueOf(JORoot));
+                    if (JORoot.has("error_code") && JORoot.getString("error_code").equalsIgnoreCase("null")) {
+                        /* CHECK THE CAPTURED STATUS */
+                        if (JORoot.has("captured")) {
+                            String CAPTURED_STATUS = JORoot.getString("captured");
+                            if (CAPTURED_STATUS.equalsIgnoreCase("true"))   {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(), "Captured successfully...", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } else {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(), "An error occurred...", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                            }
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "An error occurred...", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }

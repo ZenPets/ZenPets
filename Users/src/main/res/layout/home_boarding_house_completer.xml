@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/zen_toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbarSize="3dp"
+        android:scrollbarThumbVertical="@color/primary_dark">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtHouseLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="SELECT THE OPTIONS THAT SUIT YOUR HOUSE"
+                android:textColor="@color/secondary_text"
+                android:textSize="16sp"
+                app:fontFamily="@font/roboto_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txtUnitLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Select the type of the house you will be Home Boarding Pets at"
+                android:textColor="@color/secondary_text"
+                android:textSize="13sp"
+                app:fontFamily="@font/roboto_regular"
+                app:layout_constraintEnd_toEndOf="@+id/txtHouseLabel"
+                app:layout_constraintStart_toStartOf="@+id/txtHouseLabel"
+                app:layout_constraintTop_toBottomOf="@+id/txtHouseLabel" />
+
+            <Spinner
+                android:id="@+id/spnUnitType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="@+id/txtUnitLabel"
+                app:layout_constraintStart_toStartOf="@+id/txtUnitLabel"
+                app:layout_constraintTop_toBottomOf="@+id/txtUnitLabel" />
+
+            <CheckBox
+                android:id="@+id/chkbxDogs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="I have my own Pet Dog/s at home"
+                android:textColor="@color/primary_text"
+                android:textSize="13sp"
+                app:fontFamily="@font/roboto_medium"
+                app:layout_constraintEnd_toEndOf="@+id/spnUnitType"
+                app:layout_constraintStart_toStartOf="@+id/spnUnitType"
+                app:layout_constraintTop_toBottomOf="@+id/spnUnitType" />
+
+            <CheckBox
+                android:id="@+id/chkbxCats"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="I have my own Pet Cat/s at home"
+                android:textColor="@color/primary_text"
+                android:textSize="13sp"
+                app:fontFamily="@font/roboto_medium"
+                app:layout_constraintEnd_toEndOf="@+id/chkbxDogs"
+                app:layout_constraintStart_toStartOf="@+id/chkbxDogs"
+                app:layout_constraintTop_toBottomOf="@+id/chkbxDogs" />
+
+            <CheckBox
+                android:id="@+id/chkbxSmoking"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Me or Someone at home smokes"
+                android:textColor="@color/primary_text"
+                android:textSize="13sp"
+                app:fontFamily="@font/roboto_medium"
+                app:layout_constraintEnd_toEndOf="@+id/chkbxCats"
+                app:layout_constraintStart_toStartOf="@+id/chkbxCats"
+                app:layout_constraintTop_toBottomOf="@+id/chkbxCats" />
+
+            <CheckBox
+                android:id="@+id/chkbxVaping"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Me or Someone at home vapes"
+                android:textColor="@color/primary_text"
+                android:textSize="13sp"
+                app:fontFamily="@font/roboto_medium"
+                app:layout_constraintEnd_toEndOf="@+id/chkbxSmoking"
+                app:layout_constraintStart_toStartOf="@+id/chkbxSmoking"
+                app:layout_constraintTop_toBottomOf="@+id/chkbxSmoking" />
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</LinearLayout>

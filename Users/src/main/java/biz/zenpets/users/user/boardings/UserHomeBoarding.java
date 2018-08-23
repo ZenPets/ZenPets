@@ -1,5 +1,7 @@
 package biz.zenpets.users.user.boardings;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,7 +9,6 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,10 +27,15 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import biz.zenpets.users.R;
+import biz.zenpets.users.boarding.BoardingHouseCompleter;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.models.boarding.Boarding;
 import biz.zenpets.users.utils.models.boarding.BoardingsAPI;
+import biz.zenpets.users.utils.models.boarding.access.AccessAPI;
+import biz.zenpets.users.utils.models.boarding.conditions.ConditionsAPI;
+import biz.zenpets.users.utils.models.boarding.house.House;
+import biz.zenpets.users.utils.models.boarding.house.HouseAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -46,8 +52,17 @@ public class UserHomeBoarding extends AppCompatActivity {
     /** THE LOGGED IN USER'S ID **/
     String USER_ID = null;
 
-    /** AN INSTANCE OF THE BOARDING API INTERFACE **/
-    BoardingsAPI api = ZenApiClient.getClient().create(BoardingsAPI.class);
+    /** THE BOARDING DETAILS **/
+    String BOARDING_ID = null;
+
+    /** AN INSTANCE OF THE BOARDING API INTERFACE'S **/
+    BoardingsAPI boardingsAPI = ZenApiClient.getClient().create(BoardingsAPI.class);
+    HouseAPI houseAPI = ZenApiClient.getClient().create(HouseAPI.class);
+    AccessAPI accessAPI = ZenApiClient.getClient().create(AccessAPI.class);
+    ConditionsAPI conditionsAPI = ZenApiClient.getClient().create(ConditionsAPI.class);
+
+    /* A PROGRESS DIALOG INSTANCE */
+    ProgressDialog dialog;
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.imgvwBoardingCoverPhoto) SimpleDraweeView imgvwBoardingCoverPhoto;
@@ -87,6 +102,9 @@ public class UserHomeBoarding extends AppCompatActivity {
 
     /** EDIT THE HOME DETAILS **/
     @OnClick(R.id.imgvwHomeEdit) void editHome()    {
+        Intent intent = new Intent(UserHomeBoarding.this, BoardingHouseCompleter.class);
+        intent.putExtra("BOARDING_ID", BOARDING_ID);
+        startActivityForResult(intent, 101);
     }
 
     /** EDIT THE ACCESS DETAILS **/
@@ -119,22 +137,81 @@ public class UserHomeBoarding extends AppCompatActivity {
 
         if (USER_ID != null)    {
             /* SHOW THE PROGRESS AND FETCH THE BOARDING DETAILS */
-            linlaProgress.setVisibility(View.VISIBLE);
+//            linlaProgress.setVisibility(View.VISIBLE);
             fetchBoardingDetails();
 
-            /* FETCH THE HOME DETAILS */
-            fetchHomeDetails();
+            /* FETCH THE HOUSE DETAILS */
+            fetchHouseDetails();
         }
-
     }
 
-    /** FETCH THE HOME DETAILS **/
-    private void fetchHomeDetails() {
+    /** FETCH THE HOUSE DETAILS **/
+    private void fetchHouseDetails() {
+        Call<House> call = houseAPI.fetchBoardingHouseDetails(USER_ID);
+        call.enqueue(new Callback<House>() {
+            @Override
+            public void onResponse(Call<House> call, Response<House> response) {
+                Log.e("HOUSE RESPONSE", String.valueOf(response.raw()));
+                boolean blnError = response.body().getError();
+                if (!blnError)  {
+                    /* CAST THE RESPONSE IN THE HOUSE POJO INSTANCE */
+                    House house = response.body();
+                    if (house != null)  {
+                        /* GET AND SET THE BOARDING UNIT ID AND TYPE */
+                        String BOARDING_UNIT_ID = house.getBoardingUnitID();
+                        String BOARDING_UNIT_TYPE = house.getBoardingUnitType();
+                        txtHomeType.setText(getString(R.string.hbud_unit_type, BOARDING_UNIT_TYPE));
+
+                        /* GET THE DOGS STATUS */
+                        String HOUSE_DOGS = house.getDetailsDog();
+                        if (HOUSE_DOGS.equalsIgnoreCase("0"))   {
+                            txtHomeDogs.setText(getString(R.string.hbud_unit_dogs_no));
+                        } else {
+                            txtHomeDogs.setText(getString(R.string.hbud_unit_dogs_yes));
+                        }
+
+                        /* GET THE CATS STATUS */
+                        String HOUSE_CATS = house.getDetailsCat();
+                        if (HOUSE_CATS.equalsIgnoreCase("0"))   {
+                            txtHomeCats.setText(getString(R.string.hbud_unit_cats_no));
+                        } else {
+                            txtHomeCats.setText(getString(R.string.hbud_unit_cats_yes));
+                        }
+
+                        /* GET THE SMOKING STATUS */
+                        String HOUSE_SMOKING = house.getDetailsSmoking();
+                        if (HOUSE_SMOKING.equalsIgnoreCase("0"))    {
+                            txtHomeSmoking.setText(getString(R.string.hbud_unit_smoking_no));
+                        } else {
+                            txtHomeSmoking.setText(getString(R.string.hbud_unit_smoking_yes));
+                        }
+
+                        /* GET THE VAPING STATUS */
+                        String HOUSE_VAPING = house.getDetailsVaping();
+                        if (HOUSE_VAPING.equalsIgnoreCase("0")) {
+                            txtHomeVaping.setText(getString(R.string.hbud_unit_vaping_no));
+                        } else {
+                            txtHomeVaping.setText(getString(R.string.hbud_unit_vaping_yes));
+                        }
+
+                        if (dialog != null && dialog.isShowing()) {
+                            dialog.dismiss();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<House> call, Throwable t) {
+                Log.e("HOUSE FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
 
     /** FETCH THE BOARDING DETAILS **/
     private void fetchBoardingDetails() {
-        Call<Boarding> call = api.fetchBoardingDetailsByUser(USER_ID);
+        Call<Boarding> call = boardingsAPI.fetchBoardingDetailsByUser(USER_ID);
         call.enqueue(new Callback<Boarding>() {
             @Override
             public void onResponse(Call<Boarding> call, Response<Boarding> response) {
@@ -143,6 +220,9 @@ public class UserHomeBoarding extends AppCompatActivity {
                 /* CAST THE RESPONSE IN THE BOARDING POJO INSTANCE */
                 Boarding boarding = response.body();
                 if (boarding != null)   {
+                    /* GET THE BOARDING ID */
+                    BOARDING_ID = boarding.getBoardingID();
+
                     /* GET AND SET THE BOARDING COVER PHOTO */
                     String BOARDING_COVER_PHOTO = boarding.getBoardingCoverPhoto();
                     if (BOARDING_COVER_PHOTO != null
@@ -216,6 +296,31 @@ public class UserHomeBoarding extends AppCompatActivity {
                 Crashlytics.logException(t);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK)    {
+            if (requestCode == 101) {
+                /* SHOW THE PROGRESS AND REFRESH THE HOUSE DETAILS */
+                /* INSTANTIATE THE PROGRESS DIALOG INSTANCE */
+                dialog = new ProgressDialog(this);
+                dialog.setMessage("Updating your House details...");
+                dialog.setIndeterminate(false);
+                dialog.setCancelable(false);
+                dialog.show();
+
+                /* FETCH THE HOUSE DETAILS */
+                fetchHouseDetails();
+
+            } else if (requestCode == 102)   {
+            } else if (requestCode == 103)  {
+            } else if (requestCode == 104)  {
+            } else if (requestCode == 105)  {
+            }
+        }
     }
 
     @Override

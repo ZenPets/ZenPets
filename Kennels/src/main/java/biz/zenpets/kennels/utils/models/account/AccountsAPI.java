@@ -1,5 +1,6 @@
 package biz.zenpets.kennels.utils.models.account;
 
+import biz.zenpets.kennels.utils.models.account.trainer.Trainer;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -8,6 +9,10 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface AccountsAPI {
+
+    /** CHECK IF THE TRAINER ACCOUNT EXISTS **/
+    @GET("trainerExists")
+    Call<Trainer> trainerExists(@Query("trainerEmail") String trainerEmail);
 
     /** CREATE A NEW TRAINER'S ACCOUNT **/
     @POST("registerKennelOwner")

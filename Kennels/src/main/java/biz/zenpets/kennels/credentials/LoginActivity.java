@@ -69,8 +69,31 @@ public class LoginActivity extends AppCompatActivity {
 
     /** CREATE A NEW ACCOUNT **/
     @OnClick(R.id.txtCreateAccount) protected void newAccount()   {
-        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-        startActivityForResult(intent, 101);
+        new MaterialDialog.Builder(LoginActivity.this)
+                .icon(ContextCompat.getDrawable(LoginActivity.this, R.drawable.ic_info_black_24dp))
+                .title(getString(R.string.sign_up_prompt_trainer_title))
+                .cancelable(true)
+                .content(getString(R.string.sign_up_prompt_trainer_message))
+                .positiveText(getString(R.string.sign_up_prompt_trainer_yes))
+                .negativeText(getString(R.string.sign_up_prompt_trainer_no))
+                .theme(Theme.LIGHT)
+                .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                        intent.putExtra("OPTION_CHOICE", true);
+                        startActivityForResult(intent, 101);
+                    }
+                })
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                        intent.putExtra("OPTION_CHOICE", false);
+                        startActivityForResult(intent, 101);
+                    }
+                }).show();
     }
 
     /** FORGOT ACCOUNT PASSWORD **/

@@ -35,7 +35,7 @@ import biz.zenpets.users.creator.pet.NewPetCreator;
 import biz.zenpets.users.details.profile.ProfileDetails;
 import biz.zenpets.users.user.adoptions.TestUserAdoptions;
 import biz.zenpets.users.user.appointments.UserAppointments;
-import biz.zenpets.users.user.boardings.UserHomeBoarding;
+import biz.zenpets.users.user.boardings.NewUserHomeBoarding;
 import biz.zenpets.users.user.questions.UserQuestions;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.adapters.pet.UserPetsAdapter;
@@ -329,7 +329,7 @@ public class ProfileFragment extends Fragment {
                             /* DISMISS THE DIALOG */
                             dialog.dismiss();
 
-                            Intent intent = new Intent(getActivity(), UserHomeBoarding.class);
+                            Intent intent = new Intent(getActivity(), NewUserHomeBoarding.class);
                             startActivity(intent);
 
                         } else if (message.equalsIgnoreCase("User hasn't enabled Home Boarding"))    {

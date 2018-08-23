@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- SIGN UP PROMPT -->
+    <string name="sign_up_prompt_trainer_title">Also a Pet Trainer?</string>
+    <string name="sign_up_prompt_trainer_message">Are you also registered as a Pet Trainer On Zen Pets? If you are registered as a Pet Trainer on Zen Pets, you get an awesome 25% discount on your annual charges.
+        \n\nTo get the discount, click \"YES\". If you are a Pet Trainer, but haven\'t registered yet, you will still get the discount from the Pet Trainer\'s application.
+        \n\nIf you are not a Pet Trainer or haven\'t registered yet, click \"CONTINUE\"
+        \n\nNOTE: Make sure you use the same email address as the one used for the Pet Trainer\'s account.</string>
+    <string name="sign_up_prompt_trainer_yes">YES</string>
+    <string name="sign_up_prompt_trainer_no">CONTINUE</string>
+
+    <!-- TRAINER FAILED ERROR PROMPT -->
+    <string name="trainer_failed_title">No Trainer found</string>
+    <string name="trainer_failed_message">No Pet Trainer\'s account with the specified email address was found. To try again, check the email address provided and click \"TRY AGAIN\".
+        \n\nIf you had chosen \"YES\" on the previous screen accidentally, press \"CONTINUE\" to pay the annual charges and create your new account.
+        \n\nNOTE: You will be provided the 25% discount when you register for a Pet Trainers account with the same email address</string>
+    <string name="trainer_failed_try_again">TRY AGAIN</string>
+    <string name="trainer_failed_continue">CONTINUE</string>
+</resources>
