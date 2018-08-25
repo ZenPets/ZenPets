@@ -768,7 +768,7 @@ public class SignUpActivity extends AppCompatActivity implements PaymentResultLi
         Call<Account> call = api.registerKennelOwner(
                 user.getUid(), KENNEL_OWNER_NAME, KENNEL_OWNER_DISPLAY_PROFILE, KENNEL_OWNER_EMAIL_ADDRESS,
                 KENNEL_OWNER_PHONE_PREFIX, KENNEL_OWNER_PHONE_NUMBER, KENNEL_OWNER_MAILING_ADDRESS,
-                KENNEL_OWNER_PIN_CODE, COUNTRY_ID, STATE_ID, CITY_ID);
+                KENNEL_OWNER_PIN_CODE, COUNTRY_ID, STATE_ID, CITY_ID, PAYMENT_ID, VALID_FROM, VALID_TO);
         call.enqueue(new Callback<Account>() {
             @Override
             public void onResponse(Call<Account> call, Response<Account> response) {
@@ -1014,7 +1014,11 @@ public class SignUpActivity extends AppCompatActivity implements PaymentResultLi
     @Override
     public void onPaymentSuccess(String razorPaymentID) {
         try {
-            Toast.makeText(this, "Payment Successful: " + razorPaymentID, Toast.LENGTH_SHORT).show();
+            /* CAST THE PAYMENT ID IN THE GLOBAL INSTANCE */
+            PAYMENT_ID = razorPaymentID;
+
+            /* LOG THE RESULT FOR TESTING PURPOSES */
+            Log.e("PAYMENT SUCCESS", "Payment was made successfully with the ID: " + razorPaymentID);
 
             /* CAPTURE THE KENNEL PAYMENT */
             captureKennelPayment(razorPaymentID);
@@ -1026,6 +1030,31 @@ public class SignUpActivity extends AppCompatActivity implements PaymentResultLi
     @Override
     public void onPaymentError(int code, String response) {
         try {
+            /* SHOW THE DIALOG */
+            new MaterialDialog.Builder(this)
+                    .icon(ContextCompat.getDrawable(this, R.drawable.ic_info_black_24dp))
+                    .title(getString(R.string.payment_failed_title))
+                    .cancelable(false)
+                    .content(getString(R.string.payment_failed_message))
+                    .positiveText(getString(R.string.payment_failed_try_again))
+                    .negativeText(getString(R.string.payment_failed_cancel))
+                    .theme(Theme.LIGHT)
+                    .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
+                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            Intent intent = new Intent();
+                            setResult(RESULT_CANCELED, intent);
+                            finish();
+                        }
+                    })
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            /* TRY THE PAYMENT PROCESS AGAIN */
+                            startPaymentProcess();
+                        }
+                    }).show();
             Toast.makeText(this, "Payment failed: " + code + " " + response, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Log.e("PAYMENT ERROR EXCEPTION", e.getMessage());
@@ -1055,7 +1084,8 @@ public class SignUpActivity extends AppCompatActivity implements PaymentResultLi
         client.newCall(request).enqueue(new okhttp3.Callback() {
             @Override
             public void onFailure(okhttp3.Call call, IOException e) {
-//                Log.e("FAILURE", e.getMessage());
+                Log.e("FAILURE", e.getMessage());
+                Crashlytics.logException(e);
             }
 
             @Override
@@ -1098,14 +1128,16 @@ public class SignUpActivity extends AppCompatActivity implements PaymentResultLi
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Toast.makeText(getApplicationContext(), "Captured successfully...", Toast.LENGTH_SHORT).show();
+                                        /* CREATE THE KENNEL OWNER'S ACCOUNT */
+                                        createAccount();
+//                                        Toast.makeText(getApplicationContext(), "Captured successfully...", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                             } else {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Toast.makeText(getApplicationContext(), "An error occurred...", Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(getApplicationContext(), "An error occurred...", Toast.LENGTH_SHORT).show();
                                     }
                                 });
 
@@ -1114,7 +1146,7 @@ public class SignUpActivity extends AppCompatActivity implements PaymentResultLi
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getApplicationContext(), "An error occurred...", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(getApplicationContext(), "An error occurred...", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }

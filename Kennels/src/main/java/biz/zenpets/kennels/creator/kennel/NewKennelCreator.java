@@ -2,18 +2,12 @@ package biz.zenpets.kennels.creator.kennel;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.location.Address;
-import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
@@ -49,23 +43,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.razorpay.Checkout;
-import com.razorpay.PaymentResultListener;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import biz.zenpets.kennels.R;
 import biz.zenpets.kennels.utils.AppPrefs;
@@ -76,7 +57,6 @@ import biz.zenpets.kennels.utils.adapters.location.StatesAdapter;
 import biz.zenpets.kennels.utils.helpers.LocationPickerActivity;
 import biz.zenpets.kennels.utils.models.helpers.ZenApiClient;
 import biz.zenpets.kennels.utils.models.kennels.Kennel;
-import biz.zenpets.kennels.utils.models.kennels.KennelPages;
 import biz.zenpets.kennels.utils.models.kennels.KennelsAPI;
 import biz.zenpets.kennels.utils.models.location.CitiesData;
 import biz.zenpets.kennels.utils.models.location.CityData;
@@ -86,19 +66,12 @@ import biz.zenpets.kennels.utils.models.location.StatesData;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import id.zelory.compressor.Compressor;
-import okhttp3.Credentials;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import pl.aprilapps.easyphotopicker.DefaultCallback;
 import pl.aprilapps.easyphotopicker.EasyImage;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class KennelCreator extends AppCompatActivity implements PaymentResultListener {
+public class NewKennelCreator extends AppCompatActivity {
 
     private AppPrefs getApp()	{
         return (AppPrefs) getApplication();
@@ -106,9 +79,6 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
 
     /** THE KENNEL OWNER ID **/
     String KENNEL_OWNER_ID = null;
-
-    /** THE INCOMING LISTING TYPE **/
-    String LISTING_TYPE = null;
 
     /** PERMISSION REQUEST CONSTANT **/
     private static final int ACCESS_STORAGE_CONSTANT = 201;
@@ -118,7 +88,6 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
 
     /** DATA TYPES TO HOLD THE KENNEL DETAILS **/
     String KENNEL_ID = null;
-    String KENNEL_CHARGES_ID = "1";
     String KENNEL_NAME = null;
     String KENNEL_COVER_PHOTO = null;
     Uri KENNEL_COVER_PHOTO_URI = null;
@@ -135,8 +104,6 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
     String KENNEL_PHONE_PREFIX_2 = "91";
     String KENNEL_PHONE_NUMBER_2 = null;
     String KENNEL_PET_CAPACITY = null;
-    private String KENNEL_VALID_FROM = null;
-    private String KENNEL_VALID_TO = null;
 
     /** ADDITIONAL KENNEL CHARGES **/
     String ADDITIONAL_KENNEL_COST = "1000";
@@ -189,21 +156,12 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
         setContentView(R.layout.kennel_creator);
         ButterKnife.bind(this);
 
-        /* GET THE INCOMING LISTING TYPE */
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null && bundle.containsKey("LISTING_TYPE"))   {
-            LISTING_TYPE = bundle.getString("LISTING_TYPE");
-        }
-
         /* THE EASY IMAGE CONFIGURATION */
         EasyImage.configuration(this)
                 .setImagesFolderName("Zen Pets")
                 .setCopyTakenPhotosToPublicGalleryAppFolder(true)
                 .setCopyPickedImagesToPublicGalleryAppFolder(true)
                 .setAllowMultiplePickInGallery(false);
-
-        /* PRELOAD A CHECK OUT */
-        Checkout.preload(KennelCreator.this);
 
         /* GET THE KENNEL OWNER'S ID */
         KENNEL_OWNER_ID = getApp().getKennelOwnerID();
@@ -250,7 +208,7 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
         String[] strServes = getResources().getStringArray(R.array.pet_capacity);
         arrCapacity = Arrays.asList(strServes);
         spnPetCapacity.setAdapter(new PetCapacityAdapter(
-                KennelCreator.this,
+                NewKennelCreator.this,
                 R.layout.pet_capacity_row,
                 arrCapacity));
 
@@ -265,25 +223,6 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
-        /* GET THE VALID FROM AND TO DATES */
-        try {
-            /* CALCULATE THE KENNEL VALID FROM DATE */
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            Date date = new Date();
-            KENNEL_VALID_FROM = format.format(date);
-//            Log.e("VALID FROM", KENNEL_VALID_FROM);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(format.parse(KENNEL_VALID_FROM));
-
-            /* CALCULATE THE END DATE */
-            calendar.add(Calendar.YEAR, 1);
-            Date dateEnd = new Date(calendar.getTimeInMillis());
-            KENNEL_VALID_TO = format.format(dateEnd);
-//            Log.e("VALID TO", KENNEL_VALID_TO);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
     }
 
     /** CHECK KENNEL DETAILS **/
@@ -390,7 +329,7 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
                     Log.e("KENNEL COVER PHOTO", KENNEL_COVER_PHOTO);
                     if (KENNEL_COVER_PHOTO != null)    {
                         /* UPLOAD THE NEW KENNEL LISTING */
-//                        uploadKennelListing();
+                        uploadKennelListing();
                     } else {
                         progressDialog.dismiss();
                         Toast.makeText(
@@ -404,236 +343,36 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
     }
 
     /** UPLOAD THE NEW KENNEL LISTING **/
-//    private void uploadKennelListing() {
-//        if (LISTING_TYPE.equalsIgnoreCase("Free"))  {
-//            KENNEL_CHARGES_ID = "1";
-//        } else {
-//            KENNEL_CHARGES_ID = "2";
-//        }
-//        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-//        Call<Kennel> call = api.registerNewKennel(
-//                KENNEL_OWNER_ID, KENNEL_CHARGES_ID, KENNEL_NAME, KENNEL_COVER_PHOTO, KENNEL_ADDRESS, KENNEL_PIN_CODE,
-//                COUNTRY_ID, STATE_ID, CITY_ID, String.valueOf(KENNEL_LATITUDE), String.valueOf(KENNEL_LONGITUDE),
-//                KENNEL_PHONE_PREFIX_1, KENNEL_PHONE_NUMBER_1, KENNEL_PHONE_PREFIX_2, KENNEL_PHONE_NUMBER_2,
-//                KENNEL_PET_CAPACITY, KENNEL_VALID_FROM, KENNEL_VALID_TO
-//        );
-//        call.enqueue(new Callback<Kennel>() {
-//            @Override
-//            public void onResponse(Call<Kennel> call, Response<Kennel> response) {
-//                if (response.isSuccessful())    {
-//                    /* GET THE KENNEL ID */
-//                    KENNEL_ID = response.body().getKennelID();
-//
-//                    /* CHECK TOTAL KENNELS CREATED BY CURRENT KENNEL OWNER */
-//                    checkPublishedKennels();
-//                } else {
-//                    progressDialog.dismiss();
-//                    Toast.makeText(getApplicationContext(), "Update failed...", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Kennel> call, Throwable t) {
-//                progressDialog.dismiss();
-//                Crashlytics.logException(t);
-////                Log.e("PUBLISH FAILURE", t.getMessage());
-//            }
-//        });
-//    }
-
-    /** CHECK TOTAL KENNELS CREATED BY CURRENT KENNEL OWNER **/
-    private void checkPublishedKennels() {
+    private void uploadKennelListing() {
         KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-        Call<KennelPages> call = api.fetchOwnerKennels(KENNEL_OWNER_ID);
-        call.enqueue(new Callback<KennelPages>() {
-            @Override
-            public void onResponse(Call<KennelPages> call, Response<KennelPages> response) {
-                if (response.body() != null)    {
-                    int publishedKennels = Integer.parseInt(response.body().getTotalKennels());
-                    if (publishedKennels < 2)   {
-                        progressDialog.dismiss();
-                        Intent success = new Intent();
-                        setResult(RESULT_OK, success);
-                        Toast.makeText(getApplicationContext(), "Kennel published successfully...", Toast.LENGTH_LONG).show();
-                        finish();
-                    } else if (publishedKennels > 2){
-                        new MaterialDialog.Builder(KennelCreator.this)
-                                .icon(ContextCompat.getDrawable(KennelCreator.this, R.drawable.ic_info_black_24dp))
-                                .title("Exceeding Kennel Limit")
-                                .content(getString(R.string.kennel_creator_limit_exceed_payment_message))
-                                .cancelable(false)
-                                .positiveText("Pay Now")
-                                .negativeText("Cancel")
-                                .theme(Theme.LIGHT)
-                                .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
-                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        /* START THE PAYMENT PROCESS */
-                                        startPaymentProcess();
-                                    }
-                                })
-                                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        progressDialog.dismiss();
-                                        dialog.dismiss();
-                                    }
-                                }).show();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<KennelPages> call, Throwable t) {
-//                Log.e("CHECK KENNELS FAILURE", t.getMessage());
-                Crashlytics.logException(t);
-            }
-        });
-    }
-
-    /** START THE PAYMENT PROCESS **/
-    private void startPaymentProcess() {
-        final Activity activity = this;
-        final Checkout checkout = new Checkout();
-        int icon = R.mipmap.ic_launcher;
-        checkout.setImage(icon);
-        checkout.setFullScreenDisable(true);
-        try {
-            JSONObject options = new JSONObject();
-            options.put("name", "Zen Pets");
-            options.put("description", "Additional Kennel Listing");
-            options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
-            options.put("currency", "INR");
-            options.put("amount", Integer.parseInt(ADDITIONAL_KENNEL_COST) * 100);
-            JSONObject preFill = new JSONObject();
-            preFill.put("email", "siddharth.lele@gmail.com");
-            preFill.put("contact", "8087471157");
-            options.put("prefill", preFill);
-
-            checkout.open(activity, options);
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT)
-                    .show();
-            e.printStackTrace();
-            Crashlytics.logException(e);
-        }
-    }
-
-    @Override
-    public void onPaymentSuccess(String razorPaymentID) {
-        try {
-            Toast.makeText(this, "Payment Successful: " + razorPaymentID, Toast.LENGTH_SHORT).show();
-
-            /* CAPTURE THE KENNEL PAYMENT */
-            captureKennelPayment(razorPaymentID);
-        } catch (Exception e) {
-            Crashlytics.logException(e);
-        }
-    }
-
-    @Override
-    public void onPaymentError(int code, String response) {
-        try {
-            Toast.makeText(this, "Payment failed: " + code + " " + response, Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Crashlytics.logException(e);
-        }
-    }
-
-    /** CAPTURE THE KENNEL PAYMENT **/
-    private void captureKennelPayment(final String razorPaymentID) {
-        String apiKey = getString(R.string.razor_pay_api_key_id);
-        String apiSecret = getString(R.string.razor_pay_api_key_secret);
-        String strCredentials = Credentials.basic(apiKey, apiSecret);
-        String strUrl = "https://" + apiKey + ":" + apiSecret + "@api.razorpay.com/v1/payments/" + razorPaymentID + "/capture";
-        OkHttpClient client = new OkHttpClient();
-        RequestBody body = new FormBody.Builder()
-                .add("amount", String.valueOf(Integer.parseInt(ADDITIONAL_KENNEL_COST) * 100))
-                .build();
-        Request request = new Request.Builder()
-                .header("Authorization", strCredentials)
-                .url(strUrl)
-                .post(body)
-                .build();
-//        Log.e("REQUEST", String.valueOf(request));
-        client.newCall(request).enqueue(new okhttp3.Callback() {
-            @Override
-            public void onFailure(okhttp3.Call call, IOException e) {
-//                Log.e("FAILURE", e.getMessage());
-            }
-
-            @Override
-            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
-                /* CHECK IF THE PAYMENT WAS CAPTURED SUCCESSFULLY */
-                checkCaptureStatus(razorPaymentID);
-//                Log.e("RESPONSE", String.valueOf(response));
-            }
-        });
-    }
-
-    /** CHECK IF THE PAYMENT WAS CAPTURED SUCCESSFULLY **/
-    private void checkCaptureStatus(final String razorPaymentID) {
-        String apiKey = getString(R.string.razor_pay_api_key_id);
-        String apiSecret = getString(R.string.razor_pay_api_key_secret);
-        String strCredentials = Credentials.basic(apiKey, apiSecret);
-        String URL_CHECK_CAPTURE = "https://" + apiKey + ":" + apiSecret + "@api.razorpay.com/v1/payments/" + razorPaymentID;
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .header("Authorization", strCredentials)
-                .url(URL_CHECK_CAPTURE)
-                .build();
-        client.newCall(request).enqueue(new okhttp3.Callback() {
-            @Override
-            public void onFailure(okhttp3.Call call, IOException e) {
-            }
-
-            @Override
-            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
-                try {
-                    String strResult = response.body().string();
-                    JSONObject JORoot = new JSONObject(strResult);
-                    if (JORoot.has("error_code") && JORoot.getString("error_code").equalsIgnoreCase("null")) {
-                        /* CHECK THE CAPTURED STATUS */
-                        if (JORoot.has("captured")) {
-                            String CAPTURED_STATUS = JORoot.getString("captured");
-                            if (CAPTURED_STATUS.equalsIgnoreCase("true"))   {
-                                /* UPDATE THE KENNEL PAYMENT */
-                                updateKennelPayment(razorPaymentID);
-                            } else {
-//                                Log.e("CAPTURE FAILED", "The payment was not captured successfully...");
-                                Toast.makeText(getApplicationContext(), "An error occurred...", Toast.LENGTH_SHORT).show();
-                            }
-                        } else {
-//                            Log.e("CAPTURE FAILED", "The payment was not captured successfully...");
-                            Toast.makeText(getApplicationContext(), "An error occurred...", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /** UPDATE THE KENNEL PAYMENT **/
-    private void updateKennelPayment(String razorPaymentID) {
-        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-        Call<Kennel> call = api.updateKennelPayment(KENNEL_ID, razorPaymentID);
+        Call<Kennel> call = api.registerNewKennel(
+                KENNEL_OWNER_ID, KENNEL_NAME, KENNEL_COVER_PHOTO, KENNEL_ADDRESS, KENNEL_PIN_CODE,
+                COUNTRY_ID, STATE_ID, CITY_ID, String.valueOf(KENNEL_LATITUDE), String.valueOf(KENNEL_LONGITUDE),
+                KENNEL_PHONE_PREFIX_1, KENNEL_PHONE_NUMBER_1, KENNEL_PHONE_PREFIX_2, KENNEL_PHONE_NUMBER_2,
+                KENNEL_PET_CAPACITY);
         call.enqueue(new Callback<Kennel>() {
             @Override
             public void onResponse(Call<Kennel> call, Response<Kennel> response) {
-                progressDialog.dismiss();
-                Intent success = new Intent();
-                setResult(RESULT_OK, success);
-                Toast.makeText(getApplicationContext(), "Kennel published successfully...", Toast.LENGTH_LONG).show();
-                finish();
+                if (response.isSuccessful())    {
+                    /* GET THE KENNEL ID */
+                    KENNEL_ID = response.body().getKennelID();
+
+                    progressDialog.dismiss();
+                    Intent success = new Intent();
+                    setResult(RESULT_OK, success);
+                    Toast.makeText(getApplicationContext(), "Kennel published successfully...", Toast.LENGTH_LONG).show();
+                    finish();
+                } else {
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), "Update failed...", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onFailure(Call<Kennel> call, Throwable t) {
-//                Log.e("PAYMENT UPDATE FAILURE",t.getMessage());
+                progressDialog.dismiss();
                 Crashlytics.logException(t);
+//                Log.e("PUBLISH FAILURE", t.getMessage());
             }
         });
     }
@@ -654,7 +393,7 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = new MenuInflater(KennelCreator.this);
+        MenuInflater inflater = new MenuInflater(NewKennelCreator.this);
         inflater.inflate(R.menu.activity_save_cancel, menu);
         return super.onCreateOptionsMenu(menu);
     }
@@ -678,94 +417,52 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
         return false;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_LOCATION) {
-                Bundle bundle = data.getExtras();
-                if (bundle != null) {
-                    KENNEL_LATITUDE = bundle.getDouble("LATITUDE");
-                    KENNEL_LONGITUDE = bundle.getDouble("LONGITUDE");
-                }
-
-                /* GET THE APPROXIMATE ADDRESS FOR DISPLAY */
-                try {
-                    Geocoder geocoder;
-                    List<Address> addresses;
-                    geocoder = new Geocoder(this, Locale.getDefault());
-                    addresses = geocoder.getFromLocation(KENNEL_LATITUDE, KENNEL_LONGITUDE, 1);
-                    String address = addresses.get(0).getAddressLine(0);
-                    if (!TextUtils.isEmpty(address)) {
-                        txtLocation.setText(address);
-                    } else {
-                        // TODO: DISPLAY THE COORDINATES INSTEAD
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        EasyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
+    /** FETCH THE LIST OF STATES **/
+    private void fetchStates() {
+        LocationAPI api = ZenApiClient.getClient().create(LocationAPI.class);
+        Call<StatesData> call = api.allStates(COUNTRY_ID);
+        call.enqueue(new Callback<StatesData>() {
             @Override
-            public void onImagesPicked(@NonNull List<File> imageFiles, EasyImage.ImageSource source, int type) {
-                onPhotoReturned(imageFiles);
+            public void onResponse(Call<StatesData> call, Response<StatesData> response) {
+                arrStates = response.body().getStates();
+
+                /* SET THE ADAPTER TO THE STATES SPINNER */
+                spnState.setAdapter(new StatesAdapter(NewKennelCreator.this, arrStates));
+            }
+
+            @Override
+            public void onFailure(Call<StatesData> call, Throwable t) {
+//                Log.e("STATES FAILURE", t.getMessage());
+                Crashlytics.logException(t);
             }
         });
     }
 
-    /***** PROCESS THE SELECTED IMAGE AND GRAB THE URI *****/
-    private void onPhotoReturned(List<File> imageFiles) {
-        try {
-            File compressedFile = new Compressor(this)
-                    .setMaxWidth(800)
-                    .setMaxHeight(800)
-                    .setQuality(80)
-                    .setCompressFormat(Bitmap.CompressFormat.PNG)
-                    .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
-                            Environment.DIRECTORY_PICTURES).getAbsolutePath())
-                    .compressToFile(imageFiles.get(0));
-            Uri uri = Uri.fromFile(compressedFile);
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-            imgvwKennelCoverPhoto.setImageURI(uri);
-//            imgvwKennelCoverPhoto.setImageBitmap(bitmap);
-//            imgvwKennelCoverPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
+    /** FETCH THE LIST OF CITIES **/
+    private void fetchCities() {
+        LocationAPI api = ZenApiClient.getClient().create(LocationAPI.class);
+        Call<CitiesData> call = api.allCities(STATE_ID);
+        call.enqueue(new Callback<CitiesData>() {
+            @Override
+            public void onResponse(Call<CitiesData> call, Response<CitiesData> response) {
+                arrCities = response.body().getCities();
 
-            /* STORE THE BITMAP AS A FILE AND USE THE FILE'S URI */
-            String root = Environment.getExternalStorageDirectory().toString();
-            File myDir = new File(root + "/Zen Pets");
-            myDir.mkdirs();
-            String fName = "photo.jpg";
-            File file = new File(myDir, fName);
-            if (file.exists()) file.delete();
-
-            try {
-                FileOutputStream out = new FileOutputStream(file);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                out.flush();
-                out.close();
-
-                /* GET THE FINAL URI */
-                KENNEL_COVER_PHOTO_URI = Uri.fromFile(file);
-//                Log.e("URI", String.valueOf(KENNEL_COVER_PHOTO_URI));
-            } catch (IOException e) {
-                e.printStackTrace();
-                Crashlytics.logException(e);
-//                Log.e("EXCEPTION", e.getMessage());
+                /* SET THE ADAPTER TO THE CITIES SPINNER */
+                spnCity.setAdapter(new CitiesAdapter(NewKennelCreator.this, arrCities));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            Crashlytics.logException(e);
-//            Log.e("EXCEPTION", e.getMessage());
-        }
+
+            @Override
+            public void onFailure(Call<CitiesData> call, Throwable t) {
+//                Log.e("CITIES FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
 
     /***** CHECK STORAGE PERMISSION *****/
     private void checkStoragePermission() {
         /* CHECK FOR PERMISSION STATUS */
-        if (ContextCompat.checkSelfPermission(KennelCreator.this,
+        if (ContextCompat.checkSelfPermission(NewKennelCreator.this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED)   {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))    {
@@ -790,7 +487,7 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                 dialog.cancel();
                                 ActivityCompat.requestPermissions(
-                                        KennelCreator.this,
+                                        NewKennelCreator.this,
                                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, ACCESS_STORAGE_CONSTANT);
                             }
                         }).show();
@@ -800,7 +497,7 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
                         ACCESS_STORAGE_CONSTANT);
             }
         } else {
-            final BottomSheetDialog sheetDialog = new BottomSheetDialog(KennelCreator.this);
+            final BottomSheetDialog sheetDialog = new BottomSheetDialog(NewKennelCreator.this);
             @SuppressLint("InflateParams") View view = getLayoutInflater().inflate(R.layout.image_picker_sheet, null);
             sheetDialog.setContentView(view);
             sheetDialog.show();
@@ -814,7 +511,7 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
                 @Override
                 public void onClick(View v) {
                     sheetDialog.dismiss();
-                    EasyImage.openGallery(KennelCreator.this, 0);
+                    EasyImage.openGallery(NewKennelCreator.this, 0);
                 }
             });
 
@@ -823,7 +520,7 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
                 @Override
                 public void onClick(View v) {
                     sheetDialog.dismiss();
-                    EasyImage.openCamera(KennelCreator.this, 0);
+                    EasyImage.openCamera(NewKennelCreator.this, 0);
                 }
             });
         }
@@ -835,7 +532,7 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
 
         if (requestCode == ACCESS_STORAGE_CONSTANT)  {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)    {
-                final BottomSheetDialog sheetDialog = new BottomSheetDialog(KennelCreator.this);
+                final BottomSheetDialog sheetDialog = new BottomSheetDialog(NewKennelCreator.this);
                 @SuppressLint("InflateParams") View view = getLayoutInflater().inflate(R.layout.image_picker_sheet, null);
                 sheetDialog.setContentView(view);
                 sheetDialog.show();
@@ -849,7 +546,7 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
                     @Override
                     public void onClick(View v) {
                         sheetDialog.dismiss();
-                        EasyImage.openGallery(KennelCreator.this, 0);
+                        EasyImage.openGallery(NewKennelCreator.this, 0);
                     }
                 });
 
@@ -858,7 +555,7 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
                     @Override
                     public void onClick(View v) {
                         sheetDialog.dismiss();
-                        EasyImage.openCamera(KennelCreator.this, 0);
+                        EasyImage.openCamera(NewKennelCreator.this, 0);
                     }
                 });
             } else {
@@ -883,53 +580,11 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                 dialog.cancel();
                                 ActivityCompat.requestPermissions(
-                                        KennelCreator.this,
+                                        NewKennelCreator.this,
                                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, ACCESS_STORAGE_CONSTANT);
                             }
                         }).show();
             }
         }
-    }
-
-    /** FETCH THE LIST OF STATES **/
-    private void fetchStates() {
-        LocationAPI api = ZenApiClient.getClient().create(LocationAPI.class);
-        Call<StatesData> call = api.allStates(COUNTRY_ID);
-        call.enqueue(new Callback<StatesData>() {
-            @Override
-            public void onResponse(Call<StatesData> call, Response<StatesData> response) {
-                arrStates = response.body().getStates();
-
-                /* SET THE ADAPTER TO THE STATES SPINNER */
-                spnState.setAdapter(new StatesAdapter(KennelCreator.this, arrStates));
-            }
-
-            @Override
-            public void onFailure(Call<StatesData> call, Throwable t) {
-//                Log.e("STATES FAILURE", t.getMessage());
-                Crashlytics.logException(t);
-            }
-        });
-    }
-
-    /** FETCH THE LIST OF CITIES **/
-    private void fetchCities() {
-        LocationAPI api = ZenApiClient.getClient().create(LocationAPI.class);
-        Call<CitiesData> call = api.allCities(STATE_ID);
-        call.enqueue(new Callback<CitiesData>() {
-            @Override
-            public void onResponse(Call<CitiesData> call, Response<CitiesData> response) {
-                arrCities = response.body().getCities();
-
-                /* SET THE ADAPTER TO THE CITIES SPINNER */
-                spnCity.setAdapter(new CitiesAdapter(KennelCreator.this, arrCities));
-            }
-
-            @Override
-            public void onFailure(Call<CitiesData> call, Throwable t) {
-//                Log.e("CITIES FAILURE", t.getMessage());
-                Crashlytics.logException(t);
-            }
-        });
     }
 }

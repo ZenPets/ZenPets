@@ -16,7 +16,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,7 +43,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import biz.zenpets.kennels.R;
-import biz.zenpets.kennels.creator.kennel.KennelCreator;
+import biz.zenpets.kennels.creator.kennel.NewKennelCreator;
 import biz.zenpets.kennels.details.kennel.KennelDetails;
 import biz.zenpets.kennels.modifier.images.KennelImageManager;
 import biz.zenpets.kennels.modifier.kennel.KennelModifier;
@@ -121,7 +120,7 @@ public class KennelsList extends AppCompatActivity {
         call.enqueue(new Callback<Kennels>() {
             @Override
             public void onResponse(Call<Kennels> call, Response<Kennels> response) {
-                Log.e("RAW", String.valueOf(response.raw()));
+//                Log.e("RAW", String.valueOf(response.raw()));
                 if (response.body() != null && response.body().getKennels() != null)    {
                     arrKennels = processResult(response);
 //                    arrKennels = response.body().getKennels();
@@ -469,32 +468,23 @@ public class KennelsList extends AppCompatActivity {
             public void onResponse(Call<KennelPages> call, Response<KennelPages> response) {
                 if (response.body() != null)    {
                     int publishedKennels = Integer.parseInt(response.body().getTotalKennels());
-                    Log.e("KENNELS", String.valueOf(publishedKennels));
+//                    Log.e("KENNELS", String.valueOf(publishedKennels));
                     if (publishedKennels < 2)   {
-                        Intent intent = new Intent(KennelsList.this, KennelCreator.class);
-                        intent.putExtra("LISTING_TYPE", "FREE");
+                        Intent intent = new Intent(KennelsList.this, NewKennelCreator.class);
                         startActivityForResult(intent, 101);
                     } else {
                         new MaterialDialog.Builder(KennelsList.this)
                                 .icon(ContextCompat.getDrawable(KennelsList.this, R.drawable.ic_info_black_24dp))
-                                .title("Exceeding Kennel Limit")
-                                .content(getString(R.string.kennel_creator_limit_exceed_message))
+                                .title(getString(R.string.kennel_limit_title))
+                                .content(getString(R.string.kennel_limit_message))
                                 .cancelable(false)
-                                .positiveText("Sure Thing")
-                                .negativeText("Not Now")
+                                .positiveText(getString(R.string.kennel_limit_okay))
                                 .theme(Theme.LIGHT)
                                 .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
                                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                                     @Override
                                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        Intent intent = new Intent(KennelsList.this, KennelCreator.class);
-                                        intent.putExtra("LISTING_TYPE", "PAID");
-                                        startActivityForResult(intent, 101);
-                                    }
-                                })
-                                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        /* DISMISS THE DIALOG */
                                         dialog.dismiss();
                                     }
                                 }).show();

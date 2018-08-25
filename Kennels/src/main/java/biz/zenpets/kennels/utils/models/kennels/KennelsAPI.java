@@ -14,7 +14,6 @@ public interface KennelsAPI {
     @FormUrlEncoded
     Call<Kennel> registerNewKennel(
             @Field("kennelOwnerID") String kennelOwnerID,
-            @Field("kennelChargesID") String kennelChargesID,
             @Field("kennelName") String kennelName,
             @Field("kennelCoverPhoto") String kennelCoverPhoto,
             @Field("kennelAddress") String kennelAddress,
@@ -28,9 +27,30 @@ public interface KennelsAPI {
             @Field("kennelPhoneNumber1") String kennelPhoneNumber1,
             @Field("kennelPhonePrefix2") String kennelPhonePrefix2,
             @Field("kennelPhoneNumber2") String kennelPhoneNumber2,
-            @Field("kennelPetCapacity") String kennelPetCapacity,
-            @Field("kennelValidFrom") String kennelValidFrom,
-            @Field("kennelValidTo") String kennelValidTo);
+            @Field("kennelPetCapacity") String kennelPetCapacity);
+
+//    /** REGISTER A NEW KENNEL **/
+//    @POST("registerNewKennel")
+//    @FormUrlEncoded
+//    Call<Kennel> registerNewKennel(
+//            @Field("kennelOwnerID") String kennelOwnerID,
+//            @Field("kennelChargesID") String kennelChargesID,
+//            @Field("kennelName") String kennelName,
+//            @Field("kennelCoverPhoto") String kennelCoverPhoto,
+//            @Field("kennelAddress") String kennelAddress,
+//            @Field("kennelPinCode") String kennelPinCode,
+//            @Field("countryID") String countryID,
+//            @Field("stateID") String stateID,
+//            @Field("cityID") String cityID,
+//            @Field("kennelLatitude") String kennelLatitude,
+//            @Field("kennelLongitude") String kennelLongitude,
+//            @Field("kennelPhonePrefix1") String kennelPhonePrefix1,
+//            @Field("kennelPhoneNumber1") String kennelPhoneNumber1,
+//            @Field("kennelPhonePrefix2") String kennelPhonePrefix2,
+//            @Field("kennelPhoneNumber2") String kennelPhoneNumber2,
+//            @Field("kennelPetCapacity") String kennelPetCapacity,
+//            @Field("kennelValidFrom") String kennelValidFrom,
+//            @Field("kennelValidTo") String kennelValidTo);
 
     /** UPDATE A KENNEL'S LISTING **/
     @POST("updateKennel")

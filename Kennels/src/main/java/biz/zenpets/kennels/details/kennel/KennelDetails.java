@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -320,7 +319,7 @@ public class KennelDetails extends AppCompatActivity {
         call.enqueue(new Callback<Reviews>() {
             @Override
             public void onResponse(Call<Reviews> call, Response<Reviews> response) {
-                Log.e("RAW REVIEWS", String.valueOf(response.raw()));
+//                Log.e("RAW REVIEWS", String.valueOf(response.raw()));
                 if (response.body() != null && response.body().getReviews() != null)    {
                     arrReviewsSubset = response.body().getReviews();
                     if (arrReviewsSubset.size() > 0)    {

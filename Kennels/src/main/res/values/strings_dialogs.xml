@@ -17,4 +17,16 @@
         \n\nNOTE: You will be provided the 25% discount when you register for a Pet Trainers account with the same email address</string>
     <string name="trainer_failed_try_again">TRY AGAIN</string>
     <string name="trainer_failed_continue">CONTINUE</string>
+
+    <!-- PAYMENT FAILED -->
+    <string name="payment_failed_title">Payment Failed</string>
+    <string name="payment_failed_message">There was an error processing the payment. To try again, click the \"TRY AGAIN\" button. If the payment fails repeatedly, try a different payment method.</string>
+    <string name="payment_failed_try_again">TRY AGAIN</string>
+    <string name="payment_failed_cancel">CANCEL</string>
+
+    <!-- LIMIT EXCEEDED -->
+    <string name="kennel_limit_title">Kennel Listing Limit</string>
+    <string name="kennel_limit_message">You have already listed two (2) Kennels using your account. A Kennel Owner can only publish two (2) Kennels per account.
+        \n\nTo add additional Kennels, we recommend creating a new account on the Zen Pets Kennel Manager.</string>
+    <string name="kennel_limit_okay">OKAY</string>
 </resources>

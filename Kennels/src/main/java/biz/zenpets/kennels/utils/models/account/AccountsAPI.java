@@ -28,7 +28,10 @@ public interface AccountsAPI {
             @Field("kennelOwnerPinCode") String kennelOwnerPinCode,
             @Field("countryID") String countryID,
             @Field("stateID") String stateID,
-            @Field("cityID") String cityID);
+            @Field("cityID") String cityID,
+            @Field("paymentID") String paymentID,
+            @Field("validFrom") String validFrom,
+            @Field("validTo") String validTo);
 
     /** CHECK IF A KENNEL OWNER'S ACCOUNT EXISTS **/
     @GET("kennelOwnerExists")
