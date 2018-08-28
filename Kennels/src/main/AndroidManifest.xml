@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="biz.zenpets.kennels">
 
-    <uses-sdk
+    <!--<uses-sdk
         android:minSdkVersion="16"
-        tools:overrideLibrary="com.razorpay" />
+        tools:overrideLibrary="com.razorpay" />-->
 
     <permission
         android:name="biz.zenpets.kennels.permission.MAPS_RECEIVE"

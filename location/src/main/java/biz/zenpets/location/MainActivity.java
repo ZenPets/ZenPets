@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (CITY_NAME != null && LOCALITY_NAME != null) {
                 if (CITY_NAME.equalsIgnoreCase("Chandigarh")) {
-                    Log.e("LOCALITY", LOCALITY_NAME + " : " + CITY_NAME);
+//                    Log.e("LOCALITY", LOCALITY_NAME + " : " + CITY_NAME);
                     createLocality("38", LOCALITY_NAME);
                     arrayList.add(LOCALITY_NAME);
                     adapter.notifyDataSetChanged();

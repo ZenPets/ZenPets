@@ -43,21 +43,20 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
     implementation 'com.google.android.gms:play-services-location:15.0.1'
     implementation 'com.google.android.gms:play-services-places:15.0.1'
-    implementation 'com.google.android.gms:play-services-auth:15.0.1'
+    implementation 'com.google.android.gms:play-services-auth:16.0.0'
 
     /** CONSTRAINT LAYOUT **/
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
 
     /** FIREBASE **/
-    implementation 'com.google.firebase:firebase-core:16.0.1'
-    implementation 'com.google.firebase:firebase-auth:16.0.2'
+    implementation 'com.google.firebase:firebase-core:16.0.3'
+    implementation 'com.google.firebase:firebase-auth:16.0.3'
     implementation 'com.google.firebase:firebase-storage:16.0.1'
-    implementation 'com.google.firebase:firebase-messaging:17.1.0'
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.4'
-//    implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
+    implementation 'com.google.firebase:firebase-messaging:17.3.0'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.5'
 
     /** RAZOR PAY SDK **/
-    implementation 'com.razorpay:checkout:1.4.9'
+    implementation 'com.razorpay:checkout:1.4.7'
 
     /** FRESCO **/
     implementation 'com.facebook.fresco:fresco:1.9.0'

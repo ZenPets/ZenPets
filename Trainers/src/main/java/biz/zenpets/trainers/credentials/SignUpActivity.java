@@ -49,6 +49,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -523,31 +524,60 @@ public class SignUpActivity extends AppCompatActivity {
     private void uploadDisplayProfile() {
         TRAINER_DISPLAY_PROFILE_FILE_NAME = TRAINER_NAME.replaceAll(" ", "_").toLowerCase().trim() + "_" + user.getUid();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        StorageReference refStorage = storageReference.child("Trainer Profiles").child(TRAINER_DISPLAY_PROFILE_FILE_NAME);
-        refStorage.putFile(TRAINER_DISPLAY_PROFILE_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        final StorageReference refStorage = storageReference.child("Trainer Profiles").child(TRAINER_DISPLAY_PROFILE_FILE_NAME);
+        UploadTask uploadTask = refStorage.putFile(TRAINER_DISPLAY_PROFILE_URI);
+        Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Uri downloadURL = taskSnapshot.getDownloadUrl();
-                TRAINER_DISPLAY_PROFILE = String.valueOf(downloadURL);
-                if (TRAINER_DISPLAY_PROFILE != null)    {
-                    /* CREATE THE NEW TRAINER'S ACCOUNT */
-                    createTrainerAccount();
-                } else {
-                    progressDialog.dismiss();
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "There was a problem creating your new account. Please try again by clicking the Save button.",
-                            Toast.LENGTH_LONG).show();
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
                 }
 
+                /* CONTINUE WITH THE TASK TO GET THE IMAGE URL */
+                return refStorage.getDownloadUrl();
             }
-        }).addOnFailureListener(new OnFailureListener() {
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
-            public void onFailure(@NonNull Exception e) {
-//                Log.e("UPLOAD EXCEPTION", e.toString());
-                Crashlytics.logException(e);
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri downloadURL = task.getResult();
+                    TRAINER_DISPLAY_PROFILE = String.valueOf(downloadURL);
+                    if (TRAINER_DISPLAY_PROFILE != null)    {
+                        /* CREATE THE NEW TRAINER'S ACCOUNT */
+                        createTrainerAccount();
+                    } else {
+                        progressDialog.dismiss();
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "There was a problem creating your new account. Please try again by clicking the Save button.",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
             }
         });
+//        refStorage.putFile(TRAINER_DISPLAY_PROFILE_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                Uri downloadURL = taskSnapshot.getDownloadUrl();
+//                TRAINER_DISPLAY_PROFILE = String.valueOf(downloadURL);
+//                if (TRAINER_DISPLAY_PROFILE != null)    {
+//                    /* CREATE THE NEW TRAINER'S ACCOUNT */
+//                    createTrainerAccount();
+//                } else {
+//                    progressDialog.dismiss();
+//                    Toast.makeText(
+//                            getApplicationContext(),
+//                            "There was a problem creating your new account. Please try again by clicking the Save button.",
+//                            Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+////                Log.e("UPLOAD EXCEPTION", e.toString());
+//                Crashlytics.logException(e);
+//            }
+//        });
     }
 
     /***** CREATE THE NEW TRAINER'S ACCOUNT *****/
