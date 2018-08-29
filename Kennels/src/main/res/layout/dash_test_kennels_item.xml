@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardKennelDetails"
+        style="@style/ZenPetsCards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp">
+
+            <FrameLayout
+                android:id="@+id/fralaKennelDetails"
+                android:layout_width="0dp"
+                android:layout_height="160dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/imgvwKennelCoverPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    app:actualImageScaleType="center"
+                    app:failureImageScaleType="center"
+                    app:placeholderImage="@drawable/ic_business_black_48dp"
+                    app:placeholderImageScaleType="center" />
+
+                <TextView
+                    android:id="@+id/txtKennelName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center"
+                    android:background="#A6000000"
+                    android:padding="11dp"
+                    android:text="@string/kennel_list_kennel_name_label"
+                    android:textColor="@android:color/primary_text_dark"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/roboto_medium" />
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:id="@+id/imgvwKennelOptions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:adjustViewBounds="true"
+                    android:background="#CCDCDCDC"
+                    android:padding="11dp"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="faw_ellipsis_v"
+                    app:iiv_size="16dp" />
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:id="@+id/imgvwKennelAlert"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|start"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:adjustViewBounds="true"
+                    android:background="#CCDCDCDC"
+                    android:padding="11dp"
+                    app:iiv_color="@android:color/holo_red_dark"
+                    app:iiv_icon="faw_exclamation_triangle"
+                    app:iiv_size="16dp" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/linlaKennelAddress"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="top|center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@+id/fralaKennelDetails"
+                app:layout_constraintStart_toStartOf="@+id/fralaKennelDetails"
+                app:layout_constraintTop_toBottomOf="@+id/fralaKennelDetails">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    app:iiv_color="@color/primary_dark"
+                    app:iiv_icon="faw_building2"
+                    app:iiv_size="14dp" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txtKennelAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="start|center"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:text="@string/kennel_list_kennel_address_label"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/roboto_regular" />
+            </LinearLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/layoutPreferencesDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/linlaKennelAddress"
+                app:layout_constraintStart_toStartOf="@+id/linlaKennelAddress"
+                app:layout_constraintTop_toBottomOf="@+id/linlaKennelAddress">
+
+                <ImageView
+                    android:id="@+id/imgvwSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintEnd_toStartOf="@+id/imgvwMedium"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_pet_size_24" />
+
+                <ImageView
+                    android:id="@+id/imgvwMedium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintEnd_toStartOf="@+id/imgvwLarge"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/imgvwSmall"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_pet_size_32" />
+
+                <ImageView
+                    android:id="@+id/imgvwLarge"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintEnd_toStartOf="@+id/imgvwExtraLarge"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/imgvwMedium"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_pet_size_48" />
+
+                <ImageView
+                    android:id="@+id/imgvwExtraLarge"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/imgvwLarge"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_pet_size_64" />
+
+                <TextView
+                    android:id="@+id/txtSmallLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="SMALL"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/imgvwSmall"
+                    app:layout_constraintStart_toStartOf="@+id/imgvwSmall"
+                    app:layout_constraintTop_toBottomOf="@+id/imgvwSmall" />
+
+                <TextView
+                    android:id="@+id/txtMediumLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="MEDIUM"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/imgvwMedium"
+                    app:layout_constraintStart_toStartOf="@+id/imgvwMedium"
+                    app:layout_constraintTop_toBottomOf="@+id/imgvwMedium" />
+
+                <TextView
+                    android:id="@+id/txtLargeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="LARGE"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/imgvwLarge"
+                    app:layout_constraintStart_toStartOf="@+id/imgvwLarge"
+                    app:layout_constraintTop_toBottomOf="@+id/imgvwLarge" />
+
+                <TextView
+                    android:id="@+id/txtExtraLargeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="X-LARGE"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/imgvwExtraLarge"
+                    app:layout_constraintStart_toStartOf="@+id/imgvwExtraLarge"
+                    app:layout_constraintTop_toBottomOf="@+id/imgvwExtraLarge"
+                    app:layout_constraintVertical_bias="0.0" />
+            </android.support.constraint.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
+                android:gravity="end|center"
+                android:orientation="horizontal"
+                android:padding="6dp"
+                app:layout_constraintEnd_toEndOf="@+id/layoutPreferencesDetails"
+                app:layout_constraintStart_toStartOf="@+id/layoutPreferencesDetails"
+                app:layout_constraintTop_toBottomOf="@+id/layoutPreferencesDetails">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txtKennelLikes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="3dp"
+                        android:text="100%"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="11sp"
+                        app:fontFamily="@font/roboto_medium" />
+                </LinearLayout>
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="3dp"
+                    android:adjustViewBounds="true"
+                    app:iiv_color="@color/tertiary_text"
+                    app:iiv_icon="oct_primitive_dot"
+                    app:iiv_size="4dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <RatingBar
+                        android:id="@+id/kennelRating"
+                        style="@style/RatingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="4dp"
+                        android:numStars="5"
+                        android:rating="0" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

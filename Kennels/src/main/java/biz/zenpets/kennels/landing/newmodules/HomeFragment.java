@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 
 import biz.zenpets.kennels.R;
 import biz.zenpets.kennels.inventory.KennelInventory;
-import biz.zenpets.kennels.kennels.KennelsList;
+import biz.zenpets.kennels.kennels.TestKennelsList;
 import biz.zenpets.kennels.reports.ReportsActivity;
 import biz.zenpets.kennels.reviews.ReviewsList;
 import biz.zenpets.kennels.utils.TypefaceSpan;
@@ -27,7 +27,8 @@ public class HomeFragment extends Fragment {
 
     /** SHOW THE LIST OF KENNELS **/
     @OnClick(R.id.linlaKennels) void showKennels()  {
-        Intent intent = new Intent(getActivity(), KennelsList.class);
+//        Intent intent = new Intent(getActivity(), KennelsList.class);
+        Intent intent = new Intent(getActivity(), TestKennelsList.class);
         startActivity(intent);
     }
 

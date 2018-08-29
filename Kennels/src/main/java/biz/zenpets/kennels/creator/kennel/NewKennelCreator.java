@@ -6,8 +6,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
@@ -44,9 +49,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import biz.zenpets.kennels.R;
 import biz.zenpets.kennels.utils.AppPrefs;
@@ -56,16 +65,18 @@ import biz.zenpets.kennels.utils.adapters.location.CitiesAdapter;
 import biz.zenpets.kennels.utils.adapters.location.StatesAdapter;
 import biz.zenpets.kennels.utils.helpers.LocationPickerActivity;
 import biz.zenpets.kennels.utils.models.helpers.ZenApiClient;
-import biz.zenpets.kennels.utils.models.kennels.Kennel;
-import biz.zenpets.kennels.utils.models.kennels.KennelsAPI;
 import biz.zenpets.kennels.utils.models.location.CitiesData;
 import biz.zenpets.kennels.utils.models.location.CityData;
 import biz.zenpets.kennels.utils.models.location.LocationAPI;
 import biz.zenpets.kennels.utils.models.location.StateData;
 import biz.zenpets.kennels.utils.models.location.StatesData;
+import biz.zenpets.kennels.utils.models.test.TestKennel;
+import biz.zenpets.kennels.utils.models.test.TestKennelsAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import id.zelory.compressor.Compressor;
+import pl.aprilapps.easyphotopicker.DefaultCallback;
 import pl.aprilapps.easyphotopicker.EasyImage;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -103,7 +114,10 @@ public class NewKennelCreator extends AppCompatActivity {
     String KENNEL_PHONE_NUMBER_1 = null;
     String KENNEL_PHONE_PREFIX_2 = "91";
     String KENNEL_PHONE_NUMBER_2 = null;
-    String KENNEL_PET_CAPACITY = null;
+    String KENNEL_SMALL_CAPACITY = null;
+    String KENNEL_MEDIUM_CAPACITY = null;
+    String KENNEL_LARGE_CAPACITY = null;
+    String KENNEL_X_LARGE_CAPACITY = null;
 
     /** ADDITIONAL KENNEL CHARGES **/
     String ADDITIONAL_KENNEL_COST = "1000";
@@ -114,8 +128,11 @@ public class NewKennelCreator extends AppCompatActivity {
     /** CITIES ADAPTER AND ARRAY LIST **/
     private ArrayList<CityData> arrCities = new ArrayList<>();
 
-    /** A PET CAPACITY LIST INSTANCE **/
-    private List<String> arrCapacity = new ArrayList<>();
+    /** PET CAPACITY LIST INSTANCES **/
+    private List<String> arrSmallCapacity = new ArrayList<>();
+    private List<String> arrMediumCapacity = new ArrayList<>();
+    private List<String> arrLargeCapacity = new ArrayList<>();
+    private List<String> arrXLargeCapacity = new ArrayList<>();
 
     /** A PROGRESS DIALOG INSTANCE **/
     private ProgressDialog progressDialog;
@@ -135,7 +152,10 @@ public class NewKennelCreator extends AppCompatActivity {
     @BindView(R.id.edtPhoneNumber1) TextInputEditText edtPhoneNumber1;
     @BindView(R.id.inputPhoneNumber2) TextInputLayout inputPhoneNumber2;
     @BindView(R.id.edtPhoneNumber2) TextInputEditText edtPhoneNumber2;
-    @BindView(R.id.spnPetCapacity) Spinner spnPetCapacity;
+    @BindView(R.id.spnSmallCapacity) Spinner spnSmallCapacity;
+    @BindView(R.id.spnMediumCapacity) Spinner spnMediumCapacity;
+    @BindView(R.id.spnLargeCapacity) Spinner spnLargeCapacity;
+    @BindView(R.id.spnXLargeCapacity) Spinner spnXLargeCapacity;
     @BindView(R.id.imgvwKennelCoverPhoto) SimpleDraweeView imgvwKennelCoverPhoto;
 
     /** SELECT THE KENNEL'S LOCATION ON THE MAP **/
@@ -153,7 +173,7 @@ public class NewKennelCreator extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.kennel_creator);
+        setContentView(R.layout.kennel_creator_new);
         ButterKnife.bind(this);
 
         /* THE EASY IMAGE CONFIGURATION */
@@ -204,19 +224,79 @@ public class NewKennelCreator extends AppCompatActivity {
             }
         });
 
-        /* POPULATE THE PET CAPACITY SPINNER */
-        String[] strServes = getResources().getStringArray(R.array.pet_capacity);
-        arrCapacity = Arrays.asList(strServes);
-        spnPetCapacity.setAdapter(new PetCapacityAdapter(
+        /* POPULATE THE SMALL CAPACITY SPINNER */
+        String[] strSmallCapacity = getResources().getStringArray(R.array.pet_capacity);
+        arrSmallCapacity = Arrays.asList(strSmallCapacity);
+        spnSmallCapacity.setAdapter(new PetCapacityAdapter(
                 NewKennelCreator.this,
                 R.layout.pet_capacity_row,
-                arrCapacity));
+                arrSmallCapacity));
 
-        /* SELECT THE PET CAPACITY */
-        spnPetCapacity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        /* SELECT THE SMALL PET CAPACITY */
+        spnSmallCapacity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                KENNEL_PET_CAPACITY = arrCapacity.get(position);
+                KENNEL_SMALL_CAPACITY = arrSmallCapacity.get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        /* POPULATE THE MEDIUM CAPACITY SPINNER */
+        String[] strMediumCapacity = getResources().getStringArray(R.array.pet_capacity);
+        arrMediumCapacity = Arrays.asList(strMediumCapacity);
+        spnMediumCapacity.setAdapter(new PetCapacityAdapter(
+                NewKennelCreator.this,
+                R.layout.pet_capacity_row,
+                arrMediumCapacity));
+
+        /* SELECT THE MEDIUM PET CAPACITY */
+        spnMediumCapacity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                KENNEL_MEDIUM_CAPACITY = arrMediumCapacity.get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        /* POPULATE THE LARGE CAPACITY SPINNER */
+        String[] strLargeCapacity = getResources().getStringArray(R.array.pet_capacity);
+        arrLargeCapacity = Arrays.asList(strLargeCapacity);
+        spnLargeCapacity.setAdapter(new PetCapacityAdapter(
+                NewKennelCreator.this,
+                R.layout.pet_capacity_row,
+                arrLargeCapacity));
+
+        /* SELECT THE LARGE PET CAPACITY */
+        spnLargeCapacity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                KENNEL_LARGE_CAPACITY = arrLargeCapacity.get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        /* POPULATE THE EXTRA LARGE CAPACITY SPINNER */
+        String[] strXLargeCapacity = getResources().getStringArray(R.array.pet_capacity);
+        arrXLargeCapacity = Arrays.asList(strXLargeCapacity);
+        spnXLargeCapacity.setAdapter(new PetCapacityAdapter(
+                NewKennelCreator.this,
+                R.layout.pet_capacity_row,
+                arrXLargeCapacity));
+
+        /* SELECT THE EXTRA LARGE PET CAPACITY */
+        spnXLargeCapacity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                KENNEL_X_LARGE_CAPACITY = arrXLargeCapacity.get(position);
             }
 
             @Override
@@ -344,15 +424,18 @@ public class NewKennelCreator extends AppCompatActivity {
 
     /** UPLOAD THE NEW KENNEL LISTING **/
     private void uploadKennelListing() {
-        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-        Call<Kennel> call = api.registerNewKennel(
+        TestKennelsAPI api = ZenApiClient.getClient().create(TestKennelsAPI.class);
+        Call<TestKennel> call = api.registerNewTestKennel(
                 KENNEL_OWNER_ID, KENNEL_NAME, KENNEL_COVER_PHOTO, KENNEL_ADDRESS, KENNEL_PIN_CODE,
                 COUNTRY_ID, STATE_ID, CITY_ID, String.valueOf(KENNEL_LATITUDE), String.valueOf(KENNEL_LONGITUDE),
                 KENNEL_PHONE_PREFIX_1, KENNEL_PHONE_NUMBER_1, KENNEL_PHONE_PREFIX_2, KENNEL_PHONE_NUMBER_2,
-                KENNEL_PET_CAPACITY);
-        call.enqueue(new Callback<Kennel>() {
+                KENNEL_SMALL_CAPACITY, KENNEL_MEDIUM_CAPACITY, KENNEL_LARGE_CAPACITY, KENNEL_X_LARGE_CAPACITY,
+                "Unverified"
+        );
+        call.enqueue(new Callback<TestKennel>() {
             @Override
-            public void onResponse(Call<Kennel> call, Response<Kennel> response) {
+            public void onResponse(Call<TestKennel> call, Response<TestKennel> response) {
+                Log.e("RESPONSE", String.valueOf(response.raw()));
                 if (response.isSuccessful())    {
                     /* GET THE KENNEL ID */
                     KENNEL_ID = response.body().getKennelID();
@@ -364,15 +447,15 @@ public class NewKennelCreator extends AppCompatActivity {
                     finish();
                 } else {
                     progressDialog.dismiss();
-                    Toast.makeText(getApplicationContext(), "Update failed...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Failed to publish new kennel...", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<Kennel> call, Throwable t) {
+            public void onFailure(Call<TestKennel> call, Throwable t) {
                 progressDialog.dismiss();
                 Crashlytics.logException(t);
-//                Log.e("PUBLISH FAILURE", t.getMessage());
+                Log.e("PUBLISH FAILURE", t.getMessage());
             }
         });
     }
@@ -585,6 +668,90 @@ public class NewKennelCreator extends AppCompatActivity {
                             }
                         }).show();
             }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_LOCATION) {
+                Bundle bundle = data.getExtras();
+                if (bundle != null) {
+                    KENNEL_LATITUDE = bundle.getDouble("LATITUDE");
+                    KENNEL_LONGITUDE = bundle.getDouble("LONGITUDE");
+                }
+
+                /* GET THE APPROXIMATE ADDRESS FOR DISPLAY */
+                try {
+                    Geocoder geocoder;
+                    List<Address> addresses;
+                    geocoder = new Geocoder(this, Locale.getDefault());
+                    addresses = geocoder.getFromLocation(KENNEL_LATITUDE, KENNEL_LONGITUDE, 1);
+                    String address = addresses.get(0).getAddressLine(0);
+                    if (!TextUtils.isEmpty(address)) {
+                        txtLocation.setText(address);
+                    } else {
+                        // TODO: DISPLAY THE COORDINATES INSTEAD
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        EasyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
+            @Override
+            public void onImagesPicked(@NonNull List<File> imageFiles, EasyImage.ImageSource source, int type) {
+                onPhotoReturned(imageFiles);
+            }
+        });
+    }
+
+    /***** PROCESS THE SELECTED IMAGE AND GRAB THE URI *****/
+    private void onPhotoReturned(List<File> imageFiles) {
+        try {
+            File compressedFile = new Compressor(this)
+                    .setMaxWidth(800)
+                    .setMaxHeight(800)
+                    .setQuality(80)
+                    .setCompressFormat(Bitmap.CompressFormat.PNG)
+                    .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
+                            Environment.DIRECTORY_PICTURES).getAbsolutePath())
+                    .compressToFile(imageFiles.get(0));
+            Uri uri = Uri.fromFile(compressedFile);
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+            imgvwKennelCoverPhoto.setImageURI(uri);
+//            imgvwKennelCoverPhoto.setImageBitmap(bitmap);
+//            imgvwKennelCoverPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+            /* STORE THE BITMAP AS A FILE AND USE THE FILE'S URI */
+            String root = Environment.getExternalStorageDirectory().toString();
+            File myDir = new File(root + "/Zen Pets");
+            myDir.mkdirs();
+            String fName = "photo.jpg";
+            File file = new File(myDir, fName);
+            if (file.exists()) file.delete();
+
+            try {
+                FileOutputStream out = new FileOutputStream(file);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                out.flush();
+                out.close();
+
+                /* GET THE FINAL URI */
+                KENNEL_COVER_PHOTO_URI = Uri.fromFile(file);
+//                Log.e("URI", String.valueOf(KENNEL_COVER_PHOTO_URI));
+            } catch (IOException e) {
+                e.printStackTrace();
+                Crashlytics.logException(e);
+//                Log.e("EXCEPTION", e.getMessage());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Crashlytics.logException(e);
+//            Log.e("EXCEPTION", e.getMessage());
         }
     }
 }

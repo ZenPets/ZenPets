@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class KennelPages {
-
     @SerializedName("totalKennels") @Expose private String totalKennels;
     @SerializedName("totalPages") @Expose private String totalPages;
 
