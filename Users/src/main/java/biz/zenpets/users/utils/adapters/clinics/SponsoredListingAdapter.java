@@ -40,22 +40,22 @@ public class SponsoredListingAdapter extends RecyclerView.Adapter<SponsoredListi
     public void onBindViewHolder(@NonNull ClinicsVH holder, final int position) {
         final DoctorsData data = arrDoctors.get(position);
 
-        /* SET THE CLINIC NAME */
-        holder.txtClinicName.setText(data.getClinicName());
-
-        /* SET THE CLINIC CITY AND LOCALITY */
-        String cityName = data.getCityName();
-        String localityName = data.getLocalityName();
-        holder.txtClinicAddress.setText(activity.getString(R.string.sponsored_clinic_address_placeholder, cityName, localityName));
-
-        /* SET THE CLINIC DISTANCE FROM THE USER'S CURRENT LOCATION */
-        String tilde = activity.getString(R.string.generic_tilde);
-        String distance = data.getClinicDistance();
-        String km = activity.getString(R.string.sponsored_clinic_distance_km);
-        holder.txtClinicDistance.setText(activity.getString(R.string.sponsored_clinic_distance_placeholder, tilde, distance, km));
-
-        /* SET THE DOCTOR'S CHARGES */
-        holder.txtClinicCharges.setText(data.getDoctorCharges());
+//        /* SET THE CLINIC NAME */
+//        holder.txtClinicName.setText(data.getClinicName());
+//
+//        /* SET THE CLINIC CITY AND LOCALITY */
+//        String cityName = data.getCityName();
+//        String localityName = data.getLocalityName();
+//        holder.txtClinicAddress.setText(activity.getString(R.string.sponsored_clinic_address_placeholder, cityName, localityName));
+//
+//        /* SET THE CLINIC DISTANCE FROM THE USER'S CURRENT LOCATION */
+//        String tilde = activity.getString(R.string.generic_tilde);
+//        String distance = data.getClinicDistance();
+//        String km = activity.getString(R.string.sponsored_clinic_distance_km);
+//        holder.txtClinicDistance.setText(activity.getString(R.string.sponsored_clinic_distance_placeholder, tilde, distance, km));
+//
+//        /* SET THE DOCTOR'S CHARGES */
+//        holder.txtClinicCharges.setText(data.getDoctorCharges());
     }
 
     @NonNull
@@ -71,28 +71,28 @@ public class SponsoredListingAdapter extends RecyclerView.Adapter<SponsoredListi
 
     class ClinicsVH extends RecyclerView.ViewHolder	{
 
-        final LinearLayout linlaClinicContainer;
-        final AppCompatTextView txtClinicName;
-        final AppCompatTextView txtClinicAddress;
-        final LinearLayout linlaClinicCharges;
-        final AppCompatTextView txtClinicCharges;
-        final LinearLayout linlaClinicReviews;
-        final AppCompatTextView txtClinicReviews;
-        final LinearLayout linlaClinicDistance;
-        final AppCompatTextView txtClinicDistance;
+//        final LinearLayout linlaClinicContainer;
+//        final AppCompatTextView txtClinicName;
+//        final AppCompatTextView txtClinicAddress;
+//        final LinearLayout linlaClinicCharges;
+//        final AppCompatTextView txtClinicCharges;
+//        final LinearLayout linlaClinicReviews;
+//        final AppCompatTextView txtClinicReviews;
+//        final LinearLayout linlaClinicDistance;
+//        final AppCompatTextView txtClinicDistance;
 
         ClinicsVH(View v) {
             super(v);
 
-            linlaClinicContainer = v.findViewById(R.id.linlaClinicContainer);
-            txtClinicName = v.findViewById(R.id.txtClinicName);
-            txtClinicAddress = v.findViewById(R.id.txtClinicAddress);
-            linlaClinicCharges = v.findViewById(R.id.linlaClinicCharges);
-            txtClinicCharges = v.findViewById(R.id.txtClinicCharges);
-            linlaClinicReviews = v.findViewById(R.id.linlaClinicReviews);
-            txtClinicReviews = v.findViewById(R.id.txtClinicReviews);
-            linlaClinicDistance = v.findViewById(R.id.linlaClinicDistance);
-            txtClinicDistance = v.findViewById(R.id.txtClinicDistance);
+//            linlaClinicContainer = v.findViewById(R.id.linlaClinicContainer);
+//            txtClinicName = v.findViewById(R.id.txtClinicName);
+//            txtClinicAddress = v.findViewById(R.id.txtClinicAddress);
+//            linlaClinicCharges = v.findViewById(R.id.linlaClinicCharges);
+//            txtClinicCharges = v.findViewById(R.id.txtClinicCharges);
+//            linlaClinicReviews = v.findViewById(R.id.linlaClinicReviews);
+//            txtClinicReviews = v.findViewById(R.id.txtClinicReviews);
+//            linlaClinicDistance = v.findViewById(R.id.linlaClinicDistance);
+//            txtClinicDistance = v.findViewById(R.id.txtClinicDistance);
         }
     }
 }

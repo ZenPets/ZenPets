@@ -12,31 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.maps.model.LatLng;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.details.doctors.DoctorDetailsNew;
 import biz.zenpets.users.utils.AppPrefs;
-import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
-import biz.zenpets.users.utils.helpers.classes.ZenDistanceClient;
-import biz.zenpets.users.utils.helpers.clinics.distance.DistanceAPI;
 import biz.zenpets.users.utils.models.clinics.images.ClinicImage;
-import biz.zenpets.users.utils.models.clinics.images.ClinicImages;
-import biz.zenpets.users.utils.models.clinics.images.ClinicImagesAPI;
 import biz.zenpets.users.utils.models.doctors.list.Doctor;
-import biz.zenpets.users.utils.models.reviews.Review;
-import biz.zenpets.users.utils.models.reviews.Reviews;
-import biz.zenpets.users.utils.models.reviews.ReviewsAPI;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 @SuppressWarnings("ConstantConditions")
 public class DoctorsListAdapter extends RecyclerView.Adapter<DoctorsListAdapter.DoctorsVH> {
@@ -79,6 +63,24 @@ public class DoctorsListAdapter extends RecyclerView.Adapter<DoctorsListAdapter.
     public void onBindViewHolder(@NonNull final DoctorsVH holder, final int position) {
         final Doctor data = arrDoctors.get(position);
 
+        ArrayList<ClinicImage> arrImages = data.getImages();
+        if (arrImages != null)  {
+            if (arrImages.size() > 0)   {
+                /* RECONFIGURE AND SET THE ADAPTER TO THE RECYCLER VIEW */
+                adapter = new DoctorClinicImagesAdapter(activity, arrImages);
+                holder.listClinicImages.setAdapter(adapter);
+
+                /* SHOW THE IMAGES CONTAINER */
+                holder.linlaImagesContainer.setVisibility(View.VISIBLE);
+            } else {
+                /* HIDE THE IMAGES CONTAINER */
+                holder.linlaImagesContainer.setVisibility(View.GONE);
+            }
+        } else {
+            /* HIDE THE IMAGES CONTAINER */
+            holder.linlaImagesContainer.setVisibility(View.GONE);
+        }
+
         /* SET THE CLINIC NAME */
         holder.txtClinicName.setText(data.getClinicName());
 
@@ -89,48 +91,14 @@ public class DoctorsListAdapter extends RecyclerView.Adapter<DoctorsListAdapter.
         holder.txtClinicAddress.setText(activity.getString(R.string.doctor_list_address_placeholder, clinicAddress, cityName, clinicPinCode));
 
         /* SET THE CLINIC DISTANCE */
-        Double latitude = Double.valueOf(data.getClinicLatitude());
-        Double longitude = Double.valueOf(data.getClinicLongitude());
-        LatLng LATLNG_DESTINATION = new LatLng(latitude, longitude);
-        String strOrigin = LATLNG_ORIGIN.latitude + "," + LATLNG_ORIGIN.longitude;
-        String strDestination = LATLNG_DESTINATION.latitude + "," + LATLNG_DESTINATION.longitude;
-        String strSensor = "false";
-        String strKey = activity.getString(R.string.google_directions_api_key);
-        DistanceAPI api = ZenDistanceClient.getClient().create(DistanceAPI.class);
-        Call<String> call = api.json(strOrigin, strDestination, strSensor, strKey);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                try {
-                    String strDistance = response.body();
-                    JSONObject JORootDistance = new JSONObject(strDistance);
-                    JSONArray array = JORootDistance.getJSONArray("routes");
-                    JSONObject JORoutes = array.getJSONObject(0);
-                    JSONArray JOLegs= JORoutes.getJSONArray("legs");
-                    JSONObject JOSteps = JOLegs.getJSONObject(0);
-                    JSONObject JODistance = JOSteps.getJSONObject("distance");
-                    if (JODistance.has("text")) {
-                        String distance = JODistance.getString("text");
-                        String strTilde = activity.getString(R.string.generic_tilde);
-                        holder.txtClinicDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strTilde, distance));
-                    } else {
-                        String distance = "Unknown";
-                        String strInfinity = activity.getString(R.string.generic_infinity);
-                        holder.txtClinicDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Crashlytics.logException(t);
-                String distance = "Unknown";
-                String strInfinity = activity.getString(R.string.generic_infinity);
-                holder.txtClinicDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
-            }
-        });
+        String strClinicDistance = data.getClinicDistance();
+        if (strClinicDistance != null && !strClinicDistance.equals("Unknown"))  {
+            String strTilde = activity.getString(R.string.generic_tilde);
+            holder.txtClinicDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strTilde, strClinicDistance));
+        } else {
+            String strInfinity = activity.getString(R.string.generic_infinity);
+            holder.txtClinicDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, strClinicDistance));
+        }
 
         /* SET THE DOCTOR'S NAME */
         String doctorPrefix = data.getDoctorPrefix();
@@ -147,93 +115,84 @@ public class DoctorsListAdapter extends RecyclerView.Adapter<DoctorsListAdapter.
         String charges = data.getDoctorCharges();
         holder.txtDoctorCharges.setText(activity.getString(R.string.doctor_details_doc_charges_placeholder, currency, charges));
 
-        /* GET THE TOTAL NUMBER OF POSITIVE REVIEWS */
-        ReviewsAPI apiYes = ZenApiClient.getClient().create(ReviewsAPI.class);
-        Call<Reviews> callYes = apiYes.fetchPositiveReviews(data.getDoctorID(), "Yes");
-        callYes.enqueue(new Callback<Reviews>() {
-            @Override
-            public void onResponse(Call<Reviews> call, Response<Reviews> response) {
-                if (response.body() != null && response.body().getReviews() != null)    {
-                    ArrayList<Review> arrReview = response.body().getReviews();
-                    TOTAL_LIKES = arrReview.size();
-                    TOTAL_VOTES = TOTAL_VOTES + arrReview.size();
+        /* SET THE TOTAL NUMBER OF POSITIVE REVIEWS AND PERCENTAGE OF TOTAL REVIEWS */
+        String doctorReviews = data.getDoctorReviews();
+        String doctorPositives = data.getDoctorPositives();
+        if (doctorReviews != null && !doctorReviews.equals("null") && !doctorReviews.equals(""))    {
+            TOTAL_VOTES = Integer.parseInt(doctorReviews);
+            TOTAL_LIKES = Integer.parseInt(doctorPositives);
 
-                    /* GET THE TOTAL NUMBER OF NEGATIVE REVIEWS */
-                    ReviewsAPI apiNo = ZenApiClient.getClient().create(ReviewsAPI.class);
-                    Call<Reviews> callNo = apiNo.fetchNegativeReviews(data.getDoctorID(), "No");
-                    callNo.enqueue(new Callback<Reviews>() {
-                        @Override
-                        public void onResponse(Call<Reviews> call, Response<Reviews> response) {
-                            if (response.body() != null && response.body().getReviews() != null)    {
-                                ArrayList<Review> arrReview = response.body().getReviews();
-                                TOTAL_VOTES = TOTAL_VOTES + arrReview.size();
+            /* CALCULATE THE PERCENTAGE OF LIKES */
+            double percentLikes = ((double)TOTAL_LIKES / TOTAL_VOTES) * 100;
+            int finalPercentLikes = (int)percentLikes;
+            String strLikesPercentage = String.valueOf(finalPercentLikes) + "%";
 
-                                /* CALCULATE THE PERCENTAGE OF LIKES */
-                                double percentLikes = ((double)TOTAL_LIKES / TOTAL_VOTES) * 100;
-                                int finalPercentLikes = (int)percentLikes;
-                                String strLikesPercentage = String.valueOf(finalPercentLikes) + "%";
-
-                                /* GET THE TOTAL NUMBER OF REVIEWS / VOTES */
-                                Resources resReviews = AppPrefs.context().getResources();
-                                String reviewQuantity = null;
-                                if (TOTAL_VOTES == 0)   {
-                                    reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
-                                } else if (TOTAL_VOTES == 1)    {
-                                    reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
-                                } else if (TOTAL_VOTES > 1) {
-                                    reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
-                                }
-                                String strVotes = reviewQuantity;
-                                String open = activity.getString(R.string.doctor_list_votes_open);
-                                String close = activity.getString(R.string.doctor_list_votes_close);
-                                holder.txtDoctorLikes.setText(activity.getString(R.string.doctor_list_votes_placeholder, strLikesPercentage, open, strVotes, close));
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<Reviews> call, Throwable t) {
-                            Crashlytics.logException(t);
-                        }
-                    });
-                }
+            /* GET THE TOTAL NUMBER OF REVIEWS / VOTES */
+            Resources resReviews = AppPrefs.context().getResources();
+            String reviewQuantity = null;
+            if (TOTAL_VOTES == 0)   {
+                reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
+            } else if (TOTAL_VOTES == 1)    {
+                reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
+            } else if (TOTAL_VOTES > 1) {
+                reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
             }
+            String strVotes = reviewQuantity;
+            String open = activity.getString(R.string.doctor_list_votes_open);
+            String close = activity.getString(R.string.doctor_list_votes_close);
+            holder.txtDoctorLikes.setText(activity.getString(R.string.doctor_list_votes_placeholder, strLikesPercentage, open, strVotes, close));
+        } else {
+            TOTAL_VOTES = 0;
+            TOTAL_LIKES = 0;
 
-            @Override
-            public void onFailure(Call<Reviews> call, Throwable t) {
-                Crashlytics.logException(t);
+            String strLikesPercentage = "0%";
+
+            /* GET THE TOTAL NUMBER OF REVIEWS / VOTES */
+            Resources resReviews = AppPrefs.context().getResources();
+            String reviewQuantity = null;
+            if (TOTAL_VOTES == 0)   {
+                reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
+            } else if (TOTAL_VOTES == 1)    {
+                reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
+            } else if (TOTAL_VOTES > 1) {
+                reviewQuantity = resReviews.getQuantityString(R.plurals.votes, TOTAL_VOTES, TOTAL_VOTES);
             }
-        });
+            String strVotes = reviewQuantity;
+            String open = activity.getString(R.string.doctor_list_votes_open);
+            String close = activity.getString(R.string.doctor_list_votes_close);
+            holder.txtDoctorLikes.setText(activity.getString(R.string.doctor_list_votes_placeholder, strLikesPercentage, open, strVotes, close));
+        }
 
-        /* SET THE CLINIC IMAGES */
-        ClinicImagesAPI apiImages = ZenApiClient.getClient().create(ClinicImagesAPI.class);
-        Call<ClinicImages> callImages = apiImages.fetchClinicImages(data.getClinicID());
-        callImages.enqueue(new Callback<ClinicImages>() {
-            @Override
-            public void onResponse(Call<ClinicImages> call, Response<ClinicImages> response) {
-                if (response.body() != null && response.body().getImages() != null) {
-                    arrImages = response.body().getImages();
-                    if (arrImages.size() > 0)   {
-                        /* RECONFIGURE AND SET THE ADAPTER TO THE RECYCLER VIEW */
-                        adapter = new DoctorClinicImagesAdapter(activity, arrImages);
-                        holder.listClinicImages.setAdapter(adapter);
-
-                        /* SHOW THE IMAGES CONTAINER */
-                        holder.linlaImagesContainer.setVisibility(View.VISIBLE);
-                    } else {
-                        /* HIDE THE IMAGES CONTAINER */
-                        holder.linlaImagesContainer.setVisibility(View.GONE);
-                    }
-                } else {
-                    /* HIDE THE IMAGES CONTAINER */
-                    holder.linlaImagesContainer.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ClinicImages> call, Throwable t) {
-                Crashlytics.logException(t);
-            }
-        });
+//        /* SET THE CLINIC IMAGES */
+//        ClinicImagesAPI apiImages = ZenApiClient.getClient().create(ClinicImagesAPI.class);
+//        Call<ClinicImages> callImages = apiImages.fetchClinicImages(data.getClinicID());
+//        callImages.enqueue(new Callback<ClinicImages>() {
+//            @Override
+//            public void onResponse(Call<ClinicImages> call, Response<ClinicImages> response) {
+//                if (response.body() != null && response.body().getImages() != null) {
+//                    arrImages = response.body().getImages();
+//                    if (arrImages.size() > 0)   {
+//                        /* RECONFIGURE AND SET THE ADAPTER TO THE RECYCLER VIEW */
+//                        adapter = new DoctorClinicImagesAdapter(activity, arrImages);
+//                        holder.listClinicImages.setAdapter(adapter);
+//
+//                        /* SHOW THE IMAGES CONTAINER */
+//                        holder.linlaImagesContainer.setVisibility(View.VISIBLE);
+//                    } else {
+//                        /* HIDE THE IMAGES CONTAINER */
+//                        holder.linlaImagesContainer.setVisibility(View.GONE);
+//                    }
+//                } else {
+//                    /* HIDE THE IMAGES CONTAINER */
+//                    holder.linlaImagesContainer.setVisibility(View.GONE);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ClinicImages> call, Throwable t) {
+//                Crashlytics.logException(t);
+//            }
+//        });
 
         /* SHOW THE DOCTOR DETAILS */
         holder.linlaDoctorContainer.setOnClickListener(new View.OnClickListener() {
@@ -242,6 +201,8 @@ public class DoctorsListAdapter extends RecyclerView.Adapter<DoctorsListAdapter.
                 Intent intent = new Intent(activity, DoctorDetailsNew.class);
                 intent.putExtra("DOCTOR_ID", data.getDoctorID());
                 intent.putExtra("CLINIC_ID", data.getClinicID());
+                intent.putExtra("ORIGIN_LATITUDE", String.valueOf(LATLNG_ORIGIN.latitude));
+                intent.putExtra("ORIGIN_LONGITUDE", String.valueOf(LATLNG_ORIGIN.longitude));
                 activity.startActivity(intent);
             }
         });

@@ -21,6 +21,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -68,7 +69,7 @@ import biz.zenpets.users.utils.models.clinics.images.ClinicImagesAPI;
 import biz.zenpets.users.utils.models.clinics.ratings.ClinicRating;
 import biz.zenpets.users.utils.models.clinics.ratings.ClinicRatingsAPI;
 import biz.zenpets.users.utils.models.doctors.DoctorsAPI;
-import biz.zenpets.users.utils.models.doctors.details.DoctorDetail;
+import biz.zenpets.users.utils.models.doctors.list.Doctor;
 import biz.zenpets.users.utils.models.doctors.modules.Qualification;
 import biz.zenpets.users.utils.models.doctors.modules.Qualifications;
 import biz.zenpets.users.utils.models.doctors.modules.QualificationsAPI;
@@ -100,9 +101,11 @@ public class DoctorDetailsNew extends AppCompatActivity {
     /** THE LOGGED IN USER'S ID **/
     private String USER_ID = null;
 
-    /** THE INCOMING CLINIC ID AND THE DOCTOR ID **/
+    /** THE INCOMING DOCTOR ID, CLINIC ID  AND THE ORIGIN LATITUDE AND LONGITUDE**/
     private String DOCTOR_ID = null;
     private String CLINIC_ID = null;
+    String ORIGIN_LATITUDE = null;
+    String ORIGIN_LONGITUDE = null;
 
     /** TODAY'S DAY **/
     private String TODAY_DAY = null;
@@ -112,6 +115,7 @@ public class DoctorDetailsNew extends AppCompatActivity {
     private String CLINIC_ADDRESS;
     private Double CLINIC_LATITUDE;
     private Double CLINIC_LONGITUDE;
+    private String CLINIC_RATING;
     private String DOCTOR_PREFIX;
     private String DOCTOR_NAME;
     private String DOCTOR_PHONE_NUMBER = null;
@@ -337,11 +341,12 @@ public class DoctorDetailsNew extends AppCompatActivity {
     /***** FETCH THE DOCTOR'S DETAILS *****/
     private void fetchDoctorDetails() {
         DoctorsAPI api = ZenApiClient.getClient().create(DoctorsAPI.class);
-        Call<DoctorDetail> call = api.fetchDoctorDetails(DOCTOR_ID, CLINIC_ID);
-        call.enqueue(new Callback<DoctorDetail>() {
+        Call<Doctor> call = api.fetchDoctorDetails(DOCTOR_ID, CLINIC_ID, ORIGIN_LATITUDE, ORIGIN_LONGITUDE);
+        call.enqueue(new Callback<Doctor>() {
             @Override
-            public void onResponse(Call<DoctorDetail> call, Response<DoctorDetail> response) {
-                DoctorDetail data = response.body();
+            public void onResponse(Call<Doctor> call, Response<Doctor> response) {
+                Log.e("DETAILS RAW", String.valueOf(response.raw()));
+                Doctor data = response.body();
                 if (data != null) {
 
                     /* GET AND SET THE DOCTOR'S PREFIX AND NAME */
@@ -393,11 +398,16 @@ public class DoctorDetailsNew extends AppCompatActivity {
                     txtClinicName.setText(CLINIC_NAME);
                     txtClinicAddress.setText(getString(R.string.doctor_details_address_placeholder, CLINIC_ADDRESS, CLINIC_CITY, CLINIC_STATE, CLINIC_PIN_CODE));
 
+                    /* GET AND SET THE CLINIC'S RATINGS */
+                    CLINIC_RATING = data.getClinicRating();
+                    if (CLINIC_RATING != null && !CLINIC_RATING.equalsIgnoreCase("null")) {
+                        clinicRating.setRating(Float.parseFloat(CLINIC_RATING));
+                    } else {
+                        clinicRating.setRating(0);
+                    }
+
                     /* GET THE DOCTOR'S PHONE NUMBER */
                     DOCTOR_PHONE_NUMBER = data.getDoctorPhoneNumber();
-
-                    /* GET THE CLINIC RATING */
-                    fetchClinicRatings();
 
                     /* FETCH THE DOCTOR'S FEEDBACK */
                     fetchDoctorFeedback();
@@ -473,7 +483,7 @@ public class DoctorDetailsNew extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<DoctorDetail> call, Throwable t) {
+            public void onFailure(Call<Doctor> call, Throwable t) {
                 Crashlytics.logException(t);
             }
         });
@@ -948,10 +958,15 @@ public class DoctorDetailsNew extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null
                 && bundle.containsKey("DOCTOR_ID")
-                && bundle.containsKey("CLINIC_ID"))    {
+                && bundle.containsKey("CLINIC_ID")
+                && bundle.containsKey("ORIGIN_LATITUDE")
+                && bundle.containsKey("ORIGIN_LONGITUDE"))    {
             DOCTOR_ID = bundle.getString("DOCTOR_ID");
             CLINIC_ID = bundle.getString("CLINIC_ID");
-            if (DOCTOR_ID != null && CLINIC_ID != null)  {
+            ORIGIN_LATITUDE = bundle.getString("ORIGIN_LATITUDE");
+            ORIGIN_LONGITUDE = bundle.getString("ORIGIN_LONGITUDE");
+            if (DOCTOR_ID != null && CLINIC_ID != null
+                    && ORIGIN_LATITUDE != null && ORIGIN_LONGITUDE != null)  {
                 /* FETCH THE DOCTOR DETAILS **/
                 fetchDoctorDetails();
             } else {

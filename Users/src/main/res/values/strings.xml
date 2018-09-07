@@ -194,7 +194,7 @@
     <string name="doctor_list_votes_open">(</string>
     <string name="doctor_list_votes_close">)</string>
     <string name="doctor_list_votes_placeholder">%1$s %2$s%3$s%4$s</string>
-    <string name="doctor_list_address_placeholder">%1$s \n%2$s - %3$s</string>
+    <string name="doctor_list_address_placeholder">%1$s, %2$s - %3$s</string>
 
     <!-- DOCTOR ITEM STRINGS -->
     <string name="doctor_item_doc_name">DOCTOR NAME</string>

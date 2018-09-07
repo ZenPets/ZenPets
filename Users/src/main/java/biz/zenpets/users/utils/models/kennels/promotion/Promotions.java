@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 class Promotions {
-
     @SerializedName("error") private Boolean error;
     @SerializedName("promotions") private ArrayList<Promotion> promotions = null;
 

@@ -3,7 +3,6 @@ package biz.zenpets.users.utils.models.kennels.promotion;
 import com.google.gson.annotations.SerializedName;
 
 public class Promotion {
-
     @SerializedName("error") private Boolean error;
     @SerializedName("message") private String message;
     @SerializedName("promotedID") private String promotedID;

@@ -47,7 +47,7 @@ import biz.zenpets.users.utils.models.appointment.Appointment;
 import biz.zenpets.users.utils.models.appointment.AppointmentsAPI;
 import biz.zenpets.users.utils.models.appointment.client.Client;
 import biz.zenpets.users.utils.models.doctors.DoctorsAPI;
-import biz.zenpets.users.utils.models.doctors.details.DoctorDetail;
+import biz.zenpets.users.utils.models.doctors.list.Doctor;
 import biz.zenpets.users.utils.models.pets.pets.Pet;
 import biz.zenpets.users.utils.models.user.UserData;
 import biz.zenpets.users.utils.models.user.UsersAPI;
@@ -148,11 +148,11 @@ public class AppointmentDetailsCreator extends AppCompatActivity implements Fetc
     /***** FETCH THE DOCTOR AND CLINIC DETAILS *****/
     private void fetchDoctorDetails()   {
         DoctorsAPI api = ZenApiClient.getClient().create(DoctorsAPI.class);
-        Call<DoctorDetail> call = api.fetchDoctorDetails(DOCTOR_ID, CLINIC_ID);
-        call.enqueue(new Callback<DoctorDetail>() {
+        Call<Doctor> call = api.fetchDoctorDetails(DOCTOR_ID, CLINIC_ID, null, null);
+        call.enqueue(new Callback<Doctor>() {
             @Override
-            public void onResponse(Call<DoctorDetail> call, Response<DoctorDetail> response) {
-                DoctorDetail data = response.body();
+            public void onResponse(Call<Doctor> call, Response<Doctor> response) {
+                Doctor data = response.body();
                 if (data != null) {
 
                     /* GET AND SET THE DOCTOR'S PREFIX AND NAME */
@@ -182,7 +182,7 @@ public class AppointmentDetailsCreator extends AppCompatActivity implements Fetc
             }
 
             @Override
-            public void onFailure(Call<DoctorDetail> call, Throwable t) {
+            public void onFailure(Call<Doctor> call, Throwable t) {
                 Crashlytics.logException(t);
             }
         });
