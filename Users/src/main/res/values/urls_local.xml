@@ -3,13 +3,13 @@
     <!-- DOCTORS LIST -->
     <!--<string name="url_doctors_list">http://192.168.11.2/zenpets/public/fetchDoctorsList</string>-->
     <!--<string name="url_doctors_list_test">http://192.168.11.2/zenpets/public/fetchDoctorsListTest</string>-->
-    <string name="url_doctor_positive_reviews">http://192.168.11.2/zenpets/public/fetchPositiveReviews</string>
-    <string name="url_doctor_negative_reviews">http://192.168.11.2/zenpets/public/fetchNegativeReviews</string>
+    <!--<string name="url_doctor_positive_reviews">http://192.168.11.2/zenpets/public/fetchPositiveReviews</string>-->
+    <!--<string name="url_doctor_negative_reviews">http://192.168.11.2/zenpets/public/fetchNegativeReviews</string>-->
 
     <!-- DOCTOR DETAILS -->
-    <string name="url_doctor_details">http://192.168.11.2/zenpets/public/fetchDoctorDetails</string>
+    <!--<string name="url_doctor_details">http://192.168.11.2/zenpets/public/fetchDoctorDetails</string>-->
     <!--<string name="url_doctor_profile">http://192.168.11.2/zenpets/public/fetchDoctorProfile</string>-->
-    <string name="url_doctor_subscription_fetch">http://192.168.11.2/zenpets/public/fetchDoctorSubscription</string>
+    <!--<string name="url_doctor_subscription_fetch">http://192.168.11.2/zenpets/public/fetchDoctorSubscription</string>-->
     <!--<string name="url_question_bookmark_status">http://192.168.11.2/zenpets/public/getUserConsultationBookmarkStatus</string>-->
     <!--<string name="url_question_bookmark_new">http://192.168.11.2/zenpets/public/newConsultationBookmark</string>-->
     <!--<string name="url_question_bookmark_delete">http://192.168.11.2/zenpets/public/removeConsultationBookmark</string>-->
@@ -19,7 +19,7 @@
     <!--<string name="url_doctor_reply_vote_new">http://192.168.11.2/zenpets/public/newReplyVote</string>-->
     <!--<string name="url_doctor_reply_vote_update_no">http://192.168.11.2/zenpets/public/updateReplyVoteNo</string>-->
     <!--<string name="url_doctor_reply_vote_update_yes">http://192.168.11.2/zenpets/public/updateReplyVoteYes</string>-->
-    <string name="url_doctor_education_fetch">http://192.168.11.2/zenpets/public/fetchDoctorEducation</string>
+    <!--<string name="url_doctor_education_fetch">http://192.168.11.2/zenpets/public/fetchDoctorEducation</string>-->
 
     <!-- DOCTOR REVIEWS -->
     <string name="url_doctor_review_new">http://192.168.11.2/zenpets/public/newDoctorReview</string>
@@ -34,21 +34,21 @@
     <!--<string name="url_doctor_review_fetch_negative">http://192.168.11.2/zenpets/public/fetchNegativeReviewVotes</string>-->
 
     <!-- DOCTOR TIMINGS -->
-    <string name="url_doctor_timings">http://192.168.11.2/zenpets/public/fetchDoctorTimings</string>
-    <string name="url_timings_sun_mor">http://192.168.11.2/zenpets/public/fetchSundayMorningTimings</string>
-    <string name="url_timings_sun_aft">http://192.168.11.2/zenpets/public/fetchSundayAfternoonTimings</string>
-    <string name="url_timings_mon_mor">http://192.168.11.2/zenpets/public/fetchMondayMorningTimings</string>
-    <string name="url_timings_mon_aft">http://192.168.11.2/zenpets/public/fetchMondayAfternoonTimings</string>
-    <string name="url_timings_tue_aft">http://192.168.11.2/zenpets/public/fetchTuesdayAfternoonTimings</string>
-    <string name="url_timings_tue_mor">http://192.168.11.2/zenpets/public/fetchTuesdayMorningTimings</string>
-    <string name="url_timings_wed_mor">http://192.168.11.2/zenpets/public/fetchWednesdayMorningTimings</string>
-    <string name="url_timings_wed_aft">http://192.168.11.2/zenpets/public/fetchWednesdayAfternoonTimings</string>
-    <string name="url_timings_thu_mor">http://192.168.11.2/zenpets/public/fetchThursdayMorningTimings</string>
-    <string name="url_timings_thu_aft">http://192.168.11.2/zenpets/public/fetchThursdayAfternoonTimings</string>
-    <string name="url_timings_fri_mor">http://192.168.11.2/zenpets/public/fetchFridayMorningTimings</string>
-    <string name="url_timings_fri_aft">http://192.168.11.2/zenpets/public/fetchFridayAfternoonTimings</string>
-    <string name="url_timings_sat_mor">http://192.168.11.2/zenpets/public/fetchSaturdayMorningTimings</string>
-    <string name="url_timings_sat_aft">http://192.168.11.2/zenpets/public/fetchSaturdayAfternoonTimings</string>
+    <!--<string name="url_doctor_timings">http://192.168.11.2/zenpets/public/fetchDoctorTimings</string>-->
+    <!--<string name="url_timings_sun_mor">http://192.168.11.2/zenpets/public/fetchSundayMorningTimings</string>-->
+    <!--<string name="url_timings_sun_aft">http://192.168.11.2/zenpets/public/fetchSundayAfternoonTimings</string>-->
+    <!--<string name="url_timings_mon_mor">http://192.168.11.2/zenpets/public/fetchMondayMorningTimings</string>-->
+    <!--<string name="url_timings_mon_aft">http://192.168.11.2/zenpets/public/fetchMondayAfternoonTimings</string>-->
+    <!--<string name="url_timings_tue_aft">http://192.168.11.2/zenpets/public/fetchTuesdayAfternoonTimings</string>-->
+    <!--<string name="url_timings_tue_mor">http://192.168.11.2/zenpets/public/fetchTuesdayMorningTimings</string>-->
+    <!--<string name="url_timings_wed_mor">http://192.168.11.2/zenpets/public/fetchWednesdayMorningTimings</string>-->
+    <!--<string name="url_timings_wed_aft">http://192.168.11.2/zenpets/public/fetchWednesdayAfternoonTimings</string>-->
+    <!--<string name="url_timings_thu_mor">http://192.168.11.2/zenpets/public/fetchThursdayMorningTimings</string>-->
+    <!--<string name="url_timings_thu_aft">http://192.168.11.2/zenpets/public/fetchThursdayAfternoonTimings</string>-->
+    <!--<string name="url_timings_fri_mor">http://192.168.11.2/zenpets/public/fetchFridayMorningTimings</string>-->
+    <!--<string name="url_timings_fri_aft">http://192.168.11.2/zenpets/public/fetchFridayAfternoonTimings</string>-->
+    <!--<string name="url_timings_sat_mor">http://192.168.11.2/zenpets/public/fetchSaturdayMorningTimings</string>-->
+    <!--<string name="url_timings_sat_aft">http://192.168.11.2/zenpets/public/fetchSaturdayAfternoonTimings</string>-->
     <string name="url_timings_check_availability">http://192.168.11.2/zenpets/public/checkAvailability</string>
 
     <!-- CLINICS -->
@@ -58,32 +58,32 @@
     <!--<string name="url_location_all_countries">http://192.168.11.2/zenpets/public/allCountries</string>-->
     <!--<string name="url_location_all_states">http://192.168.11.2/zenpets/public/allStates</string>-->
     <!--<string name="url_location_cities_in_state">http://192.168.11.2/zenpets/public/citiesInState</string>-->
-    <string name="url_location_city_id">http://192.168.11.2/zenpets/public/getCityID</string>
-    <string name="url_location_locality_id">http://192.168.11.2/zenpets/public/getLocalityID</string>
+    <!--<string name="url_location_city_id">http://192.168.11.2/zenpets/public/getCityID</string>-->
+    <!--<string name="url_location_locality_id">http://192.168.11.2/zenpets/public/getLocalityID</string>-->
     <!--<string name="url_location_localities_by_city">http://192.168.11.2/zenpets/public/fetchLocalitiesByCity</string>-->
     <!--<string name="url_location_localities_search">http://192.168.11.2/zenpets/public/localitiesSearch</string>-->
 
     <!-- VISIT REASONS -->
-    <string name="url_visit_reasons">http://192.168.11.2/zenpets/public/visitReasons</string>
+    <!--<string name="url_visit_reasons">http://192.168.11.2/zenpets/public/visitReasons</string>-->
 
     <!-- VACCINES AND VACCINATIONS -->
-    <string name="url_all_vaccines">http://192.168.11.2/zenpets/public/allVaccines</string>
+    <!--<string name="url_all_vaccines">http://192.168.11.2/zenpets/public/allVaccines</string>-->
     <string name="url_new_vaccination">http://192.168.11.2/zenpets/public/newVaccination</string>
     <string name="url_new_vaccination_image">http://192.168.11.2/zenpets/public/newVaccinationImage</string>
     <!--<string name="url_all_vaccinations">http://192.168.11.2/zenpets/public/fetchPetVaccinations</string>-->
     <!--<string name="url_vaccination_images">http://192.168.11.2/zenpets/public/fetchVaccinationImages</string>-->
 
     <!-- PET TYPES AND BREEDS -->
-    <string name="url_pet_types">http://192.168.11.2/zenpets/public/petTypes</string>
-    <string name="url_pet_breeds">http://192.168.11.2/zenpets/public/allPetBreeds</string>
+    <!--<string name="url_pet_types">http://192.168.11.2/zenpets/public/petTypes</string>-->
+    <!--<string name="url_pet_breeds">http://192.168.11.2/zenpets/public/allPetBreeds</string>-->
 
     <!-- PET URL'S -->
     <string name="url_add_new_pet">http://192.168.11.2/zenpets/public/newPet</string>
-    <string name="url_user_pets">http://192.168.11.2/zenpets/public/fetchUserPets</string>
-    <string name="url_pet_details">http://192.168.11.2/zenpets/public/fetchPetDetails</string>
+    <!--<string name="url_user_pets">http://192.168.11.2/zenpets/public/fetchUserPets</string>-->
+    <!--<string name="url_pet_details">http://192.168.11.2/zenpets/public/fetchPetDetails</string>-->
 
     <!-- MEDICAL RECORDS -->
-    <string name="url_all_record_types">http://192.168.11.2/zenpets/public/allRecordTypes</string>
+    <!--<string name="url_all_record_types">http://192.168.11.2/zenpets/public/allRecordTypes</string>-->
     <string name="url_new_medical_record">http://192.168.11.2/zenpets/public/newMedicalRecord</string>
     <!--<string name="url_all_medical_records">http://192.168.11.2/zenpets/public/fetchPetMedicalRecords</string>-->
     <string name="url_new_medical_image">http://192.168.11.2/zenpets/public/newMedicalImage</string>
@@ -93,9 +93,9 @@
     <!--<string name="url_all_prescriptions">http://192.168.11.2/zenpets/public/fetchPetPrescriptions</string>-->
 
     <!-- KENNEL URL'S -->
-    <string name="url_kennels_list">http://192.168.11.2/zenpets/public/fetchKennelsListByCity</string>
-    <string name="url_positive_kennel_reviews">http://192.168.11.2/zenpets/public/fetchPositiveKennelReviews</string>
-    <string name="url_negative_kennel_reviews">http://192.168.11.2/zenpets/public/fetchNegativeKennelReviews</string>
+    <!--<string name="url_kennels_list">http://192.168.11.2/zenpets/public/fetchKennelsListByCity</string>-->
+    <!--<string name="url_positive_kennel_reviews">http://192.168.11.2/zenpets/public/fetchPositiveKennelReviews</string>-->
+    <!--<string name="url_negative_kennel_reviews">http://192.168.11.2/zenpets/public/fetchNegativeKennelReviews</string>-->
 
     <!-- ADOPTION URL'S -->
     <!--<string name="url_adoptions_list">http://192.168.11.2/zenpets/public/fetchTestAdoptions</string>-->

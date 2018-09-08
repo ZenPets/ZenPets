@@ -7,24 +7,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.crashlytics.android.Crashlytics;
 
 import java.util.ArrayList;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.utils.adapters.pet.records.FilterRecordTypesAdapter;
-import biz.zenpets.users.utils.helpers.pets.records.FetchRecordTypes;
-import biz.zenpets.users.utils.helpers.pets.records.FetchRecordTypesInterface;
+import biz.zenpets.users.utils.models.pets.records.MedicalRecordsAPI;
 import biz.zenpets.users.utils.models.pets.records.RecordType;
+import biz.zenpets.users.utils.models.pets.records.RecordTypes;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class FilterRecordTypes extends AppCompatActivity implements FetchRecordTypesInterface {
+public class FilterRecordTypes extends AppCompatActivity {
 
     /** THE INCOMING RECORD TYPE ID **/
     private String INCOMING_RECORD_TYPE_ID = null;
@@ -84,8 +91,9 @@ public class FilterRecordTypes extends AppCompatActivity implements FetchRecordT
         /* CONFIGURE THE ACTIONBAR */
         configAB();
 
-        /* FETCH THE LIST OF RECORD TYPES */
-        new FetchRecordTypes(this).execute();
+        /* SHOW THE PROGRESS AND FETCH THE LIST OF RECORD TYPES */
+        linlaProgress.setVisibility(View.VISIBLE);
+        fetchRecordTypes();
 
         listProblems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -116,84 +124,59 @@ public class FilterRecordTypes extends AppCompatActivity implements FetchRecordT
         });
     }
 
-    @Override
-    public void allRecordTypes(ArrayList<RecordType> data) {
-        /* CAST THE CONTENTS IN THE GLOBAL INSTANCE */
-        arrRecords = data;
+    /** FETCH THE LIST OF RECORD TYPES **/
+    private void fetchRecordTypes() {
+        MedicalRecordsAPI api = ZenApiClient.getClient().create(MedicalRecordsAPI.class);
+        Call<RecordTypes> call = api.allRecordTypes();
+        call.enqueue(new Callback<RecordTypes>() {
+            @Override
+            public void onResponse(Call<RecordTypes> call, Response<RecordTypes> response) {
+                if (response.body() != null && response.body().getRecords() != null)    {
+                    arrRecords = response.body().getRecords();
 
-        /* INSTANTIATE THE PROBLEMS LIST ADAPTER */
-        problemsAdapter = new FilterRecordTypesAdapter(FilterRecordTypes.this, arrRecords);
+                    if (arrRecords.size() > 0)  {
+                        /* INSTANTIATE THE PROBLEMS LIST ADAPTER */
+                        problemsAdapter = new FilterRecordTypesAdapter(FilterRecordTypes.this, arrRecords);
 
-        /* SET THE ADAPTER TO THE PROBLEMS RECYCLER VIEW */
-        listProblems.setAdapter(problemsAdapter);
+                        /* SET THE ADAPTER TO THE PROBLEMS RECYCLER VIEW */
+                        listProblems.setAdapter(problemsAdapter);
 
-        /* HIDE THE PROGRESS AFTER FETCHING THE DATA */
-        linlaProgress.setVisibility(View.GONE);
+                        /* GET THE INCOMING DATA (IF AVAILABLE) */
+                        Bundle bundle = getIntent().getExtras();
+                        if (bundle != null && bundle.containsKey("RECORD_TYPE_ID")) {
+                            INCOMING_RECORD_TYPE_ID = bundle.getString("RECORD_TYPE_ID");
+                            int intProblemPosition = getProblemIndex(arrRecords, INCOMING_RECORD_TYPE_ID);
+                            listProblems.setSelection(intProblemPosition);
 
-        /* GET THE INCOMING DATA (IF AVAILABLE) */
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null && bundle.containsKey("RECORD_TYPE_ID")) {
-            INCOMING_RECORD_TYPE_ID = bundle.getString("RECORD_TYPE_ID");
-            int intProblemPosition = getProblemIndex(arrRecords, INCOMING_RECORD_TYPE_ID);
-            listProblems.setSelection(intProblemPosition);
+                            /* MODIFY THE ADAPTER TO REFLECT THE SELECTION*/
+                            problemsAdapter.setSelectedIndex(intProblemPosition);
+                            problemsAdapter.notifyDataSetChanged();
 
-            /* MODIFY THE ADAPTER TO REFLECT THE SELECTION*/
-            problemsAdapter.setSelectedIndex(intProblemPosition);
-            problemsAdapter.notifyDataSetChanged();
+                            /* SHOW THE CLEAR BUTTON */
+                            txtClear.setVisibility(View.VISIBLE);
+                        } else {
+                            INCOMING_RECORD_TYPE_ID = null;
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Problem fetching list of Record Types...", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Problem fetching list of Record Types...", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
 
-            /* SHOW THE CLEAR BUTTON */
-            txtClear.setVisibility(View.VISIBLE);
-        } else {
-            INCOMING_RECORD_TYPE_ID = null;
-        }
+                /* HIDE THE PROGRESS AFTER FETCHING THE DATA */
+                linlaProgress.setVisibility(View.GONE);
+            }
 
+            @Override
+            public void onFailure(Call<RecordTypes> call, Throwable t) {
+                Log.e("RECORD TYPES FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
-
-    /***** FETCH THE LIST OF PROBLEMS *****/
-//    private void fetchListOfProblems() {
-//        /* SHOW THE PROGRESS AND FETCH THE DATA */
-//        linlaProgress.setVisibility(View.VISIBLE);
-//
-//        MedicalRecordsAPI api = ZenApiClient.getClient().create(MedicalRecordsAPI.class);
-//        Call<RecordTypes> call = api.allRecordTypes();
-//        call.enqueue(new Callback<RecordTypes>() {
-//            @Override
-//            public void onResponse(Call<RecordTypes> call, Response<RecordTypes> response) {
-//                arrRecords = response.body().getRecords();
-//
-//                /* INSTANTIATE THE PROBLEMS LIST ADAPTER */
-//                problemsAdapter = new FilterRecordTypesAdapter(FilterRecordTypes.this, arrRecords);
-//
-//                /* SET THE ADAPTER TO THE PROBLEMS RECYCLER VIEW */
-//                listProblems.setAdapter(problemsAdapter);
-//
-//                /* HIDE THE PROGRESS AFTER FETCHING THE DATA */
-//                linlaProgress.setVisibility(View.GONE);
-//
-//                /* GET THE INCOMING DATA (IF AVAILABLE) */
-//                Bundle bundle = getIntent().getExtras();
-//                if (bundle != null && bundle.containsKey("RECORD_TYPE_ID")) {
-//                    INCOMING_RECORD_TYPE_ID = bundle.getString("RECORD_TYPE_ID");
-//                    int intProblemPosition = getProblemIndex(arrRecords, INCOMING_RECORD_TYPE_ID);
-//                    listProblems.setSelection(intProblemPosition);
-//
-//                    /* MODIFY THE ADAPTER TO REFLECT THE SELECTION*/
-//                    problemsAdapter.setSelectedIndex(intProblemPosition);
-//                    problemsAdapter.notifyDataSetChanged();
-//
-//                    /* SHOW THE CLEAR BUTTON */
-//                    txtClear.setVisibility(View.VISIBLE);
-//                } else {
-//                    INCOMING_RECORD_TYPE_ID = null;
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<RecordTypes> call, Throwable t) {
-//                Crashlytics.logException(t);
-//            }
-//        });
-//    }
 
     /***** CONFIGURE THE ACTIONBAR *****/
     private void configAB() {

@@ -3,7 +3,8 @@ package biz.zenpets.users.utils.models.pets.pets;
 import com.google.gson.annotations.SerializedName;
 
 public class Pet {
-
+    @SerializedName("error") private Boolean error;
+    @SerializedName("message") private String message;
     @SerializedName("petID") private String petID;
     @SerializedName("userID") private String userID;
     @SerializedName("petTypeID") private String petTypeID;
@@ -16,6 +17,22 @@ public class Pet {
     @SerializedName("petNeutered") private String petNeutered;
     @SerializedName("petDisplayProfile") private String petDisplayProfile;
     @SerializedName("petActive") private String petActive;
+
+    public Boolean getError() {
+        return error;
+    }
+
+    public void setError(Boolean error) {
+        this.error = error;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public String getPetID() {
         return petID;

@@ -114,14 +114,14 @@ public class KennelsList extends AppCompatActivity {
         KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
         Call<Kennels> call = api.fetchKennelsListByCity(
                 FINAL_CITY_ID,
-                String.valueOf(currentPage),
                 String.valueOf(LATLNG_ORIGIN.latitude),
-                String.valueOf(LATLNG_ORIGIN.longitude));
+                String.valueOf(LATLNG_ORIGIN.longitude),
+                String.valueOf(currentPage));
         call.enqueue(new Callback<Kennels>() {
             @Override
             public void onResponse(Call<Kennels> call, Response<Kennels> response) {
+//                Log.e("KENNELS LIST", String.valueOf(response.raw()));
                 if (response.body() != null && response.body().getKennels() != null)    {
-//                    Log.e("KENNELS LIST", String.valueOf(response.raw()));
                     /* PROCESS THE RESPONSE */
                     arrKennels = processResult(response);
                     if (arrKennels.size() > 0)  {
@@ -159,6 +159,7 @@ public class KennelsList extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Kennels> call, Throwable t) {
+//                Log.e("KENNELS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -170,9 +171,9 @@ public class KennelsList extends AppCompatActivity {
         KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
         Call<Kennels> call = api.fetchKennelsListByCity(
                 FINAL_CITY_ID,
-                String.valueOf(currentPage),
                 String.valueOf(LATLNG_ORIGIN.latitude),
-                String.valueOf(LATLNG_ORIGIN.longitude));
+                String.valueOf(LATLNG_ORIGIN.longitude),
+                String.valueOf(currentPage));
         call.enqueue(new Callback<Kennels>() {
             @Override
             public void onResponse(Call<Kennels> call, Response<Kennels> response) {
@@ -196,6 +197,7 @@ public class KennelsList extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Kennels> call, Throwable t) {
+//                Log.e("KENNELS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -210,6 +212,7 @@ public class KennelsList extends AppCompatActivity {
             JSONObject JORoot = new JSONObject(strResult);
             if (JORoot.has("error") && JORoot.getString("error").equalsIgnoreCase("false")) {
                 JSONArray JAKennels = JORoot.getJSONArray("kennels");
+//                Log.e("KENNELS", JAKennels.toString());
                 if (JAKennels.length() > 0) {
                     Kennel data;
                     for (int i = 0; i < JAKennels.length(); i++) {

@@ -81,6 +81,7 @@ public class SplashScreen extends AppCompatActivity {
         call.enqueue(new Callback<UserData>() {
             @Override
             public void onResponse(Call<UserData> call, Response<UserData> response) {
+//                Log.e("RESPONSE", String.valueOf(response.raw()));
                 UserData data = response.body();
                 if (data != null)   {
                     /* GET THE USER'S ID */

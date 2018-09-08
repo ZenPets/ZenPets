@@ -24,7 +24,7 @@ public interface PetsAPI {
     @GET("fetchUserPets")
     Call<Pets> fetchUserPets(@Query("userID") String userID);
 
-//    /** FETCH THE PET'S DETAILS **/
-//    @GET("fetchPetDetails")
-//    Call<Pet> fetchPetDetails(@Query("petID") String petID);
+    /** FETCH THE PET'S DETAILS **/
+    @GET("fetchPetDetails")
+    Call<Pet> fetchPetDetails(@Query("petID") String petID);
 }

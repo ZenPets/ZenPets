@@ -23,6 +23,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -59,13 +60,12 @@ import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.adapters.adoptions.AdoptionsAlbumAdapter;
 import biz.zenpets.users.utils.adapters.pet.records.RecordTypesAdapter;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
-import biz.zenpets.users.utils.helpers.pets.records.FetchRecordTypes;
-import biz.zenpets.users.utils.helpers.pets.records.FetchRecordTypesInterface;
 import biz.zenpets.users.utils.helpers.pets.records.PostMedicalImageInterface;
 import biz.zenpets.users.utils.models.adoptions.AdoptionAlbumData;
 import biz.zenpets.users.utils.models.pets.records.MedicalRecord;
 import biz.zenpets.users.utils.models.pets.records.MedicalRecordsAPI;
 import biz.zenpets.users.utils.models.pets.records.RecordType;
+import biz.zenpets.users.utils.models.pets.records.RecordTypes;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -74,7 +74,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MedicalRecordCreator extends AppCompatActivity
-        implements FetchRecordTypesInterface, PostMedicalImageInterface {
+        implements PostMedicalImageInterface {
 
     private AppPrefs getApp()	{
         return (AppPrefs) getApplication();
@@ -188,7 +188,7 @@ public class MedicalRecordCreator extends AppCompatActivity
             PET_ID = bundle.getString("PET_ID");
             if (PET_ID != null) {
                 /* FETCH THE LIST OF RECORD TYPES */
-                new FetchRecordTypes(this).execute();
+                fetchRecordTypes();
             } else {
                 Toast.makeText(getApplicationContext(), "Failed to get required info", Toast.LENGTH_SHORT).show();
                 finish();
@@ -431,13 +431,36 @@ public class MedicalRecordCreator extends AppCompatActivity
         gridRecordImages.setAdapter(new AdoptionsAlbumAdapter(MedicalRecordCreator.this, arrAlbums));
     }
 
-    @Override
-    public void allRecordTypes(ArrayList<RecordType> data) {
-        /* CAST THE CONTENTS IN THE GLOBAL INSTANCE */
-        arrRecordTypes = data;
+    /** FETCH THE LIST OF RECORD TYPES **/
+    private void fetchRecordTypes() {
+        MedicalRecordsAPI api = ZenApiClient.getClient().create(MedicalRecordsAPI.class);
+        Call<RecordTypes> call = api.allRecordTypes();
+        call.enqueue(new Callback<RecordTypes>() {
+            @Override
+            public void onResponse(Call<RecordTypes> call, Response<RecordTypes> response) {
+                if (response.body() != null && response.body().getRecords() != null)    {
+                    arrRecordTypes = response.body().getRecords();
 
-        /* SET THE ADAPTER TO THE RECORD TYPES SPINNER */
-        spnRecordType.setAdapter(new RecordTypesAdapter(MedicalRecordCreator.this, arrRecordTypes));
+                    if (arrRecordTypes.size() > 0)  {
+
+                        /* SET THE ADAPTER TO THE RECORD TYPES SPINNER */
+                        spnRecordType.setAdapter(new RecordTypesAdapter(MedicalRecordCreator.this, arrRecordTypes));
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Problem fetching list of Record Types...", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Problem fetching list of Record Types...", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RecordTypes> call, Throwable t) {
+                Log.e("RECORD TYPES FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
 
     @Override

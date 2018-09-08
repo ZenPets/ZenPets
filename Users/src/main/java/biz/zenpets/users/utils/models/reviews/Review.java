@@ -3,6 +3,8 @@ package biz.zenpets.users.utils.models.reviews;
 import com.google.gson.annotations.SerializedName;
 
 public class Review {
+    @SerializedName("error") private Boolean error;
+    @SerializedName("message") private String message;
     @SerializedName("reviewID") private String reviewID;
     @SerializedName("doctorID") private String doctorID;
     @SerializedName("doctorPrefix") private String doctorPrefix;
@@ -17,6 +19,22 @@ public class Review {
     @SerializedName("appointmentStatus") private String appointmentStatus;
     @SerializedName("doctorExperience") private String doctorExperience;
     @SerializedName("reviewTimestamp") private String reviewTimestamp;
+
+    public Boolean getError() {
+        return error;
+    }
+
+    public void setError(Boolean error) {
+        this.error = error;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public String getReviewID() {
         return reviewID;

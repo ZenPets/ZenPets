@@ -14,7 +14,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -123,7 +122,7 @@ public class BoardingsList extends AppCompatActivity {
             @Override
             public void onResponse(Call<Boardings> call, Response<Boardings> response) {
                 if (response.body() != null && response.body().getBoardings() != null)    {
-                    Log.e("BOARDINGS LIST", String.valueOf(response.raw()));
+//                    Log.e("BOARDINGS LIST", String.valueOf(response.raw()));
                     /* PROCESS THE RESPONSE */
                     arrBoardings = processResult(response);
                     if (arrBoardings.size() > 0)  {
@@ -211,7 +210,7 @@ public class BoardingsList extends AppCompatActivity {
                     Boarding data;
                     for (int i = 0; i < JABoardings.length(); i++) {
                         final JSONObject JOBoardings = JABoardings.getJSONObject(i);
-                        Log.e("BOARDING", String.valueOf(JOBoardings));
+//                        Log.e("BOARDING", String.valueOf(JOBoardings));
                         data = new Boarding();
 
                         /* GET THE BOARDING ID */
@@ -568,7 +567,7 @@ public class BoardingsList extends AppCompatActivity {
             public void onResponse(Call<BoardingPages> call, Response<BoardingPages> response) {
                 if (response.body() != null && response.body().getTotalPages() != null) {
                     TOTAL_PAGES = Integer.parseInt(response.body().getTotalPages());
-                    Log.e("TOTAL PAGES", String.valueOf(TOTAL_PAGES));
+//                    Log.e("TOTAL PAGES", String.valueOf(TOTAL_PAGES));
 
                     /* SHOW THE PROGRESS FETCH THE FIRST LIST OF BOARDINGS */
                     progressLoading.setVisibility(View.VISIBLE);

@@ -12,22 +12,28 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.util.ArrayList;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.creator.pet.NewPetCreator;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.adapters.pet.UserPetsAdapter;
-import biz.zenpets.users.utils.helpers.pets.pet.FetchUserPets;
-import biz.zenpets.users.utils.helpers.pets.pet.FetchUserPetsInterface;
+import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.models.pets.pets.Pet;
+import biz.zenpets.users.utils.models.pets.pets.Pets;
+import biz.zenpets.users.utils.models.pets.pets.PetsAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 @SuppressWarnings("ConstantConditions")
 public class UserPets extends AppCompatActivity
-        implements FetchUserPetsInterface {
+        /*implements FetchUserPetsInterface*/ {
 
     private AppPrefs getApp()	{
         return (AppPrefs) getApplication();
@@ -74,35 +80,73 @@ public class UserPets extends AppCompatActivity
         if (USER_ID != null)    {
             /* SHOW THE PROGRESS AND FETCH THE USER'S PETS */
             linlaProgress.setVisibility(View.VISIBLE);
-            new FetchUserPets(this).execute(USER_ID);
+            fetchPetsList();
+//            new FetchUserPets(this).execute(USER_ID);
         } else {
             Toast.makeText(getApplicationContext(), "Failed to get required info....", Toast.LENGTH_SHORT).show();
             finish();
         }
     }
 
-    @Override
-    public void userPets(ArrayList<Pet> data) {
-        /* CAST THE RESULTS IN THE GLOBAL INSTANCE */
-        arrPets = data;
+    /***** FETCH THE USER'S LIST OF PETS *****/
+    private void fetchPetsList() {
+        PetsAPI api = ZenApiClient.getClient().create(PetsAPI.class);
+        Call<Pets> call = api.fetchUserPets(USER_ID);
+        call.enqueue(new Callback<Pets>() {
+            @Override
+            public void onResponse(Call<Pets> call, Response<Pets> response) {
+                if (response.body() != null && response.body().getPets() != null)   {
+                    arrPets = response.body().getPets();
 
-        /* CHECK FOR THE SIZE OF THE RESULT */
-        if (arrPets.size() > 0) {
-            /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY VIEW */
-            listPets.setVisibility(View.VISIBLE);
-            linlaEmpty.setVisibility(View.GONE);
+                    /* CHECK FOR RESULTS */
+                    if (arrPets.size() > 0) {
+                        /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY VIEW */
+                        listPets.setVisibility(View.VISIBLE);
+                        linlaEmpty.setVisibility(View.GONE);
 
-            /* SET THE ADAPTER TO THE RECYCLER VIEW */
-            listPets.setAdapter(new UserPetsAdapter(UserPets.this, arrPets));
-        } else {
-            /* HIDE THE RECYCLER VIEW AND SHOW THE EMPTY VIEW */
-            linlaEmpty.setVisibility(View.VISIBLE);
-            listPets.setVisibility(View.GONE);
-        }
+                        /* SET THE ADAPTER TO THE RECYCLER VIEW */
+                        listPets.setAdapter(new UserPetsAdapter(UserPets.this, arrPets));
+                    } else {
+                        /* HIDE THE RECYCLER VIEW AND SHOW THE EMPTY VIEW */
+                        linlaEmpty.setVisibility(View.VISIBLE);
+                        listPets.setVisibility(View.GONE);
+                    }
+                }
 
-        /* HIDE THE PROGRESS AFTER LOADING THE DATA */
-        linlaProgress.setVisibility(View.GONE);
+                /* HIDE THE PROGRESS AFTER FETCHING THE DATA */
+                linlaProgress.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<Pets> call, Throwable t) {
+//                Log.e("EXCEPTION", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
+
+//    @Override
+//    public void userPets(ArrayList<Pet> data) {
+//        /* CAST THE RESULTS IN THE GLOBAL INSTANCE */
+//        arrPets = data;
+//
+//        /* CHECK FOR THE SIZE OF THE RESULT */
+//        if (arrPets.size() > 0) {
+//            /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY VIEW */
+//            listPets.setVisibility(View.VISIBLE);
+//            linlaEmpty.setVisibility(View.GONE);
+//
+//            /* SET THE ADAPTER TO THE RECYCLER VIEW */
+//            listPets.setAdapter(new UserPetsAdapter(UserPets.this, arrPets));
+//        } else {
+//            /* HIDE THE RECYCLER VIEW AND SHOW THE EMPTY VIEW */
+//            linlaEmpty.setVisibility(View.VISIBLE);
+//            listPets.setVisibility(View.GONE);
+//        }
+//
+//        /* HIDE THE PROGRESS AFTER LOADING THE DATA */
+//        linlaProgress.setVisibility(View.GONE);
+//    }
 
     /***** CONFIGURE THE TOOLBAR *****/
     private void configTB() {
@@ -148,7 +192,8 @@ public class UserPets extends AppCompatActivity
             arrPets.clear();
 
             /* FETCH THE LIST OF PETS AGAIN */
-            new FetchUserPets(this).execute(USER_ID);
+            fetchPetsList();
+//            new FetchUserPets(this).execute(USER_ID);
         }
     }
 

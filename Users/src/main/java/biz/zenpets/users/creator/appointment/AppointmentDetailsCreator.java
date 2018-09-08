@@ -41,14 +41,14 @@ import biz.zenpets.users.creator.pet.NewPetCreator;
 import biz.zenpets.users.utils.adapters.pet.PetSpinnerAdapter;
 import biz.zenpets.users.utils.adapters.visit.VisitReasonsAdapter;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
-import biz.zenpets.users.utils.helpers.pets.pet.FetchUserPets;
-import biz.zenpets.users.utils.helpers.pets.pet.FetchUserPetsInterface;
 import biz.zenpets.users.utils.models.appointment.Appointment;
 import biz.zenpets.users.utils.models.appointment.AppointmentsAPI;
 import biz.zenpets.users.utils.models.appointment.client.Client;
 import biz.zenpets.users.utils.models.doctors.DoctorsAPI;
 import biz.zenpets.users.utils.models.doctors.list.Doctor;
 import biz.zenpets.users.utils.models.pets.pets.Pet;
+import biz.zenpets.users.utils.models.pets.pets.Pets;
+import biz.zenpets.users.utils.models.pets.pets.PetsAPI;
 import biz.zenpets.users.utils.models.user.UserData;
 import biz.zenpets.users.utils.models.user.UsersAPI;
 import biz.zenpets.users.utils.models.visit.Reason;
@@ -62,7 +62,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @SuppressWarnings("ConstantConditions")
-public class AppointmentDetailsCreator extends AppCompatActivity implements FetchUserPetsInterface {
+public class AppointmentDetailsCreator extends AppCompatActivity /*implements FetchUserPetsInterface*/ {
 
     /** THE INCOMING DETAILS **/
     private String DOCTOR_ID = null;
@@ -244,23 +244,55 @@ public class AppointmentDetailsCreator extends AppCompatActivity implements Fetc
         }
     }
 
-    @Override
-    public void userPets(ArrayList<Pet> data) {
-        /* CAST THE RESULTS IN THE GLOBAL INSTANCE */
-        arrPets = data;
+    /** FETCH THE USER'S LIST OF PETS **/
+    private void fetchPetsList() {
+        PetsAPI api = ZenApiClient.getClient().create(PetsAPI.class);
+        Call<Pets> call = api.fetchUserPets(USER_ID);
+        call.enqueue(new Callback<Pets>() {
+            @Override
+            public void onResponse(Call<Pets> call, Response<Pets> response) {
+                if (response.body() != null && response.body().getPets() != null)   {
+                    arrPets = response.body().getPets();
 
-        /* CHECK FOR THE SIZE OF THE RESULT */
-        if (arrPets.size() > 0) {
-            /* INSTANTIATE THE PETS SPINNER ADAPTER */
-            PetSpinnerAdapter petsAdapter = new PetSpinnerAdapter(AppointmentDetailsCreator.this, arrPets);
+                    /* CHECK FOR RESULTS */
+                    if (arrPets.size() > 0) {
+                        /* INSTANTIATE THE PETS SPINNER ADAPTER */
+                        PetSpinnerAdapter petsAdapter = new PetSpinnerAdapter(AppointmentDetailsCreator.this, arrPets);
 
-            /* SET THE ADAPTER TO THE PETS SPINNER */
-            spnPet.setAdapter(petsAdapter);
-        } else {
-            /* SHOW THE NO PETS FOUND DIALOG */
-            noPetsFound();
-        }
+                        /* SET THE ADAPTER TO THE PETS SPINNER */
+                        spnPet.setAdapter(petsAdapter);
+                    } else {
+                        /* SHOW THE NO PETS FOUND DIALOG */
+                        noPetsFound();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Pets> call, Throwable t) {
+//                Log.e("EXCEPTION", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
+
+//    @Override
+//    public void userPets(ArrayList<Pet> data) {
+//        /* CAST THE RESULTS IN THE GLOBAL INSTANCE */
+//        arrPets = data;
+//
+//        /* CHECK FOR THE SIZE OF THE RESULT */
+//        if (arrPets.size() > 0) {
+//            /* INSTANTIATE THE PETS SPINNER ADAPTER */
+//            PetSpinnerAdapter petsAdapter = new PetSpinnerAdapter(AppointmentDetailsCreator.this, arrPets);
+//
+//            /* SET THE ADAPTER TO THE PETS SPINNER */
+//            spnPet.setAdapter(petsAdapter);
+//        } else {
+//            /* SHOW THE NO PETS FOUND DIALOG */
+//            noPetsFound();
+//        }
+//    }
 
     /***** FETCH VISIT REASONS *****/
     private void fetchVisitReasons() {
@@ -305,7 +337,8 @@ public class AppointmentDetailsCreator extends AppCompatActivity implements Fetc
                     edtPhoneNumber.setText(data.getUserPhoneNumber());
 
                     /* FETCH THE USER'S PETS */
-                    new FetchUserPets(AppointmentDetailsCreator.this).execute(USER_ID);
+                    fetchPetsList();
+//                    new FetchUserPets(AppointmentDetailsCreator.this).execute(USER_ID);
                 }
             }
 
@@ -455,7 +488,8 @@ public class AppointmentDetailsCreator extends AppCompatActivity implements Fetc
             arrPets.clear();
 
             /* FETCH THE LIST OF PETS AGAIN */
-            new FetchUserPets(AppointmentDetailsCreator.this).execute(USER_ID);
+            fetchPetsList();
+//            new FetchUserPets(AppointmentDetailsCreator.this).execute(USER_ID);
         }
     }
 

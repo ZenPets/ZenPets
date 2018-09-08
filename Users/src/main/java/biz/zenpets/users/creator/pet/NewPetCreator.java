@@ -38,6 +38,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -57,24 +58,26 @@ import biz.zenpets.users.R;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.adapters.pet.BreedsAdapter;
 import biz.zenpets.users.utils.adapters.pet.PetTypesAdapter;
-import biz.zenpets.users.utils.helpers.pets.breed.FetchBreedTypes;
-import biz.zenpets.users.utils.helpers.pets.breed.FetchBreedTypesInterface;
+import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.helpers.pets.pet.AddNewPetInterface;
-import biz.zenpets.users.utils.helpers.pets.type.PetTypes;
-import biz.zenpets.users.utils.helpers.pets.type.PetTypesInterface;
 import biz.zenpets.users.utils.models.pets.breeds.Breed;
-import biz.zenpets.users.utils.models.pets.types.PetTypesData;
+import biz.zenpets.users.utils.models.pets.breeds.Breeds;
+import biz.zenpets.users.utils.models.pets.breeds.BreedsAPI;
+import biz.zenpets.users.utils.models.pets.types.PetType;
+import biz.zenpets.users.utils.models.pets.types.PetTypesAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.zelory.compressor.Compressor;
 import pl.aprilapps.easyphotopicker.DefaultCallback;
 import pl.aprilapps.easyphotopicker.EasyImage;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 @SuppressWarnings({"ConstantConditions", "ResultOfMethodCallIgnored"})
 public class NewPetCreator extends AppCompatActivity
         implements DatePickerDialog.OnDateSetListener,
-        PetTypesInterface, FetchBreedTypesInterface,
         AddNewPetInterface {
 
     private AppPrefs getApp()	{
@@ -100,8 +103,8 @@ public class NewPetCreator extends AppCompatActivity
     /** PERMISSION REQUEST CONSTANT **/
     private static final int ACCESS_STORAGE_CONSTANT = 201;
 
-    /** THE PET TYPES ARRAY LIST **/
-    private ArrayList<PetTypesData> arrPetTypes = new ArrayList<>();
+    /* THE PET TYPES ARRAY LIST */
+    private ArrayList<PetType> arrPetTypes = new ArrayList<>();
 
     /** THE BREEDS ARRAY LIST **/
     private ArrayList<Breed> arrBreeds = new ArrayList<>();
@@ -156,8 +159,9 @@ public class NewPetCreator extends AppCompatActivity
         /* GET THE USER ID */
         USER_ID = getApp().getUserID();
 
-        /* FETCH ALL PET TYPES */
-        new PetTypes(this).execute();
+        /* FETCH A LIST OF ALL PET TYPES */
+        fetchPetTypes();
+//        new PetTypes(this).execute();
 
         /* SELECT THE PET'S GENDER */
         rdgGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -208,7 +212,8 @@ public class NewPetCreator extends AppCompatActivity
                 arrBreeds.clear();
 
                 /* FETCH THE LIST OF BREEDS IN THE SELECTED PET TYPE */
-                new FetchBreedTypes(NewPetCreator.this).execute(PET_TYPE_ID);
+                fetchBreedTypes();
+//                new FetchBreedTypes(AdoptionCreator.this).execute(PET_TYPE_ID);
             }
 
             @Override
@@ -537,28 +542,95 @@ public class NewPetCreator extends AppCompatActivity
         }
     }
 
-    @Override
-    public void petTypes(ArrayList<PetTypesData> data) {
-        /* CAST THE RESULTS IN THE GLOBAL INSTANCE */
-        arrPetTypes = data;
+//    @Override
+//    public void petTypes(ArrayList<PetTypesData> data) {
+//        /* CAST THE RESULTS IN THE GLOBAL INSTANCE */
+//        arrPetTypes = data;
+//
+//        /* INSTANTIATE THE PET TYPES ADAPTER */
+//        PetTypesAdapter petTypesAdapter = new PetTypesAdapter(NewPetCreator.this, arrPetTypes);
+//
+//        /* SET THE ADAPTER TO THE PET TYPES SPINNER */
+//        spnPetTypes.setAdapter(petTypesAdapter);
+//    }
 
-        /* INSTANTIATE THE PET TYPES ADAPTER */
-        PetTypesAdapter petTypesAdapter = new PetTypesAdapter(NewPetCreator.this, arrPetTypes);
+//    @Override
+//    public void breedTypes(ArrayList<Breed> data) {
+//        /* CAST THE RESULTS IN THE GLOBAL INSTANCE */
+//        arrBreeds = data;
+//
+//        /* INSTANTIATE THE BREEDS ADAPTER */
+//        BreedsAdapter breedsAdapter = new BreedsAdapter(NewPetCreator.this, arrBreeds);
+//
+//        /* SET THE ADAPTER TO THE BREEDS SPINNER */
+//        spnBreeds.setAdapter(breedsAdapter);
+//    }
 
-        /* SET THE ADAPTER TO THE PET TYPES SPINNER */
-        spnPetTypes.setAdapter(petTypesAdapter);
+    /** FETCH A LIST OF ALL PET TYPES **/
+    private void fetchPetTypes() {
+        PetTypesAPI api = ZenApiClient.getClient().create(PetTypesAPI.class);
+        Call<biz.zenpets.users.utils.models.pets.types.PetTypes> call = api.petTypes();
+        call.enqueue(new Callback<biz.zenpets.users.utils.models.pets.types.PetTypes>() {
+            @Override
+            public void onResponse(Call<biz.zenpets.users.utils.models.pets.types.PetTypes> call, Response<biz.zenpets.users.utils.models.pets.types.PetTypes> response) {
+                if (response.body() != null && response.body().getTypes() != null)  {
+                    arrPetTypes = response.body().getTypes();
+                    if (arrPetTypes.size() > 0)    {
+
+                        /* INSTANTIATE THE PET TYPES ADAPTER */
+                        PetTypesAdapter petTypesAdapter = new PetTypesAdapter(NewPetCreator.this, arrPetTypes);
+
+                        /* SET THE ADAPTER TO THE PET TYPES SPINNER */
+                        spnPetTypes.setAdapter(petTypesAdapter);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "An error occurred fetching the list of countries", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Problem fetching list of Pet Types...", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<biz.zenpets.users.utils.models.pets.types.PetTypes> call, Throwable t) {
+//                Log.e("TYPE FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
 
-    @Override
-    public void breedTypes(ArrayList<Breed> data) {
-        /* CAST THE RESULTS IN THE GLOBAL INSTANCE */
-        arrBreeds = data;
+    /** FETCH THE LIST OF BREEDS IN THE SELECTED PET TYPE **/
+    private void fetchBreedTypes() {
+        BreedsAPI api = ZenApiClient.getClient().create(BreedsAPI.class);
+        Call<Breeds> call = api.allPetBreeds(PET_TYPE_ID);
+        call.enqueue(new Callback<Breeds>() {
+            @Override
+            public void onResponse(Call<Breeds> call, Response<Breeds> response) {
+                if (response.body() != null && response.body().getBreeds() != null) {
+                    arrBreeds = response.body().getBreeds();
+                    if (arrPetTypes.size() > 0)    {
 
-        /* INSTANTIATE THE BREEDS ADAPTER */
-        BreedsAdapter breedsAdapter = new BreedsAdapter(NewPetCreator.this, arrBreeds);
+                        /* INSTANTIATE THE BREEDS ADAPTER */
+                        BreedsAdapter breedsAdapter = new BreedsAdapter(NewPetCreator.this, arrBreeds);
 
-        /* SET THE ADAPTER TO THE BREEDS SPINNER */
-        spnBreeds.setAdapter(breedsAdapter);
+                        /* SET THE ADAPTER TO THE BREEDS SPINNER */
+                        spnBreeds.setAdapter(breedsAdapter);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Problem fetching list of Pet Types...", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Problem fetching list of Pet Breeds...", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Breeds> call, Throwable t) {
+//                Log.e("BREEDS FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
 
     @Override

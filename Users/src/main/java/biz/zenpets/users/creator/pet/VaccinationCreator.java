@@ -36,6 +36,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -61,21 +62,25 @@ import java.util.Locale;
 import biz.zenpets.users.R;
 import biz.zenpets.users.utils.adapters.adoptions.AdoptionsAlbumAdapter;
 import biz.zenpets.users.utils.adapters.pet.vaccinations.VaccinesAdapter;
-import biz.zenpets.users.utils.helpers.pets.vaccinations.AllVaccines;
-import biz.zenpets.users.utils.helpers.pets.vaccinations.AllVaccinesInterface;
+import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.helpers.pets.vaccinations.NewVaccination;
 import biz.zenpets.users.utils.helpers.pets.vaccinations.NewVaccinationInterface;
 import biz.zenpets.users.utils.helpers.pets.vaccinations.PostVaccinationImage;
 import biz.zenpets.users.utils.helpers.pets.vaccinations.PostVaccinationImageInterface;
 import biz.zenpets.users.utils.models.adoptions.AdoptionAlbumData;
 import biz.zenpets.users.utils.models.pets.vaccines.Vaccine;
+import biz.zenpets.users.utils.models.pets.vaccines.Vaccines;
+import biz.zenpets.users.utils.models.pets.vaccines.VaccinesAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 @SuppressWarnings("ConstantConditions")
 public class VaccinationCreator extends AppCompatActivity
-        implements AllVaccinesInterface,
+        implements /*AllVaccinesInterface,*/
         NewVaccinationInterface, PostVaccinationImageInterface {
 
     /** THE INCOMING PET ID **/
@@ -374,14 +379,45 @@ public class VaccinationCreator extends AppCompatActivity
         }
     }
 
-    @Override
-    public void allVaccines(ArrayList<Vaccine> data) {
-        /* CAST THE RESULTS IN THE GLOBAL INSTANCE */
-        arrVaccines = data;
+    /** FETCH THE LIST OF VACCINES **/
+    private void fetchVaccines() {
+        VaccinesAPI api = ZenApiClient.getClient().create(VaccinesAPI.class);
+        Call<Vaccines> call = api.allVaccines();
+        call.enqueue(new Callback<Vaccines>() {
+            @Override
+            public void onResponse(Call<Vaccines> call, Response<Vaccines> response) {
+                if (response.body() != null && response.body().getVaccines() != null)   {
+                    arrVaccines = response.body().getVaccines();
+                    if (arrVaccines.size() > 0) {
 
-        /* SET THE ADAPTER TO THE VISIT REASONS SPINNER */
-        spnVaccineTypes.setAdapter(new VaccinesAdapter(VaccinationCreator.this, arrVaccines));
+                        /* SET THE ADAPTER TO THE VISIT REASONS SPINNER */
+                        spnVaccineTypes.setAdapter(new VaccinesAdapter(VaccinationCreator.this, arrVaccines));
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Problem fetching list of Vaccines...", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Problem fetching list of Vaccines...", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Vaccines> call, Throwable t) {
+//                Log.e("VACCINES FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
+
+//    @Override
+//    public void allVaccines(ArrayList<Vaccine> data) {
+//        /* CAST THE RESULTS IN THE GLOBAL INSTANCE */
+//        arrVaccines = data;
+//
+//        /* SET THE ADAPTER TO THE VISIT REASONS SPINNER */
+//        spnVaccineTypes.setAdapter(new VaccinesAdapter(VaccinationCreator.this, arrVaccines));
+//    }
 
     /***** CONFIGURE THE ACTIONBAR *****/
     private void configAB() {
@@ -429,7 +465,8 @@ public class VaccinationCreator extends AppCompatActivity
             PET_ID = bundle.getString("PET_ID");
             if (PET_ID != null) {
                 /* FETCH THE LIST OF VACCINES */
-                new AllVaccines(this).execute();
+                fetchVaccines();
+//                new AllVaccines(this).execute();
             } else {
                 Toast.makeText(getApplicationContext(), "Failed to get required info", Toast.LENGTH_SHORT).show();
                 finish();

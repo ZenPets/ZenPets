@@ -17,7 +17,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -175,7 +174,7 @@ public class DoctorsList extends AppCompatActivity
 
             @Override
             public void onFailure(Call<Doctors> call, Throwable t) {
-                Log.e("DOCTORS FAILURE", t.getMessage());
+//                Log.e("DOCTORS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
 
                 /* HIDE THE PROGRESS */
@@ -229,7 +228,7 @@ public class DoctorsList extends AppCompatActivity
 
             @Override
             public void onFailure(Call<Doctors> call, Throwable t) {
-                Log.e("DOCTORS FAILURE", t.getMessage());
+//                Log.e("DOCTORS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
 
                 /* HIDE THE PROGRESS */
@@ -895,7 +894,7 @@ public class DoctorsList extends AppCompatActivity
 
             @Override
             public void onFailure(Call<City> call, Throwable t) {
-                Log.e("CITY FAILURE", t.getMessage());
+//                Log.e("CITY FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -941,7 +940,7 @@ public class DoctorsList extends AppCompatActivity
 
             @Override
             public void onFailure(Call<Locality> call, Throwable t) {
-                Log.e("LOCALITY FAILURE", t.getMessage());
+//                Log.e("LOCALITY FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

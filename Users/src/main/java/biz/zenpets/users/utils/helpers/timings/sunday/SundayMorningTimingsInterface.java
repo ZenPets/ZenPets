@@ -1,5 +1,5 @@
 package biz.zenpets.users.utils.helpers.timings.sunday;
 
-public interface SundayMorningTimingsInterface {
-    void onSundayMorningResult(String[] response);
-}
+//public interface SundayMorningTimingsInterface {
+//    void onSundayMorningResult(String[] response);
+//}

@@ -14,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -290,7 +289,7 @@ public class BoardingEnrollment extends AppCompatActivity
                 if (response.isSuccessful())    {
                     /* GET THE NEW BOARDING ID */
                     BOARDING_ID = response.body().getBoardingID();
-                    Log.e("BOARDING ID", BOARDING_ID);
+//                    Log.e("BOARDING ID", BOARDING_ID);
 
                     Intent success = new Intent();
                     setResult(RESULT_OK, success);
@@ -354,7 +353,7 @@ public class BoardingEnrollment extends AppCompatActivity
 
         /* FOR THE DATABASE ONLY !!!! */
         BOARDING_SINCE = sdf.format(cal.getTime());
-        Log.e("BOARDING SINCE", BOARDING_SINCE);
+//        Log.e("BOARDING SINCE", BOARDING_SINCE);
 
         /* FOR DISPLAY ONLY !!!! */
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault());

@@ -38,12 +38,12 @@ import biz.zenpets.users.R;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.adapters.visit.VisitReasonsAdapter;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
-import biz.zenpets.users.utils.helpers.doctors.details.FetchDoctorDetails;
-import biz.zenpets.users.utils.helpers.doctors.details.FetchDoctorDetailsInterface;
 import biz.zenpets.users.utils.helpers.doctors.reviews.AddNewReview;
 import biz.zenpets.users.utils.helpers.doctors.reviews.AddNewReviewInterface;
 import biz.zenpets.users.utils.helpers.doctors.reviews.PostClinicRating;
 import biz.zenpets.users.utils.helpers.doctors.reviews.PostClinicRatingInterface;
+import biz.zenpets.users.utils.models.doctors.DoctorsAPI;
+import biz.zenpets.users.utils.models.doctors.list.Doctor;
 import biz.zenpets.users.utils.models.visit.Reason;
 import biz.zenpets.users.utils.models.visit.Reasons;
 import biz.zenpets.users.utils.models.visit.ReasonsAPI;
@@ -55,7 +55,7 @@ import retrofit2.Response;
 
 @SuppressWarnings({"ConstantConditions", "deprecation"})
 public class ReviewCreator extends AppCompatActivity
-        implements FetchDoctorDetailsInterface, AddNewReviewInterface, PostClinicRatingInterface {
+        implements /*FetchDoctorDetailsInterface,*/ AddNewReviewInterface, PostClinicRatingInterface {
 
     private AppPrefs getApp()	{
         return (AppPrefs) getApplication();
@@ -163,27 +163,27 @@ public class ReviewCreator extends AppCompatActivity
         });
     }
 
-    @Override
-    public void onDoctorDetails(String[] result) {
-        /* GET THE RESULTS FROM THE ARRAY */
-        String DOCTOR_PREFIX = result[0];
-        String DOCTOR_NAME = result[1];
-        String DOCTOR_PROFILE = result[2];
-
-        /* SET THE DOCTOR'S NAME */
-        txtDoctorName.setText(getString(R.string.review_creator_doc_name_placeholder, DOCTOR_PREFIX, DOCTOR_NAME));
-
-        /* SET THE DOCTOR'S DISPLAY PROFILE */
-        if (DOCTOR_PROFILE != null) {
-            Uri uri = Uri.parse(DOCTOR_PROFILE);
-            imgvwDoctorProfile.setImageURI(uri);
-        } else {
-            ImageRequest request = ImageRequestBuilder
-                    .newBuilderWithResourceId(R.drawable.ic_person_black_24dp)
-                    .build();
-            imgvwDoctorProfile.setImageURI(request.getSourceUri());
-        }
-    }
+//    @Override
+//    public void onDoctorDetails(String[] result) {
+//        /* GET THE RESULTS FROM THE ARRAY */
+//        String DOCTOR_PREFIX = result[0];
+//        String DOCTOR_NAME = result[1];
+//        String DOCTOR_PROFILE = result[2];
+//
+//        /* SET THE DOCTOR'S NAME */
+//        txtDoctorName.setText(getString(R.string.review_creator_doc_name_placeholder, DOCTOR_PREFIX, DOCTOR_NAME));
+//
+//        /* SET THE DOCTOR'S DISPLAY PROFILE */
+//        if (DOCTOR_PROFILE != null) {
+//            Uri uri = Uri.parse(DOCTOR_PROFILE);
+//            imgvwDoctorProfile.setImageURI(uri);
+//        } else {
+//            ImageRequest request = ImageRequestBuilder
+//                    .newBuilderWithResourceId(R.drawable.ic_person_black_24dp)
+//                    .build();
+//            imgvwDoctorProfile.setImageURI(request.getSourceUri());
+//        }
+//    }
 
     /***** FETCH VISIT REASONS *****/
     private void fetchVisitReasons() {
@@ -214,7 +214,8 @@ public class ReviewCreator extends AppCompatActivity
             CLINIC_ID = bundle.getString("CLINIC_ID");
             if (DOCTOR_ID != null)  {
                 /* FETCH THE DOCTOR DETAILS */
-                new FetchDoctorDetails(this).execute(DOCTOR_ID, CLINIC_ID);
+                fetchDoctorDetails();
+//                new FetchDoctorDetails(this).execute(DOCTOR_ID, CLINIC_ID);
             } else {
                 Toast.makeText(getApplicationContext(), "Failed to get required info....", Toast.LENGTH_SHORT).show();
                 finish();
@@ -223,6 +224,45 @@ public class ReviewCreator extends AppCompatActivity
             Toast.makeText(getApplicationContext(), "Failed to get required info....", Toast.LENGTH_SHORT).show();
             finish();
         }
+    }
+
+    /** FETCH THE DOCTOR DETAILS **/
+    private void fetchDoctorDetails() {
+        DoctorsAPI api = ZenApiClient.getClient().create(DoctorsAPI.class);
+        Call<Doctor> call = api.fetchDoctorDetails(DOCTOR_ID, CLINIC_ID, null, null);
+        call.enqueue(new Callback<Doctor>() {
+            @Override
+            public void onResponse(Call<Doctor> call, Response<Doctor> response) {
+                Doctor doctor = response.body();
+                if (doctor != null) {
+
+                    /* GET THE NECESSARY DOCTOR DETAILS */
+                    String DOCTOR_PREFIX = doctor.getDoctorPrefix();
+                    String DOCTOR_NAME = doctor.getDoctorName();
+                    String DOCTOR_PROFILE = doctor.getDoctorDisplayProfile();
+
+                    /* SET THE DOCTOR'S NAME */
+                    txtDoctorName.setText(getString(R.string.review_creator_doc_name_placeholder, DOCTOR_PREFIX, DOCTOR_NAME));
+
+                    /* SET THE DOCTOR'S DISPLAY PROFILE */
+                    if (DOCTOR_PROFILE != null) {
+                        Uri uri = Uri.parse(DOCTOR_PROFILE);
+                        imgvwDoctorProfile.setImageURI(uri);
+                    } else {
+                        ImageRequest request = ImageRequestBuilder
+                                .newBuilderWithResourceId(R.drawable.ic_person_black_24dp)
+                                .build();
+                        imgvwDoctorProfile.setImageURI(request.getSourceUri());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Doctor> call, Throwable t) {
+//                Log.e("DETAILS FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
 
     /***** CONFIGURE THE TOOLBAR *****/

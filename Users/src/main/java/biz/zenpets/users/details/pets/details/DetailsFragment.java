@@ -1,28 +1,46 @@
 package biz.zenpets.users.details.pets.details;
 
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
+import org.joda.time.LocalDate;
+import org.joda.time.Period;
+import org.joda.time.PeriodType;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import biz.zenpets.users.R;
-import biz.zenpets.users.utils.helpers.pets.pet.FetchPetDetails;
-import biz.zenpets.users.utils.helpers.pets.pet.FetchPetDetailsInterface;
+import biz.zenpets.users.utils.AppPrefs;
+import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
+import biz.zenpets.users.utils.models.pets.pets.Pet;
+import biz.zenpets.users.utils.models.pets.pets.PetsAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class DetailsFragment extends Fragment implements FetchPetDetailsInterface {
+public class DetailsFragment extends Fragment {
 
     /** THE INCOMING PET ID **/
     private String PET_ID = null;
@@ -79,55 +97,109 @@ public class DetailsFragment extends Fragment implements FetchPetDetailsInterfac
         getIncomingData();
     }
 
-    @Override
-    public void petDetails(String[] result) {
-        PET_TYPE_ID = result[0];
-        PET_TYPE_NAME = result[1];
-        BREED_ID = result[2];
-        BREED_NAME = result[3];
-        PET_NAME = result[4];
-        PET_GENDER = result[5];
-        PET_AGE = result[6];
-        PET_NEUTERED = result[7];
-        PET_DISPLAY_PROFILE = result[8];
-        PET_ACTIVE = result[9];
+    /** FETCH THE PET'S DETAILS **/
+    private void fetchPetDetails() {
+        PetsAPI api = ZenApiClient.getClient().create(PetsAPI.class);
+        Call<Pet> call = api.fetchPetDetails(PET_ID);
+        call.enqueue(new Callback<Pet>() {
+            @Override
+            public void onResponse(Call<Pet> call, Response<Pet> response) {
+                Log.e("DETAILS RESPONSE", String.valueOf(response.raw()));
+                Pet pet = response.body();
+                if (!pet.getError()) {
 
-        /* SET THE PET'S BREED */
-        txtPetBreed.setText(BREED_NAME);
+                    /* GET THE PET DETAILS */
+                    PET_TYPE_ID = pet.getPetTypeID();
+                    PET_TYPE_NAME = pet.getPetTypeName();
+                    BREED_ID = pet.getBreedID();
+                    BREED_NAME = pet.getBreedName();
+                    PET_NAME = pet.getPetName();
+                    PET_GENDER = pet.getPetGender();
+                    String strPetDOB = pet.getPetDOB();
+                    PET_NEUTERED = pet.getPetNeutered();
+                    PET_DISPLAY_PROFILE = pet.getPetDisplayProfile();
+                    PET_ACTIVE = pet.getPetActive();
 
-        /* SET THE PET'S GENDER */
-        txtPetGender.setText(PET_GENDER);
+                    /* CALCULATE THE PET'S AGE */
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    try {
+                        /* SET THE DATE OF BIRTH TO A CALENDAR DATE */
+                        Date dtDOB = format.parse(strPetDOB);
+                        Calendar calDOB = Calendar.getInstance();
+                        calDOB.setTime(dtDOB);
+                        int dobYear = calDOB.get(Calendar.YEAR);
+                        int dobMonth = calDOB.get(Calendar.MONTH) + 1;
+                        int dobDate = calDOB.get(Calendar.DATE);
 
-        /* SET THE PET'S AGE */
-        txtPetAge.setText(PET_AGE);
+                        /* SET THE CURRENT DATE TO A CALENDAR INSTANCE */
+                        Calendar calNow = Calendar.getInstance();
+                        int nowYear = calNow.get(Calendar.YEAR);
+                        int nowMonth = calNow.get(Calendar.MONTH) + 1;
+                        int nowDate = calNow.get(Calendar.DATE);
 
-        /* SET THE PET'S NEUTERED STATUS */
-        if (PET_NEUTERED != null)   {
-            if (PET_NEUTERED.equalsIgnoreCase("1"))   {
-                txtNeutered.setText(R.string.pet_details_status_neutered);
-            } else {
-                txtNeutered.setText(R.string.pet_details_status_not_neutered);
+                        LocalDate dateDOB = new LocalDate(dobYear, dobMonth, dobDate);
+                        LocalDate dateNOW = new LocalDate(nowYear, nowMonth, nowDate);
+                        Period period = new Period(dateDOB, dateNOW, PeriodType.yearMonthDay());
+                        Resources resources = AppPrefs.context().getResources();
+                        if (period.getYears() == 0)   {
+                            PET_AGE = resources.getQuantityString(R.plurals.age, period.getYears(), period.getYears());
+                        } else if (period.getYears() == 1)    {
+                            PET_AGE = resources.getQuantityString(R.plurals.age, period.getYears(), period.getYears());
+                        } else if (period.getYears() > 1) {
+                            PET_AGE = resources.getQuantityString(R.plurals.age, period.getYears(), period.getYears());
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    /* SET THE PET'S BREED */
+                    txtPetBreed.setText(BREED_NAME);
+
+                    /* SET THE PET'S GENDER */
+                    txtPetGender.setText(PET_GENDER);
+
+                    /* SET THE PET'S AGE */
+                    txtPetAge.setText(PET_AGE);
+
+                    /* SET THE PET'S NEUTERED STATUS */
+                    if (PET_NEUTERED != null)   {
+                        if (PET_NEUTERED.equalsIgnoreCase("1"))   {
+                            txtNeutered.setText(R.string.pet_details_status_neutered);
+                        } else {
+                            txtNeutered.setText(R.string.pet_details_status_not_neutered);
+                        }
+                    } else {
+                        txtNeutered.setText(R.string.pet_details_status_not_neutered);
+                    }
+
+                    /* SET THE PET'S DISPLAY PROFILE */
+                    if (PET_DISPLAY_PROFILE != null)    {
+                        Uri uri = Uri.parse(PET_DISPLAY_PROFILE);
+                        imgvwPetProfile.setImageURI(uri);
+                    } else {
+                        ImageRequest request = ImageRequestBuilder
+                                .newBuilderWithResourceId(R.drawable.ic_person_black_24dp)
+                                .build();
+                        imgvwPetProfile.setImageURI(request.getSourceUri());
+                    }
+
+                    /* SET THE PET'S NAME */
+                    txtPetName.setText(PET_NAME);
+                } else {
+                    Toast.makeText(getActivity(), "Failed to get required info...", Toast.LENGTH_SHORT).show();
+                    getActivity().finish();
+                }
+
+                /* HIDE THE PROGRESS AFTER FETCHING THE PET DETAILS */
+                linlaProgress.setVisibility(View.GONE);
             }
-        } else {
-            txtNeutered.setText(R.string.pet_details_status_not_neutered);
-        }
 
-        /* SET THE PET'S DISPLAY PROFILE */
-        if (PET_DISPLAY_PROFILE != null)    {
-            Uri uri = Uri.parse(PET_DISPLAY_PROFILE);
-            imgvwPetProfile.setImageURI(uri);
-        } else {
-            ImageRequest request = ImageRequestBuilder
-                    .newBuilderWithResourceId(R.drawable.ic_person_black_24dp)
-                    .build();
-            imgvwPetProfile.setImageURI(request.getSourceUri());
-        }
-
-        /* SET THE PET'S NAME */
-        txtPetName.setText(PET_NAME);
-
-        /* HIDE THE PROGRESS AFTER FETCHING THE PET DETAILS */
-        linlaProgress.setVisibility(View.GONE);
+            @Override
+            public void onFailure(Call<Pet> call, Throwable t) {
+                Log.e("PET FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
 
     /***** GET THE INCOMING DATA *****/
@@ -138,7 +210,7 @@ public class DetailsFragment extends Fragment implements FetchPetDetailsInterfac
             if (PET_ID != null) {
                 /* SHOW THE PROGRESS AND FETCH THE PET'S DETAILS */
                 linlaProgress.setVisibility(View.VISIBLE);
-                new FetchPetDetails(this).execute(PET_ID);
+                fetchPetDetails();
             } else {
                 Toast.makeText(getActivity(), "Failed to get required info...", Toast.LENGTH_SHORT).show();
                 getActivity().finish();

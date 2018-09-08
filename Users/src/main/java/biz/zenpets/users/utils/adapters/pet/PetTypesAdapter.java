@@ -12,9 +12,9 @@ import android.widget.ArrayAdapter;
 import java.util.ArrayList;
 
 import biz.zenpets.users.R;
-import biz.zenpets.users.utils.models.pets.types.PetTypesData;
+import biz.zenpets.users.utils.models.pets.types.PetType;
 
-public class PetTypesAdapter extends ArrayAdapter<PetTypesData> {
+public class PetTypesAdapter extends ArrayAdapter<PetType> {
 
     /***** THE ACTIVITY INSTANCE FOR USE IN THE ADAPTER *****/
     private final Activity activity;
@@ -23,9 +23,9 @@ public class PetTypesAdapter extends ArrayAdapter<PetTypesData> {
     private LayoutInflater inflater = null;
 
     /** ARRAY LIST TO GET DATA FROM THE ACTIVITY **/
-    private final ArrayList<PetTypesData> arrPetTypes;
+    private final ArrayList<PetType> arrPetTypes;
 
-    public PetTypesAdapter(@NonNull Activity activity, ArrayList<PetTypesData> arrPetTypes) {
+    public PetTypesAdapter(@NonNull Activity activity, ArrayList<PetType> arrPetTypes) {
         super(activity, R.layout.pet_types_row);
 
         /* CAST THE ACTIVITY FROM THE METHOD TO THE LOCAL ACTIVITY INSTANCE */
@@ -44,7 +44,7 @@ public class PetTypesAdapter extends ArrayAdapter<PetTypesData> {
     }
 
     @Override
-    public PetTypesData getItem(int position) {
+    public PetType getItem(int position) {
         return arrPetTypes.get(position);
     }
 

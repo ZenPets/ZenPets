@@ -56,17 +56,17 @@ import biz.zenpets.users.utils.adapters.adoptions.AdoptionsAlbumAdapter;
 import biz.zenpets.users.utils.adapters.pet.BreedsAdapter;
 import biz.zenpets.users.utils.adapters.pet.PetTypesAdapter;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
-import biz.zenpets.users.utils.helpers.pets.breed.FetchBreedTypes;
-import biz.zenpets.users.utils.helpers.pets.breed.FetchBreedTypesInterface;
-import biz.zenpets.users.utils.helpers.pets.type.PetTypes;
-import biz.zenpets.users.utils.helpers.pets.type.PetTypesInterface;
 import biz.zenpets.users.utils.models.adoptions.AdoptionAlbumData;
 import biz.zenpets.users.utils.models.adoptions.adoption.Adoption;
 import biz.zenpets.users.utils.models.adoptions.adoption.AdoptionsAPI;
 import biz.zenpets.users.utils.models.adoptions.images.AdoptionImage;
 import biz.zenpets.users.utils.models.adoptions.images.AdoptionImagesAPI;
 import biz.zenpets.users.utils.models.pets.breeds.Breed;
-import biz.zenpets.users.utils.models.pets.types.PetTypesData;
+import biz.zenpets.users.utils.models.pets.breeds.Breeds;
+import biz.zenpets.users.utils.models.pets.breeds.BreedsAPI;
+import biz.zenpets.users.utils.models.pets.types.PetType;
+import biz.zenpets.users.utils.models.pets.types.PetTypes;
+import biz.zenpets.users.utils.models.pets.types.PetTypesAPI;
 import biz.zenpets.users.utils.models.user.UserData;
 import biz.zenpets.users.utils.models.user.UsersAPI;
 import butterknife.BindView;
@@ -78,7 +78,7 @@ import retrofit2.Response;
 
 @SuppressWarnings({"ConstantConditions", "ResultOfMethodCallIgnored"})
 public class AdoptionCreator extends AppCompatActivity
-        implements PetTypesInterface, FetchBreedTypesInterface {
+        /*implements PetTypesInterface, FetchBreedTypesInterface*/ {
 
     private AppPrefs getApp()	{
         return (AppPrefs) getApplication();
@@ -104,7 +104,7 @@ public class AdoptionCreator extends AppCompatActivity
     private static final int ACCESS_STORAGE_CONSTANT = 201;
 
     /* THE PET TYPES ARRAY LIST */
-    private ArrayList<PetTypesData> arrPetTypes = new ArrayList<>();
+    private ArrayList<PetType> arrPetTypes = new ArrayList<>();
 
     /** THE BREEDS ARRAY LIST **/
     private ArrayList<Breed> arrBreeds = new ArrayList<>();
@@ -162,8 +162,9 @@ public class AdoptionCreator extends AppCompatActivity
         /* CONFIGURE THE RECYCLER VIEW */
         configRecycler();
 
-        /* FETCH ALL PET TYPES */
-        new PetTypes(this).execute();
+        /* FETCH A LIST OF ALL PET TYPES */
+        fetchPetTypes();
+//        new PetTypes(this).execute();
 
         /* SELECT A PET TYPE */
         spnPetTypes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -176,7 +177,8 @@ public class AdoptionCreator extends AppCompatActivity
                 arrBreeds.clear();
 
                 /* FETCH THE LIST OF BREEDS IN THE SELECTED PET TYPE */
-                new FetchBreedTypes(AdoptionCreator.this).execute(PET_TYPE_ID);
+                fetchBreedTypes();
+//                new FetchBreedTypes(AdoptionCreator.this).execute(PET_TYPE_ID);
             }
 
             @Override
@@ -646,27 +648,95 @@ public class AdoptionCreator extends AppCompatActivity
         }
     }
 
-    @Override
-    public void petTypes(ArrayList<PetTypesData> data) {
-        /* CAST THE RESULTS IN THE GLOBAL INSTANCE */
-        arrPetTypes = data;
+    /** FETCH A LIST OF ALL PET TYPES **/
+    private void fetchPetTypes() {
+        PetTypesAPI api = ZenApiClient.getClient().create(PetTypesAPI.class);
+        Call<PetTypes> call = api.petTypes();
+        call.enqueue(new Callback<PetTypes>() {
+            @Override
+            public void onResponse(Call<PetTypes> call, Response<PetTypes> response) {
+                if (response.body() != null && response.body().getTypes() != null)  {
+                    arrPetTypes = response.body().getTypes();
+                    if (arrPetTypes.size() > 0)    {
 
-        /* INSTANTIATE THE PET TYPES ADAPTER */
-        PetTypesAdapter petTypesAdapter = new PetTypesAdapter(AdoptionCreator.this, arrPetTypes);
+                        /* INSTANTIATE THE PET TYPES ADAPTER */
+                        PetTypesAdapter petTypesAdapter = new PetTypesAdapter(AdoptionCreator.this, arrPetTypes);
 
-        /* SET THE ADAPTER TO THE PET TYPES SPINNER */
-        spnPetTypes.setAdapter(petTypesAdapter);
+                        /* SET THE ADAPTER TO THE PET TYPES SPINNER */
+                        spnPetTypes.setAdapter(petTypesAdapter);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Problem fetching list of Pet Types...", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Problem fetching list of Pet Types...", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PetTypes> call, Throwable t) {
+//                Log.e("TYPE FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
 
-    @Override
-    public void breedTypes(ArrayList<Breed> data) {
-        /* CAST THE RESULTS IN THE GLOBAL INSTANCE */
-        arrBreeds = data;
+    /** FETCH THE LIST OF BREEDS IN THE SELECTED PET TYPE **/
+    private void fetchBreedTypes() {
+        BreedsAPI api = ZenApiClient.getClient().create(BreedsAPI.class);
+        Call<Breeds> call = api.allPetBreeds(PET_TYPE_ID);
+        call.enqueue(new Callback<Breeds>() {
+            @Override
+            public void onResponse(Call<Breeds> call, Response<Breeds> response) {
+                if (response.body() != null && response.body().getBreeds() != null) {
+                    arrBreeds = response.body().getBreeds();
+                    if (arrPetTypes.size() > 0)    {
 
-        /* INSTANTIATE THE BREEDS ADAPTER */
-        BreedsAdapter breedsAdapter = new BreedsAdapter(AdoptionCreator.this, arrBreeds);
+                        /* INSTANTIATE THE BREEDS ADAPTER */
+                        BreedsAdapter breedsAdapter = new BreedsAdapter(AdoptionCreator.this, arrBreeds);
 
-        /* SET THE ADAPTER TO THE BREEDS SPINNER */
-        spnBreeds.setAdapter(breedsAdapter);
+                        /* SET THE ADAPTER TO THE BREEDS SPINNER */
+                        spnBreeds.setAdapter(breedsAdapter);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Problem fetching list of Pet Types...", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Problem fetching list of Pet Breeds...", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Breeds> call, Throwable t) {
+//                Log.e("BREEDS FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
+
+//    @Override
+//    public void petTypes(ArrayList<PetTypesData> data) {
+//        /* CAST THE RESULTS IN THE GLOBAL INSTANCE */
+//        arrPetTypes = data;
+//
+//        /* INSTANTIATE THE PET TYPES ADAPTER */
+//        PetTypesAdapter petTypesAdapter = new PetTypesAdapter(AdoptionCreator.this, arrPetTypes);
+//
+//        /* SET THE ADAPTER TO THE PET TYPES SPINNER */
+//        spnPetTypes.setAdapter(petTypesAdapter);
+//    }
+
+//    @Override
+//    public void breedTypes(ArrayList<Breed> data) {
+//        /* CAST THE RESULTS IN THE GLOBAL INSTANCE */
+//        arrBreeds = data;
+//
+//        /* INSTANTIATE THE BREEDS ADAPTER */
+//        BreedsAdapter breedsAdapter = new BreedsAdapter(AdoptionCreator.this, arrBreeds);
+//
+//        /* SET THE ADAPTER TO THE BREEDS SPINNER */
+//        spnBreeds.setAdapter(breedsAdapter);
+//    }
 }

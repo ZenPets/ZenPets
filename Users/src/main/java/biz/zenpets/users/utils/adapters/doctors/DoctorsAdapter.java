@@ -1,6 +1,7 @@
 package biz.zenpets.users.utils.adapters.doctors;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
@@ -19,6 +20,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import biz.zenpets.users.R;
+import biz.zenpets.users.details.doctors.DoctorDetailsNew;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.adapters.clinics.promoted.PromotedClinicsAdapter;
 import biz.zenpets.users.utils.models.clinics.images.ClinicImage;
@@ -202,6 +204,19 @@ public class DoctorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 //                        String close = activity.getString(R.string.doctor_list_votes_close);
 //                        vh.txtDoctorLikes.setText(activity.getString(R.string.doctor_list_votes_placeholder, strLikesPercentage, open, strVotes, close));
 //                    }
+
+                    /* SHOW THE DOCTOR DETAILS */
+                    vh.cardDoctor.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(activity, DoctorDetailsNew.class);
+                            intent.putExtra("DOCTOR_ID", data.getDoctorID());
+                            intent.putExtra("CLINIC_ID", data.getClinicID());
+                            intent.putExtra("ORIGIN_LATITUDE", String.valueOf(LATLNG_ORIGIN.latitude));
+                            intent.putExtra("ORIGIN_LONGITUDE", String.valueOf(LATLNG_ORIGIN.longitude));
+                            activity.startActivity(intent);
+                        }
+                    });
 
                     /* SHOW THE KENNEL ITEM AND HIDE THE LIST OF PROMOTED ADOPTION */
                     vh.cardDoctor.setVisibility(View.VISIBLE);

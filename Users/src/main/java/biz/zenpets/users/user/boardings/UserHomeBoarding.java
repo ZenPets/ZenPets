@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -151,7 +150,7 @@ public class UserHomeBoarding extends AppCompatActivity {
         call.enqueue(new Callback<House>() {
             @Override
             public void onResponse(Call<House> call, Response<House> response) {
-                Log.e("HOUSE RESPONSE", String.valueOf(response.raw()));
+//                Log.e("HOUSE RESPONSE", String.valueOf(response.raw()));
                 boolean blnError = response.body().getError();
                 if (!blnError)  {
                     /* CAST THE RESPONSE IN THE HOUSE POJO INSTANCE */
@@ -203,7 +202,7 @@ public class UserHomeBoarding extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<House> call, Throwable t) {
-                Log.e("HOUSE FAILURE", t.getMessage());
+//                Log.e("HOUSE FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -215,7 +214,7 @@ public class UserHomeBoarding extends AppCompatActivity {
         call.enqueue(new Callback<Boarding>() {
             @Override
             public void onResponse(Call<Boarding> call, Response<Boarding> response) {
-                Log.e("RAW RESPONSE", String.valueOf(response.raw()));
+//                Log.e("RAW RESPONSE", String.valueOf(response.raw()));
 
                 /* CAST THE RESPONSE IN THE BOARDING POJO INSTANCE */
                 Boarding boarding = response.body();
@@ -292,7 +291,7 @@ public class UserHomeBoarding extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Boarding> call, Throwable t) {
-                Log.e("DETAILS FAILURE", t.getMessage());
+//                Log.e("DETAILS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

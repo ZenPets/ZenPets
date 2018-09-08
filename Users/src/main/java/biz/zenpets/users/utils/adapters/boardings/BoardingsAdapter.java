@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,7 +80,7 @@ public class BoardingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 final BoardingsVH vh = (BoardingsVH) holder;
 
                 if (data.getBoardingID() != null)   {
-                    Log.e("BOARDING ID", data.getBoardingID());
+//                    Log.e("BOARDING ID", data.getBoardingID());
 
                     /* SET THE BOARDING'S COVER PHOTO */
                     String boardingCoverPhoto = data.getBoardingCoverPhoto();

@@ -21,7 +21,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -345,7 +344,7 @@ public class DoctorDetailsNew extends AppCompatActivity {
         call.enqueue(new Callback<Doctor>() {
             @Override
             public void onResponse(Call<Doctor> call, Response<Doctor> response) {
-                Log.e("DETAILS RAW", String.valueOf(response.raw()));
+//                Log.e("DETAILS RAW", String.valueOf(response.raw()));
                 Doctor data = response.body();
                 if (data != null) {
 
@@ -1586,12 +1585,40 @@ public class DoctorDetailsNew extends AppCompatActivity {
         call.enqueue(new Callback<Review>() {
             @Override
             public void onResponse(Call<Review> call, Response<Review> response) {
+//                Log.e("REVIEW RESPONSE", String.valueOf(response.raw()));
                 Review review = response.body();
                 if (review != null) {
-                    String reviewID = review.getReviewID();
-                    Intent intent = new Intent(DoctorDetailsNew.this, ReviewModifier.class);
-                    intent.putExtra("REVIEW_ID", reviewID);
-                    startActivityForResult(intent, 101);
+                    if (review.getError())  {
+                        String profileStatus = getApp().getProfileStatus();
+                        if (profileStatus.equalsIgnoreCase("Incomplete"))   {
+                            String message = "You need to complete your Profile before you can provide feedback. To complete your profile Details, click on the \"Complete Profile\" button.";
+                            new MaterialDialog.Builder(DoctorDetailsNew.this)
+                                    .icon(ContextCompat.getDrawable(DoctorDetailsNew.this, R.drawable.ic_info_outline_black_24dp))
+                                    .title("Profile Incomplete")
+                                    .cancelable(true)
+                                    .content(message)
+                                    .positiveText("Complete Profile")
+                                    .theme(Theme.LIGHT)
+                                    .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
+                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                            Intent intent = new Intent(DoctorDetailsNew.this, ProfileEditor.class);
+                                            startActivity(intent);
+                                        }
+                                    }).show();
+                        } else {
+                            Intent intentNewFeedback = new Intent(getApplicationContext(), ReviewCreator.class);
+                            intentNewFeedback.putExtra("DOCTOR_ID", DOCTOR_ID);
+                            intentNewFeedback.putExtra("CLINIC_ID", CLINIC_ID);
+                            startActivity(intentNewFeedback);
+                        }
+                    } else {
+                        String reviewID = review.getReviewID();
+                        Intent intent = new Intent(DoctorDetailsNew.this, ReviewModifier.class);
+                        intent.putExtra("REVIEW_ID", reviewID);
+                        startActivityForResult(intent, 101);
+                    }
                 } else {
                     String profileStatus = getApp().getProfileStatus();
                     if (profileStatus.equalsIgnoreCase("Incomplete"))   {

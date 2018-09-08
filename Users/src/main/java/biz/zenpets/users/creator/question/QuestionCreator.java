@@ -54,11 +54,11 @@ import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.adapters.pet.PetSpinnerAdapter;
 import biz.zenpets.users.utils.adapters.problems.ProblemSpinnerAdapter;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
-import biz.zenpets.users.utils.helpers.pets.pet.FetchUserPets;
-import biz.zenpets.users.utils.helpers.pets.pet.FetchUserPetsInterface;
 import biz.zenpets.users.utils.models.consultations.consultations.Consultation;
 import biz.zenpets.users.utils.models.consultations.consultations.ConsultationsAPI;
 import biz.zenpets.users.utils.models.pets.pets.Pet;
+import biz.zenpets.users.utils.models.pets.pets.Pets;
+import biz.zenpets.users.utils.models.pets.pets.PetsAPI;
 import biz.zenpets.users.utils.models.problems.Problem;
 import biz.zenpets.users.utils.models.problems.Problems;
 import biz.zenpets.users.utils.models.problems.ProblemsAPI;
@@ -71,7 +71,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class QuestionCreator extends AppCompatActivity implements FetchUserPetsInterface {
+public class QuestionCreator extends AppCompatActivity /*implements FetchUserPetsInterface*/ {
 
     private AppPrefs getApp()	{
         return (AppPrefs) getApplication();
@@ -131,7 +131,8 @@ public class QuestionCreator extends AppCompatActivity implements FetchUserPetsI
         USER_ID = getApp().getUserID();
         if (USER_ID != null)    {
             /* FETCH THE USER'S PETS */
-            new FetchUserPets(this).execute(USER_ID);
+            fetchPetsList();
+//            new FetchUserPets(this).execute(USER_ID);
         } else {
             Toast.makeText(getApplicationContext(), "Failed to get required info....", Toast.LENGTH_SHORT).show();
             finish();
@@ -300,23 +301,55 @@ public class QuestionCreator extends AppCompatActivity implements FetchUserPetsI
         });
     }
 
-    @Override
-    public void userPets(ArrayList<Pet> data) {
-        /* CAST THE RESULTS IN THE GLOBAL INSTANCE */
-        arrPets = data;
+    /** FETCH THE USER'S LIST OF PETS **/
+    private void fetchPetsList() {
+        PetsAPI api = ZenApiClient.getClient().create(PetsAPI.class);
+        Call<Pets> call = api.fetchUserPets(USER_ID);
+        call.enqueue(new Callback<Pets>() {
+            @Override
+            public void onResponse(Call<Pets> call, Response<Pets> response) {
+                if (response.body() != null && response.body().getPets() != null)   {
+                    arrPets = response.body().getPets();
 
-        /* CHECK FOR THE SIZE OF THE RESULT */
-        if (arrPets.size() > 0) {
-            /* SET THE ADAPTER TO THE PETS SPINNER */
-            spnMyPets.setAdapter(new PetSpinnerAdapter(QuestionCreator.this, arrPets));
-        } else {
-            /* SHOW THE NO PETS FOUND DIALOG */
-            noPetsFound();
-        }
+                    /* CHECK FOR RESULTS */
+                    if (arrPets.size() > 0) {
+                        /* SET THE ADAPTER TO THE PETS SPINNER */
+                        spnMyPets.setAdapter(new PetSpinnerAdapter(QuestionCreator.this, arrPets));
 
-        /* FETCH THE LIST OF PROBLEMS */
-        fetchListOfProblems();
+                        /* FETCH THE LIST OF PROBLEMS */
+                        fetchListOfProblems();
+                    } else {
+                        /* SHOW THE NO PETS FOUND DIALOG */
+                        noPetsFound();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Pets> call, Throwable t) {
+//                Log.e("EXCEPTION", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
+
+//    @Override
+//    public void userPets(ArrayList<Pet> data) {
+//        /* CAST THE RESULTS IN THE GLOBAL INSTANCE */
+//        arrPets = data;
+//
+//        /* CHECK FOR THE SIZE OF THE RESULT */
+//        if (arrPets.size() > 0) {
+//            /* SET THE ADAPTER TO THE PETS SPINNER */
+//            spnMyPets.setAdapter(new PetSpinnerAdapter(QuestionCreator.this, arrPets));
+//        } else {
+//            /* SHOW THE NO PETS FOUND DIALOG */
+//            noPetsFound();
+//        }
+//
+//        /* FETCH THE LIST OF PROBLEMS */
+//        fetchListOfProblems();
+//    }
 
     /***** FETCH THE LIST OF PROBLEMS *****/
     private void fetchListOfProblems() {
@@ -417,7 +450,8 @@ public class QuestionCreator extends AppCompatActivity implements FetchUserPetsI
             arrPets.clear();
 
             /* FETCH THE LIST OF PETS AGAIN */
-            new FetchUserPets(this).execute(USER_ID);
+            fetchPetsList();
+//            new FetchUserPets(this).execute(USER_ID);
         }
 
         EasyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
