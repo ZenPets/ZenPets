@@ -5,23 +5,23 @@
     <color name="primary_dark">#232228</color>
     <!--<color name="accent">#f57f17</color>-->
     <!--<color name="accent">#f44336</color>-->
-    <!--<color name="accent">#026689</color>-->
-    <color name="accent">#A5D27D</color>
+    <color name="accent">#026689</color>
+    <!--<color name="accent">#A5D27D</color>-->
 
 
     <!-- THE TEXT COLORS (LIGHT) -->
-    <color name="primary_text">@android:color/primary_text_dark</color>
-    <color name="secondary_text">@android:color/secondary_text_dark</color>
-    <color name="tertiary_text">@android:color/tertiary_text_dark</color>
+    <color name="primary_text">@android:color/primary_text_light</color>
+    <color name="secondary_text">@android:color/secondary_text_light</color>
+    <color name="tertiary_text">@android:color/tertiary_text_light</color>
 
     <!-- THE APP BG (LIGHT) -->
-    <!--<color name="app_bg">#F9F9F9</color>-->
-    <color name="app_bg">#232228</color>
+    <color name="app_bg">#F9F9F9</color>
+    <!--<color name="app_bg">#232228</color>-->
 
     <!-- THE CARD BG (LIGHT) -->
-    <!--<color name="card_bg">#FFFFFF</color>-->
+    <color name="card_bg">#FFFFFF</color>
 
-    <color name="card_bg">#2B2A30</color>
+    <!--<color name="card_bg">#2B2A30</color>-->
 
     <!-- SIDE BAR BG COLOR (LIGHT) -->
     <color name="side_bar_bg">#312C40</color>

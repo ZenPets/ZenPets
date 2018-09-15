@@ -1,8 +1,8 @@
 <resources>
     <!-- THE PRIMARY ZEN PETS STYLE -->
-    <style name="ZenPets" parent="Theme.AppCompat.NoActionBar">
-        <!--<item name="android:windowBackground">@drawable/bg_pattern</item>-->
-        <item name="android:windowBackground">@color/app_bg</item>
+    <style name="ZenPets" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg_pattern</item>
+        <!--<item name="android:windowBackground">@color/app_bg</item>-->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
@@ -22,9 +22,9 @@
     </style>
 
     <!-- THE SPLASH SCREEN STYLE -->
-    <style name="Splash" parent="Theme.AppCompat.NoActionBar">
-        <!--<item name="android:windowBackground">@drawable/bg_pattern</item>-->
-        <item name="android:windowBackground">@color/app_bg</item>
+    <style name="Splash" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg_pattern</item>
+        <!--<item name="android:windowBackground">@color/app_bg</item>-->
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
@@ -42,9 +42,9 @@
     </style>
 
     <!-- THE DIALOG STYLE -->
-    <style name="ZenPetsDialog" parent="Theme.AppCompat.Dialog.Alert">
-        <!--<item name="android:windowBackground">@drawable/bg_pattern</item>-->
-        <item name="android:windowBackground">@color/app_bg</item>
+    <style name="ZenPetsDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/bg_pattern</item>
+        <!--<item name="android:windowBackground">@color/app_bg</item>-->
         <item name="colorAccent">@color/accent</item>
 
         <!-- CALLIGRAPHY ATTRIBUTE -->

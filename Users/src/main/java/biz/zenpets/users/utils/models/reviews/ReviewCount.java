@@ -3,7 +3,6 @@ package biz.zenpets.users.utils.models.reviews;
 import com.google.gson.annotations.SerializedName;
 
 public class ReviewCount {
-
     @SerializedName("error") private Boolean error;
     @SerializedName("total_reviews") private String total_reviews;
 

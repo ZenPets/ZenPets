@@ -11,6 +11,11 @@ import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -38,11 +43,16 @@ import retrofit2.Response;
 
 public class ReviewModifier extends AppCompatActivity {
 
-    /** THE INCOMING REVIEW ID **/
+    /** THE INCOMING REVIEW ID AND CLINIC ID **/
     private String REVIEW_ID = null;
+    String CLINIC_ID = null;
 
     /** THE VISIT REASONS ARRAY LIST **/
     private ArrayList<Reason> arrReasons = new ArrayList<>();
+
+    /** STRINGS TO HOLD THE CLINIC RATING ID AND CLINIC RATING **/
+    String CLINIC_RATING_ID = null;
+    String CLINIC_RATING = null;
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.imgvwDoctorProfile) SimpleDraweeView imgvwDoctorProfile;
@@ -73,15 +83,19 @@ public class ReviewModifier extends AppCompatActivity {
 
         /* GET THE INCOMING DATA */
         getIncomingData();
+
+        /* CONFIGURE THE TOOLBAR **/
+        configTB();
     }
 
     /***** GET THE REVIEW DETAILS *****/
     private void fetchReviewDetails()   {
         ReviewsAPI api = ZenApiClient.getClient().create(ReviewsAPI.class);
-        Call<Review> call = api.fetchDoctorReviewDetails(REVIEW_ID);
+        Call<Review> call = api.fetchDoctorReviewDetails(REVIEW_ID, CLINIC_ID);
         call.enqueue(new Callback<Review>() {
             @Override
             public void onResponse(@NonNull Call<Review> call, @NonNull Response<Review> response) {
+                Log.e("REVIEW DETAILS", String.valueOf(response.raw()));
                 Review review = response.body();
                 if (review != null) {
                     /* GET THE DOCTOR ID */
@@ -148,6 +162,15 @@ public class ReviewModifier extends AppCompatActivity {
                         }
                     }
 
+                    /* GET AND SET THE CLINIC RATING ID AND THE CLINIC RATING */
+                    CLINIC_RATING_ID = review.getClinicRatingID();
+                    CLINIC_RATING = review.getClinicRating();
+                    if (CLINIC_RATING != null && !CLINIC_RATING.equalsIgnoreCase("null")) {
+                        ratingClinicExperience.setRating(Float.parseFloat(CLINIC_RATING));
+                    } else {
+                        ratingClinicExperience.setRating(0);
+                    }
+
                     /* GET AND SET THE DOCTOR EXPERIENCE */
                     String DOCTOR_EXPERIENCE = review.getDoctorExperience();
                     edtExperience.setText(DOCTOR_EXPERIENCE);
@@ -170,9 +193,12 @@ public class ReviewModifier extends AppCompatActivity {
     /***** GET THE INCOMING DATA *****/
     private void getIncomingData() {
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null && bundle.containsKey("REVIEW_ID"))  {
+        if (bundle != null
+                && bundle.containsKey("REVIEW_ID")
+                && bundle.containsKey("CLINIC_ID"))  {
             REVIEW_ID = bundle.getString("REVIEW_ID");
-            if (REVIEW_ID != null)  {
+            CLINIC_ID = bundle.getString("CLINIC_ID");
+            if (REVIEW_ID != null && CLINIC_ID != null)  {
                 /* GET THE REVIEW DETAILS */
                 fetchReviewDetails();
             } else {
@@ -204,5 +230,44 @@ public class ReviewModifier extends AppCompatActivity {
                 Crashlytics.logException(t);
             }
         });
+    }
+
+    /***** CONFIGURE THE TOOLBAR *****/
+    private void configTB() {
+        Toolbar myToolbar = findViewById(R.id.myToolbar);
+        setSupportActionBar(myToolbar);
+        String strTitle = "Update Your Review";
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setTitle(strTitle);
+        getSupportActionBar().setSubtitle(null);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = new MenuInflater(getApplicationContext());
+        inflater.inflate(R.menu.activity_review_creator, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                break;
+            case R.id.menuSubmit:
+                /* VALIDATE REVIEW DATA **/
+                validateData();
+                break;
+            default:
+                break;
+        }
+        return false;
+    }
+
+    /** VALIDATE REVIEW DATA **/
+    private void validateData() {
     }
 }

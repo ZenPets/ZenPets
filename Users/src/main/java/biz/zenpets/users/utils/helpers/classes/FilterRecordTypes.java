@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -172,7 +171,7 @@ public class FilterRecordTypes extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<RecordTypes> call, Throwable t) {
-                Log.e("RECORD TYPES FAILURE", t.getMessage());
+//                Log.e("RECORD TYPES FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

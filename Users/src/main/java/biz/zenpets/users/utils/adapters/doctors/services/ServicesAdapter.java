@@ -1,5 +1,6 @@
 package biz.zenpets.users.utils.adapters.doctors.services;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -14,23 +15,29 @@ import biz.zenpets.users.utils.models.doctors.modules.Service;
 
 public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.ServicesVH> {
 
-    /***** ARRAY LIST TO GET DATA FROM THE ACTIVITY *****/
-    private final ArrayList<Service> arrReviews;
+    /** AN ACTIVITY INSTANCE **/
+    Activity activity;
 
-    public ServicesAdapter(ArrayList<Service> arrReviews) {
+    /** ARRAY LIST TO GET DATA FROM THE ACTIVITY **/
+    private final ArrayList<Service> arrServices;
+
+    public ServicesAdapter(Activity activity, ArrayList<Service> arrServices) {
+
+        /* CAST THE ACTIVITY IN THE GLOBAL INSTANCE */
+        this.activity = activity;
 
         /* CAST THE CONTENTS OF THE ARRAY LIST IN THE METHOD TO THE LOCAL INSTANCE */
-        this.arrReviews = arrReviews;
+        this.arrServices = arrServices;
     }
 
     @Override
     public int getItemCount() {
-        return arrReviews.size();
+        return arrServices.size();
     }
 
     @Override
     public void onBindViewHolder(@NonNull ServicesVH holder, final int position) {
-        Service data = arrReviews.get(position);
+        Service data = arrServices.get(position);
 
         /* SET THE SERVICE NAME */
         if (data.getDoctorServiceName() != null)

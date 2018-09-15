@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -32,7 +33,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import biz.zenpets.users.creator.profile.ProfileEditor;
-import biz.zenpets.users.landing.LandingActivity;
+import biz.zenpets.users.landing.NewLandingActivity;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.models.user.UserData;
@@ -155,7 +156,7 @@ public class LoginActivity extends AppCompatActivity
 
             @Override
             public void onError(FacebookException error) {
-//                Log.e("FB ERROR", String.valueOf(error.getMessage()));
+                Log.e("FB ERROR", String.valueOf(error.getMessage()));
                 Crashlytics.logException(error);
             }
         });
@@ -211,12 +212,12 @@ public class LoginActivity extends AppCompatActivity
 
                     /* CHECK THE PROFILE COMPLETE STATUS */
                     if (profileComplete.equalsIgnoreCase("Complete"))   {
-                        Intent showLanding = new Intent(LoginActivity.this, LandingActivity.class);
+                        Intent showLanding = new Intent(LoginActivity.this, NewLandingActivity.class);
                         showLanding.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(showLanding);
                         finish();
                     } else if (profileComplete.equalsIgnoreCase("Incomplete"))  {
-                        Intent intent = new Intent(LoginActivity.this, ProfileEditor.class);
+                        Intent intent = new Intent(LoginActivity.this, NewLandingActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         finish();
@@ -241,7 +242,7 @@ public class LoginActivity extends AppCompatActivity
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
             } else {
-//                Log.e("Google Login Status", String.valueOf(result.getStatus()));
+                Log.e("Google Login Status", String.valueOf(result.getStatus()));
                 Toast.makeText(getApplicationContext(), "Google sign in failed. Please try again..", Toast.LENGTH_LONG).show();
             }
         } else {
@@ -279,7 +280,7 @@ public class LoginActivity extends AppCompatActivity
                         if (task.isSuccessful())    {
                             Toast.makeText(getApplicationContext(), "Google sign in successful", Toast.LENGTH_SHORT).show();
                         } else {
-//                            Log.e("Google Login", String.valueOf(task.getException()));
+                            Log.e("Google Login", String.valueOf(task.getException()));
                             Toast.makeText(getApplicationContext(), "Google authentication failed", Toast.LENGTH_SHORT).show();
                         }
                     }

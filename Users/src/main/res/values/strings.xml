@@ -5,7 +5,8 @@
     <string name="facebook_app_id">1584967218498481</string>
     <string name="google_maps_key">AIzaSyCoMTYVqI-JmuJ_cTV8TDqASsc2lknnQ_Q</string>
     <string name="google_static_map_api_key">AIzaSyD-5QWNIgI2O0F6JmmrGZyKUHUPb_YePkw</string>
-    <string name="google_directions_api_key">AIzaSyAW3Rn42MhLRJ8EeeCGuyYSiPV5Q5q_4bI</string>
+    <!--<string name="google_directions_api_key">AIzaSyAW3Rn42MhLRJ8EeeCGuyYSiPV5Q5q_4bI</string>-->
+    <string name="google_directions_api_key">AIzaSyDSJMH7Oh4FS3sUgv30g6VBSugpVandEMw</string>
 
     <!-- RAZOR PAY API KEYS -->
     <string name="razor_pay_api_key_id">rzp_test_ySDpAnHqFLEgk3</string>
@@ -22,6 +23,10 @@
     <!-- LANDING ACTIVITY -->
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+
+    <!-- NEW LANDING ACTIVITY -->
+    <string name="new_landing_empty_doctors">No doctors found near you. Click <b>\"See more doctors\"</b> to expand your location…</string>
+    <string name="new_landing_empty_adoptions">Oh snap. There are no adoptions listed in your city. :-(</string>
 
     <!-- GENERIC STRINGS -->
     <string name="generic_mb_yes">Yes</string>
@@ -226,6 +231,8 @@
     <string name="doctor_details_all_reviews">SEE ALL REVIEWS</string>
     <string name="doctor_details_all_reviews_placeholder">SEE ALL REVIEWS (%1$s)</string>
     <string name="doctor_details_no_reviews">There are no reviews for this Doctor yet…</string>
+    <string name="doctor_details_all_services">SEE ALL SERVICES</string>
+    <string name="doctor_details_all_services_placeholder">SEE ALL SERVICES (%1$s)</string>
     <string name="doctor_details_no_image">No images have been added for this Clinic yet…</string>
     <string name="doctor_details_feedback_button">Feedback</string>
     <string name="doctor_details_book">Book Appointment</string>

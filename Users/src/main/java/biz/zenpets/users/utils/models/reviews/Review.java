@@ -19,6 +19,8 @@ public class Review {
     @SerializedName("appointmentStatus") private String appointmentStatus;
     @SerializedName("doctorExperience") private String doctorExperience;
     @SerializedName("reviewTimestamp") private String reviewTimestamp;
+    @SerializedName("clinicRatingID") private String clinicRatingID;
+    @SerializedName("clinicRating") private String clinicRating;
 
     public Boolean getError() {
         return error;
@@ -146,5 +148,21 @@ public class Review {
 
     public void setReviewTimestamp(String reviewTimestamp) {
         this.reviewTimestamp = reviewTimestamp;
+    }
+
+    public String getClinicRatingID() {
+        return clinicRatingID;
+    }
+
+    public void setClinicRatingID(String clinicRatingID) {
+        this.clinicRatingID = clinicRatingID;
+    }
+
+    public String getClinicRating() {
+        return clinicRating;
+    }
+
+    public void setClinicRating(String clinicRating) {
+        this.clinicRating = clinicRating;
     }
 }

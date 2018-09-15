@@ -135,7 +135,7 @@ public class DoctorsList extends AppCompatActivity
         call.enqueue(new Callback<Doctors>() {
             @Override
             public void onResponse(Call<Doctors> call, Response<Doctors> response) {
-//                Log.e("KENNELS LIST", String.valueOf(response.raw()));
+//                Log.e("DOCTORS LIST", String.valueOf(response.raw()));
 
                 if (response.body() != null && response.body().getDoctors() != null)    {
                     /* PROCESS THE RESPONSE */
@@ -148,6 +148,10 @@ public class DoctorsList extends AppCompatActivity
 
                         if (currentPage <= TOTAL_PAGES) doctorsAdapter.addLoadingFooter();
                         else isLastPage = true;
+
+                        /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
+                        listDoctors.setVisibility(View.VISIBLE);
+                        linlaEmpty.setVisibility(View.GONE);
                     } else {
                         /* MARK THE LAST PAGE FLAG TO "TRUE" */
                         isLastPage = true;
@@ -195,7 +199,7 @@ public class DoctorsList extends AppCompatActivity
         call.enqueue(new Callback<Doctors>() {
             @Override
             public void onResponse(Call<Doctors> call, Response<Doctors> response) {
-//                Log.e("KENNELS LIST", String.valueOf(response.raw()));
+//                Log.e("DOCTORS LIST", String.valueOf(response.raw()));
 
                 if (response.body() != null && response.body().getDoctors() != null)    {
                     /* PROCESS THE RESPONSE */
@@ -219,10 +223,6 @@ public class DoctorsList extends AppCompatActivity
 
                     /* HIDE THE PROGRESS */
                     progressLoading.setVisibility(View.GONE);
-
-                    /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
-                    linlaEmpty.setVisibility(View.VISIBLE);
-                    listDoctors.setVisibility(View.GONE);
                 }
             }
 
@@ -917,9 +917,6 @@ public class DoctorsList extends AppCompatActivity
                     if (FINAL_LOCALITY_ID != null)  {
                         /* FETCH THE TOTAL NUMBER OF PAGES */
                         fetchTotalPages();
-
-                        /* FETCH THE LIST OF DOCTORS */
-                        fetchDoctors();
                     } else {
                         /* SET THE ERROR MESSAGE */
                         txtEmpty.setText(getString(R.string.doctor_list_location_not_served));
@@ -1055,6 +1052,11 @@ public class DoctorsList extends AppCompatActivity
                 DETECTED_LOCALITY = bundle.getString("LOCALITY_NAME");
                 FINAL_LOCALITY_ID = bundle.getString("LOCALITY_ID");
 
+                /* HIDE THE EMPTY LAYOUT, SHOW THE RECYCLER VIEW AND SHOW THE PROGRESS BAR */
+                linlaEmpty.setVisibility(View.GONE);
+                listDoctors.setVisibility(View.VISIBLE);
+                progressLoading.setVisibility(View.VISIBLE);
+
                 /* SET THE LOCATION */
                 txtLocation.setText(getString(R.string.doctor_list_tb_location_placeholder, DETECTED_LOCALITY, DETECTED_CITY));
 
@@ -1063,9 +1065,6 @@ public class DoctorsList extends AppCompatActivity
 
                 /* FETCH THE TOTAL NUMBER OF PAGES */
                 fetchTotalPages();
-
-                /* FETCH THE LIST OF DOCTORS */
-                fetchDoctors();
             }
         }
     }
@@ -1079,6 +1078,9 @@ public class DoctorsList extends AppCompatActivity
             public void onResponse(Call<DoctorPages> call, Response<DoctorPages> response) {
                 if (response.body() != null && response.body().getTotalPages() != null) {
                     TOTAL_PAGES = Integer.parseInt(response.body().getTotalPages());
+
+                    /* FETCH THE LIST OF DOCTORS */
+                    fetchDoctors();
                 }
             }
 

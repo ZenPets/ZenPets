@@ -129,9 +129,55 @@ public class DoctorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     String clinicPinCode = data.getClinicPinCode();
                     vh.txtClinicAddress.setText(activity.getString(R.string.doctor_list_address_placeholder, clinicAddress, cityName, clinicPinCode));
 
+//                    /* SET THE CLINIC DISTANCE */
+//                    Double latitude = Double.valueOf(data.getClinicLatitude());
+//                    Double longitude = Double.valueOf(data.getClinicLongitude());
+//                    LatLng LATLNG_DESTINATION = new LatLng(latitude, longitude);
+//                    String strOrigin = LATLNG_ORIGIN.latitude + "," + LATLNG_ORIGIN.longitude;
+//                    String strDestination = LATLNG_DESTINATION.latitude + "," + LATLNG_DESTINATION.longitude;
+//                    String strSensor = "false";
+//                    String strKey = activity.getString(R.string.google_directions_api_key);
+//                    DistanceAPI api = ZenDistanceClient.getClient().create(DistanceAPI.class);
+//                    Call<String> call = api.json(strOrigin, strDestination, strSensor, strKey);
+//                    call.enqueue(new Callback<String>() {
+//                        @Override
+//                        public void onResponse(Call<String> call, Response<String> response) {
+//                            Log.e("DISTANCE RAW", String.valueOf(response.raw()));
+//                            try {
+//                                String strDistance = response.body();
+//                                JSONObject JORootDistance = new JSONObject(strDistance);
+//                                JSONArray array = JORootDistance.getJSONArray("routes");
+//                                JSONObject JORoutes = array.getJSONObject(0);
+//                                JSONArray JOLegs= JORoutes.getJSONArray("legs");
+//                                JSONObject JOSteps = JOLegs.getJSONObject(0);
+//                                JSONObject JODistance = JOSteps.getJSONObject("distance");
+//                                if (JODistance.has("text")) {
+//                                    String distance = JODistance.getString("text");
+//                                    String strTilde = activity.getString(R.string.generic_tilde);
+//                                    vh.txtClinicDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strTilde, distance));
+//                                } else {
+//                                    String distance = "Unknown";
+//                                    String strInfinity = activity.getString(R.string.generic_infinity);
+//                                    vh.txtClinicDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
+//                                }
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                        @Override
+//                        public void onFailure(Call<String> call, Throwable t) {
+//                            Crashlytics.logException(t);
+//                            String distance = "Unknown";
+//                            String strInfinity = activity.getString(R.string.generic_infinity);
+//                            vh.txtClinicDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, distance));
+//                        }
+//                    });
+
                     /* SET THE CLINIC DISTANCE */
                     String strClinicDistance = data.getClinicDistance();
-                    if (strClinicDistance != null && !strClinicDistance.equals("Unknown"))  {
+                    if (strClinicDistance != null
+                            && !strClinicDistance.equals("Unknown")
+                            && !strClinicDistance.equalsIgnoreCase("null"))  {
                         String strTilde = activity.getString(R.string.generic_tilde);
                         vh.txtClinicDistance.setText(activity.getString(R.string.doctor_list_clinic_distance_placeholder, strTilde, strClinicDistance));
                     } else {

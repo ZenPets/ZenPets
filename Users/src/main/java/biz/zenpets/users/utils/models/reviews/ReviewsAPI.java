@@ -47,7 +47,9 @@ public interface ReviewsAPI {
 
     /** FETCH THE REVIEW DETAILS**/
     @GET("fetchDoctorReviewDetails")
-    Call<Review> fetchDoctorReviewDetails(@Query("reviewID") String reviewID);
+    Call<Review> fetchDoctorReviewDetails(
+            @Query("reviewID") String reviewID,
+            @Query("clinicID") String clinicID);
 
     /** CHECK IF THE USER HAS POSTED A REVIEW FOR A DOCTOR **/
     @GET("checkUserDoctorReview")

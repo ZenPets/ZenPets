@@ -3,7 +3,6 @@ package biz.zenpets.users.utils.helpers.timings;
 import android.os.AsyncTask;
 
 import org.joda.time.LocalTime;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -125,15 +124,23 @@ public class DisplayMorningsSlots extends AsyncTask<Object, Void, ArrayList<Morn
                 String strResult = response.body().string();
                 JSONObject JORoot = new JSONObject(strResult);
                 if (JORoot.has("error") && JORoot.getString("error").equalsIgnoreCase("false")) {
-                    JSONArray JAAppointments = JORoot.getJSONArray("appointments");
-                    if (JAAppointments.length() > 0 /*|| slotStatus == 0 || slotStatus == 1*/)    {
-                        morningData.setAppointmentStatus("Unavailable");
-                    } else {
-                        morningData.setAppointmentStatus("Available");
-                    }
-                } else {
                     morningData.setAppointmentStatus("Available");
+                } else {
+                    morningData.setAppointmentStatus("Unavailable");
                 }
+//                    if (JORoot.has("appointments")) {
+//                        JSONArray JAAppointments = JORoot.getJSONArray("appointments");
+//                        if (JAAppointments.length() > 0 /*|| slotStatus == 0 || slotStatus == 1*/)    {
+//                            morningData.setAppointmentStatus("Unavailable");
+//                        } else {
+//                            morningData.setAppointmentStatus("Available");
+//                        }
+//                    } else {
+//                        morningData.setAppointmentStatus("Unavailable");
+//                    }
+//                } else {
+//                    morningData.setAppointmentStatus("Available");
+//                }
 
                 /* ADD THE COLLECTED DATA TO THE ARRAY LIST */
                 arrMorningSlots.add(morningData);

@@ -3,7 +3,6 @@ package biz.zenpets.users.utils.helpers.timings;
 import android.os.AsyncTask;
 
 import org.joda.time.LocalTime;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -54,6 +53,8 @@ public class DisplayAfternoonSlots extends AsyncTask<Object, Void, ArrayList<Aft
         AFTERNOON_END_TIME = String.valueOf(objects[2]);
         DOCTOR_ID = String.valueOf(objects[3]);
         CLINIC_ID = String.valueOf(objects[4]);
+
+//        Log.e("CURRENT DATE", CURRENT_DATE);
 
         /* CALCULATE THE SLOTS */
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm a", Locale.getDefault());
@@ -125,15 +126,23 @@ public class DisplayAfternoonSlots extends AsyncTask<Object, Void, ArrayList<Aft
                 String strResult = response.body().string();
                 JSONObject JORoot = new JSONObject(strResult);
                 if (JORoot.has("error") && JORoot.getString("error").equalsIgnoreCase("false")) {
-                    JSONArray JAAppointments = JORoot.getJSONArray("appointments");
-                    if (JAAppointments.length() > 0 /*|| slotStatus == 0 || slotStatus == 1*/)    {
-                        afternoonData.setAppointmentStatus("Unavailable");
-                    } else {
-                        afternoonData.setAppointmentStatus("Available");
-                    }
-                } else {
                     afternoonData.setAppointmentStatus("Available");
+                } else {
+                    afternoonData.setAppointmentStatus("Unavailable");
                 }
+//                    if (JORoot.has("appointments")) {
+//                        JSONArray JAAppointments = JORoot.getJSONArray("appointments");
+//                        if (JAAppointments.length() > 0 /*|| slotStatus == 0 || slotStatus == 1*/)    {
+//                            afternoonData.setAppointmentStatus("Unavailable");
+//                        } else {
+//                            afternoonData.setAppointmentStatus("Available");
+//                        }
+//                    } else {
+//                        afternoonData.setAppointmentStatus("Unavailable");
+//                    }
+//                } else {
+//                    afternoonData.setAppointmentStatus("Available");
+//                }
 
                 /* ADD THE COLLECTED DATA TO THE ARRAY LIST */
                 arrAfternoonSlots.add(afternoonData);

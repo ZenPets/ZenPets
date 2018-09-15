@@ -36,6 +36,7 @@ import java.util.ArrayList;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.landing.LandingActivity;
+import biz.zenpets.users.landing.NewLandingActivity;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.adapters.location.CitiesAdapter;
 import biz.zenpets.users.utils.adapters.location.StatesAdapter;
@@ -321,7 +322,7 @@ public class ProfileEditor extends AppCompatActivity {
                     getApp().setUserID(response.body().getUserID());
                     getApp().setProfileStatus("Complete");
                     getApp().setUserID(USER_AUTH_ID);
-                    Intent intent = new Intent(ProfileEditor.this, LandingActivity.class);
+                    Intent intent = new Intent(ProfileEditor.this, NewLandingActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     finish();

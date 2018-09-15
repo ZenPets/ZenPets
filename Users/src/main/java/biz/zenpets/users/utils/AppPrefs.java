@@ -9,7 +9,6 @@ import android.preference.PreferenceManager;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 import android.support.v7.app.AppCompatDelegate;
-import android.util.Base64;
 
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -49,7 +48,6 @@ public class AppPrefs extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         /* INSTANTIATE THE APP INSTANCE */

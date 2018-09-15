@@ -3,8 +3,8 @@ package biz.zenpets.users.utils.models.doctors.timings;
 import com.google.gson.annotations.SerializedName;
 
 public class Timing {
-
     @SerializedName("error") private Boolean error;
+    @SerializedName("message") private String message;
     @SerializedName("timingsID") private String timingsID;
     @SerializedName("doctorID") private String doctorID;
     @SerializedName("clinicID") private String clinicID;
@@ -43,6 +43,14 @@ public class Timing {
 
     public void setError(Boolean error) {
         this.error = error;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public String getTimingsID() {

@@ -13,4 +13,8 @@ public interface ServicesAPI {
     /** FETCH A SUBSET OF THE DOCTOR'S SERVICES **/
     @GET("fetchServicesSubset")
     Call<Services> fetchServicesSubset(@Query("doctorID") String doctorID);
+
+    /** FETCH THE NUMBER OF A DOCTOR'S SERVICES **/
+    @GET("fetchDoctorServicesCount")
+    Call<ServicesCount> fetchDoctorServicesCount(@Query("doctorID") String doctorID);
 }

@@ -497,8 +497,10 @@ public class AppointmentSlotCreator extends AppCompatActivity
                     selectedPosition = holder.getAdapterPosition();
                     notifyDataSetChanged();
 
+                    /* CHANGE THE CURRENT DATE */
+                    CURRENT_DATE = data.getLongDate();
+
                     String strLongDay = data.getLongDay();
-//                    Log.e("LONG DAY", strLongDay);
 
                     /* FETCH THE TIME SLOTS  */
                     if (strLongDay.equalsIgnoreCase("sun"))   {
@@ -1290,6 +1292,8 @@ public class AppointmentSlotCreator extends AppCompatActivity
 
         /* CLEAR THE ARRAY LIST */
         arrAfternoonSlots.clear();
+
+        /* DISPLAY THE AFTERNOON SLOTS */
         new DisplayAfternoonSlots(this).execute(CURRENT_DATE, AFTERNOON_START_TIME, AFTERNOON_END_TIME, DOCTOR_ID, CLINIC_ID);
     }
 

@@ -95,4 +95,12 @@ public interface TimingsAPI {
     Call<Timing> fetchSaturdayAfternoonTimings(
             @Query("doctorID") String doctorID,
             @Query("clinicID") String clinicID);
+
+    /** CHECK SLOT AVAILABILITY **/
+    @GET("checkAvailability")
+    Call<TimeSlot> checkAvailability(
+            @Query("doctorID") String doctorID,
+            @Query("clinicID") String clinicID,
+            @Query("appointmentDate") String appointmentDate,
+            @Query("appointmentTime") String appointmentTime);
 }

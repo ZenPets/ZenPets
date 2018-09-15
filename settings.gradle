@@ -1,1 +1,1 @@
-include ':Users', ':location', ':Trainers', ':Kennels'
+include ':Users', ':location', ':Trainers', ':Kennels', ':Doctors'

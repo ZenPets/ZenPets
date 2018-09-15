@@ -17,16 +17,17 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatRatingBar;
-import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -65,8 +66,6 @@ import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.models.clinics.images.ClinicImage;
 import biz.zenpets.users.utils.models.clinics.images.ClinicImages;
 import biz.zenpets.users.utils.models.clinics.images.ClinicImagesAPI;
-import biz.zenpets.users.utils.models.clinics.ratings.ClinicRating;
-import biz.zenpets.users.utils.models.clinics.ratings.ClinicRatingsAPI;
 import biz.zenpets.users.utils.models.doctors.DoctorsAPI;
 import biz.zenpets.users.utils.models.doctors.list.Doctor;
 import biz.zenpets.users.utils.models.doctors.modules.Qualification;
@@ -75,6 +74,7 @@ import biz.zenpets.users.utils.models.doctors.modules.QualificationsAPI;
 import biz.zenpets.users.utils.models.doctors.modules.Service;
 import biz.zenpets.users.utils.models.doctors.modules.Services;
 import biz.zenpets.users.utils.models.doctors.modules.ServicesAPI;
+import biz.zenpets.users.utils.models.doctors.modules.ServicesCount;
 import biz.zenpets.users.utils.models.doctors.subscription.SubscriptionData;
 import biz.zenpets.users.utils.models.doctors.subscription.SubscriptionsAPI;
 import biz.zenpets.users.utils.models.doctors.timings.Timing;
@@ -114,6 +114,7 @@ public class DoctorDetailsNew extends AppCompatActivity {
     private String CLINIC_ADDRESS;
     private Double CLINIC_LATITUDE;
     private Double CLINIC_LONGITUDE;
+    private String CLINIC_DISTANCE;
     private String CLINIC_RATING;
     private String DOCTOR_PREFIX;
     private String DOCTOR_NAME;
@@ -154,7 +155,9 @@ public class DoctorDetailsNew extends AppCompatActivity {
     private String SAT_AFT_TO = null;
 
     /* THE SERVICES AND SUBSET ADAPTER AND ARRAY LISTS **/
+    private ServicesAdapter servicesAdapter;
     private ArrayList<Service> arrServicesSubset = new ArrayList<>();
+    private ArrayList<Service> arrServices = new ArrayList<>();
 
     /** THE REVIEWS AND SUBSET ADAPTER AND ARRAY LISTS **/
     private ReviewsAdapter reviewsAdapter;
@@ -175,34 +178,37 @@ public class DoctorDetailsNew extends AppCompatActivity {
     @BindView(R.id.toolbarLayout) CollapsingToolbarLayout toolbarLayout;
     @BindView(R.id.imgvwClinicCover) SimpleDraweeView imgvwClinicCover;
     @BindView(R.id.imgvwDoctorProfile) SimpleDraweeView imgvwDoctorProfile;
-    @BindView(R.id.txtDoctorName) AppCompatTextView txtDoctorName;
-    @BindView(R.id.txtDoctorEducation) AppCompatTextView txtDoctorEducation;
+    @BindView(R.id.txtDoctorName) TextView txtDoctorName;
+    @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
+    @BindView(R.id.txtDoctorEducation) TextView txtDoctorEducation;
     @BindView(R.id.linlaExperience) LinearLayout linlaExperience;
-    @BindView(R.id.txtExperience) AppCompatTextView txtExperience;
+    @BindView(R.id.txtExperience) TextView txtExperience;
     @BindView(R.id.linlaVotes) LinearLayout linlaVotes;
-    @BindView(R.id.txtVotes) AppCompatTextView txtVotes;
-    @BindView(R.id.txtDoctorCharges) AppCompatTextView txtDoctorCharges;
-    @BindView(R.id.txtClinicName) AppCompatTextView txtClinicName;
+    @BindView(R.id.txtVotes) TextView txtVotes;
+    @BindView(R.id.txtDoctorCharges) TextView txtDoctorCharges;
+    @BindView(R.id.txtClinicName) TextView txtClinicName;
     @BindView(R.id.clinicRating) AppCompatRatingBar clinicRating;
-    @BindView(R.id.txtClinicAddress) AppCompatTextView txtClinicAddress;
+    @BindView(R.id.txtClinicAddress) TextView txtClinicAddress;
     @BindView(R.id.clinicMap) MapView clinicMap;
+    @BindView(R.id.txtClinicDistance) TextView txtClinicDistance;
     @BindView(R.id.linlaTimingMorning) LinearLayout linlaTimingMorning;
-    @BindView(R.id.txtMorningOpen) AppCompatTextView txtMorningOpen;
-    @BindView(R.id.txtTimingsMorning) AppCompatTextView txtTimingsMorning;
-    @BindView(R.id.txtMorningClosed) AppCompatTextView txtMorningClosed;
+    @BindView(R.id.txtMorningOpen) TextView txtMorningOpen;
+    @BindView(R.id.txtTimingsMorning) TextView txtTimingsMorning;
+    @BindView(R.id.txtMorningClosed) TextView txtMorningClosed;
     @BindView(R.id.linlaTimingAfternoon) LinearLayout linlaTimingAfternoon;
-    @BindView(R.id.txtAfternoonOpen) AppCompatTextView txtAfternoonOpen;
-    @BindView(R.id.txtTimingAfternoon) AppCompatTextView txtTimingAfternoon;
-    @BindView(R.id.txtAfternoonClosed) AppCompatTextView txtAfternoonClosed;
+    @BindView(R.id.txtAfternoonOpen) TextView txtAfternoonOpen;
+    @BindView(R.id.txtTimingAfternoon) TextView txtTimingAfternoon;
+    @BindView(R.id.txtAfternoonClosed) TextView txtAfternoonClosed;
     @BindView(R.id.linlaReviewsProgress) LinearLayout linlaReviewsProgress;
     @BindView(R.id.linlaReviews) LinearLayout linlaReviews;
     @BindView(R.id.listReviews) RecyclerView listReviews;
     @BindView(R.id.linlaNoReviews) LinearLayout linlaNoReviews;
-    @BindView(R.id.txtAllReviews) AppCompatTextView txtAllReviews;
+    @BindView(R.id.txtAllReviews) TextView txtAllReviews;
     @BindView(R.id.linlaServicesProgress) LinearLayout linlaServicesProgress;
     @BindView(R.id.linlaServices) LinearLayout linlaServices;
     @BindView(R.id.listServices) RecyclerView listServices;
     @BindView(R.id.linlaNoServices) LinearLayout linlaNoServices;
+    @BindView(R.id.txtAllServices) TextView txtAllServices;
     @BindView(R.id.linlaImagesContainer) LinearLayout linlaImagesContainer;
     @BindView(R.id.linlaClinicImages) LinearLayout linlaClinicImages;
     @BindView(R.id.listClinicImages) RecyclerView listClinicImages;
@@ -210,27 +216,27 @@ public class DoctorDetailsNew extends AppCompatActivity {
 //    @BindView(R.id.btnBook) AppCompatButton btnBook;
 
     /** THE CUSTOM TIMINGS LAYOUT ELEMENTS **/
-    private AppCompatTextView txtSunMorning;
-    private AppCompatTextView txtSunAfternoon;
-    private AppCompatTextView txtMonMorning;
-    private AppCompatTextView txtMonAfternoon;
-    private AppCompatTextView txtTueMorning;
-    private AppCompatTextView txtTueAfternoon;
-    private AppCompatTextView txtWedMorning;
-    private AppCompatTextView txtWedAfternoon;
-    private AppCompatTextView txtThuMorning;
-    private AppCompatTextView txtThuAfternoon;
-    private AppCompatTextView txtFriMorning;
-    private AppCompatTextView txtFriAfternoon;
-    private AppCompatTextView txtSatMorning;
-    private AppCompatTextView txtSatAfternoon;
+    private TextView txtSunMorning;
+    private TextView txtSunAfternoon;
+    private TextView txtMonMorning;
+    private TextView txtMonAfternoon;
+    private TextView txtTueMorning;
+    private TextView txtTueAfternoon;
+    private TextView txtWedMorning;
+    private TextView txtWedAfternoon;
+    private TextView txtThuMorning;
+    private TextView txtThuAfternoon;
+    private TextView txtFriMorning;
+    private TextView txtFriAfternoon;
+    private TextView txtSatMorning;
+    private TextView txtSatAfternoon;
 
     /* THE CUSTOM SERVICES LAYOUT ELEMENTS **/
-//    RecyclerView listDoctorServices;
+    RecyclerView listDoctorServices;
 
     /** THE ALL CUSTOM VIEWS **/
     private View custAllTimings;
-//    private View custAllServices;
+    private View custAllServices;
 
     /** SHOW THE CHARGES DIALOG **/
     @OnClick(R.id.imgvwChargesInfo) void showChargesInfo()    {
@@ -252,9 +258,34 @@ public class DoctorDetailsNew extends AppCompatActivity {
     }
 
     /* SHOW ALL SERVICES **/
-//    @OnClick(R.id.txtAllServices) void showAllServices()    {
-//        showDoctorServices();
-//    }
+    @OnClick(R.id.txtAllServices) void showAllServices()    {
+        showDoctorServices();
+    }
+
+    /** SHOW ALL SERVICES **/
+    private void showDoctorServices() {
+        /* CLEAR THE ARRAY LIST */
+        arrServices.clear();
+
+        /* CONFIGURE THE DIALOG */
+        MaterialDialog dialog = new MaterialDialog.Builder(DoctorDetailsNew.this)
+                .theme(Theme.LIGHT)
+                .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
+                .title("ALL SERVICES")
+                .customView(custAllServices, false)
+                .positiveText("Dismiss")
+                .build();
+
+        /* CAST AND CONFIGURE THE RECYCLER VIEW */
+        listDoctorServices = dialog.getCustomView().findViewById(R.id.listDoctorServices);
+        LinearLayoutManager llmServices = new LinearLayoutManager(this);
+        llmServices.setOrientation(LinearLayoutManager.VERTICAL);
+        listDoctorServices.setLayoutManager(llmServices);
+        listDoctorServices.setAdapter(servicesAdapter);
+
+        /* FETCH A LIST OF THE DOCTOR'S SERVICES */
+        fetchDoctorServices(dialog);
+    }
 
     @SuppressLint("InflateParams")
     @Override
@@ -271,10 +302,10 @@ public class DoctorDetailsNew extends AppCompatActivity {
 
         /* INFLATE THE CUSTOM VIEWS */
         custAllTimings = LayoutInflater.from(getApplicationContext()).inflate(R.layout.custom_all_timings_view, null);
-//        custAllServices = LayoutInflater.from(getApplicationContext()).inflate(R.layout.custom_all_services_list, null);
+        custAllServices = LayoutInflater.from(getApplicationContext()).inflate(R.layout.custom_all_services_list, null);
 
         /* INSTANTIATE THE ADAPTERS **/
-//        servicesAdapter = new ServicesAdapter(DoctorDetailsNew.this, arrServicesSubset);
+        servicesAdapter = new ServicesAdapter(DoctorDetailsNew.this, arrServicesSubset);
         reviewsAdapter = new ReviewsAdapter(DoctorDetailsNew.this, arrReviewsSubset);
         imagesAdapter = new ClinicImagesAdapter(DoctorDetailsNew.this, arrImages);
 
@@ -301,10 +332,11 @@ public class DoctorDetailsNew extends AppCompatActivity {
         fetchReviewCount();
         fetchDoctorReviews();
 
-        /* SHOW THE PROGRESS AND FETCH THE DOCTOR'S SERVICES */
+        /* SHOW THE PROGRESS AND FETCH A SUBSET OF THE DOCTOR'S SERVICES */
         linlaServicesProgress.setVisibility(View.VISIBLE);
         listServices.setVisibility(View.GONE);
-        fetchDoctorServices();
+        fetchServicesCount();
+        fetchDoctorServicesSubset();
 
         /* FETCH CLINIC IMAGES */
         fetchClinicImages();
@@ -411,6 +443,18 @@ public class DoctorDetailsNew extends AppCompatActivity {
                     /* FETCH THE DOCTOR'S FEEDBACK */
                     fetchDoctorFeedback();
 
+                    /* GET AND SET THE CLINIC DISTANCE */
+                    CLINIC_DISTANCE = data.getClinicDistance();
+                    if (CLINIC_DISTANCE != null
+                            && !CLINIC_DISTANCE.equals("Unknown")
+                            && !CLINIC_DISTANCE.equalsIgnoreCase("null"))  {
+                        String strTilde = getString(R.string.generic_tilde);
+                        txtClinicDistance.setText(getString(R.string.doctor_list_clinic_distance_placeholder, strTilde, CLINIC_DISTANCE));
+                    } else {
+                        String strInfinity = getString(R.string.generic_infinity);
+                        txtClinicDistance.setText(getString(R.string.doctor_list_clinic_distance_placeholder, strInfinity, CLINIC_DISTANCE));
+                    }
+
                     /* GET AND SET THE CLINIC LATITUDE AND LONGITUDE ON THE MAP */
                     CLINIC_LATITUDE = Double.valueOf(data.getClinicLatitude());
                     CLINIC_LONGITUDE = Double.valueOf(data.getClinicLongitude());
@@ -478,6 +522,9 @@ public class DoctorDetailsNew extends AppCompatActivity {
                         saturdayMorningTimings();
                         saturdayAfternoonTimings();
                     }
+
+                    /* HIDE THE PROGRESS AFTER FETCHING THE DATA */
+                    linlaProgress.setVisibility(View.GONE);
                 }
             }
 
@@ -547,32 +594,32 @@ public class DoctorDetailsNew extends AppCompatActivity {
         });
     }
 
-    /***** GET THE CLINIC RATING *****/
-    private void fetchClinicRatings() {
-        ClinicRatingsAPI api = ZenApiClient.getClient().create(ClinicRatingsAPI.class);
-        Call<ClinicRating> call = api.fetchClinicRatings(CLINIC_ID);
-        call.enqueue(new Callback<ClinicRating>() {
-            @Override
-            public void onResponse(Call<ClinicRating> call, Response<ClinicRating> response) {
-                ClinicRating rating = response.body();
-                if (rating != null) {
-                    String strRating = rating.getClinicRating();
-                    if (strRating != null && !strRating.equalsIgnoreCase("null")) {
-                        clinicRating.setRating(Float.parseFloat(strRating));
-                    } else {
-                        clinicRating.setRating(0);
-                    }
-                } else {
-                    clinicRating.setRating(0);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ClinicRating> call, Throwable t) {
-                Crashlytics.logException(t);
-            }
-        });
-    }
+//    /***** GET THE CLINIC RATING *****/
+//    private void fetchClinicRatings() {
+//        ClinicRatingsAPI api = ZenApiClient.getClient().create(ClinicRatingsAPI.class);
+//        Call<ClinicRating> call = api.fetchClinicRatings(CLINIC_ID);
+//        call.enqueue(new Callback<ClinicRating>() {
+//            @Override
+//            public void onResponse(Call<ClinicRating> call, Response<ClinicRating> response) {
+//                ClinicRating rating = response.body();
+//                if (rating != null) {
+//                    String strRating = rating.getClinicRating();
+//                    if (strRating != null && !strRating.equalsIgnoreCase("null")) {
+//                        clinicRating.setRating(Float.parseFloat(strRating));
+//                    } else {
+//                        clinicRating.setRating(0);
+//                    }
+//                } else {
+//                    clinicRating.setRating(0);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ClinicRating> call, Throwable t) {
+//                Crashlytics.logException(t);
+//            }
+//        });
+//    }
 
     /***** FETCH THE DOCTOR'S REVIEWS COUNT *****/
     private void fetchReviewCount() {
@@ -596,6 +643,34 @@ public class DoctorDetailsNew extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ReviewCount> call, Throwable t) {
+//                Log.e("COUNT FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
+    }
+
+    /** FETCH THE NUMBER OF SERVICES **/
+    private void fetchServicesCount() {
+        ServicesAPI api = ZenApiClient.getClient().create(ServicesAPI.class);
+        Call<ServicesCount> call = api.fetchDoctorServicesCount(DOCTOR_ID);
+        call.enqueue(new Callback<ServicesCount>() {
+            @Override
+            public void onResponse(Call<ServicesCount> call, Response<ServicesCount> response) {
+                ServicesCount count = response.body();
+                if (count != null)  {
+                    int countServices = Integer.parseInt(count.getTotalServices());
+                    if (countServices > 0)   {
+                        txtAllServices.setText(getString(R.string.doctor_details_all_services_placeholder, String.valueOf(countServices)));
+                    } else {
+                        txtAllServices.setText(getString(R.string.doctor_details_all_services));
+                    }
+                } else {
+                    txtAllServices.setText(getString(R.string.doctor_details_all_services));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ServicesCount> call, Throwable t) {
 //                Log.e("COUNT FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
@@ -643,13 +718,64 @@ public class DoctorDetailsNew extends AppCompatActivity {
         });
     }
 
-    /***** FETCH THE DOCTOR'S SERVICES *****/
-    private void fetchDoctorServices() {
+    /** FETCH A LIST OF THE DOCTOR'S SERVICES
+     * @param dialog**/
+    private void fetchDoctorServices(final MaterialDialog dialog) {
         ServicesAPI api = ZenApiClient.getClient().create(ServicesAPI.class);
         Call<Services> call = api.fetchDoctorServices(DOCTOR_ID);
         call.enqueue(new Callback<Services>() {
             @Override
             public void onResponse(Call<Services> call, Response<Services> response) {
+//                Log.e("SERVICES", String.valueOf(response.raw()));
+                if (response.body() != null && response.body().getServices() != null)    {
+                    arrServices = response.body().getServices();
+                    if (arrServices.size() > 0)    {
+//                        /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY REVIEWS VIEW */
+//                        linlaServices.setVisibility(View.VISIBLE);
+//                        linlaNoServices.setVisibility(View.GONE);
+//                        listServices.setVisibility(View.VISIBLE);
+//
+                        /* INSTANTIATE THE ADAPTER */
+                        servicesAdapter = new ServicesAdapter(DoctorDetailsNew.this, arrServices);
+
+                        /* SET THE SERVICES ADAPTER TO THE RECYCLER VIEW */
+                        listDoctorServices.setAdapter(servicesAdapter);
+                    } else {
+//                        /* SHOW THE NO SERVICES LAYOUT */
+//                        linlaNoServices.setVisibility(View.VISIBLE);
+//                        linlaServices.setVisibility(View.GONE);
+//                        listServices.setVisibility(View.GONE);
+                    }
+                } else {
+//                    /* SHOW THE NO SERVICES LAYOUT */
+//                    linlaNoServices.setVisibility(View.VISIBLE);
+//                    linlaServices.setVisibility(View.GONE);
+//                    listServices.setVisibility(View.GONE);
+                }
+
+                /* SHOW THE DIALOG */
+                dialog.show();
+
+//                /* HIDE THE PROGRESS AFTER FETCHING THE SERVICES */
+//                linlaServicesProgress.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<Services> call, Throwable t) {
+//                Log.e("SERVICES FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
+    }
+
+    /** FETCH A SUBSET OF THE DOCTOR'S SERVICES **/
+    private void fetchDoctorServicesSubset() {
+        ServicesAPI api = ZenApiClient.getClient().create(ServicesAPI.class);
+        Call<Services> call = api.fetchServicesSubset(DOCTOR_ID);
+        call.enqueue(new Callback<Services>() {
+            @Override
+            public void onResponse(Call<Services> call, Response<Services> response) {
+//                Log.e("SERVICES SUBSET", String.valueOf(response.raw()));
                 if (response.body() != null && response.body().getServices() != null)    {
                     arrServicesSubset = response.body().getServices();
                     if (arrServicesSubset.size() > 0)    {
@@ -659,7 +785,7 @@ public class DoctorDetailsNew extends AppCompatActivity {
                         listServices.setVisibility(View.VISIBLE);
 
                         /* SET THE SERVICES ADAPTER TO THE RECYCLER VIEW */
-                        listServices.setAdapter(new ServicesAdapter(arrServicesSubset));
+                        listServices.setAdapter(new ServicesAdapter(DoctorDetailsNew.this, arrServicesSubset));
                     } else {
                         /* SHOW THE NO SERVICES LAYOUT */
                         linlaNoServices.setVisibility(View.VISIBLE);
@@ -933,7 +1059,7 @@ public class DoctorDetailsNew extends AppCompatActivity {
         listServices.setLayoutManager(services);
         listServices.setHasFixedSize(true);
         listServices.setNestedScrollingEnabled(false);
-        listServices.setAdapter(new ServicesAdapter(arrServicesSubset));
+        listServices.setAdapter(new ServicesAdapter(DoctorDetailsNew.this, arrServicesSubset));
 
         LinearLayoutManager reviews = new LinearLayoutManager(this);
         reviews.setOrientation(LinearLayoutManager.VERTICAL);
@@ -966,7 +1092,8 @@ public class DoctorDetailsNew extends AppCompatActivity {
             ORIGIN_LONGITUDE = bundle.getString("ORIGIN_LONGITUDE");
             if (DOCTOR_ID != null && CLINIC_ID != null
                     && ORIGIN_LATITUDE != null && ORIGIN_LONGITUDE != null)  {
-                /* FETCH THE DOCTOR DETAILS **/
+                /* SHOW THE PROGRESS AND FETCH THE DOCTOR DETAILS **/
+                linlaProgress.setVisibility(View.VISIBLE);
                 fetchDoctorDetails();
             } else {
                 Toast.makeText(getApplicationContext(), "Failed to get required info....", Toast.LENGTH_SHORT).show();
@@ -1585,7 +1712,7 @@ public class DoctorDetailsNew extends AppCompatActivity {
         call.enqueue(new Callback<Review>() {
             @Override
             public void onResponse(Call<Review> call, Response<Review> response) {
-//                Log.e("REVIEW RESPONSE", String.valueOf(response.raw()));
+                Log.e("REVIEW RESPONSE", String.valueOf(response.raw()));
                 Review review = response.body();
                 if (review != null) {
                     if (review.getError())  {
@@ -1617,6 +1744,7 @@ public class DoctorDetailsNew extends AppCompatActivity {
                         String reviewID = review.getReviewID();
                         Intent intent = new Intent(DoctorDetailsNew.this, ReviewModifier.class);
                         intent.putExtra("REVIEW_ID", reviewID);
+                        intent.putExtra("CLINIC_ID", CLINIC_ID);
                         startActivityForResult(intent, 101);
                     }
                 } else {

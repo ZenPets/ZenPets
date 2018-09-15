@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,7 +103,7 @@ public class DetailsFragment extends Fragment {
         call.enqueue(new Callback<Pet>() {
             @Override
             public void onResponse(Call<Pet> call, Response<Pet> response) {
-                Log.e("DETAILS RESPONSE", String.valueOf(response.raw()));
+//                Log.e("DETAILS RESPONSE", String.valueOf(response.raw()));
                 Pet pet = response.body();
                 if (!pet.getError()) {
 
@@ -196,7 +195,7 @@ public class DetailsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Pet> call, Throwable t) {
-                Log.e("PET FAILURE", t.getMessage());
+//                Log.e("PET FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });

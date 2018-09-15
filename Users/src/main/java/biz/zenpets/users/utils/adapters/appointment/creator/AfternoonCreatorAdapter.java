@@ -42,6 +42,9 @@ public class AfternoonCreatorAdapter extends RecyclerView.Adapter<AfternoonCreat
     public void onBindViewHolder(@NonNull SlotsVH holder, final int position) {
         final AfternoonTimeSlotsData data = arrSlots.get(position);
 
+//        Log.e("APPOINTMENT TIME", data.getAppointmentTime());
+//        Log.e("APPOINTMENT DATE", data.getAppointmentDate());
+
         /* SET THE APPOINTMENT TIME */
         if (data.getAppointmentTime() != null)   {
             holder.txtTimeSlot.setText(data.getAppointmentTime());

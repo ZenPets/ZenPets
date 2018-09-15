@@ -413,6 +413,8 @@ public class AppointmentDetailsCreator extends AppCompatActivity /*implements Fe
 
             @Override
             public void onFailure(Call<Appointment> call, Throwable t) {
+//                Log.e("APPOINTMENT FAILURE", t.getMessage());
+//                Log.e("APPOINTMENT FAILURE", t.getLocalizedMessage());
                 Crashlytics.logException(t);
             }
         });
