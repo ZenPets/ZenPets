@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- STORAGE PERMISSION TITLES AND MESSAGES -->
+    <string name="storage_permission_title">We Need A Permission</string>
+    <string name="storage_permission_message">\nZen Pets requires the Storage Permission to optimize Images that you upload to the Zen Pets platform.</string>
+    <string name="storage_permission_denied">\You denied Zen Pets the Storage Permission. This permissions is crucial because it helps Zen Pets optimize images to maintain a uniform image size across the entire Platform. Would you like to grant the permission again?</string>
+
+    <!-- LOCATION PERMISSION TITLES AND MESSAGES -->
+    <string name="location_permission_title">We Need Your Location</string>
+    <string name="location_permission_message">\nZen Pets requires the Location Permission to detect your current location automatically for you. \n\nFor a seamless experience, we recommend granting Zen Pets this permission.</string>
+
+    <!-- COMMON PERMISSION STRINGS -->
+    <string name="permission_grant">Grant Permission</string>
+    <string name="permission_deny">Not Now</string>
+</resources>

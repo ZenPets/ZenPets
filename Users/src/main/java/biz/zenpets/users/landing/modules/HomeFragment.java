@@ -10,17 +10,14 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import biz.zenpets.users.R;
 import biz.zenpets.users.adoptions.TestAdoptionsList;
 import biz.zenpets.users.boarding.BoardingsList;
 import biz.zenpets.users.doctors.DoctorsList;
+import biz.zenpets.users.groomers.GroomersList;
 import biz.zenpets.users.kennels.KennelsList;
 import biz.zenpets.users.trainers.TrainersList;
 import biz.zenpets.users.utils.TypefaceSpan;
@@ -44,7 +41,8 @@ public class HomeFragment extends Fragment {
 
     /** SHOW THE LIST OF GROOMERS **/
     @OnClick(R.id.linlaGroomers) void showGroomers()    {
-        Toast.makeText(getActivity(), "Coming real soon...", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), GroomersList.class);
+        startActivity(intent);
     }
 
     /** SHOW THE LIST OF PET KENNELS **/
@@ -111,21 +109,21 @@ public class HomeFragment extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setSubtitle(null);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.landing_notifications, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                getActivity().finish();
-                break;
-            default:
-                break;
-        }
-        return false;
-    }
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        inflater.inflate(R.menu.landing_notifications, menu);
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                getActivity().finish();
+//                break;
+//            default:
+//                break;
+//        }
+//        return false;
+//    }
 }

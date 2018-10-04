@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- MENU STRINGS -->
+    <string name="menu_save">Save</string>
+    <string name="menu_edit">Edit</string>
+    <string name="menu_delete">Delete</string>
+    <string name="menu_cancel">Cancel</string>
+    <string name="menu_new_image">New Image</string>
+    <string name="menu_manage_images">Manage Images</string>
+    <string name="menu_reply">Reply</string>
+    <string name="menu_search_client">Search Client…</string>
+    <string name="menu_search_clinic">Search Clinic…</string>
+    <string name="menu_search_country">Search Country…</string>
+</resources>

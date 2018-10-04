@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import biz.zenpets.users.creator.profile.ProfileEditor;
-import biz.zenpets.users.landing.NewLandingActivity;
+import biz.zenpets.users.landing.LandingActivity;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.models.user.UserData;
@@ -95,7 +95,7 @@ public class SplashScreen extends AppCompatActivity {
 
                     /* CHECK THE PROFILE COMPLETE STATUS */
                     if (profileComplete.equalsIgnoreCase("Complete"))   {
-                        Intent showLanding = new Intent(SplashScreen.this, NewLandingActivity.class);
+                        Intent showLanding = new Intent(SplashScreen.this, LandingActivity.class);
                         showLanding.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(showLanding);
                         finish();

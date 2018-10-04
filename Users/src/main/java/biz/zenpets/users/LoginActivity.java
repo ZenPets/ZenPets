@@ -33,7 +33,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import biz.zenpets.users.creator.profile.ProfileEditor;
-import biz.zenpets.users.landing.NewLandingActivity;
+import biz.zenpets.users.landing.LandingActivity;
 import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.models.user.UserData;
@@ -212,12 +212,12 @@ public class LoginActivity extends AppCompatActivity
 
                     /* CHECK THE PROFILE COMPLETE STATUS */
                     if (profileComplete.equalsIgnoreCase("Complete"))   {
-                        Intent showLanding = new Intent(LoginActivity.this, NewLandingActivity.class);
+                        Intent showLanding = new Intent(LoginActivity.this, LandingActivity.class);
                         showLanding.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(showLanding);
                         finish();
                     } else if (profileComplete.equalsIgnoreCase("Incomplete"))  {
-                        Intent intent = new Intent(LoginActivity.this, NewLandingActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, LandingActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         finish();

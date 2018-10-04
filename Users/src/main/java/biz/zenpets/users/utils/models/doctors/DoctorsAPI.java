@@ -14,20 +14,6 @@ public interface DoctorsAPI {
     @GET("fetchDoctorProfile")
     Call<DoctorProfile> fetchDoctorProfile(@Query("doctorID") String doctorID);
 
-    /** FETCH THE DOCTOR'S DETAILS **/
-    @GET("fetchDoctorDetails")
-    Call<Doctor> fetchDoctorDetails(
-            @Query("doctorID") String doctorID,
-            @Query("clinicID") String clinicID,
-            @Query("originLat") String originLat,
-            @Query("originLon") String originLon);
-
-//    /** FETCH THE LIST OF DOCTORS **/
-//    @GET("fetchDoctorsList")
-//    Call<Doctors> fetchDoctorsList(
-//            @Query("cityID") String cityID,
-//            @Query("localityID") String localityID);
-
     /** FETCH THE LIST OF DOCTORS **/
     @GET("fetchDoctorsList")
     Call<Doctors> fetchDoctorsList(
@@ -37,12 +23,21 @@ public interface DoctorsAPI {
             @Query("originLon") String originLon,
             @Query("pageNumber") String pageNumber);
 
+    /** FETCH THE DOCTOR'S DETAILS **/
+    @GET("fetchDoctorDetails")
+    Call<Doctor> fetchDoctorDetails(
+            @Query("doctorID") String doctorID,
+            @Query("clinicID") String clinicID,
+            @Query("originLat") String originLat,
+            @Query("originLon") String originLon);
+
     /** FETCH THE LIST OF DOCTORS **/
-    @GET("fetchDoctorsListTest")
-    Call<Doctors> fetchDoctorsListTest(
+    @GET("fetchDoctorsSubset")
+    Call<Doctors> fetchDoctorsSubset(
             @Query("cityID") String cityID,
-            /*@Query("localityID") String localityID,*/
-            @Query("pageNumber") String pageNumber);
+            @Query("localityID") String localityID,
+            @Query("originLat") String originLat,
+            @Query("originLon") String originLon);
 
     /** FETCH THE TOTAL NUMBER OF DOCTOR PAGES **/
     @GET("fetchDoctorPages")

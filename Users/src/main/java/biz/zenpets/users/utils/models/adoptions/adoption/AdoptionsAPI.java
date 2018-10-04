@@ -64,6 +64,10 @@ public interface AdoptionsAPI {
             @Query("adoptionGender") String adoptionGender,
             @Query("pageNumber") String pageNumber);
 
+    /** FETCH A SUBSET OF ADOPTIONS IN THE SELECTED CITY (TEST) **/
+    @GET("fetchTestAdoptionsSubset")
+    Call<Adoptions> fetchTestAdoptionsSubset(@Query("cityID") String cityID);
+
     /** FETCH ALL USER ADOPTION LISTING **/
     @GET("listUserAdoptions")
     Call<Adoptions> listUserAdoptions(@Query("userID") String userID);

@@ -20,7 +20,6 @@ import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -1712,7 +1711,7 @@ public class DoctorDetailsNew extends AppCompatActivity {
         call.enqueue(new Callback<Review>() {
             @Override
             public void onResponse(Call<Review> call, Response<Review> response) {
-                Log.e("REVIEW RESPONSE", String.valueOf(response.raw()));
+//                Log.e("REVIEW RESPONSE", String.valueOf(response.raw()));
                 Review review = response.body();
                 if (review != null) {
                     if (review.getError())  {

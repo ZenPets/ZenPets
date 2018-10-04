@@ -53,7 +53,7 @@
     <string name="sign_up_phone_number_hint">(*) Phone Number</string>
     <string name="sign_up_mailing_address_hint">(*) Your Mailing / Postal Address</string>
     <string name="sign_up_landmark_hint">Landmark (optional)</string>
-    <string name="sign_up_map_label">(*) Mark your Training facility\'s location on the map. This will help Pet Parents find your Training facility faster. To mark you location, click the button next to this text.</string>
+    <string name="sign_up_map_label">(*) Mark your Training facility\'s location on the map. This will help Pet Parents find your Training facility faster. To mark your location, click the button next to this text.</string>
     <string name="sign_up_select_country">Select your Country</string>
     <string name="sign_up_select_state">Select your State</string>
     <string name="sign_up_select_city">Select the City</string>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="top|center"
+        android:orientation="vertical">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgvwUserDisplayProfile"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                app:civ_border_color="@color/semiTransparentLight"
+                app:civ_border_width="2dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_person_black_24dp" />
+
+            <!--<com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/imgvwUserDisplayProfile"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:placeholderImage="@drawable/ic_person_black_24dp"
+                app:roundAsCircle="true"
+                app:roundingBorderColor="@color/semiTransparentLight"
+                app:roundingBorderWidth="2dp" />-->
+
+            <TextView
+                android:id="@+id/txtUserName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="@font/work_sans_regular"
+                android:text="@string/review_subset_user_name"
+                android:textColor="@color/primary_text"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/imgvwLikeStatus"
+                app:layout_constraintStart_toEndOf="@+id/imgvwUserDisplayProfile"
+                app:layout_constraintTop_toTopOf="@+id/imgvwUserDisplayProfile" />
+
+            <RatingBar
+                android:id="@+id/kennelRating"
+                style="@style/RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:numStars="5"
+                android:rating="2"
+                android:stepSize="1"
+                app:layout_constraintStart_toStartOf="@+id/txtUserName"
+                app:layout_constraintTop_toBottomOf="@+id/txtUserName" />
+
+            <TextView
+                android:id="@+id/txtTimestamp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="@font/work_sans_regular"
+                android:text="@string/review_subset_time_stamp"
+                android:textColor="@color/tertiary_text"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/kennelRating"
+                app:layout_constraintEnd_toStartOf="@+id/imgvwLikeStatus"
+                app:layout_constraintStart_toEndOf="@+id/kennelRating"
+                app:layout_constraintTop_toTopOf="@+id/kennelRating" />
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:id="@+id/imgvwLikeStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:paddingStart="11dp"
+                android:paddingLeft="11dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="11dp"
+                android:paddingRight="11dp"
+                android:paddingBottom="5dp"
+                app:iiv_color="@color/tertiary_text"
+                app:iiv_icon="faw_thumbs_up2"
+                app:iiv_size="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txtUserName" />
+
+            <TextView
+                android:id="@+id/txtKennelExperience"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/work_sans_regular"
+                android:maxLines="3"
+                android:text="Kennel Review"
+                android:textColor="@color/primary_text"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/kennelRating"
+                app:layout_constraintTop_toBottomOf="@+id/imgvwUserDisplayProfile" />
+
+            <TextView
+                android:id="@+id/txtReplyStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="@font/work_sans_regular"
+                android:text="@string/review_subset_from_label"
+                android:textColor="@color/primary_text"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/txtKennelExperience"
+                app:layout_constraintTop_toBottomOf="@+id/txtKennelExperience" />
+
+            <TextView
+                android:id="@+id/txtReply"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/work_sans_regular"
+                android:maxLines="3"
+                android:text="Kennel Owner's Reply"
+                android:textColor="@color/primary_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/txtReplyStatus"
+                app:layout_constraintTop_toBottomOf="@+id/txtReplyStatus" />
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,93 @@
+<resources>
+    <string name="app_name">Groomers</string>
+
+    <!-- THE API KEY'S -->
+    <string name="google_maps_key">AIzaSyBSKaPC3LB4e70bFFoGeR1I4i2LpoZnxho</string>
+
+    <!-- SPLASH SCREEN -->
+    <string name="splash_title">ZEN PETS</string>
+
+    <!-- COMMON STRINGS -->
+    <string name="loading_message">Loading…</string>
+
+    <!-- IMAGE PICKER SHEET STRINGS -->
+    <string name="image_picker_sheet_title">ADD AN IMAGE</string>
+    <string name="image_picker_sheet_gallery">Choose from photo gallery</string>
+    <string name="image_picker_sheet_camera">Take a photo</string>
+
+    <!-- LOGIN SCREEN -->
+    <string name="login_app_title">Zen Pets</string>
+    <string name="login_app_sub_title">for groomers</string>
+    <string name="login_email_hint">Email Address</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_sign_in">SIGN IN</string>
+    <string name="login_create_account">Create Account</string>
+    <string name="login_forgot_password">Forgot Password</string>
+
+    <string name="login_unregistered_title">"Email Not Found"</string>
+    <string name="login_unregistered_message">This email does not exist in our records. If you haven\'t signed up, please use the \"Create Account\" button to do so now.</string>
+    <string name="login_unregistered_create">Create Account</string>
+    <string name="login_unregistered_cancel">Cancel</string>
+
+    <string name="login_auth_failed_title">Authentication Failed</string>
+    <string name="login_auth_failed_message">Invalid Password. If you forgotten your password, click the \"Forgot Password\" button to reset your Password. We will send you an email on your registered Email Address to reset it.</string>
+    <string name="login_auth_failed_forgot_password">Forgot Password</string>
+    <string name="login_auth_failed_cancel">Cancel</string>
+
+    <!-- SIGN UP ACTIVITY -->
+    <string name="sign_up_label">CREATE YOUR ACCOUNT IN A FEW SIMPLE STEPS</string>
+    <string name="sign_up_groomer_name_hint">(*) Groomer Service Name</string>
+    <string name="sign_up_groomer_name_error">Provide the groomer service name</string>
+    <string name="sign_up_contact_name_hint">(*) Contact Person\'s Name</string>
+    <string name="sign_up_contact_name_error">Provide the contact person\'s name</string>
+    <string name="sign_up_email_hint">(*) E-mail Address</string>
+    <string name="sign_up_no_email_error">Provide your email address</string>
+    <string name="sign_up_invalid_email_error">Provide a correct email address</string>
+    <string name="sign_up_password_hint">(*) Choose your password</string>
+    <string name="sign_up_password_error">Choose your password</string>
+    <string name="sign_up_password_length_error">Password has to be at least 8 characters</string>
+    <string name="sign_up_confirm_password_hint">(*) Confirm your password</string>
+    <string name="sign_up_confirm_password_error">Confirm your password</string>
+    <string name="sign_up_confirm_password_length_error">Password has to be at least 8 characters</string>
+    <string name="sign_up_confirm_password_mismatch">Your passwords no not match</string>
+    <string name="sign_up_phone_1_hint">(*) Phone Number #1</string>
+    <string name="sign_up_phone_1_error">Provide a phone number</string>
+    <string name="sign_up_phone_2_hint">Phone Number #2</string>
+    <string name="sign_up_mailing_address_hint">(*) Your Mailing / Postal Address</string>
+    <string name="sign_up_mailing_address_error">Provide your mailing / postal address</string>
+    <string name="sign_up_pin_code_hint">(*) Pin Code</string>
+    <string name="sign_up_pin_code_error">Provide the pin code</string>
+    <string name="sign_up_map_label">(*) Mark your Grooming facility\'s location on the map. This will help Pet Parents find your location faster. To mark your location, click the button next to this text.</string>
+    <string name="sign_up_select_country">Select your Country</string>
+    <string name="sign_up_select_state">Select your State</string>
+    <string name="sign_up_select_city">Select the City</string>
+    <string name="sign_up_lat_lng_placeholder">The coordinates you have selected are: %1$s <i>latitude</i> and %2$s <i>longitude</i></string>
+
+    <!-- LEGAL STRINGS -->
+    <string name="sign_up_full_terms">By continuing, I agree to the Seller Agreement and Privacy Policy</string>
+    <string name="terms_part_1">By continuing, I agree to the&#160;</string>
+    <string name="terms_part_2">Seller Agreement</string>
+    <string name="terms_part_3">&#160;and the&#160;</string>
+    <string name="terms_part_4">Privacy Policy</string>
+
+    <!-- LANDING ACTIVITY -->
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+    <!-- GROOMER DETAILS -->
+    <string name="groomer_details_name">KENNEL NAME</string>
+    <string name="groomer_details_address">KENNEL ADDRESS</string>
+    <string name="groomer_details_address_placeholder">%1$s, %2$s - %3$s</string>
+    <string name="groomer_details_all_reviews_placeholder">SEE ALL REVIEWS (%1$s)</string>
+    <string name="groomer_details_votes_open">(</string>
+    <string name="groomer_details_votes_close">)</string>
+    <string name="groomer_details_votes_placeholder">%1$s %2$s%3$s%4$s</string>
+
+    <!-- REVIEWS SUBSET STRINGS -->
+    <string name="review_subset_reason">Visit Reason</string>
+    <string name="review_subset_experience">Visit Experience</string>
+    <string name="review_subset_user_name">User Name</string>
+    <string name="review_subset_time_stamp">2 Months</string>
+    <string name="review_subset_from_label"><b>Reply from Siddharth Lele</b> on 6/6/2018</string>
+    <string name="review_subset_from_title">Replied on </string>
+</resources>

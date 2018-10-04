@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--&lt;!&ndash; THE PRIMARY COLORS (LIGHT) &ndash;&gt;-->
+    <!--<color name="primary">#2C3E50</color>-->
+    <!--<color name="primary_dark">#283949</color>-->
+    <!--&lt;!&ndash;<color name="accent">#f57f17</color>&ndash;&gt;-->
+    <!--<color name="accent">#F44336</color>-->
+
+    <!--&lt;!&ndash; THE TEXT COLORS (LIGHT) &ndash;&gt;-->
+    <!--<color name="primary_text">@android:color/primary_text_light</color>-->
+    <!--<color name="secondary_text">@android:color/secondary_text_light</color>-->
+    <!--<color name="tertiary_text">@android:color/tertiary_text_light</color>-->
+
+    <!--&lt;!&ndash; THE APP BG (LIGHT) &ndash;&gt;-->
+    <!--<color name="app_bg">#DFDFDF</color>-->
+    <!--&lt;!&ndash;<color name="app_bg">#ECF0F1</color>&ndash;&gt;-->
+
+    <!--&lt;!&ndash; THE CARD BG (LIGHT) &ndash;&gt;-->
+    <!--<color name="card_bg">#FFFFFF</color>-->
+
+    <!--&lt;!&ndash; SIDE BAR BG COLOR (LIGHT) &ndash;&gt;-->
+    <!--<color name="side_bar_bg">#312C40</color>-->
+
+    <!--&lt;!&ndash; THE ICON COLOR (LIGHT) &ndash;&gt;-->
+    <!--<color name="icons">#FFFFFF</color>-->
+
+    <!--&lt;!&ndash; CIRCLE BACKGROUND &ndash;&gt;-->
+    <!--<color name="semiTransparentLight">#40FFFFFF</color>-->
+    <!--<color name="semiTransparentDark">#40888888</color>-->
+
+
+    <!-- THE PRIMARY COLORS (DARK) -->
+    <color name="primary">#25252F</color>
+    <color name="primary_dark">#25252F</color>
+    <!--<color name="accent">#f57f17</color>-->
+    <color name="accent">#F44336</color>
+
+    <!-- THE TEXT COLORS (LIGHT) -->
+    <color name="primary_text">@android:color/primary_text_dark</color>
+    <color name="secondary_text">@android:color/secondary_text_dark</color>
+    <color name="tertiary_text">@android:color/tertiary_text_dark</color>
+
+    <!-- THE APP BG (LIGHT) -->
+    <color name="app_bg">#1E1D23</color>
+
+    <!-- THE CARD BG (LIGHT) -->
+    <color name="card_bg">#25252F</color>
+
+    <!-- SIDE BAR BG COLOR (LIGHT) -->
+    <color name="side_bar_bg">#312C40</color>
+
+    <!-- THE ICON COLOR (LIGHT) -->
+    <color name="icons">@android:color/secondary_text_dark</color>
+
+    <!-- CIRCLE BACKGROUND -->
+    <color name="semiTransparentLight">#40FFFFFF</color>
+    <color name="semiTransparentDark">#40888888</color>
+</resources>

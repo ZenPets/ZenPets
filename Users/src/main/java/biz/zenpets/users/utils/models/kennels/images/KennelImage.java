@@ -3,7 +3,6 @@ package biz.zenpets.users.utils.models.kennels.images;
 import com.google.gson.annotations.SerializedName;
 
 public class KennelImage {
-
     @SerializedName("error") private Boolean error;
     @SerializedName("message") private String message;
     @SerializedName("kennelImageID") private String kennelImageID;

@@ -202,10 +202,10 @@
             android:name=".utils.helpers.classes.FilterLocationActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
+        <!--<activity
             android:name=".details.doctors.DoctorDetails"
             android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="stateHidden|adjustPan" />-->
         <activity
             android:name=".details.doctors.DoctorDetailsNew"
             android:screenOrientation="sensorPortrait"
@@ -306,6 +306,32 @@
         <!-- TRAINING ENQUIRY -->
         <activity
             android:name=".details.trainers.enquiry.TrainerEnquiryActivity"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <!-- GROOMERS -->
+        <activity
+            android:name=".groomers.GroomersList"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".details.groomer.GroomerDetails"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <!-- GROOMER REVIEWS -->
+        <activity
+            android:name=".details.groomer.reviews.GroomerReviewCreator"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".modifier.groomer.GroomerReviewModifier"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <!-- GROOMER ENQUIRY -->
+        <activity
+            android:name=".details.groomer.enquiry.GroomerEnquiryActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 

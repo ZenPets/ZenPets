@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 public class Trainers {
-
     @SerializedName("error") private Boolean error;
+    @SerializedName("message") private String message;
     @SerializedName("trainers") private ArrayList<Trainer> trainers = null;
 
     public Boolean getError() {
@@ -15,6 +15,14 @@ public class Trainers {
 
     public void setError(Boolean error) {
         this.error = error;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public ArrayList<Trainer> getTrainers() {

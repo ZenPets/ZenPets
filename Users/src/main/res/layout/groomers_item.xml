@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listPromoted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:cacheColorHint="@android:color/transparent"
+        android:fadingEdge="none"
+        android:persistentDrawingCache="scrolling"
+        android:scrollbars="none" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardGroomer"
+        style="@style/ZenPetsCards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:id="@+id/fralaGroomerDetails"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/imgvwGroomerLogo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:scaleType="center"
+                    app:actualImageScaleType="center"
+                    app:failureImageScaleType="center"
+                    app:placeholderImage="@drawable/ic_business_black_48dp"
+                    app:placeholderImageScaleType="center" />
+
+                <TextView
+                    android:id="@+id/txtGroomerName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center"
+                    android:background="#A6000000"
+                    android:paddingBottom="15dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="15dp"
+                    android:text="@string/kennel_list_kennel_name_label"
+                    android:textColor="@android:color/primary_text_dark"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/roboto_condensed_bold" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/linlaGroomerAddress"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="top|center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@+id/fralaGroomerDetails"
+                app:layout_constraintStart_toStartOf="@+id/fralaGroomerDetails"
+                app:layout_constraintTop_toBottomOf="@+id/fralaGroomerDetails">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="faw_building2"
+                    app:iiv_size="14dp" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txtGroomerAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="start|center"
+                    android:text="@string/kennel_list_kennel_address_label"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/roboto_condensed_regular" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/viewBottomDivider"
+                android:layout_width="match_parent"
+                android:layout_height="0.50dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/fixed_divider_horizontal_bright"
+                app:layout_constraintEnd_toEndOf="@+id/linlaGroomerAddress"
+                app:layout_constraintStart_toStartOf="@+id/linlaGroomerAddress"
+                app:layout_constraintTop_toBottomOf="@+id/linlaGroomerAddress" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
+                android:gravity="end|center"
+                android:orientation="horizontal"
+                android:padding="6dp"
+                app:layout_constraintEnd_toEndOf="@+id/viewBottomDivider"
+                app:layout_constraintStart_toStartOf="@+id/viewBottomDivider"
+                app:layout_constraintTop_toBottomOf="@+id/viewBottomDivider">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txtGroomerLikes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="3dp"
+                        android:text="@string/doctor_item_likes_percent"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="11sp"
+                        app:fontFamily="@font/roboto_condensed_bold" />
+                </LinearLayout>
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="3dp"
+                    android:adjustViewBounds="true"
+                    app:iiv_color="@color/tertiary_text"
+                    app:iiv_icon="oct_primitive_dot"
+                    app:iiv_size="4dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <RatingBar
+                        android:id="@+id/groomerRating"
+                        style="@style/RatingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="4dp"
+                        android:numStars="5"
+                        android:rating="0" />
+                </LinearLayout>
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="3dp"
+                    android:adjustViewBounds="true"
+                    app:iiv_color="@color/tertiary_text"
+                    app:iiv_icon="oct_primitive_dot"
+                    app:iiv_size="4dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txtGroomerDistance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="3dp"
+                        android:text="@string/doctor_item_clinic_distance"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="11sp"
+                        app:fontFamily="@font/roboto_condensed_bold" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

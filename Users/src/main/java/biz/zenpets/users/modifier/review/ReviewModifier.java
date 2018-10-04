@@ -12,7 +12,6 @@ import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -95,7 +94,7 @@ public class ReviewModifier extends AppCompatActivity {
         call.enqueue(new Callback<Review>() {
             @Override
             public void onResponse(@NonNull Call<Review> call, @NonNull Response<Review> response) {
-                Log.e("REVIEW DETAILS", String.valueOf(response.raw()));
+//                Log.e("REVIEW DETAILS", String.valueOf(response.raw()));
                 Review review = response.body();
                 if (review != null) {
                     /* GET THE DOCTOR ID */

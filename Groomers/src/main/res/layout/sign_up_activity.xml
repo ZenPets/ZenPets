@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/zen_toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbarSize="3dp"
+        android:scrollbarThumbVertical="@color/primary_dark">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtSignUpLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="@string/sign_up_label"
+                android:textSize="12sp"
+                app:fontFamily="@font/rubik_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputGroomerName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:hint="@string/sign_up_groomer_name_hint"
+                android:textColorHint="@color/tertiary_text"
+                app:hintTextAppearance="@style/TextLabel"
+                app:layout_constraintEnd_toEndOf="@+id/txtSignUpLabel"
+                app:layout_constraintStart_toStartOf="@+id/txtSignUpLabel"
+                app:layout_constraintTop_toBottomOf="@+id/txtSignUpLabel">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtGroomerName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"
+                    android:text="Test Groomer"
+                    android:textColor="@color/primary_text"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/rubik_regular" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputContactName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/sign_up_contact_name_hint"
+                android:textColorHint="@color/tertiary_text"
+                app:hintTextAppearance="@style/TextLabel"
+                app:layout_constraintEnd_toEndOf="@+id/inputGroomerName"
+                app:layout_constraintStart_toStartOf="@+id/inputGroomerName"
+                app:layout_constraintTop_toBottomOf="@+id/inputGroomerName">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtContactName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Siddharth Lele"
+                    android:textColor="@color/primary_text"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/rubik_regular" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputEmailAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/sign_up_email_hint"
+                android:textColorHint="@color/tertiary_text"
+                app:hintTextAppearance="@style/TextLabel"
+                app:layout_constraintEnd_toEndOf="@+id/inputContactName"
+                app:layout_constraintStart_toStartOf="@+id/inputContactName"
+                app:layout_constraintTop_toBottomOf="@+id/inputContactName">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtEmailAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:text="skidd.gamer.6@gmail.com"
+                    android:textColor="@color/primary_text"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/rubik_regular" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputPassword"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/sign_up_password_hint"
+                android:textColorHint="@color/tertiary_text"
+                app:hintTextAppearance="@style/TextLabel"
+                app:layout_constraintEnd_toEndOf="@+id/inputEmailAddress"
+                app:layout_constraintStart_toStartOf="@+id/inputEmailAddress"
+                app:layout_constraintTop_toBottomOf="@+id/inputEmailAddress"
+                app:passwordToggleEnabled="true">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:text="12345678"
+                    android:textColor="@color/primary_text"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/rubik_regular" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputConfirm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/sign_up_confirm_password_hint"
+                android:textColorHint="@color/tertiary_text"
+                app:hintTextAppearance="@style/TextLabel"
+                app:layout_constraintEnd_toEndOf="@+id/inputPassword"
+                app:layout_constraintStart_toStartOf="@+id/inputPassword"
+                app:layout_constraintTop_toBottomOf="@+id/inputPassword"
+                app:passwordToggleEnabled="true">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtConfirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:text="12345678"
+                    android:textColor="@color/primary_text"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/rubik_regular" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputPhoneNumber1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/sign_up_phone_1_hint"
+                android:textColorHint="@color/tertiary_text"
+                app:hintTextAppearance="@style/TextLabel"
+                app:layout_constraintEnd_toEndOf="@+id/inputConfirm"
+                app:layout_constraintStart_toStartOf="@+id/inputConfirm"
+                app:layout_constraintTop_toBottomOf="@+id/inputConfirm">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtPhoneNumber1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:text="8087471157"
+                    android:textColor="@color/primary_text"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/rubik_regular" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputPhoneNumber2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/sign_up_phone_2_hint"
+                android:textColorHint="@color/tertiary_text"
+                app:hintTextAppearance="@style/TextLabel"
+                app:layout_constraintEnd_toEndOf="@+id/inputPhoneNumber1"
+                app:layout_constraintStart_toStartOf="@+id/inputPhoneNumber1"
+                app:layout_constraintTop_toBottomOf="@+id/inputPhoneNumber1">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtPhoneNumber2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:textColor="@color/primary_text"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/rubik_regular" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/sign_up_mailing_address_hint"
+                android:textColorHint="@color/tertiary_text"
+                app:hintTextAppearance="@style/TextLabel"
+                app:layout_constraintEnd_toEndOf="@+id/inputPhoneNumber2"
+                app:layout_constraintStart_toStartOf="@+id/inputPhoneNumber2"
+                app:layout_constraintTop_toBottomOf="@+id/inputPhoneNumber2">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|top"
+                    android:inputType="textPostalAddress|textCapSentences|textMultiLine"
+                    android:lines="5"
+                    android:maxLines="8"
+                    android:minLines="5"
+                    android:text="1, Aster Villa, 781/7 Deccan Gymkhana"
+                    android:textColor="@color/primary_text"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/rubik_regular" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputPinCode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/sign_up_pin_code_hint"
+                android:textColorHint="@color/tertiary_text"
+                app:hintTextAppearance="@style/TextLabel"
+                app:layout_constraintEnd_toEndOf="@+id/inputAddress"
+                app:layout_constraintStart_toStartOf="@+id/inputAddress"
+                app:layout_constraintTop_toBottomOf="@+id/inputAddress">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtPinCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:inputType="number"
+                    android:text="411004"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/rubik_regular" />
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/linlaMap"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@+id/inputPinCode"
+                app:layout_constraintStart_toStartOf="@+id/inputPinCode"
+                app:layout_constraintTop_toBottomOf="@+id/inputPinCode">
+
+                <TextView
+                    android:id="@+id/txtLocation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="15dp"
+                    android:gravity="start|center"
+                    android:text="@string/sign_up_map_label"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/rubik_regular" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnLocationPicker"
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="gmd_my_location"
+                    app:iiv_size="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linlaLocation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="top|center"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="@+id/linlaMap"
+                app:layout_constraintStart_toStartOf="@+id/linlaMap"
+                app:layout_constraintTop_toBottomOf="@+id/linlaMap">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:layout_marginTop="5dp"
+                    android:adjustViewBounds="true"
+                    app:iiv_color="@android:color/secondary_text_light"
+                    app:iiv_icon="gmd_place"
+                    app:iiv_size="18dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!--<android.support.v7.widget.AppCompatTextView
+                        style="@style/NormalBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="start|center"
+                        android:padding="11dp"
+                        android:text="@string/sign_up_select_country"
+                        android:textColor="@android:color/secondary_text_light"
+                        android:textSize="15sp" />
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/spnCountry"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp" />-->
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="start|center"
+                        android:padding="11dp"
+                        android:text="@string/sign_up_select_state"
+                        android:textColor="@android:color/secondary_text_light"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/rubik_regular" />
+
+                    <Spinner
+                        android:id="@+id/spnState"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="start|center"
+                        android:padding="11dp"
+                        android:text="@string/sign_up_select_city"
+                        android:textColor="@android:color/secondary_text_light"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/rubik_regular" />
+
+                    <Spinner
+                        android:id="@+id/spnCity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtLogoLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="Select a Logo or a Cover Photo for your Grooming Service."
+                android:textColor="@android:color/secondary_text_light"
+                android:textSize="14sp"
+                app:fontFamily="@font/rubik_regular"
+                app:layout_constraintEnd_toEndOf="@+id/linlaLocation"
+                app:layout_constraintStart_toStartOf="@+id/linlaLocation"
+                app:layout_constraintTop_toBottomOf="@+id/linlaLocation" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardLogo"
+                style="@style/ZenPetsCards"
+                android:layout_width="0dp"
+                android:layout_height="220dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintEnd_toEndOf="@+id/txtLogoLabel"
+                app:layout_constraintStart_toStartOf="@+id/txtLogoLabel"
+                app:layout_constraintTop_toBottomOf="@+id/txtLogoLabel">
+
+                <ImageView
+                    android:id="@+id/imgvwLogo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="center"
+                    android:src="@drawable/empty_camera" />
+            </android.support.v7.widget.CardView>
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/txtTermsOfService"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginRight="11dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        android:paddingEnd="11dp"
+        android:paddingLeft="11dp"
+        android:paddingRight="11dp"
+        android:paddingStart="11dp"
+        android:paddingTop="5dp"
+        android:text="@string/sign_up_full_terms"
+        android:textColor="@color/primary_text"
+        android:textColorLink="@color/accent"
+        android:textSize="12sp"
+        app:fontFamily="@font/lato_regular" />
+</LinearLayout>

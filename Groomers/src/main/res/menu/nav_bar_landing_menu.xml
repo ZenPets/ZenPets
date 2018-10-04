@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/grpHome"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/dashHome"
+            android:checked="true"
+            android:title="Dashboard" />
+    </group>
+
+    <group
+        android:id="@+id/grpFragments"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/dashProfile"
+            android:checked="false"
+            android:title="Profile" />
+        <item
+            android:id="@+id/dashReviews"
+            android:checked="false"
+            android:title="Reviews" />
+        <item
+            android:id="@+id/dashEnquiries"
+            android:checked="false"
+            android:title="Enquiries" />
+        <item
+            android:id="@+id/dashReports"
+            android:checked="false"
+            android:title="Reports" />
+    </group>
+
+    <group
+        android:id="@+id/grpHelp"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/dashHelp"
+            android:checked="false"
+            android:title="Help" />
+        <item
+            android:id="@+id/dashFeedback"
+            android:checked="false"
+            android:title="Feedback" />
+        <item
+            android:id="@+id/dashSettings"
+            android:checked="false"
+            android:title="Settings" />
+    </group>
+</menu>

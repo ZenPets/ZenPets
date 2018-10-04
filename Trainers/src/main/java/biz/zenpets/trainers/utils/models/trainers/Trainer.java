@@ -3,7 +3,7 @@ package biz.zenpets.trainers.utils.models.trainers;
 import com.google.gson.annotations.SerializedName;
 
 public class Trainer {
-
+    @SerializedName("error") private Boolean error;
     @SerializedName("message") private String message;
     @SerializedName("trainerID") private String trainerID;
     @SerializedName("trainerAuthID") private String trainerAuthID;
@@ -26,6 +26,14 @@ public class Trainer {
     @SerializedName("trainerProfile") private String trainerProfile;
     @SerializedName("trainerDisplayProfile") private String trainerDisplayProfile;
     @SerializedName("trainerToken") private String trainerToken;
+
+    public Boolean getError() {
+        return error;
+    }
+
+    public void setError(Boolean error) {
+        this.error = error;
+    }
 
     public String getMessage() {
         return message;

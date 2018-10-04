@@ -123,6 +123,7 @@ public class DoctorsList extends AppCompatActivity
         /* CONFIGURE THE ACTIONBAR */
         configAB();
     }
+
     /***** FETCH THE FIRST LIST OF DOCTORS *****/
     private void fetchDoctors() {
         DoctorsAPI api = ZenApiClient.getClient().create(DoctorsAPI.class);

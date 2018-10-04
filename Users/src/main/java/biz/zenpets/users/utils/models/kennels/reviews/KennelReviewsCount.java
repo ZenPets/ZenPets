@@ -3,8 +3,8 @@ package biz.zenpets.users.utils.models.kennels.reviews;
 import com.google.gson.annotations.SerializedName;
 
 public class KennelReviewsCount {
-
     @SerializedName("error") private Boolean error;
+    @SerializedName("message") private String message;
     @SerializedName("totalReviews") private String totalReviews;
 
     public Boolean getError() {
@@ -13,6 +13,14 @@ public class KennelReviewsCount {
 
     public void setError(Boolean error) {
         this.error = error;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public String getTotalReviews() {
