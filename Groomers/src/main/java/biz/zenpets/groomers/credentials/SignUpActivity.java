@@ -205,7 +205,7 @@ public class SignUpActivity extends AppCompatActivity {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
             Date date = new Date();
             VALID_FROM = format.format(date);
-            Log.e("VALID FROM", VALID_FROM);
+//            Log.e("VALID FROM", VALID_FROM);
 
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(format.parse(VALID_FROM));
@@ -214,7 +214,7 @@ public class SignUpActivity extends AppCompatActivity {
             calendar.add(Calendar.MONTH, 3);
             Date dateEnd = new Date(calendar.getTimeInMillis());
             VALID_TO = format.format(dateEnd);
-            Log.e("VALID TO", VALID_TO);
+//            Log.e("VALID TO", VALID_TO);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -475,7 +475,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Groomer> call, Throwable t) {
-                Log.e("EXISTS FAILURE", t.getMessage());
+//                Log.e("EXISTS FAILURE", t.getMessage());
                 Crashlytics.logException(t);
             }
         });
@@ -534,7 +534,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                     /* GET THE NEW GROOMER ACCOUNT ID */
                     final String groomerID = response.body().getGroomerID();
-                    Log.e("GROOMER ID", groomerID);
+//                    Log.e("GROOMER ID", groomerID);
 
                     /* FINISH THE REGISTRATION AND MOVE TO THE LOGIN SCREEN */
                     progressDialog.dismiss();

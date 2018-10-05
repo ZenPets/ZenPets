@@ -100,7 +100,7 @@ public class ImagesManagerAdapter extends RecyclerView.Adapter<ImagesManagerAdap
 
                                     @Override
                                     public void onFailure(Call<GroomerImage> call, Throwable t) {
-                                        Log.e("DELETE FAILURE", t.getMessage());
+//                                        Log.e("DELETE FAILURE", t.getMessage());
                                         Crashlytics.logException(t);
                                     }
                                 });

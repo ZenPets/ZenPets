@@ -59,6 +59,12 @@
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
+        <!-- REVIEWS -->
+        <activity
+            android:name=".details.review.ReviewDetails"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
         <!-- GROOMER IMAGES MANAGER -->
         <activity
             android:name=".images.GroomerImageManager"
@@ -83,5 +89,17 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="8074556284620034cc9fd486b84c369000c4a218" />
+
+        <!-- FIREBASE CLOUD MESSAGING -->
+        <service
+            android:name=".utils.services.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
     </application>
 </manifest>

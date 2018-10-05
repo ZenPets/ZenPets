@@ -4,6 +4,9 @@
     <!-- THE API KEY'S -->
     <string name="google_maps_key">AIzaSyBSKaPC3LB4e70bFFoGeR1I4i2LpoZnxho</string>
 
+    <!-- THE DEFAULT NOTIFICATION CHANNEL ID -->
+    <string name="default_notification_channel_id">fcm_default_channel</string>
+
     <!-- SPLASH SCREEN -->
     <string name="splash_title">ZEN PETS</string>
 

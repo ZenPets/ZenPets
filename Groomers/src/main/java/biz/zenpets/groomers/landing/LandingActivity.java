@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -102,6 +103,7 @@ public class LandingActivity extends AppCompatActivity {
         /* FIREBASE MESSAGING TEST */
         FirebaseMessaging.getInstance().subscribeToTopic("enquiries");
         String token = FirebaseInstanceId.getInstance().getToken();
+        Log.e("TOKEN", token);
 
         /* UPDATE THE GROOMER'S DEVICE TOKEN */
         updateDeviceToken(token);
@@ -114,7 +116,7 @@ public class LandingActivity extends AppCompatActivity {
         call.enqueue(new Callback<Groomer>() {
             @Override
             public void onResponse(Call<Groomer> call, Response<Groomer> response) {
-                Log.e("PROFILE RESPONSE", String.valueOf(response.raw()));
+//                Log.e("PROFILE RESPONSE", String.valueOf(response.raw()));
 
                 /* GET AND SET THE GROOMER'S NAME */
                 GROOMER_NAME = response.body().getGroomerName();

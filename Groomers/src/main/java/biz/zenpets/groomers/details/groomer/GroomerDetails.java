@@ -244,7 +244,7 @@ public class GroomerDetails extends AppCompatActivity {
         call.enqueue(new Callback<Groomer>() {
             @Override
             public void onResponse(Call<Groomer> call, Response<Groomer> response) {
-                Log.e("PROFILE RESPONSE", String.valueOf(response.raw()));
+//                Log.e("PROFILE RESPONSE", String.valueOf(response.raw()));
 
                 Groomer groomer = response.body();
                 if (groomer != null)    {

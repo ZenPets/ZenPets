@@ -143,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<Groomer>() {
             @Override
             public void onResponse(Call<Groomer> call, Response<Groomer> response) {
-                Log.e("GROOMER RESPONSE", String.valueOf(response.raw()));
+//                Log.e("GROOMER RESPONSE", String.valueOf(response.raw()));
                 /* GET THE GROOMER ACCOUNT ID */
                 GROOMER_ID = response.body().getGroomerID();
                 if (GROOMER_ID != null)    {

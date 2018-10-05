@@ -354,7 +354,7 @@ public class GroomerImageManager extends AppCompatActivity {
 
                                             @Override
                                             public void onFailure(Call<GroomerImage> call, Throwable t) {
-                                                Log.e("IMAGE FAILURE", t.getMessage());
+//                                                Log.e("IMAGE FAILURE", t.getMessage());
                                                 Crashlytics.logException(t);
                                             }
                                         });

@@ -1,4 +1,4 @@
-package biz.zenpets.kennels.utils.services;
+package biz.zenpets.groomers.utils.services;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,8 +12,8 @@ import com.google.firebase.messaging.RemoteMessage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import biz.zenpets.kennels.enquiry.KennelEnquiryActivity;
-import biz.zenpets.kennels.utils.AppPrefs;
+import biz.zenpets.groomers.details.review.ReviewDetails;
+import biz.zenpets.groomers.utils.AppPrefs;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -31,7 +31,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         /* CHECK IF THE MESSAGE CONTAINS A PAYLOAD */
         if (remoteMessage.getNotification() != null) {
-//            Log.e(TAG, "Notification Body: " + remoteMessage.getNotification().getBody());
+            Log.e(TAG, "Notification Body: " + remoteMessage.getNotification().getBody());
             handleNotification(remoteMessage.getNotification().getBody());
         }
 
@@ -39,7 +39,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getData().size() > 0) {
             try {
                 JSONObject json = new JSONObject(remoteMessage.getData().toString());
-//                Log.e("JSON", String.valueOf(json));
+                Log.e("JSON", String.valueOf(json));
                 handleDataMessage(json);
             } catch (Exception e) {
 //                Log.e(TAG, "Exception: " + e.getMessage());
@@ -73,20 +73,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             JSONObject payload = data.getJSONObject("payload");
 
             String strReference = null;
-            String strKennelID = null;
-            String strEnquiryID  = null;
+            String strReviewID = null;
             if (payload.has("notificationReference")) {
                 strReference = payload.getString("notificationReference");
-                if (strReference.equalsIgnoreCase("Kennel Enquiry"))   {
-                    strKennelID = payload.getString("kennelID");
-                    strEnquiryID = payload.getString("kennelEnquiryID");
+                if (strReference.equalsIgnoreCase("New Review"))   {
+                    strReviewID = payload.getString("reviewID");
                 }
             }
 
-            if (strReference.equalsIgnoreCase("Kennel Enquiry"))   {
-                Intent intent = new Intent(getApplicationContext(), KennelEnquiryActivity.class);
-                intent.putExtra("KENNEL_ID", strKennelID);
-                intent.putExtra("ENQUIRY_ID", strEnquiryID);
+            if (strReference.equalsIgnoreCase("New Review"))   {
+                Intent intent = new Intent(getApplicationContext(), ReviewDetails.class);
+                intent.putExtra("REVIEW_ID", strReviewID);
                 showNotificationMessage(getApplicationContext(), notificationTitle, notificationMessage, intent);
             }
         } catch (JSONException e) {

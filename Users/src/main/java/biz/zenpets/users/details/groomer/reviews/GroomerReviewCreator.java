@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -37,8 +38,12 @@ import biz.zenpets.users.utils.AppPrefs;
 import biz.zenpets.users.utils.helpers.classes.ZenApiClient;
 import biz.zenpets.users.utils.models.groomers.groomers.Groomer;
 import biz.zenpets.users.utils.models.groomers.groomers.GroomersAPI;
+import biz.zenpets.users.utils.models.groomers.notifications.Notification;
+import biz.zenpets.users.utils.models.groomers.notifications.NotificationsAPI;
 import biz.zenpets.users.utils.models.groomers.review.GroomerReview;
 import biz.zenpets.users.utils.models.groomers.review.GroomerReviewsAPI;
+import biz.zenpets.users.utils.models.user.UserData;
+import biz.zenpets.users.utils.models.user.UsersAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -51,11 +56,16 @@ public class GroomerReviewCreator extends AppCompatActivity {
         return (AppPrefs) getApplication();
     }
 
-    /** THE USER ID **/
+    /** THE LOGGED IN USER'S ID, NAME AND DISPLAY PROFILE **/
     private String USER_ID = null;
+    private String USER_NAME = null;
+    private String USER_DISPLAY_PROFILE = null;
 
     /** THE INCOMING GROOMER ID **/
     private String GROOMER_ID = null;
+
+    /** THE GROOMER'S DEVICE TOKEN **/
+    String DEVICE_TOKEN = null;
 
     /** DATA TYPES TO HOLD THE USER SELECTIONS **/
     private String RECOMMEND_STATUS = "Yes";
@@ -63,6 +73,9 @@ public class GroomerReviewCreator extends AppCompatActivity {
 
     /** A PROGRESS DIALOG INSTANCE **/
     private ProgressDialog dialog;
+
+    /** THE NEW POSTED REVIEW ID **/
+    String REVIEW_ID = null;
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.imgvwGroomerLogo) SimpleDraweeView imgvwGroomerLogo;
@@ -82,6 +95,9 @@ public class GroomerReviewCreator extends AppCompatActivity {
 
         /* GET THE USER ID */
         USER_ID = getApp().getUserID();
+
+        /* GET THE USER'S DETAILS */
+        fetchUserDetails();
 
         /* CONFIGURE THE TOOLBAR **/
         configTB();
@@ -134,6 +150,10 @@ public class GroomerReviewCreator extends AppCompatActivity {
             public void onResponse(Call<Groomer> call, Response<Groomer> response) {
                 if (!response.body().getError()) {
                     Groomer groomer = response.body();
+
+                    /* GET THE DEVICE TOKEN */
+                    DEVICE_TOKEN = groomer.getGroomerToken();
+                    Log.e("TOKEN", DEVICE_TOKEN);
 
                     /* GET AND SET THE GROOMER'S NAME */
                     String groomerName = groomer.getGroomerName();
@@ -253,7 +273,13 @@ public class GroomerReviewCreator extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<GroomerReview> call, Response<GroomerReview> response) {
                     if (response.isSuccessful() && !response.body().getError())    {
+                        /* GET THE REVIEW ID */
+                        REVIEW_ID = response.body().getReviewID();
+
                         dialog.dismiss();
+
+                        /* SEND A NOTIFICATION TO THE GROOMER'S DEVICE */
+                        sendReviewNotification();
                         Toast.makeText(getApplicationContext(), "Review published successfully...", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent();
                         setResult(RESULT_OK, intent);
@@ -272,5 +298,48 @@ public class GroomerReviewCreator extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    /** SEND A NOTIFICATION TO THE GROOMER'S DEVICE **/
+    private void sendReviewNotification() {
+        NotificationsAPI api = ZenApiClient.getClient().create(NotificationsAPI.class);
+        Call<Notification> call = api.sendGroomerReviewNotification(
+                DEVICE_TOKEN, "New review posted by " + USER_NAME,
+                edtExperience.getText().toString(), "New Review", REVIEW_ID,
+                USER_ID, USER_NAME, USER_DISPLAY_PROFILE);
+        call.enqueue(new Callback<Notification>() {
+            @Override
+            public void onResponse(Call<Notification> call, Response<Notification> response) {
+                Log.e("PUSH RESPONSE", String.valueOf(response.raw()));
+            }
+
+            @Override
+            public void onFailure(Call<Notification> call, Throwable t) {
+                Log.e("PUSH FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
+    }
+
+    /***** GET THE USER'S DETAILS *****/
+    private void fetchUserDetails() {
+        UsersAPI api = ZenApiClient.getClient().create(UsersAPI.class);
+        Call<UserData> call = api.fetchUserDetails(USER_ID);
+        call.enqueue(new Callback<UserData>() {
+            @Override
+            public void onResponse(Call<UserData> call, Response<UserData> response) {
+                UserData data = response.body();
+                if (data != null)   {
+                    USER_NAME = data.getUserName();
+                    USER_DISPLAY_PROFILE = data.getUserDisplayProfile();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserData> call, Throwable t) {
+//                Log.e("PROFILE FAILURE", t.getMessage());
+                Crashlytics.logException(t);
+            }
+        });
     }
 }
