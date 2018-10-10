@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="biz.zenpets.users">
+    package="co.zenpets.users">
 
     <permission
-        android:name="biz.zenpets.users.permission.MAPS_RECEIVE"
+        android:name="co.zenpets.users.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
     <uses-feature

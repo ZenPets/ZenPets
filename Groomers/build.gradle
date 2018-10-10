@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
+//apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "biz.zenpets.groomers"
+        applicationId "co.zenpets.groomers"
         minSdkVersion 16
         targetSdkVersion 27
         multiDexEnabled true
@@ -53,7 +53,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.0.4'
     implementation 'com.google.firebase:firebase-storage:16.0.3'
     implementation 'com.google.firebase:firebase-messaging:17.3.3'
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.5'
+//    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.5'
 
     /** RAZOR PAY SDK **/
     implementation 'com.razorpay:checkout:1.4.7'

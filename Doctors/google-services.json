@@ -1,43 +1,35 @@
 {
   "project_info": {
-    "project_number": "1029533036058",
-    "firebase_url": "https://zen-pets-4c786.firebaseio.com",
-    "project_id": "zen-pets-4c786",
-    "storage_bucket": "zen-pets-4c786.appspot.com"
+    "project_number": "10153487718",
+    "firebase_url": "https://zenpetsapi.firebaseio.com",
+    "project_id": "zenpetsapi",
+    "storage_bucket": "zenpetsapi.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1029533036058:android:8da5882b6f397bdf",
+        "mobilesdk_app_id": "1:10153487718:android:5a80d32cccd7a6ee",
         "android_client_info": {
-          "package_name": "biz.zenpets.users"
+          "package_name": "co.zenpets.doctors"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1029533036058-l5pu8f7v704kh73iqmu8hn3e5mlmj0ur.apps.googleusercontent.com",
+          "client_id": "10153487718-geq6bfnfq20g2p7drnarjkvpfbaq2mqd.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "biz.zenpets.users",
-            "certificate_hash": "bb9d35a6a346cdcb3df6967f97bbf1a7242a242a"
+            "package_name": "co.zenpets.doctors",
+            "certificate_hash": "cee3918ee535d373fb86713c62c73247e7517a3b"
           }
         },
         {
-          "client_id": "1029533036058-cfdeg2gchcbvrhuv9h7udua4n1ce2cfj.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "biz.zenpets.users",
-            "certificate_hash": "e8ecc543af773751b1d6d5055961c3b96d1704f7"
-          }
-        },
-        {
-          "client_id": "1029533036058-jel0a7hl21ol5obcnhp13n1gdt0vchu0.apps.googleusercontent.com",
+          "client_id": "10153487718-l945ja0ijvtmgnik7foacjedb26i95n2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBU7GnqxeUQgxiItdRQe-SKyDOEVrJpsmM"
+          "current_key": "AIzaSyC2yLbpPG7RzGiBgZPR-S04vzlgCPu9cko"
         }
       ],
       "services": {
@@ -48,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "1029533036058-jel0a7hl21ol5obcnhp13n1gdt0vchu0.apps.googleusercontent.com",
+              "client_id": "10153487718-l945ja0ijvtmgnik7foacjedb26i95n2.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -60,36 +52,28 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1029533036058:android:ec86f3d72364c3d8",
+        "mobilesdk_app_id": "1:10153487718:android:a156485b8e3f6a25",
         "android_client_info": {
-          "package_name": "biz.zenpets.doctors"
+          "package_name": "co.zenpets.groomers"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1029533036058-im8sqv61n59ggf3bc77n4lo69rbep1t2.apps.googleusercontent.com",
+          "client_id": "10153487718-gb8de5a565j1dm6elm2dmlm0d0mj195g.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "biz.zenpets.doctors",
-            "certificate_hash": "bb9d35a6a346cdcb3df6967f97bbf1a7242a242a"
+            "package_name": "co.zenpets.groomers",
+            "certificate_hash": "cee3918ee535d373fb86713c62c73247e7517a3b"
           }
         },
         {
-          "client_id": "1029533036058-igiief0takf5d6tcfgq4do8bji6ron7i.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "biz.zenpets.doctors",
-            "certificate_hash": "e8ecc543af773751b1d6d5055961c3b96d1704f7"
-          }
-        },
-        {
-          "client_id": "1029533036058-jel0a7hl21ol5obcnhp13n1gdt0vchu0.apps.googleusercontent.com",
+          "client_id": "10153487718-l945ja0ijvtmgnik7foacjedb26i95n2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBU7GnqxeUQgxiItdRQe-SKyDOEVrJpsmM"
+          "current_key": "AIzaSyC2yLbpPG7RzGiBgZPR-S04vzlgCPu9cko"
         }
       ],
       "services": {
@@ -100,7 +84,139 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "1029533036058-jel0a7hl21ol5obcnhp13n1gdt0vchu0.apps.googleusercontent.com",
+              "client_id": "10153487718-l945ja0ijvtmgnik7foacjedb26i95n2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10153487718:android:391bfe6c40ad5280",
+        "android_client_info": {
+          "package_name": "co.zenpets.kennels"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "10153487718-uiufphbvpoqe1d2akh34p6d2i1jjek17.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.zenpets.kennels",
+            "certificate_hash": "cee3918ee535d373fb86713c62c73247e7517a3b"
+          }
+        },
+        {
+          "client_id": "10153487718-l945ja0ijvtmgnik7foacjedb26i95n2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2yLbpPG7RzGiBgZPR-S04vzlgCPu9cko"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "10153487718-l945ja0ijvtmgnik7foacjedb26i95n2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10153487718:android:654fa039410b7c8f",
+        "android_client_info": {
+          "package_name": "co.zenpets.trainers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "10153487718-via4gutkp2ao5detlmiugnasam2r924h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.zenpets.trainers",
+            "certificate_hash": "cee3918ee535d373fb86713c62c73247e7517a3b"
+          }
+        },
+        {
+          "client_id": "10153487718-l945ja0ijvtmgnik7foacjedb26i95n2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2yLbpPG7RzGiBgZPR-S04vzlgCPu9cko"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "10153487718-l945ja0ijvtmgnik7foacjedb26i95n2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10153487718:android:6fda67890d9ff689",
+        "android_client_info": {
+          "package_name": "co.zenpets.users"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "10153487718-k60vhvuec44qav8brcll9j41u5ph7kvs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.zenpets.users",
+            "certificate_hash": "cee3918ee535d373fb86713c62c73247e7517a3b"
+          }
+        },
+        {
+          "client_id": "10153487718-l945ja0ijvtmgnik7foacjedb26i95n2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2yLbpPG7RzGiBgZPR-S04vzlgCPu9cko"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "10153487718-l945ja0ijvtmgnik7foacjedb26i95n2.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

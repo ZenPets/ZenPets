@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="biz.zenpets.kennels">
+    package="co.zenpets.kennels">
 
     <!--<uses-sdk
         android:minSdkVersion="16"
         tools:overrideLibrary="com.razorpay" />-->
 
     <permission
-        android:name="biz.zenpets.kennels.permission.MAPS_RECEIVE"
+        android:name="co.zenpets.kennels.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
     <uses-feature

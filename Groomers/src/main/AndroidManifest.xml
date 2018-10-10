@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="biz.zenpets.groomers">
+    package="co.zenpets.groomers">
 
     <permission
-        android:name="biz.zenpets.groomers.permission.MAPS_RECEIVE"
+        android:name="co.zenpets.groomers.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
     <uses-feature

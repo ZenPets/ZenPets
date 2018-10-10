@@ -171,7 +171,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:gravity="center"
-                    android:text="There are no messages to display here. You can start a conversation with the Trainer to ask any questions or queries you may have about the Training Module."
+                    android:text="There are no messages to display here. You can start a conversation with the Groomer to ask any questions or queries you may have about the services they offer."
                     android:textColor="@color/secondary_text"
                     android:textSize="14sp"
                     app:fontFamily="@font/roboto_condensed_light" />

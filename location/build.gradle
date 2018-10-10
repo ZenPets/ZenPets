@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
 
     defaultConfig {
-        applicationId "biz.zenpets.location"
+        applicationId "co.zenpets.location"
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
