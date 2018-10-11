@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 //apply plugin: 'io.fabric'
 
+/** THE VERSIONING CODES **/
+ext.versionMajor = 1
+ext.versionMinor = 0
+ext.versionPatch = 1
+ext.versionClassifier = null
+ext.isSnapshot = false
+ext.minimumSdkVersion = 16
+
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -9,14 +17,26 @@ android {
         minSdkVersion 16
         targetSdkVersion 27
         multiDexEnabled true
-        versionCode 1
-        versionName "1.0"
+        versionCode generateVersionCode()
+        versionName generateVersionName()
+//        versionCode 1
+//        versionName "1.0"
+
         vectorDrawables {
             useSupportLibrary = true
         }
     }
+    signingConfigs {
+        release {
+            storeFile file("ZenPets")
+            storePassword "Scooby_DOO29"
+            keyAlias "users"
+            keyPassword "Die_harD29"
+        }
+    }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -24,6 +44,22 @@ android {
     dexOptions {
         jumboMode = true
     }
+}
+
+private Integer generateVersionCode() {
+    return ext.minimumSdkVersion * 10000000 + ext.versionMajor * 10000 + ext.versionMinor * 100 + ext.versionPatch
+}
+
+private String generateVersionName() {
+    String versionName = "${ext.versionMajor}.${ext.versionMinor}.${ext.versionPatch}"
+    if (ext.versionClassifier == null && ext.isSnapshot) {
+        ext.versionClassifier = "SNAPSHOT"
+    }
+
+    if (ext.versionClassifier != null) {
+        versionName += "-" + ext.versionClassifier
+    }
+    return versionName;
 }
 
 dependencies {

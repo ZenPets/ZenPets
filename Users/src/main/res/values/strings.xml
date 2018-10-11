@@ -3,7 +3,8 @@
 
     <!-- THE API KEY'S -->
     <string name="facebook_app_id">1584967218498481</string>
-    <string name="google_maps_key">AIzaSyCoMTYVqI-JmuJ_cTV8TDqASsc2lknnQ_Q</string>
+    <!--<string name="google_maps_key">AIzaSyCoMTYVqI-JmuJ_cTV8TDqASsc2lknnQ_Q</string>-->
+    <string name="google_maps_key">AIzaSyCC6_QV-QfckZ9SaEhKrccZcnYFTDcF0ec</string>
     <string name="google_static_map_api_key">AIzaSyD-5QWNIgI2O0F6JmmrGZyKUHUPb_YePkw</string>
     <!--<string name="google_directions_api_key">AIzaSyAW3Rn42MhLRJ8EeeCGuyYSiPV5Q5q_4bI</string>-->
     <string name="google_directions_api_key">AIzaSyDSJMH7Oh4FS3sUgv30g6VBSugpVandEMw</string>

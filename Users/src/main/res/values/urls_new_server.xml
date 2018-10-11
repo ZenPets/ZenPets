@@ -1,102 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--&lt;!&ndash; DOCTORS LIST &ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_doctors_list">https://zenpetsapi.appspot.com/fetchDoctorsList</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_doctors_list_test">https://zenpetsapi.appspot.com/fetchDoctorsListTest</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_doctor_positive_reviews">https://zenpetsapi.appspot.com/fetchPositiveReviews</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_doctor_negative_reviews">https://zenpetsapi.appspot.com/fetchNegativeReviews</string>&ndash;&gt;-->
+    <!-- DOCTORS LIST -->
+    <!--<string name="url_doctors_list">https://zenpetsapi.appspot.com/fetchDoctorsList</string>-->
+    <!--<string name="url_doctors_list_test">https://zenpetsapi.appspot.com/fetchDoctorsListTest</string>-->
+    <!--<string name="url_doctor_positive_reviews">https://zenpetsapi.appspot.com/fetchPositiveReviews</string>-->
+    <!--<string name="url_doctor_negative_reviews">https://zenpetsapi.appspot.com/fetchNegativeReviews</string>-->
 
-    <!--&lt;!&ndash; DOCTOR DETAILS &ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_doctor_details">https://zenpetsapi.appspot.com/fetchDoctorDetails</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_doctor_profile">https://zenpetsapi.appspot.com/fetchDoctorProfile</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_doctor_subscription_fetch">https://zenpetsapi.appspot.com/fetchDoctorSubscription</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_question_bookmark_status">https://zenpetsapi.appspot.com/getUserConsultationBookmarkStatus</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_question_bookmark_new">https://zenpetsapi.appspot.com/newConsultationBookmark</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_question_bookmark_delete">https://zenpetsapi.appspot.com/removeConsultationBookmark</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_doctor_reply_votes_yes">https://zenpetsapi.appspot.com/fetchYesVotes</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_doctor_reply_votes_no">https://zenpetsapi.appspot.com/fetchNoVotes</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_doctor_reply_vote_check">https://zenpetsapi.appspot.com/checkUserVote</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_doctor_reply_vote_new">https://zenpetsapi.appspot.com/newReplyVote</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_doctor_reply_vote_update_no">https://zenpetsapi.appspot.com/updateReplyVoteNo</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_doctor_reply_vote_update_yes">https://zenpetsapi.appspot.com/updateReplyVoteYes</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_doctor_education_fetch">https://zenpetsapi.appspot.com/fetchDoctorEducation</string>&ndash;&gt;-->
+    <!-- DOCTOR DETAILS -->
+    <!--<string name="url_doctor_details">https://zenpetsapi.appspot.com/fetchDoctorDetails</string>-->
+    <!--<string name="url_doctor_profile">https://zenpetsapi.appspot.com/fetchDoctorProfile</string>-->
+    <!--<string name="url_doctor_subscription_fetch">https://zenpetsapi.appspot.com/fetchDoctorSubscription</string>-->
+    <!--<string name="url_question_bookmark_status">https://zenpetsapi.appspot.com/getUserConsultationBookmarkStatus</string>-->
+    <!--<string name="url_question_bookmark_new">https://zenpetsapi.appspot.com/newConsultationBookmark</string>-->
+    <!--<string name="url_question_bookmark_delete">https://zenpetsapi.appspot.com/removeConsultationBookmark</string>-->
+    <!--<string name="url_doctor_reply_votes_yes">https://zenpetsapi.appspot.com/fetchYesVotes</string>-->
+    <!--<string name="url_doctor_reply_votes_no">https://zenpetsapi.appspot.com/fetchNoVotes</string>-->
+    <!--<string name="url_doctor_reply_vote_check">https://zenpetsapi.appspot.com/checkUserVote</string>-->
+    <!--<string name="url_doctor_reply_vote_new">https://zenpetsapi.appspot.com/newReplyVote</string>-->
+    <!--<string name="url_doctor_reply_vote_update_no">https://zenpetsapi.appspot.com/updateReplyVoteNo</string>-->
+    <!--<string name="url_doctor_reply_vote_update_yes">https://zenpetsapi.appspot.com/updateReplyVoteYes</string>-->
+    <!--<string name="url_doctor_education_fetch">https://zenpetsapi.appspot.com/fetchDoctorEducation</string>-->
 
-    <!--&lt;!&ndash; DOCTOR REVIEWS &ndash;&gt;-->
-    <!--<string name="url_doctor_review_new">https://zenpetsapi.appspot.com/newDoctorReview</string>-->
-    <!--<string name="url_clinic_rating_new">https://zenpetsapi.appspot.com/newClinicRating</string>-->
-    <!--&lt;!&ndash;<string name="url_doctor_review_subset_fetch">https://zenpetsapi.appspot.com/fetchDoctorReviewsSubset</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_doctor_review_all_fetch">https://zenpetsapi.appspot.com/fetchDoctorReviews</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_doctor_reviews_check_vote">https://zenpetsapi.appspot.com/checkUserReviewVote</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_doctor_review_new_vote">https://zenpetsapi.appspot.com/newReviewVote</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_doctor_review_update_vote_yes">https://zenpetsapi.appspot.com/updateReviewVoteYes</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_doctor_review_update_vote_no">https://zenpetsapi.appspot.com/updateReviewVoteNo</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_doctor_review_fetch_positive">https://zenpetsapi.appspot.com/fetchPositiveReviewVotes</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_doctor_review_fetch_negative">https://zenpetsapi.appspot.com/fetchNegativeReviewVotes</string>&ndash;&gt;-->
+    <!-- DOCTOR REVIEWS -->
+    <string name="url_doctor_review_new">https://zenpetsapi.appspot.com/newDoctorReview</string>
+    <string name="url_clinic_rating_new">https://zenpetsapi.appspot.com/newClinicRating</string>
+    <!--<string name="url_doctor_review_subset_fetch">https://zenpetsapi.appspot.com/fetchDoctorReviewsSubset</string>-->
+    <!--<string name="url_doctor_review_all_fetch">https://zenpetsapi.appspot.com/fetchDoctorReviews</string>-->
+    <!--<string name="url_doctor_reviews_check_vote">https://zenpetsapi.appspot.com/checkUserReviewVote</string>-->
+    <!--<string name="url_doctor_review_new_vote">https://zenpetsapi.appspot.com/newReviewVote</string>-->
+    <!--<string name="url_doctor_review_update_vote_yes">https://zenpetsapi.appspot.com/updateReviewVoteYes</string>-->
+    <!--<string name="url_doctor_review_update_vote_no">https://zenpetsapi.appspot.com/updateReviewVoteNo</string>-->
+    <!--<string name="url_doctor_review_fetch_positive">https://zenpetsapi.appspot.com/fetchPositiveReviewVotes</string>-->
+    <!--<string name="url_doctor_review_fetch_negative">https://zenpetsapi.appspot.com/fetchNegativeReviewVotes</string>-->
 
-    <!--&lt;!&ndash; DOCTOR TIMINGS &ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_doctor_timings">https://zenpetsapi.appspot.com/fetchDoctorTimings</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_timings_sun_mor">https://zenpetsapi.appspot.com/fetchSundayMorningTimings</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_timings_sun_aft">https://zenpetsapi.appspot.com/fetchSundayAfternoonTimings</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_timings_mon_mor">https://zenpetsapi.appspot.com/fetchMondayMorningTimings</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_timings_mon_aft">https://zenpetsapi.appspot.com/fetchMondayAfternoonTimings</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_timings_tue_aft">https://zenpetsapi.appspot.com/fetchTuesdayAfternoonTimings</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_timings_tue_mor">https://zenpetsapi.appspot.com/fetchTuesdayMorningTimings</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_timings_wed_mor">https://zenpetsapi.appspot.com/fetchWednesdayMorningTimings</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_timings_wed_aft">https://zenpetsapi.appspot.com/fetchWednesdayAfternoonTimings</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_timings_thu_mor">https://zenpetsapi.appspot.com/fetchThursdayMorningTimings</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_timings_thu_aft">https://zenpetsapi.appspot.com/fetchThursdayAfternoonTimings</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_timings_fri_mor">https://zenpetsapi.appspot.com/fetchFridayMorningTimings</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_timings_fri_aft">https://zenpetsapi.appspot.com/fetchFridayAfternoonTimings</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_timings_sat_mor">https://zenpetsapi.appspot.com/fetchSaturdayMorningTimings</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_timings_sat_aft">https://zenpetsapi.appspot.com/fetchSaturdayAfternoonTimings</string>&ndash;&gt;-->
-    <!--<string name="url_timings_check_availability">https://zenpetsapi.appspot.com/checkAvailability</string>-->
+    <!-- DOCTOR TIMINGS -->
+    <!--<string name="url_doctor_timings">https://zenpetsapi.appspot.com/fetchDoctorTimings</string>-->
+    <!--<string name="url_timings_sun_mor">https://zenpetsapi.appspot.com/fetchSundayMorningTimings</string>-->
+    <!--<string name="url_timings_sun_aft">https://zenpetsapi.appspot.com/fetchSundayAfternoonTimings</string>-->
+    <!--<string name="url_timings_mon_mor">https://zenpetsapi.appspot.com/fetchMondayMorningTimings</string>-->
+    <!--<string name="url_timings_mon_aft">https://zenpetsapi.appspot.com/fetchMondayAfternoonTimings</string>-->
+    <!--<string name="url_timings_tue_aft">https://zenpetsapi.appspot.com/fetchTuesdayAfternoonTimings</string>-->
+    <!--<string name="url_timings_tue_mor">https://zenpetsapi.appspot.com/fetchTuesdayMorningTimings</string>-->
+    <!--<string name="url_timings_wed_mor">https://zenpetsapi.appspot.com/fetchWednesdayMorningTimings</string>-->
+    <!--<string name="url_timings_wed_aft">https://zenpetsapi.appspot.com/fetchWednesdayAfternoonTimings</string>-->
+    <!--<string name="url_timings_thu_mor">https://zenpetsapi.appspot.com/fetchThursdayMorningTimings</string>-->
+    <!--<string name="url_timings_thu_aft">https://zenpetsapi.appspot.com/fetchThursdayAfternoonTimings</string>-->
+    <!--<string name="url_timings_fri_mor">https://zenpetsapi.appspot.com/fetchFridayMorningTimings</string>-->
+    <!--<string name="url_timings_fri_aft">https://zenpetsapi.appspot.com/fetchFridayAfternoonTimings</string>-->
+    <!--<string name="url_timings_sat_mor">https://zenpetsapi.appspot.com/fetchSaturdayMorningTimings</string>-->
+    <!--<string name="url_timings_sat_aft">https://zenpetsapi.appspot.com/fetchSaturdayAfternoonTimings</string>-->
+    <string name="url_timings_check_availability">https://zenpetsapi.appspot.com/checkAvailability</string>
 
-    <!--&lt;!&ndash; CLINICS &ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_clinic_fetch_images">https://zenpetsapi.appspot.com/fetchClinicImages</string>&ndash;&gt;-->
+    <!-- CLINICS -->
+    <!--<string name="url_clinic_fetch_images">https://zenpetsapi.appspot.com/fetchClinicImages</string>-->
 
-    <!--&lt;!&ndash; LOCATION URLS &ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_location_all_countries">https://zenpetsapi.appspot.com/allCountries</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_location_all_states">https://zenpetsapi.appspot.com/allStates</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_location_cities_in_state">https://zenpetsapi.appspot.com/citiesInState</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_location_city_id">https://zenpetsapi.appspot.com/getCityID</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_location_locality_id">https://zenpetsapi.appspot.com/getLocalityID</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_location_localities_by_city">https://zenpetsapi.appspot.com/fetchLocalitiesByCity</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_location_localities_search">https://zenpetsapi.appspot.com/localitiesSearch</string>&ndash;&gt;-->
+    <!-- LOCATION URLS -->
+    <!--<string name="url_location_all_countries">https://zenpetsapi.appspot.com/allCountries</string>-->
+    <!--<string name="url_location_all_states">https://zenpetsapi.appspot.com/allStates</string>-->
+    <!--<string name="url_location_cities_in_state">https://zenpetsapi.appspot.com/citiesInState</string>-->
+    <!--<string name="url_location_city_id">https://zenpetsapi.appspot.com/getCityID</string>-->
+    <!--<string name="url_location_locality_id">https://zenpetsapi.appspot.com/getLocalityID</string>-->
+    <!--<string name="url_location_localities_by_city">https://zenpetsapi.appspot.com/fetchLocalitiesByCity</string>-->
+    <!--<string name="url_location_localities_search">https://zenpetsapi.appspot.com/localitiesSearch</string>-->
 
-    <!--&lt;!&ndash; VISIT REASONS &ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_visit_reasons">https://zenpetsapi.appspot.com/visitReasons</string>&ndash;&gt;-->
+    <!-- VISIT REASONS -->
+    <!--<string name="url_visit_reasons">https://zenpetsapi.appspot.com/visitReasons</string>-->
 
-    <!--&lt;!&ndash; VACCINES AND VACCINATIONS &ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_all_vaccines">https://zenpetsapi.appspot.com/allVaccines</string>&ndash;&gt;-->
-    <!--<string name="url_new_vaccination">https://zenpetsapi.appspot.com/newVaccination</string>-->
-    <!--<string name="url_new_vaccination_image">https://zenpetsapi.appspot.com/newVaccinationImage</string>-->
-    <!--&lt;!&ndash;<string name="url_all_vaccinations">https://zenpetsapi.appspot.com/fetchPetVaccinations</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_vaccination_images">https://zenpetsapi.appspot.com/fetchVaccinationImages</string>&ndash;&gt;-->
+    <!-- VACCINES AND VACCINATIONS -->
+    <!--<string name="url_all_vaccines">https://zenpetsapi.appspot.com/allVaccines</string>-->
+    <string name="url_new_vaccination">https://zenpetsapi.appspot.com/newVaccination</string>
+    <string name="url_new_vaccination_image">https://zenpetsapi.appspot.com/newVaccinationImage</string>
+    <!--<string name="url_all_vaccinations">https://zenpetsapi.appspot.com/fetchPetVaccinations</string>-->
+    <!--<string name="url_vaccination_images">https://zenpetsapi.appspot.com/fetchVaccinationImages</string>-->
 
-    <!--&lt;!&ndash; PET TYPES AND BREEDS &ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_pet_types">https://zenpetsapi.appspot.com/petTypes</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_pet_breeds">https://zenpetsapi.appspot.com/allPetBreeds</string>&ndash;&gt;-->
+    <!-- PET TYPES AND BREEDS -->
+    <!--<string name="url_pet_types">https://zenpetsapi.appspot.com/petTypes</string>-->
+    <!--<string name="url_pet_breeds">https://zenpetsapi.appspot.com/allPetBreeds</string>-->
 
-    <!--&lt;!&ndash; PET URL'S &ndash;&gt;-->
-    <!--<string name="url_add_new_pet">https://zenpetsapi.appspot.com/newPet</string>-->
-    <!--&lt;!&ndash;<string name="url_user_pets">https://zenpetsapi.appspot.com/fetchUserPets</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_pet_details">https://zenpetsapi.appspot.com/fetchPetDetails</string>&ndash;&gt;-->
+    <!-- PET URL'S -->
+    <string name="url_add_new_pet">https://zenpetsapi.appspot.com/newPet</string>
+    <!--<string name="url_user_pets">https://zenpetsapi.appspot.com/fetchUserPets</string>-->
+    <!--<string name="url_pet_details">https://zenpetsapi.appspot.com/fetchPetDetails</string>-->
 
-    <!--&lt;!&ndash; MEDICAL RECORDS &ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_all_record_types">https://zenpetsapi.appspot.com/allRecordTypes</string>&ndash;&gt;-->
-    <!--<string name="url_new_medical_record">https://zenpetsapi.appspot.com/newMedicalRecord</string>-->
-    <!--&lt;!&ndash;<string name="url_all_medical_records">https://zenpetsapi.appspot.com/fetchPetMedicalRecords</string>&ndash;&gt;-->
-    <!--<string name="url_new_medical_image">https://zenpetsapi.appspot.com/newMedicalImage</string>-->
-    <!--&lt;!&ndash;<string name="url_medical_record_images">https://zenpetsapi.appspot.com/fetchMedicalImages</string>&ndash;&gt;-->
+    <!-- MEDICAL RECORDS -->
+    <!--<string name="url_all_record_types">https://zenpetsapi.appspot.com/allRecordTypes</string>-->
+    <string name="url_new_medical_record">https://zenpetsapi.appspot.com/newMedicalRecord</string>
+    <!--<string name="url_all_medical_records">https://zenpetsapi.appspot.com/fetchPetMedicalRecords</string>-->
+    <string name="url_new_medical_image">https://zenpetsapi.appspot.com/newMedicalImage</string>
+    <!--<string name="url_medical_record_images">https://zenpetsapi.appspot.com/fetchMedicalImages</string>-->
 
-    <!--&lt;!&ndash; PRESCRIPTIONS &ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_all_prescriptions">https://zenpetsapi.appspot.com/fetchPetPrescriptions</string>&ndash;&gt;-->
+    <!-- PRESCRIPTIONS -->
+    <!--<string name="url_all_prescriptions">https://zenpetsapi.appspot.com/fetchPetPrescriptions</string>-->
 
-    <!--&lt;!&ndash; KENNEL URL'S &ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_kennels_list">https://zenpetsapi.appspot.com/fetchKennelsListByCity</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_positive_kennel_reviews">https://zenpetsapi.appspot.com/fetchPositiveKennelReviews</string>&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_negative_kennel_reviews">https://zenpetsapi.appspot.com/fetchNegativeKennelReviews</string>&ndash;&gt;-->
+    <!-- KENNEL URL'S -->
+    <!--<string name="url_kennels_list">https://zenpetsapi.appspot.com/fetchKennelsListByCity</string>-->
+    <!--<string name="url_positive_kennel_reviews">https://zenpetsapi.appspot.com/fetchPositiveKennelReviews</string>-->
+    <!--<string name="url_negative_kennel_reviews">https://zenpetsapi.appspot.com/fetchNegativeKennelReviews</string>-->
 
-    <!--&lt;!&ndash; ADOPTION URL'S &ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="url_adoptions_list">https://zenpetsapi.appspot.com/fetchTestAdoptions</string>&ndash;&gt;-->
+    <!-- ADOPTION URL'S -->
+    <!--<string name="url_adoptions_list">https://zenpetsapi.appspot.com/fetchTestAdoptions</string>-->
 </resources>
