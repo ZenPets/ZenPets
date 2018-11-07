@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardClient"
+        style="@style/ZenPetsCards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardElevation="5dp"
+        app:contentPadding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/imgvwUserProfile"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_margin="5dp"
+                app:placeholderImage="@drawable/ic_person_black_24dp"
+                app:roundedCornerRadius="4dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txtUserName"
+                    style="@style/NormalBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="11dp"
+                    android:paddingTop="5dp"
+                    android:text="User Name"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:paddingBottom="5dp"
+                        android:paddingEnd="11dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="11dp"
+                        android:paddingStart="5dp"
+                        android:paddingTop="5dp"
+                        app:iiv_color="@color/secondary_text"
+                        app:iiv_icon="faw_phone"
+                        app:iiv_size="14dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtUserPhone"
+                        style="@style/NormalRegular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autoLink="phone"
+                        android:gravity="start|center"
+                        android:paddingBottom="5dp"
+                        android:paddingEnd="11dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="11dp"
+                        android:paddingStart="5dp"
+                        android:paddingTop="5dp"
+                        android:text="User Phone"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:paddingBottom="5dp"
+                        android:paddingEnd="11dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="11dp"
+                        android:paddingStart="5dp"
+                        android:paddingTop="5dp"
+                        app:iiv_color="@color/secondary_text"
+                        app:iiv_icon="gmd_today"
+                        app:iiv_size="14dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtLastAppointment"
+                        style="@style/NormalRegular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:paddingBottom="5dp"
+                        android:paddingEnd="11dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="11dp"
+                        android:paddingStart="5dp"
+                        android:paddingTop="5dp"
+                        android:text="Previous Appointment"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top|center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:padding="11dp"
+                    app:iiv_color="@color/tertiary_text"
+                    app:iiv_icon="@string/faw_phone"
+                    app:iiv_size="16dp" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txtUserPhone"
+                    style="@style/NormalRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoLink="phone"
+                    android:gravity="start|center"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="5dp"
+                    android:paddingTop="5dp"
+                    android:text="User Phone"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:gravity="top|center"
+                android:orientation="horizontal">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:padding="11dp"
+                    android:paddingTop="5dp"
+                    app:iiv_color="@color/tertiary_text"
+                    app:iiv_icon="@string/gmd_today"
+                    app:iiv_size="16dp" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txtLastAppointment"
+                    style="@style/NormalRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="11dp"
+                    android:paddingStart="5dp"
+                    android:paddingTop="5dp"
+                    android:text="Previous Appointment"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>-->
+    </android.support.v7.widget.CardView>
+</LinearLayout>

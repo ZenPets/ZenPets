@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/zen_toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbarSize="3dp"
+        android:scrollbarThumbVertical="@color/primary">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txtPrefixLabel"
+                style="@style/NormalBold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:gravity="start|center"
+                android:paddingBottom="5dp"
+                android:paddingEnd="11dp"
+                android:paddingLeft="11dp"
+                android:paddingRight="11dp"
+                android:paddingStart="11dp"
+                android:paddingTop="5dp"
+                android:text="SELECT YOUR PREFIX"
+                android:textColor="@color/secondary_text"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spnPrefix"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/txtPrefixLabel"
+                app:layout_constraintStart_toStartOf="@+id/txtPrefixLabel"
+                app:layout_constraintTop_toBottomOf="@+id/txtPrefixLabel" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputFullName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:hintTextAppearance="@style/TextLabel"
+                app:layout_constraintEnd_toEndOf="@+id/spnPrefix"
+                app:layout_constraintStart_toStartOf="@+id/spnPrefix"
+                app:layout_constraintTop_toBottomOf="@+id/spnPrefix">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtFullName"
+                    style="@style/NormalRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:gravity="start|center"
+                    android:hint="@string/sign_up_full_name"
+                    android:inputType="textCapWords"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textColorHint="@android:color/tertiary_text_light"
+                    android:textSize="14sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputEmailAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:hintTextAppearance="@style/TextLabel"
+                app:layout_constraintEnd_toEndOf="@+id/inputFullName"
+                app:layout_constraintStart_toStartOf="@+id/inputFullName"
+                app:layout_constraintTop_toBottomOf="@+id/inputFullName">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtEmailAddress"
+                    style="@style/NormalRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:gravity="start|center"
+                    android:hint="@string/sign_up_email_address_hint"
+                    android:inputType="textEmailAddress"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textColorHint="@android:color/tertiary_text_light"
+                    android:textSize="14sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputPhoneNumber"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:hintTextAppearance="@style/TextLabel"
+                app:layout_constraintEnd_toEndOf="@+id/inputEmailAddress"
+                app:layout_constraintStart_toStartOf="@+id/inputEmailAddress"
+                app:layout_constraintTop_toBottomOf="@+id/inputEmailAddress">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtPhoneNumber"
+                    style="@style/NormalRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:gravity="start|center"
+                    android:hint="@string/sign_up_phone_number_hint"
+                    android:inputType="phone"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textColorHint="@android:color/secondary_text_light"
+                    android:textSize="14sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:hintTextAppearance="@style/TextLabel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputPhoneNumber">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtAddress"
+                    style="@style/NormalRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|top"
+                    android:hint="(*) Your Address"
+                    android:inputType="textPostalAddress|textCapSentences|textMultiLine"
+                    android:lines="3"
+                    android:maxLines="8"
+                    android:minLines="3"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="14sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/linlaLocation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="top|center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@+id/inputAddress"
+                app:layout_constraintStart_toStartOf="@+id/inputAddress"
+                app:layout_constraintTop_toBottomOf="@+id/inputAddress">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:layout_marginTop="5dp"
+                    android:adjustViewBounds="true"
+                    android:padding="11dp"
+                    app:iiv_color="@android:color/secondary_text_light"
+                    app:iiv_icon="faw-map-marker"
+                    app:iiv_size="18dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtCountryLabel"
+                        style="@style/NormalBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="start|center"
+                        android:padding="11dp"
+                        android:text="Tap To Change The Country"
+                        android:textColor="@android:color/secondary_text_light"
+                        android:textSize="15sp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtCountryName"
+                        style="@style/NormalRegular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="start|center"
+                        android:padding="11dp"
+                        android:text="Country Name"
+                        android:textColor="@android:color/secondary_text_light"
+                        android:textSize="14sp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtStateLabel"
+                        style="@style/NormalBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="start|center"
+                        android:padding="11dp"
+                        android:text="Tap To Change The State"
+                        android:textColor="@android:color/secondary_text_light"
+                        android:textSize="15sp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtStateName"
+                        style="@style/NormalRegular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="start|center"
+                        android:padding="11dp"
+                        android:text="State Name"
+                        android:textColor="@android:color/secondary_text_light"
+                        android:textSize="14sp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtCityLabel"
+                        style="@style/NormalBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="start|center"
+                        android:padding="11dp"
+                        android:text="Tap To Change The City"
+                        android:textColor="@android:color/secondary_text_light"
+                        android:textSize="15sp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtCityName"
+                        style="@style/NormalRegular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="start|center"
+                        android:padding="11dp"
+                        android:text="City Name"
+                        android:textColor="@android:color/secondary_text_light"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linlaGender"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@+id/linlaLocation"
+                app:layout_constraintStart_toStartOf="@+id/linlaLocation"
+                app:layout_constraintTop_toBottomOf="@+id/linlaLocation">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:adjustViewBounds="true"
+                    app:iiv_color="@android:color/secondary_text_light"
+                    app:iiv_icon="faw-venus-mars"
+                    app:iiv_size="18dp" />
+
+                <RadioGroup
+                    android:id="@+id/rdgGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:orientation="horizontal"
+                    android:padding="11dp">
+
+                    <android.support.v7.widget.AppCompatRadioButton
+                        android:id="@+id/rdbtnMale"
+                        style="@style/NormalRegular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start|center"
+                        android:layout_weight="1"
+                        android:checked="true"
+                        android:padding="4dp"
+                        android:text="@string/sign_up_male"
+                        android:textColor="@android:color/secondary_text_light"
+                        android:textSize="14sp" />
+
+                    <android.support.v7.widget.AppCompatRadioButton
+                        android:id="@+id/rdbtnFemale"
+                        style="@style/NormalRegular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start|center"
+                        android:layout_weight="1"
+                        android:checked="false"
+                        android:padding="4dp"
+                        android:text="@string/sign_up_female"
+                        android:textColor="@android:color/secondary_text_light"
+                        android:textSize="14sp" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputSummary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:hintTextAppearance="@style/TextLabel"
+                app:layout_constraintEnd_toEndOf="@+id/linlaGender"
+                app:layout_constraintStart_toStartOf="@+id/linlaGender"
+                app:layout_constraintTop_toBottomOf="@+id/linlaGender">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtSummary"
+                    style="@style/NormalRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top|start"
+                    android:hint="(*) Tell us something about your practise"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:lines="5"
+                    android:maxLines="10"
+                    android:minLines="5"
+                    android:padding="11dp"
+                    android:textColor="@color/primary_text"
+                    android:textColorHint="@color/tertiary_text"
+                    android:textSize="14sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputExperience"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:hintTextAppearance="@style/TextLabel"
+                app:layout_constraintEnd_toEndOf="@+id/inputSummary"
+                app:layout_constraintStart_toStartOf="@+id/inputSummary"
+                app:layout_constraintTop_toBottomOf="@+id/inputSummary">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtExperience"
+                    style="@style/NormalRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:gravity="start|center"
+                    android:hint="(*) Your Experience (In Years)"
+                    android:inputType="number"
+                    android:padding="11dp"
+                    android:textColor="@color/primary_text"
+                    android:textColorHint="@color/tertiary_text"
+                    android:textSize="14sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputCharges"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:hintTextAppearance="@style/TextLabel"
+                app:layout_constraintEnd_toEndOf="@+id/inputExperience"
+                app:layout_constraintStart_toStartOf="@+id/inputExperience"
+                app:layout_constraintTop_toBottomOf="@+id/inputExperience">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtCharges"
+                    style="@style/NormalRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:gravity="start|center"
+                    android:hint="(*) Minimum Charges"
+                    android:inputType="numberDecimal"
+                    android:padding="11dp"
+                    android:textColor="@color/primary_text"
+                    android:textColorHint="@color/tertiary_text"
+                    android:textSize="14sp" />
+            </android.support.design.widget.TextInputLayout>
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</LinearLayout>

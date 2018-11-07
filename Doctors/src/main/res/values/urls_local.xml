@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- DOCTOR TIMINGS -->
+    <string name="url_timings_check_availability">http://192.168.11.2/zenpets/public/checkAvailability</string>
+</resources>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="5dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/imgvwUserProfile"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        app:placeholderImage="@drawable/ic_person_black_24dp"
+        app:roundAsCircle="true"
+        app:roundedCornerRadius="4dp"
+        app:roundingBorderColor="@color/semiTransparentDark" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txtUserName"
+        style="@style/CondensedRegular"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start|center"
+        android:paddingBottom="5dp"
+        android:paddingEnd="11dp"
+        android:paddingLeft="11dp"
+        android:paddingRight="11dp"
+        android:paddingStart="11dp"
+        android:paddingTop="5dp"
+        android:text="USER NAME"
+        android:textColor="@android:color/primary_text_dark"
+        android:textSize="18sp" />
+</LinearLayout>

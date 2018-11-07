@@ -52,6 +52,10 @@
             android:name=".landing.LandingActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".landing.NewLandingActivity"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <!-- GROOMER DETAILS -->
         <activity
@@ -62,6 +66,12 @@
         <!-- REVIEWS -->
         <activity
             android:name=".details.review.ReviewDetails"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <!-- ENQUIRY -->
+        <activity
+            android:name=".details.enquiry.EnquiryDetails"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
@@ -92,7 +102,7 @@
 
         <!-- FIREBASE CLOUD MESSAGING -->
         <service
-            android:name=".utils.services.MyFirebaseMessagingService"
+            android:name=".utils.services.NewFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

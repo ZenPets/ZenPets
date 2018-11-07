@@ -3,7 +3,6 @@ package co.zenpets.users.utils.models.appointment;
 import com.google.gson.annotations.SerializedName;
 
 public class Appointment {
-
     @SerializedName("appointmentID") private String appointmentID;
     @SerializedName("doctorID") private String doctorID;
     @SerializedName("doctorPrefix") private String doctorPrefix;
@@ -18,8 +17,13 @@ public class Appointment {
     @SerializedName("clinicLongitude") private String clinicLongitude;
     @SerializedName("userID") private String userID;
     @SerializedName("userName") private String userName;
+    @SerializedName("userDisplayProfile") private String userDisplayProfile;
     @SerializedName("petID") private String petID;
     @SerializedName("petName") private String petName;
+    @SerializedName("petTypeID") private String petTypeID;
+    @SerializedName("petTypeName") private String petTypeName;
+    @SerializedName("breedID") private String breedID;
+    @SerializedName("breedName") private String breedName;
     @SerializedName("visitReasonID") private String visitReasonID;
     @SerializedName("visitReason") private String visitReason;
     @SerializedName("appointmentDate") private String appointmentDate;
@@ -140,6 +144,14 @@ public class Appointment {
         this.userName = userName;
     }
 
+    public String getUserDisplayProfile() {
+        return userDisplayProfile;
+    }
+
+    public void setUserDisplayProfile(String userDisplayProfile) {
+        this.userDisplayProfile = userDisplayProfile;
+    }
+
     public String getPetID() {
         return petID;
     }
@@ -154,6 +166,38 @@ public class Appointment {
 
     public void setPetName(String petName) {
         this.petName = petName;
+    }
+
+    public String getPetTypeID() {
+        return petTypeID;
+    }
+
+    public void setPetTypeID(String petTypeID) {
+        this.petTypeID = petTypeID;
+    }
+
+    public String getPetTypeName() {
+        return petTypeName;
+    }
+
+    public void setPetTypeName(String petTypeName) {
+        this.petTypeName = petTypeName;
+    }
+
+    public String getBreedID() {
+        return breedID;
+    }
+
+    public void setBreedID(String breedID) {
+        this.breedID = breedID;
+    }
+
+    public String getBreedName() {
+        return breedName;
+    }
+
+    public void setBreedName(String breedName) {
+        this.breedName = breedName;
     }
 
     public String getVisitReasonID() {

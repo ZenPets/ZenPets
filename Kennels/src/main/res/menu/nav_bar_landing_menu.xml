@@ -19,11 +19,11 @@
             android:checked="false"
             android:icon="@drawable/dash_profile_dark"
             android:title="Profile" />
-        <item
+        <!--<item
             android:id="@+id/dashKennels"
             android:checked="false"
             android:icon="@drawable/dash_kennels_dark"
-            android:title="Your Kennels" />
+            android:title="Your Kennels" />-->
         <item
             android:id="@+id/dashReviews"
             android:checked="false"

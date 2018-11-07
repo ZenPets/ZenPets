@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.AppCompatTextView
+        style="@style/CondensedRegular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:autoLink="email"
+        android:padding="11dp"
+        android:text="You have claimed a Doctor's Profile with the details listed below. We are processing your claim and will update it withing 48 hours of claiming it. \n\nIf it's been longer than 48 hours, please send us an email at claims@zenpets.biz and mention the Claim ID listed below."
+        android:textColor="@color/primary_text"
+        android:textSize="15sp" />
+
+    <android.support.v7.widget.AppCompatTextView
+        style="@style/NormalBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="11dp"
+        android:text="PROFILE CLAIMED"
+        android:textColor="@color/secondary_text"
+        android:textSize="14sp" />
+
+    <android.support.v7.widget.CardView
+        style="@style/ZenPetsCards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:contentPadding="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:padding="5dp"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="faw_user_md"
+                    app:iiv_size="16dp" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txtDoctorName"
+                    style="@style/NormalBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="start|center"
+                    android:maxLines="1"
+                    android:padding="5dp"
+                    android:text="Doctor Name"
+                    android:textColor="@color/primary_text"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start|top"
+                android:orientation="horizontal">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:padding="5dp"
+                    app:iiv_color="@color/tertiary_text"
+                    app:iiv_icon="faw_hospital_o"
+                    app:iiv_size="16dp" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txtDoctorAddress"
+                    style="@style/LightBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start|center"
+                    android:padding="5dp"
+                    android:text="Doctor Address"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.AppCompatTextView
+        style="@style/NormalBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="11dp"
+        android:text="CLAIM ID"
+        android:textColor="@color/secondary_text"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/txtClaimID"
+        style="@style/NormalRegular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="11dp"
+        android:text="Claim ID"
+        android:textColor="@color/primary_text" />
+
+    <android.support.v7.widget.AppCompatTextView
+        style="@style/NormalBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="11dp"
+        android:text="CLAIM STATUS"
+        android:textColor="@color/secondary_text"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/txtClaimStatus"
+        style="@style/NormalRegular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="11dp"
+        android:text="Claim Status"
+        android:textColor="@color/primary_text" />
+</LinearLayout>

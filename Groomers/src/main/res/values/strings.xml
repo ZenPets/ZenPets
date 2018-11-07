@@ -2,10 +2,11 @@
     <string name="app_name">Groomers</string>
 
     <!-- THE API KEY'S -->
-    <string name="google_maps_key">AIzaSyBSKaPC3LB4e70bFFoGeR1I4i2LpoZnxho</string>
+    <string name="google_maps_key">AIzaSyCC6_QV-QfckZ9SaEhKrccZcnYFTDcF0ec</string>
 
-    <!-- THE DEFAULT NOTIFICATION CHANNEL ID -->
+    <!-- THE DEFAULT NOTIFICATION CHANNEL -->
     <string name="default_notification_channel_id">fcm_default_channel</string>
+    <string name="default_notification_channel_desc">fcm_default_channel</string>
 
     <!-- SPLASH SCREEN -->
     <string name="splash_title">ZEN PETS</string>
@@ -93,4 +94,15 @@
     <string name="review_subset_time_stamp">2 Months</string>
     <string name="review_subset_from_label"><b>Reply from Siddharth Lele</b> on 6/6/2018</string>
     <string name="review_subset_from_title">Replied on </string>
+
+    <!-- ENQUIRY ITEM STRINGS -->
+    <string name="ge_unread_message_count_placeholder">%1$s</string>
+
+    <!-- ENQUIRY DETAILS -->
+    <string name="enquiry_details_new_message_hint">Type a message</string>
+    <string name="ed_incoming_message">This is an incoming message…</string>
+    <string name="ed_user_name">USER\'s Name</string>
+    <string name="ed_outgoing_message">This is an outgoing message…</string>
+    <string name="ed_groomer_name">GROOMER\'s NAME</string>
+    <string name="ed_message_time_stamp">11:15 PM</string>
 </resources>

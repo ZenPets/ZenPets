@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class AdoptionNotification {
     @SerializedName("error") private Boolean error;
+    @SerializedName("message") private String message;
     @SerializedName("deviceToken") private String deviceToken;
     @SerializedName("notificationTitle") private String notificationTitle;
     @SerializedName("notificationMessage") private String notificationMessage;

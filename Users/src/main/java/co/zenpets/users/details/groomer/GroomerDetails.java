@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -190,7 +189,7 @@ public class GroomerDetails extends AppCompatActivity {
         call.enqueue(new Callback<Groomer>() {
             @Override
             public void onResponse(Call<Groomer> call, Response<Groomer> response) {
-                Log.e("GROOMER DETAILS", String.valueOf(response.raw()));
+//                Log.e("GROOMER DETAILS", String.valueOf(response.raw()));
                 Groomer data = response.body();
                 if (data != null)   {
 
@@ -350,7 +349,7 @@ public class GroomerDetails extends AppCompatActivity {
         call.enqueue(new Callback<GroomerReviews>() {
             @Override
             public void onResponse(Call<GroomerReviews> call, Response<GroomerReviews> response) {
-                Log.e("REVIEWS RAW", String.valueOf(response.raw()));
+//                Log.e("REVIEWS RAW", String.valueOf(response.raw()));
                 if (response.body() != null && response.body().getReviews() != null)    {
                     arrReviewsSubset = response.body().getReviews();
                     if (arrReviewsSubset.size() > 0)    {
@@ -417,7 +416,7 @@ public class GroomerDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<GroomerImages> call, Throwable t) {
-                Log.e("IMAGES FAILURE", t.getMessage());
+//                Log.e("IMAGES FAILURE", t.getMessage());
             }
         });
     }
@@ -433,8 +432,8 @@ public class GroomerDetails extends AppCompatActivity {
             ORIGIN_LATITUDE = bundle.getString("ORIGIN_LATITUDE");
             ORIGIN_LONGITUDE = bundle.getString("ORIGIN_LONGITUDE");
             if (GROOMER_ID != null && ORIGIN_LATITUDE != null && ORIGIN_LONGITUDE != null)  {
-                Log.e("LATITUDE", ORIGIN_LATITUDE);
-                Log.e("LONGITUDE", ORIGIN_LONGITUDE);
+//                Log.e("LATITUDE", ORIGIN_LATITUDE);
+//                Log.e("LONGITUDE", ORIGIN_LONGITUDE);
                 /* FETCH THE GROOMER DETAILS */
                 fetchGroomerDetails();
 
@@ -561,7 +560,7 @@ public class GroomerDetails extends AppCompatActivity {
         call.enqueue(new Callback<GroomerReview>() {
             @Override
             public void onResponse(Call<GroomerReview> call, Response<GroomerReview> response) {
-                Log.e("RESPONSE RAW", String.valueOf(response.raw()));
+//                Log.e("RESPONSE RAW", String.valueOf(response.raw()));
                 if (!response.body().getError()) {
                     GroomerReview review = response.body();
                     if (review != null) {

@@ -1,3 +1,262 @@
 <resources>
     <string name="app_name">Zen Pets</string>
+
+    <!-- THE API KEY'S -->
+    <string name="google_maps_key">AIzaSyBoDGi9WYtBuqDMqSNS7J0iEmdwcwXaJkM</string>
+
+    <!-- THE DEFAULT NOTIFICATION CHANNEL -->
+    <string name="default_notification_channel_id">fcm_default_channel</string>
+    <string name="default_notification_channel_desc">fcm_default_channel</string>
+
+    <!-- PRIVACY POLICY -->
+    <string name="privacy_policy_url">http://zenpets.s3-website.ap-south-1.amazonaws.com/privacy-policy.html</string>
+
+    <!-- LOADING SCREEN -->
+    <string name="common_loading">Loading…</string>
+
+    <!-- IMAGE PICKER SHEET STRINGS -->
+    <string name="image_picker_sheet_title">ADD AN IMAGE</string>
+    <string name="image_picker_sheet_gallery">Choose from photo gallery</string>
+    <string name="image_picker_sheet_camera">Take a photo</string>
+
+    <!-- STORAGE PERMISSION TITLES AND MESSAGES -->
+    <string name="storage_permission_title">We Need A Permission</string>
+    <string name="storage_permission_message">\nZen Pets requires the Storage Permission to optimize Images that you upload to the Zen Pets platform.</string>
+
+    <!-- LOCATION PERMISSION TITLES AND MESSAGES -->
+    <string name="location_permission_title">We Need Your Location</string>
+    <string name="location_permission_message">\nZen Pets requires the Location Permission to detect your current location automatically for you. \n\nFor a seamless experience, we recommend granting Zen Pets this permission.</string>
+
+    <!-- COMMON PERMISSION STRINGS -->
+    <string name="permission_grant">Grant Permission</string>
+    <string name="permission_deny">Not Now</string>
+
+    <!-- SPLASH SCREEN -->
+    <string name="splash_title">ZEN PETS</string>
+    <string name="splash_clinic_prompter_title">Clinic Required</string>
+    <string name="splash_clinic_prompter_message">You need to add at least one Clinic / Hospital <b><i>or</i></b> connect an existing Clinic to your account before your profile can be made public and available for all Zen Pets users.
+        \n\nIf you own / run your own Clinic / Hospital, click the \"NEW CLINIC\" button, to add a new Clinic / Hospital.
+        \n\nIf you practice at a Clinic / Hospital owned / run by someone else, click the \"SEARCH CLINIC\" button.</string>
+    <string name="splash_clinic_prompter_new">New Clinic</string>
+    <string name="splash_clinic_prompter_search">Search Clinic</string>
+
+    <!-- LOGIN SCREEN -->
+    <string name="login_app_title">Zen Pets</string>
+    <string name="login_app_sub_title">for doctors</string>
+    <string name="login_email_hint">Email Address</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_sign_in">SIGN IN</string>
+    <string name="login_create_account">Create Account</string>
+    <string name="login_forgot_password">Forgot Password</string>
+    <string name="login_listed_message">If you have been pre-listed, click the link below to claim your profile</string>
+    <string name="login_listed">CLAIM PROFILE</string>
+
+    <string name="login_unregistered_title">"Email Not Found"</string>
+    <string name="login_unregistered_message">This email does not exist in our records. If you haven\'t signed up, please use the \"Create Account\" button to do so now.</string>
+    <string name="login_unregistered_create">Create Account</string>
+    <string name="login_unregistered_cancel">Cancel</string>
+
+    <string name="login_auth_failed_title">Authentication Failed</string>
+    <string name="login_auth_failed_message">Invalid Password. If you forgotten your password, click the \"Forgot Password\" button to reset your Password. We will send you an email on your registered Email Address to reset it.</string>
+    <string name="login_auth_failed_forgot_password">Forgot Password</string>
+    <string name="login_auth_failed_cancel">Cancel</string>
+
+    <!-- SIGN UP / CREATE ACCOUNT TEXT -->
+    <string name="sign_up_title">CREATE AN ACCOUNT</string>
+    <string name="sign_up_sub_title">Start using Zen Pet For Doctors in a few steps</string>
+    <string name="sign_up_email_address_hint">(*) Email address</string>
+    <string name="sign_up_password_hint">(*) Password (at least 8 characters)</string>
+    <string name="sign_up_confirm_password_hint">(*) Confirm the Password</string>
+    <string name="sign_up_full_name">Provide your Full Name</string>
+    <string name="sign_up_prefix_hint">1234</string>
+    <string name="sign_up_phone_number_hint">(*) Phone Number</string>
+    <string name="sign_up_male">MALE</string>
+    <string name="sign_up_female">FEMALE</string>
+    <string name="sign_up_date_of_birth">Date of Birth</string>
+    <string name="sign_up_select_country">Select your Country</string>
+    <string name="sign_up_select_state">Select your State</string>
+    <string name="sign_up_select_city">Select the City</string>
+    <string name="sign_up_profile_picture">Select Your Display Profile</string>
+
+    <!-- LEGAL STRINGS -->
+    <string name="sign_up_full_terms">By continuing, I agree to the Seller Agreement and Privacy Policy</string>
+    <string name="terms_part_1">By continuing, I agree to the&#160;</string>
+    <string name="terms_part_2">Seller Agreement</string>
+    <string name="terms_part_3">&#160;and the&#160;</string>
+    <string name="terms_part_4">Privacy Policy</string>
+
+    <!-- GENERIC STRINGS -->
+    <string name="generic_mb_yes">Yes</string>
+    <string name="generic_mb_no">No</string>
+    <string name="generic_tilde">~</string>
+    <string name="generic_infinity">∞</string>
+
+    <!-- CLINIC SEARCH -->
+
+    <!-- CLINIC MAPPER -->
+    <string name="clinic_mapper_title">Choose An Option</string>
+    <!--<string name="clinic_mapper_message"></string>-->
+
+    <!-- CLINIC CREATOR -->
+    <string name="clinic_creator_prompter_title">New Clinic</string>
+    <string name="clinic_creator_prompter_message">If you own or operate your own Clinic / Hospital, click the \"NEW CLINIC\" button, to add a new Clinic / Hospital.
+        \n\nIf you practice at a Clinic / Hospital owned or operated by someone else, click the \"SEARCH CLINIC\" button.</string>
+    <string name="clinic_creator_prompter_new">New Clinic</string>
+    <string name="clinic_creator_prompter_search">Search Clinic</string>
+
+    <!-- LANDING ACTIVITY -->
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+    <!-- THE ACCOUNT UNVERIFIED MESSAGE -->
+    <string name="unverified_title">Account Not Verified</string>
+    <string name="unverified_message">To start using Zen Pets - For Doctors, you need to verify your Email Address.
+        \n\nThis is a necessary step for us to know your Email is valid and can receive important Email notifications such as appointments, notices, upgrades / updates, etc from us.
+        \n\nPress the <b>\"Send Verification Email\"</b> button to receive the verification email.
+        \n\nThe process may take a few hours to reflect in the system after verification.</string>
+    <string name="unverified_send">Send Verification Email</string>
+    <string name="unverified_later">Later</string>
+
+    <!-- CLAIM PROFILE STRINGS -->
+    <string name="claim_profile_doc_name_placeholder">%1$s %2$s</string>
+    <string name="claim_profile_experience_text">yrs exp</string>
+    <string name="claim_profile_experience_placeholder">%1$s %2$s</string>
+    <string name="claim_profile_profile_claimed">Profile is claimed</string>
+    <string name="claim_profile_profile_unclaimed">Claim this profile</string>
+
+    <!-- PROFILE DETAILS -->
+    <string name="doctor_profile_name">DOCTOR\'S NAME</string>
+    <string name="doctor_profile_id">INTERNAL ID</string>
+    <string name="doctor_profile_email">EMAIL ADDRESS</string>
+    <string name="doctor_profile_phone">PHONE NUMBER </string>
+    <string name="doctor_profile_address">ADDRESS</string>
+    <string name="doctor_profile_gender">GENDER</string>
+    <string name="doctor_profile_summary">SUMMARY</string>
+    <string name="doctor_profile_experience">EXPERIENCE</string>
+    <string name="doctor_profile_charges">DOCTOR CHARGES</string>
+    <string name="doctor_profile_id_placeholder">System Generated ID: %1$s</string>
+    <string name="doctor_profile_name_placeholder">%1$s %2$s</string>
+    <string name="doctor_profile_phone_placeholder">%1$s %2$s</string>
+    <string name="doctor_profile_address_placeholder">%1$s\n%2$s, %3$s, %4$s</string>
+    <string name="doctor_profile_experience_placeholder">%1$s yrs experience</string>
+    <string name="doctor_profile_charges_placeholder">%1$s %2$s (<i>Minimum Consultation Charges</i>)</string>
+    <string name="profile_clinic_item_name">Clinic Name</string>
+    <string name="profile_clinic_item_details">Clinic Details</string>
+    <string name="profile_clinic_item_details_placeholder">%1$s, %2$s</string>
+
+    <!-- CONSULTATION STRINGS -->
+    <string name="consultation_filter">Filter questions</string>
+    <string name="consultation_empty">There are no Consultations at the moment…</string>
+
+    <!-- FILTER QUESTIONS STRINGS -->
+    <string name="filter_question_tb_title">Filter</string>
+    <string name="filter_question_tb_clear">CLEAR</string>
+    <string name="filter_question_apply">Apply</string>
+
+    <!-- PROBLEMS -->
+    <string name="problem_type_text">Problem Text</string>
+
+    <!-- QUESTION DETAILS -->
+    <string name="question_details_title">Consultation Title</string>
+    <string name="question_details_description">Consultation Description</string>
+    <string name="question_details_asked_for">Consultation Asked For</string>
+    <string name="question_details_time_stamp">Timestamp</string>
+    <string name="question_details_views">0 Views</string>
+    <string name="question_details_replies">11 Replies</string>
+    <string name="question_details_answers_label">Answers</string>
+    <string name="question_details_answers_empty">There are no answers on this question yet…</string>
+    <string name="question_details_asked_for_placeholder">Asked for %1$s %2$s %3$s</string>
+    <string name="question_details_location_placeholder">%1$s, %2$s</string>
+    <string name="question_details_votes_placeholder">%1$s / %2$s found this helpful</string>
+    <string name="question_details_views_placeholder">%1$s Views</string>
+    <string name="question_details_replies_placeholder">%1$s Replies</string>
+
+    <!-- REPLIES ITEM STRINGS -->
+    <string name="reply_item_doc_name">Doctor\'s Name</string>
+    <string name="reply_item_doc_location">Doctor\'s Location</string>
+    <string name="reply_item_time_stamp">Timestamp</string>
+    <string name="reply_item_title">Consultation Title</string>
+    <string name="reply_item_helpful_count">0 / 0 found this helpful</string>
+    <string name="reply_item_helpful_label">Was this answer helpful?</string>
+    <string name="reply_item_helpful_yes">YES</string>
+    <string name="reply_item_helpful_no">NO</string>
+    <string name="new_reply_hint">Type your answer…</string>
+
+    <!-- DOCTOR TIMINGS -->
+    <string name="doctor_timings_closed">Closed</string>
+    <string name="doctor_timings_placeholder">%1$s - %2$s</string>
+
+    <!-- DOCTOR FEEDBACK LIST -->
+    <string name="reviews_list_empty">There are no reviews / feedback for you, yet.
+        \n\nThis section will populate as soon as Zen Pets Users start adding reviews for your services…</string>
+
+    <!-- DOCTOR'S PATIENTS LIST -->
+    <string name="patients_list_empty">There are no patients listed here yet.
+        \n\nThis section will populate as soon as Users start making appointments for your services…</string>
+
+    <!-- DOCTOR FEEDBACK ITEM STRINGS -->
+    <string name="reviews_item_user_alpha">A</string>
+    <string name="reviews_item_user_name">USER NAME</string>
+    <string name="reviews_item_user_time_stamp">6 months ago</string>
+    <string name="reviews_item_user_experience">EXPERIENCE</string>
+    <string name="reviews_item_user_reason">Visit Reason</string>
+    <string name="reviews_item_user_helpful">Did you find this helpful?</string>
+    <string name="reviews_item_user_helpful_no">NO (0)</string>
+    <string name="reviews_item_user_helpful_yes">YES (0)</string>
+    <string name="reviews_item_helpful_placeholder">YES (%1$s)</string>
+    <string name="reviews_item_not_helpful_placeholder">NO (%1$s)</string>
+
+    <!-- REVIEWS SUBSET STRINGS -->
+    <string name="review_subset_reason">Visit Reason</string>
+    <string name="review_subset_experience">Visit Experience</string>
+    <string name="review_subset_user_name">User Name</string>
+    <string name="review_subset_time_stamp">2 Months</string>
+
+    <!-- CLINIC CREATOR -->
+    <string name="clinic_name_empty">Enter the Clinic Name</string>
+    <string name="clinic_contact_person_empty">Provide the Clinic\'s Contact Person</string>
+    <string name="clinic_phone_empty">Enter the Clinic\'s Phone Number</string>
+    <string name="clinic_postal_address_empty">Provide the Clinic\'s Postal Address</string>
+    <string name="clinic_city_empty">Enter the Clinic City</string>
+    <string name="clinic_pin_code_empty">Provide the Clinic\'s Pin Code</string>
+    <string name="clinic_locality_empty">Provide the Clinic Locality</string>
+    <string name="clinic_charges_empty">Provide the Clinic\'s Charges</string>
+    <string name="clinic_logo_empty">Please select the Clinic Logo.</string>
+
+    <!-- DOCTOR LIST STRINGS -->
+    <string name="doctor_list_tb_title">Find &amp; Book</string>
+    <string name="doctor_list_tb_location_title">LOCATION</string>
+    <string name="doctor_list_tb_location">Locality, City</string>
+    <string name="doctor_list_empty_message">We could not find any Doctors near you. Try changing your location…</string>
+    <string name="doctor_list_location_not_served">We currently do not serve this City. but fear not. We will have you covered shortly.</string>
+    <string name="doctor_item_name_placeholder">%1$s %2$s</string>
+    <string name="doctor_list_tb_location_placeholder">%1$s, %2$s</string>
+    <string name="doctor_list_clinic_distance_placeholder">%1$s %2$s</string>
+    <string name="doctor_list_doctor_experience_text">yrs exp</string>
+    <string name="doctor_list_doctor_experience_placeholder">%1$s %2$s</string>
+    <string name="doctor_list_votes_percent_text">0 %</string>
+    <string name="doctor_list_votes_text">0 votes</string>
+    <string name="doctor_list_votes_open">(</string>
+    <string name="doctor_list_votes_close">)</string>
+    <string name="doctor_list_votes_placeholder">%1$s %2$s%3$s%4$s</string>
+    <string name="doctor_list_address_placeholder">%1$s \n%2$s - %3$s</string>
+    <string name="doctor_item_charges_placeholder">%1$s %2$s</string>
+
+    <!-- ZEN CUSTOM CALENDAR LAYOUT STRINGS -->
+    <string name="zen_calendar_day">S</string>
+    <string name="zen_calendar_date">11</string>
+
+    <!-- APPOINTMENT DETAILS CREATOR -->
+    <string name="appointment_creator_doctor_name">Doctor\'s Name</string>
+    <string name="appointment_creator_clinic_details">Clinic Details</string>
+    <string name="appointment_creator_date_time">Date and Time</string>
+    <string name="appointment_creator_user_name">(*) Your Name</string>
+    <string name="appointment_creator_select_pet">Select a Pet</string>
+    <string name="appointment_creator_email_address">(*) Email Address</string>
+    <string name="appointment_creator_mobile">(*) Mobile Number</string>
+    <string name="appointment_creator_purpose">Select the purpose of this appointment</string>
+    <string name="appointment_creator_book">Book</string>
+    <string name="appointment_creator_details_doctor">%1$s %2$s</string>
+    <string name="appointment_creator_clinic_details_placeholder">%1$s, %2$s</string>
+    <string name="appointment_creator_date_time_placeholder">%1$s - %2$s</string>
 </resources>

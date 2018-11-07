@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/zen_pets_graphic" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtAppName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-47dp"
+            android:gravity="center"
+            android:text="@string/login_app_title"
+            android:textColor="@android:color/primary_text_light"
+            android:textSize="47sp" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtAppIdentifier"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/login_app_sub_title"
+            android:textColor="@android:color/secondary_text_light"
+            android:textSize="29sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center|bottom"
+        android:orientation="vertical"
+        android:padding="11dp">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputEmailAddress"
+                style="@style/NormalRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                app:hintTextAppearance="@style/TextLabel">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtEmailAddress"
+                    style="@style/NormalRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:hint="@string/login_email_hint"
+                    android:inputType="textEmailAddress"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textColorHint="@android:color/tertiary_text_light"
+                    android:textSize="16sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                app:hintTextAppearance="@style/TextLabel"
+                app:passwordToggleEnabled="true">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtPassword"
+                    style="@style/NormalRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:hint="@string/login_password_hint"
+                    android:inputType="textPassword"
+                    android:padding="15dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textColorHint="@android:color/secondary_text_light"
+                    android:textSize="16sp" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnSignIn"
+            style="@style/CondensedRegular"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="55dp"
+            android:layout_marginRight="55dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/login_button_bg"
+            android:text="@string/login_sign_in"
+            android:textColor="@android:color/primary_text_dark"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtCreateAccount"
+            style="@style/LightNormal"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end|center"
+            android:padding="11dp"
+            android:text="@string/login_create_account"
+            android:textColor="@android:color/primary_text_light"
+            android:textColorLink="@android:color/holo_orange_dark"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="0.50dp"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/fixed_divider_horizontal_bright" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtForgotPassword"
+            style="@style/LightNormal"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:autoLink="all"
+            android:gravity="start|center"
+            android:padding="11dp"
+            android:text="@string/login_forgot_password"
+            android:textColor="@android:color/primary_text_light"
+            android:textColorLink="@android:color/holo_orange_dark"
+            android:textSize="14sp" />
+    </LinearLayout>
+</LinearLayout>

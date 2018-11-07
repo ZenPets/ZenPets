@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <include layout="@layout/zen_toolbar" />
 
     <android.support.v7.widget.AppCompatTextView
-        style="@style/LightNormal"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="5dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_margin="5dp"
         android:gravity="center"
-        android:padding="11dp"
-        android:text="Long press the marker to drag and drop the marker to mark your precise location on the Map"
-        android:textColor="@android:color/secondary_text_light"
-        android:textSize="16sp" />
+        android:paddingBottom="5dp"
+        android:paddingEnd="11dp"
+        android:paddingLeft="11dp"
+        android:paddingRight="11dp"
+        android:paddingStart="11dp"
+        android:paddingTop="5dp"
+        android:text="Long press the marker to drag and drop the marker to mark your location on the Map. This will help Pet Parents find your location faster."
+        android:textColor="@color/secondary_text"
+        android:textSize="14sp"
+        app:fontFamily="@font/rubik_regular" />
 
     <fragment
         android:id="@+id/map"

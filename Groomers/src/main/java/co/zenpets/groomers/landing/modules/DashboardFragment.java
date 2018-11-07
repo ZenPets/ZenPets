@@ -28,9 +28,13 @@ import co.zenpets.groomers.R;
 import co.zenpets.groomers.details.groomer.GroomerDetails;
 import co.zenpets.groomers.utils.AppPrefs;
 import co.zenpets.groomers.utils.TypefaceSpan;
+import co.zenpets.groomers.utils.adapters.enquiry.GroomerEnquiryAdapter;
 import co.zenpets.groomers.utils.adapters.reviews.ReviewsAdapter;
 import co.zenpets.groomers.utils.helpers.ZenApiClient;
 import co.zenpets.groomers.utils.models.dashboard.DashboardAPI;
+import co.zenpets.groomers.utils.models.enquiries.Enquiries;
+import co.zenpets.groomers.utils.models.enquiries.EnquiriesAPI;
+import co.zenpets.groomers.utils.models.enquiries.Enquiry;
 import co.zenpets.groomers.utils.models.groomers.Groomer;
 import co.zenpets.groomers.utils.models.groomers.GroomersAPI;
 import co.zenpets.groomers.utils.models.reviews.Review;
@@ -55,6 +59,9 @@ public class DashboardFragment extends Fragment {
     private  String GROOMER_NAME = null;
     private  String GROOMER_LOGO = null;
 
+    /** THE ENQUIRIES ARRAY LIST **/
+    ArrayList<Enquiry> arrEnquiries = new ArrayList<>();
+
     /** THE REVIEWS ARRAY LIST **/
     private ArrayList<Review> arrReviewsSubset = new ArrayList<>();
 
@@ -63,8 +70,10 @@ public class DashboardFragment extends Fragment {
     @BindView(R.id.imgvwGroomerLogo) ImageView imgvwGroomerLogo;
     @BindView(R.id.txtGroomerName) TextView txtGroomerName;
     @BindView(R.id.listEnquiries) RecyclerView listEnquiries;
+    @BindView(R.id.linlaEmptyEnquiries) LinearLayout linlaEmptyEnquiries;
     @BindView(R.id.txtViewEnquiries) TextView txtViewEnquiries;
     @BindView(R.id.listReviews) RecyclerView listReviews;
+    @BindView(R.id.linlaEmptyReviews) LinearLayout linlaEmptyReviews;
     @BindView(R.id.txtViewReviews) TextView txtViewReviews;
 
     /** SHOW THE GROOMER'S PROFILE **/
@@ -114,6 +123,48 @@ public class DashboardFragment extends Fragment {
 
         /* FETCH THE THREE (3) RECENT REVIEWS */
         fetchGroomerReviews();
+
+        /* FETCH THE THREE (3) RECENT ENQUIRIES */
+        fetchGroomerEnquiries();
+    }
+
+    /** FETCH THE THREE (3) RECENT ENQUIRIES **/
+    private void fetchGroomerEnquiries() {
+        EnquiriesAPI api = ZenApiClient.getClient().create(EnquiriesAPI.class);
+        Call<Enquiries> call = api.fetchGroomerEnquiries(GROOMER_ID);
+        call.enqueue(new Callback<Enquiries>() {
+            @Override
+            public void onResponse(Call<Enquiries> call, Response<Enquiries> response) {
+                Log.e("ENQUIRIES RAW", String.valueOf(response.raw()));
+                if (response.body() != null && response.body().getEnquiries() != null)  {
+                    arrEnquiries = response.body().getEnquiries();
+                    if (arrEnquiries.size() > 0)    {
+                        /* SET THE ADAPTER TO THE RECYCLER VIEW */
+                        listEnquiries.setAdapter(new GroomerEnquiryAdapter(getActivity(), arrEnquiries));
+
+                        /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
+                        listEnquiries.setVisibility(View.VISIBLE);
+//                        linlaEmpty.setVisibility(View.GONE);
+                    } else {
+                        /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
+//                        linlaEmpty.setVisibility(View.VISIBLE);
+                        listEnquiries.setVisibility(View.GONE);
+                    }
+                } else {
+                    /* SHOW THE EMPTY LAYOUT AND HIDE THE RECYCLER VIEW */
+//                    linlaEmpty.setVisibility(View.VISIBLE);
+                    listEnquiries.setVisibility(View.GONE);
+                }
+
+                /* HIDE THE PROGRESS */
+                linlaProgress.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<Enquiries> call, Throwable t) {
+//                Log.e("ENQUIRIES FAILURE", t.getMessage());
+            }
+        });
     }
 
     /** FETCH THE GROOMER'S DETAILS **/
@@ -237,6 +288,6 @@ public class DashboardFragment extends Fragment {
         listEnquiries.setLayoutManager(llmEnquiries);
         listEnquiries.setHasFixedSize(true);
         listEnquiries.setNestedScrollingEnabled(false);
-//        listEnquiries.setAdapter(new KennelImagesAdapter(getActivity(), arrImages));
+        listEnquiries.setAdapter(new GroomerEnquiryAdapter(getActivity(), arrEnquiries));
     }
 }

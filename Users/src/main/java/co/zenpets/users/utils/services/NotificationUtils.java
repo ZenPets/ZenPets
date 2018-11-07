@@ -68,7 +68,7 @@ class NotificationUtils {
         notification.setPriority(NotificationCompat.PRIORITY_HIGH);
         notification.setAutoCancel(true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)  {
-            notification.setSmallIcon(R.drawable.zen_pets_notification);
+            notification.setSmallIcon(R.drawable.zen_pets_notification_new);
             notification.setColor(mContext.getResources().getColor(R.color.accent));
         } else {
             notification.setSmallIcon(R.drawable.zen_pets_notification_icon);

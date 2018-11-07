@@ -9,17 +9,17 @@ import retrofit2.http.Query;
 
 public interface EnquiryMessagesAPI {
 
-    /** FETCH ALL KENNEL ENQUIRY MESSAGES **/
-    @GET("fetchKennelEnquiryMessages")
-    Call<EnquiryMessages> fetchKennelEnquiryMessages(@Query("kennelEnquiryID") String kennelEnquiryID);
+    /** FETCH ALL GROOMER ENQUIRY MESSAGES **/
+    @GET("fetchGroomerEnquiryMessages")
+    Call<EnquiryMessages> fetchGroomerEnquiryMessages(@Query("enquiryID") String enquiryID);
 
-    /** POST A NEW TRAINING ENQUIRY MESSAGE (USER) **/
-    @POST("newKennelEnquiryOwnerMessage")
+    /** POST A NEW GROOMER ENQUIRY MESSAGE (OWNER) **/
+    @POST("newGroomerEnquiryOwnerMessage")
     @FormUrlEncoded
-    Call<EnquiryMessage> newKennelEnquiryOwnerMessage(
-            @Field("kennelEnquiryID") String kennelEnquiryID,
-            @Field("kennelID") String kennelID,
+    Call<EnquiryMessage> newGroomerEnquiryOwnerMessage(
+            @Field("enquiryID") String enquiryID,
+            @Field("groomerID") String groomerID,
             @Field("userID") String userID,
-            @Field("kennelEnquiryMessage") String kennelEnquiryMessage,
-            @Field("kennelEnquiryTimestamp") String kennelEnquiryTimestamp);
+            @Field("enquiryMessage") String enquiryMessage,
+            @Field("enquiryTimestamp") String enquiryTimestamp);
 }

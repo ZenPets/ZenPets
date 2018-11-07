@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import co.zenpets.users.R;
 import co.zenpets.users.creator.appointment.AppointmentDetailsCreator;
-import co.zenpets.users.utils.models.appointment.slots.MorningTimeSlotsData;
+import co.zenpets.users.utils.models.doctors.timings.TimeSlot;
 
 public class MorningCreatorAdapter extends RecyclerView.Adapter<MorningCreatorAdapter.SlotsVH> {
 
@@ -22,9 +22,9 @@ public class MorningCreatorAdapter extends RecyclerView.Adapter<MorningCreatorAd
     private final Activity activity;
 
     /** ARRAY LIST TO GET DATA FROM THE ACTIVITY **/
-    private final ArrayList<MorningTimeSlotsData> arrSlots;
+    private final ArrayList<TimeSlot> arrSlots;
 
-    public MorningCreatorAdapter(Activity activity, ArrayList<MorningTimeSlotsData> arrSlots) {
+    public MorningCreatorAdapter(Activity activity, ArrayList<TimeSlot> arrSlots) {
 
         /* CAST THE ACTIVITY IN THE GLOBAL ACTIVITY INSTANCE */
         this.activity = activity;
@@ -40,7 +40,7 @@ public class MorningCreatorAdapter extends RecyclerView.Adapter<MorningCreatorAd
 
     @Override
     public void onBindViewHolder(@NonNull SlotsVH holder, final int position) {
-        final MorningTimeSlotsData data = arrSlots.get(position);
+        final TimeSlot data = arrSlots.get(position);
 
 //        Log.e("APPOINTMENT TIME", data.getAppointmentTime());
 //        Log.e("APPOINTMENT DATE", data.getAppointmentDate());

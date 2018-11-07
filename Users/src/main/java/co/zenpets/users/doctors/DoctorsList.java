@@ -1054,6 +1054,7 @@ public class DoctorsList extends AppCompatActivity
 
                 /* CLEAR THE ARRAY LIST */
                 arrDoctors.clear();
+                doctorsAdapter.clear();
 
                 /* FETCH THE TOTAL NUMBER OF PAGES */
                 fetchTotalPages();

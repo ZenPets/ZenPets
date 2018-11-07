@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import co.zenpets.users.R;
 import co.zenpets.users.creator.appointment.AppointmentDetailsCreator;
-import co.zenpets.users.utils.models.appointment.slots.AfternoonTimeSlotsData;
+import co.zenpets.users.utils.models.doctors.timings.TimeSlot;
 
 public class AfternoonCreatorAdapter extends RecyclerView.Adapter<AfternoonCreatorAdapter.SlotsVH> {
 
@@ -22,9 +22,9 @@ public class AfternoonCreatorAdapter extends RecyclerView.Adapter<AfternoonCreat
     private final Activity activity;
 
     /** ARRAY LIST TO GET DATA FROM THE ACTIVITY **/
-    private final ArrayList<AfternoonTimeSlotsData> arrSlots;
+    private final ArrayList<TimeSlot> arrSlots;
 
-    public AfternoonCreatorAdapter(Activity activity, ArrayList<AfternoonTimeSlotsData> arrSlots) {
+        public AfternoonCreatorAdapter(Activity activity, ArrayList<TimeSlot> arrSlots) {
 
         /* CAST THE ACTIVITY IN THE GLOBAL ACTIVITY INSTANCE */
         this.activity = activity;
@@ -40,7 +40,7 @@ public class AfternoonCreatorAdapter extends RecyclerView.Adapter<AfternoonCreat
 
     @Override
     public void onBindViewHolder(@NonNull SlotsVH holder, final int position) {
-        final AfternoonTimeSlotsData data = arrSlots.get(position);
+        final TimeSlot data = arrSlots.get(position);
 
 //        Log.e("APPOINTMENT TIME", data.getAppointmentTime());
 //        Log.e("APPOINTMENT DATE", data.getAppointmentDate());
@@ -55,22 +55,25 @@ public class AfternoonCreatorAdapter extends RecyclerView.Adapter<AfternoonCreat
             if (data.getAppointmentStatus().equalsIgnoreCase("Available"))  {
                 holder.txtTimeSlot.setTextColor(ContextCompat.getColor(activity, R.color.primary_text));
             } else if (data.getAppointmentStatus().equalsIgnoreCase("Unavailable"))  {
-                holder.txtTimeSlot.setTextColor(ContextCompat.getColor(activity, android.R.color.darker_gray));
+                holder.txtTimeSlot.setTextColor(ContextCompat.getColor(activity, R.color.tertiary_text));
             }
         } else {
-            holder.txtTimeSlot.setTextColor(ContextCompat.getColor(activity, android.R.color.darker_gray));
+            holder.txtTimeSlot.setTextColor(ContextCompat.getColor(activity, R.color.tertiary_text));
         }
 
         /* PASS THE DATA TO THE DETAILS ACTIVITY */
         holder.txtTimeSlot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(activity, AppointmentDetailsCreator.class);
-                intent.putExtra("DOCTOR_ID", data.getDoctorID());
-                intent.putExtra("CLINIC_ID", data.getClinicID());
-                intent.putExtra("APPOINTMENT_TIME", data.getAppointmentTime());
-                intent.putExtra("APPOINTMENT_DATE", data.getAppointmentDate());
-                activity.startActivityForResult(intent, 101);
+                if (data.getAppointmentStatus() != null
+                        && !data.getAppointmentStatus().equalsIgnoreCase("Unavailable"))    {
+                    Intent intent = new Intent(activity, AppointmentDetailsCreator.class);
+                    intent.putExtra("DOCTOR_ID", data.getDoctorID());
+                    intent.putExtra("CLINIC_ID", data.getClinicID());
+                    intent.putExtra("APPOINTMENT_TIME", data.getAppointmentTime());
+                    intent.putExtra("APPOINTMENT_DATE", data.getAppointmentDate());
+                    activity.startActivityForResult(intent, 101);
+                }
             }
         });
     }

@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -107,7 +106,7 @@ public class GroomerEnquiryActivity extends AppCompatActivity {
         if (ENQUIRY_ID != null) {
             EnquiryMessagesAPI api = ZenApiClient.getClient().create(EnquiryMessagesAPI.class);
             Call<EnquiryMessage> call = api.newGroomerEnquiryUserMessage(
-                    ENQUIRY_ID, GROOMER_ID, USER_ID, enquiryMessage, timeStamp);
+                    ENQUIRY_ID, null, USER_ID, enquiryMessage, timeStamp);
             call.enqueue(new retrofit2.Callback<EnquiryMessage>() {
                 @Override
                 public void onResponse(Call<EnquiryMessage> call, Response<EnquiryMessage> response) {
@@ -142,7 +141,7 @@ public class GroomerEnquiryActivity extends AppCompatActivity {
 
                         /* GET THE ENQUIRY ID */
                         ENQUIRY_ID = enquiry.getEnquiryID();
-                        Log.e("ENQUIRY ID", ENQUIRY_ID);
+//                        Log.e("ENQUIRY ID", ENQUIRY_ID);
 
                         EnquiryMessagesAPI messagesAPI = ZenApiClient.getClient().create(EnquiryMessagesAPI.class);
                         Call<EnquiryMessage> messageCall = messagesAPI.newGroomerEnquiryUserMessage(
@@ -231,7 +230,7 @@ public class GroomerEnquiryActivity extends AppCompatActivity {
         call.enqueue(new retrofit2.Callback<Enquiry>() {
             @Override
             public void onResponse(Call<Enquiry> call, Response<Enquiry> response) {
-                Log.e("MASTER RESPONSE", String.valueOf(response.raw()));
+//                Log.e("MASTER RESPONSE", String.valueOf(response.raw()));
                 Enquiry enquiry = response.body();
                 if (enquiry != null)    {
                     Boolean blnError = enquiry.getError();
@@ -267,7 +266,7 @@ public class GroomerEnquiryActivity extends AppCompatActivity {
         call.enqueue(new retrofit2.Callback<EnquiryMessages>() {
             @Override
             public void onResponse(Call<EnquiryMessages> call, Response<EnquiryMessages> response) {
-                Log.e("MESSAGES RESPONSE", String.valueOf(response.raw()));
+//                Log.e("MESSAGES RESPONSE", String.valueOf(response.raw()));
                 if (response.body() != null && response.body().getMessages() != null)   {
                     arrMessages = response.body().getMessages();
                     if (arrMessages.size() > 0) {
@@ -310,7 +309,7 @@ public class GroomerEnquiryActivity extends AppCompatActivity {
         call.enqueue(new retrofit2.Callback<Groomer>() {
             @Override
             public void onResponse(Call<Groomer> call, Response<Groomer> response) {
-                Log.e("GROOMER DETAILS", String.valueOf(response.raw()));
+//                Log.e("GROOMER DETAILS", String.valueOf(response.raw()));
                 Groomer data = response.body();
                 if (data != null) {
 

@@ -14,7 +14,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -102,7 +101,7 @@ public class GroomerReviewModifier extends AppCompatActivity {
         call.enqueue(new Callback<GroomerReview>() {
             @Override
             public void onResponse(@NonNull Call<GroomerReview> call, @NonNull Response<GroomerReview> response) {
-                Log.e("REVIEW DETAILS", String.valueOf(response.raw()));
+//                Log.e("REVIEW DETAILS", String.valueOf(response.raw()));
                 GroomerReview review = response.body();
                 if (review != null) {
 

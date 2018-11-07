@@ -11,14 +11,14 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import co.zenpets.users.creator.profile.ProfileEditor;
 import co.zenpets.users.landing.LandingActivity;
 import co.zenpets.users.utils.AppPrefs;
 import co.zenpets.users.utils.helpers.classes.ZenApiClient;
 import co.zenpets.users.utils.models.user.UserData;
 import co.zenpets.users.utils.models.user.UsersAPI;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -58,7 +58,7 @@ public class SplashScreen extends AppCompatActivity {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null)   {
                     /* FETCH THE USER'S PROFILE */
-                    fetchProfile(user.getUid());
+                    fetchProfile(user.getEmail());
                 } else {
                     Intent showLogin = new Intent(SplashScreen.this, LoginActivity.class);
                     showLogin.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -74,9 +74,9 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     /***** FETCH THE USER'S PROFILE *****/
-    private void fetchProfile(String userAuthID) {
+    private void fetchProfile(String userEmail) {
         UsersAPI api = ZenApiClient.getClient().create(UsersAPI.class);
-        Call<UserData> call = api.fetchProfile(userAuthID);
+        Call<UserData> call = api.fetchProfile(userEmail);
         call.enqueue(new Callback<UserData>() {
             @Override
             public void onResponse(Call<UserData> call, Response<UserData> response) {

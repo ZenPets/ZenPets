@@ -1,7 +1,6 @@
 package co.zenpets.users.utils.models.appointment.slots;
 
 public class AfternoonTimeSlotsData {
-
     private String appointmentTime;
     private String appointmentDate;
     private String appointmentStatus;

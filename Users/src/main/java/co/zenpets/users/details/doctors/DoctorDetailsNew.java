@@ -260,31 +260,6 @@ public class DoctorDetailsNew extends AppCompatActivity {
         showDoctorServices();
     }
 
-    /** SHOW ALL SERVICES **/
-    private void showDoctorServices() {
-        /* CLEAR THE ARRAY LIST */
-        arrServices.clear();
-
-        /* CONFIGURE THE DIALOG */
-        MaterialDialog dialog = new MaterialDialog.Builder(DoctorDetailsNew.this)
-                .theme(Theme.LIGHT)
-                .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
-                .title("ALL SERVICES")
-                .customView(custAllServices, false)
-                .positiveText("Dismiss")
-                .build();
-
-        /* CAST AND CONFIGURE THE RECYCLER VIEW */
-        listDoctorServices = dialog.getCustomView().findViewById(R.id.listDoctorServices);
-        LinearLayoutManager llmServices = new LinearLayoutManager(this);
-        llmServices.setOrientation(LinearLayoutManager.VERTICAL);
-        listDoctorServices.setLayoutManager(llmServices);
-        listDoctorServices.setAdapter(servicesAdapter);
-
-        /* FETCH A LIST OF THE DOCTOR'S SERVICES */
-        fetchDoctorServices(dialog);
-    }
-
     @SuppressLint("InflateParams")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -1040,6 +1015,31 @@ public class DoctorDetailsNew extends AppCompatActivity {
         });
     }
 
+    /** SHOW ALL SERVICES **/
+    private void showDoctorServices() {
+        /* CLEAR THE ARRAY LIST */
+        arrServices.clear();
+
+        /* CONFIGURE THE DIALOG */
+        MaterialDialog dialog = new MaterialDialog.Builder(DoctorDetailsNew.this)
+                .theme(Theme.LIGHT)
+                .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
+                .title("ALL SERVICES")
+                .customView(custAllServices, false)
+                .positiveText("Dismiss")
+                .build();
+
+        /* CAST AND CONFIGURE THE RECYCLER VIEW */
+        listDoctorServices = dialog.getCustomView().findViewById(R.id.listDoctorServices);
+        LinearLayoutManager llmServices = new LinearLayoutManager(this);
+        llmServices.setOrientation(LinearLayoutManager.VERTICAL);
+        listDoctorServices.setLayoutManager(llmServices);
+        listDoctorServices.setAdapter(servicesAdapter);
+
+        /* FETCH A LIST OF THE DOCTOR'S SERVICES */
+        fetchDoctorServices(dialog);
+    }
+
     /** CONFIGURE THE RECYCLER VIEW **/
     private void configRecycler() {
         LinearLayoutManager services = new LinearLayoutManager(this);
@@ -1314,6 +1314,7 @@ public class DoctorDetailsNew extends AppCompatActivity {
         call.enqueue(new Callback<Timing>() {
             @Override
             public void onResponse(Call<Timing> call, Response<Timing> response) {
+//                Log.e("MONDAY MORNING", String.valueOf(response.raw()));
                 Timing timing = response.body();
                 if (timing != null) {
                     String morningFrom = timing.getWedMorFrom();
@@ -1349,6 +1350,7 @@ public class DoctorDetailsNew extends AppCompatActivity {
         call.enqueue(new Callback<Timing>() {
             @Override
             public void onResponse(Call<Timing> call, Response<Timing> response) {
+//                Log.e("MONDAY AFTERNOON", String.valueOf(response.raw()));
                 Timing timing = response.body();
                 if (timing != null) {
                     String afternoonFrom = timing.getWedAftFrom();

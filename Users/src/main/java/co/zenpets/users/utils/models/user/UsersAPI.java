@@ -11,7 +11,7 @@ public interface UsersAPI {
 
     /** CHECK IF A USER'S RECORD EXISTS **/
     @GET("profileExists")
-    Call<UserExistsData> profileExists(@Query("userAuthID") String userAuthID);
+    Call<UserExistsData> profileExists(@Query("userEmail") String userEmail);
 
     /** CREATE A NEW USER RECORD **/
     @POST("register")
@@ -31,7 +31,7 @@ public interface UsersAPI {
 
     /** FETCH USER'S PROFILE **/
     @GET("fetchProfile")
-    Call<UserData> fetchProfile(@Query("userAuthID") String userAuthID);
+    Call<UserData> fetchProfile(@Query("userEmail") String userEmail);
 
     /** FETCH USER'S PROFILE DETAILS **/
     @GET("fetchUserDetails")

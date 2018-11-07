@@ -35,6 +35,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import co.zenpets.users.R;
 import co.zenpets.users.creator.pet.NewPetCreator;
 import co.zenpets.users.utils.adapters.pet.PetSpinnerAdapter;
@@ -43,6 +46,8 @@ import co.zenpets.users.utils.helpers.classes.ZenApiClient;
 import co.zenpets.users.utils.models.appointment.Appointment;
 import co.zenpets.users.utils.models.appointment.AppointmentsAPI;
 import co.zenpets.users.utils.models.appointment.client.Client;
+import co.zenpets.users.utils.models.appointment.notifications.AppointmentNotification;
+import co.zenpets.users.utils.models.appointment.notifications.AppointmentNotificationAPI;
 import co.zenpets.users.utils.models.doctors.DoctorsAPI;
 import co.zenpets.users.utils.models.doctors.list.Doctor;
 import co.zenpets.users.utils.models.pets.pets.Pet;
@@ -53,15 +58,12 @@ import co.zenpets.users.utils.models.user.UsersAPI;
 import co.zenpets.users.utils.models.visit.Reason;
 import co.zenpets.users.utils.models.visit.Reasons;
 import co.zenpets.users.utils.models.visit.ReasonsAPI;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 @SuppressWarnings("ConstantConditions")
-public class AppointmentDetailsCreator extends AppCompatActivity /*implements FetchUserPetsInterface*/ {
+public class AppointmentDetailsCreator extends AppCompatActivity {
 
     /** THE INCOMING DETAILS **/
     private String DOCTOR_ID = null;
@@ -69,9 +71,18 @@ public class AppointmentDetailsCreator extends AppCompatActivity /*implements Fe
     private String APPOINTMENT_TIME = null;
     private String APPOINTMENT_DATE = null;
 
+    /** THE APPOINTMENT ID **/
+    String APPOINTMENT_ID = null;
+
+    /** THE DOCTOR'S DEVICE TOKEN **/
+    String DOCTOR_DEVICE_TOKEN = null;
+
     /** THE USER DETAILS **/
+    String USER_EMAIL = null;
     private String USER_AUTH_ID = null;
     private String USER_ID = null;
+    String USER_NAME = null;
+    String USER_DISPLAY_PROFILE = null;
 
     /** THE PET DETAILS **/
     private String PET_ID = null;
@@ -177,6 +188,9 @@ public class AppointmentDetailsCreator extends AppCompatActivity /*implements Fe
                     String localityName = data.getLocalityName();
                     String clinicAddress = localityName + ", " + cityName;
                     txtClinicDetails.setText(getString(R.string.appointment_creator_clinic_details_placeholder, clinicName, clinicAddress));
+                    
+                    /* GET THE DOCTOR'S DEVICE TOKEN */
+                    DOCTOR_DEVICE_TOKEN = data.getDoctorToken();
                 }
             }
 
@@ -207,7 +221,7 @@ public class AppointmentDetailsCreator extends AppCompatActivity /*implements Fe
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
                     /* GET THE USER AUTH ID */
-                    USER_AUTH_ID = user.getUid();
+                    USER_EMAIL = user.getEmail();
 
                     /* FETCH THE USER DETAILS */
                     fetchUserDetails();
@@ -273,24 +287,6 @@ public class AppointmentDetailsCreator extends AppCompatActivity /*implements Fe
         });
     }
 
-//    @Override
-//    public void userPets(ArrayList<Pet> data) {
-//        /* CAST THE RESULTS IN THE GLOBAL INSTANCE */
-//        arrPets = data;
-//
-//        /* CHECK FOR THE SIZE OF THE RESULT */
-//        if (arrPets.size() > 0) {
-//            /* INSTANTIATE THE PETS SPINNER ADAPTER */
-//            PetSpinnerAdapter petsAdapter = new PetSpinnerAdapter(AppointmentDetailsCreator.this, arrPets);
-//
-//            /* SET THE ADAPTER TO THE PETS SPINNER */
-//            spnPet.setAdapter(petsAdapter);
-//        } else {
-//            /* SHOW THE NO PETS FOUND DIALOG */
-//            noPetsFound();
-//        }
-//    }
-
     /***** FETCH VISIT REASONS *****/
     private void fetchVisitReasons() {
         ReasonsAPI api = ZenApiClient.getClient().create(ReasonsAPI.class);
@@ -314,7 +310,7 @@ public class AppointmentDetailsCreator extends AppCompatActivity /*implements Fe
     /***** FETCH THE USER DETAILS *****/
     private void fetchUserDetails() {
         UsersAPI api = ZenApiClient.getClient().create(UsersAPI.class);
-        Call<UserData> call = api.fetchProfile(USER_AUTH_ID);
+        Call<UserData> call = api.fetchProfile(USER_EMAIL);
         call.enqueue(new Callback<UserData>() {
             @Override
             public void onResponse(Call<UserData> call, Response<UserData> response) {
@@ -323,8 +319,12 @@ public class AppointmentDetailsCreator extends AppCompatActivity /*implements Fe
                     /* GET THE USER'S ID */
                     USER_ID = data.getUserID();
 
-                    /* SET THE USER'S NAME */
-                    edtUserName.setText(data.getUserName());
+                    /* GET AND SET THE USER'S NAME */
+                    USER_NAME = data.getUserName();
+                    edtUserName.setText(USER_NAME);
+                    
+                    /* GET THE USER'S DISPLAY PROFILE */
+                    USER_DISPLAY_PROFILE = data.getUserDisplayProfile();
 
                     /* SET THE USER'S EMAIL ADDRESS */
                     edtEmailAddress.setText(data.getUserEmail());
@@ -385,7 +385,7 @@ public class AppointmentDetailsCreator extends AppCompatActivity /*implements Fe
 
         /* PUBLISH THE NEW APPOINTMENT */
         AppointmentsAPI api = ZenApiClient.getClient().create(AppointmentsAPI.class);
-        Call<Appointment> call = api.newDocAppointment(
+        Call<Appointment> call = api.newVetAppointment(
                 DOCTOR_ID, CLINIC_ID, VISIT_REASON_ID, USER_ID, PET_ID,
                 APPOINTMENT_DATE, APPOINTMENT_TIME,
                 "Pending", "",
@@ -395,6 +395,7 @@ public class AppointmentDetailsCreator extends AppCompatActivity /*implements Fe
             @Override
             public void onResponse(Call<Appointment> call, Response<Appointment> response) {
                 if (response.isSuccessful())    {
+                    APPOINTMENT_ID = response.body().getAppointmentID();
                     /* CHECK IF THE CLIENT EXISTS ON THE DOCTOR'S LIST */
                     checkClientRecord();
                 } else {
@@ -424,6 +425,10 @@ public class AppointmentDetailsCreator extends AppCompatActivity /*implements Fe
                 Client client = response.body();
                 if (response.isSuccessful() && client != null)    {
                     String message = client.getMessage();
+
+                    /* SEND A NOTIFICATION TO THE DOCTOR */
+                    sendDocNotification();
+
                     if (message.equalsIgnoreCase("Client record doesn't exist..."))   {
                         /* CREATE THE CLIENTS RECORD */
                         createClientRecord();
@@ -473,6 +478,26 @@ public class AppointmentDetailsCreator extends AppCompatActivity /*implements Fe
         });
     }
 
+    /** SEND A NOTIFICATION TO THE DOCTOR **/
+    private void sendDocNotification() {
+        AppointmentNotificationAPI api = ZenApiClient.getClient().create(AppointmentNotificationAPI.class);
+        Call<AppointmentNotification> call = api.sendVetAppointmentNotification(
+                DOCTOR_DEVICE_TOKEN, "New appointment by " + USER_NAME, "You have a new appointment",
+                "New Appointment", APPOINTMENT_ID, APPOINTMENT_DATE, APPOINTMENT_TIME,
+                USER_ID, USER_NAME, USER_DISPLAY_PROFILE
+        );
+        call.enqueue(new Callback<AppointmentNotification>() {
+            @Override
+            public void onResponse(Call<AppointmentNotification> call, Response<AppointmentNotification> response) {
+            }
+
+            @Override
+            public void onFailure(Call<AppointmentNotification> call, Throwable t) {
+//                                Log.e("ADOPTION PUSH FAILURE", t.getMessage());
+            }
+        });
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -483,7 +508,6 @@ public class AppointmentDetailsCreator extends AppCompatActivity /*implements Fe
 
             /* FETCH THE LIST OF PETS AGAIN */
             fetchPetsList();
-//            new FetchUserPets(AppointmentDetailsCreator.this).execute(USER_ID);
         }
     }
 

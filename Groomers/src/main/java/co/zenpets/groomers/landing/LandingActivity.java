@@ -103,15 +103,15 @@ public class LandingActivity extends AppCompatActivity {
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
                 LandingActivity.this,
                 new OnSuccessListener<InstanceIdResult>() {
-            @Override
-            public void onSuccess(InstanceIdResult instanceIdResult) {
-                String token = instanceIdResult.getToken();
-                Log.e("NEW TOKEN", token);
+                    @Override
+                    public void onSuccess(InstanceIdResult instanceIdResult) {
+                        String token = instanceIdResult.getToken();
+                        Log.e("NEW TOKEN", token);
 
-                /* UPDATE THE GROOMER'S DEVICE TOKEN */
-                updateDeviceToken(token);
-            }
-        });
+                        /* UPDATE THE GROOMER'S DEVICE TOKEN */
+                        updateDeviceToken(token);
+                    }
+                });
     }
 
     /** FETCH THE GROOMER'S PROFILE **/

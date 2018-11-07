@@ -7,6 +7,7 @@
         <item
             android:id="@+id/dashHome"
             android:checked="true"
+            android:icon="@drawable/dash_home_dark"
             android:title="Dashboard" />
     </group>
 
@@ -16,18 +17,22 @@
         <item
             android:id="@+id/dashProfile"
             android:checked="false"
+            android:icon="@drawable/dash_profile_dark"
             android:title="Profile" />
         <item
             android:id="@+id/dashReviews"
             android:checked="false"
+            android:icon="@drawable/dash_reviews_dark"
             android:title="Reviews" />
         <item
             android:id="@+id/dashEnquiries"
             android:checked="false"
+            android:icon="@drawable/dash_enquiries_dark"
             android:title="Enquiries" />
         <item
             android:id="@+id/dashReports"
             android:checked="false"
+            android:icon="@drawable/dash_reports_dark"
             android:title="Reports" />
     </group>
 
@@ -37,14 +42,17 @@
         <item
             android:id="@+id/dashHelp"
             android:checked="false"
+            android:icon="@drawable/dash_help_dark"
             android:title="Help" />
         <item
             android:id="@+id/dashFeedback"
             android:checked="false"
+            android:icon="@drawable/dash_feedback_dark"
             android:title="Feedback" />
         <item
             android:id="@+id/dashSettings"
             android:checked="false"
+            android:icon="@drawable/dash_settings_dark"
             android:title="Settings" />
     </group>
 </menu>

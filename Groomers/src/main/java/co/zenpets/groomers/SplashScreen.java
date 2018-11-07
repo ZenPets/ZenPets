@@ -11,14 +11,14 @@ import android.view.animation.Animation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import co.zenpets.groomers.credentials.LoginActivity;
 import co.zenpets.groomers.landing.LandingActivity;
 import co.zenpets.groomers.utils.AppPrefs;
 import co.zenpets.groomers.utils.helpers.ZenApiClient;
 import co.zenpets.groomers.utils.models.groomers.Groomer;
 import co.zenpets.groomers.utils.models.groomers.GroomersAPI;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,9 +28,6 @@ public class SplashScreen extends AppCompatActivity {
     private AppPrefs getApp()	{
         return (AppPrefs) getApplication();
     }
-
-    /** A FIREBASE USER INSTANCE  **/
-    private FirebaseUser user;
 
     /** THE GROOMER'S ACCOUNT ID **/
     private String GROOMER_ID = null;
@@ -61,10 +58,10 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 /* DETERMINE IF THE USER IS LOGGED IN */
-                user = FirebaseAuth.getInstance().getCurrentUser();
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null)   {
                     /* SAVE THE GROOMER ACCOUNT ID */
-                    saveGroomerID();
+                    saveGroomerID(user);
                 } else {
                     Intent showLogin = new Intent(SplashScreen.this, LoginActivity.class);
                     showLogin.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -80,7 +77,7 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     /** SAVE THE GROOMER ACCOUNT ID **/
-    private void saveGroomerID() {
+    private void saveGroomerID(FirebaseUser user) {
         GroomersAPI apiInterface = ZenApiClient.getClient().create(GroomersAPI.class);
         Call<Groomer> call = apiInterface.fetchGroomerID(user.getUid());
         call.enqueue(new Callback<Groomer>() {

@@ -73,7 +73,7 @@
             android:gravity="end|center"
             android:padding="11dp"
             android:text="@string/login_create_account"
-            android:textColor="@android:color/primary_text_light"
+            android:textColor="@color/primary_text"
             android:textColorLink="@android:color/holo_orange_dark"
             android:textSize="14sp" />
 
@@ -97,7 +97,7 @@
             android:gravity="start|center"
             android:padding="11dp"
             android:text="@string/login_forgot_password"
-            android:textColor="@android:color/primary_text_light"
+            android:textColor="@color/primary_text"
             android:textColorLink="@android:color/holo_orange_dark"
             android:textSize="14sp" />
     </LinearLayout>
@@ -142,8 +142,8 @@
             android:hint="@string/login_password_hint"
             android:inputType="textPassword"
             android:text="12345678"
-            android:textColor="@android:color/primary_text_light"
-            android:textColorHint="@android:color/secondary_text_light"
+            android:textColor="@color/primary_text"
+            android:textColorHint="@color/tertiary_text"
             android:textSize="16sp" />
     </android.support.design.widget.TextInputLayout>
 
@@ -169,8 +169,8 @@
             android:hint="@string/login_email_hint"
             android:inputType="textEmailAddress"
             android:text="skidd.gamer.6@gmail.com"
-            android:textColor="@android:color/primary_text_light"
-            android:textColorHint="@android:color/tertiary_text_light"
+            android:textColor="@color/primary_text"
+            android:textColorHint="@color/tertiary_text"
             android:textSize="16sp">
 
             <requestFocus />

@@ -40,6 +40,7 @@ public class Doctor {
     @SerializedName("doctorVoteStats") private String doctorVoteStats;
     @SerializedName("clinicRating") private String clinicRating;
     @SerializedName("doctorClaimed") private String doctorClaimed;
+    @SerializedName("doctorToken") private String doctorToken;
     @SerializedName("images") private ArrayList<ClinicImage> images;
     @SerializedName("promotions") private ArrayList<Promotion> promotions = new ArrayList<>();
 
@@ -297,6 +298,14 @@ public class Doctor {
 
     public void setDoctorClaimed(String doctorClaimed) {
         this.doctorClaimed = doctorClaimed;
+    }
+
+    public String getDoctorToken() {
+        return doctorToken;
+    }
+
+    public void setDoctorToken(String doctorToken) {
+        this.doctorToken = doctorToken;
     }
 
     public ArrayList<ClinicImage> getImages() {

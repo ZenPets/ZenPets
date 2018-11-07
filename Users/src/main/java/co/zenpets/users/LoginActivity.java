@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -120,7 +119,7 @@ public class LoginActivity extends AppCompatActivity
 
                     /* CHECK IF THE USER RECORD EXISTS **/
 //                    new checkUserExists().execute();
-                    checkUserExists(user.getUid());
+                    checkUserExists(user.getEmail());
                 }
             }
         };
@@ -155,26 +154,27 @@ public class LoginActivity extends AppCompatActivity
 
             @Override
             public void onError(FacebookException error) {
-                Log.e("FB ERROR", String.valueOf(error.getMessage()));
+//                Log.e("FB ERROR", String.valueOf(error.getMessage()));
 //                Crashlytics.logException(error);
             }
         });
     }
 
     /***** CHECK IF THE USER RECORD EXISTS *****/
-    private void checkUserExists(String userAuthID) {
+    private void checkUserExists(String email) {
         UsersAPI api = ZenApiClient.getClient().create(UsersAPI.class);
-        Call<UserExistsData> call = api.profileExists(userAuthID);
+        Call<UserExistsData> call = api.profileExists(email);
         call.enqueue(new Callback<UserExistsData>() {
             @Override
             public void onResponse(Call<UserExistsData> call, Response<UserExistsData> response) {
+//                Log.e("RESPONSE", String.valueOf(response.raw()));
                 UserExistsData data = response.body();
                 if (data != null)   {
                     String message = data.getMessage();
                     if (message != null)    {
                         if (message.equalsIgnoreCase("User record exists..."))   {
                            /* FETCH THE USER'S PROFILE */
-                            fetchProfile(user.getUid());
+                            fetchProfile(user.getEmail());
                         } else if (message.equalsIgnoreCase("User record doesn't exist..."))    {
                             Intent intent = new Intent(LoginActivity.this, ProfileEditor.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -241,7 +241,7 @@ public class LoginActivity extends AppCompatActivity
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
             } else {
-                Log.e("Google Login Status", String.valueOf(result.getStatus()));
+//                Log.e("Google Login Status", String.valueOf(result.getStatus()));
                 Toast.makeText(getApplicationContext(), "Google sign in failed. Please try again..", Toast.LENGTH_LONG).show();
             }
         } else {
@@ -279,7 +279,7 @@ public class LoginActivity extends AppCompatActivity
                         if (task.isSuccessful())    {
                             Toast.makeText(getApplicationContext(), "Google sign in successful", Toast.LENGTH_SHORT).show();
                         } else {
-                            Log.e("Google Login", String.valueOf(task.getException()));
+//                            Log.e("Google Login", String.valueOf(task.getException()));
                             Toast.makeText(getApplicationContext(), "Google authentication failed", Toast.LENGTH_SHORT).show();
                         }
                     }

@@ -141,10 +141,10 @@ public class LandingActivity extends AppCompatActivity {
                         mContent = new ProfileFragment();
                         switchFragment(mContent);
                         return true;
-                    case R.id.dashKennels:
-                        mContent = new KennelsFragment();
-                        switchFragment(mContent);
-                        return true;
+//                    case R.id.dashKennels:
+//                        mContent = new KennelsFragment();
+//                        switchFragment(mContent);
+//                        return true;
                     case R.id.dashReviews:
                         mContent = new ReviewsFragment();
                         switchFragment(mContent);

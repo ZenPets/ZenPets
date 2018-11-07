@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbarSize="3dp"
+    android:scrollbarThumbVertical="@color/primary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatTextView
+            style="@style/NormalBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#d1d1d1"
+            android:padding="11dp"
+            android:text="General"
+            android:textColor="@color/secondary_text"
+            android:textSize="16sp" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtAboutZenPets"
+            style="@style/NormalRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|center"
+            android:padding="11dp"
+            android:text="About Zen Pets"
+            android:textColor="@color/primary_text"
+            android:textSize="14sp" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtHelpSupport"
+            style="@style/NormalRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|center"
+            android:padding="11dp"
+            android:text="Help and Support"
+            android:textColor="@color/primary_text"
+            android:textSize="14sp" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtShare"
+            style="@style/NormalRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|center"
+            android:padding="11dp"
+            android:text="Share with family and friends"
+            android:textColor="@color/primary_text"
+            android:textSize="14sp" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtRate"
+            style="@style/NormalRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|center"
+            android:padding="11dp"
+            android:text="Rate Zen Pets on the Play Store"
+            android:textColor="@color/primary_text"
+            android:textSize="14sp" />
+
+        <android.support.v7.widget.AppCompatTextView
+            style="@style/NormalBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#d1d1d1"
+            android:padding="11dp"
+            android:text="Account"
+            android:textColor="@color/secondary_text"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txtLogout"
+                style="@style/NormalBold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start|center"
+                android:padding="11dp"
+                android:text="Logout"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="14sp" />
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:id="@+id/imgvwLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:adjustViewBounds="true"
+                android:padding="11dp"
+                app:iiv_color="@android:color/holo_red_dark"
+                app:iiv_icon="faw_sign_out_alt"
+                app:iiv_size="20dp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

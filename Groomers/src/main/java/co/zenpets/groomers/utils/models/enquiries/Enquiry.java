@@ -5,15 +5,15 @@ import com.google.gson.annotations.SerializedName;
 public class Enquiry {
     @SerializedName("error") private Boolean error;
     @SerializedName("message") private String message;
-    @SerializedName("kennelEnquiryID") private String kennelEnquiryID;
+    @SerializedName("enquiryID") private String enquiryID;
     @SerializedName("userID") private String userID;
     @SerializedName("userName") private String userName;
     @SerializedName("userDisplayProfile") private String userDisplayProfile;
-    @SerializedName("kennelID") private String kennelID;
-    @SerializedName("kennelName") private String kennelName;
-    @SerializedName("kennelEnquiryMessage") private String kennelEnquiryMessage;
-    @SerializedName("kennelEnquiryRead") private String kennelEnquiryRead;
-    @SerializedName("kennelEnquiryTimestamp") private String kennelEnquiryTimestamp;
+    @SerializedName("groomerID") private String groomerID;
+    @SerializedName("groomerName") private String groomerName;
+    @SerializedName("enquiryMessage") private String enquiryMessage;
+    @SerializedName("enquiryRead") private String enquiryRead;
+    @SerializedName("enquiryTimestamp") private String enquiryTimestamp;
 
     public Boolean getError() {
         return error;
@@ -31,12 +31,12 @@ public class Enquiry {
         this.message = message;
     }
 
-    public String getKennelEnquiryID() {
-        return kennelEnquiryID;
+    public String getEnquiryID() {
+        return enquiryID;
     }
 
-    public void setKennelEnquiryID(String kennelEnquiryID) {
-        this.kennelEnquiryID = kennelEnquiryID;
+    public void setEnquiryID(String enquiryID) {
+        this.enquiryID = enquiryID;
     }
 
     public String getUserID() {
@@ -63,43 +63,43 @@ public class Enquiry {
         this.userDisplayProfile = userDisplayProfile;
     }
 
-    public String getKennelID() {
-        return kennelID;
+    public String getGroomerID() {
+        return groomerID;
     }
 
-    public void setKennelID(String kennelID) {
-        this.kennelID = kennelID;
+    public void setGroomerID(String groomerID) {
+        this.groomerID = groomerID;
     }
 
-    public String getKennelName() {
-        return kennelName;
+    public String getGroomerName() {
+        return groomerName;
     }
 
-    public void setKennelName(String kennelName) {
-        this.kennelName = kennelName;
+    public void setGroomerName(String groomerName) {
+        this.groomerName = groomerName;
     }
 
-    public String getKennelEnquiryMessage() {
-        return kennelEnquiryMessage;
+    public String getEnquiryMessage() {
+        return enquiryMessage;
     }
 
-    public void setKennelEnquiryMessage(String kennelEnquiryMessage) {
-        this.kennelEnquiryMessage = kennelEnquiryMessage;
+    public void setEnquiryMessage(String enquiryMessage) {
+        this.enquiryMessage = enquiryMessage;
     }
 
-    public String getKennelEnquiryRead() {
-        return kennelEnquiryRead;
+    public String getEnquiryRead() {
+        return enquiryRead;
     }
 
-    public void setKennelEnquiryRead(String kennelEnquiryRead) {
-        this.kennelEnquiryRead = kennelEnquiryRead;
+    public void setEnquiryRead(String enquiryRead) {
+        this.enquiryRead = enquiryRead;
     }
 
-    public String getKennelEnquiryTimestamp() {
-        return kennelEnquiryTimestamp;
+    public String getEnquiryTimestamp() {
+        return enquiryTimestamp;
     }
 
-    public void setKennelEnquiryTimestamp(String kennelEnquiryTimestamp) {
-        this.kennelEnquiryTimestamp = kennelEnquiryTimestamp;
+    public void setEnquiryTimestamp(String enquiryTimestamp) {
+        this.enquiryTimestamp = enquiryTimestamp;
     }
 }

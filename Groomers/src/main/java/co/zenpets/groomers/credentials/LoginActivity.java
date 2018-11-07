@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -22,15 +23,15 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import co.zenpets.groomers.R;
 import co.zenpets.groomers.landing.LandingActivity;
 import co.zenpets.groomers.utils.AppPrefs;
 import co.zenpets.groomers.utils.helpers.ZenApiClient;
 import co.zenpets.groomers.utils.models.groomers.Groomer;
 import co.zenpets.groomers.utils.models.groomers.GroomersAPI;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -142,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<Groomer>() {
             @Override
             public void onResponse(Call<Groomer> call, Response<Groomer> response) {
-//                Log.e("GROOMER RESPONSE", String.valueOf(response.raw()));
+                Log.e("GROOMER RESPONSE", String.valueOf(response.raw()));
                 /* GET THE GROOMER ACCOUNT ID */
                 GROOMER_ID = response.body().getGroomerID();
                 if (GROOMER_ID != null)    {

@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/zen_progress" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="218dp">
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/imgvwUserProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:adjustViewBounds="true"
+                        app:actualImageScaleType="center"
+                        app:placeholderImage="@drawable/ic_person_black_24dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtUserName"
+                        style="@style/CondensedBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|bottom"
+                        android:background="#CC212121"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:paddingBottom="18dp"
+                        android:paddingEnd="15dp"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingStart="15dp"
+                        android:paddingTop="18dp"
+                        android:text="@string/doctor_profile_name"
+                        android:textColor="@android:color/primary_text_dark"
+                        android:textSize="20sp" />
+
+                    <LinearLayout
+                        android:id="@+id/linlaProfileEdit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:background="#33FFFFFF"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="6dp">
+
+                        <com.mikepenz.iconics.view.IconicsImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:paddingEnd="5dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingStart="5dp"
+                            app:iiv_color="@color/primary_text"
+                            app:iiv_icon="faw_camera"
+                            app:iiv_size="20dp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/txtProfileEdit"
+                            style="@style/LightBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingEnd="5dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:paddingStart="5dp"
+                            android:text="EDIT"
+                            android:textColor="@color/primary_text"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:layout_width="47dp"
+                        android:layout_height="47dp"
+                        android:adjustViewBounds="true"
+                        app:iiv_color="@android:color/holo_blue_dark"
+                        app:iiv_icon="faw_id_card"
+                        app:iiv_size="20dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtInternalID"
+                        style="@style/NormalRegular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="start|center"
+                        android:padding="11dp"
+                        android:text="@string/doctor_profile_id"
+                        android:textColor="@color/primary_text"
+                        android:textSize="15sp" />
+
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:id="@+id/imgvwIDInfo"
+                        android:layout_width="47dp"
+                        android:layout_height="47dp"
+                        android:adjustViewBounds="true"
+                        android:padding="11dp"
+                        app:iiv_color="@color/secondary_text"
+                        app:iiv_icon="gmd_info"
+                        app:iiv_size="20dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:layout_width="47dp"
+                        android:layout_height="47dp"
+                        android:adjustViewBounds="true"
+                        app:iiv_color="@android:color/holo_blue_dark"
+                        app:iiv_icon="faw_envelope"
+                        app:iiv_size="18dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtEmailAddress"
+                        style="@style/NormalRegular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="start|center"
+                        android:padding="11dp"
+                        android:text="@string/doctor_profile_email"
+                        android:textColor="@color/primary_text"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:layout_width="47dp"
+                        android:layout_height="47dp"
+                        android:adjustViewBounds="true"
+                        app:iiv_color="@android:color/holo_blue_dark"
+                        app:iiv_icon="faw_phone"
+                        app:iiv_size="18dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtPhoneNumber"
+                        style="@style/NormalRegular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="start|center"
+                        android:padding="11dp"
+                        android:text="@string/doctor_profile_phone"
+                        android:textColor="@color/primary_text"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|top"
+                    android:orientation="horizontal">
+
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:layout_width="47dp"
+                        android:layout_height="47dp"
+                        android:adjustViewBounds="true"
+                        app:iiv_color="@android:color/holo_blue_dark"
+                        app:iiv_icon="faw_address_card"
+                        app:iiv_size="18dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtAddress"
+                        style="@style/NormalRegular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="start|center"
+                        android:padding="11dp"
+                        android:text="@string/doctor_profile_address"
+                        android:textColor="@color/primary_text"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:layout_width="47dp"
+                        android:layout_height="47dp"
+                        android:adjustViewBounds="true"
+                        app:iiv_color="@android:color/holo_blue_dark"
+                        app:iiv_icon="faw_venus_mars"
+                        app:iiv_size="18dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtGender"
+                        style="@style/NormalRegular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="start|center"
+                        android:padding="11dp"
+                        android:text="@string/doctor_profile_gender"
+                        android:textColor="@color/primary_text"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|top"
+                    android:orientation="horizontal">
+
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:layout_width="47dp"
+                        android:layout_height="47dp"
+                        android:adjustViewBounds="true"
+                        app:iiv_color="@android:color/holo_blue_dark"
+                        app:iiv_icon="gmd_assignment"
+                        app:iiv_size="18dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtSummary"
+                        style="@style/NormalRegular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="start|center"
+                        android:padding="11dp"
+                        android:text="@string/doctor_profile_summary"
+                        android:textColor="@color/primary_text"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:layout_width="47dp"
+                        android:layout_height="47dp"
+                        android:adjustViewBounds="true"
+                        app:iiv_color="@android:color/holo_blue_dark"
+                        app:iiv_icon="faw_briefcase"
+                        app:iiv_size="18dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtExperience"
+                        style="@style/NormalRegular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="start|center"
+                        android:padding="11dp"
+                        android:text="@string/doctor_profile_experience"
+                        android:textColor="@color/primary_text"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:layout_width="47dp"
+                        android:layout_height="47dp"
+                        android:adjustViewBounds="true"
+                        app:iiv_color="@android:color/holo_blue_dark"
+                        app:iiv_icon="faw_credit_card"
+                        app:iiv_size="18dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txtDoctorCharges"
+                        style="@style/NormalRegular"
+                        android:layout_width="0dp"
+                        android:layout_height="47dp"
+                        android:layout_weight="1"
+                        android:gravity="start|center"
+                        android:padding="11dp"
+                        android:text="@string/doctor_profile_charges"
+                        android:textColor="@color/primary_text"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabEditProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_edit_white_24dp"
+        app:elevation="2dp"
+        app:fabSize="normal"
+        app:pressedTranslationZ="12dp" />
+</android.support.design.widget.CoordinatorLayout>

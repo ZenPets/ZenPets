@@ -25,6 +25,7 @@ public class DoctorProfile {
     @SerializedName("doctorCharges") private String doctorCharges;
     @SerializedName("currencySymbol") private String currencySymbol;
     @SerializedName("doctorDisplayProfile") private String doctorDisplayProfile;
+    @SerializedName("doctorToken") private String doctorToken;
 
     public Boolean getError() {
         return error;
@@ -192,5 +193,13 @@ public class DoctorProfile {
 
     public void setDoctorDisplayProfile(String doctorDisplayProfile) {
         this.doctorDisplayProfile = doctorDisplayProfile;
+    }
+
+    public String getDoctorToken() {
+        return doctorToken;
+    }
+
+    public void setDoctorToken(String doctorToken) {
+        this.doctorToken = doctorToken;
     }
 }

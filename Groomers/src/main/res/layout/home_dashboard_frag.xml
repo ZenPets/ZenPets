@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -23,15 +24,15 @@
                 android:id="@+id/txtProfileLabel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:text="Your profile"
                 android:textColor="@color/primary_text"
                 android:textSize="16sp"
-                app:fontFamily="@font/work_sans_medium"
+                app:fontFamily="@font/roboto_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -41,11 +42,11 @@
                 style="@style/ZenPetsCards"
                 android:layout_width="0dp"
                 android:layout_height="200dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtProfileLabel">
@@ -71,7 +72,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="#A6000000"
-                        android:fontFamily="@font/work_sans_regular"
+                        android:fontFamily="@font/roboto_regular"
                         android:padding="11dp"
                         android:text="Groomer Name"
                         android:textColor="@android:color/primary_text_dark"
@@ -86,20 +87,20 @@
                 android:id="@+id/txtViewProfile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
-                android:fontFamily="@font/work_sans_bold"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="end|center"
-                android:paddingBottom="5dp"
-                android:paddingEnd="11dp"
-                android:paddingLeft="11dp"
-                android:paddingRight="11dp"
                 android:paddingStart="11dp"
+                android:paddingLeft="11dp"
                 android:paddingTop="5dp"
-                android:text="VIEW PROFILE"
+                android:paddingEnd="11dp"
+                android:paddingRight="11dp"
+                android:paddingBottom="5dp"
+                android:text="VIEW YOUR GROOMER'S PROFILE"
                 android:textColor="@android:color/primary_text_dark"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -110,15 +111,16 @@
                 android:id="@+id/txtEnquiriesLabel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="@font/roboto_medium"
                 android:text="Latest enquiries"
                 android:textColor="@color/primary_text"
                 android:textSize="16sp"
-                app:fontFamily="@font/work_sans_medium"
+                app:fontFamily="@font/roboto_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtViewProfile" />
@@ -127,16 +129,16 @@
                 android:id="@+id/listEnquiries"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtEnquiriesLabel" />
 
-            <!--<LinearLayout
+            <LinearLayout
                 android:id="@+id/linlaEmptyEnquiries"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -147,7 +149,7 @@
                 android:layout_marginRight="8dp"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:visible="gone"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/listEnquiries">
@@ -166,36 +168,36 @@
                     android:src="@drawable/empty_graphic" />
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/txtEmpty"
+                    android:id="@+id/txtEmptyEnquiries"
                     style="@style/LightNormal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:gravity="center"
-                    android:text="There are no enquiries yet..."
+                    android:text="You have no enquiries posted for your services yet..."
                     android:textColor="@color/tertiary_text"
                     android:textSize="14sp" />
-            </LinearLayout>-->
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/txtViewEnquiries"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
-                android:fontFamily="@font/work_sans_bold"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="end|center"
-                android:paddingBottom="5dp"
-                android:paddingEnd="11dp"
-                android:paddingLeft="11dp"
-                android:paddingRight="11dp"
                 android:paddingStart="11dp"
+                android:paddingLeft="11dp"
                 android:paddingTop="5dp"
-                android:text="VIEW ENQUIRIES"
+                android:paddingEnd="11dp"
+                android:paddingRight="11dp"
+                android:paddingBottom="5dp"
+                android:text="VIEW ALL ENQUIRIES"
                 android:textColor="@android:color/primary_text_dark"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -206,15 +208,16 @@
                 android:id="@+id/txtReviewsLabel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:fontFamily="@font/roboto_medium"
                 android:text="Latest reviews"
                 android:textColor="@color/primary_text"
                 android:textSize="16sp"
-                app:fontFamily="@font/work_sans_medium"
+                app:fontFamily="@font/roboto_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtViewEnquiries" />
@@ -223,39 +226,507 @@
                 android:id="@+id/listReviews"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtReviewsLabel" />
+
+            <LinearLayout
+                android:id="@+id/linlaEmptyReviews"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/listReviews">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/empty_graphic" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txtEmptyReviews"
+                    style="@style/LightNormal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:text="You have no reviews posted for your services..."
+                    android:textColor="@color/tertiary_text"
+                    android:textSize="14sp" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/txtViewReviews"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/work_sans_bold"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="end|center"
-                android:paddingBottom="5dp"
-                android:paddingEnd="11dp"
-                android:paddingLeft="11dp"
-                android:paddingRight="11dp"
                 android:paddingStart="11dp"
+                android:paddingLeft="11dp"
                 android:paddingTop="5dp"
-                android:text="VIEW REVIEWS"
+                android:paddingEnd="11dp"
+                android:paddingRight="11dp"
+                android:paddingBottom="5dp"
+                android:text="VIEW ALL REVIEWS"
                 android:textColor="@android:color/primary_text_dark"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/listReviews" />
+                app:layout_constraintTop_toBottomOf="@+id/linlaEmptyReviews" />
+
+            <View
+                android:id="@+id/viewClientDivider"
+                android:layout_width="0dp"
+                android:layout_height="0.50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/fixed_divider_horizontal_bright"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtViewReviews" />
+
+            <LinearLayout
+                android:id="@+id/linlaClients"
+                android:layout_width="0dp"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewClientDivider">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:adjustViewBounds="true"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="gmd_folder_shared"
+                    app:iiv_size="22dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:paddingStart="11dp"
+                        android:paddingLeft="11dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="11dp"
+                        android:paddingRight="11dp"
+                        android:paddingBottom="5dp"
+                        android:text="Your Clients"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="15sp"
+                        app:fontFamily="@font/roboto_medium" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:paddingStart="11dp"
+                        android:paddingLeft="11dp"
+                        android:paddingTop="2dp"
+                        android:paddingEnd="11dp"
+                        android:paddingRight="11dp"
+                        android:paddingBottom="2dp"
+                        android:text="A record of all your clients"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="12sp"
+                        app:fontFamily="@font/roboto_condensed_regular" />
+                </LinearLayout>
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:adjustViewBounds="true"
+                    android:padding="11dp"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="gmd_chevron_right"
+                    app:iiv_size="12dp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/viewReportsDivider"
+                android:layout_width="0dp"
+                android:layout_height="0.50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/fixed_divider_horizontal_bright"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linlaClients" />
+
+            <LinearLayout
+                android:id="@+id/linlaReports"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewReportsDivider">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:adjustViewBounds="true"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="faw_chart_line"
+                    app:iiv_size="22dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:paddingStart="11dp"
+                        android:paddingLeft="11dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="11dp"
+                        android:paddingRight="11dp"
+                        android:paddingBottom="5dp"
+                        android:text="Reports"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="15sp"
+                        app:fontFamily="@font/roboto_medium" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:paddingStart="11dp"
+                        android:paddingLeft="11dp"
+                        android:paddingTop="2dp"
+                        android:paddingEnd="11dp"
+                        android:paddingRight="11dp"
+                        android:paddingBottom="2dp"
+                        android:text="How are your services doing?"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="12sp"
+                        app:fontFamily="@font/roboto_condensed_regular" />
+                </LinearLayout>
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:adjustViewBounds="true"
+                    android:padding="11dp"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="gmd_chevron_right"
+                    app:iiv_size="12dp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/viewSettingsDivider"
+                android:layout_width="0dp"
+                android:layout_height="0.50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/fixed_divider_horizontal_bright"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linlaReports" />
+
+            <LinearLayout
+                android:id="@+id/linlaSettings"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewSettingsDivider">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:adjustViewBounds="true"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="faw_cogs"
+                    app:iiv_size="22dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:paddingStart="11dp"
+                        android:paddingLeft="11dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="11dp"
+                        android:paddingRight="11dp"
+                        android:paddingBottom="5dp"
+                        android:text="Settings"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="15sp"
+                        app:fontFamily="@font/roboto_medium" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:paddingStart="11dp"
+                        android:paddingLeft="11dp"
+                        android:paddingTop="2dp"
+                        android:paddingEnd="11dp"
+                        android:paddingRight="11dp"
+                        android:paddingBottom="2dp"
+                        android:text="Manage Zen Pets Settings"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="12sp"
+                        app:fontFamily="@font/roboto_condensed_regular" />
+                </LinearLayout>
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:adjustViewBounds="true"
+                    android:padding="11dp"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="gmd_chevron_right"
+                    app:iiv_size="12dp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/viewHelpDivider"
+                android:layout_width="0dp"
+                android:layout_height="0.50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/fixed_divider_horizontal_bright"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linlaSettings" />
+
+            <LinearLayout
+                android:id="@+id/linlaHelp"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewHelpDivider">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:adjustViewBounds="true"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="faw_question_circle2"
+                    app:iiv_size="22dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:paddingStart="11dp"
+                        android:paddingLeft="11dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="11dp"
+                        android:paddingRight="11dp"
+                        android:paddingBottom="5dp"
+                        android:text="Help"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="15sp"
+                        app:fontFamily="@font/roboto_medium" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:paddingStart="11dp"
+                        android:paddingLeft="11dp"
+                        android:paddingTop="2dp"
+                        android:paddingEnd="11dp"
+                        android:paddingRight="11dp"
+                        android:paddingBottom="2dp"
+                        android:text="Need help with something?"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="12sp"
+                        app:fontFamily="@font/roboto_condensed_regular" />
+                </LinearLayout>
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:adjustViewBounds="true"
+                    android:padding="11dp"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="gmd_chevron_right"
+                    app:iiv_size="12dp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/viewFeedbackDivider"
+                android:layout_width="0dp"
+                android:layout_height="0.50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/fixed_divider_horizontal_bright"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linlaHelp" />
+
+            <LinearLayout
+                android:id="@+id/linlaFeedback"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewFeedbackDivider">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:adjustViewBounds="true"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="faw_exclamation_circle"
+                    app:iiv_size="22dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:paddingStart="11dp"
+                        android:paddingLeft="11dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="11dp"
+                        android:paddingRight="11dp"
+                        android:paddingBottom="5dp"
+                        android:text="Feedback"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="15sp"
+                        app:fontFamily="@font/roboto_medium" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:paddingStart="11dp"
+                        android:paddingLeft="11dp"
+                        android:paddingTop="2dp"
+                        android:paddingEnd="11dp"
+                        android:paddingRight="11dp"
+                        android:paddingBottom="2dp"
+                        android:text="What do you think of Zen Pets? Have any feature ideas?"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="12sp"
+                        app:fontFamily="@font/roboto_condensed_regular" />
+                </LinearLayout>
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:adjustViewBounds="true"
+                    android:padding="11dp"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="gmd_chevron_right"
+                    app:iiv_size="12dp" />
+            </LinearLayout>
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 </LinearLayout>

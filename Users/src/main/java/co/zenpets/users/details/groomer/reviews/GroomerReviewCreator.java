@@ -13,7 +13,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -152,7 +151,7 @@ public class GroomerReviewCreator extends AppCompatActivity {
 
                     /* GET THE DEVICE TOKEN */
                     DEVICE_TOKEN = groomer.getGroomerToken();
-                    Log.e("TOKEN", DEVICE_TOKEN);
+//                    Log.e("TOKEN", DEVICE_TOKEN);
 
                     /* GET AND SET THE GROOMER'S NAME */
                     String groomerName = groomer.getGroomerName();
@@ -307,12 +306,12 @@ public class GroomerReviewCreator extends AppCompatActivity {
         call.enqueue(new Callback<Notification>() {
             @Override
             public void onResponse(Call<Notification> call, Response<Notification> response) {
-                Log.e("PUSH RESPONSE", String.valueOf(response.raw()));
+//                Log.e("PUSH RESPONSE", String.valueOf(response.raw()));
             }
 
             @Override
             public void onFailure(Call<Notification> call, Throwable t) {
-                Log.e("PUSH FAILURE", t.getMessage());
+//                Log.e("PUSH FAILURE", t.getMessage());
             }
         });
     }

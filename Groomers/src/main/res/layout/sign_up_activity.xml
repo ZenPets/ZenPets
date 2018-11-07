@@ -243,7 +243,7 @@
                     android:gravity="start|center"
                     android:inputType="number"
                     android:text="411004"
-                    android:textColor="@android:color/primary_text_light"
+                    android:textColor="@color/primary_text"
                     android:textSize="14sp"
                     app:fontFamily="@font/rubik_regular" />
             </android.support.design.widget.TextInputLayout>
@@ -307,7 +307,7 @@
                     android:layout_height="47dp"
                     android:layout_marginTop="5dp"
                     android:adjustViewBounds="true"
-                    app:iiv_color="@android:color/secondary_text_light"
+                    app:iiv_color="@color/secondary_text"
                     app:iiv_icon="gmd_place"
                     app:iiv_size="18dp" />
 
@@ -324,7 +324,7 @@
                         android:gravity="start|center"
                         android:padding="11dp"
                         android:text="@string/sign_up_select_country"
-                        android:textColor="@android:color/secondary_text_light"
+                        android:textColor="@color/secondary_text"
                         android:textSize="15sp" />
 
                     <android.support.v7.widget.AppCompatSpinner
@@ -340,7 +340,7 @@
                         android:gravity="start|center"
                         android:padding="11dp"
                         android:text="@string/sign_up_select_state"
-                        android:textColor="@android:color/secondary_text_light"
+                        android:textColor="@color/secondary_text"
                         android:textSize="14sp"
                         app:fontFamily="@font/rubik_regular" />
 
@@ -357,7 +357,7 @@
                         android:gravity="start|center"
                         android:padding="11dp"
                         android:text="@string/sign_up_select_city"
-                        android:textColor="@android:color/secondary_text_light"
+                        android:textColor="@color/secondary_text"
                         android:textSize="14sp"
                         app:fontFamily="@font/rubik_regular" />
 
@@ -376,7 +376,7 @@
                 android:layout_marginTop="12dp"
                 android:gravity="center"
                 android:text="Select a Logo or a Cover Photo for your Grooming Service."
-                android:textColor="@android:color/secondary_text_light"
+                android:textColor="@color/secondary_text"
                 android:textSize="14sp"
                 app:fontFamily="@font/rubik_regular"
                 app:layout_constraintEnd_toEndOf="@+id/linlaLocation"

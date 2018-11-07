@@ -1,0 +1,737 @@
+INSERT INTO localities (localityName, cityID) VALUES
+172	Agarkar Nagar
+172	Akurdi
+172	Ashok Nagar
+172	Aundh
+172	B.T. Kawade Road
+172	Balewadi
+172	Baner
+172	Bavdhan
+172	Bhawani Peth
+172	Bhosari
+172	Bibvewadi
+172	Bopkhel
+172	Bopodi
+172	Budhwar Peth
+172	Bund Garden Road
+172	Camp
+172	Camp Area
+172	Chakan
+172	Chandan Nagar
+172	Chinchwad
+172	Dange Chowk
+172	Dattawadi
+172	Deccan Gymkhana
+172	Dehu Road
+172	Dhankawadi
+172	Dhanori
+172	Dhole Patil Road
+172	East Street
+172	Erandwana
+172	Erandwane
+172	Fatima Nagar
+172	FC Road
+172	Ganesh Peth
+172	Ganeshkhind
+172	Ganga Dham
+172	Ganj Peth
+172	Gawaliwada
+172	Ghorpade Peth
+172	Ghorpadi
+172	Gokhalenagar
+172	Gultekadi
+172	Gultekdi
+172	Guru Nanak Nagar
+172	Guruwar Peth
+172	Hadapsar
+172	Hingne Khurd
+172	Hinjawadi
+172	JM Road
+172	Kalas
+172	Kalyani Nagar
+172	Karve Nagar
+172	Kasba Peth
+172	Kashewadi
+172	Katad Khana
+172	Katraj
+172	Khadakwasla
+172	Khadki
+172	Khaire Vasti
+172	Khandala
+172	Kharadi
+172	Kondhwa
+172	Kondhwa Budruk
+172	Koregaon Park
+172	Kothrud
+172	Lavale
+172	Lavasa
+172	Law College Road
+172	Lohegaon
+172	Lonavala
+172	Lulla Nagar
+172	Magarpatta
+172	Maharshi Nagar
+172	Market Yard
+172	MG Road
+172	Model Colony
+172	Modi Colony
+172	Mukund Nagar
+172	Mulshi Road
+172	Mundhwa
+172	Municipal Colony
+172	Nana Peth
+172	Narhe
+172	New Nana Peth
+172	New Timber Market
+172	NIBM Road
+172	Nigdi
+172	Old Mumbai-Pune Highway
+172	Parvati
+172	Parvati Paytha
+172	Pashan
+172	Pimple Gurav
+172	Pimple Nilakh
+172	Pimple Saudagar
+172	Pimpri
+172	Pune Cantonment
+172	Pune Railway Station
+172	Pune University
+172	Pune-Solapur Road
+172	Range Hills
+172	Rasta Peth
+172	Ravet
+172	Raviwar Peth
+172	Sadar Bazaar
+172	Sadashiv Peth
+172	Salunkhe Vihar Road
+172	Sangamvadi
+172	Sassoon Road
+172	Satara Road
+172	Senapati Bapat Road
+172	Shaniwar Peth
+172	Sheela Vihar Colony
+172	Shivaji Nagar
+172	Shivajinagar
+172	Shivapur
+172	Shukrawar Peth
+172	Sinhgad Road
+172	Somwar Peth
+172	Swargate
+172	Taljai Forest Area
+172	Tilak Road
+172	Tingre Nagar
+172	Viman Nagar
+172	Visharant Wadi
+172	Vishrantwadi
+172	Wadgaon Sheri
+172	Wagholi
+172	Wakad
+172	Wanowrie
+172	Warje
+172	Yerawada
+106	2052, Chak Garia
+106	45 Pally
+106	AA Block
+106	Adarsapally
+106	Adarsha Nagar
+106	Adarsha Pally
+106	Agarpara
+106	Airport Area Barrackpore
+106	Alipore
+106	Alipore Body Guard Lines
+106	Alipur Zoological Garden
+106	Anandamath
+106	Anandanagar
+106	Anandapur
+106	Anandapuri
+106	Angus Line
+106	Ariadaha
+106	Aruna Chal
+106	Ashok Nagar
+106	Ashokgarh
+106	Atabag Basti
+106	Atapara
+106	Auropota
+106	Authpur
+106	Azad Hind Bag
+106	B 13
+106	B 3
+106	B 6
+106	B B D Bagh
+106	B.N.R
+106	B4
+106	B8
+106	Babanpur
+106	Badal Pally
+106	Baghajatin Colony
+106	Baghbazar
+106	Bagmari
+106	Bagpota
+106	Baguiati
+106	Baidyapara
+106	Baishali Park
+106	Baithakkhana
+106	Bakshi Bagan
+106	Baliya
+106	Ballygunge
+106	Ballygunge Park
+106	Ballygunge Place
+106	Banarjee Para
+106	Banerjee Para
+106	Bangashree Pally
+106	Bansberia
+106	Bantala
+106	Barabagan
+106	Barabazar Market
+106	Baranagar
+106	Barisha
+106	Baro Bagan
+106	Barrackpore
+106	Basudevpur Colony
+106	BBD Bagh
+106	Beck Bagan
+106	Bediapara
+106	Beehive Garden
+106	Behala
+106	Beleghata
+106	Belgachia
+106	Belghoria
+106	Benepukur
+106	Beniapukur
+106	Bhadreswar
+106	Bhatpara
+106	Bhowanipore
+106	Bidhan Sarani
+106	Bijoygarh
+106	Bina Enclave
+106	Bipadbhanjan Colony
+106	Birati
+106	Block 1
+106	Block 2
+106	Block A
+106	Block B
+106	Block C
+106	Block F
+106	Block P
+106	Boalia
+106	Borakhola
+106	Boral
+106	Bose Para
+106	Bosepukur
+106	Bow Barracks
+106	Bowbazar
+106	BRS 3
+106	Budherhat
+106	Buroshibtalla
+106	Central Balia
+106	Chailabi
+106	Chak Ramnagar
+106	Chakda Mauza
+106	Chakraborty Para
+106	Champdani
+106	Chetla
+106	Chinsurah R S
+106	Chitpur
+106	Chowbaga
+106	Chowk Bazar
+106	College Row
+106	College Square
+106	College Street
+106	Colony No.4
+106	Cossipore
+106	CPT Colony
+106	Dakhin Mart Kaikhalii
+106	Dakshineswar
+106	Dargatala
+106	Darjipara
+106	Daspara
+106	Debpukur
+106	Debrupayan Nagar
+106	Deshpriya Nagar
+106	Dhakuria
+106	Dhalua
+106	Dhapa
+106	Dharampur
+106	Dharmatala
+106	Diamond Park
+106	Dinesh Pally
+106	Diri Para
+106	Doordarshan Campus
+106	Doperia Village
+106	Dover Terrace
+106	Dum Dum
+106	Dum Dum Cantonment
+106	Durgapur Colony
+106	East Kolkata Township
+106	East Topsia
+106	EB Block
+106	Ekbalpur
+106	Elgin
+106	Entally
+106	Fairley Place
+106	Fatullahpur
+106	Flyover
+106	Gangajoara
+106	Ganguly Bagan
+106	Garden Reach
+106	Garfa
+106	Garia
+106	Garia Gardens
+106	Gariahat
+106	Garulia
+106	Ghola
+106	Gholeshapur
+106	Ghose Bagan
+106	Ghosh Bagan
+106	GM Block
+106	Goa Bagan
+106	Goalbati
+106	Gobra
+106	Golf Green
+106	Gondol Para
+106	Gopalpur
+106	Gouranga Sarani
+106	Government Colony
+106	Green Park
+106	Halisahar
+106	Halisahar Station Road
+106	Haltu
+106	Hanspukuria
+106	Hanuman Mandir Basti
+106	Haridevpur
+106	Hastings
+106	Hindmotor
+106	HM Block
+106	Hooghly Jute Mill Colony
+106	Hussainpur
+106	Ichapur
+106	Ichapur Bidhanpally
+106	Ichhapur Defence Estate
+106	Indrajit Pally
+106	Indrapuri
+106	Ishwarpur Village
+106	Italgacha
+106	Itkhola
+106	Jadavpur
+106	Jadu Colony
+106	Jadubabur Bazar
+106	Jaffarpur Chal Bazar
+106	Jagatdal
+106	Jagatipota
+106	Jagodhatripally
+106	Jamuna Nagar
+106	Janbazar
+106	Jatindas Nagar
+106	Jodhpur Gardens
+106	Jodhpur Park
+106	Jogendra Nagar
+106	Joka
+106	Jorabagan
+106	Jugberia
+106	K P C Medical College and Hospital Campus
+106	KA Block
+106	Kadapara
+106	Kaeipara
+106	Kaharpara Basti
+106	Kaikhali
+106	Kailash Nagar
+106	Kalabagan
+106	Kalarait
+106	Kalighat
+106	Kalu Para
+106	Kalua
+106	Kalyan Nagar
+106	Kamalgachhi More
+106	Kamalpur
+106	Kamardanga
+106	Kamarhati
+106	Kamdahari
+106	Kankaria Estates
+106	Kankinara
+106	Kankurgachi
+106	Kapasdanga P
+106	Kasba
+106	Kata Pukur
+106	Kestopur
+106	Khalisani
+106	Khanna
+106	Khardaha
+106	Kheyadah Village
+106	Khidirpur
+106	Khudirabad
+106	Khurigachi Natunpara
+106	Kolkata Airport Quarters
+106	Kolupukur Panchanantala
+106	Kolutolla
+106	Krishnanagar
+106	Kudghat
+106	Kulia
+106	Kumarkhali
+106	Kustia
+106	Lake Gardens
+106	Lake Range
+106	Lake Town
+106	Lal Bazar
+106	Lal Dighi
+106	Last French Colony
+106	Lebutala
+106	Machuabazar
+106	Madhawpur Village
+106	Maidan
+106	Makalhati Mauza
+106	Malir Bagan
+106	Manasipara
+106	Mandirtala
+106	Manicktala
+106	Mankundu
+106	Matagiri Harna Pally
+106	Math Para
+106	Mauza Panchpota
+106	May Dibas Pally
+106	Milan Park
+106	Milanghar
+106	Mohan Pur
+106	Mominpore
+106	Mondal Para
+106	Moore Avenue
+106	Mukundapur
+106	Mullick Bazar
+106	Mundapara
+106	Nabagram
+106	Nabanagar
+106	Nabapalli
+106	Nabapally
+106	Nabin Nagar
+106	Naihati Urban
+106	Naktala
+106	Nandan Nagar
+106	Narantal
+106	Narayantala
+106	Narendrapur
+106	Narkeldanga
+106	Naskar Para
+106	Naskarhat
+106	Naskarpur
+106	Natagarh
+106	Natar Bheril
+106	Natun Diyara
+106	Nawabganj
+106	Nayabad
+106	Nazirabad
+106	Nehaboot Nagar
+106	Netaji Nagar
+106	Netaji Pally
+106	Netaji Subhas Chandra Bose International Airport
+106	Netajipalli
+106	New Alipore
+106	New Ballygunge
+106	New Barrakpur
+106	New Garia Housing Development Society
+106	New Nawpara
+106	Nilachal
+106	Nimta
+106	Nona Chandanpukur
+106	Nondan Nagar
+106	North Dumdum
+106	North Purbachal
+106	Nutan Pally
+106	Olaichanditala
+106	Old Kodalia
+106	Paharpur
+106	Paikpara
+106	Pallisree
+106	Pallymangal
+106	Palpara
+106	Pancha Sayar
+106	Panchanan Tola
+106	Panchanntala
+106	Panchasayar
+106	Panchpota
+106	Panihati
+106	Pansila
+106	Park Circus
+106	Park Street Area
+106	Parui Mauza
+106	Paschim Balia
+106	Paschim Barisha
+106	Paschim Chowbaga
+106	Paschim Putiary
+106	Patipukur
+106	Patuli
+106	Patulia
+106	Pearabagan
+106	Philips Colony
+106	Pirtala
+106	Poddar Court
+106	Prantik Palli
+106	Pratiraksha Nagar
+106	Purba Barisha
+106	Purba Panchannagram South
+106	Purba Putiary
+106	Purba Putiary Mauza
+106	Rabindra Nagar
+106	Rabindrasarovar Area
+106	Race Course
+106	Rahara
+106	Raja Bazar
+106	Rajarhat
+106	Rajbari
+106	Rajdanga
+106	Ram Bagan
+106	Ramchandrapur
+106	Ramkrishna Nagar
+106	Ramkrishna Pally
+106	Ramlal Bazar
+106	Rampur
+106	Rangapara
+106	Rania
+106	Rania Mauza
+106	Rath Tala
+106	Regent Estate
+106	Roy Nagar
+106	Roy Para
+106	Ruiya
+106	Sadar Bazar
+106	Sahapur
+106	Sahitya Parishad
+106	Salt Lake City
+106	Sangati Colony
+106	Santoshpur
+106	Santoshree Pally
+106	Sarada Nagar
+106	Sarada Palli
+106	Sarada Pally
+106	Sarat Pally
+106	Sardar Bazar
+106	Sardarhat
+106	Sarkarpool
+106	Sarsuna
+106	Satchasi Para
+106	Satgram
+106	Satin Sen Nagar
+106	Satpukur
+106	Sawdagarh Pally
+106	Sector -01
+106	Sector 1
+106	Sector C
+106	Sector G
+106	Sector H
+106	Sector II
+106	Sector III
+106	Sector IV
+106	Sector V
+106	Selimpur
+106	Sen Mukherjee Bagan
+106	Sewli Telinipara
+106	Shanti Pally
+106	Sharat Pally
+106	Sheoraphuli
+106	Shibachal
+106	Shobhabazar
+106	Shyam Bazar
+106	Shyambadal
+106	Shyamnagar
+106	Simultala
+106	Sinthi
+106	Sodepur
+106	Sonarpur
+106	South Dum Dum
+106	South Nowda Para
+106	South Rabindra Nagar
+106	Sree Krishna Pally
+106	Sreema Pally
+106	Sreepally
+106	Srikhanda
+106	Srishti
+106	Sthirpara
+106	Subhas Sarobar Park
+106	Subhash Nagar
+106	Subodh Park
+106	Surjaysen Nagar
+106	Swestha Apartments North Balia
+106	Tala
+106	Talbanda
+106	Taltala
+106	Tangra
+106	Tara Park
+106	Tara Pukur South
+106	Taratala
+106	Teli Para
+106	Telinipara
+106	Tematha
+106	Tentulberia
+106	Terita Bazar
+106	Teritta Bazar
+106	Thakur Pukur
+106	Thakuranir Chak
+106	Tikiapara
+106	Tiljala
+106	Titagarh
+106	Tollygunge
+106	Tollygunge Golf Club
+106	Tollygunje
+106	Topsia
+106	Tribeni
+106	Ultadanga
+106	Usha Park
+106	Ustadji Para
+106	Vidhan Pally
+106	VIP Nagar
+106	Vivek Nagar
+106	Vivekanand Pally
+106	Vivekananda Nagar
+106	Watganj
+
+
+('Akurdi', 172),
+('Aundh', 172),
+('B.T. Kawade Road', 172),
+('Balewadi', 172),
+('Baner', 172),
+('Bavdhan', 172),
+('Bhosari', 172),
+('Bibvewadi', 172),
+('Budhwar Peth', 172),
+('Bund Garden Road', 172),
+('Camp Area', 172),
+('Chakan', 172),
+('Chandan Nagar', 172),
+('Chinchwad', 172),
+('Dange Chowk', 172),
+('Deccan Gymkhana', 172),
+('Dehu Road', 172),
+('Dhankawadi', 172),
+('Dhanori', 172),
+('Dhole Patil Road', 172),
+('East Street', 172),
+('Erandwane', 172),
+('FC Road', 172),
+('Fatima Nagar', 172),
+('Hadapsar', 172),
+('Hinjawadi', 172),
+('JM Road', 172),
+('Kalyani Nagar', 172),
+('Karve Nagar', 172),
+('Katraj', 172),
+('Khadakwasla', 172),
+('Khadki', 172),
+('Khandala', 172),
+('Kharadi', 172),
+('Kondhwa', 172),
+('Koregaon Park', 172),
+('Kothrud', 172),
+('Lavale', 172),
+('Lavasa', 172),
+('Law College Road', 172),
+('Lohegaon', 172),
+('Lonavala', 172),
+('MG Road', 172),
+('Magarpatta', 172),
+('Model Colony', 172),
+('Mulshi Road', 172),
+('Mundhwa', 172),
+('NIBM Road', 172),
+('Narhe', 172),
+('Nigdi', 172),
+('Old Mumbai-Pune Highway', 172),
+('Parvati', 172),
+('Pashan', 172),
+('Pimple Gurav', 172),
+('Pimple Nilakh', 172),
+('Pimple Saudagar', 172),
+('Pimpri', 172),
+('Pune-Solapur Road', 172),
+('Pune University', 172),
+('Rasta Peth', 172),
+('Ravet', 172),
+('Sadashiv Peth', 172),
+('Salunkhe Vihar Road', 172),
+('Sassoon Road', 172),
+('Satara Road', 172),
+('Senapati Bapat Road', 172),
+('Shaniwar Peth', 172),
+('Shivaji Nagar', 172),
+('Shivapur', 172),
+('Shukrawar Peth', 172),
+('Sinhgad Road', 172),
+('Swargate', 172),
+('Tilak Road', 172),
+('Viman Nagar', 172),
+('Vishrantwadi', 172),
+('Wadgaon Sheri', 172),
+('Wagholi', 172),
+('Wakad', 172),
+('Wanowrie', 172),
+('Warje', 172),
+('Yerawada', 172),
+('Agarkar Nagar', 172),
+('Ashok Nagar', 172),
+('Aundh', 172),
+('Baner', 172),
+('Bhawani Peth', 172),
+('Bibvewadi', 172),
+('Bopkhel', 172),
+('Bopodi', 172),
+('Budhwar Peth', 172),
+('Camp', 172),
+('Dattawadi', 172),
+('Deccan Gymkhana', 172),
+('Dhanori', 172),
+('Erandwana', 172),
+('Erandwane', 172),
+('Ganesh Peth', 172),
+('Ganeshkhind', 172),
+('Ganga Dham', 172),
+('Ganj Peth', 172),
+('Gawaliwada', 172),
+('Ghorpade Peth', 172),
+('Ghorpadi', 172),
+('Gokhalenagar', 172),
+('Gultekadi', 172),
+('Gultekdi', 172),
+('Guru Nanak Nagar', 172),
+('Guruwar Peth', 172),
+('Hadapsar', 172),
+('Hingne Khurd', 172),
+('Kalas', 172),
+('Kalyani Nagar', 172),
+('Karve Nagar', 172),
+('Kasba Peth', 172),
+('Kashewadi', 172),
+('Katad Khana', 172),
+('Katraj', 172),
+('Khadki', 172),
+('Khaire Vasti', 172),
+('Kondhwa', 172),
+('Kondhwa Budruk', 172),
+('Koregaon Park', 172),
+('Kothrud', 172),
+('Lulla Nagar', 172),
+('Maharshi Nagar', 172),
+('Market Yard', 172),
+('Modi Colony', 172),
+('Mukund Nagar', 172),
+('Municipal Colony', 172),
+('Nana Peth', 172),
+('New Nana Peth', 172),
+('New Timber Market', 172),
+('Parvati Paytha', 172),
+('Pashan', 172),
+('Pune Cantonment', 172),
+('Pune Railway Station', 172),
+('Range Hills', 172),
+('Rasta Peth', 172),
+('Raviwar Peth', 172),
+('Sadar Bazaar', 172),
+('Sadashiv Peth', 172),
+('Sangamvadi', 172),
+('Sheela Vihar Colony', 172),
+('Shivajinagar', 172),
+('Shukrawar Peth', 172),
+('Somwar Peth', 172),
+('Swargate', 172),
+('Taljai Forest Area', 172),
+('Tingre Nagar', 172),
+('Visharant Wadi', 172),
+('Wanowrie', 172),
+('Yerawada', 172);

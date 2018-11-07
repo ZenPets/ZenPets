@@ -22,10 +22,10 @@ public interface AppointmentsAPI {
             @Query("userID") String userID,
             @Query("appointmentDate") String appointmentDate);
 
-    /** CREATE A NEW APPOINTMENT **/
-    @POST("newDocAppointment")
+    /** ADD A NEW APPOINTMENT (BY USER) **/
+    @POST("newVetAppointment")
     @FormUrlEncoded
-    Call<Appointment> newDocAppointment(
+    Call<Appointment> newVetAppointment(
             @Field("doctorID") String doctorID,
             @Field("clinicID") String clinicID,
             @Field("visitReasonID") String visitReasonID,
@@ -47,4 +47,8 @@ public interface AppointmentsAPI {
     Call<Client> newClient(
             @Field("doctorID") String doctorID,
             @Field("userID") String userID);
+
+    /** FETCH APPOINTMENT DETAILS **/
+    @GET("fetchAppointmentDetails")
+    Call<Appointment> fetchAppointmentDetails(@Query("appointmentID") String appointmentID);
 }

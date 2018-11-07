@@ -1,5 +1,6 @@
 package co.zenpets.users.user.appointments;
 
+import android.app.NotificationManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,6 +24,7 @@ import co.zenpets.users.user.appointments.modules.PastAppointments;
 import co.zenpets.users.user.appointments.modules.UpcomingAppointments;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import co.zenpets.users.utils.services.NewFirebaseMessagingService;
 
 public class UserAppointments extends AppCompatActivity {
 
@@ -35,6 +37,12 @@ public class UserAppointments extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_appointments_container);
         ButterKnife.bind(this);
+
+        /* MANUALLY REMOVE THE NOTIFICATION */
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if (manager != null) {
+            manager.cancel(NewFirebaseMessagingService.APPOINTMENT_UPDATE_NOT_ID);
+        }
 
         /* CONFIGURE THE TOOLBAR */
         configToolbar();

@@ -6,25 +6,25 @@ import retrofit2.http.Query;
 
 public interface EnquiriesAPI {
 
-    /** FETCH ALL KENNEL ENQUIRIES **/
-    @GET("fetchKennelEnquiries")
-    Call<Enquiries> fetchKennelEnquiries(@Query("kennelID") String kennelID);
+    /** FETCH ALL GROOMER ENQUIRIES **/
+    @GET("fetchGroomerEnquiries")
+    Call<Enquiries> fetchGroomerEnquiries(@Query("groomerID") String groomerID);
 
-    /** GET NUMBER OF USER MESSAGES ON A KENNEL **/
-    @GET("fetchKennelEnquiryUserMessagesCount")
-    Call<MessagesCount> fetchKennelEnquiryUserMessagesCount(
-            @Query("kennelEnquiryID") String kennelEnquiryID,
+    /** GET NUMBER OF USER MESSAGES IN A GROOMER ENQUIRY THREAD **/
+    @GET("fetchGroomerEnquiryUserMessagesCount")
+    Call<MessagesCount> fetchGroomerEnquiryUserMessagesCount(
+            @Query("enquiryID") String enquiryID,
             @Query("userID") String userID);
 
-    /** FETCH THE LAST KENNEL ENQUIRY MESSAGE DETAILS **/
-    @GET("fetchLastKennelEnquiryDetails")
-    Call<Enquiry> fetchLastKennelEnquiryDetails(
-            @Query("kennelEnquiryID") String kennelEnquiryID,
+    /** FETCH THE LAST GROOMER ENQUIRY MESSAGE DETAILS **/
+    @GET("fetchLastGroomerEnquiryDetails")
+    Call<Enquiry> fetchLastGroomerEnquiryDetails(
+            @Query("enquiryID") String enquiryID,
             @Query("userID") String userID);
 
     /** GET NUMBER OF UNREAD MESSAGES IN AN ENQUIRY  **/
-    @GET("fetchKennelEnquiryUnreadCount")
-    Call<UnreadCount> fetchKennelEnquiryUnreadCount(
-            @Query("kennelEnquiryID") String kennelEnquiryID,
+    @GET("fetchGroomerEnquiryUnreadCount")
+    Call<UnreadCount> fetchGroomerEnquiryUnreadCount(
+            @Query("enquiryID") String enquiryID,
             @Query("userID") String userID);
 }

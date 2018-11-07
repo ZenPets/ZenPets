@@ -1,0 +1,1131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/zen_toolbar" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbarSize="3dp"
+        android:scrollbarThumbVertical="@color/primary_dark">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/NormalBold"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="start|center"
+                android:padding="11dp"
+                android:text="Update your Sunday timings"
+                android:textColor="@color/secondary_text"
+                android:textSize="15sp" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/chkbxSundayMorning"
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:padding="11dp"
+                android:text="Open On Sunday Morning" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtSundayMorningFrom"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnSunMorningFrom"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtSundayMorningTo"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnSunMorningTo"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/chkbxSundayAfternoon"
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:padding="11dp"
+                android:text="Open On Sunday Afternoon" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtSundayAfternoonFrom"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnSunAfternoonFrom"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtSundayAfternoonTo"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnSunAfternoonTo"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/NormalBold"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="start|center"
+                android:padding="11dp"
+                android:text="Update your Monday timings"
+                android:textColor="@color/secondary_text"
+                android:textSize="15sp" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/chkbxMondayMorning"
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:padding="11dp"
+                android:text="Open On Monday Morning" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtMondayMorningFrom"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnMonMorningFrom"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtMondayMorningTo"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnMonMorningTo"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/chkbxMondayAfternoon"
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:padding="11dp"
+                android:text="Open On Monday Afternoon" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtMondayAfternoonFrom"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnMonAfternoonFrom"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtMondayAfternoonTo"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnMonAfternoonTo"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/NormalBold"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="start|center"
+                android:padding="11dp"
+                android:text="Update your Tuesday timings"
+                android:textColor="@color/secondary_text"
+                android:textSize="15sp" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/chkbxTuesdayMorning"
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:padding="11dp"
+                android:text="Open On Tuesday Morning" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtTuesdayMorningFrom"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnTueMorningFrom"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtTuesdayMorningTo"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnTueMorningTo"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/chkbxTuesdayAfternoon"
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:padding="11dp"
+                android:text="Open On Tuesday Afternoon" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtTuesdayAfternoonFrom"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnTueAfternoonFrom"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtTuesdayAfternoonTo"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnTueAfternoonTo"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/NormalBold"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="start|center"
+                android:padding="11dp"
+                android:text="Update your Wednesday timings"
+                android:textColor="@color/secondary_text"
+                android:textSize="15sp" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/chkbxWednesdayMorning"
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:padding="11dp"
+                android:text="Open On Wednesday Morning" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtWednesdayMorningFrom"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnWedMorningFrom"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtWednesdayMorningTo"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnWedMorningTo"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/chkbxWednesdayAfternoon"
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:padding="11dp"
+                android:text="Open On Wednesday Afternoon" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtWednesdayAfternoonFrom"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnWedAfternoonFrom"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtWednesdayAfternoonTo"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnWedAfternoonTo"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/NormalBold"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="start|center"
+                android:padding="11dp"
+                android:text="Update your Thursday timings"
+                android:textColor="@color/secondary_text"
+                android:textSize="15sp" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/chkbxThursdayMorning"
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:padding="11dp"
+                android:text="Open On Thursday Morning" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtThursdayMorningFrom"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnThuMorningFrom"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtThursdayMorningTo"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnThuMorningTo"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/chkbxThursdayAfternoon"
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:padding="11dp"
+                android:text="Open On Thursday Afternoon" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtThursdayAfternoonFrom"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnThuAfternoonFrom"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtThursdayAfternoonTo"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnThuAfternoonTo"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/NormalBold"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="start|center"
+                android:padding="11dp"
+                android:text="Update your Friday timings"
+                android:textColor="@color/secondary_text"
+                android:textSize="15sp" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/chkbxFridayMorning"
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:padding="11dp"
+                android:text="Open On Friday Morning" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtFridayMorningFrom"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnFriMorningFrom"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtFridayMorningTo"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnFriMorningTo"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/chkbxFridayAfternoon"
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:padding="11dp"
+                android:text="Open On Friday Afternoon" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtFridayAfternoonFrom"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnFriAfternoonFrom"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtFridayAfternoonTo"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnFriAfternoonTo"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/NormalBold"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="start|center"
+                android:padding="11dp"
+                android:text="Update your Saturday timings"
+                android:textColor="@color/secondary_text"
+                android:textSize="15sp" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/chkbxSaturdayMorning"
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:padding="11dp"
+                android:text="Open On Saturday Morning" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtSaturdayMorningFrom"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnSatMorningFrom"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtSaturdayMorningTo"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnSatMorningTo"
+                    android:layout_width="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/chkbxSaturdayAfternoon"
+                style="@style/NormalRegular"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:padding="11dp"
+                android:text="Open On Saturday Afternoon" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="11dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtSaturdayAfternoonFrom"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnSatAfternoonFrom"
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edtSaturdayAfternoonTo"
+                    style="@style/NormalRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:gravity="start|center"
+                    android:padding="11dp"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp" />
+
+                <com.mikepenz.iconics.view.IconicsImageButton
+                    android:id="@+id/btnSatAfternoonTo"
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:enabled="false"
+                    android:gravity="center"
+                    app:iiv_color="@android:color/holo_blue_dark"
+                    app:iiv_icon="faw_clock"
+                    app:iiv_size="20sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

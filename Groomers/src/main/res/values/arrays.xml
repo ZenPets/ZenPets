@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- UNREAD ENQUIRY MESSAGES -->
+    <plurals name="unread_enquiry_messages">
+        <item quantity="zero">0 New Messages</item>
+        <item quantity="one">1 New Message</item>
+        <item quantity="other">%d New Messages</item>
+    </plurals>
+</resources>

@@ -66,7 +66,7 @@ public class LandingActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             /* FETCH THE USER'S PROFILE */
-            fetchUserProfile(user.getUid());
+            fetchUserProfile(user.getEmail());
         }
 
         /* CREATE THE NOTIFICATION CHANNEL */

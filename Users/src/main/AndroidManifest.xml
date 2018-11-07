@@ -452,8 +452,15 @@
             android:value="@string/razor_pay_api_key_id" />
 
         <!-- FIREBASE CLOUD MESSAGING -->
-        <service
+        <!--<service
             android:name=".utils.services.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>-->
+        <service
+            android:name=".utils.services.NewFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -466,6 +473,9 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
         <!--<service
             android:name=".utils.services.MyJobService"
             android:exported="false">
@@ -477,7 +487,7 @@
         <!-- SET THE NOTIFICATION ICON -->
         <!--<meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/zen_pets_notification" />
+            android:resource="@drawable/ic_zen_pets_notification" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/primary" />-->
