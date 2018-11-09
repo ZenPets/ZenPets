@@ -229,7 +229,7 @@ public class SignUpActivity extends AppCompatActivity implements PaymentResultLi
             calendar.setTime(format.parse(VALID_FROM));
 
             /* CALCULATE THE END DATE */
-            calendar.add(Calendar.MONTH, 15);
+            calendar.add(Calendar.MONTH, 3);
             Date dateEnd = new Date(calendar.getTimeInMillis());
             VALID_TO = format.format(dateEnd);
 //            Log.e("VALID TO", VALID_TO);

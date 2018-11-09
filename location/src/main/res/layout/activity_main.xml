@@ -4,13 +4,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--<android.support.v7.widget.AppCompatSpinner
-        android:id="@+id/spnCities"
+    <include layout="@layout/zen_toolbar" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp" />-->
+        android:orientation="horizontal">
 
-    <include layout="@layout/zen_toolbar" />
+        <Spinner
+            android:id="@+id/spnStates"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1" />
+
+        <Spinner
+            android:id="@+id/spnCities"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +38,7 @@
             android:layout_weight="1"
             android:hint="Min Lat"
             android:padding="11dp"
-            android:text="30.7595842" />
+            android:text="26.1013839" />
 
         <EditText
             android:id="@+id/edtLatMax"
@@ -33,7 +47,7 @@
             android:layout_weight="1"
             android:hint="Max Lat"
             android:padding="11dp"
-            android:text="30.7143093" />
+            android:text="26.1918162" />
     </LinearLayout>
 
     <LinearLayout
@@ -48,7 +62,7 @@
             android:layout_weight="1"
             android:hint="Min Lng"
             android:padding="11dp"
-            android:text="76.6926176" />
+            android:text="91.5782403" />
 
         <EditText
             android:id="@+id/edtLngMax"
@@ -57,7 +71,7 @@
             android:layout_weight="1"
             android:hint="Max Lng"
             android:padding="11dp"
-            android:text="76.8343903" />
+            android:text="91.7653968" />
     </LinearLayout>
 
     <Button
@@ -65,18 +79,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
         android:text="Fetch Localities" />
 
     <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txtCoordinates"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:maxLines="9"
+        android:maxLines="7"
         android:scrollbars="vertical"
         android:text="@string/coords"
         android:textIsSelectable="true" />

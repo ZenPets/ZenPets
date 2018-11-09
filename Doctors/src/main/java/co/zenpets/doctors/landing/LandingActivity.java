@@ -133,7 +133,6 @@ public class LandingActivity extends AppCompatActivity {
                 if (subscription != null)   {
                     /* GET THE SUBSCRIPTION ID */
                     String strSubscriptionID = subscription.getSubscriptionID();
-//                    Log.e("SUB ID", strSubscriptionID);
 
                     /* SET THE SUBSCRIPTION ID TO SHARED PREFERENCES */
                     getApp().setSubscription(strSubscriptionID);

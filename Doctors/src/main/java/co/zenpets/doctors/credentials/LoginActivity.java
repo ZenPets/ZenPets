@@ -106,29 +106,31 @@ public class LoginActivity extends AppCompatActivity {
 
     /** CREATE A NEW ACCOUNT **/
     @OnClick(R.id.txtCreateAccount) protected void newAccount()   {
-        new MaterialDialog.Builder(LoginActivity.this)
-                .icon(ContextCompat.getDrawable(LoginActivity.this, R.drawable.ic_info_outline_black_24dp))
-                .title("Select Option")
-                .cancelable(true)
-                .content("If you have received an Email / Phone Call / Letter / Message informing you that your profile has been listed, select the option \"Claim Profile\".\n\nIf you haven't been intimated by us, select the option \"Create Account\"")
-                .positiveText("Create Account")
-                .negativeText("Claim Profile")
-                .theme(Theme.LIGHT)
-                .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                        startActivityForResult(intent, 101);
-                    }
-                })
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent(LoginActivity.this, ClaimProfileList.class);
-                        startActivityForResult(intent, 101);
-                    }
-                }).show();
+        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+        startActivityForResult(intent, 101);
+//        new MaterialDialog.Builder(LoginActivity.this)
+//                .icon(ContextCompat.getDrawable(LoginActivity.this, R.drawable.ic_info_outline_black_24dp))
+//                .title("Select Option")
+//                .cancelable(true)
+//                .content("If you have received an Email / Phone Call / Letter / Message informing you that your profile has been listed, select the option \"Claim Profile\".\n\nIf you haven't been intimated by us, select the option \"Create Account\"")
+//                .positiveText("Create Account")
+//                .negativeText("Claim Profile")
+//                .theme(Theme.LIGHT)
+//                .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
+//                .onPositive(new MaterialDialog.SingleButtonCallback() {
+//                    @Override
+//                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+//                        startActivityForResult(intent, 101);
+//                    }
+//                })
+//                .onNegative(new MaterialDialog.SingleButtonCallback() {
+//                    @Override
+//                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                        Intent intent = new Intent(LoginActivity.this, ClaimProfileList.class);
+//                        startActivityForResult(intent, 101);
+//                    }
+//                }).show();
     }
 
     /** FORGOT ACCOUNT PASSWORD **/

@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/txtCityName"
+        android:id="@+id/txtStateName"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="start|center"

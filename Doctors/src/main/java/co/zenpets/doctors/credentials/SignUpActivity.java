@@ -56,11 +56,14 @@ import com.google.firebase.auth.FirebaseUser;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -121,6 +124,8 @@ public class SignUpActivity extends AppCompatActivity {
     private String DOCTOR_DISPLAY_PROFILE_FILE_NAME = null;
     private Uri DOCTOR_DISPLAY_PROFILE_URI = null;
     private String PASSWORD = null;
+    private String VALID_FROM = null;
+    private String VALID_TO = null;
 
     /** STRING TO HOLD THE ERROR MESSAGE, IF ANY **/
     private String strErrorMessage = null;
@@ -180,6 +185,25 @@ public class SignUpActivity extends AppCompatActivity {
                 .setCopyTakenPhotosToPublicGalleryAppFolder(true)
                 .setCopyPickedImagesToPublicGalleryAppFolder(true)
                 .setAllowMultiplePickInGallery(false);
+
+        /* GENERATE THE VALID FROM AND VALID TO DATES */
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            Date date = new Date();
+            VALID_FROM = format.format(date);
+//            Log.e("VALID FROM", VALID_FROM);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(format.parse(VALID_FROM));
+
+            /* CALCULATE THE END DATE */
+            calendar.add(Calendar.MONTH, 3);
+            Date dateEnd = new Date(calendar.getTimeInMillis());
+            VALID_TO = format.format(dateEnd);
+//            Log.e("VALID TO", VALID_TO);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         /* SET THE TERMS OF SERVICE TEXT **/
         setTermsAndConditions(txtTermsOfService);
@@ -650,63 +674,14 @@ public class SignUpActivity extends AppCompatActivity {
 
     /***** CREATE THE FREE TRIAL UPGRADE SUBSCRIPTION RECORD *****/
     private void createTrialSubscription(String doctorID) {
-        /* GET THE START AND END DATES */
-        Calendar calendar = Calendar.getInstance();
-        Date today = calendar.getTime();
-        long START_DATE = today.getTime() / 1000;
-        calendar.add(Calendar.MONTH, 3);
-        Date nextYear = calendar.getTime();
-        long END_DATE = nextYear.getTime() / 1000;
-
         SubscriptionAPI api = ZenApiClient.getClient().create(SubscriptionAPI.class);
         Call<Subscription> call = api.newDoctorSubscription(
-                doctorID,
-                "2",
-                String.valueOf(START_DATE),
-                String.valueOf(END_DATE));
+                doctorID, VALID_FROM, VALID_TO, "Free Trial");
         call.enqueue(new Callback<Subscription>() {
             @Override
             public void onResponse(Call<Subscription> call, Response<Subscription> response) {
                 if (response.isSuccessful())    {
-                    String docSubscriptionID = response.body().getDocSubscriptionID();
-                    progressDialog.dismiss();
-                    auth.signOut();
-                    Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Subscription> call, Throwable t) {
-//                Crashlytics.logException(t);
-            }
-        });
-    }
-
-    /***** CREATE THE DEFAULT SUBSCRIPTION RECORD *****/
-    private void createDefaultSubscription(String doctorID) {
-        /* GET THE START AND END DATES */
-        Calendar calendar = Calendar.getInstance();
-        Date today = calendar.getTime();
-        long START_DATE = today.getTime() / 1000;
-        calendar.add(Calendar.MONTH, 3);
-        Date nextYear = calendar.getTime();
-        long END_DATE = nextYear.getTime() / 1000;
-
-        SubscriptionAPI api = ZenApiClient.getClient().create(SubscriptionAPI.class);
-        Call<Subscription> call = api.newDoctorSubscription(
-                doctorID,
-                "1",
-                String.valueOf(START_DATE),
-                String.valueOf(END_DATE));
-        call.enqueue(new Callback<Subscription>() {
-            @Override
-            public void onResponse(Call<Subscription> call, Response<Subscription> response) {
-                if (response.isSuccessful())    {
-                    String docSubscriptionID = response.body().getDocSubscriptionID();
-//                    Log.e("SUBSCRIPTION ID", docSubscriptionID);
+                    String subscriptionID = response.body().getSubscriptionID();
                     progressDialog.dismiss();
                     auth.signOut();
                     Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);

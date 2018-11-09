@@ -18,7 +18,7 @@ public interface SubscriptionAPI {
     @FormUrlEncoded
     Call<Subscription> newDoctorSubscription(
             @Field("doctorID") String doctorID,
-            @Field("subscriptionID") String subscriptionID,
-            @Field("subscriptionStart") String subscriptionStart,
-            @Field("subscriptionEnd") String subscriptionEnd);
+            @Field("validFrom") String validFrom,
+            @Field("validTo") String validTo,
+            @Field("subscriptionNote") String subscriptionNote);
 }
