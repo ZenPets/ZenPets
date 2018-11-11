@@ -67,7 +67,7 @@ public class DoctorSpecializationsFrag extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         /* CAST THE LAYOUT TO A NEW VIEW INSTANCE */
         View view = inflater.inflate(R.layout.doctor_details_specialization_list, container, false);
@@ -90,7 +90,7 @@ public class DoctorSpecializationsFrag extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         /* CONFIGURE THE RECYCLER VIEW **/
@@ -120,7 +120,7 @@ public class DoctorSpecializationsFrag extends Fragment {
         Call<Specializations> call = apiInterface.fetchDoctorSpecializations(DOCTOR_ID);
         call.enqueue(new Callback<Specializations>() {
             @Override
-            public void onResponse(Call<Specializations> call, Response<Specializations> response) {
+            public void onResponse(@NonNull Call<Specializations> call, @NonNull Response<Specializations> response) {
                 arrSpecialization = response.body().getSpecializations();
                 if (arrSpecialization != null && arrSpecialization.size() > 0)  {
                     /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
@@ -140,7 +140,7 @@ public class DoctorSpecializationsFrag extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Specializations> call, Throwable t) {
+            public void onFailure(@NonNull Call<Specializations> call, @NonNull Throwable t) {
             }
         });
     }
@@ -163,7 +163,7 @@ public class DoctorSpecializationsFrag extends Fragment {
                         Call<Specialization> call = apiInterface.newDoctorSpecialization(DOCTOR_ID, input.toString());
                         call.enqueue(new Callback<Specialization>() {
                             @Override
-                            public void onResponse(Call<Specialization> call, Response<Specialization> response) {
+                            public void onResponse(@NonNull Call<Specialization> call, @NonNull Response<Specialization> response) {
                                 if (response.isSuccessful())    {
                                     dialog.dismiss();
                                     Toast.makeText(getActivity(), "Successfully added a new specialization", Toast.LENGTH_SHORT).show();
@@ -179,7 +179,7 @@ public class DoctorSpecializationsFrag extends Fragment {
                             }
 
                             @Override
-                            public void onFailure(Call<Specialization> call, Throwable t) {
+                            public void onFailure(@NonNull Call<Specialization> call, @NonNull Throwable t) {
 //                                Log.e("FAILURE", t.getMessage());
 //                                Crashlytics.logException(t);
                             }
@@ -227,7 +227,7 @@ public class DoctorSpecializationsFrag extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(ClinicsVH holder, final int position) {
+        public void onBindViewHolder(@NonNull ClinicsVH holder, final int position) {
             final Specialization data = arrSpecialization.get(position);
 
             /* SET THE SPECIALIZATION NAME */
@@ -262,7 +262,7 @@ public class DoctorSpecializationsFrag extends Fragment {
                                                     Call<Specialization> call = apiInterface.updateSpecializationDetails(data.getDoctorSpecializationID(), DOCTOR_ID, input.toString());
                                                     call.enqueue(new Callback<Specialization>() {
                                                         @Override
-                                                        public void onResponse(Call<Specialization> call, Response<Specialization> response) {
+                                                        public void onResponse(@NonNull Call<Specialization> call, @NonNull Response<Specialization> response) {
                                                             if (response.isSuccessful())    {
                                                                 dialog.dismiss();
                                                                 Toast.makeText(getActivity(), "Successfully updated record...", Toast.LENGTH_SHORT).show();
@@ -278,7 +278,7 @@ public class DoctorSpecializationsFrag extends Fragment {
                                                         }
 
                                                         @Override
-                                                        public void onFailure(Call<Specialization> call, Throwable t) {
+                                                        public void onFailure(@NonNull Call<Specialization> call, @NonNull Throwable t) {
 //                                                            Log.e("FAILURE", t.getMessage());
 //                                                            Crashlytics.logException(t);
                                                         }
@@ -334,7 +334,7 @@ public class DoctorSpecializationsFrag extends Fragment {
             Call<Specialization> call = api.deleteSpecialization(doctorSpecializationID);
             call.enqueue(new Callback<Specialization>() {
                 @Override
-                public void onResponse(Call<Specialization> call, Response<Specialization> response) {
+                public void onResponse(@NonNull Call<Specialization> call, @NonNull Response<Specialization> response) {
                     if (response.isSuccessful())    {
                         /* SHOW THE SUCCESS MESSAGE */
                         Toast.makeText(getActivity(), "Successfully deleted...", Toast.LENGTH_SHORT).show();
@@ -353,15 +353,16 @@ public class DoctorSpecializationsFrag extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<Specialization> call, Throwable t) {
+                public void onFailure(@NonNull Call<Specialization> call, @NonNull Throwable t) {
 //                    Log.e("DELETE FAILURE", t.getMessage());
 //                    Crashlytics.logException(t);
                 }
             });
         }
 
+        @NonNull
         @Override
-        public ClinicsVH onCreateViewHolder(ViewGroup parent, int i) {
+        public ClinicsVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
             View itemView = LayoutInflater.
                     from(parent.getContext()).

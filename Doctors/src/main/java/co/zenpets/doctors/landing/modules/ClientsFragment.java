@@ -1,6 +1,7 @@
 package co.zenpets.doctors.landing.modules;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -58,7 +59,7 @@ public class ClientsFragment extends Fragment implements SearchView.OnQueryTextL
     @BindView(R.id.linlaEmpty) LinearLayout linlaEmpty;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         /* CAST THE LAYOUT TO A NEW VIEW INSTANCE */
         View view = inflater.inflate(R.layout.home_clients_frag_list, container, false);
@@ -81,7 +82,7 @@ public class ClientsFragment extends Fragment implements SearchView.OnQueryTextL
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         /* CONFIGURE THE ACTIONBAR */
@@ -110,7 +111,7 @@ public class ClientsFragment extends Fragment implements SearchView.OnQueryTextL
         Call<Clients> call = api.fetchDoctorClients(DOCTOR_ID);
         call.enqueue(new Callback<Clients>() {
             @Override
-            public void onResponse(Call<Clients> call, Response<Clients> response) {
+            public void onResponse(@NonNull Call<Clients> call, @NonNull Response<Clients> response) {
                 arrClients = response.body().getClients();
                 if (arrClients != null && arrClients.size() > 0)    {
                     /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT  */
@@ -136,7 +137,7 @@ public class ClientsFragment extends Fragment implements SearchView.OnQueryTextL
             }
 
             @Override
-            public void onFailure(Call<Clients> call, Throwable t) {
+            public void onFailure(@NonNull Call<Clients> call, @NonNull Throwable t) {
             }
         });
     }

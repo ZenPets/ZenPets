@@ -240,7 +240,7 @@ public class ClaimSignUpActivity extends AppCompatActivity {
         Call<DoctorProfileData> call = api.fetchDoctorProfile(DOCTOR_ID);
         call.enqueue(new Callback<DoctorProfileData>() {
             @Override
-            public void onResponse(Call<DoctorProfileData> call, Response<DoctorProfileData> response) {
+            public void onResponse(@NonNull Call<DoctorProfileData> call, @NonNull Response<DoctorProfileData> response) {
                 DoctorProfileData data = response.body();
                 if (data != null)   {
                     /* GET THE AUTH ID */
@@ -326,7 +326,7 @@ public class ClaimSignUpActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<DoctorProfileData> call, Throwable t) {
+            public void onFailure(@NonNull Call<DoctorProfileData> call, @NonNull Throwable t) {
 //                Log.e("PROFILE FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -357,7 +357,7 @@ public class ClaimSignUpActivity extends AppCompatActivity {
         spanTxt.append(getResources().getString(R.string.terms_part_2));
         spanTxt.setSpan(new ClickableSpan() {
             @Override
-            public void onClick(View widget) {
+            public void onClick(@NonNull View widget) {
                 Intent showSellerAgreement = new Intent(getApplicationContext(), SellerAgreementActivity.class);
                 startActivity(showSellerAgreement);
             }
@@ -367,7 +367,7 @@ public class ClaimSignUpActivity extends AppCompatActivity {
         spanTxt.append(getResources().getString(R.string.terms_part_4));
         spanTxt.setSpan(new ClickableSpan() {
             @Override
-            public void onClick(View widget) {
+            public void onClick(@NonNull View widget) {
                 Intent showPrivacyPolicy = new Intent(getApplicationContext(), NewPrivacyPolicyActivity.class);
                 startActivity(showPrivacyPolicy);
             }
@@ -743,7 +743,7 @@ public class ClaimSignUpActivity extends AppCompatActivity {
                 "True", DOCTOR_TOKEN);
         call.enqueue(new Callback<AccountData>() {
             @Override
-            public void onResponse(Call<AccountData> call, Response<AccountData> response) {
+            public void onResponse(@NonNull Call<AccountData> call, @NonNull Response<AccountData> response) {
                 if (response.isSuccessful())    {
                     /* CREATE THE DEFAULT SUBSCRIPTION RECORD */
                     createSubscriptionRecord(DOCTOR_ID);
@@ -773,7 +773,7 @@ public class ClaimSignUpActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<AccountData> call, Throwable t) {
+            public void onFailure(@NonNull Call<AccountData> call, @NonNull Throwable t) {
 //                Log.e("SIGN UP FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -798,7 +798,7 @@ public class ClaimSignUpActivity extends AppCompatActivity {
                 String.valueOf(END_DATE));
         call.enqueue(new Callback<Subscription>() {
             @Override
-            public void onResponse(Call<Subscription> call, Response<Subscription> response) {
+            public void onResponse(@NonNull Call<Subscription> call, @NonNull Response<Subscription> response) {
                 if (response.isSuccessful())    {
                     /* SET THE APPROVED STATUS TO "YES" */
                     getApp().setClaimApproved("Yes");
@@ -813,7 +813,7 @@ public class ClaimSignUpActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Subscription> call, Throwable t) {
+            public void onFailure(@NonNull Call<Subscription> call, @NonNull Throwable t) {
 
             }
         });

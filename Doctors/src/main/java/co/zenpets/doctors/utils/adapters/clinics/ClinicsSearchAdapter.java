@@ -3,6 +3,7 @@ package co.zenpets.doctors.utils.adapters.clinics;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,8 +32,9 @@ public class ClinicsSearchAdapter extends RecyclerView.Adapter<ClinicsSearchVH> 
         this.arrClinics = arrClinics;
     }
 
+    @NonNull
     @Override
-    public ClinicsSearchVH onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ClinicsSearchVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.
                 from(parent.getContext()).
@@ -42,7 +44,7 @@ public class ClinicsSearchAdapter extends RecyclerView.Adapter<ClinicsSearchVH> 
     }
 
     @Override
-    public void onBindViewHolder(ClinicsSearchVH holder, int position) {
+    public void onBindViewHolder(@NonNull ClinicsSearchVH holder, int position) {
         final ClinicData data = arrClinics.get(position);
 
         /* SET THE CLINIC'S LOGO */

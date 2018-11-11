@@ -3,6 +3,7 @@ package co.zenpets.doctors.modifier.profile;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
@@ -175,7 +176,7 @@ public class ProfileModifier extends AppCompatActivity {
         Call<DoctorProfileData> call = api.fetchDoctorProfile(DOCTOR_ID);
         call.enqueue(new Callback<DoctorProfileData>() {
             @Override
-            public void onResponse(Call<DoctorProfileData> call, Response<DoctorProfileData> response) {
+            public void onResponse(@NonNull Call<DoctorProfileData> call, @NonNull Response<DoctorProfileData> response) {
                 DoctorProfileData data = response.body();
                 if (data != null)   {
 
@@ -243,7 +244,7 @@ public class ProfileModifier extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<DoctorProfileData> call, Throwable t) {
+            public void onFailure(@NonNull Call<DoctorProfileData> call, @NonNull Throwable t) {
 //                Log.e("PROFILE FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }

@@ -3,6 +3,7 @@ package co.zenpets.doctors.creator.appointment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -20,41 +21,38 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
-
 import org.joda.time.DateTime;
+import org.joda.time.LocalTime;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import co.zenpets.doctors.R;
 import co.zenpets.doctors.utils.AppPrefs;
 import co.zenpets.doctors.utils.adapters.appointments.creator.AfternoonCreatorAdapter;
 import co.zenpets.doctors.utils.adapters.appointments.creator.MorningCreatorAdapter;
 import co.zenpets.doctors.utils.adapters.clinics.ClinicSelectorAdapter;
 import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
-import co.zenpets.doctors.utils.helpers.timings.AfternoonSlotsInterface;
-import co.zenpets.doctors.utils.helpers.timings.DisplayAfternoonSlots;
-import co.zenpets.doctors.utils.helpers.timings.DisplayMorningsSlots;
-import co.zenpets.doctors.utils.helpers.timings.MorningSlotsInterface;
-import co.zenpets.doctors.utils.models.appointments.AppointmentSlotsData;
 import co.zenpets.doctors.utils.models.calendar.ZenCalendarData;
 import co.zenpets.doctors.utils.models.doctors.clinic.DoctorClinic;
 import co.zenpets.doctors.utils.models.doctors.clinic.DoctorClinics;
 import co.zenpets.doctors.utils.models.doctors.clinic.DoctorClinicsAPI;
+import co.zenpets.doctors.utils.models.doctors.modules.TimeSlot;
 import co.zenpets.doctors.utils.models.doctors.modules.Timings;
 import co.zenpets.doctors.utils.models.doctors.modules.TimingsAPI;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 @SuppressWarnings("ConstantConditions")
 public class AppointmentSlotCreator extends AppCompatActivity
-        implements AfternoonSlotsInterface, MorningSlotsInterface {
+        /*implements AfternoonSlotsInterface, MorningSlotsInterface*/ {
 
     private AppPrefs getApp()	{
         return (AppPrefs) getApplication();
@@ -82,13 +80,21 @@ public class AppointmentSlotCreator extends AppCompatActivity
     private ZenCalendarAdapter calendarAdapter;
     private final ArrayList<ZenCalendarData> arrDates = new ArrayList<>();
 
+    /** A MORNING TIME SLOTS INSTANCE **/
+    TimeSlot morningData;
+
     /** THE MORNING TIME SLOTS ADAPTER AND ARRAY LIST **/
     private MorningCreatorAdapter morningCreatorAdapter;
-    private final ArrayList<AppointmentSlotsData> arrMorningSlots = new ArrayList<>();
+    //    private final ArrayList<MorningTimeSlotsData> arrMorningSlots = new ArrayList<>();
+    private final ArrayList<TimeSlot> arrMorningSlots = new ArrayList<>();
+
+    /** AN AFTERNOON TIME SLOTS INSTANCE **/
+    TimeSlot afternoonData;
 
     /** THE AFTERNOON TIME SLOTS ADAPTER AND ARRAY LIST **/
     private AfternoonCreatorAdapter afternoonCreatorAdapter;
-    private final ArrayList<AppointmentSlotsData> arrAfternoonSlots = new ArrayList<>();
+    //    private final ArrayList<AfternoonTimeSlotsData> arrAfternoonSlots = new ArrayList<>();
+    private final ArrayList<TimeSlot> arrAfternoonSlots = new ArrayList<>();
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.spnClinics) AppCompatSpinner spnClinics;
@@ -153,7 +159,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
         Call<DoctorClinics> call = api.fetchDoctorClinics(DOCTOR_ID);
         call.enqueue(new Callback<DoctorClinics>() {
             @Override
-            public void onResponse(Call<DoctorClinics> call, Response<DoctorClinics> response) {
+            public void onResponse(@NonNull Call<DoctorClinics> call, @NonNull Response<DoctorClinics> response) {
                 if (response.body() != null && response.body().getClinics() != null)    {
                     arrClinics = response.body().getClinics();
                     if (arrClinics != null && arrClinics.size() > 0)    {
@@ -165,7 +171,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<DoctorClinics> call, Throwable t) {
+            public void onFailure(@NonNull Call<DoctorClinics> call, @NonNull Throwable t) {
             }
         });
     }
@@ -445,7 +451,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
         }
 
         @Override
-        public void onBindViewHolder(final ZenCalendarAdapter.CalendarVH holder, int position) {
+        public void onBindViewHolder(@NonNull final ZenCalendarAdapter.CalendarVH holder, int position) {
             final ZenCalendarData data = arrDates.get(position);
 
             /* SET THE SELECTION AND MARK WITH DRAWABLE */
@@ -585,8 +591,9 @@ public class AppointmentSlotCreator extends AppCompatActivity
             });
         }
 
+        @NonNull
         @Override
-        public ZenCalendarAdapter.CalendarVH onCreateViewHolder(ViewGroup parent, int i) {
+        public ZenCalendarAdapter.CalendarVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
             View itemView = LayoutInflater.
                     from(parent.getContext()).
@@ -621,7 +628,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
         Call<Timings> call = api.fetchSundayMorningTimings(DOCTOR_ID, CLINIC_ID);
         call.enqueue(new Callback<Timings>() {
             @Override
-            public void onResponse(Call<Timings> call, Response<Timings> response) {
+            public void onResponse(@NonNull Call<Timings> call, @NonNull Response<Timings> response) {
                 /* SHOW THE PROGRESS WHILE FETCHING THE DATA */
                 listMorningTimes.setVisibility(View.GONE);
                 linlaMorningProgress.setVisibility(View.VISIBLE);
@@ -652,7 +659,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<Timings> call, Throwable t) {
+            public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -665,7 +672,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
         Call<Timings> call = api.fetchSundayAfternoonTimings(DOCTOR_ID, CLINIC_ID);
         call.enqueue(new Callback<Timings>() {
             @Override
-            public void onResponse(Call<Timings> call, Response<Timings> response) {
+            public void onResponse(@NonNull Call<Timings> call, @NonNull Response<Timings> response) {
                 /* SHOW THE PROGRESS WHILE FETCHING THE DATA */
                 listAfternoonTimes.setVisibility(View.GONE);
                 linlaAfternoonProgress.setVisibility(View.VISIBLE);
@@ -697,7 +704,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<Timings> call, Throwable t) {
+            public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -710,7 +717,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
         Call<Timings> call = api.fetchMondayMorningTimings(DOCTOR_ID, CLINIC_ID);
         call.enqueue(new Callback<Timings>() {
             @Override
-            public void onResponse(Call<Timings> call, Response<Timings> response) {
+            public void onResponse(@NonNull Call<Timings> call, @NonNull Response<Timings> response) {
                 /* SHOW THE PROGRESS WHILE FETCHING THE DATA */
                 listMorningTimes.setVisibility(View.GONE);
                 linlaMorningProgress.setVisibility(View.VISIBLE);
@@ -741,7 +748,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<Timings> call, Throwable t) {
+            public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -754,7 +761,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
         Call<Timings> call = api.fetchMondayAfternoonTimings(DOCTOR_ID, CLINIC_ID);
         call.enqueue(new Callback<Timings>() {
             @Override
-            public void onResponse(Call<Timings> call, Response<Timings> response) {
+            public void onResponse(@NonNull Call<Timings> call, @NonNull Response<Timings> response) {
                 /* SHOW THE PROGRESS WHILE FETCHING THE DATA */
                 listAfternoonTimes.setVisibility(View.GONE);
                 linlaAfternoonProgress.setVisibility(View.VISIBLE);
@@ -786,7 +793,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<Timings> call, Throwable t) {
+            public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -799,7 +806,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
         Call<Timings> call = api.fetchTuesdayMorningTimings(DOCTOR_ID, CLINIC_ID);
         call.enqueue(new Callback<Timings>() {
             @Override
-            public void onResponse(Call<Timings> call, Response<Timings> response) {
+            public void onResponse(@NonNull Call<Timings> call, @NonNull Response<Timings> response) {
                 /* SHOW THE PROGRESS WHILE FETCHING THE DATA */
                 listMorningTimes.setVisibility(View.GONE);
                 linlaMorningProgress.setVisibility(View.VISIBLE);
@@ -831,7 +838,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<Timings> call, Throwable t) {
+            public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -844,7 +851,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
         Call<Timings> call = api.fetchTuesdayAfternoonTimings(DOCTOR_ID, CLINIC_ID);
         call.enqueue(new Callback<Timings>() {
             @Override
-            public void onResponse(Call<Timings> call, Response<Timings> response) {
+            public void onResponse(@NonNull Call<Timings> call, @NonNull Response<Timings> response) {
                 /* SHOW THE PROGRESS WHILE FETCHING THE DATA */
                 listAfternoonTimes.setVisibility(View.GONE);
                 linlaAfternoonProgress.setVisibility(View.VISIBLE);
@@ -876,7 +883,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<Timings> call, Throwable t) {
+            public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -889,7 +896,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
         Call<Timings> call = api.fetchWednesdayMorningTimings(DOCTOR_ID, CLINIC_ID);
         call.enqueue(new Callback<Timings>() {
             @Override
-            public void onResponse(Call<Timings> call, Response<Timings> response) {
+            public void onResponse(@NonNull Call<Timings> call, @NonNull Response<Timings> response) {
                 /* SHOW THE PROGRESS WHILE FETCHING THE DATA */
                 listMorningTimes.setVisibility(View.GONE);
                 linlaMorningProgress.setVisibility(View.VISIBLE);
@@ -921,7 +928,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<Timings> call, Throwable t) {
+            public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -934,7 +941,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
         Call<Timings> call = api.fetchWednesdayAfternoonTimings(DOCTOR_ID, CLINIC_ID);
         call.enqueue(new Callback<Timings>() {
             @Override
-            public void onResponse(Call<Timings> call, Response<Timings> response) {
+            public void onResponse(@NonNull Call<Timings> call, @NonNull Response<Timings> response) {
                 /* SHOW THE PROGRESS WHILE FETCHING THE DATA */
                 listAfternoonTimes.setVisibility(View.GONE);
                 linlaAfternoonProgress.setVisibility(View.VISIBLE);
@@ -966,7 +973,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<Timings> call, Throwable t) {
+            public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -979,7 +986,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
         Call<Timings> call = api.fetchThursdayMorningTimings(DOCTOR_ID, CLINIC_ID);
         call.enqueue(new Callback<Timings>() {
             @Override
-            public void onResponse(Call<Timings> call, Response<Timings> response) {
+            public void onResponse(@NonNull Call<Timings> call, @NonNull Response<Timings> response) {
                 /* SHOW THE PROGRESS WHILE FETCHING THE DATA */
                 listMorningTimes.setVisibility(View.GONE);
                 linlaMorningProgress.setVisibility(View.VISIBLE);
@@ -1011,7 +1018,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<Timings> call, Throwable t) {
+            public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -1024,7 +1031,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
         Call<Timings> call = api.fetchThursdayAfternoonTimings(DOCTOR_ID, CLINIC_ID);
         call.enqueue(new Callback<Timings>() {
             @Override
-            public void onResponse(Call<Timings> call, Response<Timings> response) {
+            public void onResponse(@NonNull Call<Timings> call, @NonNull Response<Timings> response) {
                 /* SHOW THE PROGRESS WHILE FETCHING THE DATA */
                 listAfternoonTimes.setVisibility(View.GONE);
                 linlaAfternoonProgress.setVisibility(View.VISIBLE);
@@ -1056,7 +1063,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<Timings> call, Throwable t) {
+            public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -1069,7 +1076,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
         Call<Timings> call = api.fetchFridayMorningTimings(DOCTOR_ID, CLINIC_ID);
         call.enqueue(new Callback<Timings>() {
             @Override
-            public void onResponse(Call<Timings> call, Response<Timings> response) {
+            public void onResponse(@NonNull Call<Timings> call, @NonNull Response<Timings> response) {
                 /* SHOW THE PROGRESS WHILE FETCHING THE DATA */
                 listMorningTimes.setVisibility(View.GONE);
                 linlaMorningProgress.setVisibility(View.VISIBLE);
@@ -1101,7 +1108,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<Timings> call, Throwable t) {
+            public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -1114,7 +1121,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
         Call<Timings> call = api.fetchFridayAfternoonTimings(DOCTOR_ID, CLINIC_ID);
         call.enqueue(new Callback<Timings>() {
             @Override
-            public void onResponse(Call<Timings> call, Response<Timings> response) {
+            public void onResponse(@NonNull Call<Timings> call, @NonNull Response<Timings> response) {
                 /* SHOW THE PROGRESS WHILE FETCHING THE DATA */
                 listAfternoonTimes.setVisibility(View.GONE);
                 linlaAfternoonProgress.setVisibility(View.VISIBLE);
@@ -1146,7 +1153,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<Timings> call, Throwable t) {
+            public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -1159,7 +1166,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
         Call<Timings> call = api.fetchSaturdayMorningTimings(DOCTOR_ID, CLINIC_ID);
         call.enqueue(new Callback<Timings>() {
             @Override
-            public void onResponse(Call<Timings> call, Response<Timings> response) {
+            public void onResponse(@NonNull Call<Timings> call, @NonNull Response<Timings> response) {
                 /* SHOW THE PROGRESS WHILE FETCHING THE DATA */
                 listMorningTimes.setVisibility(View.GONE);
                 linlaMorningProgress.setVisibility(View.VISIBLE);
@@ -1191,7 +1198,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<Timings> call, Throwable t) {
+            public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -1204,7 +1211,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
         Call<Timings> call = api.fetchSaturdayAfternoonTimings(DOCTOR_ID, CLINIC_ID);
         call.enqueue(new Callback<Timings>() {
             @Override
-            public void onResponse(Call<Timings> call, Response<Timings> response) {
+            public void onResponse(@NonNull Call<Timings> call, @NonNull Response<Timings> response) {
                 /* SHOW THE PROGRESS WHILE FETCHING THE DATA */
                 listAfternoonTimes.setVisibility(View.GONE);
                 linlaAfternoonProgress.setVisibility(View.VISIBLE);
@@ -1236,7 +1243,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<Timings> call, Throwable t) {
+            public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -1253,8 +1260,22 @@ public class AppointmentSlotCreator extends AppCompatActivity
         /* CLEAR THE ARRAY LIST */
         arrMorningSlots.clear();
 
+        /* INSTANTIATE THE TIME SLOTS ADAPTER */
+        morningCreatorAdapter = new MorningCreatorAdapter(AppointmentSlotCreator.this, arrMorningSlots);
+
+        /* SET THE TIME SLOTS ADAPTER TO THE AFTERNOON RECYCLER VIEW */
+        listMorningTimes.setAdapter(morningCreatorAdapter);
+
+        /* SET THE LIST VISIBILITY */
+        listMorningTimes.setVisibility(View.VISIBLE);
+        linlaMorningEmpty.setVisibility(View.GONE);
+
+        /* HIDE THE PROGRESS AFTER FETCHING THE DATA */
+        linlaMorningProgress.setVisibility(View.GONE);
+
         /* DISPLAY THE MORNING SLOTS */
-        new DisplayMorningsSlots(this).execute(CURRENT_DATE, MORNING_START_TIME, MORNING_END_TIME, DOCTOR_ID, CLINIC_ID);
+        ArrayList<String> arrMorSlots = fetchTimeSlots(CURRENT_DATE, MORNING_START_TIME, MORNING_END_TIME);
+        displayMorningSlots(arrMorSlots);
     }
 
     /***** DISPLAY THE AFTERNOON SLOTS *****/
@@ -1267,41 +1288,216 @@ public class AppointmentSlotCreator extends AppCompatActivity
         /* CLEAR THE ARRAY LIST */
         arrAfternoonSlots.clear();
 
-        /* DISPLAY THE AFTERNOON SLOTS */
-        new DisplayAfternoonSlots(this).execute(CURRENT_DATE, AFTERNOON_START_TIME, AFTERNOON_END_TIME, DOCTOR_ID, CLINIC_ID);
-    }
-
-    @Override
-    public void onMorningSlotResult(ArrayList<AppointmentSlotsData> arrMorningSlots) {
-        /* INSTANTIATE THE TIME SLOTS ADAPTER */
-        morningCreatorAdapter = new MorningCreatorAdapter(AppointmentSlotCreator.this, arrMorningSlots);
-
-        /* SET THE TIME SLOTS ADAPTER TO THE AFTERNOON RECYCLER VIEW */
-        listMorningTimes.setAdapter(morningCreatorAdapter);
-
-        /* SET THE LIST VISIBILITY */
-        listMorningTimes.setVisibility(View.VISIBLE);
-        linlaMorningEmpty.setVisibility(View.GONE);
-
-        /* HIDE THE PROGRESS AFTER FETCHING THE DATA */
-        listMorningTimes.setVisibility(View.VISIBLE);
-        linlaMorningProgress.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onAfternoonSlotResult(ArrayList<AppointmentSlotsData> arrAfternoonSlots) {
         /* INSTANTIATE THE AFTERNOON TIME SLOTS ADAPTER */
         afternoonCreatorAdapter = new AfternoonCreatorAdapter(AppointmentSlotCreator.this, arrAfternoonSlots);
 
         /* SET THE TIME SLOTS ADAPTER TO THE AFTERNOON RECYCLER VIEW */
         listAfternoonTimes.setAdapter(afternoonCreatorAdapter);
 
-        /* SET THE LIST VISIBILITY */
+        /* SHOW THE AFTERNOON SLOTS AND HIDE THE EMPTY VIEW */
         listAfternoonTimes.setVisibility(View.VISIBLE);
         linlaAfternoonEmpty.setVisibility(View.GONE);
 
         /* HIDE THE PROGRESS AFTER FETCHING THE DATA */
-        listAfternoonTimes.setVisibility(View.VISIBLE);
         linlaAfternoonProgress.setVisibility(View.GONE);
+
+        /* DISPLAY THE AFTERNOON SLOTS */
+        ArrayList<String> arrAftSlots = fetchTimeSlots(CURRENT_DATE, AFTERNOON_START_TIME, AFTERNOON_END_TIME);
+        displayAfternoonSlots(arrAftSlots);
     }
+
+    /** DISPLAY THE MORNING SLOTS **/
+    private void displayMorningSlots(ArrayList<String> arrMorSlots) {
+        for (int i = 0; i < arrMorSlots.size(); i++) {
+
+            /* GET THE SLOT TIME */
+            final String slotTime = arrMorSlots.get(i);
+//            Log.e("SLOT", arrMorSlots.get(i));
+
+            TimingsAPI api = ZenApiClient.getClient().create(TimingsAPI.class);
+            Call<TimeSlot> call = api.checkAvailability(DOCTOR_ID, CLINIC_ID, CURRENT_DATE, arrMorSlots.get(i));
+            call.enqueue(new Callback<TimeSlot>() {
+                @Override
+                public void onResponse(Call<TimeSlot> call, Response<TimeSlot> response) {
+//                    Log.e("AVAILABILITY RESPONSE", String.valueOf(response.raw()));
+                    TimeSlot slot = response.body();
+                    morningData = new TimeSlot();
+
+                    /* SET THE SLOT TIME */
+                    morningData.setAppointmentTime(slotTime);
+
+                    /* SET THE DOCTOR ID */
+                    morningData.setDoctorID(DOCTOR_ID);
+
+                    /* SET THE CLINIC ID */
+                    morningData.setClinicID(CLINIC_ID);
+
+                    /* SET THE APPOINTMENT DATE */
+                    morningData.setAppointmentDate(CURRENT_DATE);
+
+                    if (slot != null)   {
+                        if (slot.getError())    {
+                            morningData.setAppointmentStatus("Available");
+                        } else {
+                            morningData.setAppointmentStatus("Unavailable");
+                        }
+                    } else {
+                        morningData.setAppointmentStatus("Unavailable");
+                    }
+
+                    /* ADD THE COLLECTED DATA TO THE ARRAY LIST */
+                    arrMorningSlots.add(morningData);
+                    morningCreatorAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onFailure(Call<TimeSlot> call, Throwable t) {
+//                    Log.e("TIME SLOT FAILURE", t.getMessage());
+                }
+            });
+        }
+    }
+
+    /** DISPLAY THE AFTERNOON SLOTS **/
+    private void displayAfternoonSlots(final ArrayList<String> arrAftSlots) {
+        for (int i = 0; i < arrAftSlots.size(); i++) {
+
+            /* GET THE SLOT TIME */
+            final String slotTime = arrAftSlots.get(i);
+//            Log.e("SLOT", arrAftSlots.get(i));
+
+            TimingsAPI api = ZenApiClient.getClient().create(TimingsAPI.class);
+            Call<TimeSlot> call = api.checkAvailability(DOCTOR_ID, CLINIC_ID, CURRENT_DATE, arrAftSlots.get(i));
+            call.enqueue(new Callback<TimeSlot>() {
+                @Override
+                public void onResponse(Call<TimeSlot> call, Response<TimeSlot> response) {
+//                    Log.e("AVAILABILITY RESPONSE", String.valueOf(response.raw()));
+                    TimeSlot slot = response.body();
+                    afternoonData = new TimeSlot();
+
+                    /* SET THE SLOT TIME */
+                    afternoonData.setAppointmentTime(slotTime);
+
+                    /* SET THE DOCTOR ID */
+                    afternoonData.setDoctorID(DOCTOR_ID);
+
+                    /* SET THE CLINIC ID */
+                    afternoonData.setClinicID(CLINIC_ID);
+
+                    /* SET THE APPOINTMENT DATE */
+                    afternoonData.setAppointmentDate(CURRENT_DATE);
+
+                    if (slot != null)   {
+                        if (slot.getError())    {
+                            afternoonData.setAppointmentStatus("Available");
+                        } else {
+                            afternoonData.setAppointmentStatus("Unavailable");
+                        }
+                    } else {
+                        afternoonData.setAppointmentStatus("Unavailable");
+                    }
+
+                    /* ADD THE COLLECTED DATA TO THE ARRAY LIST */
+                    arrAfternoonSlots.add(afternoonData);
+                    afternoonCreatorAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onFailure(Call<TimeSlot> call, Throwable t) {
+//                    Log.e("TIME SLOT FAILURE", t.getMessage());
+                }
+            });
+        }
+    }
+
+    /** FETCH THE LIST OF TIME SLOTS **/
+    private ArrayList<String> fetchTimeSlots(String currentDate, String afternoonStartTime, String afternoonEndTime) {
+        ArrayList<String> list = new ArrayList<>();
+
+        /* CALCULATE THE SLOTS */
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm a", Locale.getDefault());
+        try {
+            final Calendar startCalendar = Calendar.getInstance();
+            startCalendar.setTime(sdf.parse(currentDate + " " + afternoonStartTime));
+            if (startCalendar.get(Calendar.MINUTE) < 15) {
+                startCalendar.set(Calendar.MINUTE, 0);
+            } else {
+                startCalendar.add(Calendar.MINUTE, 15); // overstep hour and clear minutes
+                startCalendar.clear(Calendar.MINUTE);
+            }
+
+            Calendar endCalendar = Calendar.getInstance();
+            endCalendar.setTime(sdf.parse(CURRENT_DATE + " " + afternoonEndTime));
+            endCalendar.add(Calendar.HOUR_OF_DAY, 0);
+
+            endCalendar.clear(Calendar.MINUTE);
+            endCalendar.clear(Calendar.SECOND);
+            endCalendar.clear(Calendar.MILLISECOND);
+
+            final SimpleDateFormat slotTime = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+            while (endCalendar.after(startCalendar)) {
+
+                /* SET THE TIME SLOT */
+                String slotStartTime = slotTime.format(startCalendar.getTime());
+                startCalendar.add(Calendar.MINUTE, 15);
+//                Log.e("QUERY TIME", slotStartTime);
+
+                SimpleDateFormat format = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+                String currentTime = format.format(new Date());
+//                Log.e("CURRENT TIME", currentTime);
+
+                int spacePOSSlot = slotStartTime.indexOf(" ");
+                String finalSlot = slotStartTime.substring(0, spacePOSSlot - 1);
+                int spacePOSCurrent = currentTime.indexOf(" ");
+                String finalCurrent = currentTime.substring(0, spacePOSCurrent - 1);
+
+                LocalTime timeSlot = new LocalTime(finalSlot);
+                LocalTime timeCurrent = new LocalTime(finalCurrent);
+                int slotStatus = timeCurrent.compareTo(timeSlot);
+//                Log.e("STATUS", String.valueOf(slotStatus));
+
+                list.add(slotStartTime);
+            }
+
+            return list;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+//    @Override
+//    public void onMorningSlotResult(ArrayList<AppointmentSlotsData> arrMorningSlots) {
+//        /* INSTANTIATE THE TIME SLOTS ADAPTER */
+//        morningCreatorAdapter = new MorningCreatorAdapter(AppointmentSlotCreator.this, arrMorningSlots);
+//
+//        /* SET THE TIME SLOTS ADAPTER TO THE AFTERNOON RECYCLER VIEW */
+//        listMorningTimes.setAdapter(morningCreatorAdapter);
+//
+//        /* SET THE LIST VISIBILITY */
+//        listMorningTimes.setVisibility(View.VISIBLE);
+//        linlaMorningEmpty.setVisibility(View.GONE);
+//
+//        /* HIDE THE PROGRESS AFTER FETCHING THE DATA */
+//        listMorningTimes.setVisibility(View.VISIBLE);
+//        linlaMorningProgress.setVisibility(View.GONE);
+//    }
+//
+//    @Override
+//    public void onAfternoonSlotResult(ArrayList<AppointmentSlotsData> arrAfternoonSlots) {
+//        /* INSTANTIATE THE AFTERNOON TIME SLOTS ADAPTER */
+//        afternoonCreatorAdapter = new AfternoonCreatorAdapter(AppointmentSlotCreator.this, arrAfternoonSlots);
+//
+//        /* SET THE TIME SLOTS ADAPTER TO THE AFTERNOON RECYCLER VIEW */
+//        listAfternoonTimes.setAdapter(afternoonCreatorAdapter);
+//
+//        /* SET THE LIST VISIBILITY */
+//        listAfternoonTimes.setVisibility(View.VISIBLE);
+//        linlaAfternoonEmpty.setVisibility(View.GONE);
+//
+//        /* HIDE THE PROGRESS AFTER FETCHING THE DATA */
+//        listAfternoonTimes.setVisibility(View.VISIBLE);
+//        linlaAfternoonProgress.setVisibility(View.GONE);
+//    }
 }

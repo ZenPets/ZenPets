@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -110,7 +111,7 @@ public class ClinicModifier extends AppCompatActivity {
         Call<ClinicData> call = apiInterface.fetchClinicDetails(CLINIC_ID);
         call.enqueue(new Callback<ClinicData>() {
             @Override
-            public void onResponse(Call<ClinicData> call, Response<ClinicData> response) {
+            public void onResponse(@NonNull Call<ClinicData> call, @NonNull Response<ClinicData> response) {
                 ClinicData data = response.body();
                 if (data != null)   {
                     CLINIC_NAME = data.getClinicName();
@@ -184,7 +185,7 @@ public class ClinicModifier extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ClinicData> call, Throwable t) {
+            public void onFailure(@NonNull Call<ClinicData> call, @NonNull Throwable t) {
 //                Crashlytics.logException(t);
             }
         });
@@ -321,7 +322,7 @@ public class ClinicModifier extends AppCompatActivity {
                     "91", PHONE_NUMBER_1, "91", PHONE_NUMBER_2);
             call.enqueue(new Callback<Clinic>() {
                 @Override
-                public void onResponse(Call<Clinic> call, Response<Clinic> response) {
+                public void onResponse(@NonNull Call<Clinic> call, @NonNull Response<Clinic> response) {
                     if (response.isSuccessful())    {
                         /* DISMISS THE DIALOG AND FINISH THE ACTIVITY */
                         dialog.dismiss();
@@ -337,7 +338,7 @@ public class ClinicModifier extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<Clinic> call, Throwable t) {
+                public void onFailure(@NonNull Call<Clinic> call, @NonNull Throwable t) {
 //                    Log.e("UPDATE FAILURE", t.getMessage());
 //                    Crashlytics.logException(t);
                 }

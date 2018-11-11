@@ -78,7 +78,7 @@ public class DoctorEducationFrag extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         /* CAST THE LAYOUT TO A NEW VIEW INSTANCE */
         View view = inflater.inflate(R.layout.doctor_details_education_list, container, false);
@@ -101,7 +101,7 @@ public class DoctorEducationFrag extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         /* CONFIGURE THE RECYCLER VIEW **/
@@ -127,7 +127,7 @@ public class DoctorEducationFrag extends Fragment {
         retrofit2.Call<Qualifications> call = apiInterface.fetchDoctorEducation(DOCTOR_ID);
         call.enqueue(new retrofit2.Callback<Qualifications>() {
             @Override
-            public void onResponse(retrofit2.Call<Qualifications> call, retrofit2.Response<Qualifications> response) {
+            public void onResponse(@NonNull retrofit2.Call<Qualifications> call, @NonNull retrofit2.Response<Qualifications> response) {
                 arrEducation = response.body().getQualifications();
                 if (arrEducation != null && arrEducation.size() > 0)    {
                     /* SET THE ADAPTER */
@@ -150,7 +150,7 @@ public class DoctorEducationFrag extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Qualifications> call, Throwable t) {
+            public void onFailure(@NonNull Call<Qualifications> call, @NonNull Throwable t) {
             }
         });
     }
@@ -202,7 +202,7 @@ public class DoctorEducationFrag extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(ClinicsVH holder, final int position) {
+        public void onBindViewHolder(@NonNull ClinicsVH holder, final int position) {
             final Qualification data = arrEducation.get(position);
 
             /* SET THE EDUCATION NAME */
@@ -271,7 +271,7 @@ public class DoctorEducationFrag extends Fragment {
             Call<Qualification> call = api.deleteEducation(doctorEducationID);
             call.enqueue(new Callback<Qualification>() {
                 @Override
-                public void onResponse(Call<Qualification> call, Response<Qualification> response) {
+                public void onResponse(@NonNull Call<Qualification> call, @NonNull Response<Qualification> response) {
                     if (response.isSuccessful())    {
                         /* SHOW THE SUCCESS MESSAGE */
                         Toast.makeText(getActivity(), "Successfully deleted...", Toast.LENGTH_SHORT).show();
@@ -290,15 +290,16 @@ public class DoctorEducationFrag extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<Qualification> call, Throwable t) {
+                public void onFailure(@NonNull Call<Qualification> call, @NonNull Throwable t) {
 //                    Log.e("DELETE FAILURE", t.getMessage());
 //                    Crashlytics.logException(t);
                 }
             });
         }
 
+        @NonNull
         @Override
-        public ClinicsVH onCreateViewHolder(ViewGroup parent, int i) {
+        public ClinicsVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
             View itemView = LayoutInflater.
                     from(parent.getContext()).

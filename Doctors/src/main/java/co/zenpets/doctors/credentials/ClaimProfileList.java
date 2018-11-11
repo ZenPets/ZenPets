@@ -1,6 +1,7 @@
 package co.zenpets.doctors.credentials;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -75,7 +76,7 @@ public class ClaimProfileList extends AppCompatActivity {
         Call<Doctors> call = api.doctorSearch(query);
         call.enqueue(new Callback<Doctors>() {
             @Override
-            public void onResponse(Call<Doctors> call, Response<Doctors> response) {
+            public void onResponse(@NonNull Call<Doctors> call, @NonNull Response<Doctors> response) {
                 if (response.body() != null && response.body().getDoctors() != null)    {
                     arrDoctors = response.body().getDoctors();
                     if (arrDoctors.size() > 0)  {
@@ -107,7 +108,7 @@ public class ClaimProfileList extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Doctors> call, Throwable t) {
+            public void onFailure(@NonNull Call<Doctors> call, @NonNull Throwable t) {
 //                Log.e("SEARCH FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }

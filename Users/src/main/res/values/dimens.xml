@@ -1,7 +1,7 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- PHONE / TABLET-->
-    <bool name="isTablet">false</bool>
+    <bool name="isTablet" tools:ignore="PrivateResource">false</bool>
 
     <dimen name="app_bar_height">200dp</dimen>
     <dimen name="fab_margin">16dp</dimen>

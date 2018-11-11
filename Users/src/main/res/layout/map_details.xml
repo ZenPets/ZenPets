@@ -37,11 +37,11 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:gravity="start|center"
-                    android:paddingEnd="5dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
                     android:paddingStart="5dp"
+                    android:paddingLeft="5dp"
                     android:paddingTop="2dp"
+                    android:paddingEnd="5dp"
+                    android:paddingRight="5dp"
                     android:text="@string/map_details_tb_title"
                     android:textColor="@android:color/primary_text_dark"
                     android:textSize="16sp" />
@@ -54,11 +54,11 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:gravity="start|center"
-                    android:paddingBottom="2dp"
-                    android:paddingEnd="5dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
                     android:paddingStart="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingEnd="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="2dp"
                     android:text="@string/map_details_tb_doc_name"
                     android:textColor="@android:color/primary_text_dark"
                     android:textSize="13sp" />
@@ -72,8 +72,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:gravity="start|center"
         android:padding="5dp"
         android:text="@string/map_details_clinic_name"
@@ -123,14 +123,24 @@
             android:textSize="14sp" />
     </LinearLayout>
 
+    <!--<com.google.android.gms.maps.MapView
+        android:id="@+id/clinicMap"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
+        app:cameraZoom="18"
+        app:mapType="normal" />-->
+
     <fragment
         android:id="@+id/clinicMap"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_weight="1" />
 
     <!--<android.support.v7.widget.AppCompatButton

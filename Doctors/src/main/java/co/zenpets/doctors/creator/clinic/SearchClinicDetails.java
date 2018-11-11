@@ -179,7 +179,7 @@ public class SearchClinicDetails extends AppCompatActivity {
         Call<String> call = api.newDoctorClinic(LOGGED_IN_DOCTOR_ID, CLINIC_ID, "Pending");
         call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                 if (response.isSuccessful())    {
                     progressDialog.dismiss();
                     Toast.makeText(getApplicationContext(), "Profile was successfully mapped to this Clinic", Toast.LENGTH_SHORT).show();
@@ -194,7 +194,7 @@ public class SearchClinicDetails extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -210,7 +210,7 @@ public class SearchClinicDetails extends AppCompatActivity {
         Call<Doctors> call = api.fetchClinicDoctors(CLINIC_ID);
         call.enqueue(new Callback<Doctors>() {
             @Override
-            public void onResponse(Call<Doctors> call, Response<Doctors> response) {
+            public void onResponse(@NonNull Call<Doctors> call, @NonNull Response<Doctors> response) {
                 if (response.body() != null && response.body().getDoctors() != null)    {
                     arrDoctors = response.body().getDoctors();
                     if (arrDoctors.size() > 0)  {
@@ -228,7 +228,7 @@ public class SearchClinicDetails extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Doctors> call, Throwable t) {
+            public void onFailure(@NonNull Call<Doctors> call, @NonNull Throwable t) {
 //                Log.e("DOCTOR FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -259,7 +259,7 @@ public class SearchClinicDetails extends AppCompatActivity {
         Call<ClinicData> call = apiInterface.fetchClinicDetails(CLINIC_ID);
         call.enqueue(new Callback<ClinicData>() {
             @Override
-            public void onResponse(Call<ClinicData> call, Response<ClinicData> response) {
+            public void onResponse(@NonNull Call<ClinicData> call, @NonNull Response<ClinicData> response) {
                 DOCTOR_ID = response.body().getDoctorID();
                 DOCTOR_NAME = response.body().getDoctorName();
                 DOCTOR_DISPLAY_PROFILE = response.body().getDoctorDisplayProfile();
@@ -349,7 +349,7 @@ public class SearchClinicDetails extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ClinicData> call, Throwable t) {
+            public void onFailure(@NonNull Call<ClinicData> call, @NonNull Throwable t) {
             }
         });
     }
@@ -360,7 +360,7 @@ public class SearchClinicDetails extends AppCompatActivity {
         Call<ImagesData> call = apiInterface.fetchClinicImages(CLINIC_ID);
         call.enqueue(new Callback<ImagesData>() {
             @Override
-            public void onResponse(Call<ImagesData> call, Response<ImagesData> response) {
+            public void onResponse(@NonNull Call<ImagesData> call, @NonNull Response<ImagesData> response) {
                 arrImages = response.body().getImages();
                 if (arrImages != null && arrImages.size() > 0)  {
                     /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
@@ -380,7 +380,7 @@ public class SearchClinicDetails extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ImagesData> call, Throwable t) {
+            public void onFailure(@NonNull Call<ImagesData> call, @NonNull Throwable t) {
             }
         });
     }

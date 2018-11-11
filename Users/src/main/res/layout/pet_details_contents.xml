@@ -325,7 +325,7 @@
                             android:text="@string/pet_details_vaccinations_empty"
                             android:textColor="@android:color/secondary_text_light"
                             android:textSize="14sp"
-                            app:fontFamily="@font/raleway_light" />
+                            app:fontFamily="@font/roboto_condensed_light" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -492,7 +492,7 @@
                             android:text="@string/pet_details_records_empty"
                             android:textColor="@android:color/secondary_text_light"
                             android:textSize="14sp"
-                            app:fontFamily="@font/raleway_light" />
+                            app:fontFamily="@font/roboto_condensed_light" />
                     </LinearLayout>
                 </LinearLayout>
 

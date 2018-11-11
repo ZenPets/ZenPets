@@ -128,7 +128,7 @@ public class LandingActivity extends AppCompatActivity {
         Call<Subscription> call = api.fetchDoctorSubscription(DOCTOR_ID);
         call.enqueue(new Callback<Subscription>() {
             @Override
-            public void onResponse(Call<Subscription> call, Response<Subscription> response) {
+            public void onResponse(@NonNull Call<Subscription> call, @NonNull Response<Subscription> response) {
                 Subscription subscription = response.body();
                 if (subscription != null)   {
                     /* GET THE SUBSCRIPTION ID */
@@ -140,7 +140,7 @@ public class LandingActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Subscription> call, Throwable t) {
+            public void onFailure(@NonNull Call<Subscription> call, @NonNull Throwable t) {
 //                Log.e("SUBSCRIPTION FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -309,7 +309,7 @@ public class LandingActivity extends AppCompatActivity {
         Call<DoctorProfileData> call = apiInterface.fetchDoctorProfile(DOCTOR_ID);
         call.enqueue(new Callback<DoctorProfileData>() {
             @Override
-            public void onResponse(Call<DoctorProfileData> call, Response<DoctorProfileData> response) {
+            public void onResponse(@NonNull Call<DoctorProfileData> call, @NonNull Response<DoctorProfileData> response) {
                 /* GET THE DOCTOR'S NAME */
                 DOCTOR_NAME = response.body().getDoctorName();
                 if (DOCTOR_NAME != null)    {
@@ -325,7 +325,7 @@ public class LandingActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<DoctorProfileData> call, Throwable t) {
+            public void onFailure(@NonNull Call<DoctorProfileData> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -365,11 +365,11 @@ public class LandingActivity extends AppCompatActivity {
         Call<DoctorProfileData> call = api.updateDoctorToken(DOCTOR_ID, deviceToken);
         call.enqueue(new Callback<DoctorProfileData>() {
             @Override
-            public void onResponse(Call<DoctorProfileData> call, Response<DoctorProfileData> response) {
+            public void onResponse(@NonNull Call<DoctorProfileData> call, @NonNull Response<DoctorProfileData> response) {
             }
 
             @Override
-            public void onFailure(Call<DoctorProfileData> call, Throwable t) {
+            public void onFailure(@NonNull Call<DoctorProfileData> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }

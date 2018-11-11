@@ -3,6 +3,7 @@ package co.zenpets.doctors.modifier.profile;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
@@ -243,7 +244,7 @@ public class TimingsModifier extends AppCompatActivity {
         Call<Timings> call = apiInterface.fetchDoctorTimings(DOCTOR_ID, CLINIC_ID);
         call.enqueue(new Callback<Timings>() {
             @Override
-            public void onResponse(Call<Timings> call, Response<Timings> response) {
+            public void onResponse(@NonNull Call<Timings> call, @NonNull Response<Timings> response) {
                 Timings data = response.body();
                 assert data != null;
                 Boolean blnError = data.getError();
@@ -545,7 +546,7 @@ public class TimingsModifier extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Timings> call, Throwable t) {
+            public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TIMINGS FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
 
@@ -746,7 +747,7 @@ public class TimingsModifier extends AppCompatActivity {
                         SAT_MOR_FROM, SAT_MOR_TO, SAT_AFT_FROM, SAT_AFT_TO);
                 call.enqueue(new Callback<Timings>() {
                     @Override
-                    public void onResponse(Call<Timings> call, Response<Timings> response) {
+                    public void onResponse(@NonNull Call<Timings> call, @NonNull Response<Timings> response) {
                         if (response.isSuccessful())    {
                             /* FINISH THE ACTIVITY */
                             Toast.makeText(getApplicationContext(), "Updated successfully", Toast.LENGTH_SHORT).show();
@@ -759,7 +760,7 @@ public class TimingsModifier extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<Timings> call, Throwable t) {
+                    public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                        Log.e("FAILURE", t.getMessage());
 //                        Crashlytics.logException(t);
                     }

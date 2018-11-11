@@ -3,6 +3,7 @@ package co.zenpets.doctors.utils;
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.support.v4.util.LruCache;
 import android.text.TextPaint;
 import android.text.style.MetricAffectingSpan;
@@ -24,7 +25,7 @@ public class TypefaceSpan extends MetricAffectingSpan {
 	}
 	
 	@Override
-	public void updateMeasureState(TextPaint p)	{
+	public void updateMeasureState(@NonNull TextPaint p)	{
 		p.setTypeface(mTypeface);
 		
 		// Note: This flag is required for proper typeface rendering

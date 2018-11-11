@@ -1,6 +1,7 @@
 package co.zenpets.doctors.landing.modules;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -49,7 +50,7 @@ public class ReviewsFragment extends Fragment {
     @BindView(R.id.linlaEmpty) LinearLayout linlaEmpty;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         /* CAST THE LAYOUT TO A NEW VIEW INSTANCE */
         View view = inflater.inflate(R.layout.home_reviews_fragment_list, container, false);
@@ -72,7 +73,7 @@ public class ReviewsFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         /* CONFIGURE THE ACTIONBAR */
@@ -98,7 +99,7 @@ public class ReviewsFragment extends Fragment {
         Call<ReviewsData> call = api.fetchDoctorReviews(DOCTOR_ID);
         call.enqueue(new Callback<ReviewsData>() {
             @Override
-            public void onResponse(Call<ReviewsData> call, Response<ReviewsData> response) {
+            public void onResponse(@NonNull Call<ReviewsData> call, @NonNull Response<ReviewsData> response) {
                 arrReviews = response.body().getReviews();
                 if (arrReviews != null && arrReviews.size() > 0)    {
                     /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT  */
@@ -118,7 +119,7 @@ public class ReviewsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ReviewsData> call, Throwable t) {
+            public void onFailure(@NonNull Call<ReviewsData> call, @NonNull Throwable t) {
             }
         });
     }

@@ -19,7 +19,7 @@ public class DoctorPrefixAdapter extends ArrayAdapter<String> {
     private final Activity activity;
 
     /***** LAYOUT INFLATER TO USE A CUSTOM LAYOUT *****/
-    private LayoutInflater inflater = null;
+    private LayoutInflater inflater;
 
     /***** ARRAY LIST TO GET DATA FROM THE ACTIVITY *****/
     private final List<String> arrServes;

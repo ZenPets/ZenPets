@@ -34,7 +34,7 @@
                 android:text="Select The Record Type"
                 android:textColor="@color/primary_text"
                 android:textSize="15sp"
-                app:fontFamily="@font/lato_bold" />
+                app:fontFamily="@font/roboto_medium" />
 
             <android.support.v7.widget.AppCompatSpinner
                 android:id="@+id/spnRecordType"
@@ -62,7 +62,7 @@
                     android:id="@+id/edtRecordNotes"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_regular"
+                    app:fontFamily="@font/roboto_condensed_regular"
                     android:gravity="start|top"
                     android:inputType="textMultiLine|textCapSentences"
                     android:lines="5"
@@ -83,7 +83,7 @@
                 android:text="Select The Record Date"
                 android:textColor="@color/primary_text"
                 android:textSize="15sp"
-                app:fontFamily="@font/lato_bold" />
+                app:fontFamily="@font/roboto_medium" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -104,7 +104,7 @@
                     android:padding="11dp"
                     android:textColor="@color/primary_text"
                     android:textSize="14sp"
-                    app:fontFamily="@font/lato_regular" />
+                    app:fontFamily="@font/roboto_condensed_regular" />
 
                 <com.mikepenz.iconics.view.IconicsButton
                     android:id="@+id/btnRecordDate"

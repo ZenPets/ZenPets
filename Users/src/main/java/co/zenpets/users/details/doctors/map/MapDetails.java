@@ -17,6 +17,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -53,15 +54,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import co.zenpets.users.R;
 import co.zenpets.users.creator.appointment.AppointmentSlotCreator;
 import co.zenpets.users.utils.helpers.classes.ZenApiClient;
 import co.zenpets.users.utils.helpers.directions.DataParser;
 import co.zenpets.users.utils.models.doctors.subscription.SubscriptionData;
 import co.zenpets.users.utils.models.doctors.subscription.SubscriptionsAPI;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -246,7 +247,9 @@ public class MapDetails extends AppCompatActivity
 
             /* INSTANTIATE THE LATLNG DESTINATION */
             LATLNG_DESTINATION = new LatLng(CLINIC_LATITUDE, CLINIC_LONGITUDE);
-//            Log.e("DESTINATION", String.valueOf(LATLNG_DESTINATION));
+            Log.e("LONGITUDE", String.valueOf(CLINIC_LONGITUDE));
+            Log.e("LATITUDE", String.valueOf(CLINIC_LATITUDE));
+            Log.e("DESTINATION", String.valueOf(LATLNG_DESTINATION));
 
             /* SET THE DISTANCE BETWEEN THE ORIGIN AND THE DESTINATION */
             String URL_DISTANCE = getUrl(LATLNG_ORIGIN, LATLNG_DESTINATION);
@@ -301,9 +304,6 @@ public class MapDetails extends AppCompatActivity
             if (CLINIC_ADDRESS != null) {
                 txtClinicAddress.setText(CLINIC_ADDRESS);
             }
-
-            /* SETUP THE MAP MARKERS */
-            setupMapMarkers();
         } else {
             Toast.makeText(getApplicationContext(), "Failed to get required info....", Toast.LENGTH_SHORT).show();
             finish();
@@ -352,6 +352,9 @@ public class MapDetails extends AppCompatActivity
         clinicMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         clinicMap.setBuildingsEnabled(true);
         clinicMap.getUiSettings().setMapToolbarEnabled(false);
+
+        /* SETUP THE MAP MARKERS */
+        setupMapMarkers();
 
         /* SET THE MAP STYLE */
 //        MapStyleOptions mapStyleOptions = MapStyleOptions.loadRawResourceStyle(this, R.raw.zen_map_style);
@@ -465,17 +468,22 @@ public class MapDetails extends AppCompatActivity
         /* DESTINATION OF THE ROUTE */
         String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
 
+        /* THE API KEY */
+        String strKey = "key=" + getString(R.string.google_directions_api_key);
+
         /* SENSOR ENABLED */
         String sensor = "sensor=false";
 
         /* BUILDING THE PARAMETERS FOR THE WEB SERVICE */
-        String parameters = str_origin + "&" + str_dest + "&" + sensor;
+        String parameters = str_origin + "&" + str_dest + "&" + strKey + "&" + sensor;
 
         /* THE OUTPUT FORMAT */
         String output = "json";
 
         /* BUILD THE FINAL URL FOR THE WEB SERVICE */
-        return "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
+        String strUrl = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
+//        Log.e("DIRECTIONS", strUrl);
+        return strUrl;
     }
 
     /** DOWNLOAD THE URL TO FETCH THE DIRECTIONS **/

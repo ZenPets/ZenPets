@@ -532,7 +532,7 @@ public class SignUpActivity extends AppCompatActivity {
         Call<DoctorExists> call = api.doctorExists(DOCTOR_EMAIL);
         call.enqueue(new Callback<DoctorExists>() {
             @Override
-            public void onResponse(Call<DoctorExists> call, Response<DoctorExists> response) {
+            public void onResponse(@NonNull Call<DoctorExists> call, @NonNull Response<DoctorExists> response) {
                 String message = response.body().getMessage();
                 if (message != null)    {
 //                    Log.e("MESSAGE", message);
@@ -550,7 +550,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<DoctorExists> call, Throwable t) {
+            public void onFailure(@NonNull Call<DoctorExists> call, @NonNull Throwable t) {
 //                Log.e("EXISTS FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -598,7 +598,7 @@ public class SignUpActivity extends AppCompatActivity {
                 DOCTOR_GENDER, DOCTOR_SUMMARY, DOCTOR_EXPERIENCE, DOCTOR_CHARGES, DOCTOR_DISPLAY_PROFILE);
         call.enqueue(new Callback<SignUp>() {
             @Override
-            public void onResponse(Call<SignUp> call, Response<SignUp> response) {
+            public void onResponse(@NonNull Call<SignUp> call, @NonNull Response<SignUp> response) {
                 if (response.isSuccessful())    {
                     final String doctorID = response.body().getDoctorID();
 
@@ -665,7 +665,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<SignUp> call, Throwable t) {
+            public void onFailure(@NonNull Call<SignUp> call, @NonNull Throwable t) {
 //                Log.e("SIGN UP FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -679,7 +679,7 @@ public class SignUpActivity extends AppCompatActivity {
                 doctorID, VALID_FROM, VALID_TO, "Free Trial");
         call.enqueue(new Callback<Subscription>() {
             @Override
-            public void onResponse(Call<Subscription> call, Response<Subscription> response) {
+            public void onResponse(@NonNull Call<Subscription> call, @NonNull Response<Subscription> response) {
                 if (response.isSuccessful())    {
                     String subscriptionID = response.body().getSubscriptionID();
                     progressDialog.dismiss();
@@ -692,7 +692,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Subscription> call, Throwable t) {
+            public void onFailure(@NonNull Call<Subscription> call, @NonNull Throwable t) {
 //                Crashlytics.logException(t);
             }
         });
@@ -847,7 +847,7 @@ public class SignUpActivity extends AppCompatActivity {
         Call<StatesData> call = api.allStates(COUNTRY_ID);
         call.enqueue(new Callback<StatesData>() {
             @Override
-            public void onResponse(Call<StatesData> call, Response<StatesData> response) {
+            public void onResponse(@NonNull Call<StatesData> call, @NonNull Response<StatesData> response) {
                 arrStates = response.body().getStates();
                 if (arrStates != null && arrStates.size() > 0)  {
                     /* INSTANTIATE THE STATES ADAPTER */
@@ -862,7 +862,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<StatesData> call, Throwable t) {
+            public void onFailure(@NonNull Call<StatesData> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -875,7 +875,7 @@ public class SignUpActivity extends AppCompatActivity {
         Call<CitiesData> call = api.allCities(STATE_ID);
         call.enqueue(new Callback<CitiesData>() {
             @Override
-            public void onResponse(Call<CitiesData> call, Response<CitiesData> response) {
+            public void onResponse(@NonNull Call<CitiesData> call, @NonNull Response<CitiesData> response) {
                 arrCities = response.body().getCities();
                 if (arrCities != null && arrCities.size() > 0)  {
                     /* INSTANTIATE THE CITIES ADAPTER */
@@ -887,7 +887,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<CitiesData> call, Throwable t) {
+            public void onFailure(@NonNull Call<CitiesData> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
 
@@ -935,7 +935,7 @@ public class SignUpActivity extends AppCompatActivity {
         spanTxt.append(getResources().getString(R.string.terms_part_2));
         spanTxt.setSpan(new ClickableSpan() {
             @Override
-            public void onClick(View widget) {
+            public void onClick(@NonNull View widget) {
                 Intent showSellerAgreement = new Intent(getApplicationContext(), SellerAgreementActivity.class);
                 startActivity(showSellerAgreement);
             }
@@ -945,7 +945,7 @@ public class SignUpActivity extends AppCompatActivity {
         spanTxt.append(getResources().getString(R.string.terms_part_4));
         spanTxt.setSpan(new ClickableSpan() {
             @Override
-            public void onClick(View widget) {
+            public void onClick(@NonNull View widget) {
                 Intent showPrivacyPolicy = new Intent(getApplicationContext(), NewPrivacyPolicyActivity.class);
                 startActivity(showPrivacyPolicy);
             }

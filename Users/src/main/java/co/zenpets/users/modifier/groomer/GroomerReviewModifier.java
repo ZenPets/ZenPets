@@ -29,12 +29,14 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
+import java.util.Locale;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import co.zenpets.users.R;
 import co.zenpets.users.utils.helpers.classes.ZenApiClient;
 import co.zenpets.users.utils.models.groomers.review.GroomerReview;
 import co.zenpets.users.utils.models.groomers.review.GroomerReviewsAPI;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -139,7 +141,7 @@ public class GroomerReviewModifier extends AppCompatActivity {
                     GROOMER_RATING = review.getGroomerRating();
                     if (GROOMER_RATING != null && !GROOMER_RATING.equalsIgnoreCase("null")) {
                         Double dblRating = Double.valueOf(GROOMER_RATING);
-                        String finalRating = String.format("%.1f", dblRating);
+                        String finalRating = String.format(Locale.getDefault(), "%.1f", dblRating);
                         ratingGroomer.setRating(Float.parseFloat(finalRating));
                     } else {
                         ratingGroomer.setRating(0);

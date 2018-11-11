@@ -88,7 +88,7 @@ public class AppointmentDetails extends AppCompatActivity {
         Call<AppointmentData> call = api.fetchAppointmentDetails(APPOINTMENT_ID);
         call.enqueue(new Callback<AppointmentData>() {
             @Override
-            public void onResponse(Call<AppointmentData> call, Response<AppointmentData> response) {
+            public void onResponse(@NonNull Call<AppointmentData> call, @NonNull Response<AppointmentData> response) {
                 Log.e("DETAILS RAW", String.valueOf(response.raw()));
                 AppointmentData data = response.body();
 
@@ -146,7 +146,7 @@ public class AppointmentDetails extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<AppointmentData> call, Throwable t) {
+            public void onFailure(@NonNull Call<AppointmentData> call, @NonNull Throwable t) {
                 Log.e("DETAILS FAILURE", t.getMessage());
             }
         });
@@ -158,14 +158,14 @@ public class AppointmentDetails extends AppCompatActivity {
         Call<UserData> call = api.fetchUserToken(USER_ID);
         call.enqueue(new Callback<UserData>() {
             @Override
-            public void onResponse(Call<UserData> call, Response<UserData> response) {
+            public void onResponse(@NonNull Call<UserData> call, @NonNull Response<UserData> response) {
                 /* GET THE USER'S DEVICE TOKEN */
                 USER_DEVICE_TOKEN = response.body().getUserToken();
                 Log.e("DEVICE TOKEN", USER_DEVICE_TOKEN);
             }
 
             @Override
-            public void onFailure(Call<UserData> call, Throwable t) {
+            public void onFailure(@NonNull Call<UserData> call, @NonNull Throwable t) {
                 Log.e("TOKEN FAILURE", t.getMessage());
             }
         });
@@ -177,7 +177,7 @@ public class AppointmentDetails extends AppCompatActivity {
         Call<Doctor> call = api.fetchDoctorProfile(DOCTOR_ID);
         call.enqueue(new Callback<Doctor>() {
             @Override
-            public void onResponse(Call<Doctor> call, Response<Doctor> response) {
+            public void onResponse(@NonNull Call<Doctor> call, @NonNull Response<Doctor> response) {
                 Doctor doctor = response.body();
 
                 /* GET THE DOCTOR'S PREFIX AND NAME */
@@ -189,7 +189,7 @@ public class AppointmentDetails extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Doctor> call, Throwable t) {
+            public void onFailure(@NonNull Call<Doctor> call, @NonNull Throwable t) {
                 Log.e("PROFILE FAILURE", t.getMessage());
             }
         });
@@ -229,7 +229,7 @@ public class AppointmentDetails extends AppCompatActivity {
                 "Confirmed");
         call.enqueue(new Callback<AppointmentData>() {
             @Override
-            public void onResponse(Call<AppointmentData> call, Response<AppointmentData> response) {
+            public void onResponse(@NonNull Call<AppointmentData> call, @NonNull Response<AppointmentData> response) {
                 if (response.isSuccessful())    {
                     /* SEND CONFIRMATION NOTIFICATION TO USER */
                     sendConfirmationNotification();
@@ -243,7 +243,7 @@ public class AppointmentDetails extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<AppointmentData> call, Throwable t) {
+            public void onFailure(@NonNull Call<AppointmentData> call, @NonNull Throwable t) {
                 Log.e("CONFIRM FAILURE", t.getMessage());
             }
         });
@@ -272,7 +272,7 @@ public class AppointmentDetails extends AppCompatActivity {
                                 "Cancelled");
                         call.enqueue(new Callback<AppointmentData>() {
                             @Override
-                            public void onResponse(Call<AppointmentData> call, Response<AppointmentData> response) {
+                            public void onResponse(@NonNull Call<AppointmentData> call, @NonNull Response<AppointmentData> response) {
                                 if (response.isSuccessful())    {
                                     /* SEND CANCELLATION NOTIFICATION TO USER */
                                     sendCancellationNotification();
@@ -285,7 +285,7 @@ public class AppointmentDetails extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onFailure(Call<AppointmentData> call, Throwable t) {
+                            public void onFailure(@NonNull Call<AppointmentData> call, @NonNull Throwable t) {
                                 Log.e("FAILURE", t.getMessage());
                             }
                         });
@@ -311,11 +311,11 @@ public class AppointmentDetails extends AppCompatActivity {
         );
         call.enqueue(new Callback<AppointmentNotification>() {
             @Override
-            public void onResponse(Call<AppointmentNotification> call, Response<AppointmentNotification> response) {
+            public void onResponse(@NonNull Call<AppointmentNotification> call, @NonNull Response<AppointmentNotification> response) {
             }
 
             @Override
-            public void onFailure(Call<AppointmentNotification> call, Throwable t) {
+            public void onFailure(@NonNull Call<AppointmentNotification> call, @NonNull Throwable t) {
                 Log.e("CONFIRM FAILURE", t.getMessage());
             }
         });

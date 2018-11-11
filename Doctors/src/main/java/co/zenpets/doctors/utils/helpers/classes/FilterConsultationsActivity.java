@@ -2,6 +2,7 @@ package co.zenpets.doctors.utils.helpers.classes;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
@@ -131,7 +132,7 @@ public class FilterConsultationsActivity extends AppCompatActivity {
         Call<Problems> call = api.allProblemTypes();
         call.enqueue(new Callback<Problems>() {
             @Override
-            public void onResponse(Call<Problems> call, Response<Problems> response) {
+            public void onResponse(@NonNull Call<Problems> call, @NonNull Response<Problems> response) {
                 arrProblems = response.body().getProblems();
                 if (arrProblems != null && arrProblems.size() > 0)  {
                     /* INSTANTIATE THE PROBLEMS LIST ADAPTER */
@@ -165,7 +166,7 @@ public class FilterConsultationsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Problems> call, Throwable t) {
+            public void onFailure(@NonNull Call<Problems> call, @NonNull Throwable t) {
 
             }
         });

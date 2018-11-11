@@ -62,8 +62,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @SuppressWarnings("ConstantConditions")
-public class DoctorsList extends AppCompatActivity
-        /*implements FetchCityIDInterface, FetchLocalityIDInterface*/ {
+public class DoctorsList extends AppCompatActivity {
 
     /** A FUSED LOCATION PROVIDER CLIENT INSTANCE**/
     private FusedLocationProviderClient mFusedLocationClient;
@@ -676,62 +675,6 @@ public class DoctorsList extends AppCompatActivity
         }
         return doctors;
     }
-
-//    /***** FETCH THE FIRST LIST OF DOCTORS *****/
-//    private void fetchDoctors() {
-//        DoctorsAPI api = ZenApiClient.getClient().create(DoctorsAPI.class);
-//        Call<Doctors> call = api.fetchDoctorsList(
-//                FINAL_CITY_ID,
-//                FINAL_LOCALITY_ID,
-//                String.valueOf(LATLNG_ORIGIN.latitude),
-//                String.valueOf(LATLNG_ORIGIN.longitude),
-//                String.valueOf(currentPage));
-//        call.enqueue(new Callback<Doctors>() {
-//            @Override
-//            public void onResponse(Call<Doctors> call, Response<Doctors> response) {
-//                Log.e("DOCTORS RAW", String.valueOf(response.raw()));
-//                if (response.body() != null && response.body().getDoctors() != null)    {
-//                    arrDoctors = response.body().getDoctors();
-//                    if (arrDoctors.size() > 0)  {
-//                        /* SHOW THE DOCTORS RECYCLER AND HIDE THE EMPTY LAYOUT */
-//                        listDoctors.setVisibility(View.VISIBLE);
-//                        linlaEmpty.setVisibility(View.GONE);
-//
-//                        /* SET THE DOCTORS RECYCLER VIEW */
-//                        listDoctors.setAdapter(new DoctorsListAdapter(DoctorsList.this, arrDoctors, LATLNG_ORIGIN));
-//
-//                        /* HIDE THE PROGRESS AFTER LOADING THE DATA */
-//                        linlaProgress.setVisibility(View.GONE);
-//                    } else {
-//                        /* SET THE EMPTY TEXT */
-//                        txtEmpty.setText(getString(R.string.doctor_list_empty_message));
-//
-//                        /* HIDE THE RECYCLER AND SHOW THE EMPTY LAYOUT */
-//                        listDoctors.setVisibility(View.GONE);
-//                        linlaEmpty.setVisibility(View.VISIBLE);
-//
-//                        /* HIDE THE PROGRESS AFTER LOADING THE DATA */
-//                        linlaProgress.setVisibility(View.GONE);
-//                    }
-//                } else {
-//                    /* SET THE EMPTY TEXT */
-//                    txtEmpty.setText(getString(R.string.doctor_list_empty_message));
-//
-//                    /* HIDE THE RECYCLER AND SHOW THE EMPTY LAYOUT */
-//                    listDoctors.setVisibility(View.GONE);
-//                    linlaEmpty.setVisibility(View.VISIBLE);
-//
-//                    /* HIDE THE PROGRESS AFTER LOADING THE DATA */
-//                    linlaProgress.setVisibility(View.GONE);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Doctors> call, Throwable t) {
-//                Log.e("DOCTORS FAILURE", t.getMessage());
-//            }
-//        });
-//    }
 
     /***** FETCH THE USER'S LOCATION *****/
     private void getUserLocation() {

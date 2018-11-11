@@ -34,7 +34,7 @@
                 android:text="@string/vaccination_creator_vaccine"
                 android:textColor="@color/primary_text"
                 android:textSize="15sp"
-                app:fontFamily="@font/lato_bold" />
+                app:fontFamily="@font/roboto_condensed_bold" />
 
             <android.support.v7.widget.AppCompatSpinner
                 android:id="@+id/spnVaccineTypes"
@@ -57,7 +57,7 @@
                 android:text="@string/vaccination_creator_date"
                 android:textColor="@color/primary_text"
                 android:textSize="15sp"
-                app:fontFamily="@font/lato_bold" />
+                app:fontFamily="@font/roboto_condensed_bold" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -78,7 +78,7 @@
                     android:padding="11dp"
                     android:textColor="@color/primary_text"
                     android:textSize="14sp"
-                    app:fontFamily="@font/lato_regular" />
+                    app:fontFamily="@font/roboto_condensed_regular" />
 
                 <com.mikepenz.iconics.view.IconicsButton
                     android:id="@+id/btnVaccinationDate"
@@ -102,7 +102,7 @@
                 android:text="@string/vaccination_creator_next_date"
                 android:textColor="@color/primary_text"
                 android:textSize="15sp"
-                app:fontFamily="@font/lato_bold" />
+                app:fontFamily="@font/roboto_condensed_bold" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -123,7 +123,7 @@
                     android:padding="11dp"
                     android:textColor="@color/primary_text"
                     android:textSize="14sp"
-                    app:fontFamily="@font/lato_regular" />
+                    app:fontFamily="@font/roboto_condensed_regular" />
 
                 <com.mikepenz.iconics.view.IconicsButton
                     android:id="@+id/btnVaccinationNextDate"
@@ -143,7 +143,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/lato_regular"
+                app:fontFamily="@font/roboto_condensed_regular"
                 android:padding="11dp"
                 android:text="@string/vaccination_creator_remind"
                 android:textColor="@color/secondary_text"
@@ -166,7 +166,7 @@
                     android:id="@+id/edtVaccineNotes"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_regular"
+                    app:fontFamily="@font/roboto_condensed_regular"
                     android:gravity="start|top"
                     android:inputType="textMultiLine|textCapSentences"
                     android:lines="5"

@@ -2,6 +2,7 @@ package co.zenpets.doctors.utils.helpers.classes.location;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
@@ -76,7 +77,7 @@ public class CountrySelectorActivity extends AppCompatActivity implements Search
         Call<CountriesData> call = api.allCountries();
         call.enqueue(new Callback<CountriesData>() {
             @Override
-            public void onResponse(Call<CountriesData> call, Response<CountriesData> response) {
+            public void onResponse(@NonNull Call<CountriesData> call, @NonNull Response<CountriesData> response) {
                 if (response.body() != null && response.body().getCountries() != null)  {
                     arrCountries = response.body().getCountries();
                     if (arrCountries.size() > 0)    {
@@ -103,7 +104,7 @@ public class CountrySelectorActivity extends AppCompatActivity implements Search
             }
 
             @Override
-            public void onFailure(Call<CountriesData> call, Throwable t) {
+            public void onFailure(@NonNull Call<CountriesData> call, @NonNull Throwable t) {
 //                Log.e("COUNTRIES FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -191,7 +192,7 @@ public class CountrySelectorActivity extends AppCompatActivity implements Search
         }
 
         @Override
-        public void onBindViewHolder(final CountriesVH holder, final int position) {
+        public void onBindViewHolder(@NonNull final CountriesVH holder, final int position) {
             final CountryData data = mFilteredList.get(position);
 
             /* SET THE COUNTRY NAME */
@@ -216,8 +217,9 @@ public class CountrySelectorActivity extends AppCompatActivity implements Search
             });
         }
 
+        @NonNull
         @Override
-        public CountriesVH onCreateViewHolder(ViewGroup parent, int i) {
+        public CountriesVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
             View itemView = LayoutInflater.
                     from(parent.getContext()).

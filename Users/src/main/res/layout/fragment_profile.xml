@@ -126,7 +126,7 @@
                             android:text="@string/profile_my_pets"
                             android:textColor="@color/primary_text"
                             android:textSize="14sp"
-                            app:fontFamily="@font/lato_bold" />
+                            app:fontFamily="@font/roboto_condensed_bold" />
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/txtAddPet"
@@ -137,7 +137,7 @@
                             android:text="NEW PET"
                             android:textColor="@color/accent"
                             android:textSize="15sp"
-                            app:fontFamily="@font/lato_bold" />
+                            app:fontFamily="@font/roboto_condensed_bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -237,7 +237,7 @@
                     android:text="@string/profile_my_appointments"
                     android:textColor="@color/primary_text"
                     android:textSize="14sp"
-                    app:fontFamily="@font/lato_bold" />
+                    app:fontFamily="@font/roboto_condensed_bold" />
 
                 <com.mikepenz.iconics.view.IconicsImageView
                     android:layout_width="wrap_content"
@@ -276,7 +276,7 @@
                     android:text="@string/profile_my_consultations"
                     android:textColor="@color/primary_text"
                     android:textSize="14sp"
-                    app:fontFamily="@font/lato_bold" />
+                    app:fontFamily="@font/roboto_condensed_bold" />
 
                 <com.mikepenz.iconics.view.IconicsImageView
                     android:layout_width="wrap_content"
@@ -315,7 +315,7 @@
                     android:text="@string/profile_my_adoptions"
                     android:textColor="@color/primary_text"
                     android:textSize="14sp"
-                    app:fontFamily="@font/lato_bold" />
+                    app:fontFamily="@font/roboto_condensed_bold" />
 
                 <com.mikepenz.iconics.view.IconicsImageView
                     android:layout_width="wrap_content"
@@ -354,7 +354,7 @@
                     android:text="@string/profile_home_boarding"
                     android:textColor="@color/primary_text"
                     android:textSize="14sp"
-                    app:fontFamily="@font/lato_bold" />
+                    app:fontFamily="@font/roboto_condensed_bold" />
 
                 <com.mikepenz.iconics.view.IconicsImageView
                     android:layout_width="wrap_content"
@@ -392,7 +392,7 @@
                     android:text="@string/profile_settings_out"
                     android:textColor="@color/accent"
                     android:textSize="14sp"
-                    app:fontFamily="@font/lato_bold" />
+                    app:fontFamily="@font/roboto_condensed_bold" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

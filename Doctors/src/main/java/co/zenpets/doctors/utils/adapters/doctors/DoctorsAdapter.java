@@ -3,6 +3,7 @@ package co.zenpets.doctors.utils.adapters.doctors;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -53,7 +54,7 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ClinicsV
     }
 
     @Override
-    public void onBindViewHolder(final ClinicsVH holder, final int position) {
+    public void onBindViewHolder(@NonNull final ClinicsVH holder, final int position) {
         final Doctor data = arrDoctors.get(position);
 
         /* SET THE DOCTOR'S DISPLAY PROFILE */
@@ -86,7 +87,7 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ClinicsV
         Call<ReviewsData> callYes = apiYes.fetchPositiveReviews(data.getDoctorID(), "Yes");
         callYes.enqueue(new Callback<ReviewsData>() {
             @Override
-            public void onResponse(Call<ReviewsData> call, Response<ReviewsData> response) {
+            public void onResponse(@NonNull Call<ReviewsData> call, @NonNull Response<ReviewsData> response) {
                 if (response.body() != null && response.body().getReviews() != null)    {
                     ArrayList<ReviewData> arrReview = response.body().getReviews();
                     TOTAL_LIKES = arrReview.size();
@@ -97,7 +98,7 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ClinicsV
                     Call<ReviewsData> callNo = apiNo.fetchNegativeReviews(data.getDoctorID(), "No");
                     callNo.enqueue(new Callback<ReviewsData>() {
                         @Override
-                        public void onResponse(Call<ReviewsData> call, Response<ReviewsData> response) {
+                        public void onResponse(@NonNull Call<ReviewsData> call, @NonNull Response<ReviewsData> response) {
                             if (response.body() != null && response.body().getReviews() != null)    {
                                 ArrayList<ReviewData> arrReview = response.body().getReviews();
                                 TOTAL_VOTES = TOTAL_VOTES + arrReview.size();
@@ -125,7 +126,7 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ClinicsV
                         }
 
                         @Override
-                        public void onFailure(Call<ReviewsData> call, Throwable t) {
+                        public void onFailure(@NonNull Call<ReviewsData> call, @NonNull Throwable t) {
 //                            Crashlytics.logException(t);
                         }
                     });
@@ -133,7 +134,7 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ClinicsV
             }
 
             @Override
-            public void onFailure(Call<ReviewsData> call, Throwable t) {
+            public void onFailure(@NonNull Call<ReviewsData> call, @NonNull Throwable t) {
 //                Crashlytics.logException(t);
             }
         });
@@ -150,8 +151,9 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ClinicsV
 //        });
     }
 
+    @NonNull
     @Override
-    public ClinicsVH onCreateViewHolder(ViewGroup parent, int i) {
+    public ClinicsVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
         View itemView = LayoutInflater.
                 from(parent.getContext()).

@@ -3,6 +3,7 @@ package co.zenpets.doctors.creator.appointment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
@@ -125,7 +126,8 @@ public class AppointmentClientSelector extends AppCompatActivity implements Sear
         Call<Clients> call = api.fetchDoctorClients(DOCTOR_ID);
         call.enqueue(new Callback<Clients>() {
             @Override
-            public void onResponse(Call<Clients> call, Response<Clients> response) {
+            public void onResponse(@NonNull Call<Clients> call, @NonNull Response<Clients> response) {
+                assert response.body() != null;
                 arrClients = response.body().getClients();
                 if (arrClients != null && arrClients.size() > 0)    {
                     /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT  */
@@ -151,7 +153,7 @@ public class AppointmentClientSelector extends AppCompatActivity implements Sear
             }
 
             @Override
-            public void onFailure(Call<Clients> call, Throwable t) {
+            public void onFailure(@NonNull Call<Clients> call, @NonNull Throwable t) {
             }
         });
     }
@@ -248,7 +250,7 @@ public class AppointmentClientSelector extends AppCompatActivity implements Sear
         }
 
         @Override
-        public void onBindViewHolder(ClientsVH holder, final int position) {
+        public void onBindViewHolder(@NonNull ClientsVH holder, final int position) {
             final Client data = mFilteredList.get(position);
 
             /* CHECK IF A USER ID IS AVAILABLE */
@@ -301,8 +303,9 @@ public class AppointmentClientSelector extends AppCompatActivity implements Sear
             });
         }
 
+        @NonNull
         @Override
-        public ClientsVH onCreateViewHolder(ViewGroup parent, int i) {
+        public ClientsVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
             View itemView = LayoutInflater.
                     from(parent.getContext()).

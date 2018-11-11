@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -149,7 +150,7 @@ public class DashboardFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         /* CAST THE LAYOUT TO A NEW VIEW INSTANCE */
         View view = inflater.inflate(R.layout.home_dashboard_fragment, container, false);
@@ -172,7 +173,7 @@ public class DashboardFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         /* CONFIGURE THE ACTIONBAR */
@@ -226,7 +227,7 @@ public class DashboardFragment extends Fragment {
         Call<DoctorClinics> call = api.fetchDoctorClinics(DOCTOR_ID);
         call.enqueue(new Callback<DoctorClinics>() {
             @Override
-            public void onResponse(Call<DoctorClinics> call, Response<DoctorClinics> response) {
+            public void onResponse(@NonNull Call<DoctorClinics> call, @NonNull Response<DoctorClinics> response) {
                 if (response.body() != null && response.body().getClinics() != null)    {
                     arrClinics = response.body().getClinics();
                     if (arrClinics != null && arrClinics.size() > 0)    {
@@ -238,7 +239,7 @@ public class DashboardFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<DoctorClinics> call, Throwable t) {
+            public void onFailure(@NonNull Call<DoctorClinics> call, @NonNull Throwable t) {
             }
         });
     }
@@ -249,7 +250,7 @@ public class DashboardFragment extends Fragment {
         Call<AppointmentsData> call = api.fetchDoctorTodayAppointments(DOCTOR_ID, CLINIC_ID, APPOINTMENT_DATE);
         call.enqueue(new Callback<AppointmentsData>() {
             @Override
-            public void onResponse(Call<AppointmentsData> call, Response<AppointmentsData> response) {
+            public void onResponse(@NonNull Call<AppointmentsData> call, @NonNull Response<AppointmentsData> response) {
                 Log.e("RESPONSE", String.valueOf(response.raw()));
                 arrAppointments = response.body().getAppointments();
                 if (arrAppointments != null && arrAppointments.size() > 0)    {
@@ -271,7 +272,7 @@ public class DashboardFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<AppointmentsData> call, Throwable t) {
+            public void onFailure(@NonNull Call<AppointmentsData> call, @NonNull Throwable t) {
                 Log.e("FAILURE", t.getMessage());
             }
         });
@@ -299,7 +300,7 @@ public class DashboardFragment extends Fragment {
         Call<Qualifications> call = apiInterface.fetchDoctorEducation(DOCTOR_ID);
         call.enqueue(new Callback<Qualifications>() {
             @Override
-            public void onResponse(Call<Qualifications> call, Response<Qualifications> response) {
+            public void onResponse(@NonNull Call<Qualifications> call, @NonNull Response<Qualifications> response) {
                 ArrayList<Qualification> arrEducation = response.body().getQualifications();
                 if (arrEducation != null && arrEducation.size() > 0)    {
                     PROFILE_COMPLETE = PROFILE_COMPLETE + 25;
@@ -322,7 +323,7 @@ public class DashboardFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Qualifications> call, Throwable t) {
+            public void onFailure(@NonNull Call<Qualifications> call, @NonNull Throwable t) {
             }
         });
     }
@@ -333,7 +334,7 @@ public class DashboardFragment extends Fragment {
         Call<Specializations> call = apiInterface.fetchDoctorSpecializations(DOCTOR_ID);
         call.enqueue(new Callback<Specializations>() {
             @Override
-            public void onResponse(Call<Specializations> call, Response<Specializations> response) {
+            public void onResponse(@NonNull Call<Specializations> call, @NonNull Response<Specializations> response) {
                 ArrayList<Specialization> arrSpecialization = response.body().getSpecializations();
                 if (arrSpecialization != null && arrSpecialization.size() > 0)  {
                     PROFILE_COMPLETE = PROFILE_COMPLETE + 25;
@@ -356,7 +357,7 @@ public class DashboardFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Specializations> call, Throwable t) {
+            public void onFailure(@NonNull Call<Specializations> call, @NonNull Throwable t) {
             }
         });
     }
@@ -367,7 +368,7 @@ public class DashboardFragment extends Fragment {
         Call<Services> call = apiInterface.fetchDoctorServices(DOCTOR_ID);
         call.enqueue(new Callback<Services>() {
             @Override
-            public void onResponse(Call<Services> call, Response<Services> response) {
+            public void onResponse(@NonNull Call<Services> call, @NonNull Response<Services> response) {
                 ArrayList<Service> arrService = response.body().getServices();
                 if (arrService != null && arrService.size() > 0)    {
                     PROFILE_COMPLETE = PROFILE_COMPLETE + 25;
@@ -390,7 +391,7 @@ public class DashboardFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Services> call, Throwable t) {
+            public void onFailure(@NonNull Call<Services> call, @NonNull Throwable t) {
             }
         });
     }
@@ -401,7 +402,7 @@ public class DashboardFragment extends Fragment {
         Call<Timings> call = apiInterface.fetchDoctorTimings(DOCTOR_ID, CLINIC_ID);
         call.enqueue(new Callback<Timings>() {
             @Override
-            public void onResponse(Call<Timings> call, Response<Timings> response) {
+            public void onResponse(@NonNull Call<Timings> call, @NonNull Response<Timings> response) {
                 String timingsID = response.body().getTimingsID();
                 if (timingsID != null)  {
                     PROFILE_COMPLETE = PROFILE_COMPLETE + 25;
@@ -428,7 +429,7 @@ public class DashboardFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Timings> call, Throwable t) {
+            public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
             }
         });
     }
@@ -464,7 +465,7 @@ public class DashboardFragment extends Fragment {
         Call<DoctorProfileData> call = apiInterface.fetchDoctorProfile(DOCTOR_ID);
         call.enqueue(new Callback<DoctorProfileData>() {
             @Override
-            public void onResponse(Call<DoctorProfileData> call, Response<DoctorProfileData> response) {
+            public void onResponse(@NonNull Call<DoctorProfileData> call, @NonNull Response<DoctorProfileData> response) {
                 /* GET THE DOCTOR'S PREFIX AND NAME */
                 String DOCTOR_PREFIX = response.body().getDoctorPrefix();
                 String DOCTOR_NAME = response.body().getDoctorName();
@@ -487,7 +488,7 @@ public class DashboardFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<DoctorProfileData> call, Throwable t) {
+            public void onFailure(@NonNull Call<DoctorProfileData> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }

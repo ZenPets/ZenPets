@@ -36,8 +36,8 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -62,7 +62,7 @@
                         android:text="@string/doctor_item_doc_name"
                         android:textColor="@color/secondary_text"
                         android:textSize="15sp"
-                        app:fontFamily="@font/lato_bold" />
+                        app:fontFamily="@font/roboto_condensed_bold" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -75,12 +75,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
-                        android:paddingBottom="5dp"
-                        android:paddingEnd="11dp"
-                        android:paddingLeft="11dp"
-                        android:paddingRight="11dp"
                         android:paddingStart="11dp"
+                        android:paddingLeft="11dp"
                         android:paddingTop="5dp"
+                        android:paddingEnd="11dp"
+                        android:paddingRight="11dp"
+                        android:paddingBottom="5dp"
                         app:iiv_color="@color/secondary_text"
                         app:iiv_icon="faw_hospital"
                         app:iiv_size="16dp" />
@@ -98,9 +98,9 @@
                             android:gravity="start|center"
                             android:padding="5dp"
                             android:text="@string/doctor_item_clinic_name"
-                            android:textColor="@color/secondary_text"
+                            android:textColor="@color/primary_text"
                             android:textSize="13sp"
-                            app:fontFamily="@font/lato_bold" />
+                            app:fontFamily="@font/roboto_condensed_regular" />
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/txtClinicAddress"
@@ -111,7 +111,7 @@
                             android:text="@string/doctor_item_clinic_address"
                             android:textColor="@color/secondary_text"
                             android:textSize="12sp"
-                            app:fontFamily="@font/lato_regular" />
+                            app:fontFamily="@font/roboto_condensed_regular" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -119,8 +119,8 @@
                     android:id="@+id/linlaImagesContainer"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:gravity="top|center"
                     android:orientation="horizontal">
 
@@ -128,12 +128,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
-                        android:paddingBottom="5dp"
-                        android:paddingEnd="11dp"
-                        android:paddingLeft="11dp"
-                        android:paddingRight="11dp"
                         android:paddingStart="11dp"
+                        android:paddingLeft="11dp"
                         android:paddingTop="5dp"
+                        android:paddingEnd="11dp"
+                        android:paddingRight="11dp"
+                        android:paddingBottom="5dp"
                         app:iiv_color="@color/secondary_text"
                         app:iiv_icon="ion_images"
                         app:iiv_size="16dp" />
@@ -153,12 +153,12 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.50dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="2dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="2dp"
                 android:background="@drawable/fixed_divider_horizontal_bright" />
 
             <LinearLayout
@@ -171,10 +171,10 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
                     android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -186,7 +186,7 @@
                         android:text="@string/doctor_item_likes_percent"
                         android:textColor="@color/secondary_text"
                         android:textSize="11sp"
-                        app:fontFamily="@font/lato_regular" />
+                        app:fontFamily="@font/roboto_condensed_regular" />
                 </LinearLayout>
 
                 <com.mikepenz.iconics.view.IconicsImageView
@@ -203,10 +203,10 @@
                     android:id="@+id/linlaDoctorExp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
                     android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -218,7 +218,7 @@
                         android:text="@string/doctor_item_doc_experience"
                         android:textColor="@color/secondary_text"
                         android:textSize="11sp"
-                        app:fontFamily="@font/lato_regular" />
+                        app:fontFamily="@font/roboto_condensed_regular" />
                 </LinearLayout>
 
                 <com.mikepenz.iconics.view.IconicsImageView
@@ -235,10 +235,10 @@
                     android:id="@+id/linlaDoctorCharges"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
                     android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -250,7 +250,7 @@
                         android:text="@string/doctor_item_doc_charges"
                         android:textColor="@color/secondary_text"
                         android:textSize="11sp"
-                        app:fontFamily="@font/lato_regular" />
+                        app:fontFamily="@font/roboto_condensed_regular" />
                 </LinearLayout>
 
                 <com.mikepenz.iconics.view.IconicsImageView
@@ -267,10 +267,10 @@
                     android:id="@+id/linlaClinicDistance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="10dp"
                     android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -282,7 +282,7 @@
                         android:text="@string/doctor_item_clinic_distance"
                         android:textColor="@color/secondary_text"
                         android:textSize="11sp"
-                        app:fontFamily="@font/lato_regular" />
+                        app:fontFamily="@font/roboto_condensed_regular" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

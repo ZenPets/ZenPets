@@ -2,6 +2,7 @@ package co.zenpets.doctors.utils.helpers.classes.location;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
@@ -92,7 +93,7 @@ public class StateSelectorActivity extends AppCompatActivity implements SearchVi
         Call<StatesData> call = api.allStates(COUNTRY_ID);
         call.enqueue(new Callback<StatesData>() {
             @Override
-            public void onResponse(Call<StatesData> call, Response<StatesData> response) {
+            public void onResponse(@NonNull Call<StatesData> call, @NonNull Response<StatesData> response) {
                 if (response.body() != null && response.body().getStates() != null)  {
                     arrStates = response.body().getStates();
                     if (arrStates.size() > 0)    {
@@ -119,7 +120,7 @@ public class StateSelectorActivity extends AppCompatActivity implements SearchVi
             }
 
             @Override
-            public void onFailure(Call<StatesData> call, Throwable t) {
+            public void onFailure(@NonNull Call<StatesData> call, @NonNull Throwable t) {
 //                Log.e("STATES FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -207,7 +208,7 @@ public class StateSelectorActivity extends AppCompatActivity implements SearchVi
         }
 
         @Override
-        public void onBindViewHolder(final StatesVH holder, final int position) {
+        public void onBindViewHolder(@NonNull final StatesVH holder, final int position) {
             final StateData data = mFilteredList.get(position);
 
             /* SET THE STATE NAME */
@@ -228,8 +229,9 @@ public class StateSelectorActivity extends AppCompatActivity implements SearchVi
             });
         }
 
+        @NonNull
         @Override
-        public StatesVH onCreateViewHolder(ViewGroup parent, int i) {
+        public StatesVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
             View itemView = LayoutInflater.
                     from(parent.getContext()).

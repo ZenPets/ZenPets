@@ -67,7 +67,7 @@ public class ClaimProfileStatus extends AppCompatActivity {
         Call<ClaimStatus> call = api.fetchClaimDetails(CLAIM_ID);
         call.enqueue(new Callback<ClaimStatus>() {
             @Override
-            public void onResponse(Call<ClaimStatus> call, Response<ClaimStatus> response) {
+            public void onResponse(@NonNull Call<ClaimStatus> call, @NonNull Response<ClaimStatus> response) {
                 final ClaimStatus status = response.body();
                 if (status != null) {
                     /* GET THE CLAIM STATUS */
@@ -113,7 +113,7 @@ public class ClaimProfileStatus extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ClaimStatus> call, Throwable t) {
+            public void onFailure(@NonNull Call<ClaimStatus> call, @NonNull Throwable t) {
 //                Log.e("CLAIM FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }

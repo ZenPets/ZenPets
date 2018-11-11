@@ -116,7 +116,7 @@ public class ClinicsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         /* CAST THE LAYOUT TO A NEW VIEW INSTANCE */
         View view = inflater.inflate(R.layout.home_clinics_fragment_list, container, false);
@@ -139,7 +139,7 @@ public class ClinicsFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         /* CONFIGURE THE ACTIONBAR */
@@ -172,7 +172,7 @@ public class ClinicsFragment extends Fragment {
         Call<DoctorClinics> call = api.fetchDoctorClinics(DOCTOR_ID);
         call.enqueue(new Callback<DoctorClinics>() {
             @Override
-            public void onResponse(Call<DoctorClinics> call, Response<DoctorClinics> response) {
+            public void onResponse(@NonNull Call<DoctorClinics> call, @NonNull Response<DoctorClinics> response) {
                 arrClinics = response.body().getClinics();
                 if (arrClinics != null && arrClinics.size() > 0)  {
                     /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
@@ -192,7 +192,7 @@ public class ClinicsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<DoctorClinics> call, Throwable t) {
+            public void onFailure(@NonNull Call<DoctorClinics> call, @NonNull Throwable t) {
             }
         });
     }

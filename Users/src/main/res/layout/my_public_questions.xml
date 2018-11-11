@@ -57,7 +57,7 @@
             android:scrollbarSize="5dp"
             android:scrollbarThumbVertical="@color/primary_dark"
             android:scrollbars="vertical"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/linlaEmpty"
@@ -67,16 +67,16 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="110dp"
                 android:layout_height="110dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
                 android:layout_marginStart="40dp"
+                android:layout_marginLeft="40dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginRight="40dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerInside"
                 android:src="@drawable/empty_graphic" />
@@ -86,24 +86,24 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
                 android:gravity="center"
                 android:text="@string/user_public_question_empty"
                 android:textColor="@color/secondary_text"
                 android:textSize="15sp"
-                app:fontFamily="@font/raleway_light" />
+                app:fontFamily="@font/roboto_condensed_light" />
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btnAskQuestion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
                 android:layout_marginStart="40dp"
+                android:layout_marginLeft="40dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/generic_button_bg"
                 android:gravity="center"
                 android:padding="11dp"
@@ -111,7 +111,7 @@
                 android:textAllCaps="false"
                 android:textColor="@android:color/primary_text_dark"
                 android:textSize="15sp"
-                app:fontFamily="@font/oswald_regular" />
+                app:fontFamily="@font/roboto_medium" />
         </LinearLayout>
     </LinearLayout>
 

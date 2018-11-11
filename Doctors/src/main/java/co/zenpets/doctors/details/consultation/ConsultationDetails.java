@@ -126,7 +126,7 @@ public class ConsultationDetails extends AppCompatActivity {
         Call<Consultation> call = api.consultationDetails(CONSULTATION_ID);
         call.enqueue(new Callback<Consultation>() {
             @Override
-            public void onResponse(Call<Consultation> call, Response<Consultation> response) {
+            public void onResponse(@NonNull Call<Consultation> call, @NonNull Response<Consultation> response) {
                 Consultation data = response.body();
                 if (data != null)   {
                     /* GET AND SET THE CONSULTATION TITLE */
@@ -195,7 +195,7 @@ public class ConsultationDetails extends AppCompatActivity {
                     Call<ConsultationReplies> callReplies = apiReplies.fetchConsultationReplies(data.getConsultationID());
                     callReplies.enqueue(new Callback<ConsultationReplies>() {
                         @Override
-                        public void onResponse(Call<ConsultationReplies> call, Response<ConsultationReplies> response) {
+                        public void onResponse(@NonNull Call<ConsultationReplies> call, @NonNull Response<ConsultationReplies> response) {
                             ArrayList<ConsultationReply> list = response.body().getReplies();
                             if (list != null && list.size() > 0)    {
                                 int TOTAL_REPLIES = list.size();
@@ -218,7 +218,7 @@ public class ConsultationDetails extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onFailure(Call<ConsultationReplies> call, Throwable t) {
+                        public void onFailure(@NonNull Call<ConsultationReplies> call, @NonNull Throwable t) {
 //                            Crashlytics.logException(t);
                         }
                     });
@@ -234,7 +234,7 @@ public class ConsultationDetails extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Consultation> call, Throwable t) {
+            public void onFailure(@NonNull Call<Consultation> call, @NonNull Throwable t) {
 //                Crashlytics.logException(t);
             }
         });
@@ -246,7 +246,7 @@ public class ConsultationDetails extends AppCompatActivity {
         Call<ConsultationStatus> callStatus = api.consultationDoctorReplied(CONSULTATION_ID, DOCTOR_ID);
         callStatus.enqueue(new Callback<ConsultationStatus>() {
             @Override
-            public void onResponse(Call<ConsultationStatus> call, Response<ConsultationStatus> response) {
+            public void onResponse(@NonNull Call<ConsultationStatus> call, @NonNull Response<ConsultationStatus> response) {
                 ConsultationStatus status = response.body();
                 if (status != null) {
                     blnReplyStatus = status.getError();
@@ -255,7 +255,7 @@ public class ConsultationDetails extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ConsultationStatus> call, Throwable t) {
+            public void onFailure(@NonNull Call<ConsultationStatus> call, @NonNull Throwable t) {
 //                Crashlytics.logException(t);
             }
         });
@@ -267,7 +267,7 @@ public class ConsultationDetails extends AppCompatActivity {
         Call<ConsultationViews> call = api.fetchConsultationViews(CONSULTATION_ID);
         call.enqueue(new Callback<ConsultationViews>() {
             @Override
-            public void onResponse(Call<ConsultationViews> call, Response<ConsultationViews> response) {
+            public void onResponse(@NonNull Call<ConsultationViews> call, @NonNull Response<ConsultationViews> response) {
                 ArrayList<ConsultationView> list = response.body().getViews();
                 if (list != null && list.size() > 0)    {
                     String views = String.valueOf(list.size());
@@ -278,7 +278,7 @@ public class ConsultationDetails extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ConsultationViews> call, Throwable t) {
+            public void onFailure(@NonNull Call<ConsultationViews> call, @NonNull Throwable t) {
 //                Crashlytics.logException(t);
             }
         });
@@ -290,7 +290,7 @@ public class ConsultationDetails extends AppCompatActivity {
         Call<ConsultationReplies> call = api.fetchConsultationReplies(CONSULTATION_ID);
         call.enqueue(new Callback<ConsultationReplies>() {
             @Override
-            public void onResponse(Call<ConsultationReplies> call, Response<ConsultationReplies> response) {
+            public void onResponse(@NonNull Call<ConsultationReplies> call, @NonNull Response<ConsultationReplies> response) {
                 if (response.body() != null && response.body().getReplies() != null)    {
                     arrReplies = response.body().getReplies();
 
@@ -321,7 +321,7 @@ public class ConsultationDetails extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ConsultationReplies> call, Throwable t) {
+            public void onFailure(@NonNull Call<ConsultationReplies> call, @NonNull Throwable t) {
 //                Crashlytics.logException(t);
             }
         });
@@ -440,7 +440,7 @@ public class ConsultationDetails extends AppCompatActivity {
                                 String.valueOf(System.currentTimeMillis() / 1000));
                         call.enqueue(new Callback<ReplyData>() {
                             @Override
-                            public void onResponse(Call<ReplyData> call, Response<ReplyData> response) {
+                            public void onResponse(@NonNull Call<ReplyData> call, @NonNull Response<ReplyData> response) {
                                 if (response.isSuccessful())    {
                                     /* CLEAR THE ARRAY LIST */
                                     if (arrReplies != null)
@@ -459,7 +459,7 @@ public class ConsultationDetails extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onFailure(Call<ReplyData> call, Throwable t) {
+                            public void onFailure(@NonNull Call<ReplyData> call, @NonNull Throwable t) {
                                 /* SHOW THE ERROR MESSAGE */
                                 Toast.makeText(getApplicationContext(), "There was an error posting your reply. Please try again...", Toast.LENGTH_LONG).show();
 //                                Log.e("FAILURE", t.getMessage());

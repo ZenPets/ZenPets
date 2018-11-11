@@ -290,7 +290,7 @@
                     android:adjustViewBounds="true"
                     android:padding="11dp"
                     app:iiv_color="@android:color/holo_blue_dark"
-                    app:iiv_icon="faw_hospital_o"
+                    app:iiv_icon="faw_hospital2"
                     app:iiv_size="20dp" />
 
                 <LinearLayout

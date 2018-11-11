@@ -55,7 +55,7 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
     }
 
     @Override
-    public void onBindViewHolder(AppointmentsVH holder, final int position) {
+    public void onBindViewHolder(@NonNull AppointmentsVH holder, final int position) {
         final AppointmentData data = arrAppointments.get(position);
 
         /* SET THE APPOINTMENT TIME */
@@ -150,8 +150,9 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
         });
     }
 
+    @NonNull
     @Override
-    public AppointmentsVH onCreateViewHolder(ViewGroup parent, int i) {
+    public AppointmentsVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
         View itemView = LayoutInflater.
                 from(parent.getContext()).
@@ -202,7 +203,7 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
                                 "Cancelled");
                         call.enqueue(new Callback<AppointmentData>() {
                             @Override
-                            public void onResponse(Call<AppointmentData> call, Response<AppointmentData> response) {
+                            public void onResponse(@NonNull Call<AppointmentData> call, @NonNull Response<AppointmentData> response) {
                                 if (response.isSuccessful())    {
                                     dialog.dismiss();
                                     Toast.makeText(activity, "Appointment has been cancelled", Toast.LENGTH_SHORT).show();
@@ -213,7 +214,7 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
                             }
 
                             @Override
-                            public void onFailure(Call<AppointmentData> call, Throwable t) {
+                            public void onFailure(@NonNull Call<AppointmentData> call, @NonNull Throwable t) {
 //                                Log.e("FAILURE", t.getMessage());
 //                                Crashlytics.logException(t);
                             }
@@ -244,7 +245,7 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
                 "Confirmed");
         call.enqueue(new Callback<AppointmentData>() {
             @Override
-            public void onResponse(Call<AppointmentData> call, Response<AppointmentData> response) {
+            public void onResponse(@NonNull Call<AppointmentData> call, @NonNull Response<AppointmentData> response) {
                 if (response.isSuccessful())    {
                     Toast.makeText(activity, "The Appointment was confirmed", Toast.LENGTH_SHORT).show();
                 } else {
@@ -256,7 +257,7 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
             }
 
             @Override
-            public void onFailure(Call<AppointmentData> call, Throwable t) {
+            public void onFailure(@NonNull Call<AppointmentData> call, @NonNull Throwable t) {
 //                Log.e("CONFIRM FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }

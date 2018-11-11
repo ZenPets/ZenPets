@@ -4,7 +4,9 @@
       <w>crashlytics</w>
       <w>cust</w>
       <w>firebase</w>
+      <w>geocoder</w>
       <w>imgvw</w>
+      <w>latlng</w>
       <w>linla</w>
     </words>
   </dictionary>

@@ -43,7 +43,7 @@
             android:text="Groomer Name"
             android:textColor="@color/secondary_text"
             android:textSize="15sp"
-            app:fontFamily="@font/raleway_medium" />
+            app:fontFamily="@font/roboto_condensed_bold" />
     </LinearLayout>
 
     <ScrollView
@@ -74,7 +74,7 @@
                 android:text="Would you recommend this Groomer to your family and friends?"
                 android:textColor="@color/primary_text"
                 android:textSize="14sp"
-                app:fontFamily="@font/raleway_regular" />
+                app:fontFamily="@font/roboto_condensed_regular" />
 
             <RadioGroup
                 android:id="@+id/rdgRecommend"
@@ -131,7 +131,7 @@
                 android:text="How would rate this Groomer?"
                 android:textColor="@color/primary_text"
                 android:textSize="14sp"
-                app:fontFamily="@font/raleway_regular" />
+                app:fontFamily="@font/roboto_condensed_regular" />
 
             <RatingBar
                 android:id="@+id/ratingGroomer"
@@ -164,7 +164,7 @@
                     android:padding="11dp"
                     android:textColor="@color/primary_text"
                     android:textSize="14sp"
-                    app:fontFamily="@font/raleway_regular" />
+                    app:fontFamily="@font/roboto_condensed_regular" />
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
     </ScrollView>

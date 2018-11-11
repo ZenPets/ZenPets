@@ -2,6 +2,7 @@ package co.zenpets.doctors.utils.helpers.classes.location;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
@@ -92,7 +93,7 @@ public class CitySelectorActivity extends AppCompatActivity implements SearchVie
         Call<CitiesData> call = api.allCities(STATE_ID);
         call.enqueue(new Callback<CitiesData>() {
             @Override
-            public void onResponse(Call<CitiesData> call, Response<CitiesData> response) {
+            public void onResponse(@NonNull Call<CitiesData> call, @NonNull Response<CitiesData> response) {
                 if (response.body() != null && response.body().getCities() != null)  {
                     arrCities = response.body().getCities();
                     if (arrCities.size() > 0)    {
@@ -119,7 +120,7 @@ public class CitySelectorActivity extends AppCompatActivity implements SearchVie
             }
 
             @Override
-            public void onFailure(Call<CitiesData> call, Throwable t) {
+            public void onFailure(@NonNull Call<CitiesData> call, @NonNull Throwable t) {
 //                Log.e("STATES FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -207,7 +208,7 @@ public class CitySelectorActivity extends AppCompatActivity implements SearchVie
         }
 
         @Override
-        public void onBindViewHolder(final CitiesVH holder, final int position) {
+        public void onBindViewHolder(@NonNull final CitiesVH holder, final int position) {
             final CityData data = mFilteredList.get(position);
 
             /* SET THE CITY NAME */
@@ -228,8 +229,9 @@ public class CitySelectorActivity extends AppCompatActivity implements SearchVie
             });
         }
 
+        @NonNull
         @Override
-        public CitiesVH onCreateViewHolder(ViewGroup parent, int i) {
+        public CitiesVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
             View itemView = LayoutInflater.
                     from(parent.getContext()).

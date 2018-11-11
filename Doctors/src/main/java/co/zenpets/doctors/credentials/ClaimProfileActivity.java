@@ -3,6 +3,7 @@ package co.zenpets.doctors.credentials;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
@@ -109,7 +110,7 @@ public class ClaimProfileActivity extends AppCompatActivity {
             );
             call.enqueue(new Callback<Claim>() {
                 @Override
-                public void onResponse(Call<Claim> call, Response<Claim> response) {
+                public void onResponse(@NonNull Call<Claim> call, @NonNull Response<Claim> response) {
                     if (response.isSuccessful())    {
                         /* GET THE CLAIM ID */
                         String CLAIM_ID = response.body().getDoctorClaimID();
@@ -130,7 +131,7 @@ public class ClaimProfileActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<Claim> call, Throwable t) {
+                public void onFailure(@NonNull Call<Claim> call, @NonNull Throwable t) {
 //                    Log.e("CLAIM FAILURE", t.getMessage());
 //                    Crashlytics.logException(t);
                 }
@@ -154,7 +155,7 @@ public class ClaimProfileActivity extends AppCompatActivity {
         Call<DoctorProfileData> call = apiInterface.fetchDoctorProfile(DOCTOR_ID);
         call.enqueue(new Callback<DoctorProfileData>() {
             @Override
-            public void onResponse(Call<DoctorProfileData> call, Response<DoctorProfileData> response) {
+            public void onResponse(@NonNull Call<DoctorProfileData> call, @NonNull Response<DoctorProfileData> response) {
                 DoctorProfileData data = response.body();
 
                 if (data != null)   {
@@ -177,7 +178,7 @@ public class ClaimProfileActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<DoctorProfileData> call, Throwable t) {
+            public void onFailure(@NonNull Call<DoctorProfileData> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
                 linlaProgress.setVisibility(View.GONE);

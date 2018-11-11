@@ -2,6 +2,7 @@ package co.zenpets.doctors.utils.adapters.consultations;
 
 import android.app.Activity;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -56,7 +57,7 @@ public class RepliesAdapter extends RecyclerView.Adapter<RepliesAdapter.RepliesV
     }
 
     @Override
-    public void onBindViewHolder(final RepliesVH holder, final int position) {
+    public void onBindViewHolder(@NonNull final RepliesVH holder, final int position) {
         final ConsultationReply data = arrReplies.get(position);
 
             /* SET THE REPLY TEXT */
@@ -104,8 +105,9 @@ public class RepliesAdapter extends RecyclerView.Adapter<RepliesAdapter.RepliesV
         fetchVotes(holder.txtReplyHelpful, data.getReplyID());
     }
 
+    @NonNull
     @Override
-    public RepliesVH onCreateViewHolder(ViewGroup parent, int i) {
+    public RepliesVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
         View itemView = LayoutInflater.
                 from(parent.getContext()).
@@ -141,7 +143,7 @@ public class RepliesAdapter extends RecyclerView.Adapter<RepliesAdapter.RepliesV
         Call<Votes> callYes = apiYes.fetchYesVotes(replyID, "1");
         callYes.enqueue(new Callback<Votes>() {
             @Override
-            public void onResponse(Call<Votes> call, Response<Votes> response) {
+            public void onResponse(@NonNull Call<Votes> call, @NonNull Response<Votes> response) {
                 ArrayList<Vote> listYes = response.body().getVotes();
                 if (listYes != null && listYes.size() > 0)  {
                     HELPFUL_VOTES = String.valueOf(listYes.size());
@@ -154,7 +156,7 @@ public class RepliesAdapter extends RecyclerView.Adapter<RepliesAdapter.RepliesV
                 Call<Votes> callNo = apiNo.fetchNoVotes(replyID, "0");
                 callNo.enqueue(new Callback<Votes>() {
                     @Override
-                    public void onResponse(Call<Votes> call, Response<Votes> response) {
+                    public void onResponse(@NonNull Call<Votes> call, @NonNull Response<Votes> response) {
                         ArrayList<Vote> listNo = response.body().getVotes();
                         if (listNo != null && listNo.size() > 0)    {
                             NON_HELPFUL_VOTES = String.valueOf(listNo.size());
@@ -167,14 +169,14 @@ public class RepliesAdapter extends RecyclerView.Adapter<RepliesAdapter.RepliesV
                     }
 
                     @Override
-                    public void onFailure(Call<Votes> call, Throwable t) {
+                    public void onFailure(@NonNull Call<Votes> call, @NonNull Throwable t) {
 //                        Crashlytics.logException(t);
                     }
                 });
             }
 
             @Override
-            public void onFailure(Call<Votes> call, Throwable t) {
+            public void onFailure(@NonNull Call<Votes> call, @NonNull Throwable t) {
 //                Crashlytics.logException(t);
             }
         });

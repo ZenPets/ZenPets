@@ -1,6 +1,5 @@
 package co.zenpets.doctors.utils.models.doctors.modules;
 
-import co.zenpets.doctors.utils.models.appointments.AppointmentSlotsData;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -170,7 +169,7 @@ public interface TimingsAPI {
 
     /** CHECK THE AVAILABILITY OF THE TIMING SLOTS **/
     @GET("checkAvailability")
-    Call<AppointmentSlotsData> checkAvailability(
+    Call<TimeSlot> checkAvailability(
             @Query("doctorID") String doctorID,
             @Query("clinicID") String clinicID,
             @Query("appointmentDate") String appointmentDate,

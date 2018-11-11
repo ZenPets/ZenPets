@@ -77,7 +77,7 @@
                             android:layout_margin="2dp"
                             android:adjustViewBounds="true"
                             app:iiv_color="@color/accent"
-                            app:iiv_icon="faw_thumbs_o_up"
+                            app:iiv_icon="faw_thumbs_up2"
                             app:iiv_size="11dp" />
 
                         <android.support.v7.widget.AppCompatTextView

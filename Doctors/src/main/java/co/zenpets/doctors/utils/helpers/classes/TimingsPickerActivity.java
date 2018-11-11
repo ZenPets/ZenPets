@@ -3,6 +3,7 @@ package co.zenpets.doctors.utils.helpers.classes;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
@@ -448,7 +449,7 @@ public class TimingsPickerActivity extends AppCompatActivity {
                         SAT_MOR_FROM, SAT_MOR_TO, SAT_AFT_FROM, SAT_AFT_TO);
                 call.enqueue(new Callback<Timings>() {
                     @Override
-                    public void onResponse(Call<Timings> call, Response<Timings> response) {
+                    public void onResponse(@NonNull Call<Timings> call, @NonNull Response<Timings> response) {
                         if (response.isSuccessful())    {
                             /* FINISH THE ACTIVITY */
                             Toast.makeText(getApplicationContext(), "Successfully added the new Timings", Toast.LENGTH_SHORT).show();
@@ -461,7 +462,7 @@ public class TimingsPickerActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<Timings> call, Throwable t) {
+                    public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                        Log.e("FAILURE", t.getMessage());
 //                        Crashlytics.logException(t);
                     }

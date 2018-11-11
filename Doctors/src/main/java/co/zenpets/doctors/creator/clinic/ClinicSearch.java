@@ -2,6 +2,7 @@ package co.zenpets.doctors.creator.clinic;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -117,7 +118,7 @@ public class ClinicSearch extends AppCompatActivity implements SearchView.OnQuer
         Call<ClinicsData> call = api.clinicSearch(query);
         call.enqueue(new Callback<ClinicsData>() {
             @Override
-            public void onResponse(Call<ClinicsData> call, Response<ClinicsData> response) {
+            public void onResponse(@NonNull Call<ClinicsData> call, @NonNull Response<ClinicsData> response) {
                 arrClinics = response.body().getClinics();
                 if (arrClinics != null && arrClinics.size() > 0)    {
                     /* SET THE ADAPTER TO THE RECYCLER VIEW */
@@ -137,7 +138,7 @@ public class ClinicSearch extends AppCompatActivity implements SearchView.OnQuer
             }
 
             @Override
-            public void onFailure(Call<ClinicsData> call, Throwable t) {
+            public void onFailure(@NonNull Call<ClinicsData> call, @NonNull Throwable t) {
 
             }
         });

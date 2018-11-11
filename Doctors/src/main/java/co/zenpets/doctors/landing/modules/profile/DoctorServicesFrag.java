@@ -67,7 +67,7 @@ public class DoctorServicesFrag extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         /* CAST THE LAYOUT TO A NEW VIEW INSTANCE */
         View view = inflater.inflate(R.layout.doctor_details_service_list, container, false);
@@ -90,7 +90,7 @@ public class DoctorServicesFrag extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         /* CONFIGURE THE RECYCLER VIEW **/
@@ -120,7 +120,7 @@ public class DoctorServicesFrag extends Fragment {
         Call<Services> call = apiInterface.fetchDoctorServices(DOCTOR_ID);
         call.enqueue(new Callback<Services>() {
             @Override
-            public void onResponse(Call<Services> call, Response<Services> response) {
+            public void onResponse(@NonNull Call<Services> call, @NonNull Response<Services> response) {
                 arrServices = response.body().getServices();
                 if (arrServices != null && arrServices.size() > 0)    {
                     /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
@@ -140,7 +140,7 @@ public class DoctorServicesFrag extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Services> call, Throwable t) {
+            public void onFailure(@NonNull Call<Services> call, @NonNull Throwable t) {
             }
         });
     }
@@ -163,7 +163,7 @@ public class DoctorServicesFrag extends Fragment {
                         Call<Service> call = apiInterface.newDoctorService(DOCTOR_ID, input.toString());
                         call.enqueue(new Callback<Service>() {
                             @Override
-                            public void onResponse(Call<Service> call, Response<Service> response) {
+                            public void onResponse(@NonNull Call<Service> call, @NonNull Response<Service> response) {
                                 if (response.isSuccessful())    {
                                     dialog.dismiss();
                                     Toast.makeText(getActivity(), "Successfully added a new service", Toast.LENGTH_SHORT).show();
@@ -179,7 +179,7 @@ public class DoctorServicesFrag extends Fragment {
                             }
 
                             @Override
-                            public void onFailure(Call<Service> call, Throwable t) {
+                            public void onFailure(@NonNull Call<Service> call, @NonNull Throwable t) {
 //                                Log.e("FAILURE", t.getMessage());
 //                                Crashlytics.logException(t);
                             }
@@ -227,7 +227,7 @@ public class DoctorServicesFrag extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(ClinicsVH holder, final int position) {
+        public void onBindViewHolder(@NonNull ClinicsVH holder, final int position) {
             final Service data = arrServices.get(position);
 
             /* SET THE SERVICE NAME */
@@ -262,7 +262,7 @@ public class DoctorServicesFrag extends Fragment {
                                                     Call<Service> call = apiInterface.updateServiceDetails(data.getDoctorServiceID(), DOCTOR_ID, input.toString());
                                                     call.enqueue(new Callback<Service>() {
                                                         @Override
-                                                        public void onResponse(Call<Service> call, Response<Service> response) {
+                                                        public void onResponse(@NonNull Call<Service> call, @NonNull Response<Service> response) {
                                                             if (response.isSuccessful())    {
                                                                 dialog.dismiss();
                                                                 Toast.makeText(getActivity(), "Successfully updated record...", Toast.LENGTH_SHORT).show();
@@ -278,7 +278,7 @@ public class DoctorServicesFrag extends Fragment {
                                                         }
 
                                                         @Override
-                                                        public void onFailure(Call<Service> call, Throwable t) {
+                                                        public void onFailure(@NonNull Call<Service> call, @NonNull Throwable t) {
 //                                                            Log.e("FAILURE", t.getMessage());
 //                                                            Crashlytics.logException(t);
                                                         }
@@ -334,7 +334,7 @@ public class DoctorServicesFrag extends Fragment {
             Call<Service> call = api.deleteService(doctorServiceID);
             call.enqueue(new Callback<Service>() {
                 @Override
-                public void onResponse(Call<Service> call, Response<Service> response) {
+                public void onResponse(@NonNull Call<Service> call, @NonNull Response<Service> response) {
                     if (response.isSuccessful())    {
                         /* SHOW THE SUCCESS MESSAGE */
                         Toast.makeText(getActivity(), "Successfully deleted...", Toast.LENGTH_SHORT).show();
@@ -353,15 +353,16 @@ public class DoctorServicesFrag extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<Service> call, Throwable t) {
+                public void onFailure(@NonNull Call<Service> call, @NonNull Throwable t) {
 //                    Log.e("DELETE FAILURE", t.getMessage());
 //                    Crashlytics.logException(t);
                 }
             });
         }
 
+        @NonNull
         @Override
-        public ClinicsVH onCreateViewHolder(ViewGroup parent, int i) {
+        public ClinicsVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
             View itemView = LayoutInflater.
                     from(parent.getContext()).

@@ -1,4 +1,4 @@
-package biz.zenpets.doctors.landing.modules;
+package co.zenpets.doctors.landing.modules;
 
 //public class ProfileFragment extends Fragment
 //        implements FetchDoctorProfileInterface,

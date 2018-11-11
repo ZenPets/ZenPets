@@ -80,7 +80,7 @@
                     android:adjustViewBounds="true"
                     android:padding="5dp"
                     app:iiv_color="@color/tertiary_text"
-                    app:iiv_icon="faw_hospital_o"
+                    app:iiv_icon="faw_hospital2"
                     app:iiv_size="16dp" />
 
                 <android.support.v7.widget.AppCompatTextView

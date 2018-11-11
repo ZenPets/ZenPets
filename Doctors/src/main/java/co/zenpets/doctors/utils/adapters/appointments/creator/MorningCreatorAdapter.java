@@ -2,6 +2,7 @@ package co.zenpets.doctors.utils.adapters.appointments.creator;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 
 import co.zenpets.doctors.R;
 import co.zenpets.doctors.creator.appointment.AppointmentClientSelector;
-import co.zenpets.doctors.utils.models.appointments.AppointmentSlotsData;
+import co.zenpets.doctors.utils.models.doctors.modules.TimeSlot;
 
 
 public class MorningCreatorAdapter extends RecyclerView.Adapter<MorningCreatorAdapter.SlotsVH> {
@@ -22,9 +23,9 @@ public class MorningCreatorAdapter extends RecyclerView.Adapter<MorningCreatorAd
     private final Activity activity;
 
     /** ARRAY LIST TO GET DATA FROM THE ACTIVITY **/
-    private final ArrayList<AppointmentSlotsData> arrSlots;
+    private final ArrayList<TimeSlot> arrSlots;
 
-    public MorningCreatorAdapter(Activity activity, ArrayList<AppointmentSlotsData> arrSlots) {
+    public MorningCreatorAdapter(Activity activity, ArrayList<TimeSlot> arrSlots) {
 
         /* CAST THE ACTIVITY IN THE GLOBAL ACTIVITY INSTANCE */
         this.activity = activity;
@@ -39,8 +40,8 @@ public class MorningCreatorAdapter extends RecyclerView.Adapter<MorningCreatorAd
     }
 
     @Override
-    public void onBindViewHolder(SlotsVH holder, final int position) {
-        final AppointmentSlotsData data = arrSlots.get(position);
+    public void onBindViewHolder(@NonNull SlotsVH holder, final int position) {
+        final TimeSlot data = arrSlots.get(position);
 
         /* SET THE APPOINTMENT TIME */
         if (data.getAppointmentTime() != null)   {
@@ -74,8 +75,9 @@ public class MorningCreatorAdapter extends RecyclerView.Adapter<MorningCreatorAd
         }
     }
 
+    @NonNull
     @Override
-    public SlotsVH onCreateViewHolder(ViewGroup parent, int i) {
+    public SlotsVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
         View itemView = LayoutInflater.
                 from(parent.getContext()).

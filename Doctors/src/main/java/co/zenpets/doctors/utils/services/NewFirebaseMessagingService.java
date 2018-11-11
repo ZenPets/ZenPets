@@ -58,17 +58,17 @@ public class NewFirebaseMessagingService extends FirebaseMessagingService {
             Log.e("PAYLOAD", String.valueOf(payload));
 
             /* THE REFERENCE */
-            String strReference = null;
+            String strReference;
 
             /* THE USER DETAILS */
             String USER_ID = null;
-            String USER_NAME = null;
-            String USER_DISPLAY_PROFILE = null;
+            String USER_NAME;
+            String USER_DISPLAY_PROFILE;
 
             /* THE APPOINTMENT DETAILS */
-            String APPOINTMENT_ID = null;
-            String APPOINTMENT_DATE = null;
-            String APPOINTMENT_TIME = null;
+            String APPOINTMENT_ID;
+            String APPOINTMENT_DATE;
+            String APPOINTMENT_TIME;
 
             if (payload.has("notificationReference")) {
                 Intent intent;

@@ -2,6 +2,7 @@ package co.zenpets.doctors.utils.adapters.doctors.reviews;
 
 import android.app.Activity;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -45,7 +46,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
     }
 
     @Override
-    public void onBindViewHolder(ReviewsVH holder, final int position) {
+    public void onBindViewHolder(@NonNull ReviewsVH holder, final int position) {
         ReviewData data = arrReviews.get(position);
 
         /* SET THE RECOMMEND STATUS */
@@ -92,8 +93,9 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
         }
     }
 
+    @NonNull
     @Override
-    public ReviewsVH onCreateViewHolder(ViewGroup parent, int i) {
+    public ReviewsVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
         View itemView = LayoutInflater.
                 from(parent.getContext()).

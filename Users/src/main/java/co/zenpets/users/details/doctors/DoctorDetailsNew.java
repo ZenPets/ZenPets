@@ -293,26 +293,26 @@ public class DoctorDetailsNew extends AppCompatActivity {
         /* GET THE INCOMING DATA */
         getIncomingData();
 
-        /* FETCH THE DOCTOR'S SUBSCRIPTION */
+        /* FETCH THE DOCTOR'S SUBSCRIPTION *//*
         fetchDoctorSubscription();
 
-        /* FETCH THE DOCTOR'S EDUCATIONAL QUALIFICATIONS */
+        *//* FETCH THE DOCTOR'S EDUCATIONAL QUALIFICATIONS *//*
         fetchDoctorEducation();
 
-        /* SHOW THE PROGRESS AND FETCH THE FIRST 3 REVIEWS FOR THE DOCTOR */
+        *//* SHOW THE PROGRESS AND FETCH THE FIRST 3 REVIEWS FOR THE DOCTOR *//*
         linlaReviewsProgress.setVisibility(View.VISIBLE);
         listReviews.setVisibility(View.GONE);
         fetchReviewCount();
         fetchDoctorReviews();
 
-        /* SHOW THE PROGRESS AND FETCH A SUBSET OF THE DOCTOR'S SERVICES */
+        *//* SHOW THE PROGRESS AND FETCH A SUBSET OF THE DOCTOR'S SERVICES *//*
         linlaServicesProgress.setVisibility(View.VISIBLE);
         listServices.setVisibility(View.GONE);
         fetchServicesCount();
         fetchDoctorServicesSubset();
 
-        /* FETCH CLINIC IMAGES */
-        fetchClinicImages();
+        *//* FETCH CLINIC IMAGES *//*
+        fetchClinicImages();*/
 
         /* CONFIGURE THE APP BAR LAYOUT */
         appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -495,6 +495,27 @@ public class DoctorDetailsNew extends AppCompatActivity {
                         saturdayMorningTimings();
                         saturdayAfternoonTimings();
                     }
+
+                    /* FETCH THE DOCTOR'S SUBSCRIPTION */
+                    fetchDoctorSubscription();
+
+                    /* FETCH THE DOCTOR'S EDUCATIONAL QUALIFICATIONS */
+                    fetchDoctorEducation();
+
+                    /* SHOW THE PROGRESS AND FETCH THE FIRST 3 REVIEWS FOR THE DOCTOR */
+                    linlaReviewsProgress.setVisibility(View.VISIBLE);
+                    listReviews.setVisibility(View.GONE);
+                    fetchReviewCount();
+                    fetchDoctorReviews();
+
+                    /* SHOW THE PROGRESS AND FETCH A SUBSET OF THE DOCTOR'S SERVICES */
+                    linlaServicesProgress.setVisibility(View.VISIBLE);
+                    listServices.setVisibility(View.GONE);
+                    fetchServicesCount();
+                    fetchDoctorServicesSubset();
+
+                    /* FETCH CLINIC IMAGES */
+                    fetchClinicImages();
 
                     /* HIDE THE PROGRESS AFTER FETCHING THE DATA */
                     linlaProgress.setVisibility(View.GONE);

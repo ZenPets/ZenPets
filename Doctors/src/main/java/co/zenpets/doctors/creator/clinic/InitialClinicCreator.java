@@ -222,7 +222,7 @@ public class InitialClinicCreator extends AppCompatActivity {
         Call<StatesData> call = api.allStates("51");
         call.enqueue(new Callback<StatesData>() {
             @Override
-            public void onResponse(Call<StatesData> call, Response<StatesData> response) {
+            public void onResponse(@NonNull Call<StatesData> call, @NonNull Response<StatesData> response) {
                 arrStates = response.body().getStates();
                 if (arrStates != null && arrStates.size() > 0)  {
                     /* INSTANTIATE THE STATES ADAPTER */
@@ -235,7 +235,7 @@ public class InitialClinicCreator extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<StatesData> call, Throwable t) {
+            public void onFailure(@NonNull Call<StatesData> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -248,7 +248,7 @@ public class InitialClinicCreator extends AppCompatActivity {
         Call<CitiesData> call = api.allCities(STATE_ID);
         call.enqueue(new Callback<CitiesData>() {
             @Override
-            public void onResponse(Call<CitiesData> call, Response<CitiesData> response) {
+            public void onResponse(@NonNull Call<CitiesData> call, @NonNull Response<CitiesData> response) {
                 arrCities = response.body().getCities();
                 if (arrCities != null && arrCities.size() > 0)  {
                     /* INSTANTIATE THE CITIES ADAPTER */
@@ -260,7 +260,7 @@ public class InitialClinicCreator extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<CitiesData> call, Throwable t) {
+            public void onFailure(@NonNull Call<CitiesData> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -273,7 +273,7 @@ public class InitialClinicCreator extends AppCompatActivity {
         Call<LocalitiesData> call = api.allLocalities(CITY_ID);
         call.enqueue(new Callback<LocalitiesData>() {
             @Override
-            public void onResponse(Call<LocalitiesData> call, Response<LocalitiesData> response) {
+            public void onResponse(@NonNull Call<LocalitiesData> call, @NonNull Response<LocalitiesData> response) {
                 arrLocalities = response.body().getLocalities();
                 if (arrLocalities != null && arrLocalities.size() > 0)  {
                     /* INSTANTIATE THE LOCALITIES ADAPTER */
@@ -285,7 +285,7 @@ public class InitialClinicCreator extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<LocalitiesData> call, Throwable t) {
+            public void onFailure(@NonNull Call<LocalitiesData> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -458,7 +458,7 @@ public class InitialClinicCreator extends AppCompatActivity {
         Call<String> call = api.newDoctorClinic(DOCTOR_ID, result, "Pending");
         call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                 if (response.isSuccessful())    {
                     /* DISMISS THE DIALOG */
                     dialog.dismiss();
@@ -473,7 +473,7 @@ public class InitialClinicCreator extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }

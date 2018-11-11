@@ -143,7 +143,7 @@ public class KennelReviewModifier extends AppCompatActivity {
                     KENNEL_RATING = review.getKennelRating();
                     if (KENNEL_RATING != null && !KENNEL_RATING.equalsIgnoreCase("null")) {
                         Double dblRating = Double.valueOf(KENNEL_RATING);
-                        String finalRating = String.format("%.1f", dblRating);
+                        String finalRating = String.format(Locale.getDefault(), "%.1f", dblRating);
                         ratingKennel.setRating(Float.parseFloat(finalRating));
                     } else {
                         ratingKennel.setRating(0);

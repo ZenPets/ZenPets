@@ -122,7 +122,7 @@ public class ClinicImagesManager extends AppCompatActivity {
         retrofit2.Call<ImagesData> call = apiInterface.fetchClinicImages(CLINIC_ID);
         call.enqueue(new retrofit2.Callback<ImagesData>() {
             @Override
-            public void onResponse(Call<ImagesData> call, Response<ImagesData> response) {
+            public void onResponse(@NonNull Call<ImagesData> call, @NonNull Response<ImagesData> response) {
                 arrImages = response.body().getImages();
                 if (arrImages != null && arrImages.size() > 0)  {
                     /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
@@ -142,7 +142,7 @@ public class ClinicImagesManager extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(retrofit2.Call<ImagesData> call, Throwable t) {
+            public void onFailure(@NonNull retrofit2.Call<ImagesData> call, @NonNull Throwable t) {
             }
         });
     }

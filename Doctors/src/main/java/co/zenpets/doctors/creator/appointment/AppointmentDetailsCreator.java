@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
@@ -111,7 +112,7 @@ public class AppointmentDetailsCreator extends AppCompatActivity {
         Call<DoctorDetail> call = api.fetchDoctorDetails(DOCTOR_ID, CLINIC_ID);
         call.enqueue(new Callback<DoctorDetail>() {
             @Override
-            public void onResponse(Call<DoctorDetail> call, Response<DoctorDetail> response) {
+            public void onResponse(@NonNull Call<DoctorDetail> call, @NonNull Response<DoctorDetail> response) {
                 DoctorDetail data = response.body();
                 if (data != null) {
 
@@ -134,7 +135,7 @@ public class AppointmentDetailsCreator extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<DoctorDetail> call, Throwable t) {
+            public void onFailure(@NonNull Call<DoctorDetail> call, @NonNull Throwable t) {
 //                Crashlytics.logException(t);
             }
         });
@@ -146,7 +147,7 @@ public class AppointmentDetailsCreator extends AppCompatActivity {
         Call<Client> call = api.fetchClientDetails(CLIENT_ID);
         call.enqueue(new Callback<Client>() {
             @Override
-            public void onResponse(Call<Client> call, Response<Client> response) {
+            public void onResponse(@NonNull Call<Client> call, @NonNull Response<Client> response) {
                 Client data = response.body();
                 if (data != null)   {
                     USER_ID = data.getUserID();
@@ -185,7 +186,7 @@ public class AppointmentDetailsCreator extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Client> call, Throwable t) {
+            public void onFailure(@NonNull Call<Client> call, @NonNull Throwable t) {
             }
         });
     }
@@ -251,7 +252,7 @@ public class AppointmentDetailsCreator extends AppCompatActivity {
         Call<Reasons> call = api.visitReasons();
         call.enqueue(new Callback<Reasons>() {
             @Override
-            public void onResponse(Call<Reasons> call, Response<Reasons> response) {
+            public void onResponse(@NonNull Call<Reasons> call, @NonNull Response<Reasons> response) {
                 /* CAST THE RESULTS IN THE GLOBAL INSTANCE */
                 arrReasons = response.body().getReasons();
 
@@ -260,7 +261,7 @@ public class AppointmentDetailsCreator extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Reasons> call, Throwable t) {
+            public void onFailure(@NonNull Call<Reasons> call, @NonNull Throwable t) {
 //                Crashlytics.logException(t);
 //                Log.e("REASONS FAILURE", t.getMessage());
             }
@@ -310,7 +311,7 @@ public class AppointmentDetailsCreator extends AppCompatActivity {
         );
         call.enqueue(new Callback<AppointmentData>() {
             @Override
-            public void onResponse(Call<AppointmentData> call, Response<AppointmentData> response) {
+            public void onResponse(@NonNull Call<AppointmentData> call, @NonNull Response<AppointmentData> response) {
                 if (response.isSuccessful())    {
                     /* DISMISS THE DIALOG */
                     dialog.dismiss();
@@ -328,7 +329,7 @@ public class AppointmentDetailsCreator extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<AppointmentData> call, Throwable t) {
+            public void onFailure(@NonNull Call<AppointmentData> call, @NonNull Throwable t) {
 //                Crashlytics.logException(t);
             }
         });

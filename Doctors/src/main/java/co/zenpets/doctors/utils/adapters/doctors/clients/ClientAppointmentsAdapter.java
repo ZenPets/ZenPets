@@ -50,7 +50,7 @@ public class ClientAppointmentsAdapter extends RecyclerView.Adapter<ClientAppoin
     }
 
     @Override
-    public void onBindViewHolder(PatientsVH holder, final int position) {
+    public void onBindViewHolder(@NonNull PatientsVH holder, final int position) {
         final ClientAppointment data = arrClientAppointments.get(position);
 
         /* SET THE TIME LINE VIEW GRAPHIC */
@@ -115,8 +115,9 @@ public class ClientAppointmentsAdapter extends RecyclerView.Adapter<ClientAppoin
         });
     }
 
+    @NonNull
     @Override
-    public PatientsVH onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PatientsVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.
                 from(parent.getContext()).

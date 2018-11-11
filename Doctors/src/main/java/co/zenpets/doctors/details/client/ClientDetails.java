@@ -2,6 +2,7 @@ package co.zenpets.doctors.details.client;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
@@ -92,7 +93,7 @@ public class ClientDetails extends AppCompatActivity {
         Call<Client> call = api.fetchClientDetails(CLIENT_ID);
         call.enqueue(new Callback<Client>() {
             @Override
-            public void onResponse(Call<Client> call, Response<Client> response) {
+            public void onResponse(@NonNull Call<Client> call, @NonNull Response<Client> response) {
                 USER_ID = response.body().getUserID();
                 USER_NAME = response.body().getUserName();
                 USER_EMAIL = response.body().getUserEmail();
@@ -131,7 +132,7 @@ public class ClientDetails extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Client> call, Throwable t) {
+            public void onFailure(@NonNull Call<Client> call, @NonNull Throwable t) {
             }
         });
     }
@@ -141,7 +142,7 @@ public class ClientDetails extends AppCompatActivity {
         Call<ClientAppointments> call = apiInterface.getClientAppointments(DOCTOR_ID, USER_ID);
         call.enqueue(new Callback<ClientAppointments>() {
             @Override
-            public void onResponse(Call<ClientAppointments> call, Response<ClientAppointments> response) {
+            public void onResponse(@NonNull Call<ClientAppointments> call, @NonNull Response<ClientAppointments> response) {
                 arrClientAppointments = response.body().getAppointments();
 
                 /* CHECK IF RESULTS WERE RETURNED */
@@ -163,7 +164,7 @@ public class ClientDetails extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ClientAppointments> call, Throwable t) {
+            public void onFailure(@NonNull Call<ClientAppointments> call, @NonNull Throwable t) {
             }
         });
     }

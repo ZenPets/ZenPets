@@ -3,6 +3,7 @@ package co.zenpets.doctors.landing.modules.profile;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatSpinner;
@@ -87,7 +88,7 @@ public class DoctorTimingsFrag extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         /* CAST THE LAYOUT TO A NEW VIEW INSTANCE */
         View view = inflater.inflate(R.layout.doctor_details_timings, container, false);
@@ -110,7 +111,7 @@ public class DoctorTimingsFrag extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         /* GET THE DOCTOR'S ID */
@@ -149,7 +150,7 @@ public class DoctorTimingsFrag extends Fragment {
         Call<DoctorClinics> call = api.fetchDoctorClinics(DOCTOR_ID);
         call.enqueue(new Callback<DoctorClinics>() {
             @Override
-            public void onResponse(Call<DoctorClinics> call, Response<DoctorClinics> response) {
+            public void onResponse(@NonNull Call<DoctorClinics> call, @NonNull Response<DoctorClinics> response) {
                 arrClinics = response.body().getClinics();
                 if (arrClinics != null && arrClinics.size() > 0)    {
                     spnClinics.setAdapter(new ClinicSelectorAdapter(getActivity(),
@@ -159,7 +160,7 @@ public class DoctorTimingsFrag extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<DoctorClinics> call, Throwable t) {
+            public void onFailure(@NonNull Call<DoctorClinics> call, @NonNull Throwable t) {
             }
         });
     }
@@ -170,7 +171,7 @@ public class DoctorTimingsFrag extends Fragment {
         Call<Timings> call = apiInterface.fetchDoctorTimings(DOCTOR_ID, CLINIC_ID);
         call.enqueue(new Callback<Timings>() {
             @Override
-            public void onResponse(Call<Timings> call, Response<Timings> response) {
+            public void onResponse(@NonNull Call<Timings> call, @NonNull Response<Timings> response) {
                 Timings data = response.body();
                 assert data != null;
                 Boolean blnError = data.getError();
@@ -326,7 +327,7 @@ public class DoctorTimingsFrag extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Timings> call, Throwable t) {
+            public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TIMINGS FAILURE", t.getMessage());
 
                 /*  SHOW THE EMPTY LAYOUT AND HIDE THE TIMINGS SCROLL*/

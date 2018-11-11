@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -198,7 +199,7 @@ public class ClinicDetails extends AppCompatActivity {
         Call<ClinicData> call = apiInterface.fetchClinicDetails(CLINIC_ID);
         call.enqueue(new Callback<ClinicData>() {
             @Override
-            public void onResponse(Call<ClinicData> call, Response<ClinicData> response) {
+            public void onResponse(@NonNull Call<ClinicData> call, @NonNull Response<ClinicData> response) {
                 DOCTOR_ID = response.body().getDoctorID();
                 CLINIC_NAME = response.body().getClinicName();
                 CLINIC_ADDRESS = response.body().getClinicAddress();
@@ -272,7 +273,7 @@ public class ClinicDetails extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ClinicData> call, Throwable t) {
+            public void onFailure(@NonNull Call<ClinicData> call, @NonNull Throwable t) {
 //                Crashlytics.logException(t);
             }
         });
@@ -284,7 +285,7 @@ public class ClinicDetails extends AppCompatActivity {
         Call<ImagesData> call = apiInterface.fetchClinicImages(CLINIC_ID);
         call.enqueue(new Callback<ImagesData>() {
             @Override
-            public void onResponse(Call<ImagesData> call, Response<ImagesData> response) {
+            public void onResponse(@NonNull Call<ImagesData> call, @NonNull Response<ImagesData> response) {
                 arrImages = response.body().getImages();
                 if (arrImages != null && arrImages.size() > 0)  {
                     /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY LAYOUT */
@@ -304,7 +305,7 @@ public class ClinicDetails extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ImagesData> call, Throwable t) {
+            public void onFailure(@NonNull Call<ImagesData> call, @NonNull Throwable t) {
 //                Crashlytics.logException(t);
             }
         });
@@ -319,7 +320,7 @@ public class ClinicDetails extends AppCompatActivity {
         Call<Doctors> call = api.fetchClinicDoctors(CLINIC_ID);
         call.enqueue(new Callback<Doctors>() {
             @Override
-            public void onResponse(Call<Doctors> call, Response<Doctors> response) {
+            public void onResponse(@NonNull Call<Doctors> call, @NonNull Response<Doctors> response) {
                 if (response.body() != null && response.body().getDoctors() != null)    {
                     arrDoctors = response.body().getDoctors();
                     if (arrDoctors.size() > 0)  {
@@ -337,7 +338,7 @@ public class ClinicDetails extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Doctors> call, Throwable t) {
+            public void onFailure(@NonNull Call<Doctors> call, @NonNull Throwable t) {
 //                Log.e("DOCTOR FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }

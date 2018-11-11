@@ -51,10 +51,10 @@
                 android:layout_marginRight="10dp"
                 android:gravity="center"
                 android:padding="11dp"
-                android:text="Either we currently do not serve this Country, or an error occurred fetching the list of States..."
+                android:text="Either we currently do not serve in this State, or an error occurred while fetching the list of States..."
                 android:textColor="@color/tertiary_text"
                 android:textSize="16sp"
-                app:fontFamily="@font/lato_light" />
+                app:fontFamily="@font/roboto_condensed_light" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

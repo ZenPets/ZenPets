@@ -62,7 +62,7 @@
                         android:text="@string/doctor_details_doc_name"
                         android:textColor="@android:color/primary_text_dark"
                         android:textSize="18sp"
-                        app:fontFamily="@font/lato_bold" />
+                        app:fontFamily="@font/roboto_bold" />
                 </LinearLayout>
             </FrameLayout>
 

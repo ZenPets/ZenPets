@@ -3,6 +3,7 @@ package co.zenpets.doctors.utils.adapters.doctors.claim;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
@@ -43,7 +44,7 @@ public class ClaimProfileAdapter extends RecyclerView.Adapter<ClaimProfileAdapte
     }
 
     @Override
-    public void onBindViewHolder(final ClinicsVH holder, final int position) {
+    public void onBindViewHolder(@NonNull final ClinicsVH holder, final int position) {
         final Doctor data = arrDoctors.get(position);
 
         /* SET THE DOCTOR'S NAME */
@@ -126,7 +127,7 @@ public class ClaimProfileAdapter extends RecyclerView.Adapter<ClaimProfileAdapte
         SpannableStringBuilder spanTxt = new SpannableStringBuilder(activity.getString(R.string.claim_profile_profile_unclaimed));
         spanTxt.setSpan(new ClickableSpan() {
             @Override
-            public void onClick(View widget) {
+            public void onClick(@NonNull View widget) {
                 Intent intent = new Intent(activity, ClaimProfileActivity.class);
                 intent.putExtra("DOCTOR_ID", doctorID);
                 activity.startActivity(intent);
@@ -137,8 +138,9 @@ public class ClaimProfileAdapter extends RecyclerView.Adapter<ClaimProfileAdapte
         txtProfileClaimed.setText(spanTxt, AppCompatTextView.BufferType.SPANNABLE);
     }
 
+    @NonNull
     @Override
-    public ClinicsVH onCreateViewHolder(ViewGroup parent, int i) {
+    public ClinicsVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
         View itemView = LayoutInflater.
                 from(parent.getContext()).

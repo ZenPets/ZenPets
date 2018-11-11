@@ -125,7 +125,7 @@ public class DoctorDetailsFrag extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         /* CAST THE LAYOUT TO A NEW VIEW INSTANCE */
         View view = inflater.inflate(R.layout.doctor_details_frag, container, false);
@@ -148,7 +148,7 @@ public class DoctorDetailsFrag extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         /* THE EASY IMAGE CONFIGURATION */
@@ -184,7 +184,7 @@ public class DoctorDetailsFrag extends Fragment {
         Call<DoctorProfileData> call = apiInterface.fetchDoctorProfile(DOCTOR_ID);
         call.enqueue(new Callback<DoctorProfileData>() {
             @Override
-            public void onResponse(Call<DoctorProfileData> call, Response<DoctorProfileData> response) {
+            public void onResponse(@NonNull Call<DoctorProfileData> call, @NonNull Response<DoctorProfileData> response) {
                 /* SET THE INTERNAL ID */
                 txtInternalID.setText(getString(R.string.doctor_profile_id_placeholder, DOCTOR_ID));
 
@@ -239,7 +239,7 @@ public class DoctorDetailsFrag extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<DoctorProfileData> call, Throwable t) {
+            public void onFailure(@NonNull Call<DoctorProfileData> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }

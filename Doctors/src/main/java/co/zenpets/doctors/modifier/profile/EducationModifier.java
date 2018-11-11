@@ -3,6 +3,7 @@ package co.zenpets.doctors.modifier.profile;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
@@ -121,7 +122,7 @@ public class EducationModifier extends AppCompatActivity {
         Call<Qualification> call = api.fetchEducationDetails(EDUCATION_ID);
         call.enqueue(new Callback<Qualification>() {
             @Override
-            public void onResponse(Call<Qualification> call, Response<Qualification> response) {
+            public void onResponse(@NonNull Call<Qualification> call, @NonNull Response<Qualification> response) {
                 Qualification data = response.body();
                 if (data != null)   {
                     /* GET THE DOCTOR ID */
@@ -145,7 +146,7 @@ public class EducationModifier extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Qualification> call, Throwable t) {
+            public void onFailure(@NonNull Call<Qualification> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -263,7 +264,7 @@ public class EducationModifier extends AppCompatActivity {
                 EDUCATION_ID, DOCTOR_ID, COLLEGE_NAME, EDUCATION_NAME, EDUCATION_YEAR);
         call.enqueue(new Callback<Qualification>() {
             @Override
-            public void onResponse(Call<Qualification> call, Response<Qualification> response) {
+            public void onResponse(@NonNull Call<Qualification> call, @NonNull Response<Qualification> response) {
                 if (response.isSuccessful())    {
                     /* FINISH THE ACTIVITY */
                     Toast.makeText(getApplicationContext(), "Successfully updated record...", Toast.LENGTH_SHORT).show();
@@ -276,7 +277,7 @@ public class EducationModifier extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Qualification> call, Throwable t) {
+            public void onFailure(@NonNull Call<Qualification> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }

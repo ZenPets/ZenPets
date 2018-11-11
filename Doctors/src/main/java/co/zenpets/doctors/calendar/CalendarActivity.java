@@ -173,7 +173,7 @@ public class CalendarActivity extends AppCompatActivity
         Call<DoctorClinics> call = api.fetchDoctorClinics(DOCTOR_ID);
         call.enqueue(new Callback<DoctorClinics>() {
             @Override
-            public void onResponse(Call<DoctorClinics> call, Response<DoctorClinics> response) {
+            public void onResponse(@NonNull Call<DoctorClinics> call, @NonNull Response<DoctorClinics> response) {
 //                String strResponse = new Gson().toJson(response);
 //                try {
 //                    JSONObject JORoot = new JSONObject(strResponse);
@@ -196,7 +196,7 @@ public class CalendarActivity extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<DoctorClinics> call, Throwable t) {
+            public void onFailure(@NonNull Call<DoctorClinics> call, @NonNull Throwable t) {
 //                Crashlytics.logException(t);
             }
         });
@@ -209,7 +209,7 @@ public class CalendarActivity extends AppCompatActivity
                 DOCTOR_ID, CLINIC_ID, String.valueOf(APPOINTMENT_YEAR), MONTH);
         call.enqueue(new Callback<AppointmentsData>() {
             @Override
-            public void onResponse(Call<AppointmentsData> call, Response<AppointmentsData> response) {
+            public void onResponse(@NonNull Call<AppointmentsData> call, @NonNull Response<AppointmentsData> response) {
                 ArrayList<AppointmentData> arrAppointments = response.body().getAppointments();
                 if (arrAppointments != null && arrAppointments.size() > 0)  {
                     for (int i = 0; i < arrAppointments.size(); i++) {
@@ -250,7 +250,7 @@ public class CalendarActivity extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<AppointmentsData> call, Throwable t) {
+            public void onFailure(@NonNull Call<AppointmentsData> call, @NonNull Throwable t) {
 //                Crashlytics.logException(t);
             }
         });
@@ -262,7 +262,7 @@ public class CalendarActivity extends AppCompatActivity
         Call<AppointmentsData> call = api.fetchDoctorTodayAppointments(DOCTOR_ID, CLINIC_ID, APPOINTMENT_DATE);
         call.enqueue(new Callback<AppointmentsData>() {
             @Override
-            public void onResponse(Call<AppointmentsData> call, Response<AppointmentsData> response) {
+            public void onResponse(@NonNull Call<AppointmentsData> call, @NonNull Response<AppointmentsData> response) {
                 arrAppointments = response.body().getAppointments();
                 if (arrAppointments != null && arrAppointments.size() > 0)    {
                     /* SHOW THE RECYCLER VIEW AND HIDE THE EMPTY APPOINTMENTS LAYOUT */
@@ -282,7 +282,7 @@ public class CalendarActivity extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<AppointmentsData> call, Throwable t) {
+            public void onFailure(@NonNull Call<AppointmentsData> call, @NonNull Throwable t) {
 //                Crashlytics.logException(t);
             }
         });
@@ -375,7 +375,7 @@ public class CalendarActivity extends AppCompatActivity
         Call<Timings> call = apiInterface.fetchDoctorTimings(DOCTOR_ID, CLINIC_ID);
         call.enqueue(new Callback<Timings>() {
             @Override
-            public void onResponse(Call<Timings> call, Response<Timings> response) {
+            public void onResponse(@NonNull Call<Timings> call, @NonNull Response<Timings> response) {
                 String timingsID = response.body().getTimingsID();
                 if (timingsID != null)  {
                 } else {
@@ -412,7 +412,7 @@ public class CalendarActivity extends AppCompatActivity
             }
 
             @Override
-            public void onFailure(Call<Timings> call, Throwable t) {
+            public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
             }
         });
     }

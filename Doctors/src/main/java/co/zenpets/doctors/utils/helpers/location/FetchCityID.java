@@ -1,4 +1,4 @@
-package biz.zenpets.doctors.utils.helpers.location;
+package co.zenpets.doctors.utils.helpers.location;
 
 //public class FetchCityID extends AsyncTask<Object, Void, String> {
 //

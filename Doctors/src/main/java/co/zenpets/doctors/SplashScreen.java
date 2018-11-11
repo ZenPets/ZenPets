@@ -119,7 +119,7 @@ public class SplashScreen extends AppCompatActivity {
         Call<Doctor> call = apiInterface.getDoctorID(user.getUid());
         call.enqueue(new Callback<Doctor>() {
             @Override
-            public void onResponse(Call<Doctor> call, Response<Doctor> response) {
+            public void onResponse(@NonNull Call<Doctor> call, @NonNull Response<Doctor> response) {
                 /* GET THE DOCTOR'S ID */
                 DOCTOR_ID = response.body().getDoctorID();
                 if (DOCTOR_ID != null)    {
@@ -132,7 +132,7 @@ public class SplashScreen extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Doctor> call, Throwable t) {
+            public void onFailure(@NonNull Call<Doctor> call, @NonNull Throwable t) {
             }
         });
     }
@@ -143,7 +143,7 @@ public class SplashScreen extends AppCompatActivity {
         Call<ClinicCheckerData> call = apiInterface.fetchDoctorClinics(DOCTOR_ID);
         call.enqueue(new Callback<ClinicCheckerData>() {
             @Override
-            public void onResponse(Call<ClinicCheckerData> call, Response<ClinicCheckerData> response) {
+            public void onResponse(@NonNull Call<ClinicCheckerData> call, @NonNull Response<ClinicCheckerData> response) {
                 ArrayList<Clinic> arrClinics = response.body().getClinics();
                 if (arrClinics != null && arrClinics.size() > 0)    {
                     Intent showLanding = new Intent(SplashScreen.this, LandingActivity.class);
@@ -157,7 +157,7 @@ public class SplashScreen extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ClinicCheckerData> call, Throwable t) {
+            public void onFailure(@NonNull Call<ClinicCheckerData> call, @NonNull Throwable t) {
             }
         });
     }

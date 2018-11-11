@@ -3,6 +3,7 @@ package co.zenpets.doctors.utils.adapters.consultations;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -57,7 +58,7 @@ public class ConsultationsAdapter extends RecyclerView.Adapter<ConsultationsAdap
     }
 
     @Override
-    public void onBindViewHolder(final ConsultationsVH holder, final int position) {
+    public void onBindViewHolder(@NonNull final ConsultationsVH holder, final int position) {
         final Consultation data = arrConsultations.get(position);
 
         /* SET THE TITLE */
@@ -94,7 +95,7 @@ public class ConsultationsAdapter extends RecyclerView.Adapter<ConsultationsAdap
         Call<ConsultationViews> call = api.fetchConsultationViews(data.getConsultationID());
         call.enqueue(new Callback<ConsultationViews>() {
             @Override
-            public void onResponse(Call<ConsultationViews> call, Response<ConsultationViews> response) {
+            public void onResponse(@NonNull Call<ConsultationViews> call, @NonNull Response<ConsultationViews> response) {
                 ArrayList<ConsultationView> list = response.body().getViews();
                 if (list != null && list.size() > 0)    {
                     int TOTAL_VIEWS = list.size();
@@ -116,7 +117,7 @@ public class ConsultationsAdapter extends RecyclerView.Adapter<ConsultationsAdap
             }
 
             @Override
-            public void onFailure(Call<ConsultationViews> call, Throwable t) {
+            public void onFailure(@NonNull Call<ConsultationViews> call, @NonNull Throwable t) {
 //                Log.e("VIEWS FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
@@ -127,7 +128,7 @@ public class ConsultationsAdapter extends RecyclerView.Adapter<ConsultationsAdap
         Call<ConsultationReplies> callReplies = apiReplies.fetchConsultationReplies(data.getConsultationID());
         callReplies.enqueue(new Callback<ConsultationReplies>() {
             @Override
-            public void onResponse(Call<ConsultationReplies> call, Response<ConsultationReplies> response) {
+            public void onResponse(@NonNull Call<ConsultationReplies> call, @NonNull Response<ConsultationReplies> response) {
                 ArrayList<ConsultationReply> list = response.body().getReplies();
                 if (list != null && list.size() > 0)    {
                     int TOTAL_REPLIES = list.size();
@@ -149,7 +150,7 @@ public class ConsultationsAdapter extends RecyclerView.Adapter<ConsultationsAdap
             }
 
             @Override
-            public void onFailure(Call<ConsultationReplies> call, Throwable t) {
+            public void onFailure(@NonNull Call<ConsultationReplies> call, @NonNull Throwable t) {
 //                Crashlytics.logException(t);
             }
         });
@@ -165,8 +166,9 @@ public class ConsultationsAdapter extends RecyclerView.Adapter<ConsultationsAdap
         });
     }
 
+    @NonNull
     @Override
-    public ConsultationsVH onCreateViewHolder(ViewGroup parent, int i) {
+    public ConsultationsVH onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
         View itemView = LayoutInflater.
                 from(parent.getContext()).

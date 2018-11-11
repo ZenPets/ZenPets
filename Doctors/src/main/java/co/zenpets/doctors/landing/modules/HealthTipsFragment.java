@@ -1,4 +1,4 @@
-package biz.zenpets.doctors.landing.modules;
+package co.zenpets.doctors.landing.modules;
 
 import android.support.v4.app.Fragment;
 
