@@ -34,6 +34,9 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -53,20 +56,21 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import co.zenpets.users.R;
 import co.zenpets.users.utils.AppPrefs;
 import co.zenpets.users.utils.adapters.adoptions.AdoptionsAlbumAdapter;
 import co.zenpets.users.utils.adapters.pet.records.RecordTypesAdapter;
 import co.zenpets.users.utils.helpers.classes.ZenApiClient;
+import co.zenpets.users.utils.helpers.pets.records.PostMedicalImage;
 import co.zenpets.users.utils.helpers.pets.records.PostMedicalImageInterface;
 import co.zenpets.users.utils.models.adoptions.AdoptionAlbumData;
 import co.zenpets.users.utils.models.pets.records.MedicalRecord;
 import co.zenpets.users.utils.models.pets.records.MedicalRecordsAPI;
 import co.zenpets.users.utils.models.pets.records.RecordType;
 import co.zenpets.users.utils.models.pets.records.RecordTypes;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -308,20 +312,32 @@ public class MedicalRecordCreator extends AppCompatActivity
             }
 
             StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-            StorageReference refStorage = storageReference.child("Medical Records").child(FILE_NAME);
+            final StorageReference refStorage = storageReference.child("Medical Records").child(FILE_NAME);
             UploadTask uploadTask = refStorage.putFile(uri);
-//            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    Uri downloadURL = taskSnapshot.getDownloadUrl();
-//                    if (downloadURL != null) {
-//                        /* INCREMENT THE UPLOAD COUNTER AND UPLOAD THE IMAGE */
-//                        IMAGE_UPLOAD_COUNTER++;
-//                        new PostMedicalImage(MedicalRecordCreator.this)
-//                                .execute(medicalRecordID, String.valueOf(downloadURL));
-//                    }
-//                }
-//            });
+            Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+
+                    /* CONTINUE WITH THE TASK TO GET THE IMAGE URL */
+                    return refStorage.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadURL = task.getResult();
+                        if (downloadURL != null) {
+                            /* INCREMENT THE UPLOAD COUNTER AND UPLOAD THE IMAGE */
+                            IMAGE_UPLOAD_COUNTER++;
+                            new PostMedicalImage(MedicalRecordCreator.this)
+                                    .execute(medicalRecordID, String.valueOf(downloadURL));
+                        }
+                    }
+                }
+            });
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

@@ -81,7 +81,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
     private final ArrayList<ZenCalendarData> arrDates = new ArrayList<>();
 
     /** A MORNING TIME SLOTS INSTANCE **/
-    TimeSlot morningData;
+    private TimeSlot morningData;
 
     /** THE MORNING TIME SLOTS ADAPTER AND ARRAY LIST **/
     private MorningCreatorAdapter morningCreatorAdapter;
@@ -89,7 +89,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
     private final ArrayList<TimeSlot> arrMorningSlots = new ArrayList<>();
 
     /** AN AFTERNOON TIME SLOTS INSTANCE **/
-    TimeSlot afternoonData;
+    private TimeSlot afternoonData;
 
     /** THE AFTERNOON TIME SLOTS ADAPTER AND ARRAY LIST **/
     private AfternoonCreatorAdapter afternoonCreatorAdapter;

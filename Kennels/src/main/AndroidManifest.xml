@@ -48,7 +48,7 @@
             android:name=".credentials.LoginActivity"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/Splash"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".credentials.SignUpActivity"
             android:screenOrientation="sensorPortrait"
@@ -65,6 +65,10 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".landing.NewLandingActivity"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".landing.TestLandingActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 

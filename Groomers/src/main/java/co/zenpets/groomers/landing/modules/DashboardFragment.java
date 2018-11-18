@@ -11,7 +11,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -135,7 +134,7 @@ public class DashboardFragment extends Fragment {
         call.enqueue(new Callback<Enquiries>() {
             @Override
             public void onResponse(Call<Enquiries> call, Response<Enquiries> response) {
-                Log.e("ENQUIRIES RAW", String.valueOf(response.raw()));
+//                Log.e("ENQUIRIES RAW", String.valueOf(response.raw()));
                 if (response.body() != null && response.body().getEnquiries() != null)  {
                     arrEnquiries = response.body().getEnquiries();
                     if (arrEnquiries.size() > 0)    {
@@ -211,7 +210,7 @@ public class DashboardFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Groomer> call, Throwable throwable) {
-                Log.e("DETAILS FAILURE", throwable.getMessage());
+//                Log.e("DETAILS FAILURE", throwable.getMessage());
             }
         });
     }

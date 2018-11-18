@@ -1,8 +1,8 @@
 <resources>
     <!-- THE PRIMARY ZEN PETS STYLE -->
-    <style name="ZenPets" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/bg_pattern</item>
-        <!--<item name="android:windowBackground">@color/app_bg</item>-->
+    <style name="ZenPets" parent="Theme.AppCompat.NoActionBar">
+        <!--<item name="android:windowBackground">@drawable/bg_pattern</item>-->
+        <item name="android:windowBackground">@color/app_bg</item>
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
@@ -12,46 +12,43 @@
         <item name="cardStyle">@style/ZenPetsCards</item>
 
         <!-- CALLIGRAPHY ATTRIBUTE -->
-        <!--<item name="fontPath">fonts/Roboto-Regular.ttf</item>-->
+        <!--<item name="fontPath">fonts/Montserrat-Regular.otf</item>-->
 
         <!-- POPUP MENU STYLE -->
-        <item name="popupMenuStyle">@style/myPopupMenuStyle</item>
-        <item name="android:popupMenuStyle">@style/myPopupMenuStyle</item>
+        <!--<item name="popupMenuStyle">@style/myPopupMenuStyle</item>
+        <item name="android:popupMenuStyle">@style/myPopupMenuStyle</item>-->
         <item name="android:textAppearanceLargePopupMenu">@style/myPopupMenuTextAppearanceSmall
         </item>
-
-        <!-- THE SPARK LINE VIEW STYLE -->
-        <!--<item name="spark_SparkViewStyle">@style/MySparkViewStyle</item>-->
     </style>
 
     <!-- THE SPLASH SCREEN STYLE -->
-    <style name="Splash" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/bg_pattern</item>
-        <!--<item name="android:windowBackground">@color/app_bg</item>-->
+    <style name="Splash" parent="Theme.AppCompat.NoActionBar">
+        <!--<item name="android:windowBackground">@drawable/bg_pattern</item>-->
+        <item name="android:windowBackground">@color/app_bg</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
 
         <!-- CALLIGRAPHY ATTRIBUTE -->
-        <!--<item name="fontPath">fonts/Roboto-Regular.ttf</item>-->
-    </style>
-
-    <!-- THE DIALOG STYLE -->
-    <style name="ZenPetsDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:windowBackground">@drawable/bg_pattern</item>
-        <!--<item name="android:windowBackground">@color/app_bg</item>-->
-        <item name="colorAccent">@color/accent</item>
-
-        <!-- CALLIGRAPHY ATTRIBUTE -->
-        <!--<item name="fontPath">fonts/Roboto-Regular.ttf</item>-->
+        <!--<item name="fontPath">fonts/Montserrat-Regular.otf</item>-->
     </style>
 
     <style name="NavigationDrawerStyle">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@android:color/primary_text_dark</item>
+        <item name="android:textColor">@android:color/primary_text_light</item>
+    </style>
+
+    <!-- THE DIALOG STYLE -->
+    <style name="ZenPetsDialog" parent="Theme.AppCompat.Dialog.Alert">
+        <!--<item name="android:windowBackground">@drawable/bg_pattern</item>-->
+        <item name="android:windowBackground">@color/app_bg</item>
+        <item name="colorAccent">@color/accent</item>
+
+        <!-- CALLIGRAPHY ATTRIBUTE -->
+        <!--<item name="fontPath">fonts/Montserrat-Regular.otf</item>-->
     </style>
 
     <!-- THE DRAWER ARROW TOGGLE STYLE -->
@@ -61,13 +58,13 @@
     </style>
 
     <!-- THE POPUP MENU STYLE -->
-    <style name="myPopupMenuStyle" parent="@android:style/Widget.PopupMenu">
-        <item name="android:popupBackground">#444444</item>
-    </style>
+    <!--<style name="myPopupMenuStyle" parent="@android:style/Widget.PopupMenu">
+        <item name="android:popupBackground">#FFFFFF</item>
+    </style>-->
 
     <!-- THE POPUP MENU APPEARANCE -->
     <style name="myPopupMenuTextAppearanceSmall" parent="@android:style/TextAppearance.DeviceDefault.Widget.PopupMenu.Small">
-        <item name="android:textColor">#D9D9D9</item>
+        <item name="android:textColor">@color/primary_text</item>
         <item name="android:textSize">15sp</item>
     </style>
 
@@ -92,6 +89,12 @@
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- THE TOOLBAR TITLE STYLE-->
+    <style name="Toolbar.SubtitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
+        <item name="android:textColor">#d9d9d9</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <!-- THE TEXT INPUT LAYOUT STYLE -->
@@ -145,20 +148,4 @@
         <item name="colorControlNormal">@color/accent</item>
         <item name="colorControlActivated">@color/tertiary_text</item>
     </style>
-
-    <!--<style name="MySparkViewStyle" parent="@style/SparkView">
-        <item name="spark_lineColor">@color/accent</item>
-        <item name="spark_lineWidth">3dp</item>
-        <item name="spark_cornerRadius">5dp</item>
-        <item name="spark_fill">false</item>
-
-        &lt;!&ndash;<item name="spark_baseLineColor">@color/base_line_color</item>
-        <item name="spark_baseLineWidth">@dimen/base_line_width</item>&ndash;&gt;
-
-        <item name="spark_scrubLineColor">@color/primary_dark</item>
-        <item name="spark_scrubLineWidth">3dp</item>
-        <item name="spark_scrubEnabled">true</item>
-
-        <item name="spark_animateChanges">true</item>
-    </style>-->
 </resources>

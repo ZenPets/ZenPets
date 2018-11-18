@@ -168,10 +168,11 @@ public class LoginActivity extends AppCompatActivity {
     /***** SAVE THE DOCTOR ID *****/
     private void saveDoctorID() {
         DoctorsAPI apiInterface = ZenApiClient.getClient().create(DoctorsAPI.class);
-        Call<Doctor> call = apiInterface.getDoctorID(user.getUid());
+        Call<Doctor> call = apiInterface.fetchDoctorID(user.getUid());
         call.enqueue(new Callback<Doctor>() {
             @Override
             public void onResponse(@NonNull Call<Doctor> call, @NonNull Response<Doctor> response) {
+//                Log.e("RESPONSE", String.valueOf(response.raw()));
                 /* GET THE DOCTOR'S ID */
                 DOCTOR_ID = response.body().getDoctorID();
                 if (DOCTOR_ID != null)    {

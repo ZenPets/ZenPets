@@ -259,4 +259,15 @@
     <string name="appointment_creator_details_doctor">%1$s %2$s</string>
     <string name="appointment_creator_clinic_details_placeholder">%1$s, %2$s</string>
     <string name="appointment_creator_date_time_placeholder">%1$s - %2$s</string>
+
+    <!-- APPOINTMENT DETAILS -->
+    <string name="app_det_time">2:30 PM</string>
+    <string name="app_det_user_name">User Name</string>
+    <string name="app_det_visit_reason">VISIT REASON</string>
+    <string name="app_det_pet_details">Pet Details</string>
+    <string name="app_det_app_status_label">Status</string>
+    <string name="app_det_app_status_confirmed">Confirmed</string>
+    <string name="app_det_app_status_pending">Pending</string>
+    <string name="app_det_confirm">CONFIRM</string>
+    <string name="app_det_cancel">CANCEL</string>
 </resources>

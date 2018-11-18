@@ -551,28 +551,6 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
-//        refStorage.putFile(TRAINER_DISPLAY_PROFILE_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                Uri downloadURL = taskSnapshot.getDownloadUrl();
-//                TRAINER_DISPLAY_PROFILE = String.valueOf(downloadURL);
-//                if (TRAINER_DISPLAY_PROFILE != null)    {
-//                    /* CREATE THE NEW TRAINER'S ACCOUNT */
-//                    createTrainerAccount();
-//                } else {
-//                    progressDialog.dismiss();
-//                    Toast.makeText(
-//                            getApplicationContext(),
-//                            "There was a problem creating your new account. Please try again by clicking the Save button.",
-//                            Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-////                Log.e("UPLOAD EXCEPTION", e.toString());
-//            }
-//        });
     }
 
     /***** CREATE THE NEW TRAINER'S ACCOUNT *****/

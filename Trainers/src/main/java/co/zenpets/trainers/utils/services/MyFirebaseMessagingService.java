@@ -3,7 +3,6 @@ package co.zenpets.trainers.utils.services;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -41,7 +40,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //                Log.e("JSON", String.valueOf(json));
                 handleDataMessage(json);
             } catch (Exception e) {
-                Log.e(TAG, "Exception: " + e.getMessage());
+//                Log.e(TAG, "Exception: " + e.getMessage());
             }
         }
     }
@@ -89,9 +88,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 showNotificationMessage(getApplicationContext(), notificationTitle, notificationMessage, intent);
             }
         } catch (JSONException e) {
-            Log.e(TAG, "Json Exception: " + e.getMessage());
+//            Log.e(TAG, "Json Exception: " + e.getMessage());
         } catch (Exception e) {
-            Log.e(TAG, "Exception: " + e.getMessage());
+//            Log.e(TAG, "Exception: " + e.getMessage());
         }
     }
 

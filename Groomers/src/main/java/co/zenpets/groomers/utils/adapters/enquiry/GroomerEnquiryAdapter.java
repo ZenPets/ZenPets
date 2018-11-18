@@ -3,20 +3,14 @@ package co.zenpets.groomers.utils.adapters.enquiry;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.request.ImageRequest;
-import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
@@ -32,7 +26,6 @@ import co.zenpets.groomers.details.enquiry.EnquiryDetails;
 import co.zenpets.groomers.utils.AppPrefs;
 import co.zenpets.groomers.utils.helpers.ZenApiClient;
 import co.zenpets.groomers.utils.models.enquiries.EnquiriesAPI;
-import co.zenpets.groomers.utils.models.enquiries.Enquiry;
 import co.zenpets.groomers.utils.models.enquiries.Enquiry;
 import co.zenpets.groomers.utils.models.enquiries.UnreadCount;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -112,7 +105,7 @@ public class GroomerEnquiryAdapter extends RecyclerView.Adapter<GroomerEnquiryAd
         call.enqueue(new Callback<Enquiry>() {
             @Override
             public void onResponse(Call<Enquiry> call, Response<Enquiry> response) {
-                Log.e("LATEST REPONSE", String.valueOf(response.raw()));
+//                Log.e("LATEST REPONSE", String.valueOf(response.raw()));
                 Enquiry enquiry = response.body();
                 if (!enquiry.getError())    {
                     /* GET AND SET THE ENQUIRY MESSAGE */
@@ -142,7 +135,7 @@ public class GroomerEnquiryAdapter extends RecyclerView.Adapter<GroomerEnquiryAd
         callCount.enqueue(new Callback<UnreadCount>() {
             @Override
             public void onResponse(Call<UnreadCount> call, Response<UnreadCount> response) {
-                Log.e("COUNT RESPONSE", String.valueOf(response.raw()));
+//                Log.e("COUNT RESPONSE", String.valueOf(response.raw()));
                 UnreadCount count = response.body();
                 if (count != null)  {
                     int messageCount = Integer.parseInt(count.getUnreadMessages());

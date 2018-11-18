@@ -463,56 +463,6 @@ public class TrainingImageManager extends AppCompatActivity {
                                 }
                             }
                         });
-//                        refStorage.putFile(MODULE_IMAGE_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                            @Override
-//                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                                Uri downloadURL = taskSnapshot.getDownloadUrl();
-//                                MODULE_IMAGE_URL = String.valueOf(downloadURL);
-//                                if (MODULE_IMAGE_URL != null)    {
-//                                    ModuleImagesAPI api = ZenApiClient.getClient().create(ModuleImagesAPI.class);
-//                                    Call<ModuleImage> call = api.newTrainingModuleImage(MODULE_ID, MODULE_IMAGE_URL, input.toString());
-//                                    call.enqueue(new Callback<ModuleImage>() {
-//                                        @Override
-//                                        public void onResponse(Call<ModuleImage> call, Response<ModuleImage> response) {
-//                                            if (response.isSuccessful())    {
-//                                                /* DISMISS THE DIALOG */
-//                                                progressDialog.dismiss();
-//                                                Toast.makeText(getApplicationContext(), "The new Clinic image was successfully uploaded.", Toast.LENGTH_LONG).show();
-//
-//                                                /* CLEAR THE ARRAY */
-//                                                if (arrImages != null)
-//                                                    arrImages.clear();
-//
-//                                                /* FETCH THE TRAINING MODULE IMAGES (AGAIN) */
-//                                                fetchModuleImages();
-//                                            } else {
-//                                                /* DISMISS THE DIALOG */
-//                                                progressDialog.dismiss();
-//                                                Toast.makeText(getApplicationContext(), "There was an error posting this image. Please try again...", Toast.LENGTH_LONG).show();
-//                                            }
-//                                        }
-//
-//                                        @Override
-//                                        public void onFailure(Call<ModuleImage> call, Throwable t) {
-////                                            Log.e("IMAGE FAILURE", t.getMessage());
-//                                            Crashlytics.logException(t);
-//                                        }
-//                                    });
-////                                    new AddClinicImage(TrainingImageManager.this).execute(CLINIC_ID, CLINIC_IMAGE_URL);
-//                                } else {
-//                                    Toast.makeText(
-//                                            getApplicationContext(),
-//                                            "There was an error posting this image. Please try again...",
-//                                            Toast.LENGTH_LONG).show();
-//                                }
-//                            }
-//                        }).addOnFailureListener(new OnFailureListener() {
-//                            @Override
-//                            public void onFailure(@NonNull Exception e) {
-////                                Log.e("UPLOAD EXCEPTION", e.toString());
-//                                Crashlytics.logException(e);
-//                            }
-//                        });
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {

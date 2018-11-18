@@ -8,7 +8,7 @@ import retrofit2.http.Query;
 public interface DoctorsAPI {
     /* FETCH THE LOGGED IN DOCTOR'S ID */
     @GET("fetchDoctorID")
-    Call<Doctor> getDoctorID(@Query("doctorAuthID") String doctorAuthID);
+    Call<Doctor> fetchDoctorID(@Query("doctorAuthID") String doctorAuthID);
 
     /* FETCH THE LIST OF DOCTORS AT A CLINIC */
     @GET("fetchClinicDoctors")

@@ -18,6 +18,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,12 +30,16 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -48,6 +53,7 @@ import co.zenpets.doctors.R;
 import co.zenpets.doctors.modifier.profile.ProfileModifier;
 import co.zenpets.doctors.utils.AppPrefs;
 import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.models.doctors.account.AccountData;
 import co.zenpets.doctors.utils.models.doctors.profile.DoctorProfileAPI;
 import co.zenpets.doctors.utils.models.doctors.profile.DoctorProfileData;
 import id.zelory.compressor.Compressor;
@@ -459,44 +465,55 @@ public class DoctorDetailsFrag extends Fragment {
 
     /***** UPLOAD THE NEW DISPLAY PROFILE *****/
     private void uploadNewProfile() {
-//        DOCTOR_DISPLAY_PROFILE_FILE_NAME =
-//                DOCTOR_NAME.replaceAll(" ", "_").toLowerCase().trim() + "_" + AUTH_ID;
-//        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-//        StorageReference refStorage = storageReference.child("Doctor Profiles").child(DOCTOR_DISPLAY_PROFILE_FILE_NAME);
-//        refStorage.putFile(DOCTOR_DISPLAY_PROFILE_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                Uri downloadURL = taskSnapshot.getDownloadUrl();
-//                DoctorProfileAPI api = ZenApiClient.getClient().create(DoctorProfileAPI.class);
-//                Call<AccountData> call = api.updateDoctorDisplayProfile(DOCTOR_ID, String.valueOf(downloadURL));
-//                call.enqueue(new Callback<AccountData>() {
-//                    @Override
-//                    public void onResponse(Call<AccountData> call, Response<AccountData> response) {
-//                        if (response.isSuccessful())    {
-//                            dialog.dismiss();
-//                            Toast.makeText(getActivity(), "Profile updated successfully...", Toast.LENGTH_SHORT).show();
-//                        } else {
-//                            dialog.dismiss();
-//                            Toast.makeText(getActivity(), "Update failed...", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<AccountData> call, Throwable t) {
-//                        dialog.dismiss();
-////                        Crashlytics.logException(t);
-////                        Log.e("DISPLAY FAILURE", t.getMessage());
-//                    }
-//                });
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                dialog.dismiss();
-////                Log.e("UPLOAD EXCEPTION", e.toString());
-////                Crashlytics.logException(e);
-//            }
-//        });
+        DOCTOR_DISPLAY_PROFILE_FILE_NAME =
+                DOCTOR_NAME.replaceAll(" ", "_").toLowerCase().trim() + "_" + AUTH_ID;
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        final StorageReference refStorage = storageReference.child("Doctor Profiles").child(DOCTOR_DISPLAY_PROFILE_FILE_NAME);
+        UploadTask uploadTask = refStorage.putFile(DOCTOR_DISPLAY_PROFILE_URI);
+        Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+
+                /* CONTINUE WITH THE TASK TO GET THE IMAGE URL */
+                return refStorage.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri downloadURL = task.getResult();
+                    if (downloadURL != null)    {
+                        DoctorProfileAPI api = ZenApiClient.getClient().create(DoctorProfileAPI.class);
+                        Call<AccountData> call = api.updateDoctorDisplayProfile(DOCTOR_ID, String.valueOf(downloadURL));
+                        call.enqueue(new Callback<AccountData>() {
+                            @Override
+                            public void onResponse(Call<AccountData> call, Response<AccountData> response) {
+                                if (response.isSuccessful())    {
+                                    dialog.dismiss();
+                                    Toast.makeText(getActivity(), "Profile updated successfully...", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    dialog.dismiss();
+                                    Toast.makeText(getActivity(), "Update failed...", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<AccountData> call, Throwable t) {
+                                dialog.dismiss();
+                                Toast.makeText(getActivity(), "Update failed...", Toast.LENGTH_SHORT).show();
+                                Log.e("DISPLAY PIC FAILURE", t.getMessage());
+                            }
+                        });
+                    } else {
+                        dialog.dismiss();
+                        Toast.makeText(getActivity(), "Update failed...", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
     }
 
     @Override

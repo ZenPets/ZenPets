@@ -6,13 +6,12 @@ public class Kennel {
     @SerializedName("error") private Boolean error;
     @SerializedName("message") private String message;
     @SerializedName("kennelID") private String kennelID;
-    @SerializedName("kennelOwnerID") private String kennelOwnerID;
-    @SerializedName("kennelChargesID") private String kennelChargesID;
-    @SerializedName("paymentID") private String paymentID;
-    @SerializedName("kennelOwnerName") private String kennelOwnerName;
-    @SerializedName("kennelOwnerDisplayProfile") private String kennelOwnerDisplayProfile;
     @SerializedName("kennelName") private String kennelName;
+    @SerializedName("kennelEmail") private String kennelEmail;
     @SerializedName("kennelCoverPhoto") private String kennelCoverPhoto;
+    @SerializedName("kennelContactName") private String kennelContactName;
+    @SerializedName("kennelContactPhonePrefix") private String kennelContactPhonePrefix;
+    @SerializedName("kennelContactPhoneNumber") private String kennelContactPhoneNumber;
     @SerializedName("kennelAddress") private String kennelAddress;
     @SerializedName("kennelPinCode") private String kennelPinCode;
     @SerializedName("countryID") private String countryID;
@@ -30,11 +29,13 @@ public class Kennel {
     @SerializedName("kennelPetCapacity") private String kennelPetCapacity;
     @SerializedName("kennelValidFrom") private String kennelValidFrom;
     @SerializedName("kennelValidTo") private String kennelValidTo;
-    @SerializedName("kennelVerified") private String kennelVerified;
+    @SerializedName("kennelPaymentID") private String kennelPaymentID;
+    @SerializedName("kennelToken") private String kennelToken;
     @SerializedName("kennelReviews") private String kennelReviews;
     @SerializedName("kennelPositives") private String kennelPositives;
     @SerializedName("kennelVoteStats") private String kennelVoteStats;
     @SerializedName("kennelRating") private String kennelRating;
+    @SerializedName("kennelVerified") private String kennelVerified;
 
     public Boolean getError() {
         return error;
@@ -60,46 +61,6 @@ public class Kennel {
         this.kennelID = kennelID;
     }
 
-    public String getKennelOwnerID() {
-        return kennelOwnerID;
-    }
-
-    public void setKennelOwnerID(String kennelOwnerID) {
-        this.kennelOwnerID = kennelOwnerID;
-    }
-
-    public String getKennelChargesID() {
-        return kennelChargesID;
-    }
-
-    public void setKennelChargesID(String kennelChargesID) {
-        this.kennelChargesID = kennelChargesID;
-    }
-
-    public String getPaymentID() {
-        return paymentID;
-    }
-
-    public void setPaymentID(String paymentID) {
-        this.paymentID = paymentID;
-    }
-
-    public String getKennelOwnerName() {
-        return kennelOwnerName;
-    }
-
-    public void setKennelOwnerName(String kennelOwnerName) {
-        this.kennelOwnerName = kennelOwnerName;
-    }
-
-    public String getKennelOwnerDisplayProfile() {
-        return kennelOwnerDisplayProfile;
-    }
-
-    public void setKennelOwnerDisplayProfile(String kennelOwnerDisplayProfile) {
-        this.kennelOwnerDisplayProfile = kennelOwnerDisplayProfile;
-    }
-
     public String getKennelName() {
         return kennelName;
     }
@@ -108,12 +69,44 @@ public class Kennel {
         this.kennelName = kennelName;
     }
 
+    public String getKennelEmail() {
+        return kennelEmail;
+    }
+
+    public void setKennelEmail(String kennelEmail) {
+        this.kennelEmail = kennelEmail;
+    }
+
     public String getKennelCoverPhoto() {
         return kennelCoverPhoto;
     }
 
     public void setKennelCoverPhoto(String kennelCoverPhoto) {
         this.kennelCoverPhoto = kennelCoverPhoto;
+    }
+
+    public String getKennelContactName() {
+        return kennelContactName;
+    }
+
+    public void setKennelContactName(String kennelContactName) {
+        this.kennelContactName = kennelContactName;
+    }
+
+    public String getKennelContactPhonePrefix() {
+        return kennelContactPhonePrefix;
+    }
+
+    public void setKennelContactPhonePrefix(String kennelContactPhonePrefix) {
+        this.kennelContactPhonePrefix = kennelContactPhonePrefix;
+    }
+
+    public String getKennelContactPhoneNumber() {
+        return kennelContactPhoneNumber;
+    }
+
+    public void setKennelContactPhoneNumber(String kennelContactPhoneNumber) {
+        this.kennelContactPhoneNumber = kennelContactPhoneNumber;
     }
 
     public String getKennelAddress() {
@@ -252,12 +245,20 @@ public class Kennel {
         this.kennelValidTo = kennelValidTo;
     }
 
-    public String getKennelVerified() {
-        return kennelVerified;
+    public String getKennelPaymentID() {
+        return kennelPaymentID;
     }
 
-    public void setKennelVerified(String kennelVerified) {
-        this.kennelVerified = kennelVerified;
+    public void setKennelPaymentID(String kennelPaymentID) {
+        this.kennelPaymentID = kennelPaymentID;
+    }
+
+    public String getKennelToken() {
+        return kennelToken;
+    }
+
+    public void setKennelToken(String kennelToken) {
+        this.kennelToken = kennelToken;
     }
 
     public String getKennelReviews() {
@@ -290,5 +291,13 @@ public class Kennel {
 
     public void setKennelRating(String kennelRating) {
         this.kennelRating = kennelRating;
+    }
+
+    public String getKennelVerified() {
+        return kennelVerified;
+    }
+
+    public void setKennelVerified(String kennelVerified) {
+        this.kennelVerified = kennelVerified;
     }
 }

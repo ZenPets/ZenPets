@@ -64,10 +64,7 @@ public class KennelCoverUpdater extends AppCompatActivity {
         return (AppPrefs) getApplication();
     }
 
-    /** THE KENNEL OWNER ID **/
-    String KENNEL_OWNER_ID = null;
-
-    /** THE INCOMING KENNEL ID AND NAME **/
+    /** THE KENNEL ID AND NAME **/
     private String KENNEL_ID = null;
     private String KENNEL_NAME = null;
 
@@ -92,7 +89,7 @@ public class KennelCoverUpdater extends AppCompatActivity {
         ButterKnife.bind(this);
 
         /* GET THE KENNEL OWNER'S ID */
-        KENNEL_OWNER_ID = getApp().getKennelOwnerID();
+        KENNEL_ID = getApp().getKennelID();
 
         /* CONFIGURE THE ACTIONBAR */
         configAB();
@@ -281,7 +278,7 @@ public class KennelCoverUpdater extends AppCompatActivity {
 
                 /* GENERATE THE FILE NAME */
                 if (LOGO_URI != null && KENNEL_NAME != null)    {
-                    FILE_NAME = KENNEL_OWNER_ID + "_" + KENNEL_NAME.replaceAll(" ", "_").toLowerCase().trim();
+                    FILE_NAME = KENNEL_ID + "_" + KENNEL_NAME.replaceAll(" ", "_").toLowerCase().trim();
                 }
             } catch (IOException e) {
                 e.printStackTrace();

@@ -1,5 +1,6 @@
 package co.zenpets.doctors.landing.modules;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,7 +23,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import butterknife.OnClick;
 import co.zenpets.doctors.R;
+import co.zenpets.doctors.creator.client.ClientCreator;
 import co.zenpets.doctors.utils.AppPrefs;
 import co.zenpets.doctors.utils.TypefaceSpan;
 import co.zenpets.doctors.utils.adapters.doctors.clients.ClientsAdapter;
@@ -57,6 +60,13 @@ public class ClientsFragment extends Fragment implements SearchView.OnQueryTextL
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
     @BindView(R.id.listClients) RecyclerView listClients;
     @BindView(R.id.linlaEmpty) LinearLayout linlaEmpty;
+
+    /** ADD A NEW CLIENT **/
+    @OnClick(R.id.fabNewClient) void newClient()    {
+        Intent intent = new Intent(getActivity(), ClientCreator.class);
+        intent.putExtra("DOCTOR_ID", DOCTOR_ID);
+        startActivityForResult(intent, 101);
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

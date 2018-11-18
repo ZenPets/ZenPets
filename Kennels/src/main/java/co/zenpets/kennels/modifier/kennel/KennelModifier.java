@@ -83,10 +83,7 @@ public class KennelModifier extends AppCompatActivity {
         return (AppPrefs) getApplication();
     }
 
-    /** THE KENNEL OWNER DETAILS **/
-    String KENNEL_OWNER_ID = null;
-
-    /** THE INCOMING KENNEL ID **/
+    /** THE KENNEL ID **/
     String KENNEL_ID = null;
 
     /** PERMISSION REQUEST CONSTANTS **/
@@ -168,7 +165,7 @@ public class KennelModifier extends AppCompatActivity {
                 .setAllowMultiplePickInGallery(false);
 
         /* GET THE KENNEL OWNER'S ID */
-        KENNEL_OWNER_ID = getApp().getKennelOwnerID();
+        KENNEL_ID = getApp().getKennelID();
 
         /* CONFIGURE THE TOOLBAR */
         configTB();
@@ -440,7 +437,7 @@ public class KennelModifier extends AppCompatActivity {
 
         /* CHECK IF THE KENNEL COVER IS BEING UPDATE AND THEN SET THE KENNEL COVER FILE NAME */
         if (KENNEL_COVER_PHOTO_URI != null && !TextUtils.isEmpty(KENNEL_NAME)) {
-            KENNEL_COVER_PHOTO_FILE_NAME = KENNEL_OWNER_ID + "_" + KENNEL_NAME.replaceAll(" ", "_").toLowerCase().trim();
+            KENNEL_COVER_PHOTO_FILE_NAME = KENNEL_ID + "_" + KENNEL_NAME.replaceAll(" ", "_").toLowerCase().trim();
 
             /* SHOW THE PROGRESS DIALOG **/
             progressDialog = new ProgressDialog(this);

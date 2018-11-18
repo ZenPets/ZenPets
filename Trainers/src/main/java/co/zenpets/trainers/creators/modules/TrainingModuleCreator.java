@@ -446,17 +446,6 @@ public class TrainingModuleCreator extends AppCompatActivity {
                     }
                 }
             });
-//            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    Uri downloadURL = taskSnapshot.getDownloadUrl();
-//                    if (downloadURL != null) {
-//                        /* INCREMENT THE UPLOAD COUNTER AND UPLOAD THE IMAGE */
-//                        IMAGE_UPLOAD_COUNTER++;
-//                        postImage(trainerModuleID, String.valueOf(downloadURL));
-//                    }
-//                }
-//            });
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

@@ -22,15 +22,16 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import co.zenpets.kennels.R;
-import co.zenpets.kennels.landing.NewLandingActivity;
-import co.zenpets.kennels.utils.AppPrefs;
-import co.zenpets.kennels.utils.models.account.Account;
-import co.zenpets.kennels.utils.models.account.AccountsAPI;
-import co.zenpets.kennels.utils.models.helpers.ZenApiClient;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import co.zenpets.kennels.R;
+import co.zenpets.kennels.landing.LandingActivity;
+import co.zenpets.kennels.landing.TestLandingActivity;
+import co.zenpets.kennels.utils.AppPrefs;
+import co.zenpets.kennels.utils.models.helpers.ZenApiClient;
+import co.zenpets.kennels.utils.models.kennels.Kennel;
+import co.zenpets.kennels.utils.models.kennels.KennelsAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseUser user;
 
     /** THE KENNEL OWNER'S ID **/
-    private String KENNEL_OWNER_ID = null;
+    private String KENNEL_ID = null;
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.txtAppName) TextView txtAppName;
@@ -68,31 +69,34 @@ public class LoginActivity extends AppCompatActivity {
 
     /** CREATE A NEW ACCOUNT **/
     @OnClick(R.id.txtCreateAccount) protected void newAccount()   {
-        new MaterialDialog.Builder(LoginActivity.this)
-                .icon(ContextCompat.getDrawable(LoginActivity.this, R.drawable.ic_info_black_24dp))
-                .title(getString(R.string.sign_up_prompt_trainer_title))
-                .cancelable(true)
-                .content(getString(R.string.sign_up_prompt_trainer_message))
-                .positiveText(getString(R.string.sign_up_prompt_trainer_yes))
-                .negativeText(getString(R.string.sign_up_prompt_trainer_no))
-                .theme(Theme.LIGHT)
-                .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                        intent.putExtra("OPTION_CHOICE", true);
-                        startActivityForResult(intent, 101);
-                    }
-                })
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                        intent.putExtra("OPTION_CHOICE", false);
-                        startActivityForResult(intent, 101);
-                    }
-                }).show();
+        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+        intent.putExtra("OPTION_CHOICE", true);
+        startActivityForResult(intent, 101);
+//        new MaterialDialog.Builder(LoginActivity.this)
+//                .icon(ContextCompat.getDrawable(LoginActivity.this, R.drawable.ic_info_black_24dp))
+//                .title(getString(R.string.sign_up_prompt_trainer_title))
+//                .cancelable(true)
+//                .content(getString(R.string.sign_up_prompt_trainer_message))
+//                .positiveText(getString(R.string.sign_up_prompt_trainer_yes))
+//                .negativeText(getString(R.string.sign_up_prompt_trainer_no))
+//                .theme(Theme.LIGHT)
+//                .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
+//                .onPositive(new MaterialDialog.SingleButtonCallback() {
+//                    @Override
+//                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+//                        intent.putExtra("OPTION_CHOICE", true);
+//                        startActivityForResult(intent, 101);
+//                    }
+//                })
+//                .onNegative(new MaterialDialog.SingleButtonCallback() {
+//                    @Override
+//                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+//                        intent.putExtra("OPTION_CHOICE", false);
+//                        startActivityForResult(intent, 101);
+//                    }
+//                }).show();
     }
 
     /** FORGOT ACCOUNT PASSWORD **/
@@ -120,28 +124,32 @@ public class LoginActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    /* SAVE THE KENNEL OWNER'S ID */
-                    saveKennelOwnerID();
+//                    /* SAVE THE KENNEL OWNER'S ID */
+//                    saveKennelOwnerID();
+
+                    /* SAVE THE KENNEL ID */
+                    saveKennelID();
                 }
             }
         };
     }
 
-    /***** SAVE THE KENNEL OWNER'S ID *****/
-    private void saveKennelOwnerID() {
-        AccountsAPI apiInterface = ZenApiClient.getClient().create(AccountsAPI.class);
-        Call<Account> call = apiInterface.fetchKennelOwnerID(user.getUid());
-        call.enqueue(new Callback<Account>() {
+    /** SAVE THE KENNEL ID **/
+    private void saveKennelID() {
+        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
+        Call<Kennel> call = api.fetchKennelID(user.getUid());
+        call.enqueue(new Callback<Kennel>() {
             @Override
-            public void onResponse(Call<Account> call, Response<Account> response) {
-                /* GET THE TRAINERS'S ID */
-                KENNEL_OWNER_ID = response.body().getKennelOwnerID();
-                if (KENNEL_OWNER_ID != null)    {
-                    /* SET KENNEL OWNER'S ID TO THE APP'S PRIVATE SHARED PREFERENCES */
-                    getApp().setKennelOwnerID(KENNEL_OWNER_ID);
+            public void onResponse(Call<Kennel> call, Response<Kennel> response) {
+                /* GET THE KENNEL ID */
+                KENNEL_ID = response.body().getKennelID();
+                if (KENNEL_ID != null)    {
+//                    Log.e("KENNEL ID", KENNEL_ID);
+                    /* SET KENNEL ID TO THE APP'S PRIVATE SHARED PREFERENCES */
+                    getApp().setKennelID(KENNEL_ID);
 
                     /* SHOW THE LANDING ACTIVITY */
-                    Intent showLanding = new Intent(LoginActivity.this, NewLandingActivity.class);
+                    Intent showLanding = new Intent(LoginActivity.this, LandingActivity.class);
                     showLanding.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(showLanding);
                     finish();
@@ -149,11 +157,39 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Account> call, Throwable t) {
-//                Log.e("KENNEL OWNERS FAILURE", t.getMessage());
+            public void onFailure(Call<Kennel> call, Throwable t) {
+//                Log.e("KENNEL ID FAILURE", t.getMessage());
             }
         });
     }
+
+//    /***** SAVE THE KENNEL OWNER'S ID *****/
+//    private void saveKennelOwnerID() {
+//        AccountsAPI apiInterface = ZenApiClient.getClient().create(AccountsAPI.class);
+//        Call<Account> call = apiInterface.fetchKennelOwnerID(user.getUid());
+//        call.enqueue(new Callback<Account>() {
+//            @Override
+//            public void onResponse(Call<Account> call, Response<Account> response) {
+//                /* GET THE TRAINERS'S ID */
+//                KENNEL_ID = response.body().getKennelOwnerID();
+//                if (KENNEL_ID != null)    {
+//                    /* SET KENNEL OWNER'S ID TO THE APP'S PRIVATE SHARED PREFERENCES */
+//                    getApp().setKennelOwnerID(KENNEL_ID);
+//
+//                    /* SHOW THE LANDING ACTIVITY */
+//                    Intent showLanding = new Intent(LoginActivity.this, NewLandingActivity.class);
+//                    showLanding.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    startActivity(showLanding);
+//                    finish();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Account> call, Throwable t) {
+////                Log.e("KENNEL OWNERS FAILURE", t.getMessage());
+//            }
+//        });
+//    }
 
     /***** PERFORM THE SIGN IN *****/
     private void performSignIn() {

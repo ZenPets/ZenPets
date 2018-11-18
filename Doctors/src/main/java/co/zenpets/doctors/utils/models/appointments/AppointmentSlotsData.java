@@ -2,7 +2,7 @@ package co.zenpets.doctors.utils.models.appointments;
 
 import com.google.gson.annotations.SerializedName;
 
-public class AppointmentSlotsData {
+class AppointmentSlotsData {
 
     @SerializedName("error") private Boolean error;
     @SerializedName("appointmentTime") private String appointmentTime;

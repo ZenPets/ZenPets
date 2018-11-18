@@ -56,7 +56,7 @@ public class KennelsFragment extends Fragment {
     }
 
     /** THE KENNEL OWNER'S ID **/
-    private String KENNEL_OWNER_ID = null;
+    private String KENNEL_ID = null;
 
     /** AN ARRAY LIST TO STORE THE LIST OF KENNELS **/
     ArrayList<Kennel> arrKennels = new ArrayList<>();
@@ -108,7 +108,7 @@ public class KennelsFragment extends Fragment {
         configAB();
 
         /* GET THE KENNEL OWNER'S ID */
-        KENNEL_OWNER_ID = getApp().getKennelOwnerID();
+        KENNEL_ID = getApp().getKennelID();
 
         /* CONFIGURE THE RECYCLER VIEW **/
         configRecycler();
@@ -142,7 +142,7 @@ public class KennelsFragment extends Fragment {
     /***** FETCH THE LIST OF KENNELS *****/
     private void fetchKennels() {
         KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-        Call<Kennels> call = api.fetchKennelsListByOwner(KENNEL_OWNER_ID);
+        Call<Kennels> call = api.fetchKennelsListByOwner(KENNEL_ID);
         call.enqueue(new Callback<Kennels>() {
             @Override
             public void onResponse(Call<Kennels> call, Response<Kennels> response) {

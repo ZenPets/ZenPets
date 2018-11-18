@@ -38,6 +38,9 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
@@ -579,37 +582,43 @@ public class AdoptionCreatorNew extends AppCompatActivity {
 
         /* PUBLISH THE ADOPTION COVER PHOTO TO FIREBASE */
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        StorageReference refStorage = storageReference.child("Adoption Covers").child(FILE_NAME);
-//        refStorage.putFile(ADOPTION_COVER_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                Uri downloadURL = taskSnapshot.getDownloadUrl();
-//                if (downloadURL != null)    {
-//                    ADOPTION_COVER_URL = String.valueOf(downloadURL);
-//                    if (ADOPTION_COVER_URL != null)    {
-//                        /* PUBLISH THE ADOPTION LISTING */
-//                        publishAdoptionListing();
-//                    } else {
-//                        dialog.dismiss();
-//                        Toast.makeText(
-//                                getApplicationContext(),
-//                                "Error publishing adoption...",
-//                                Toast.LENGTH_LONG).show();
-//                    }
-//                } else {
-//                    dialog.dismiss();
-//                    Toast.makeText(
-//                            getApplicationContext(),
-//                            "Error publishing adoption...",
-//                            Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                e.printStackTrace();
-//            }
-//        });
+        final StorageReference refStorage = storageReference.child("Adoption Covers").child(FILE_NAME);
+        UploadTask uploadTask = refStorage.putFile(ADOPTION_COVER_URI);
+        Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+
+                /* CONTINUE WITH THE TASK TO GET THE IMAGE URL */
+                return refStorage.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri downloadURL = task.getResult();
+                    ADOPTION_COVER_URL = String.valueOf(downloadURL);
+                    if (ADOPTION_COVER_URL != null)    {
+                        /* PUBLISH THE ADOPTION LISTING */
+                        publishAdoptionListing();
+                    } else {
+                        dialog.dismiss();
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "Error publishing adoption...",
+                                Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    dialog.dismiss();
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "Error publishing adoption...",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     /** PUBLISH THE ADOPTION LISTING **/
@@ -673,19 +682,31 @@ public class AdoptionCreatorNew extends AppCompatActivity {
             }
 
             StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-            StorageReference refStorage = storageReference.child("Adoptions").child(FILE_NAME);
+            final StorageReference refStorage = storageReference.child("Adoptions").child(FILE_NAME);
             UploadTask uploadTask = refStorage.putFile(uri);
-//            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    Uri downloadURL = taskSnapshot.getDownloadUrl();
-//                    if (downloadURL != null) {
-//                        /* INCREMENT THE UPLOAD COUNTER AND UPLOAD THE IMAGE */
-//                        IMAGE_UPLOAD_COUNTER++;
-//                        postImage(String.valueOf(downloadURL));
-//                    }
-//                }
-//            });
+            Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+
+                    /* CONTINUE WITH THE TASK TO GET THE IMAGE URL */
+                    return refStorage.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadURL = task.getResult();
+                        if (downloadURL != null) {
+                            /* INCREMENT THE UPLOAD COUNTER AND UPLOAD THE IMAGE */
+                            IMAGE_UPLOAD_COUNTER++;
+                            postImage(String.valueOf(downloadURL));
+                        }
+                    }
+                }
+            });
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

@@ -47,7 +47,7 @@
             android:layout_weight="1"
             android:hint="Max Lat"
             android:padding="11dp"
-            android:text="25.5594422" />
+            android:text="25.586078" />
     </LinearLayout>
 
     <LinearLayout
@@ -71,7 +71,7 @@
             android:layout_weight="1"
             android:hint="Max Lng"
             android:padding="11dp"
-            android:text="83.9778593" />
+            android:text="84.0088423" />
     </LinearLayout>
 
     <Button

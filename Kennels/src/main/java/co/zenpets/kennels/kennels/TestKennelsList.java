@@ -69,7 +69,7 @@ public class TestKennelsList extends AppCompatActivity {
     }
 
     /** THE KENNEL OWNER'S ID **/
-    private String KENNEL_OWNER_ID = null;
+    private String KENNEL_ID = null;
 
     /** AN ARRAY LIST TO STORE THE LIST OF KENNELS **/
     ArrayList<TestKennel> arrKennels = new ArrayList<>();
@@ -103,8 +103,8 @@ public class TestKennelsList extends AppCompatActivity {
         /* CONFIGURE THE TOOLBAR */
         configTB();
 
-        /* GET THE KENNEL OWNER'S ID */
-        KENNEL_OWNER_ID = getApp().getKennelOwnerID();
+        /* GET THE KENNEL ID */
+        KENNEL_ID = getApp().getKennelID();
 
         /* CONFIGURE THE RECYCLER VIEW **/
         configRecycler();
@@ -117,7 +117,7 @@ public class TestKennelsList extends AppCompatActivity {
     /***** FETCH THE LIST OF KENNELS *****/
     private void fetchKennels() {
         TestKennelsAPI api = ZenApiClient.getClient().create(TestKennelsAPI.class);
-        Call<TestKennels> call = api.fetchTestKennelsListByOwner(KENNEL_OWNER_ID);
+        Call<TestKennels> call = api.fetchTestKennelsListByOwner(KENNEL_ID);
         call.enqueue(new Callback<TestKennels>() {
             @Override
             public void onResponse(Call<TestKennels> call, Response<TestKennels> response) {
@@ -454,7 +454,7 @@ public class TestKennelsList extends AppCompatActivity {
     /** CHECK TOTAL KENNELS CREATED BY CURRENT KENNEL OWNER **/
     private void checkPublishedKennels() {
         KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-        Call<KennelPages> call = api.fetchOwnerKennels(KENNEL_OWNER_ID);
+        Call<KennelPages> call = api.fetchOwnerKennels(KENNEL_ID);
         call.enqueue(new Callback<KennelPages>() {
             @Override
             public void onResponse(Call<KennelPages> call, Response<KennelPages> response) {

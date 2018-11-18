@@ -44,11 +44,8 @@ public class ReviewsFragment extends Fragment {
         return (AppPrefs) getActivity().getApplication();
     }
 
-    /** THE KENNEL'S OWNERS ID **/
-    private String KENNEL_OWNER_ID = null;
-
-    /** THE SELECTED KENNEL ID **/
-    String KENNEL_ID = null;
+    /** THE KENNEL ID **/
+    private String KENNEL_ID = null;
 
     /** AN ARRAY LIST TO STORE THE LIST OF KENNELS **/
     ArrayList<Kennel> arrKennels = new ArrayList<>();
@@ -100,8 +97,8 @@ public class ReviewsFragment extends Fragment {
         configRecycler();
 
         /* GET THE LOGGED IN KENNEL OWNER'S ID */
-        KENNEL_OWNER_ID = getApp().getKennelOwnerID();
-        if (KENNEL_OWNER_ID != null)    {
+        KENNEL_ID = getApp().getKennelID();
+        if (KENNEL_ID != null)    {
             /* SHOW THE PROGRESS AND FETCH THE LIST OF KENNELS */
             linlaProgress.setVisibility(View.VISIBLE);
             fetchKennels();
@@ -176,7 +173,7 @@ public class ReviewsFragment extends Fragment {
     /** FETCH THE LIST OF KENNELS **/
     private void fetchKennels() {
         KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-        Call<Kennels> call = api.fetchKennelsListByOwner(KENNEL_OWNER_ID);
+        Call<Kennels> call = api.fetchKennelsListByOwner(KENNEL_ID);
         call.enqueue(new Callback<Kennels>() {
             @Override
             public void onResponse(Call<Kennels> call, Response<Kennels> response) {

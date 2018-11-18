@@ -116,7 +116,7 @@ public class SplashScreen extends AppCompatActivity {
     /***** SAVE THE DOCTOR ID *****/
     private void saveDoctorID() {
         DoctorsAPI apiInterface = ZenApiClient.getClient().create(DoctorsAPI.class);
-        Call<Doctor> call = apiInterface.getDoctorID(user.getUid());
+        Call<Doctor> call = apiInterface.fetchDoctorID(user.getUid());
         call.enqueue(new Callback<Doctor>() {
             @Override
             public void onResponse(@NonNull Call<Doctor> call, @NonNull Response<Doctor> response) {

@@ -18,14 +18,14 @@ import java.util.List;
 
 import co.zenpets.doctors.R;
 
-public class NotificationUtils {
+class NotificationUtils {
 
     private static String TAG = NotificationUtils.class.getSimpleName();
 
     private Context mContext;
     private String CHANNEL_ID;
 
-    public NotificationUtils(Context mContext, String CHANNEL_ID) {
+    private NotificationUtils(Context mContext, String CHANNEL_ID) {
         this.mContext = mContext;
         this.CHANNEL_ID = CHANNEL_ID;
     }
@@ -80,7 +80,7 @@ public class NotificationUtils {
     }
 
     /** PLAY THE NOTIFICATION SOUND  **/
-    public void playNotificationSound() {
+    private void playNotificationSound() {
         try {
             Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             Ringtone r = RingtoneManager.getRingtone(mContext, alarmSound);

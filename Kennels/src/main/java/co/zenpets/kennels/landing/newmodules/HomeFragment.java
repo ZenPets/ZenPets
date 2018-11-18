@@ -14,23 +14,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import co.zenpets.kennels.R;
 import co.zenpets.kennels.inventory.KennelInventory;
-import co.zenpets.kennels.kennels.TestKennelsList;
 import co.zenpets.kennels.reports.ReportsActivity;
 import co.zenpets.kennels.reviews.ReviewsList;
 import co.zenpets.kennels.utils.TypefaceSpan;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class HomeFragment extends Fragment {
 
-    /** SHOW THE LIST OF KENNELS **/
-    @OnClick(R.id.linlaKennels) void showKennels()  {
-//        Intent intent = new Intent(getActivity(), KennelsList.class);
-        Intent intent = new Intent(getActivity(), TestKennelsList.class);
-        startActivity(intent);
-    }
+//    /** SHOW THE LIST OF KENNELS **/
+//    @OnClick(R.id.linlaKennels) void showKennels()  {
+////        Intent intent = new Intent(getActivity(), KennelsList.class);
+//        Intent intent = new Intent(getActivity(), TestKennelsList.class);
+//        startActivity(intent);
+//    }
 
     /** MANAGE THE KENNEL INVENTORY **/
     @OnClick(R.id.linlaInventory) void manageInventory()    {

@@ -2,7 +2,7 @@ package co.zenpets.doctors.utils.models.appointments;
 
 import com.google.gson.annotations.SerializedName;
 
-public class MonthlyAppointment {
+class MonthlyAppointment {
 
     @SerializedName("appointmentID") private String appointmentID;
     @SerializedName("doctorID") private String doctorID;

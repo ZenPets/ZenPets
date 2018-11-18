@@ -9,7 +9,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -24,10 +23,10 @@ public class NewFirebaseMessagingService extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
 
         /* NOTIFICATION FROM */
-        Log.e("FROM", remoteMessage.getFrom());
+//        Log.e("FROM", remoteMessage.getFrom());
 
         if (remoteMessage.getData().size() > 0) {
-            Log.e("PAYLOAD", String.valueOf(remoteMessage.getData()));
+//            Log.e("PAYLOAD", String.valueOf(remoteMessage.getData()));
         }
 
         sendNotification(String.valueOf(remoteMessage.getData()));

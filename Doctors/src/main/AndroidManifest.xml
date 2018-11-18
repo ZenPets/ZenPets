@@ -173,6 +173,10 @@
 
         <!-- CLIENTS -->
         <activity
+            android:name=".creator.client.ClientCreator"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
             android:name=".details.client.ClientDetails"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />

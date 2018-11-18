@@ -11,7 +11,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -143,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<Groomer>() {
             @Override
             public void onResponse(Call<Groomer> call, Response<Groomer> response) {
-                Log.e("GROOMER RESPONSE", String.valueOf(response.raw()));
+//                Log.e("GROOMER RESPONSE", String.valueOf(response.raw()));
                 /* GET THE GROOMER ACCOUNT ID */
                 GROOMER_ID = response.body().getGroomerID();
                 if (GROOMER_ID != null)    {

@@ -99,7 +99,7 @@ public class ReviewsList extends AppCompatActivity {
         configRecycler();
 
         /* GET THE LOGGED IN KENNEL OWNER'S ID */
-        KENNEL_OWNER_ID = getApp().getKennelOwnerID();
+        KENNEL_ID = getApp().getKennelID();
         if (KENNEL_OWNER_ID != null)    {
             /* SHOW THE PROGRESS AND FETCH THE LIST OF KENNELS */
             linlaProgress.setVisibility(View.VISIBLE);

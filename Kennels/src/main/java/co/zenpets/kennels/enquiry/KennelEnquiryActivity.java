@@ -45,9 +45,6 @@ public class KennelEnquiryActivity extends AppCompatActivity {
         return (AppPrefs) getApplication();
     }
 
-    /** THE LOGGED IN KENNEL OWNER'S ID **/
-    String KENNEL_OWNER_ID = null;
-
     /** THE INCOMING KENNEL ID AND ENQUIRY ID **/
     String KENNEL_ID = null;
     String ENQUIRY_ID = null;
@@ -100,9 +97,9 @@ public class KennelEnquiryActivity extends AppCompatActivity {
         setContentView(R.layout.kennel_enquiry_list);
         ButterKnife.bind(this);
 
-        /* GET THE KENNEL OWNER'S ID */
-        KENNEL_OWNER_ID = getApp().getKennelOwnerID();
-//        Log.e("OWNER ID", KENNEL_OWNER_ID);
+        /* GET THE KENNEL ID */
+        KENNEL_ID = getApp().getKennelID();
+//        Log.e("OWNER ID", KENNEL_ID);
 
         /* GET THE KENNEL DETAILS */
         fetchKennelDetails();
@@ -306,7 +303,7 @@ public class KennelEnquiryActivity extends AppCompatActivity {
             Call<Notification> call = api.sendKennelReplyNotification(
                     USER_TOKEN, "New reply from " + KENNEL_NAME,
                     strMessage, "Kennel Enquiry", ENQUIRY_ID,
-                    KENNEL_ID, KENNEL_NAME, KENNEL_COVER_PHOTO, KENNEL_OWNER_ID);
+                    KENNEL_ID, KENNEL_NAME, KENNEL_COVER_PHOTO, KENNEL_ID);
             call.enqueue(new Callback<Notification>() {
                 @Override
                 public void onResponse(Call<Notification> call, Response<Notification> response) {

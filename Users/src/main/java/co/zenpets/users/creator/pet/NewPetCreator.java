@@ -38,8 +38,12 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.io.File;
@@ -53,20 +57,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import co.zenpets.users.R;
 import co.zenpets.users.utils.AppPrefs;
 import co.zenpets.users.utils.adapters.pet.BreedsAdapter;
 import co.zenpets.users.utils.adapters.pet.PetTypesAdapter;
 import co.zenpets.users.utils.helpers.classes.ZenApiClient;
+import co.zenpets.users.utils.helpers.pets.pet.AddNewPet;
 import co.zenpets.users.utils.helpers.pets.pet.AddNewPetInterface;
 import co.zenpets.users.utils.models.pets.breeds.Breed;
 import co.zenpets.users.utils.models.pets.breeds.Breeds;
 import co.zenpets.users.utils.models.pets.breeds.BreedsAPI;
 import co.zenpets.users.utils.models.pets.types.PetType;
 import co.zenpets.users.utils.models.pets.types.PetTypesAPI;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import id.zelory.compressor.Compressor;
 import pl.aprilapps.easyphotopicker.DefaultCallback;
 import pl.aprilapps.easyphotopicker.EasyImage;
@@ -269,39 +274,45 @@ public class NewPetCreator extends AppCompatActivity
 
         /* PUBLISH THE PET PROFILE TO FIREBASE */
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        StorageReference refStorage = storageReference.child("Pets").child(FILE_NAME);
-//        refStorage.putFile(PET_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                Uri downloadURL = taskSnapshot.getDownloadUrl();
-//                if (downloadURL != null)    {
-//                    PET_PROFILE = String.valueOf(downloadURL);
-//                    if (PET_PROFILE != null)    {
-//                        /* PUBLISH THE NEW PET */
-//                        new AddNewPet(NewPetCreator.this).execute(
-//                                USER_ID, PET_TYPE_ID, PET_BREED_ID, PET_NAME,
-//                                PET_GENDER, PET_DOB, PET_NEUTERED, PET_PROFILE);
-//                    } else {
-//                        dialog.dismiss();
-//                        Toast.makeText(
-//                                getApplicationContext(),
-//                                "There was a problem adding your new Pet. Please try again by clicking the Save button.",
-//                                Toast.LENGTH_LONG).show();
-//                    }
-//                } else {
-//                    dialog.dismiss();
-//                    Toast.makeText(
-//                            getApplicationContext(),
-//                            "There was a problem adding your new Pet. Please try again by clicking the Save button.",
-//                            Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                e.printStackTrace();
-//            }
-//        });
+        final StorageReference refStorage = storageReference.child("Pets").child(FILE_NAME);
+        UploadTask uploadTask = refStorage.putFile(PET_URI);
+        Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+
+                /* CONTINUE WITH THE TASK TO GET THE IMAGE URL */
+                return refStorage.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri downloadURL = task.getResult();
+                    PET_PROFILE = String.valueOf(downloadURL);
+                    if (PET_PROFILE != null)    {
+                        /* PUBLISH THE NEW PET */
+                        new AddNewPet(NewPetCreator.this).execute(
+                                USER_ID, PET_TYPE_ID, PET_BREED_ID, PET_NAME,
+                                PET_GENDER, PET_DOB, PET_NEUTERED, PET_PROFILE);
+                    } else {
+                        dialog.dismiss();
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "There was a problem adding your new Pet. Please try again by clicking the Save button.",
+                                Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    dialog.dismiss();
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "There was a problem adding your new Pet. Please try again by clicking the Save button.",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     @Override

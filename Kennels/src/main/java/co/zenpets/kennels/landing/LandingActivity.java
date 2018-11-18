@@ -21,14 +21,17 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import co.zenpets.kennels.R;
 import co.zenpets.kennels.landing.modules.ClientsFragment;
 import co.zenpets.kennels.landing.modules.DashboardFragment;
-import co.zenpets.kennels.landing.modules.KennelsFragment;
 import co.zenpets.kennels.landing.modules.ReportsFragment;
 import co.zenpets.kennels.landing.modules.ReviewsFragment;
 import co.zenpets.kennels.landing.newmodules.EnquiriesFragment;
@@ -37,11 +40,9 @@ import co.zenpets.kennels.landing.others.FeedbackFragment;
 import co.zenpets.kennels.landing.others.HelpFragment;
 import co.zenpets.kennels.landing.others.SettingsFragment;
 import co.zenpets.kennels.utils.AppPrefs;
-import co.zenpets.kennels.utils.models.account.Account;
-import co.zenpets.kennels.utils.models.account.AccountsAPI;
 import co.zenpets.kennels.utils.models.helpers.ZenApiClient;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import co.zenpets.kennels.utils.models.kennels.Kennel;
+import co.zenpets.kennels.utils.models.kennels.KennelsAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,8 +53,10 @@ public class LandingActivity extends AppCompatActivity {
         return (AppPrefs) getApplication();
     }
 
-    /** THE KENNEL OWNER DETAILS **/
-    String KENNEL_OWNER_ID = null;
+    /** THE LOGGED IN KENNEL ID AND IT'S DETAILS **/
+    String KENNEL_ID = null;
+    String KENNEL_NAME = null;
+    String KENNEL_COVER_PHOTO = null;
 
     /** A FRAGMENT INSTANCE **/
     private Fragment mContent;
@@ -73,8 +76,8 @@ public class LandingActivity extends AppCompatActivity {
         setContentView(R.layout.landing_activity);
         ButterKnife.bind(this);
 
-        /* GET THE KENNEL OWNER'S ID */
-        KENNEL_OWNER_ID = getApp().getKennelOwnerID();
+        /* GET THE KENNEL ID */
+        KENNEL_ID = getApp().getKennelID();
 
         /* CONFIGURE THE TOOLBAR */
         configToolbar();
@@ -85,8 +88,8 @@ public class LandingActivity extends AppCompatActivity {
         /* DETERMINE IF THE KENNEL OWNER IS LOGGED IN */
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            /* FETCH THE KENNEL OWNER'S PROFILE */
-            fetchProfile(user.getUid());
+            /* FETCH THE KENNEL DETAILS */
+            fetchKennelDetails();
         }
 
         /* SHOW THE FIRST FRAGMENT (DASHBOARD) */
@@ -101,11 +104,52 @@ public class LandingActivity extends AppCompatActivity {
         /* CREATE THE NOTIFICATION CHANNEL */
         createNotificationChannel();
 
-        /* FIREBASE MESSAGING TEST */
-        String token = FirebaseInstanceId.getInstance().getToken();
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
+                LandingActivity.this,
+                new OnSuccessListener<InstanceIdResult>() {
+                    @Override
+                    public void onSuccess(InstanceIdResult instanceIdResult) {
+                        String token = instanceIdResult.getToken();
+//                        Log.e("NEW TOKEN", token);
 
-        /* UPDATE THE DOCTOR'S DEVICE TOKEN */
-        updateDeviceToken(token);
+                        /* UPDATE THE GROOMER'S DEVICE TOKEN */
+                        updateDeviceToken(token);
+                    }
+                });
+    }
+
+    /** FETCH THE KENNEL DETAILS **/
+    private void fetchKennelDetails() {
+        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
+        Call<Kennel> call = api.fetchKennelDetails(KENNEL_ID);
+        call.enqueue(new Callback<Kennel>() {
+            @Override
+            public void onResponse(Call<Kennel> call, Response<Kennel> response) {
+//                Log.e("KENNEL RESPONSE", String.valueOf(response.raw()));
+                Kennel kennel = response.body();
+                if (kennel != null) {
+                    /* GET THE KENNEL NAME */
+                    KENNEL_NAME = kennel.getKennelName();
+                    if (KENNEL_NAME != null)    {
+//                        Log.e("KENNEL NAME", KENNEL_NAME);
+                        txtKennelOwnerName.setText(KENNEL_NAME);
+                    }
+
+                    /* GET THE KENNEL COVER PHOTO */
+                    KENNEL_COVER_PHOTO = kennel.getKennelCoverPhoto();
+                    if (KENNEL_COVER_PHOTO != null) {
+//                        Log.e("KENNEL COVER", KENNEL_COVER_PHOTO);
+                        Uri uri = Uri.parse(KENNEL_COVER_PHOTO);
+                        imgvwKennelOwnerDisplayProfile.setImageURI(uri);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Kennel> call, Throwable t) {
+//                Log.e("DETAILS FAILURE", t.getMessage());
+            }
+        });
     }
 
     /** CONFIGURE THE NAVIGATION BAR **/
@@ -250,52 +294,18 @@ public class LandingActivity extends AppCompatActivity {
                 .commit();
     }
 
-    /***** FETCH THE KENNEL OWNER'S PROFILE *****/
-    private void fetchProfile(String kennelOwnerAuthID) {
-        AccountsAPI api = ZenApiClient.getClient().create(AccountsAPI.class);
-        Call<Account> call = api.fetchKennelOwnerProfileAuthID(kennelOwnerAuthID);
-        call.enqueue(new Callback<Account>() {
-            @Override
-            public void onResponse(Call<Account> call, Response<Account> response) {
-                /* GET THE USER'S ID */
-                Account data = response.body();
-                if (data != null)   {
-                    /* GET THE KENNEL OWNER'S ID */
-                    String kennelOwnerID = data.getKennelOwnerID();
-                    getApp().setKennelOwnerID(kennelOwnerID);
-
-                    /* GET THE KENNEL OWNER'S NAME */
-                    String kennelOwnerName = data.getKennelOwnerName();
-                    txtKennelOwnerName.setText(kennelOwnerName);
-
-                    /* GET AND SET THE KENNEL OWNER'S DISPLAY PROFILE */
-                    String kennelOwnerDisplayProfile = data.getKennelOwnerDisplayProfile();
-                    if (kennelOwnerDisplayProfile != null) {
-                        Uri uri = Uri.parse(kennelOwnerDisplayProfile);
-                        imgvwKennelOwnerDisplayProfile.setImageURI(uri);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Account> call, Throwable t) {
-//                Log.e("KENNEL OWNER PROFILE", t.getMessage());
-            }
-        });
-    }
-
     /* UPDATE THE TRAINER'S DEVICE TOKEN */
     private void updateDeviceToken(String deviceToken) {
-        String KENNEL_OWNER_ID = getApp().getKennelOwnerID();
-        AccountsAPI api = ZenApiClient.getClient().create(AccountsAPI.class);
-        Call<Account> call = api.updateKennelOwnerToken(KENNEL_OWNER_ID, deviceToken);
-        call.enqueue(new Callback<Account>() {
+        String KENNEL_ID = getApp().getKennelID();
+        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
+        Call<Kennel> call = api.updateKennelToken(KENNEL_ID, deviceToken);
+        call.enqueue(new Callback<Kennel>() {
             @Override
-            public void onResponse(Call<Account> call, Response<Account> response) {
+            public void onResponse(Call<Kennel> call, Response<Kennel> response) {
             }
 
             @Override
-            public void onFailure(Call<Account> call, Throwable t) {
+            public void onFailure(Call<Kennel> call, Throwable t) {
             }
         });
     }

@@ -17,7 +17,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
@@ -39,10 +38,10 @@ public class NewFirebaseMessagingService extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
 
         /* NOTIFICATION FROM */
-        Log.e("FROM", remoteMessage.getFrom());
+//        Log.e("FROM", remoteMessage.getFrom());
 
         if (remoteMessage.getData().size() > 0) {
-            Log.e("PAYLOAD", String.valueOf(remoteMessage.getData()));
+//            Log.e("PAYLOAD", String.valueOf(remoteMessage.getData()));
         }
 
         sendNotification(String.valueOf(remoteMessage.getData()));
@@ -51,11 +50,11 @@ public class NewFirebaseMessagingService extends FirebaseMessagingService {
         try {
             JSONObject json = new JSONObject(messageBody);
             JSONObject data = json.getJSONObject("data");
-            Log.e("DATA", String.valueOf(data));
+//            Log.e("DATA", String.valueOf(data));
             String notificationTitle = data.getString("notificationTitle");
             String notificationMessage = data.getString("notificationMessage");
             JSONObject payload = data.getJSONObject("payload");
-            Log.e("PAYLOAD", String.valueOf(payload));
+//            Log.e("PAYLOAD", String.valueOf(payload));
 
             /* THE REFERENCE */
             String strReference;
@@ -73,15 +72,15 @@ public class NewFirebaseMessagingService extends FirebaseMessagingService {
             if (payload.has("notificationReference")) {
                 Intent intent;
                 strReference = payload.getString("notificationReference");
-                Log.e("REFERENCE", strReference);
+//                Log.e("REFERENCE", strReference);
                 if (strReference.equalsIgnoreCase("New Appointment"))   {
                     /* GET THE APPOINTMENT DETAILS */
                     APPOINTMENT_ID = payload.getString("appointmentID");
                     APPOINTMENT_DATE = payload.getString("appointmentDate");
                     APPOINTMENT_TIME = payload.getString("appointmentTime");
-                    Log.e("APPOINTMENT ID", APPOINTMENT_ID);
-                    Log.e("APPOINTMENT DATE", APPOINTMENT_DATE);
-                    Log.e("APPOINTMENT TIME", APPOINTMENT_TIME);
+//                    Log.e("APPOINTMENT ID", APPOINTMENT_ID);
+//                    Log.e("APPOINTMENT DATE", APPOINTMENT_DATE);
+//                    Log.e("APPOINTMENT TIME", APPOINTMENT_TIME);
                     USER_ID = payload.getString("userID");
                     USER_NAME = payload.getString("userName");
                     USER_DISPLAY_PROFILE = payload.getString("userDisplayProfile");
@@ -93,7 +92,7 @@ public class NewFirebaseMessagingService extends FirebaseMessagingService {
                             .get();
                     Bitmap bmpDisplayProfile = getCircleBitmap(bmpOriginal);
 
-                    Log.e("DISPLAY PROFILE", USER_DISPLAY_PROFILE);
+//                    Log.e("DISPLAY PROFILE", USER_DISPLAY_PROFILE);
                     intent = new Intent(this, AppointmentDetails.class);
                     intent.putExtra("APPOINTMENT_ID", APPOINTMENT_ID);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

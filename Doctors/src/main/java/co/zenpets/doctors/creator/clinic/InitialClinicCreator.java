@@ -42,6 +42,12 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -61,6 +67,8 @@ import co.zenpets.doctors.utils.adapters.location.LocalitiesAdapter;
 import co.zenpets.doctors.utils.adapters.location.StatesAdapter;
 import co.zenpets.doctors.utils.helpers.classes.LocationPickerActivity;
 import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.models.clinics.ClinicsAPI;
+import co.zenpets.doctors.utils.models.doctors.clinic.Clinic;
 import co.zenpets.doctors.utils.models.doctors.clinic.ClinicMapperAPI;
 import co.zenpets.doctors.utils.models.location.CitiesData;
 import co.zenpets.doctors.utils.models.location.CityData;
@@ -402,54 +410,60 @@ public class InitialClinicCreator extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.show();
 
-//        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-//        final StorageReference refStorage = storageReference.child("Clinic Logos").child(FILE_NAME);
-//        refStorage.putFile(LOGO_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                Uri downloadURL = taskSnapshot.getDownloadUrl();
-//                LOGO_URL = String.valueOf(downloadURL);
-//                if (LOGO_URL != null)    {
-//                    /* CREATE THE NEW CLINIC */
-//                    ClinicsApi api = ZenApiClient.getClient().create(ClinicsApi.class);
-//                    Call<Clinic> call = api.newClinic(
-//                            DOCTOR_ID, "51", STATE_ID, CITY_ID, LOCALITY_ID,
-//                            CLINIC_NAME, CLINIC_ADDRESS, LANDMARK, PIN_CODE,
-//                            String.valueOf(CLINIC_LATITUDE), String.valueOf(CLINIC_LONGITUDE),
-//                            LOGO_URL, "91", PHONE_NUMBER_1, "91", PHONE_NUMBER_2, "Pending");
-//                    call.enqueue(new Callback<Clinic>() {
-//                        @Override
-//                        public void onResponse(Call<Clinic> call, Response<Clinic> response) {
-//                            if (response.isSuccessful())    {
-//                                /* MAP THE DOCTOR TO THE CLINIC */
-//                                String clinicID = response.body().getClinicID();
-//                                mapTheDoctor(clinicID);
-//                            } else {
-//                                /* DISMISS THE DIALOG */
-//                                dialog.dismiss();
-//                                Toast.makeText(getApplicationContext(), "There was a problem creating the new Clinic. Please try again", Toast.LENGTH_LONG).show();
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<Clinic> call, Throwable t) {
-//                        }
-//                    });
-//                } else {
-//                    Toast.makeText(
-//                            getApplicationContext(),
-//                            "There was a problem creating your new account. Please try again by clicking the Save button.",
-//                            Toast.LENGTH_LONG).show();
-//                }
-//
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-////                Log.e("UPLOAD EXCEPTION", e.toString());
-////                Crashlytics.logException(e);
-//            }
-//        });
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        final StorageReference refStorage = storageReference.child("Clinic Logos").child(FILE_NAME);
+        UploadTask uploadTask = refStorage.putFile(LOGO_URI);
+        Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+
+                /* CONTINUE WITH THE TASK TO GET THE IMAGE URL */
+                return refStorage.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri downloadURL = task.getResult();
+                    LOGO_URL = String.valueOf(downloadURL);
+                    if (LOGO_URL != null)    {
+                        /* CREATE THE NEW CLINIC */
+                        ClinicsAPI api = ZenApiClient.getClient().create(ClinicsAPI.class);
+                        Call<Clinic> call = api.newClinic(
+                                DOCTOR_ID, "51", STATE_ID, CITY_ID, LOCALITY_ID,
+                                CLINIC_NAME, CLINIC_ADDRESS, LANDMARK, PIN_CODE,
+                                String.valueOf(CLINIC_LATITUDE), String.valueOf(CLINIC_LONGITUDE),
+                                LOGO_URL, "91", PHONE_NUMBER_1, "91", PHONE_NUMBER_2, "Pending");
+                        call.enqueue(new Callback<Clinic>() {
+                            @Override
+                            public void onResponse(Call<Clinic> call, Response<Clinic> response) {
+                                if (response.isSuccessful())    {
+                                    /* MAP THE DOCTOR TO THE CLINIC */
+                                    String clinicID = response.body().getClinicID();
+                                    mapTheDoctor(clinicID);
+                                } else {
+                                    /* DISMISS THE DIALOG */
+                                    dialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), "There was a problem creating the new Clinic. Please try again", Toast.LENGTH_LONG).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Clinic> call, Throwable t) {
+                            }
+                        });
+                    } else {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "There was a problem creating your new account. Please try again by clicking the Save button.",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
     }
 
     /***** MAP THE DOCTOR TO THE SELECTED CLINIC *****/

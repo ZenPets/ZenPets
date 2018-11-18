@@ -6,11 +6,72 @@
     android:fillViewport="true">
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardKennel"
+            style="@style/ZenPetsCards"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imgvwKennelCoverPhoto"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_business_black_48dp" />
+
+                <TextView
+                    android:id="@+id/txtKennelName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="#A6000000"
+                    android:fontFamily="@font/roboto_regular"
+                    android:padding="11dp"
+                    android:text="@string/kennel_details_name"
+                    android:textColor="@android:color/primary_text_dark"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:id="@+id/txtViewKennel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:gravity="end|center"
+            android:text="VIEW KENNEL"
+            android:textColor="@color/primary_text"
+            android:textSize="15sp"
+            app:fontFamily="@font/roboto_medium" />
+
+        <!--<LinearLayout
             android:id="@+id/linlaKennels"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -22,7 +83,7 @@
                 android:layout_width="47dp"
                 android:layout_height="47dp"
                 android:adjustViewBounds="true"
-                app:iiv_color="?attr/colorPrimary"
+                app:iiv_color="@color/secondary_text"
                 app:iiv_icon="gmd_store"
                 app:iiv_size="22dp" />
 
@@ -73,18 +134,96 @@
                 app:iiv_color="@color/secondary_text"
                 app:iiv_icon="gmd_chevron_right"
                 app:iiv_size="12dp" />
-        </LinearLayout>
+        </LinearLayout>-->
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.50dp"
-            android:layout_marginBottom="2dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="2dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="2dp"
             android:background="@drawable/fixed_divider_horizontal_bright" />
+
+        <TextView
+            android:id="@+id/txtEnquiriesLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="LATEST ENQUIRIES"
+            android:textColor="@color/secondary_text"
+            android:textSize="14sp"
+            app:fontFamily="@font/roboto_regular" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/listEnquiries"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp" />
+
+        <TextView
+            android:id="@+id/txtViewEnquiries"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:gravity="end|center"
+            android:text="VIEW ALL ENQUIRIES"
+            android:textColor="@color/primary_text"
+            android:textSize="15sp"
+            app:fontFamily="@font/roboto_medium" />
+
+        <TextView
+            android:id="@+id/txtReviewsLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="LATEST REVIEWS"
+            android:textColor="@color/secondary_text"
+            android:textSize="14sp"
+            app:fontFamily="@font/roboto_regular" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/listReviews"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp" />
+
+        <TextView
+            android:id="@+id/txtViewReviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:gravity="end|center"
+            android:text="VIEW ALL REVIEWS"
+            android:textColor="@color/primary_text"
+            android:textSize="15sp"
+            app:fontFamily="@font/roboto_medium" />
 
         <LinearLayout
             android:id="@+id/linlaInventory"
@@ -98,7 +237,7 @@
                 android:layout_width="47dp"
                 android:layout_height="47dp"
                 android:adjustViewBounds="true"
-                app:iiv_color="?attr/colorPrimary"
+                app:iiv_color="@color/secondary_text"
                 app:iiv_icon="faw_box_open"
                 app:iiv_size="22dp" />
 
@@ -112,12 +251,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start|center"
-                    android:paddingBottom="5dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="11dp"
                     android:paddingStart="11dp"
+                    android:paddingLeft="11dp"
                     android:paddingTop="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingBottom="5dp"
                     android:text="Kennel Inventory"
                     android:textColor="@color/secondary_text"
                     android:textSize="15sp"
@@ -127,12 +266,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start|center"
-                    android:paddingBottom="2dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="11dp"
                     android:paddingStart="11dp"
+                    android:paddingLeft="11dp"
                     android:paddingTop="2dp"
+                    android:paddingEnd="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingBottom="2dp"
                     android:text="Manage your Inventory"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
@@ -154,12 +293,12 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.50dp"
-            android:layout_marginBottom="2dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="2dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="2dp"
             android:background="@drawable/fixed_divider_horizontal_bright" />
 
         <LinearLayout
@@ -174,7 +313,7 @@
                 android:layout_width="47dp"
                 android:layout_height="47dp"
                 android:adjustViewBounds="true"
-                app:iiv_color="?attr/colorPrimary"
+                app:iiv_color="@color/secondary_text"
                 app:iiv_icon="faw_thumbs_up"
                 app:iiv_size="22dp" />
 
@@ -188,12 +327,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start|center"
-                    android:paddingBottom="5dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="11dp"
                     android:paddingStart="11dp"
+                    android:paddingLeft="11dp"
                     android:paddingTop="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingBottom="5dp"
                     android:text="Reviews"
                     android:textColor="@color/secondary_text"
                     android:textSize="15sp"
@@ -203,12 +342,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start|center"
-                    android:paddingBottom="2dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="11dp"
                     android:paddingStart="11dp"
+                    android:paddingLeft="11dp"
                     android:paddingTop="2dp"
+                    android:paddingEnd="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingBottom="2dp"
                     android:text="Keep track of reviews posted by Pet Parents"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
@@ -230,12 +369,12 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.50dp"
-            android:layout_marginBottom="2dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="2dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="2dp"
             android:background="@drawable/fixed_divider_horizontal_bright" />
 
         <LinearLayout
@@ -250,7 +389,7 @@
                 android:layout_width="47dp"
                 android:layout_height="47dp"
                 android:adjustViewBounds="true"
-                app:iiv_color="?attr/colorPrimary"
+                app:iiv_color="@color/secondary_text"
                 app:iiv_icon="gmd_folder_shared"
                 app:iiv_size="22dp" />
 
@@ -264,12 +403,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start|center"
-                    android:paddingBottom="5dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="11dp"
                     android:paddingStart="11dp"
+                    android:paddingLeft="11dp"
                     android:paddingTop="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingBottom="5dp"
                     android:text="Your Clients"
                     android:textColor="@color/secondary_text"
                     android:textSize="15sp"
@@ -279,12 +418,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start|center"
-                    android:paddingBottom="2dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="11dp"
                     android:paddingStart="11dp"
+                    android:paddingLeft="11dp"
                     android:paddingTop="2dp"
+                    android:paddingEnd="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingBottom="2dp"
                     android:text="A record of all your clients"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
@@ -306,12 +445,12 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.50dp"
-            android:layout_marginBottom="2dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="2dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="2dp"
             android:background="@drawable/fixed_divider_horizontal_bright" />
 
         <LinearLayout
@@ -326,7 +465,7 @@
                 android:layout_width="47dp"
                 android:layout_height="47dp"
                 android:adjustViewBounds="true"
-                app:iiv_color="?attr/colorPrimary"
+                app:iiv_color="@color/secondary_text"
                 app:iiv_icon="faw_chart_line"
                 app:iiv_size="22dp" />
 
@@ -340,12 +479,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start|center"
-                    android:paddingBottom="5dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="11dp"
                     android:paddingStart="11dp"
+                    android:paddingLeft="11dp"
                     android:paddingTop="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingBottom="5dp"
                     android:text="Reports"
                     android:textColor="@color/secondary_text"
                     android:textSize="15sp"
@@ -355,12 +494,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start|center"
-                    android:paddingBottom="2dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="11dp"
                     android:paddingStart="11dp"
+                    android:paddingLeft="11dp"
                     android:paddingTop="2dp"
+                    android:paddingEnd="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingBottom="2dp"
                     android:text="How are your kennels doing?"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
@@ -382,12 +521,12 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.50dp"
-            android:layout_marginBottom="2dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="2dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="2dp"
             android:background="@drawable/fixed_divider_horizontal_bright" />
 
         <LinearLayout
@@ -402,7 +541,7 @@
                 android:layout_width="47dp"
                 android:layout_height="47dp"
                 android:adjustViewBounds="true"
-                app:iiv_color="?attr/colorPrimary"
+                app:iiv_color="@color/secondary_text"
                 app:iiv_icon="faw_cogs"
                 app:iiv_size="22dp" />
 
@@ -416,12 +555,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start|center"
-                    android:paddingBottom="5dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="11dp"
                     android:paddingStart="11dp"
+                    android:paddingLeft="11dp"
                     android:paddingTop="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingBottom="5dp"
                     android:text="Settings"
                     android:textColor="@color/secondary_text"
                     android:textSize="15sp"
@@ -431,12 +570,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start|center"
-                    android:paddingBottom="2dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="11dp"
                     android:paddingStart="11dp"
+                    android:paddingLeft="11dp"
                     android:paddingTop="2dp"
+                    android:paddingEnd="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingBottom="2dp"
                     android:text="Manage Zen Pets Settings"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
@@ -458,12 +597,12 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.50dp"
-            android:layout_marginBottom="2dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="2dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="2dp"
             android:background="@drawable/fixed_divider_horizontal_bright" />
 
         <LinearLayout
@@ -478,7 +617,7 @@
                 android:layout_width="47dp"
                 android:layout_height="47dp"
                 android:adjustViewBounds="true"
-                app:iiv_color="?attr/colorPrimary"
+                app:iiv_color="@color/secondary_text"
                 app:iiv_icon="faw_question_circle2"
                 app:iiv_size="22dp" />
 
@@ -492,12 +631,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start|center"
-                    android:paddingBottom="5dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="11dp"
                     android:paddingStart="11dp"
+                    android:paddingLeft="11dp"
                     android:paddingTop="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingBottom="5dp"
                     android:text="Help"
                     android:textColor="@color/secondary_text"
                     android:textSize="15sp"
@@ -507,12 +646,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start|center"
-                    android:paddingBottom="2dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="11dp"
                     android:paddingStart="11dp"
+                    android:paddingLeft="11dp"
                     android:paddingTop="2dp"
+                    android:paddingEnd="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingBottom="2dp"
                     android:text="Need help with something?"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
@@ -534,12 +673,12 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.50dp"
-            android:layout_marginBottom="2dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="2dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="2dp"
             android:background="@drawable/fixed_divider_horizontal_bright" />
 
         <LinearLayout
@@ -554,7 +693,7 @@
                 android:layout_width="47dp"
                 android:layout_height="47dp"
                 android:adjustViewBounds="true"
-                app:iiv_color="?attr/colorPrimary"
+                app:iiv_color="@color/secondary_text"
                 app:iiv_icon="faw_exclamation_circle"
                 app:iiv_size="22dp" />
 
@@ -568,12 +707,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start|center"
-                    android:paddingBottom="5dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="11dp"
                     android:paddingStart="11dp"
+                    android:paddingLeft="11dp"
                     android:paddingTop="5dp"
+                    android:paddingEnd="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingBottom="5dp"
                     android:text="Feedback"
                     android:textColor="@color/secondary_text"
                     android:textSize="15sp"
@@ -583,12 +722,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start|center"
-                    android:paddingBottom="2dp"
-                    android:paddingEnd="11dp"
-                    android:paddingLeft="11dp"
-                    android:paddingRight="11dp"
                     android:paddingStart="11dp"
+                    android:paddingLeft="11dp"
                     android:paddingTop="2dp"
+                    android:paddingEnd="11dp"
+                    android:paddingRight="11dp"
+                    android:paddingBottom="2dp"
                     android:text="What do you think of Zen Pets? Have any feature ideas?"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"

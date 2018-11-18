@@ -60,10 +60,8 @@ public class ReportsActivity extends AppCompatActivity {
     }
 
     /** THE KENNEL'S OWNERS ID **/
-    private String KENNEL_OWNER_ID = null;
+    private String KENNEL_ID = null;
 
-    /** THE SELECTED KENNEL ID **/
-    String KENNEL_ID = null;
 
     /** THE START AND END DATE FOR THE MYSQL QUERY **/
     String END_DATE = null;
@@ -98,8 +96,8 @@ public class ReportsActivity extends AppCompatActivity {
         calculateDates();
 
         /* GET THE LOGGED IN KENNEL OWNER'S ID */
-        KENNEL_OWNER_ID = getApp().getKennelOwnerID();
-        if (KENNEL_OWNER_ID != null)    {
+        KENNEL_ID = getApp().getKennelID();
+        if (KENNEL_ID != null)    {
             /* SHOW THE PROGRESS AND FETCH THE LIST OF KENNELS */
             linlaProgress.setVisibility(View.VISIBLE);
             fetchKennels();
@@ -311,7 +309,7 @@ public class ReportsActivity extends AppCompatActivity {
     /** FETCH THE LIST OF KENNELS **/
     private void fetchKennels() {
         KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-        Call<Kennels> call = api.fetchKennelsListByOwner(KENNEL_OWNER_ID);
+        Call<Kennels> call = api.fetchKennelsListByOwner(KENNEL_ID);
         call.enqueue(new Callback<Kennels>() {
             @Override
             public void onResponse(Call<Kennels> call, Response<Kennels> response) {

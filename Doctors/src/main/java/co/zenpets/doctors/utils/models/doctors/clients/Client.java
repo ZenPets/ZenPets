@@ -3,7 +3,8 @@ package co.zenpets.doctors.utils.models.doctors.clients;
 import com.google.gson.annotations.SerializedName;
 
 public class Client {
-
+    @SerializedName("error") private Boolean error;
+    @SerializedName("message") private String message;
     @SerializedName("clientID") private String clientID;
     @SerializedName("doctorID") private String doctorID;
     @SerializedName("userID") private String userID;
@@ -16,6 +17,22 @@ public class Client {
     @SerializedName("clientName") private String clientName;
     @SerializedName("clientPhonePrefix") private String clientPhonePrefix;
     @SerializedName("clientPhoneNumber") private String clientPhoneNumber;
+
+    public Boolean getError() {
+        return error;
+    }
+
+    public void setError(Boolean error) {
+        this.error = error;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public String getClientID() {
         return clientID;

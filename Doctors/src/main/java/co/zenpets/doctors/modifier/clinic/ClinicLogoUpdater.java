@@ -31,6 +31,12 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -41,9 +47,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.zenpets.doctors.R;
 import co.zenpets.doctors.utils.TypefaceSpan;
+import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.models.clinics.ClinicData;
+import co.zenpets.doctors.utils.models.clinics.logo.ClinicLogoAPI;
 import id.zelory.compressor.Compressor;
 import pl.aprilapps.easyphotopicker.DefaultCallback;
 import pl.aprilapps.easyphotopicker.EasyImage;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ClinicLogoUpdater extends AppCompatActivity {
 
@@ -325,56 +337,61 @@ public class ClinicLogoUpdater extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.show();
 
-//        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-//        final StorageReference refStorage = storageReference.child("Clinic Logos").child(FILE_NAME);
-//        refStorage.putFile(LOGO_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                Uri downloadURL = taskSnapshot.getDownloadUrl();
-//                LOGO_URL = String.valueOf(downloadURL);
-//                if (LOGO_URL != null)    {
-//                    /* CREATE THE NEW CLINIC */
-//                    ClinicLogoAPI api = ZenApiClient.getClient().create(ClinicLogoAPI.class);
-//                    Call<ClinicData> call = api.updateClinicLogo(CLINIC_ID, LOGO_URL);
-//                    call.enqueue(new Callback<ClinicData>() {
-//                        @Override
-//                        public void onResponse(Call<ClinicData> call, Response<ClinicData> response) {
-//                            if (response.isSuccessful())    {
-//                                /* DISMISS THE DIALOG */
-//                                dialog.dismiss();
-//                                Intent success = new Intent();
-//                                setResult(RESULT_OK, success);
-//                                Toast.makeText(getApplicationContext(), "The new Clinic was successfully created.", Toast.LENGTH_LONG).show();
-//                                finish();
-//                            } else {
-//                                Toast.makeText(
-//                                        getApplicationContext(),
-//                                        "Failed to update the Logo. Please try again.",
-//                                        Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<ClinicData> call, Throwable t) {
-////                            Log.e("LOGO FAILURE", t.getMessage());
-//                            Crashlytics.logException(t);
-//                        }
-//                    });
-//                } else {
-//                    dialog.dismiss();
-//                    Toast.makeText(
-//                            getApplicationContext(),
-//                            "There was a problem creating your new account. Please try again by clicking the Save button.",
-//                            Toast.LENGTH_LONG).show();
-//                }
-//
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-////                Log.e("UPLOAD EXCEPTION", e.toString());
-////                Crashlytics.logException(e);
-//            }
-//        });
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        final StorageReference refStorage = storageReference.child("Clinic Logos").child(FILE_NAME);
+        UploadTask uploadTask = refStorage.putFile(LOGO_URI);
+        Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+
+                /* CONTINUE WITH THE TASK TO GET THE IMAGE URL */
+                return refStorage.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri downloadURL = task.getResult();
+                    LOGO_URL = String.valueOf(downloadURL);
+                    if (LOGO_URL != null)    {
+                        /* CREATE THE NEW CLINIC */
+                        ClinicLogoAPI api = ZenApiClient.getClient().create(ClinicLogoAPI.class);
+                        Call<ClinicData> call = api.updateClinicLogo(CLINIC_ID, LOGO_URL);
+                        call.enqueue(new Callback<ClinicData>() {
+                            @Override
+                            public void onResponse(Call<ClinicData> call, Response<ClinicData> response) {
+                                if (response.isSuccessful())    {
+                                    /* DISMISS THE DIALOG */
+                                    dialog.dismiss();
+                                    Intent success = new Intent();
+                                    setResult(RESULT_OK, success);
+                                    Toast.makeText(getApplicationContext(), "The new Clinic was successfully created.", Toast.LENGTH_LONG).show();
+                                    finish();
+                                } else {
+                                    Toast.makeText(
+                                            getApplicationContext(),
+                                            "Failed to update the Logo. Please try again.",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ClinicData> call, Throwable t) {
+//                            Log.e("LOGO FAILURE", t.getMessage());
+                            }
+                        });
+                    } else {
+                        dialog.dismiss();
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "There was a problem creating your new account. Please try again by clicking the Save button.",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
     }
 }

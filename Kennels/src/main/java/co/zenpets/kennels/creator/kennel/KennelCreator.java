@@ -102,8 +102,8 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
         return (AppPrefs) getApplication();
     }
 
-    /** THE KENNEL OWNER ID **/
-    String KENNEL_OWNER_ID = null;
+    /** THE KENNEL ID **/
+    String KENNEL_ID = null;
 
     /** THE INCOMING LISTING TYPE **/
     String LISTING_TYPE = null;
@@ -115,7 +115,6 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
     private final int REQUEST_LOCATION = 1;
 
     /** DATA TYPES TO HOLD THE KENNEL DETAILS **/
-    String KENNEL_ID = null;
     String KENNEL_CHARGES_ID = "1";
     String KENNEL_NAME = null;
     String KENNEL_COVER_PHOTO = null;
@@ -203,8 +202,8 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
         /* PRELOAD A CHECK OUT */
         Checkout.preload(KennelCreator.this);
 
-        /* GET THE KENNEL OWNER'S ID */
-        KENNEL_OWNER_ID = getApp().getKennelOwnerID();
+        /* GET THE KENNEL ID */
+        KENNEL_ID = getApp().getKennelID();
 
         /* CONFIGURE THE TOOLBAR */
         configTB();
@@ -301,7 +300,7 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
 
         /* GENERATE THE FILE NAME */
         if (!(KENNEL_COVER_PHOTO_URI == null) && !TextUtils.isEmpty(KENNEL_NAME))    {
-            KENNEL_COVER_PHOTO_FILE_NAME = KENNEL_OWNER_ID + "_" + KENNEL_NAME.replaceAll(" ", "_").toLowerCase().trim();
+            KENNEL_COVER_PHOTO_FILE_NAME = KENNEL_ID + "_" + KENNEL_NAME.replaceAll(" ", "_").toLowerCase().trim();
         } else {
             KENNEL_COVER_PHOTO_FILE_NAME = null;
         }
@@ -410,7 +409,7 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
 //        }
 //        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
 //        Call<Kennel> call = api.registerNewKennel(
-//                KENNEL_OWNER_ID, KENNEL_CHARGES_ID, KENNEL_NAME, KENNEL_COVER_PHOTO, KENNEL_ADDRESS, KENNEL_PIN_CODE,
+//                KENNEL_ID, KENNEL_CHARGES_ID, KENNEL_NAME, KENNEL_COVER_PHOTO, KENNEL_ADDRESS, KENNEL_PIN_CODE,
 //                COUNTRY_ID, STATE_ID, CITY_ID, String.valueOf(KENNEL_LATITUDE), String.valueOf(KENNEL_LONGITUDE),
 //                KENNEL_PHONE_PREFIX_1, KENNEL_PHONE_NUMBER_1, KENNEL_PHONE_PREFIX_2, KENNEL_PHONE_NUMBER_2,
 //                KENNEL_PET_CAPACITY, KENNEL_VALID_FROM, KENNEL_VALID_TO
@@ -442,7 +441,7 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
     /** CHECK TOTAL KENNELS CREATED BY CURRENT KENNEL OWNER **/
     private void checkPublishedKennels() {
         KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-        Call<KennelPages> call = api.fetchOwnerKennels(KENNEL_OWNER_ID);
+        Call<KennelPages> call = api.fetchOwnerKennels(KENNEL_ID);
         call.enqueue(new Callback<KennelPages>() {
             @Override
             public void onResponse(Call<KennelPages> call, Response<KennelPages> response) {

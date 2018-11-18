@@ -17,7 +17,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -247,9 +246,9 @@ public class MapDetails extends AppCompatActivity
 
             /* INSTANTIATE THE LATLNG DESTINATION */
             LATLNG_DESTINATION = new LatLng(CLINIC_LATITUDE, CLINIC_LONGITUDE);
-            Log.e("LONGITUDE", String.valueOf(CLINIC_LONGITUDE));
-            Log.e("LATITUDE", String.valueOf(CLINIC_LATITUDE));
-            Log.e("DESTINATION", String.valueOf(LATLNG_DESTINATION));
+//            Log.e("LONGITUDE", String.valueOf(CLINIC_LONGITUDE));
+//            Log.e("LATITUDE", String.valueOf(CLINIC_LATITUDE));
+//            Log.e("DESTINATION", String.valueOf(LATLNG_DESTINATION));
 
             /* SET THE DISTANCE BETWEEN THE ORIGIN AND THE DESTINATION */
             String URL_DISTANCE = getUrl(LATLNG_ORIGIN, LATLNG_DESTINATION);
@@ -670,10 +669,11 @@ public class MapDetails extends AppCompatActivity
     /***** FETCH THE DOCTOR'S SUBSCRIPTION *****/
     private void fetchDoctorSubscription() {
         SubscriptionsAPI api = ZenApiClient.getClient().create(SubscriptionsAPI.class);
-        retrofit2.Call<SubscriptionData> call = api.fetchDoctorSubscription(DOCTOR_ID);
+        retrofit2.Call<SubscriptionData> call = api.checkDoctorSubscription(DOCTOR_ID);
         call.enqueue(new retrofit2.Callback<SubscriptionData>() {
             @Override
             public void onResponse(retrofit2.Call<SubscriptionData> call, retrofit2.Response<SubscriptionData> response) {
+//                Log.e("SUB RESPONSE", String.valueOf(response.raw()));
                 SubscriptionData data = response.body();
                 if (data != null) {
                     /* GET THE SUBSCRIPTION ID */
@@ -687,6 +687,9 @@ public class MapDetails extends AppCompatActivity
                         blnSubscriptionStatus = false;
                         invalidateOptionsMenu();
                     }
+                } else {
+                    blnSubscriptionStatus = false;
+                    invalidateOptionsMenu();
                 }
             }
 

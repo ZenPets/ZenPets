@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -42,21 +41,21 @@ public class AppointmentDetails extends AppCompatActivity {
     }
 
     /** THE INCOMING APPOINTMENT ID **/
-    String APPOINTMENT_ID = null;
+    private String APPOINTMENT_ID = null;
 
     /** THE APPOINTMENT DATE AND TIME **/
-    String APPOINTMENT_DATE = null;
-    String APPOINTMENT_TIME = null;
+    private String APPOINTMENT_DATE = null;
+    private String APPOINTMENT_TIME = null;
 
     /** THE USER'S ID AND DEVICE TOKEN **/
-    String USER_ID = null;
-    String USER_DEVICE_TOKEN = null;
+    private String USER_ID = null;
+    private String USER_DEVICE_TOKEN = null;
 
     /** THE DOCTOR'S DETAILS **/
-    String DOCTOR_ID = null;
-    String DOCTOR_PREFIX = null;
-    String DOCTOR_NAME = null;
-    String DOCTOR_DISPLAY_PROFILE = null;
+    private String DOCTOR_ID = null;
+    private String DOCTOR_PREFIX = null;
+    private String DOCTOR_NAME = null;
+    private String DOCTOR_DISPLAY_PROFILE = null;
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
@@ -89,7 +88,7 @@ public class AppointmentDetails extends AppCompatActivity {
         call.enqueue(new Callback<AppointmentData>() {
             @Override
             public void onResponse(@NonNull Call<AppointmentData> call, @NonNull Response<AppointmentData> response) {
-                Log.e("DETAILS RAW", String.valueOf(response.raw()));
+//                Log.e("DETAILS RAW", String.valueOf(response.raw()));
                 AppointmentData data = response.body();
 
                 /* GET AND SET THE APPOINTMENT TIME */
@@ -135,7 +134,7 @@ public class AppointmentDetails extends AppCompatActivity {
                         btnCancel.setEnabled(true);
                     }
                 } else {
-                    txtAppointmentStatus.setText("Pending");
+                    txtAppointmentStatus.setText(getString(R.string.app_det_app_status_pending));
                 }
 
                 /* HIDE THE PROGRESS AFTER FETCHING THE DATA */
@@ -147,7 +146,7 @@ public class AppointmentDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<AppointmentData> call, @NonNull Throwable t) {
-                Log.e("DETAILS FAILURE", t.getMessage());
+//                Log.e("DETAILS FAILURE", t.getMessage());
             }
         });
     }
@@ -161,12 +160,12 @@ public class AppointmentDetails extends AppCompatActivity {
             public void onResponse(@NonNull Call<UserData> call, @NonNull Response<UserData> response) {
                 /* GET THE USER'S DEVICE TOKEN */
                 USER_DEVICE_TOKEN = response.body().getUserToken();
-                Log.e("DEVICE TOKEN", USER_DEVICE_TOKEN);
+//                Log.e("DEVICE TOKEN", USER_DEVICE_TOKEN);
             }
 
             @Override
             public void onFailure(@NonNull Call<UserData> call, @NonNull Throwable t) {
-                Log.e("TOKEN FAILURE", t.getMessage());
+//                Log.e("TOKEN FAILURE", t.getMessage());
             }
         });
     }
@@ -190,7 +189,7 @@ public class AppointmentDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<Doctor> call, @NonNull Throwable t) {
-                Log.e("PROFILE FAILURE", t.getMessage());
+//                Log.e("PROFILE FAILURE", t.getMessage());
             }
         });
     }
@@ -244,7 +243,7 @@ public class AppointmentDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<AppointmentData> call, @NonNull Throwable t) {
-                Log.e("CONFIRM FAILURE", t.getMessage());
+//                Log.e("CONFIRM FAILURE", t.getMessage());
             }
         });
     }
@@ -286,7 +285,7 @@ public class AppointmentDetails extends AppCompatActivity {
 
                             @Override
                             public void onFailure(@NonNull Call<AppointmentData> call, @NonNull Throwable t) {
-                                Log.e("FAILURE", t.getMessage());
+//                                Log.e("FAILURE", t.getMessage());
                             }
                         });
                     }
@@ -316,7 +315,7 @@ public class AppointmentDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<AppointmentNotification> call, @NonNull Throwable t) {
-                Log.e("CONFIRM FAILURE", t.getMessage());
+//                Log.e("CONFIRM FAILURE", t.getMessage());
             }
         });
     }

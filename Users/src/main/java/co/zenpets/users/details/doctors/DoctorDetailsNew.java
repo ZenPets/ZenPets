@@ -1886,23 +1886,19 @@ public class DoctorDetailsNew extends AppCompatActivity {
     /***** FETCH THE DOCTOR'S SUBSCRIPTION *****/
     private void fetchDoctorSubscription() {
         SubscriptionsAPI api = ZenApiClient.getClient().create(SubscriptionsAPI.class);
-        Call<SubscriptionData> call = api.fetchDoctorSubscription(DOCTOR_ID);
+        Call<SubscriptionData> call = api.checkDoctorSubscription(DOCTOR_ID);
         call.enqueue(new Callback<SubscriptionData>() {
             @Override
             public void onResponse(Call<SubscriptionData> call, Response<SubscriptionData> response) {
+//                Log.e("SUB RESPONSE", String.valueOf(response.raw()));
                 SubscriptionData data = response.body();
-                if (data != null) {
-                    /* GET THE SUBSCRIPTION ID */
-                    String subscriptionID = data.getSubscriptionID();
-
-                    if (subscriptionID != null && !subscriptionID.equalsIgnoreCase("")) {
-                        /* PROCESS THE SUBSCRIPTION LEVEL AND INVALIDATE THE OPTIONS MENU */
-                        blnSubscriptionStatus = !subscriptionID.equalsIgnoreCase("1");
-                        invalidateOptionsMenu();
-                    } else {
-                        blnSubscriptionStatus = false;
-                        invalidateOptionsMenu();
-                    }
+                if (!data.getError())    {
+                    /* PROCESS THE SUBSCRIPTION LEVEL AND INVALIDATE THE OPTIONS MENU */
+                    blnSubscriptionStatus = true;
+                    invalidateOptionsMenu();
+                } else {
+                    blnSubscriptionStatus = false;
+                    invalidateOptionsMenu();
                 }
             }
 

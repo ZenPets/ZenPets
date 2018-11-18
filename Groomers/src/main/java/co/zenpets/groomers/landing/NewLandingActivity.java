@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -85,7 +84,7 @@ public class NewLandingActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(InstanceIdResult instanceIdResult) {
                         String token = instanceIdResult.getToken();
-                        Log.e("NEW TOKEN", token);
+//                        Log.e("NEW TOKEN", token);
 
                         /* UPDATE THE GROOMER'S DEVICE TOKEN */
                         updateDeviceToken(token);
@@ -126,7 +125,7 @@ public class NewLandingActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Groomer> call, Throwable t) {
-                Log.e("TOKEN EXCEPTION", t.getMessage());
+//                Log.e("TOKEN EXCEPTION", t.getMessage());
             }
         });
     }

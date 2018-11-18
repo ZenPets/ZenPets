@@ -3,13 +3,13 @@ package co.zenpets.users.utils.models.doctors.subscription;
 import com.google.gson.annotations.SerializedName;
 
 public class SubscriptionData {
-
     @SerializedName("error") private Boolean error;
-    @SerializedName("docSubscriptionID") private String docSubscriptionID;
-    @SerializedName("doctorID") private String doctorID;
+    @SerializedName("message") private String message;
     @SerializedName("subscriptionID") private String subscriptionID;
-    @SerializedName("subscriptionStart") private String subscriptionStart;
-    @SerializedName("subscriptionEnd") private String subscriptionEnd;
+    @SerializedName("doctorID") private String doctorID;
+    @SerializedName("validFrom") private String validFrom;
+    @SerializedName("validTo") private String validTo;
+    @SerializedName("subscriptionNote") private String subscriptionNote;
 
     public Boolean getError() {
         return error;
@@ -19,20 +19,12 @@ public class SubscriptionData {
         this.error = error;
     }
 
-    public String getDocSubscriptionID() {
-        return docSubscriptionID;
+    public String getMessage() {
+        return message;
     }
 
-    public void setDocSubscriptionID(String docSubscriptionID) {
-        this.docSubscriptionID = docSubscriptionID;
-    }
-
-    public String getDoctorID() {
-        return doctorID;
-    }
-
-    public void setDoctorID(String doctorID) {
-        this.doctorID = doctorID;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public String getSubscriptionID() {
@@ -43,19 +35,35 @@ public class SubscriptionData {
         this.subscriptionID = subscriptionID;
     }
 
-    public String getSubscriptionStart() {
-        return subscriptionStart;
+    public String getDoctorID() {
+        return doctorID;
     }
 
-    public void setSubscriptionStart(String subscriptionStart) {
-        this.subscriptionStart = subscriptionStart;
+    public void setDoctorID(String doctorID) {
+        this.doctorID = doctorID;
     }
 
-    public String getSubscriptionEnd() {
-        return subscriptionEnd;
+    public String getValidFrom() {
+        return validFrom;
     }
 
-    public void setSubscriptionEnd(String subscriptionEnd) {
-        this.subscriptionEnd = subscriptionEnd;
+    public void setValidFrom(String validFrom) {
+        this.validFrom = validFrom;
+    }
+
+    public String getValidTo() {
+        return validTo;
+    }
+
+    public void setValidTo(String validTo) {
+        this.validTo = validTo;
+    }
+
+    public String getSubscriptionNote() {
+        return subscriptionNote;
+    }
+
+    public void setSubscriptionNote(String subscriptionNote) {
+        this.subscriptionNote = subscriptionNote;
     }
 }

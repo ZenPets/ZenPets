@@ -26,7 +26,7 @@ public interface AppointmentsAPI {
     @POST("newVetAppointment")
     @FormUrlEncoded
     Call<Appointment> newVetAppointment(
-            @Field("doctorID") String doctorID,
+            @Field("doctorID") String doctorID/* SAVE THE NEW CLIENT RECORD */,
             @Field("clinicID") String clinicID,
             @Field("visitReasonID") String visitReasonID,
             @Field("userID") String userID,

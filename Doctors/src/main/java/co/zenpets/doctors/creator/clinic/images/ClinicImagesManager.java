@@ -29,6 +29,12 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -50,6 +56,7 @@ import id.zelory.compressor.Compressor;
 import pl.aprilapps.easyphotopicker.DefaultCallback;
 import pl.aprilapps.easyphotopicker.EasyImage;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 @SuppressWarnings("ConstantConditions")
@@ -294,58 +301,62 @@ public class ClinicImagesManager extends AppCompatActivity {
                         String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
                         String FILE_NAME = "CLINIC_" + CLINIC_ID + "_" + timestamp;
 
-//                        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-//                        final StorageReference refStorage = storageReference.child("Clinic Images").child(FILE_NAME);
-//                        refStorage.putFile(CLINIC_IMAGE_URI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                            @Override
-//                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                                Uri downloadURL = taskSnapshot.getDownloadUrl();
-//                                CLINIC_IMAGE_URL = String.valueOf(downloadURL);
-//                                if (CLINIC_IMAGE_URL != null)    {
-//                                    ClinicImagesAPI api = ZenApiClient.getClient().create(ClinicImagesAPI.class);
-//                                    Call<ImageData> call = api.postClinicImages(CLINIC_ID, CLINIC_IMAGE_URL);
-//                                    call.enqueue(new Callback<ImageData>() {
-//                                        @Override
-//                                        public void onResponse(Call<ImageData> call, Response<ImageData> response) {
-//                                            if (response.isSuccessful())    {
-//                                                /* DISMISS THE DIALOG */
-//                                                progressDialog.dismiss();
-//                                                Toast.makeText(getApplicationContext(), "The new Clinic image was successfully uploaded.", Toast.LENGTH_LONG).show();
-//
-//                                                /* CLEAR THE ARRAY */
-//                                                if (arrImages != null)
-//                                                    arrImages.clear();
-//
-//                                                /* FETCH THE CLINIC IMAGES (AGAIN) */
-//                                                fetchClinicImages();
-//                                            } else {
-//                                                /* DISMISS THE DIALOG */
-//                                                progressDialog.dismiss();
-//                                                Toast.makeText(getApplicationContext(), "There was an error posting this image. Please try again...", Toast.LENGTH_LONG).show();
-//                                            }
-//                                        }
-//
-//                                        @Override
-//                                        public void onFailure(Call<ImageData> call, Throwable t) {
-////                                            Log.e("IMAGE FAILURE", t.getMessage());
-////                                            Crashlytics.logException(t);
-//                                        }
-//                                    });
-////                                    new AddClinicImage(ClinicImagesManager.this).execute(CLINIC_ID, CLINIC_IMAGE_URL);
-//                                } else {
-//                                    Toast.makeText(
-//                                            getApplicationContext(),
-//                                            "There was an error posting this image. Please try again...",
-//                                            Toast.LENGTH_LONG).show();
-//                                }
-//                            }
-//                        }).addOnFailureListener(new OnFailureListener() {
-//                            @Override
-//                            public void onFailure(@NonNull Exception e) {
-////                                Log.e("UPLOAD EXCEPTION", e.toString());
-////                                Crashlytics.logException(e);
-//                            }
-//                        });
+                        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+                        final StorageReference refStorage = storageReference.child("Clinic Images").child(FILE_NAME);
+                        UploadTask uploadTask = refStorage.putFile(CLINIC_IMAGE_URI);
+                        Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                            @Override
+                            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                if (!task.isSuccessful()) {
+                                    throw task.getException();
+                                }
+
+                                /* CONTINUE WITH THE TASK TO GET THE IMAGE URL */
+                                return refStorage.getDownloadUrl();
+                            }
+                        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Uri> task) {
+                                if (task.isSuccessful()) {
+                                    Uri downloadURL = task.getResult();
+                                    CLINIC_IMAGE_URL = String.valueOf(downloadURL);
+                                    if (CLINIC_IMAGE_URL != null)    {
+                                        ClinicImagesAPI api = ZenApiClient.getClient().create(ClinicImagesAPI.class);
+                                        Call<ImageData> call = api.postClinicImages(CLINIC_ID, CLINIC_IMAGE_URL);
+                                        call.enqueue(new Callback<ImageData>() {
+                                            @Override
+                                            public void onResponse(Call<ImageData> call, Response<ImageData> response) {
+                                                if (response.isSuccessful())    {
+                                                    /* DISMISS THE DIALOG */
+                                                    progressDialog.dismiss();
+                                                    Toast.makeText(getApplicationContext(), "The new Clinic image was successfully uploaded.", Toast.LENGTH_LONG).show();
+
+                                                    /* CLEAR THE ARRAY */
+                                                    if (arrImages != null)
+                                                        arrImages.clear();
+
+                                                    /* FETCH THE CLINIC IMAGES (AGAIN) */
+                                                    fetchClinicImages();
+                                                } else {
+                                                    /* DISMISS THE DIALOG */
+                                                    progressDialog.dismiss();
+                                                    Toast.makeText(getApplicationContext(), "There was an error posting this image. Please try again...", Toast.LENGTH_LONG).show();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<ImageData> call, Throwable t) {
+                                            }
+                                        });
+                                    } else {
+                                        Toast.makeText(
+                                                getApplicationContext(),
+                                                "There was an error posting this image. Please try again...",
+                                                Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            }
+                        });
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {

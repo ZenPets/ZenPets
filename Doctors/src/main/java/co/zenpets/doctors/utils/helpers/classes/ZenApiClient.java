@@ -7,7 +7,7 @@ public class ZenApiClient {
 
     /** THE BASE URL **/
     private static final String BASE_URL = "http://192.168.11.2/zenpets/public/";
-//    private static final String BASE_URL = "http://34.235.84.116/zenpets/public/";
+//    private static final String BASE_URL = "https://zenpetsapi.appspot.com/";
 
     /** THE RETROFIT INSTANCE **/
     private static Retrofit retrofit = null;

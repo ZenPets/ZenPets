@@ -181,8 +181,8 @@ public class NewKennelCreator extends AppCompatActivity {
                 .setCopyPickedImagesToPublicGalleryAppFolder(true)
                 .setAllowMultiplePickInGallery(false);
 
-        /* GET THE KENNEL OWNER'S ID */
-        KENNEL_OWNER_ID = getApp().getKennelOwnerID();
+        /* GET THE KENNEL ID */
+        KENNEL_OWNER_ID = getApp().getKennelID();
 
         /* CONFIGURE THE TOOLBAR */
         configTB();

@@ -30,8 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @SuppressWarnings("ConstantConditions")
-public class UserPets extends AppCompatActivity
-        /*implements FetchUserPetsInterface*/ {
+public class UserPets extends AppCompatActivity {
 
     private AppPrefs getApp()	{
         return (AppPrefs) getApplication();

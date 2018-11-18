@@ -67,7 +67,7 @@
                     app:iiv_icon="faw_ellipsis_v"
                     app:iiv_size="16dp" />
 
-                <com.mikepenz.iconics.view.IconicsImageView
+                <!--<com.mikepenz.iconics.view.IconicsImageView
                     android:id="@+id/imgvwKennelAlert"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -75,12 +75,13 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
+                    android:visibility="gone"
                     android:adjustViewBounds="true"
                     android:background="#CCDCDCDC"
                     android:padding="11dp"
                     app:iiv_color="@android:color/holo_red_dark"
                     app:iiv_icon="faw_exclamation_triangle"
-                    app:iiv_size="16dp" />
+                    app:iiv_size="16dp" />-->
             </FrameLayout>
 
             <LinearLayout

@@ -9,4 +9,8 @@ public interface SubscriptionsAPI {
     /** FETCH THE DOCTOR'S SUBSCRIPTION **/
     @GET("fetchDoctorSubscription")
     Call<SubscriptionData> fetchDoctorSubscription(@Query("doctorID") String doctorID);
+
+    /** CHECK THE DOCTOR'S SUBSCRIPTION **/
+    @GET("checkDoctorSubscription")
+    Call<SubscriptionData> checkDoctorSubscription(@Query("doctorID") String doctorID);
 }

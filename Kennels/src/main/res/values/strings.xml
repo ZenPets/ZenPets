@@ -2,7 +2,7 @@
     <string name="app_name">Kennel Manager</string>
 
     <!-- GOOGLE MAPS API KEY -->
-    <string name="google_maps_api_key">AIzaSyBW_52FTXhgeW_Z_GHLHxcG1lRVAej5W28</string>
+    <string name="google_maps_api_key">AIzaSyCC6_QV-QfckZ9SaEhKrccZcnYFTDcF0ec</string>
 
     <!-- RAZOR PAY API KEYS -->
     <string name="razor_pay_api_key_id">rzp_test_ySDpAnHqFLEgk3</string>
@@ -52,18 +52,36 @@
     <!-- SIGN UP / CREATE ACCOUNT TEXT -->
     <string name="sign_up_title">CREATE AN ACCOUNT</string>
     <string name="sign_up_sub_title">Start using Zen Pets Kennel Manager in a few steps</string>
-    <string name="sign_up_full_name">(*) Provide your Full Name</string>
+    <string name="sign_up_kennel_name">(*) Kennel Name</string>
+    <string name="sign_up_kennel_name_error">Please provide the kennel name</string>
+    <string name="sign_up_contact_name">(*) Contact person\'s name</string>
+    <string name="sign_up_contact_name_error">Provide the contact person\'s name</string>
+    <string name="sign_up_contact_phone">(*) Contact person\'s phone</string>
+    <string name="sign_up_contact_phone_error">Provide the contact person\'s phone</string>
     <string name="sign_up_email_address_hint">(*) Email address</string>
+    <string name="sign_up_email_address_error">Provide the email address</string>
+    <string name="sign_up_email_address_incorrect">Enter a valid email address</string>
     <string name="sign_up_password_hint">(*) Password (at least 8 characters)</string>
+    <string name="sign_up_password_error">Choose your password</string>
     <string name="sign_up_confirm_password_hint">(*) Confirm the Password</string>
-    <string name="sign_up_prefix_hint">1234</string>
-    <string name="sign_up_phone_number_hint">(*) Phone Number</string>
-    <string name="sign_up_mailing_address_hint">(*) Your Mailing / Postal Address</string>
+    <string name="sign_up_confirm_password_error">Confirm your Password</string>
+    <string name="sign_up_length_error">Password has to be at least 8 characters</string>
+    <string name="sign_up_mismatch_error">Your passwords do not match</string>
+    <string name="sign_up_mailing_address_hint">(*) Kennel\'s Postal Address</string>
+    <string name="sign_up_mailing_address_error">Please provide the Kennel\'s postal address</string>
     <string name="sign_up_pin_code_hint">(*) Pin Code</string>
+    <string name="sign_up_pin_code_error">Please provide the pin code</string>
+    <string name="sign_up_phone_number_1_hint">(*) Kennel Phone Number #1</string>
+    <string name="sign_up_phone_number_1_error">Provide the Kennel\'s phone number</string>
+    <string name="sign_up_phone_number_2_hint">Kennel Phone Number #2</string>
+    <string name="sign_up_pet_capacity_hint">(*) Total Pets You Can Accommodate</string>
+    <string name="sign_up_pet_capacity_error">How many Pets can you accommodate?</string>
     <string name="sign_up_select_country">Select your Country</string>
     <string name="sign_up_select_state">Select your State</string>
-    <string name="sign_up_select_city">Select the City</string>
-    <string name="sign_up_display_profile">Select Your Display Profile</string>
+    <string name="sign_up_select_city">Select your City</string>
+    <string name="sign_up_location_error">Please mark the Kennel\'s location on the Map</string>
+    <string name="sign_up_cover_photo">Tap the image to select the Kennel\'s Cover Photo/ Logo</string>
+    <string name="sign_up_cover_photo_error">Please select the Kennel\'s Cover Photo / Logo</string>
 
     <!-- LEGAL STRINGS -->
     <string name="sign_up_full_terms">By continuing, I agree to the Seller Agreement and Privacy Policy</string>

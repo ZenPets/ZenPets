@@ -191,8 +191,8 @@ public class KennelDetails extends AppCompatActivity {
                         toolbarLayout.setTitle(kennel.getKennelName());
                     }
 
-                    /* GET AND SET THE KENNEL OWNER'S NAME */
-                    txtKennelOwnerName.setText(kennel.getKennelOwnerName());
+//                    /* GET AND SET THE KENNEL OWNER'S NAME */
+//                    txtKennelOwnerName.setText(kennel.getKennelOwnerName());
 
                     /* GET AND SET THE KENNEL COVER PHOTO */
                     String strKennelCoverPhoto = kennel.getKennelCoverPhoto();

@@ -6,7 +6,6 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -68,7 +67,7 @@ public class EnquiryDetails extends AppCompatActivity {
         call.enqueue(new retrofit2.Callback<EnquiryMessages>() {
             @Override
             public void onResponse(Call<EnquiryMessages> call, Response<EnquiryMessages> response) {
-                Log.e("MESSAGES RESPONSE", String.valueOf(response.raw()));
+//                Log.e("MESSAGES RESPONSE", String.valueOf(response.raw()));
                 if (response.body() != null && response.body().getMessages() != null)   {
                     arrMessages = response.body().getMessages();
                     if (arrMessages.size() > 0) {

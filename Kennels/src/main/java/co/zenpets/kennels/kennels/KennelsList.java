@@ -67,7 +67,7 @@ public class KennelsList extends AppCompatActivity {
     }
 
     /** THE KENNEL OWNER'S ID **/
-    private String KENNEL_OWNER_ID = null;
+    private String KENNEL_ID = null;
 
     /** AN ARRAY LIST TO STORE THE LIST OF KENNELS **/
     ArrayList<Kennel> arrKennels = new ArrayList<>();
@@ -101,8 +101,8 @@ public class KennelsList extends AppCompatActivity {
         /* CONFIGURE THE TOOLBAR */
         configTB();
 
-        /* GET THE KENNEL OWNER'S ID */
-        KENNEL_OWNER_ID = getApp().getKennelOwnerID();
+        /* GET THE KENNEL ID */
+        KENNEL_ID = getApp().getKennelID();
 
         /* CONFIGURE THE RECYCLER VIEW **/
         configRecycler();
@@ -115,7 +115,7 @@ public class KennelsList extends AppCompatActivity {
     /***** FETCH THE LIST OF KENNELS *****/
     private void fetchKennels() {
         KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-        Call<Kennels> call = api.fetchKennelsListByOwner(KENNEL_OWNER_ID);
+        Call<Kennels> call = api.fetchKennelsListByOwner(KENNEL_ID);
         call.enqueue(new Callback<Kennels>() {
             @Override
             public void onResponse(Call<Kennels> call, Response<Kennels> response) {
@@ -190,40 +190,40 @@ public class KennelsList extends AppCompatActivity {
                             data.setKennelName(null);
                         }
 
-                        /* GET THE KENNEL OWNER'S ID */
-                        if (JOKennels.has("kennelOwnerID")) {
-                            data.setKennelOwnerID(JOKennels.getString("kennelOwnerID"));
-                        } else {
-                            data.setKennelOwnerID(null);
-                        }
-
-                        /* GET THE KENNEL CHARGES ID */
-                        if (JOKennels.has("kennelChargesID")) {
-                            data.setKennelChargesID(JOKennels.getString("kennelChargesID"));
-                        } else {
-                            data.setKennelChargesID(null);
-                        }
+//                        /* GET THE KENNEL OWNER'S ID */
+//                        if (JOKennels.has("kennelOwnerID")) {
+//                            data.setKennelOwnerID(JOKennels.getString("kennelOwnerID"));
+//                        } else {
+//                            data.setKennelOwnerID(null);
+//                        }
+//
+//                        /* GET THE KENNEL CHARGES ID */
+//                        if (JOKennels.has("kennelChargesID")) {
+//                            data.setKennelChargesID(JOKennels.getString("kennelChargesID"));
+//                        } else {
+//                            data.setKennelChargesID(null);
+//                        }
 
                         /* GET THE PAYMENT ID */
-                        if (JOKennels.has("paymentID")) {
-                            data.setPaymentID(JOKennels.getString("paymentID"));
+                        if (JOKennels.has("kennelPaymentID")) {
+                            data.setKennelPaymentID(JOKennels.getString("kennelPaymentID"));
                         } else {
-                            data.setPaymentID(null);
+                            data.setKennelPaymentID(null);
                         }
 
-                        /* GET THE KENNEL OWNER'S NAME */
-                        if (JOKennels.has("kennelOwnerName"))   {
-                            data.setKennelOwnerName(JOKennels.getString("kennelOwnerName"));
-                        } else {
-                            data.setKennelOwnerName(null);
-                        }
+//                        /* GET THE KENNEL OWNER'S NAME */
+//                        if (JOKennels.has("kennelOwnerName"))   {
+//                            data.setKennelOwnerName(JOKennels.getString("kennelOwnerName"));
+//                        } else {
+//                            data.setKennelOwnerName(null);
+//                        }
 
-                        /* GET THE KENNEL OWNER'S DISPLAY PROFILE */
-                        if (JOKennels.has("kennelOwnerDisplayProfile")) {
-                            data.setKennelOwnerDisplayProfile(JOKennels.getString("kennelOwnerDisplayProfile"));
-                        } else {
-                            data.setKennelOwnerDisplayProfile(null);
-                        }
+//                        /* GET THE KENNEL OWNER'S DISPLAY PROFILE */
+//                        if (JOKennels.has("kennelOwnerDisplayProfile")) {
+//                            data.setKennelOwnerDisplayProfile(JOKennels.getString("kennelOwnerDisplayProfile"));
+//                        } else {
+//                            data.setKennelOwnerDisplayProfile(null);
+//                        }
 
                         /* GET THE KENNEL ADDRESS */
                         if (JOKennels.has("kennelAddress")) {
@@ -459,7 +459,7 @@ public class KennelsList extends AppCompatActivity {
     /** CHECK TOTAL KENNELS CREATED BY CURRENT KENNEL OWNER **/
     private void checkPublishedKennels() {
         KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-        Call<KennelPages> call = api.fetchOwnerKennels(KENNEL_OWNER_ID);
+        Call<KennelPages> call = api.fetchOwnerKennels(KENNEL_ID);
         call.enqueue(new Callback<KennelPages>() {
             @Override
             public void onResponse(Call<KennelPages> call, Response<KennelPages> response) {
@@ -522,19 +522,19 @@ public class KennelsList extends AppCompatActivity {
         public void onBindViewHolder(@NonNull final KennelsAdapter.KennelsVH holder, final int position) {
             final Kennel data = arrKennelsAdapter.get(position);
 
-            /* CHECK FOR ALERTS */
-            String kennelChargesID = data.getKennelChargesID();
-            if (kennelChargesID.equalsIgnoreCase("2"))    {
-                if (data.getPaymentID() != null
-                        && !data.getPaymentID().equalsIgnoreCase("null")
-                        && !data.getPaymentID().equalsIgnoreCase(""))  {
-                    holder.imgvwKennelAlert.setVisibility(View.GONE);
-                } else {
-                    holder.imgvwKennelAlert.setVisibility(View.VISIBLE);
-                }
-            } else {
-                holder.imgvwKennelAlert.setVisibility(View.GONE);
-            }
+//            /* CHECK FOR ALERTS */
+//            String kennelChargesID = data.getKennelChargesID();
+//            if (kennelChargesID.equalsIgnoreCase("2"))    {
+//                if (data.getPaymentID() != null
+//                        && !data.getPaymentID().equalsIgnoreCase("null")
+//                        && !data.getPaymentID().equalsIgnoreCase(""))  {
+//                    holder.imgvwKennelAlert.setVisibility(View.GONE);
+//                } else {
+//                    holder.imgvwKennelAlert.setVisibility(View.VISIBLE);
+//                }
+//            } else {
+//                holder.imgvwKennelAlert.setVisibility(View.GONE);
+//            }
 
             /* SET THE KENNEL COVER PHOTO */
             String strKennelCoverPhoto = data.getKennelCoverPhoto();
@@ -584,33 +584,33 @@ public class KennelsList extends AppCompatActivity {
                 holder.txtKennelValidity.setText(getString(R.string.kennel_list_kennel_validity_label_placeholder, kennelValidFrom, kennelValidTo));
             }
 
-            /* SHOW THE UNPAID KENNEL LISTING ALERT */
-            holder.imgvwKennelAlert.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    new MaterialDialog.Builder(activity)
-                            .icon(ContextCompat.getDrawable(activity, R.drawable.ic_info_black_24dp))
-                            .title(getString(R.string.kennel_list_unpaid_alert_title))
-                            .content(getString(R.string.kennel_list_unpaid_alert_message))
-                            .cancelable(false)
-                            .positiveText("Process Payment")
-                            .negativeText("Cancel")
-                            .theme(Theme.LIGHT)
-                            .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
-                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    dialog.dismiss();
-                                }
-                            })
-                            .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    dialog.dismiss();
-                                }
-                            }).show();
-                }
-            });
+//            /* SHOW THE UNPAID KENNEL LISTING ALERT */
+//            holder.imgvwKennelAlert.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    new MaterialDialog.Builder(activity)
+//                            .icon(ContextCompat.getDrawable(activity, R.drawable.ic_info_black_24dp))
+//                            .title(getString(R.string.kennel_list_unpaid_alert_title))
+//                            .content(getString(R.string.kennel_list_unpaid_alert_message))
+//                            .cancelable(false)
+//                            .positiveText("Process Payment")
+//                            .negativeText("Cancel")
+//                            .theme(Theme.LIGHT)
+//                            .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
+//                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+//                                @Override
+//                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                                    dialog.dismiss();
+//                                }
+//                            })
+//                            .onNegative(new MaterialDialog.SingleButtonCallback() {
+//                                @Override
+//                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                                    dialog.dismiss();
+//                                }
+//                            }).show();
+//                }
+//            });
 
             /* SHOW THE KENNEL DETAILS */
             holder.cardKennelDetails.setOnClickListener(new View.OnClickListener() {
@@ -726,7 +726,7 @@ public class KennelsList extends AppCompatActivity {
             SimpleDraweeView imgvwKennelCoverPhoto;
             TextView txtKennelName;
             IconicsImageView imgvwKennelOptions;
-            IconicsImageView imgvwKennelAlert;
+//            IconicsImageView imgvwKennelAlert;
             TextView txtKennelAddress;
             TextView txtPetCapacity;
             TextView txtKennelValidity;
@@ -740,7 +740,7 @@ public class KennelsList extends AppCompatActivity {
                 imgvwKennelCoverPhoto = v.findViewById(R.id.imgvwKennelCoverPhoto);
                 txtKennelName = v.findViewById(R.id.txtKennelName);
                 imgvwKennelOptions = v.findViewById(R.id.imgvwKennelOptions);
-                imgvwKennelAlert = v.findViewById(R.id.imgvwKennelAlert);
+//                imgvwKennelAlert = v.findViewById(R.id.imgvwKennelAlert);
                 txtKennelAddress = v.findViewById(R.id.txtKennelAddress);
                 txtPetCapacity = v.findViewById(R.id.txtPetCapacity);
                 txtKennelValidity = v.findViewById(R.id.txtKennelValidity);
