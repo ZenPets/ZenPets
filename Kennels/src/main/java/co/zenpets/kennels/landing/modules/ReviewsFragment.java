@@ -13,27 +13,21 @@ import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import co.zenpets.kennels.R;
 import co.zenpets.kennels.utils.AppPrefs;
 import co.zenpets.kennels.utils.TypefaceSpan;
-import co.zenpets.kennels.utils.adapters.kennels.KennelsSpinnerAdapter;
 import co.zenpets.kennels.utils.adapters.reviews.ReviewsAdapter;
 import co.zenpets.kennels.utils.models.helpers.ZenApiClient;
-import co.zenpets.kennels.utils.models.kennels.Kennel;
-import co.zenpets.kennels.utils.models.kennels.Kennels;
-import co.zenpets.kennels.utils.models.kennels.KennelsAPI;
 import co.zenpets.kennels.utils.models.reviews.Review;
 import co.zenpets.kennels.utils.models.reviews.Reviews;
 import co.zenpets.kennels.utils.models.reviews.ReviewsAPI;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,11 +38,11 @@ public class ReviewsFragment extends Fragment {
         return (AppPrefs) getActivity().getApplication();
     }
 
-    /** THE KENNEL ID **/
-    private String KENNEL_ID = null;
+    /** THE LOGGED IN KENNEL ID **/
+    String KENNEL_ID = null;
 
-    /** AN ARRAY LIST TO STORE THE LIST OF KENNELS **/
-    ArrayList<Kennel> arrKennels = new ArrayList<>();
+//    /** AN ARRAY LIST TO STORE THE LIST OF KENNELS **/
+//    ArrayList<Kennel> arrKennels = new ArrayList<>();
 
     /** THE REVIEWS ADAPTER AND ARRAY LISTS **/
     ReviewsAdapter reviewsAdapter;
@@ -56,7 +50,6 @@ public class ReviewsFragment extends Fragment {
 
     /** CAST THE LAYOUT ELEMENTS **/
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
-    @BindView(R.id.spnKennels) Spinner spnKennels;
     @BindView(R.id.listReviews) RecyclerView listReviews;
     @BindView(R.id.linlaEmpty) LinearLayout linlaEmpty;
 
@@ -99,33 +92,12 @@ public class ReviewsFragment extends Fragment {
         /* GET THE LOGGED IN KENNEL OWNER'S ID */
         KENNEL_ID = getApp().getKennelID();
         if (KENNEL_ID != null)    {
-            /* SHOW THE PROGRESS AND FETCH THE LIST OF KENNELS */
+            /* SHOW THE PROGRESS AND FETCH THE LIST OF REVIEWS */
             linlaProgress.setVisibility(View.VISIBLE);
-            fetchKennels();
+            fetchKennelReviews();
         } else {
             Toast.makeText(getActivity(), "Failed to get required info...", Toast.LENGTH_SHORT).show();
         }
-
-        /* SELECT A KENNEL TO SHOW IT'S REVIEWS */
-        spnKennels.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                /* GET THE SELECTED KENNEL ID */
-                KENNEL_ID = arrKennels.get(position).getKennelID();
-
-                /* CLEAR THE REVIEWS ARRAY */
-                if (arrReviews != null)
-                    arrReviews.clear();
-
-                /* SHOW THE PROGRESS AND FETCH THE LIST OF REVIEWS */
-                linlaProgress.setVisibility(View.VISIBLE);
-                fetchKennelReviews();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
     }
 
     /** FETCH THE LIST OF REVIEWS **/
@@ -170,39 +142,39 @@ public class ReviewsFragment extends Fragment {
         });
     }
 
-    /** FETCH THE LIST OF KENNELS **/
-    private void fetchKennels() {
-        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-        Call<Kennels> call = api.fetchKennelsListByOwner(KENNEL_ID);
-        call.enqueue(new Callback<Kennels>() {
-            @Override
-            public void onResponse(Call<Kennels> call, Response<Kennels> response) {
-//                Log.e("RAW", String.valueOf(response.raw()));
-                if (response.body() != null && response.body().getKennels() != null) {
-                    arrKennels = response.body().getKennels();
-                    if (arrKennels.size() > 0) {
-                        /* SET THE ADAPTER TO THE KENNELS SPINNER */
-                        spnKennels.setAdapter(new KennelsSpinnerAdapter(
-                                getActivity(),
-                                R.layout.pet_capacity_row,
-                                arrKennels));
-                    }
-                }
-
-                /* HIDE THE PROGRESS AFTER FETCHING THE DATA */
-                linlaProgress.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onFailure(Call<Kennels> call, Throwable t) {
-//                Log.e("KENNELS FAILURE", t.getMessage());
-            }
-        });
-    }
+//    /** FETCH THE LIST OF KENNELS **/
+//    private void fetchKennels() {
+//        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
+//        Call<Kennels> call = api.fetchKennelsListByOwner(KENNEL_ID);
+//        call.enqueue(new Callback<Kennels>() {
+//            @Override
+//            public void onResponse(Call<Kennels> call, Response<Kennels> response) {
+////                Log.e("RAW", String.valueOf(response.raw()));
+//                if (response.body() != null && response.body().getKennels() != null) {
+//                    arrKennels = response.body().getKennels();
+//                    if (arrKennels.size() > 0) {
+//                        /* SET THE ADAPTER TO THE KENNELS SPINNER */
+//                        spnKennels.setAdapter(new KennelsSpinnerAdapter(
+//                                getActivity(),
+//                                R.layout.pet_capacity_row,
+//                                arrKennels));
+//                    }
+//                }
+//
+//                /* HIDE THE PROGRESS AFTER FETCHING THE DATA */
+//                linlaProgress.setVisibility(View.GONE);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Kennels> call, Throwable t) {
+////                Log.e("KENNELS FAILURE", t.getMessage());
+//            }
+//        });
+//    }
 
     /***** CONFIGURE THE ACTIONBAR *****/
     private void configAB() {
-        String strTitle = "Reviews";
+        String strTitle = "Kennel Reviews";
         SpannableString s = new SpannableString(strTitle);
         s.setSpan(new TypefaceSpan(getActivity()), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 

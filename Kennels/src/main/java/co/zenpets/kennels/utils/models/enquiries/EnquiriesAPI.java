@@ -6,6 +6,10 @@ import retrofit2.http.Query;
 
 public interface EnquiriesAPI {
 
+    /** FETCH THE KENNEL'S ENQUIRIES FOR THE DASHBOARD **/
+    @GET("fetchKennelDashboardEnquiries")
+    Call<Enquiries> fetchKennelDashboardEnquiries(@Query("kennelID") String kennelID);
+
     /** FETCH ALL KENNEL ENQUIRIES **/
     @GET("fetchKennelEnquiries")
     Call<Enquiries> fetchKennelEnquiries(@Query("kennelID") String kennelID);

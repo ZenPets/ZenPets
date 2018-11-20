@@ -9,6 +9,10 @@ import retrofit2.http.Query;
 
 public interface ReviewsAPI {
 
+    /** FETCH THE KENNEL'S REVIEWS FOR THE DASHBOARD **/
+    @GET("fetchKennelDashboardReviews")
+    Call<Reviews> fetchKennelDashboardReviews(@Query("kennelID") String kennelID);
+
     /** FETCH ALL REVIEWS OF A KENNEL **/
     @GET("fetchKennelReviewCount")
     Call<ReviewCount> fetchKennelReviewCount(@Query("kennelID") String kennelID);

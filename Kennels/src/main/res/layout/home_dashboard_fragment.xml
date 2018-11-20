@@ -69,36 +69,6 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
                 </android.support.constraint.ConstraintLayout>
-
-                <!--<FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/imgvwKennelCoverPhoto"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:adjustViewBounds="true"
-                        android:scaleType="center"
-                        android:src="@drawable/zen_pets_graphic" />
-
-                    <TextView
-                        android:id="@+id/txtKennelName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|center"
-                        android:background="#CC000000"
-                        android:paddingStart="11dp"
-                        android:paddingLeft="11dp"
-                        android:paddingTop="15dp"
-                        android:paddingEnd="11dp"
-                        android:paddingRight="11dp"
-                        android:paddingBottom="15dp"
-                        android:text="@string/kennel_details_name"
-                        android:textColor="@android:color/primary_text_dark"
-                        android:textSize="14sp" />
-                </FrameLayout>-->
             </android.support.v7.widget.CardView>
 
             <TextView
@@ -109,7 +79,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="12dp"
                 android:gravity="end|center"
-                android:text="VIEW KENNEL"
+                android:text="VIEW / UPDATE KENNEL DETAILS"
                 android:textColor="@color/primary_text"
                 android:textSize="15sp"
                 app:fontFamily="@font/roboto_medium"
@@ -133,25 +103,72 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/listEnquiries"
                 android:layout_width="0dp"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="@+id/txtEnquiriesLabel"
                 app:layout_constraintStart_toStartOf="@+id/txtEnquiriesLabel"
                 app:layout_constraintTop_toBottomOf="@+id/txtEnquiriesLabel" />
+
+            <LinearLayout
+                android:id="@+id/linlaEmptyEnquiries"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/listEnquiries">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/empty_graphic" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txtEmptyEnquiries"
+                    style="@style/LightNormal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:text="You have no enquiries posted for your services yet..."
+                    android:textColor="@color/tertiary_text"
+                    android:textSize="14sp" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/txtViewEnquiries"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="12dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:gravity="end|center"
                 android:text="VIEW ALL ENQUIRIES"
                 android:textColor="@color/primary_text"
                 android:textSize="15sp"
                 app:fontFamily="@font/roboto_medium"
-                app:layout_constraintEnd_toEndOf="@+id/listEnquiries"
-                app:layout_constraintStart_toStartOf="@+id/listEnquiries"
-                app:layout_constraintTop_toBottomOf="@+id/listEnquiries" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linlaEmptyEnquiries" />
 
             <TextView
                 android:id="@+id/txtReviewsLabel"
@@ -169,17 +186,64 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/listReviews"
                 android:layout_width="0dp"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="@+id/txtReviewsLabel"
                 app:layout_constraintStart_toStartOf="@+id/txtReviewsLabel"
                 app:layout_constraintTop_toBottomOf="@+id/txtReviewsLabel" />
+
+            <LinearLayout
+                android:id="@+id/linlaEmptyReviews"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/listReviews">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/empty_graphic" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txtEmptyReviews"
+                    style="@style/LightNormal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:text="You have no reviews posted for your services..."
+                    android:textColor="@color/tertiary_text"
+                    android:textSize="14sp" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/txtViewReviews"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="12dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_marginBottom="16dp"
                 android:gravity="end|center"
                 android:text="VIEW ALL REVIEWS"
@@ -187,9 +251,9 @@
                 android:textSize="15sp"
                 app:fontFamily="@font/roboto_medium"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/listReviews"
-                app:layout_constraintStart_toStartOf="@+id/listReviews"
-                app:layout_constraintTop_toBottomOf="@+id/listReviews"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linlaEmptyReviews"
                 app:layout_constraintVertical_bias="0.0" />
         </android.support.constraint.ConstraintLayout>
         <!--</android.support.v4.widget.NestedScrollView>-->

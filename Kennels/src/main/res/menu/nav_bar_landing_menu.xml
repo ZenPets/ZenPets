@@ -39,11 +39,11 @@
             android:checked="false"
             android:icon="@drawable/dash_enquiries_dark"
             android:title="Enquiries" />
-        <item
+        <!--<item
             android:id="@+id/dashClients"
             android:checked="false"
             android:icon="@drawable/dash_patients_dark"
-            android:title="Clients" />
+            android:title="Clients" />-->
         <item
             android:id="@+id/dashReports"
             android:checked="false"

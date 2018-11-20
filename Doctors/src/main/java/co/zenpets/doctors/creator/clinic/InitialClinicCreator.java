@@ -60,6 +60,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import co.zenpets.doctors.R;
+import co.zenpets.doctors.landing.LandingActivity;
 import co.zenpets.doctors.utils.AppPrefs;
 import co.zenpets.doctors.utils.TypefaceSpan;
 import co.zenpets.doctors.utils.adapters.location.CitiesAdapter;
@@ -68,6 +69,7 @@ import co.zenpets.doctors.utils.adapters.location.StatesAdapter;
 import co.zenpets.doctors.utils.helpers.classes.LocationPickerActivity;
 import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
 import co.zenpets.doctors.utils.models.clinics.ClinicsAPI;
+import co.zenpets.doctors.utils.models.clinics.map.ClinicMapper;
 import co.zenpets.doctors.utils.models.doctors.clinic.Clinic;
 import co.zenpets.doctors.utils.models.doctors.clinic.ClinicMapperAPI;
 import co.zenpets.doctors.utils.models.location.CitiesData;
@@ -117,7 +119,7 @@ public class InitialClinicCreator extends AppCompatActivity {
     private String LOGO_URL = null;
 
     /** A PROGRESS DIALOG INSTANCE **/
-    private ProgressDialog dialog;
+    private ProgressDialog progressDialog;
 
     /** THE LOCATION REQUEST CODE **/
     private final int REQUEST_LOCATION = 1;
@@ -219,7 +221,10 @@ public class InitialClinicCreator extends AppCompatActivity {
             /* SELECT A LOCALITY */
             spnLocalities.setOnItemSelectedListener(selectLocality);
         } else {
-            Toast.makeText(getApplicationContext(), "Failed to get required info...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Failed to get required info...",
+                    Toast.LENGTH_SHORT).show();
             finish();
         }
     }
@@ -358,38 +363,56 @@ public class InitialClinicCreator extends AppCompatActivity {
 //            inputPhone1.setErrorEnabled(false);
 //            inputClinicAddress.setErrorEnabled(false);
 //            inputPinCode.setErrorEnabled(false);
-//            Toast.makeText(getApplicationContext(), "Please select a Country", Toast.LENGTH_LONG).show();
+//            Toast.makeText(
+//                    getApplicationContext(),
+//                    "Please select a Country",
+//                    Toast.LENGTH_LONG).show();
 //        }
         else if (TextUtils.isEmpty(STATE_ID) || STATE_ID == null) {
             inputClinicName.setErrorEnabled(false);
             inputPhone1.setErrorEnabled(false);
             inputClinicAddress.setErrorEnabled(false);
             inputPinCode.setErrorEnabled(false);
-            Toast.makeText(getApplicationContext(), "Please select a State", Toast.LENGTH_LONG).show();
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Please select a State",
+                    Toast.LENGTH_LONG).show();
         } else if (TextUtils.isEmpty(CITY_ID)) {
             inputClinicName.setErrorEnabled(false);
             inputPhone1.setErrorEnabled(false);
             inputClinicAddress.setErrorEnabled(false);
             inputPinCode.setErrorEnabled(false);
-            Toast.makeText(getApplicationContext(), "Please select a City", Toast.LENGTH_LONG).show();
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Please select a City",
+                    Toast.LENGTH_LONG).show();
         } else if (TextUtils.isEmpty(LOCALITY_ID) || LOCALITY_ID == null)   {
             inputClinicName.setErrorEnabled(false);
             inputPhone1.setErrorEnabled(false);
             inputClinicAddress.setErrorEnabled(false);
             inputPinCode.setErrorEnabled(false);
-            Toast.makeText(getApplicationContext(), "Please select a Locality", Toast.LENGTH_LONG).show();
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Please select a Locality",
+                    Toast.LENGTH_LONG).show();
         } else if (CLINIC_LONGITUDE == null || CLINIC_LATITUDE == null) {
             inputClinicName.setErrorEnabled(false);
             inputPhone1.setErrorEnabled(false);
             inputClinicAddress.setErrorEnabled(false);
             inputPinCode.setErrorEnabled(false);
-            Toast.makeText(getApplicationContext(), "Please select / mark your Location on the Map", Toast.LENGTH_LONG).show();
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Please select / mark your Location on the Map",
+                    Toast.LENGTH_LONG).show();
         } else if (FILE_NAME == null)    {
             inputClinicName.setErrorEnabled(false);
             inputPhone1.setErrorEnabled(false);
             inputClinicAddress.setErrorEnabled(false);
             inputPinCode.setErrorEnabled(false);
-            Toast.makeText(getApplicationContext(), getString(R.string.clinic_logo_empty), Toast.LENGTH_LONG).show();
+            Toast.makeText(
+                    getApplicationContext(),
+                    getString(R.string.clinic_logo_empty),
+                    Toast.LENGTH_LONG).show();
         } else {
             inputClinicName.setErrorEnabled(false);
             inputPhone1.setErrorEnabled(false);
@@ -404,11 +427,11 @@ public class InitialClinicCreator extends AppCompatActivity {
     /***** UPLOAD THE CLINIC LOGO *****/
     private void uploadClinicLogo() {
         /* SHOW THE PROGRESS DIALOG WHILE UPLOADING THE IMAGE **/
-        dialog = new ProgressDialog(this);
-        dialog.setMessage("Please wait while we add the new Clinic...");
-        dialog.setIndeterminate(false);
-        dialog.setCancelable(false);
-        dialog.show();
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Please wait while we add the new Clinic...");
+        progressDialog.setIndeterminate(false);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         final StorageReference refStorage = storageReference.child("Clinic Logos").child(FILE_NAME);
@@ -443,22 +466,28 @@ public class InitialClinicCreator extends AppCompatActivity {
                                 if (response.isSuccessful())    {
                                     /* MAP THE DOCTOR TO THE CLINIC */
                                     String clinicID = response.body().getClinicID();
+//                                    Log.e("NEW CLINIC ID", clinicID);
                                     mapTheDoctor(clinicID);
                                 } else {
                                     /* DISMISS THE DIALOG */
-                                    dialog.dismiss();
-                                    Toast.makeText(getApplicationContext(), "There was a problem creating the new Clinic. Please try again", Toast.LENGTH_LONG).show();
+                                    progressDialog.dismiss();
+                                    Toast.makeText(
+                                            getApplicationContext(),
+                                            "There was a problem creating the new Clinic. Please try again",
+                                            Toast.LENGTH_LONG).show();
                                 }
                             }
 
                             @Override
                             public void onFailure(Call<Clinic> call, Throwable t) {
+//                                Log.e("CLINIC FAILURE", t.getMessage());
                             }
                         });
                     } else {
+                        progressDialog.dismiss();
                         Toast.makeText(
                                 getApplicationContext(),
-                                "There was a problem creating your new account. Please try again by clicking the Save button.",
+                                "There was a problem creating the new Clinic. Please try again",
                                 Toast.LENGTH_LONG).show();
                     }
                 }
@@ -467,28 +496,55 @@ public class InitialClinicCreator extends AppCompatActivity {
     }
 
     /***** MAP THE DOCTOR TO THE SELECTED CLINIC *****/
-    private void mapTheDoctor(String result) {
+    private void mapTheDoctor(String clinicID) {
         ClinicMapperAPI api = ZenApiClient.getClient().create(ClinicMapperAPI.class);
-        Call<String> call = api.newDoctorClinic(DOCTOR_ID, result, "Pending");
-        call.enqueue(new Callback<String>() {
+        Call<ClinicMapper> call = api.newDoctorClinic(DOCTOR_ID, clinicID, "Pending");
+        call.enqueue(new Callback<ClinicMapper>() {
             @Override
-            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-                if (response.isSuccessful())    {
+            public void onResponse(@NonNull Call<ClinicMapper> call, @NonNull Response<ClinicMapper> response) {
+                ClinicMapper mapper = response.body();
+                if (!mapper.getError()) {
                     /* DISMISS THE DIALOG */
-                    dialog.dismiss();
-                    Intent success = new Intent();
-                    setResult(RESULT_OK, success);
-                    Toast.makeText(getApplicationContext(), "The new Clinic was successfully created.", Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "The new Clinic was successfully created.",
+                            Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(InitialClinicCreator.this, LandingActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                     finish();
                 } else {
-                    dialog.dismiss();
-                    Toast.makeText(getApplicationContext(), "There was an error mapping to this Clinic. Please try again", Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "There was an error mapping your account to the new Clinic. Please try again",
+                            Toast.LENGTH_LONG).show();
                 }
+
+//                if (response.isSuccessful())    {
+//                    /* DISMISS THE DIALOG */
+//                    progressDialog.dismiss();
+//                    Toast.makeText(
+//                            getApplicationContext(),
+//                            "The new Clinic was successfully created.",
+//                            Toast.LENGTH_LONG).show();
+//                    Intent intent = new Intent(InitialClinicCreator.this, LandingActivity.class);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    startActivity(intent);
+//                    finish();
+//                } else {
+//                    progressDialog.dismiss();
+//                    Toast.makeText(
+//                            getApplicationContext(),
+//                            "There was an error mapping your account to the new Clinic. Please try again",
+//                            Toast.LENGTH_LONG).show();
+//                }
             }
 
             @Override
-            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
-//                Log.e("FAILURE", t.getMessage());
+            public void onFailure(@NonNull Call<ClinicMapper> call, @NonNull Throwable t) {
+//                Log.e("MAPPING FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }
         });

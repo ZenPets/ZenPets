@@ -11,9 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,20 +33,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import co.zenpets.kennels.R;
-import co.zenpets.kennels.utils.AppPrefs;
-import co.zenpets.kennels.utils.adapters.kennels.KennelsSpinnerAdapter;
-import co.zenpets.kennels.utils.helpers.MyMarkerView;
-import co.zenpets.kennels.utils.models.helpers.ZenApiClient;
-import co.zenpets.kennels.utils.models.kennels.Kennel;
-import co.zenpets.kennels.utils.models.kennels.Kennels;
-import co.zenpets.kennels.utils.models.kennels.KennelsAPI;
-import co.zenpets.kennels.utils.models.statistics.KennelView;
-import co.zenpets.kennels.utils.models.statistics.KennelViews;
-import co.zenpets.kennels.utils.models.statistics.KennelViewsAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.ceryle.segmentedbutton.SegmentedButtonGroup;
+import co.zenpets.kennels.R;
+import co.zenpets.kennels.utils.AppPrefs;
+import co.zenpets.kennels.utils.helpers.MyMarkerView;
+import co.zenpets.kennels.utils.models.helpers.ZenApiClient;
+import co.zenpets.kennels.utils.models.statistics.KennelView;
+import co.zenpets.kennels.utils.models.statistics.KennelViews;
+import co.zenpets.kennels.utils.models.statistics.KennelViewsAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,9 +53,8 @@ public class ReportsActivity extends AppCompatActivity {
         return (AppPrefs) getApplication();
     }
 
-    /** THE KENNEL'S OWNERS ID **/
-    private String KENNEL_ID = null;
-
+    /** THE LOGGED IN KENNEL ID **/
+    String KENNEL_ID = null;
 
     /** THE START AND END DATE FOR THE MYSQL QUERY **/
     String END_DATE = null;
@@ -70,14 +63,10 @@ public class ReportsActivity extends AppCompatActivity {
     /** THE SELECTED DURATION **/
     int SELECTED_DURATION = 30;
 
-    /** AN ARRAY LIST TO STORE THE LIST OF KENNELS **/
-    ArrayList<Kennel> arrKennels = new ArrayList<>();
-
     /** AN ARRAY LIST TO STORE THE NUMBER OF KENNEL VIEWS **/
     ArrayList<KennelView> arrViews = new ArrayList<>();
 
     /** CAST THE LAYOUT ELEMENTS **/
-    @BindView(R.id.spnKennels) Spinner spnKennels;
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
     @BindView(R.id.groupDurationSelector) SegmentedButtonGroup groupDurationSelector;
     @BindView(R.id.txtViews) TextView txtViews;
@@ -95,32 +84,16 @@ public class ReportsActivity extends AppCompatActivity {
         /* GET THE START AND END DATE FOR THE DURATION */
         calculateDates();
 
-        /* GET THE LOGGED IN KENNEL OWNER'S ID */
+        /* GET THE LOGGED IN KENNEL'S ID */
         KENNEL_ID = getApp().getKennelID();
         if (KENNEL_ID != null)    {
-            /* SHOW THE PROGRESS AND FETCH THE LIST OF KENNELS */
+
+            /* SHOW THE PROGRESS AND FETCH THE STATS FOR THE SELECTED DURATION */
             linlaProgress.setVisibility(View.VISIBLE);
-            fetchKennels();
+            fetchKennelViewStats();
         } else {
             Toast.makeText(getApplicationContext(), "Failed to get required info...", Toast.LENGTH_SHORT).show();
         }
-
-        /* SELECT A KENNEL TO SHOW IT'S REVIEWS */
-        spnKennels.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                /* GET THE SELECTED KENNEL ID */
-                KENNEL_ID = arrKennels.get(position).getKennelID();
-
-                /* SHOW THE PROGRESS AND FETCH THE STATS FOR THE SELECTED DURATION */
-                linlaProgress.setVisibility(View.VISIBLE);
-                fetchKennelViewStats();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
 
         /* CONFIGURE THE LINE CHART */
         configLineChart();
@@ -305,36 +278,6 @@ public class ReportsActivity extends AppCompatActivity {
 //            }
 //        }
 //    }
-
-    /** FETCH THE LIST OF KENNELS **/
-    private void fetchKennels() {
-        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-        Call<Kennels> call = api.fetchKennelsListByOwner(KENNEL_ID);
-        call.enqueue(new Callback<Kennels>() {
-            @Override
-            public void onResponse(Call<Kennels> call, Response<Kennels> response) {
-//                Log.e("RAW", String.valueOf(response.raw()));
-                if (response.body() != null && response.body().getKennels() != null) {
-                    arrKennels = response.body().getKennels();
-                    if (arrKennels.size() > 0) {
-                        /* SET THE ADAPTER TO THE KENNELS SPINNER */
-                        spnKennels.setAdapter(new KennelsSpinnerAdapter(
-                                ReportsActivity.this,
-                                R.layout.pet_capacity_row,
-                                arrKennels));
-                    }
-                }
-
-                /* HIDE THE PROGRESS AFTER FETCHING THE DATA */
-                linlaProgress.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onFailure(Call<Kennels> call, Throwable t) {
-//                Log.e("KENNELS FAILURE", t.getMessage());
-            }
-        });
-    }
 
     /***** CONFIGURE THE TOOLBAR *****/
     private void configTB() {

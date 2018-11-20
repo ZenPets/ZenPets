@@ -48,6 +48,7 @@ import co.zenpets.doctors.utils.models.clinics.details.ClinicDetailsAPI;
 import co.zenpets.doctors.utils.models.clinics.images.ClinicImagesAPI;
 import co.zenpets.doctors.utils.models.clinics.images.ImageData;
 import co.zenpets.doctors.utils.models.clinics.images.ImagesData;
+import co.zenpets.doctors.utils.models.clinics.map.ClinicMapper;
 import co.zenpets.doctors.utils.models.doctors.Doctor;
 import co.zenpets.doctors.utils.models.doctors.Doctors;
 import co.zenpets.doctors.utils.models.doctors.DoctorsAPI;
@@ -176,10 +177,10 @@ public class SearchClinicDetails extends AppCompatActivity {
         progressDialog.show();
 
         ClinicMapperAPI api = ZenApiClient.getClient().create(ClinicMapperAPI.class);
-        Call<String> call = api.newDoctorClinic(LOGGED_IN_DOCTOR_ID, CLINIC_ID, "Pending");
-        call.enqueue(new Callback<String>() {
+        Call<ClinicMapper> call = api.newDoctorClinic(LOGGED_IN_DOCTOR_ID, CLINIC_ID, "Pending");
+        call.enqueue(new Callback<ClinicMapper>() {
             @Override
-            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+            public void onResponse(@NonNull Call<ClinicMapper> call, @NonNull Response<ClinicMapper> response) {
                 if (response.isSuccessful())    {
                     progressDialog.dismiss();
                     Toast.makeText(getApplicationContext(), "Profile was successfully mapped to this Clinic", Toast.LENGTH_SHORT).show();
@@ -194,7 +195,7 @@ public class SearchClinicDetails extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ClinicMapper> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
 //                Crashlytics.logException(t);
             }

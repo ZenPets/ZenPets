@@ -30,7 +30,6 @@ import com.google.firebase.iid.InstanceIdResult;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.zenpets.kennels.R;
-import co.zenpets.kennels.landing.modules.ClientsFragment;
 import co.zenpets.kennels.landing.modules.DashboardFragment;
 import co.zenpets.kennels.landing.modules.ReportsFragment;
 import co.zenpets.kennels.landing.modules.ReviewsFragment;
@@ -198,10 +197,10 @@ public class LandingActivity extends AppCompatActivity {
                         mContent = new EnquiriesFragment();
                         switchFragment(mContent);
                         return true;
-                    case R.id.dashClients:
-                        mContent = new ClientsFragment();
-                        switchFragment(mContent);
-                        return true;
+//                    case R.id.dashClients:
+//                        mContent = new ClientsFragment();
+//                        switchFragment(mContent);
+//                        return true;
                     case R.id.dashReports:
                         mContent = new ReportsFragment();
                         switchFragment(mContent);

@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseUser;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.zenpets.kennels.credentials.LoginActivity;
-import co.zenpets.kennels.landing.LandingActivity;
+import co.zenpets.kennels.landing.NewLandingActivity;
 import co.zenpets.kennels.utils.AppPrefs;
 import co.zenpets.kennels.utils.models.helpers.ZenApiClient;
 import co.zenpets.kennels.utils.models.kennels.Kennel;
@@ -89,6 +89,7 @@ public class SplashScreen extends AppCompatActivity {
         call.enqueue(new Callback<Kennel>() {
             @Override
             public void onResponse(Call<Kennel> call, Response<Kennel> response) {
+//                Log.e("KENNEL ID RESPONSE", String.valueOf(response.raw()));
                 /* GET THE KENNEL ID */
                 KENNEL_ID = response.body().getKennelID();
                 if (KENNEL_ID != null)    {
@@ -97,7 +98,7 @@ public class SplashScreen extends AppCompatActivity {
                     getApp().setKennelID(KENNEL_ID);
 
                     /* SHOW THE LANDING ACTIVITY */
-                    Intent showLanding = new Intent(SplashScreen.this, LandingActivity.class);
+                    Intent showLanding = new Intent(SplashScreen.this, NewLandingActivity.class);
                     showLanding.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(showLanding);
                     finish();

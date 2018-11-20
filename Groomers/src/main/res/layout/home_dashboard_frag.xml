@@ -130,6 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
+                android:visibility="visible"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
@@ -201,7 +202,7 @@
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/listEnquiries" />
+                app:layout_constraintTop_toBottomOf="@+id/linlaEmptyEnquiries" />
 
             <TextView
                 android:id="@+id/txtReviewsLabel"

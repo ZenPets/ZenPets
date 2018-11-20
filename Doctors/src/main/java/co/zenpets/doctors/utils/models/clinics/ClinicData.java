@@ -3,7 +3,6 @@ package co.zenpets.doctors.utils.models.clinics;
 import com.google.gson.annotations.SerializedName;
 
 public class ClinicData {
-
     @SerializedName("clinicID") private String clinicID;
     @SerializedName("doctorID") private String doctorID;
     @SerializedName("countryID") private String countryID;

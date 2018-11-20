@@ -68,6 +68,7 @@ import co.zenpets.doctors.utils.adapters.location.StatesAdapter;
 import co.zenpets.doctors.utils.helpers.classes.LocationPickerActivity;
 import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
 import co.zenpets.doctors.utils.models.clinics.ClinicsAPI;
+import co.zenpets.doctors.utils.models.clinics.map.ClinicMapper;
 import co.zenpets.doctors.utils.models.doctors.clinic.Clinic;
 import co.zenpets.doctors.utils.models.doctors.clinic.ClinicMapperAPI;
 import co.zenpets.doctors.utils.models.location.CitiesData;
@@ -465,10 +466,10 @@ public class ClinicCreator extends AppCompatActivity {
     /***** MAP THE DOCTOR TO THE SELECTED CLINIC *****/
     private void mapTheDoctor(final String result) {
         ClinicMapperAPI api = ZenApiClient.getClient().create(ClinicMapperAPI.class);
-        Call<String> call = api.newDoctorClinic(DOCTOR_ID, result, "Pending");
-        call.enqueue(new Callback<String>() {
+        Call<ClinicMapper> call = api.newDoctorClinic(DOCTOR_ID, result, "Pending");
+        call.enqueue(new Callback<ClinicMapper>() {
             @Override
-            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+            public void onResponse(@NonNull Call<ClinicMapper> call, @NonNull Response<ClinicMapper> response) {
                 if (response.isSuccessful())    {
                     /* DISMISS THE DIALOG */
                     dialog.dismiss();
@@ -483,7 +484,7 @@ public class ClinicCreator extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ClinicMapper> call, @NonNull Throwable t) {
             }
         });
     }

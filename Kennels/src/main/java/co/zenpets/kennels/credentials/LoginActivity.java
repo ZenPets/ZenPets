@@ -26,8 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import co.zenpets.kennels.R;
-import co.zenpets.kennels.landing.LandingActivity;
-import co.zenpets.kennels.landing.TestLandingActivity;
+import co.zenpets.kennels.landing.NewLandingActivity;
 import co.zenpets.kennels.utils.AppPrefs;
 import co.zenpets.kennels.utils.models.helpers.ZenApiClient;
 import co.zenpets.kennels.utils.models.kennels.Kennel;
@@ -149,7 +148,7 @@ public class LoginActivity extends AppCompatActivity {
                     getApp().setKennelID(KENNEL_ID);
 
                     /* SHOW THE LANDING ACTIVITY */
-                    Intent showLanding = new Intent(LoginActivity.this, LandingActivity.class);
+                    Intent showLanding = new Intent(LoginActivity.this, NewLandingActivity.class);
                     showLanding.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(showLanding);
                     finish();

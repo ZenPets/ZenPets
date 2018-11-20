@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Zen Pets</string>
+    <string name="app_name">Veterinary Manager</string>
 
     <!-- THE API KEY'S -->
     <string name="google_maps_key">AIzaSyCC6_QV-QfckZ9SaEhKrccZcnYFTDcF0ec</string>
@@ -34,10 +34,9 @@
     <!-- SPLASH SCREEN -->
     <string name="splash_title">ZEN PETS</string>
     <string name="splash_clinic_prompter_title">Clinic Required</string>
-    <string name="splash_clinic_prompter_message">You need to add at least one Clinic / Hospital <b><i>or</i></b> connect an existing Clinic to your account before your profile can be made public and available for all Zen Pets users.
-        \n\nIf you own / run your own Clinic / Hospital, click the \"NEW CLINIC\" button, to add a new Clinic / Hospital.
-        \n\nIf you practice at a Clinic / Hospital owned / run by someone else, click the \"SEARCH CLINIC\" button.</string>
-    <string name="splash_clinic_prompter_new">New Clinic</string>
+    <string name="splash_clinic_prompter_message">You need to add a Clinic to your account before your profile can be made public and available for Pet Parents to discover your profile and the services you offer.
+        \n\nTo proceed and add a new Clinic, click the \"CONTINUE\" button.</string>
+    <string name="splash_clinic_prompter_new">CONTINUE</string>
     <string name="splash_clinic_prompter_search">Search Clinic</string>
 
     <!-- LOGIN SCREEN -->

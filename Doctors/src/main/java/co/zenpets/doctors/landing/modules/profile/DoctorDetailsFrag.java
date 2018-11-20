@@ -18,7 +18,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -504,7 +503,7 @@ public class DoctorDetailsFrag extends Fragment {
                             public void onFailure(Call<AccountData> call, Throwable t) {
                                 dialog.dismiss();
                                 Toast.makeText(getActivity(), "Update failed...", Toast.LENGTH_SHORT).show();
-                                Log.e("DISPLAY PIC FAILURE", t.getMessage());
+//                                Log.e("DISPLAY PIC FAILURE", t.getMessage());
                             }
                         });
                     } else {

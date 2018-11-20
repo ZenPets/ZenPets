@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -94,15 +93,15 @@ public class ClientCreator extends AppCompatActivity {
             public void onResponse(Call<Client> call, Response<Client> response) {
                 if (response.isSuccessful())    {
                     String clientID = response.body().getClientID();
-                    Log.e("NEW CLIENT ID", clientID);
+//                    Log.e("NEW CLIENT ID", clientID);
                 } else {
-                    Log.e("RESPONSE FAILURE", "NEW CLIENT CREATION FAILED");
+//                    Log.e("RESPONSE FAILURE", "NEW CLIENT CREATION FAILED");
                 }
             }
 
             @Override
             public void onFailure(Call<Client> call, Throwable t) {
-                Log.e("CLIENT FAILURE", t.getMessage());
+//                Log.e("CLIENT FAILURE", t.getMessage());
             }
         });
     }

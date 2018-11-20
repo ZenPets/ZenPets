@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -19,6 +20,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import co.zenpets.kennels.R;
 import co.zenpets.kennels.utils.AppPrefs;
 import co.zenpets.kennels.utils.adapters.enquiries.KennelMessagesAdapter;
@@ -32,9 +36,6 @@ import co.zenpets.kennels.utils.models.notifications.Notification;
 import co.zenpets.kennels.utils.models.notifications.NotificationsAPI;
 import co.zenpets.kennels.utils.models.users.UserData;
 import co.zenpets.kennels.utils.models.users.UsersAPI;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -116,13 +117,12 @@ public class KennelEnquiryActivity extends AppCompatActivity {
 
     /** FETCH THE KENNEL ENQUIRY MESSAGES **/
     private void fetchEnquiryMessages() {
-        arrMessages.clear();
         EnquiryMessagesAPI apiEnquiry = ZenApiClient.getClient().create(EnquiryMessagesAPI.class);
-        Call<EnquiryMessages> call = apiEnquiry.fetchKennelEnquiryMessages(KENNEL_ID);
+        Call<EnquiryMessages> call = apiEnquiry.fetchKennelEnquiryMessages(ENQUIRY_ID);
         call.enqueue(new Callback<EnquiryMessages>() {
             @Override
             public void onResponse(Call<EnquiryMessages> call, Response<EnquiryMessages> response) {
-//                Log.e("ENQUIRY RAW", String.valueOf(response.raw()));
+                Log.e("ENQUIRY RAW", String.valueOf(response.raw()));
                 if (response.body() != null && response.body().getMessages() != null)   {
                     arrMessages = response.body().getMessages();
                     if (arrMessages.size() > 0) {

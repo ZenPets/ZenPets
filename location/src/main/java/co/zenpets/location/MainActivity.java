@@ -356,7 +356,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<CitiesData> call, Throwable t) {
                 Log.e("CITIES FAILURE", t.getMessage());
-
             }
         });
     }

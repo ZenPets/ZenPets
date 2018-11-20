@@ -612,38 +612,41 @@ public class SignUpActivity extends AppCompatActivity {
                 if (response.isSuccessful())    {
                     final String doctorID = response.body().getDoctorID();
 
-                    /* SHOW THE OFFER DIALOG **/
-                    new MaterialDialog.Builder(SignUpActivity.this)
-                            .title("An Offer For You!")
-                            .content("For our new Veterinarians, we are offering a free upgrade to help you see all the features of the \"Zen Pets - For Doctors\" application." +
-                                    "\n\nThis upgrade is valid for 3 months starting today.")
-                            .positiveText("Absolutely")
-                            .negativeText("Not Now")
-                            .theme(Theme.LIGHT)
-                            .icon(ContextCompat.getDrawable(SignUpActivity.this, R.drawable.ic_info_outline_black_24dp))
-                            .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
-                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    dialog.dismiss();
+                    /* CREATE THE FREE TRIAL UPGRADE SUBSCRIPTION RECORD */
+                    createTrialSubscription(doctorID);
 
-                                    /* CREATE THE FREE TRIAL UPGRADE SUBSCRIPTION RECORD */
-                                    createTrialSubscription(doctorID);
-                                }
-                            })
-                            .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    dialog.dismiss();
-                                    progressDialog.dismiss();
-                                    auth.signOut();
-                                    Toast.makeText(getApplicationContext(), "Account created successfully...", Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            }).show();
+//                    /* SHOW THE OFFER DIALOG **/
+//                    new MaterialDialog.Builder(SignUpActivity.this)
+//                            .title("An Offer For You!")
+//                            .content("For our new Veterinarians, we are offering a free upgrade to help you see all the features of the \"Zen Pets - For Doctors\" application." +
+//                                    "\n\nThis upgrade is valid for 3 months starting today.")
+//                            .positiveText("Absolutely")
+//                            .negativeText("Not Now")
+//                            .theme(Theme.LIGHT)
+//                            .icon(ContextCompat.getDrawable(SignUpActivity.this, R.drawable.ic_info_outline_black_24dp))
+//                            .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
+//                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+//                                @Override
+//                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                                    dialog.dismiss();
+//
+//                                    /* CREATE THE FREE TRIAL UPGRADE SUBSCRIPTION RECORD */
+//                                    createTrialSubscription(doctorID);
+//                                }
+//                            })
+//                            .onNegative(new MaterialDialog.SingleButtonCallback() {
+//                                @Override
+//                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                                    dialog.dismiss();
+//                                    progressDialog.dismiss();
+//                                    auth.signOut();
+//                                    Toast.makeText(getApplicationContext(), "Account created successfully...", Toast.LENGTH_LONG).show();
+//                                    Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+//                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                                    startActivity(intent);
+//                                    finish();
+//                                }
+//                            }).show();
                 } else {
                     /* SET THE ERROR MESSAGE **/
                     strErrorMessage = "There was en error signing you up. Please submit your details again.";

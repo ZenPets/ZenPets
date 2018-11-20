@@ -24,8 +24,10 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import co.zenpets.doctors.R;
-import co.zenpets.doctors.creator.clinic.ClinicSearch;
 import co.zenpets.doctors.creator.clinic.InitialClinicCreator;
 import co.zenpets.doctors.landing.LandingActivity;
 import co.zenpets.doctors.utils.AppPrefs;
@@ -35,9 +37,6 @@ import co.zenpets.doctors.utils.models.doctors.DoctorsAPI;
 import co.zenpets.doctors.utils.models.doctors.clinic.Clinic;
 import co.zenpets.doctors.utils.models.doctors.clinic.ClinicCheckerAPI;
 import co.zenpets.doctors.utils.models.doctors.clinic.ClinicCheckerData;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -91,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful())    {
                         String result = String.valueOf(task.getException());
+//                        Log.e("RESULT", result);
                         if (result.contains("There is no user record corresponding to this identifier"))    {
                             /* SHOW UNREGISTERED USER DIALOG */
                             showUnregisteredUser();
@@ -226,22 +226,12 @@ public class LoginActivity extends AppCompatActivity {
                 .cancelable(true)
                 .content(getString(R.string.splash_clinic_prompter_message))
                 .positiveText(getString(R.string.splash_clinic_prompter_new))
-                .negativeText(getString(R.string.splash_clinic_prompter_search))
                 .theme(Theme.LIGHT)
                 .typeface("Roboto-Medium.ttf", "Roboto-Regular.ttf")
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         Intent intent = new Intent(LoginActivity.this, InitialClinicCreator.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                        finish();
-                    }
-                })
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent(LoginActivity.this, ClinicSearch.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         finish();

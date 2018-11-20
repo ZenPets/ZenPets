@@ -4,32 +4,30 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import co.zenpets.kennels.R;
 import co.zenpets.kennels.utils.AppPrefs;
+import co.zenpets.kennels.utils.TypefaceSpan;
 import co.zenpets.kennels.utils.adapters.enquiries.KennelEnquiriesAdapter;
-import co.zenpets.kennels.utils.adapters.kennels.KennelsSpinnerAdapter;
 import co.zenpets.kennels.utils.models.enquiries.Enquiries;
 import co.zenpets.kennels.utils.models.enquiries.EnquiriesAPI;
 import co.zenpets.kennels.utils.models.enquiries.Enquiry;
 import co.zenpets.kennels.utils.models.helpers.ZenApiClient;
-import co.zenpets.kennels.utils.models.kennels.Kennel;
-import co.zenpets.kennels.utils.models.kennels.Kennels;
-import co.zenpets.kennels.utils.models.kennels.KennelsAPI;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,14 +41,10 @@ public class EnquiriesFragment extends Fragment {
     /** THE LOGGED IN KENNEL ID **/
     String KENNEL_ID = null;
 
-    /** AN ARRAY LIST TO STORE THE LIST OF KENNELS **/
-    ArrayList<Kennel> arrKennels = new ArrayList<>();
-
     /** THE TRAINING ENQUIRIES ARRAY LIST **/
     ArrayList<Enquiry> arrEnquiries = new ArrayList<>();
 
     /** CAST THE LAYOUT ELEMENTS **/
-    @BindView(R.id.spnKennels) Spinner spnKennels;
     @BindView(R.id.linlaProgress) LinearLayout linlaProgress;
     @BindView(R.id.listKennelEnquiries) RecyclerView listKennelEnquiries;
     @BindView(R.id.linlaEmpty) LinearLayout linlaEmpty;
@@ -83,36 +77,18 @@ public class EnquiriesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        /* CONFIGURE THE ACTIONBAR */
+        configAB();
+
         /* GET THE KENNEL OWNER'S ID */
         KENNEL_ID = getApp().getKennelID();
 
         /* CONFIGURE THE RECYCLER VIEW **/
         configRecycler();
 
-        /* SHOW THE PROGRESS AND FETCH THE LIST OF KENNELS */
+        /* SHOW THE PROGRESS AND FETCH THE LIST OF ENQUIRIES */
         linlaProgress.setVisibility(View.VISIBLE);
-        fetchKennels();
-
-        /* SELECT A KENNEL TO SHOW IT'S REVIEWS */
-        spnKennels.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                /* GET THE SELECTED KENNEL ID */
-                KENNEL_ID = arrKennels.get(position).getKennelID();
-
-                /* CLEAR THE ENQUIRES ARRAY */
-                if (arrEnquiries != null)
-                    arrEnquiries.clear();
-
-                /* SHOW THE PROGRESS AND FETCH THE LIST OF ENQUIRIES */
-                linlaProgress.setVisibility(View.VISIBLE);
-                fetchKennelEnquiries();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
+        fetchKennelEnquiries();
     }
 
     /** FETCH THE LIST OF ENQUIRIES **/
@@ -153,32 +129,6 @@ public class EnquiriesFragment extends Fragment {
         });
     }
 
-    /** FETCH THE LIST OF KENNELS **/
-    private void fetchKennels() {
-        KennelsAPI api = ZenApiClient.getClient().create(KennelsAPI.class);
-        Call<Kennels> call = api.fetchKennelsListByOwner(KENNEL_ID);
-        call.enqueue(new Callback<Kennels>() {
-            @Override
-            public void onResponse(Call<Kennels> call, Response<Kennels> response) {
-                if (response.body() != null && response.body().getKennels() != null) {
-                    arrKennels = response.body().getKennels();
-                    if (arrKennels.size() > 0) {
-                        /* SET THE ADAPTER TO THE KENNELS SPINNER */
-                        spnKennels.setAdapter(new KennelsSpinnerAdapter(
-                                getActivity(),
-                                R.layout.pet_capacity_row,
-                                arrKennels));
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Kennels> call, Throwable t) {
-//                Log.e("KENNELS FAILURE", t.getMessage());
-            }
-        });
-    }
-
     /***** CONFIGURE THE RECYCLER VIEW *****/
     private void configRecycler() {
         /* SET THE CONFIGURATION */
@@ -189,8 +139,22 @@ public class EnquiriesFragment extends Fragment {
 
         /* SET THE ADAPTER TO THE RECYCLER VIEW */
         listKennelEnquiries.setAdapter(new KennelEnquiriesAdapter(getActivity(), arrEnquiries));
+//
+//        DividerItemDecoration decoration = new DividerItemDecoration(getActivity(), manager.getOrientation());
+//        listKennelEnquiries.addItemDecoration(decoration);
+    }
 
-        DividerItemDecoration decoration = new DividerItemDecoration(getActivity(), manager.getOrientation());
-        listKennelEnquiries.addItemDecoration(decoration);
+    /***** CONFIGURE THE ACTIONBAR *****/
+    private void configAB() {
+        String strTitle = "Kennel Enquiries";
+        SpannableString s = new SpannableString(strTitle);
+        s.setSpan(new TypefaceSpan(getActivity()), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(s);
     }
 }

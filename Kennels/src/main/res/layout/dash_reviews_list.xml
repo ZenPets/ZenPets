@@ -4,9 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/zen_toolbar" />
+    <!--<include layout="@layout/zen_toolbar" />-->
 
-    <Spinner
+    <!--<Spinner
         android:id="@+id/spnKennels"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp" />-->
 
     <include layout="@layout/zen_progress" />
 
