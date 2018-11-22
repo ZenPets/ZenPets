@@ -268,8 +268,8 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
         ReviewsVH(View v) {
             super(v);
 
-            imgvwUserDisplayProfile = v.findViewById(R.id.imgvwUserDisplayProfile);
-            txtUserName = v.findViewById(R.id.txtUserName);
+            imgvwUserDisplayProfile = v.findViewById(R.id.imgvwPetDisplayProfile);
+            txtUserName = v.findViewById(R.id.txtPetName);
             kennelRating = v.findViewById(R.id.kennelRating);
             txtTimestamp = v.findViewById(R.id.txtTimeStamp);
             imgvwLikeStatus = v.findViewById(R.id.imgvwLikeStatus);

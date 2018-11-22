@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -122,7 +121,7 @@ public class KennelEnquiryActivity extends AppCompatActivity {
         call.enqueue(new Callback<EnquiryMessages>() {
             @Override
             public void onResponse(Call<EnquiryMessages> call, Response<EnquiryMessages> response) {
-                Log.e("ENQUIRY RAW", String.valueOf(response.raw()));
+//                Log.e("ENQUIRY RAW", String.valueOf(response.raw()));
                 if (response.body() != null && response.body().getMessages() != null)   {
                     arrMessages = response.body().getMessages();
                     if (arrMessages.size() > 0) {

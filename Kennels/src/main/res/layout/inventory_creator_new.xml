@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/zen_toolbar" />
+
+    <include layout="@layout/zen_progress" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbarSize="3dp"
+        android:scrollbarThumbVertical="@color/primary_dark">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtInventoryCreatorLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                android:text="ADD A NEW INVENTORY ITEM TO YOUR KENNEL"
+                android:textColor="@color/primary_text"
+                android:textSize="12sp"
+                app:fontFamily="@font/roboto_condensed_bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txtInventoryTypeLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="start|center"
+                android:text="Choose a type for the new inventory item"
+                android:textColor="@color/secondary_text"
+                android:textSize="14sp"
+                app:fontFamily="@font/roboto_condensed_regular"
+                app:layout_constraintEnd_toEndOf="@+id/txtInventoryCreatorLabel"
+                app:layout_constraintStart_toStartOf="@+id/txtInventoryCreatorLabel"
+                app:layout_constraintTop_toBottomOf="@+id/txtInventoryCreatorLabel" />
+
+            <Spinner
+                android:id="@+id/spnInventoryType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="@+id/txtInventoryTypeLabel"
+                app:layout_constraintStart_toStartOf="@+id/txtInventoryTypeLabel"
+                app:layout_constraintTop_toBottomOf="@+id/txtInventoryTypeLabel" />
+
+            <TextView
+                android:id="@+id/txtInventoryNameLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="start|center"
+                android:text="Provide a unique name for this inventory item"
+                android:textColor="@color/secondary_text"
+                android:textSize="14sp"
+                app:fontFamily="@font/roboto_condensed_regular"
+                app:layout_constraintEnd_toEndOf="@+id/spnInventoryType"
+                app:layout_constraintStart_toStartOf="@+id/spnInventoryType"
+                app:layout_constraintTop_toBottomOf="@+id/spnInventoryType" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputInventoryName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:hintTextAppearance="@style/TextLabel"
+                app:layout_constraintEnd_toEndOf="@+id/txtInventoryNameLabel"
+                app:layout_constraintStart_toStartOf="@+id/txtInventoryNameLabel"
+                app:layout_constraintTop_toBottomOf="@+id/txtInventoryNameLabel">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtInventoryName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter a unique inventory item name"
+                    android:inputType="textCapWords"
+                    android:textColor="@color/primary_text"
+                    android:textColorHint="@color/tertiary_text"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/roboto_condensed_regular" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/txtCostLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="start|center"
+                android:text="Provide the cost of booking this inventory (per day / night)"
+                android:textColor="@color/secondary_text"
+                android:textSize="14sp"
+                app:fontFamily="@font/roboto_condensed_regular"
+                app:layout_constraintEnd_toEndOf="@+id/inputInventoryName"
+                app:layout_constraintStart_toStartOf="@+id/inputInventoryName"
+                app:layout_constraintTop_toBottomOf="@+id/inputInventoryName" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputInventoryCost"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:hintTextAppearance="@style/TextLabel"
+                app:layout_constraintEnd_toEndOf="@+id/txtCostLabel"
+                app:layout_constraintStart_toStartOf="@+id/txtCostLabel"
+                app:layout_constraintTop_toBottomOf="@+id/txtCostLabel">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edtInventoryCost"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter the per day / night cost"
+                    android:textColor="@color/primary_text"
+                    android:textColorHint="@color/tertiary_text"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/roboto_condensed_regular" />
+            </android.support.design.widget.TextInputLayout>
+
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@+id/inputInventoryCost"
+                app:layout_constraintStart_toStartOf="@+id/inputInventoryCost"
+                app:layout_constraintTop_toBottomOf="@+id/inputInventoryCost">
+
+                <RadioButton
+                    android:id="@+id/btnInclusive"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:text="Inclusive"
+                    android:textColor="@color/primary_text"
+                    android:textSize="13sp"
+                    app:fontFamily="@font/roboto_condensed_regular" />
+
+                <RadioButton
+                    android:id="@+id/btnExclusive"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:text="Exclusive"
+                    android:textColor="@color/primary_text"
+                    android:textSize="13sp"
+                    app:fontFamily="@font/roboto_condensed_regular" />
+            </RadioGroup>
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+</LinearLayout>

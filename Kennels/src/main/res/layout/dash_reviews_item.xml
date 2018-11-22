@@ -17,7 +17,7 @@
             android:layout_height="wrap_content">
 
             <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/imgvwUserDisplayProfile"
+                android:id="@+id/imgvwPetDisplayProfile"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="8dp"
@@ -31,7 +31,7 @@
                 app:roundingBorderWidth="2dp" />
 
             <TextView
-                android:id="@+id/txtUserName"
+                android:id="@+id/txtPetName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -43,8 +43,8 @@
                 android:textColor="@color/primary_text"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toStartOf="@+id/imgvwLikeStatus"
-                app:layout_constraintStart_toEndOf="@+id/imgvwUserDisplayProfile"
-                app:layout_constraintTop_toTopOf="@+id/imgvwUserDisplayProfile" />
+                app:layout_constraintStart_toEndOf="@+id/imgvwPetDisplayProfile"
+                app:layout_constraintTop_toTopOf="@+id/imgvwPetDisplayProfile" />
 
             <RatingBar
                 android:id="@+id/kennelRating"
@@ -55,8 +55,8 @@
                 android:numStars="5"
                 android:rating="2"
                 android:stepSize="1"
-                app:layout_constraintStart_toStartOf="@+id/txtUserName"
-                app:layout_constraintTop_toBottomOf="@+id/txtUserName" />
+                app:layout_constraintStart_toStartOf="@+id/txtPetName"
+                app:layout_constraintTop_toBottomOf="@+id/txtPetName" />
 
             <TextView
                 android:id="@+id/txtTimeStamp"
@@ -91,7 +91,7 @@
                 app:iiv_icon="faw_thumbs_up2"
                 app:iiv_size="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/txtUserName" />
+                app:layout_constraintTop_toTopOf="@+id/txtPetName" />
 
             <TextView
                 android:id="@+id/txtKennelExperience"
@@ -108,7 +108,7 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/kennelRating"
-                app:layout_constraintTop_toBottomOf="@+id/imgvwUserDisplayProfile" />
+                app:layout_constraintTop_toBottomOf="@+id/imgvwPetDisplayProfile" />
 
             <TextView
                 android:id="@+id/txtReplyStatus"

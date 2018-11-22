@@ -111,6 +111,10 @@
             android:name=".inventory.KennelInventory"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".creator.inventory.InventoryCreator"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <!-- REVIEWS -->
         <activity

@@ -191,8 +191,8 @@ public class KennelEnquiriesAdapter extends RecyclerView.Adapter<KennelEnquiries
         EnquiriesVH(View v) {
             super(v);
             enquiryContainer = v.findViewById(R.id.enquiryContainer);
-            imgvwUserDisplayProfile = v.findViewById(R.id.imgvwUserDisplayProfile);
-            txtUserName = v.findViewById(R.id.txtUserName);
+            imgvwUserDisplayProfile = v.findViewById(R.id.imgvwPetDisplayProfile);
+            txtUserName = v.findViewById(R.id.txtPetName);
             txtTimeStamp = v.findViewById(R.id.txtTimeStamp);
             txtEnquiryMessage = v.findViewById(R.id.txtEnquiryMessage);
             txtUnreadCount = v.findViewById(R.id.txtUnreadCount);

@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
         return (AppPrefs) getActivity().getApplication();
     }
 
-    /** THE LOGGED IN KENNEL ID **/
+    /** THE LOGGED IN KENNEL'S ID **/
     String KENNEL_ID = null;
 
     /** THE KENNEL NAME AND COVER PHOTO **/

@@ -158,9 +158,9 @@ public class KennelMessagesAdapter extends RecyclerView.Adapter<KennelMessagesAd
         MessagesVH(View v) {
             super(v);
             linlaUser = v.findViewById(R.id.linlaUser);
-            imgvwUserDisplayProfile = v.findViewById(R.id.imgvwUserDisplayProfile);
+            imgvwUserDisplayProfile = v.findViewById(R.id.imgvwPetDisplayProfile);
             txtUsersMessage = v.findViewById(R.id.txtUsersMessage);
-            txtUserName = v.findViewById(R.id.txtUserName);
+            txtUserName = v.findViewById(R.id.txtPetName);
             txtUserTimeStamp = v.findViewById(R.id.txtUserTimeStamp);
             linlaTrainer = v.findViewById(R.id.linlaTrainer);
             imgvwTrainerDisplayProfile = v.findViewById(R.id.imgvwTrainerDisplayProfile);

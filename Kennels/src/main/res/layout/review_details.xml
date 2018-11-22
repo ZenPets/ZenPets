@@ -22,7 +22,7 @@
             android:layout_height="wrap_content">
 
             <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/imgvwUserDisplayProfile"
+                android:id="@+id/imgvwPetDisplayProfile"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:placeholderImage="@drawable/ic_person_black_24dp"
@@ -36,10 +36,10 @@
                 android:layout_marginTop="8dp" />
 
             <TextView
-                android:id="@+id/txtUserName"
+                android:id="@+id/txtPetName"
                 app:layout_constraintEnd_toStartOf="@+id/imgvwLikeStatus"
-                app:layout_constraintStart_toEndOf="@+id/imgvwUserDisplayProfile"
-                app:layout_constraintTop_toTopOf="@+id/imgvwUserDisplayProfile"
+                app:layout_constraintStart_toEndOf="@+id/imgvwPetDisplayProfile"
+                app:layout_constraintTop_toTopOf="@+id/imgvwPetDisplayProfile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -54,8 +54,8 @@
             <RatingBar
                 android:id="@+id/kennelRating"
                 style="?android:attr/ratingBarStyleSmall"
-                app:layout_constraintStart_toStartOf="@+id/txtUserName"
-                app:layout_constraintTop_toBottomOf="@+id/txtUserName"
+                app:layout_constraintStart_toStartOf="@+id/txtPetName"
+                app:layout_constraintTop_toBottomOf="@+id/txtPetName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -104,7 +104,7 @@
                 app:iiv_icon="faw_thumbs_up2"
                 app:iiv_size="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/txtUserName"
+                app:layout_constraintTop_toTopOf="@+id/txtPetName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -138,7 +138,7 @@
                 android:id="@+id/txtKennelExperience"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/kennelRating"
-                app:layout_constraintTop_toBottomOf="@+id/imgvwUserDisplayProfile"
+                app:layout_constraintTop_toBottomOf="@+id/imgvwPetDisplayProfile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"

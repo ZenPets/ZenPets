@@ -24,7 +24,7 @@
             android:orientation="horizontal">
 
             <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/imgvwUserDisplayProfile"
+                android:id="@+id/imgvwPetDisplayProfile"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="5dp"
@@ -62,7 +62,7 @@
             android:orientation="horizontal">
 
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/txtUserName"
+                android:id="@+id/txtPetName"
                 style="@style/LightBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
