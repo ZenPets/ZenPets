@@ -12,6 +12,9 @@ release/
 # KEYSTORE FILES
 *.jks
 
+# IGNORE THE KEY STORE PROPERTIES FILE
+keystore.properties
+
 # GOOGLE SERVICES (e.g. APIs or Firebase)
 google-services.json
 
