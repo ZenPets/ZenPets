@@ -1,6 +1,10 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
+def keystorePropertiesFile = file('keystore.properties')
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 /** THE VERSIONING CODES **/
 ext.versionMajor = 1
 ext.versionMinor = 0
@@ -28,10 +32,14 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file("ZenPets.jks")
-            storePassword "Scooby_DOO29"
-            keyAlias "users"
-            keyPassword "Die_harD29"
+//            storeFile file("ZenPets.jks")
+//            storePassword "Scooby_DOO29"
+//            keyAlias "users"
+//            keyPassword "Die_harD29"
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
         }
     }
     buildTypes {
