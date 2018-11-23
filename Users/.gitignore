@@ -1,4 +1,4 @@
-# Gradle files
+# GRADLE FILES
 .gradle/
 build/
 
@@ -6,10 +6,13 @@ build/
 *.apk
 *.ap_
 
-# Keystore files
+# RELEASE FILES
+release/
+
+# KEYSTORE FILES
 *.jks
 
-# Google Services (e.g. APIs or Firebase)
+# GOOGLE SERVICES (e.g. APIs or Firebase)
 google-services.json
 
 # Intellij
