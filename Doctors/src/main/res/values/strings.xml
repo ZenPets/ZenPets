@@ -1,9 +1,6 @@
 <resources>
     <string name="app_name">Veterinary Manager</string>
 
-    <!-- THE API KEY'S -->
-    <string name="google_maps_key">AIzaSyCC6_QV-QfckZ9SaEhKrccZcnYFTDcF0ec</string>
-
     <!-- THE DEFAULT NOTIFICATION CHANNEL -->
     <string name="default_notification_channel_id">fcm_default_channel</string>
     <string name="default_notification_channel_desc">fcm_default_channel</string>

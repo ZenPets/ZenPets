@@ -11,6 +11,8 @@ release/
 
 # KEYSTORE FILES
 *.jks
+#*.keystore
+#*.properties
 
 # IGNORE THE KEY STORE PROPERTIES FILE
 keystore.properties

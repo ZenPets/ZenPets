@@ -149,7 +149,7 @@
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".utils.helpers.classes.FilterConsultationsActivity"
+            android:name=".utils.helpers.FilterConsultationsActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
@@ -183,13 +183,13 @@
 
         <!-- TIMINGS PICKER -->
         <activity
-            android:name=".utils.helpers.classes.TimingsPickerActivity"
+            android:name=".utils.helpers.TimingsPickerActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <!-- LOCATION PICKER -->
         <activity
-            android:name=".utils.helpers.classes.LocationPickerActivity"
+            android:name=".utils.helpers.LocationPickerActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
@@ -231,22 +231,22 @@
 
         <!-- COUNTRY, STATE, CITY, LOCALITY SELECTOR ACTIVITIES -->
         <activity
-            android:name=".utils.helpers.classes.location.CountrySelectorActivity"
+            android:name=".utils.helpers.location.CountrySelectorActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".utils.helpers.classes.location.StateSelectorActivity"
+            android:name=".utils.helpers.location.StateSelectorActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".utils.helpers.classes.location.CitySelectorActivity"
+            android:name=".utils.helpers.location.CitySelectorActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <!-- GOOGLE MAPS -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="@string/google_maps_api_key" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
