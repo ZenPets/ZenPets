@@ -23,8 +23,6 @@ android {
         multiDexEnabled true
         versionCode generateVersionCode()
         versionName generateVersionName()
-//        versionCode 20180214
-//        versionName "0.0.4"
 
         vectorDrawables {
             useSupportLibrary = true
