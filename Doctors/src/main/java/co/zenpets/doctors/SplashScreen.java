@@ -26,7 +26,7 @@ import co.zenpets.doctors.credentials.ClaimProfileStatus;
 import co.zenpets.doctors.credentials.LoginActivity;
 import co.zenpets.doctors.landing.LandingActivity;
 import co.zenpets.doctors.utils.AppPrefs;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.doctors.Doctor;
 import co.zenpets.doctors.utils.models.doctors.DoctorsAPI;
 import co.zenpets.doctors.utils.models.doctors.clinic.Clinic;

@@ -29,7 +29,7 @@ import co.zenpets.doctors.creator.client.ClientCreator;
 import co.zenpets.doctors.utils.AppPrefs;
 import co.zenpets.doctors.utils.TypefaceSpan;
 import co.zenpets.doctors.utils.adapters.doctors.clients.ClientsAdapter;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.doctors.clients.Client;
 import co.zenpets.doctors.utils.models.doctors.clients.Clients;
 import co.zenpets.doctors.utils.models.doctors.clients.DoctorClientsAPI;

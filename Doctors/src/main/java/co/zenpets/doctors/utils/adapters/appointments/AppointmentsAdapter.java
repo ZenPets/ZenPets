@@ -17,12 +17,13 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.crashlytics.android.Crashlytics;
 import com.mikepenz.iconics.view.IconicsImageView;
 
 import java.util.ArrayList;
 
 import co.zenpets.doctors.R;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.appointments.AppointmentData;
 import co.zenpets.doctors.utils.models.appointments.AppointmentsAPI;
 import retrofit2.Call;
@@ -216,7 +217,7 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
                             @Override
                             public void onFailure(@NonNull Call<AppointmentData> call, @NonNull Throwable t) {
 //                                Log.e("FAILURE", t.getMessage());
-//                                Crashlytics.logException(t);
+                                Crashlytics.logException(t);
                             }
                         });
                     }
@@ -259,7 +260,7 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
             @Override
             public void onFailure(@NonNull Call<AppointmentData> call, @NonNull Throwable t) {
 //                Log.e("CONFIRM FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }

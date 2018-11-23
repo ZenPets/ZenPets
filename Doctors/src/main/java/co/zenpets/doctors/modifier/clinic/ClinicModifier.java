@@ -22,6 +22,8 @@ import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -31,8 +33,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import co.zenpets.doctors.R;
 import co.zenpets.doctors.utils.TypefaceSpan;
-import co.zenpets.doctors.utils.helpers.classes.LocationPickerActivity;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.LocationPickerActivity;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.clinics.ClinicData;
 import co.zenpets.doctors.utils.models.clinics.ClinicsAPI;
 import co.zenpets.doctors.utils.models.clinics.details.ClinicDetailsAPI;
@@ -186,7 +188,7 @@ public class ClinicModifier extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<ClinicData> call, @NonNull Throwable t) {
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -340,7 +342,7 @@ public class ClinicModifier extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Call<Clinic> call, @NonNull Throwable t) {
 //                    Log.e("UPDATE FAILURE", t.getMessage());
-//                    Crashlytics.logException(t);
+                    Crashlytics.logException(t);
                 }
             });
         }

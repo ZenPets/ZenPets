@@ -10,16 +10,18 @@ import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import co.zenpets.doctors.R;
 import co.zenpets.doctors.utils.adapters.doctors.claim.ClaimProfileAdapter;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.doctors.Doctor;
 import co.zenpets.doctors.utils.models.doctors.Doctors;
 import co.zenpets.doctors.utils.models.doctors.DoctorsAPI;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -110,7 +112,7 @@ public class ClaimProfileList extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<Doctors> call, @NonNull Throwable t) {
 //                Log.e("SEARCH FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }

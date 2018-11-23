@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -47,7 +48,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.zenpets.doctors.R;
 import co.zenpets.doctors.utils.TypefaceSpan;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.clinics.ClinicData;
 import co.zenpets.doctors.utils.models.clinics.logo.ClinicLogoAPI;
 import id.zelory.compressor.Compressor;
@@ -381,6 +382,7 @@ public class ClinicLogoUpdater extends AppCompatActivity {
                             @Override
                             public void onFailure(Call<ClinicData> call, Throwable t) {
 //                            Log.e("LOGO FAILURE", t.getMessage());
+                                Crashlytics.logException(t);
                             }
                         });
                     } else {

@@ -16,16 +16,18 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import co.zenpets.doctors.R;
 import co.zenpets.doctors.utils.AppPrefs;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.doctors.claims.Claim;
 import co.zenpets.doctors.utils.models.doctors.claims.DoctorClaimsAPI;
 import co.zenpets.doctors.utils.models.doctors.profile.DoctorProfileAPI;
 import co.zenpets.doctors.utils.models.doctors.profile.DoctorProfileData;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -133,7 +135,7 @@ public class ClaimProfileActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Call<Claim> call, @NonNull Throwable t) {
 //                    Log.e("CLAIM FAILURE", t.getMessage());
-//                    Crashlytics.logException(t);
+                    Crashlytics.logException(t);
                 }
             });
         }
@@ -180,7 +182,7 @@ public class ClaimProfileActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<DoctorProfileData> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
                 linlaProgress.setVisibility(View.GONE);
             }
         });

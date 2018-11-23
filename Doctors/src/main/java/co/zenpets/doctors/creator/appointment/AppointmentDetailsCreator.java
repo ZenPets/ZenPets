@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
@@ -25,9 +26,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import co.zenpets.doctors.R;
 import co.zenpets.doctors.utils.adapters.visit.VisitReasonsAdapter;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.appointments.AppointmentData;
 import co.zenpets.doctors.utils.models.appointments.AppointmentsAPI;
 import co.zenpets.doctors.utils.models.doctors.DoctorsAPI;
@@ -37,9 +41,6 @@ import co.zenpets.doctors.utils.models.doctors.details.DoctorDetail;
 import co.zenpets.doctors.utils.models.visit.Reason;
 import co.zenpets.doctors.utils.models.visit.Reasons;
 import co.zenpets.doctors.utils.models.visit.ReasonsAPI;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -136,7 +137,7 @@ public class AppointmentDetailsCreator extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<DoctorDetail> call, @NonNull Throwable t) {
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -262,8 +263,7 @@ public class AppointmentDetailsCreator extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<Reasons> call, @NonNull Throwable t) {
-//                Crashlytics.logException(t);
-//                Log.e("REASONS FAILURE", t.getMessage());
+                Crashlytics.logException(t);
             }
         });
     }
@@ -330,7 +330,7 @@ public class AppointmentDetailsCreator extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<AppointmentData> call, @NonNull Throwable t) {
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }

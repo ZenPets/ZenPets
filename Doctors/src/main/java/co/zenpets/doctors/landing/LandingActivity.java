@@ -21,12 +21,15 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import co.zenpets.doctors.R;
 import co.zenpets.doctors.landing.modules.CalendarFragment;
 import co.zenpets.doctors.landing.modules.ClientsFragment;
@@ -39,14 +42,12 @@ import co.zenpets.doctors.landing.modules.feedback.FeedbackFragment;
 import co.zenpets.doctors.landing.modules.help.HelpFragment;
 import co.zenpets.doctors.landing.modules.settings.SettingsFragment;
 import co.zenpets.doctors.utils.AppPrefs;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.doctors.profile.DoctorProfileAPI;
 import co.zenpets.doctors.utils.models.doctors.profile.DoctorProfileData;
 import co.zenpets.doctors.utils.models.doctors.subscription.Subscription;
 import co.zenpets.doctors.utils.models.doctors.subscription.SubscriptionAPI;
 import co.zenpets.doctors.utils.models.doctors.token.TokenAPI;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -142,7 +143,7 @@ public class LandingActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<Subscription> call, @NonNull Throwable t) {
 //                Log.e("SUBSCRIPTION FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -327,7 +328,7 @@ public class LandingActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<DoctorProfileData> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -371,7 +372,7 @@ public class LandingActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<DoctorProfileData> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }

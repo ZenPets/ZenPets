@@ -16,13 +16,15 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.util.ArrayList;
 
 import co.zenpets.doctors.R;
 import co.zenpets.doctors.utils.AppPrefs;
 import co.zenpets.doctors.utils.TypefaceSpan;
 import co.zenpets.doctors.utils.adapters.doctors.reviews.ReviewsAdapter;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.doctors.reviews.DoctorReviewsAPI;
 import co.zenpets.doctors.utils.models.doctors.reviews.ReviewData;
 import co.zenpets.doctors.utils.models.doctors.reviews.ReviewsData;
@@ -120,6 +122,7 @@ public class ReviewsFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ReviewsData> call, @NonNull Throwable t) {
+                Crashlytics.logException(t);
             }
         });
     }

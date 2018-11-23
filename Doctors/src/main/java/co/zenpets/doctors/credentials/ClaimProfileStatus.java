@@ -11,14 +11,15 @@ import android.support.v7.widget.AppCompatTextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.crashlytics.android.Crashlytics;
 
-import co.zenpets.doctors.R;
-import co.zenpets.doctors.utils.AppPrefs;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
-import co.zenpets.doctors.utils.models.doctors.claims.ClaimStatus;
-import co.zenpets.doctors.utils.models.doctors.claims.DoctorClaimsAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import co.zenpets.doctors.R;
+import co.zenpets.doctors.utils.AppPrefs;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
+import co.zenpets.doctors.utils.models.doctors.claims.ClaimStatus;
+import co.zenpets.doctors.utils.models.doctors.claims.DoctorClaimsAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -115,7 +116,7 @@ public class ClaimProfileStatus extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<ClaimStatus> call, @NonNull Throwable t) {
 //                Log.e("CLAIM FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }

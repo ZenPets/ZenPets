@@ -47,6 +47,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -73,7 +74,7 @@ import co.zenpets.doctors.R;
 import co.zenpets.doctors.utils.AppPrefs;
 import co.zenpets.doctors.utils.TypefaceSpan;
 import co.zenpets.doctors.utils.adapters.doctors.DoctorPrefixAdapter;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.legal.NewPrivacyPolicyActivity;
 import co.zenpets.doctors.utils.legal.SellerAgreementActivity;
 import co.zenpets.doctors.utils.models.doctors.account.AccountData;
@@ -332,7 +333,7 @@ public class ClaimSignUpActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<DoctorProfileData> call, @NonNull Throwable t) {
 //                Log.e("PROFILE FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -785,7 +786,7 @@ public class ClaimSignUpActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<AccountData> call, @NonNull Throwable t) {
 //                Log.e("SIGN UP FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }

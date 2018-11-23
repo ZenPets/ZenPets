@@ -16,11 +16,13 @@ import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.zenpets.doctors.R;
 import co.zenpets.doctors.utils.TypefaceSpan;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.doctors.clients.Client;
 import co.zenpets.doctors.utils.models.doctors.clients.DoctorClientsAPI;
 import retrofit2.Call;
@@ -102,6 +104,7 @@ public class ClientCreator extends AppCompatActivity {
             @Override
             public void onFailure(Call<Client> call, Throwable t) {
 //                Log.e("CLIENT FAILURE", t.getMessage());
+                Crashlytics.logException(t);
             }
         });
     }

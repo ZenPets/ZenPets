@@ -20,19 +20,20 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.crashlytics.android.Crashlytics;
 import com.mikepenz.iconics.view.IconicsImageView;
 
 import java.util.ArrayList;
 
-import co.zenpets.doctors.R;
-import co.zenpets.doctors.utils.AppPrefs;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
-import co.zenpets.doctors.utils.models.doctors.modules.Specialization;
-import co.zenpets.doctors.utils.models.doctors.modules.Specializations;
-import co.zenpets.doctors.utils.models.doctors.modules.SpecializationsAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import co.zenpets.doctors.R;
+import co.zenpets.doctors.utils.AppPrefs;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
+import co.zenpets.doctors.utils.models.doctors.modules.Specialization;
+import co.zenpets.doctors.utils.models.doctors.modules.Specializations;
+import co.zenpets.doctors.utils.models.doctors.modules.SpecializationsAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -181,7 +182,7 @@ public class DoctorSpecializationsFrag extends Fragment {
                             @Override
                             public void onFailure(@NonNull Call<Specialization> call, @NonNull Throwable t) {
 //                                Log.e("FAILURE", t.getMessage());
-//                                Crashlytics.logException(t);
+                                Crashlytics.logException(t);
                             }
                         });
                     }
@@ -280,7 +281,7 @@ public class DoctorSpecializationsFrag extends Fragment {
                                                         @Override
                                                         public void onFailure(@NonNull Call<Specialization> call, @NonNull Throwable t) {
 //                                                            Log.e("FAILURE", t.getMessage());
-//                                                            Crashlytics.logException(t);
+                                                            Crashlytics.logException(t);
                                                         }
                                                     });
                                                 }
@@ -355,7 +356,7 @@ public class DoctorSpecializationsFrag extends Fragment {
                 @Override
                 public void onFailure(@NonNull Call<Specialization> call, @NonNull Throwable t) {
 //                    Log.e("DELETE FAILURE", t.getMessage());
-//                    Crashlytics.logException(t);
+                    Crashlytics.logException(t);
                 }
             });
         }

@@ -49,6 +49,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import co.zenpets.users.R;
 import co.zenpets.users.creator.appointment.AppointmentSlotCreator;
 import co.zenpets.users.creator.profile.ProfileEditor;
@@ -81,9 +84,6 @@ import co.zenpets.users.utils.models.reviews.Review;
 import co.zenpets.users.utils.models.reviews.ReviewCount;
 import co.zenpets.users.utils.models.reviews.Reviews;
 import co.zenpets.users.utils.models.reviews.ReviewsAPI;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -584,33 +584,6 @@ public class DoctorDetailsNew extends AppCompatActivity {
             }
         });
     }
-
-//    /***** GET THE CLINIC RATING *****/
-//    private void fetchClinicRatings() {
-//        ClinicRatingsAPI api = ZenApiClient.getClient().create(ClinicRatingsAPI.class);
-//        Call<ClinicRating> call = api.fetchClinicRatings(CLINIC_ID);
-//        call.enqueue(new Callback<ClinicRating>() {
-//            @Override
-//            public void onResponse(Call<ClinicRating> call, Response<ClinicRating> response) {
-//                ClinicRating rating = response.body();
-//                if (rating != null) {
-//                    String strRating = rating.getClinicRating();
-//                    if (strRating != null && !strRating.equalsIgnoreCase("null")) {
-//                        clinicRating.setRating(Float.parseFloat(strRating));
-//                    } else {
-//                        clinicRating.setRating(0);
-//                    }
-//                } else {
-//                    clinicRating.setRating(0);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ClinicRating> call, Throwable t) {
-//                Crashlytics.logException(t);
-//            }
-//        });
-//    }
 
     /***** FETCH THE DOCTOR'S REVIEWS COUNT *****/
     private void fetchReviewCount() {

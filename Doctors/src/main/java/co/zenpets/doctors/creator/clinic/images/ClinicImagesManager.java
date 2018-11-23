@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -48,7 +49,7 @@ import butterknife.OnClick;
 import co.zenpets.doctors.R;
 import co.zenpets.doctors.utils.TypefaceSpan;
 import co.zenpets.doctors.utils.adapters.clinics.ClinicImagesManagerAdapter;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.clinics.images.ClinicImagesAPI;
 import co.zenpets.doctors.utils.models.clinics.images.ImageData;
 import co.zenpets.doctors.utils.models.clinics.images.ImagesData;
@@ -149,7 +150,8 @@ public class ClinicImagesManager extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(@NonNull retrofit2.Call<ImagesData> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ImagesData> call, @NonNull Throwable t) {
+                Crashlytics.logException(t);
             }
         });
     }

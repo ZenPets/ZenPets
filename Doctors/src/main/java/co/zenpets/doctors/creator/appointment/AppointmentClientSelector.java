@@ -24,6 +24,7 @@ import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
@@ -32,7 +33,7 @@ import java.util.ArrayList;
 
 import co.zenpets.doctors.R;
 import co.zenpets.doctors.utils.TypefaceSpan;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.doctors.clients.Client;
 import co.zenpets.doctors.utils.models.doctors.clients.Clients;
 import co.zenpets.doctors.utils.models.doctors.clients.DoctorClientsAPI;
@@ -154,6 +155,7 @@ public class AppointmentClientSelector extends AppCompatActivity implements Sear
 
             @Override
             public void onFailure(@NonNull Call<Clients> call, @NonNull Throwable t) {
+                Crashlytics.logException(t);
             }
         });
     }

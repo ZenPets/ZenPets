@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'io.fabric'
+apply plugin: 'io.fabric'
 
 /** THE VERSIONING CODES **/
 ext.versionMajor = 1
@@ -88,9 +88,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.0.5'
     implementation 'com.google.firebase:firebase-storage:16.0.4'
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
-//    implementation ('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
-//        transitive = true
-//    }
+    implementation ('com.crashlytics.sdk.android:crashlytics:2.9.6@aar') {
+        transitive = true
+    }
 
     /** RAZOR PAY SDK **/
     implementation 'com.razorpay:checkout:1.4.7'

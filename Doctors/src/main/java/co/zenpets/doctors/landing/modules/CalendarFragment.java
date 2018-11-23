@@ -43,7 +43,7 @@ import co.zenpets.doctors.utils.AppPrefs;
 import co.zenpets.doctors.utils.TypefaceSpan;
 import co.zenpets.doctors.utils.adapters.appointments.AppointmentsAdapter;
 import co.zenpets.doctors.utils.adapters.clinics.ClinicSelectorAdapter;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.appointments.AppointmentData;
 import co.zenpets.doctors.utils.models.appointments.AppointmentsAPI;
 import co.zenpets.doctors.utils.models.appointments.AppointmentsData;

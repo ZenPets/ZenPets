@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import co.zenpets.doctors.R;
 import co.zenpets.doctors.utils.AppPrefs;
 import co.zenpets.doctors.utils.TypefaceSpan;
 import co.zenpets.doctors.utils.adapters.doctors.clients.ClientAppointmentsAdapter;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.doctors.clients.Client;
 import co.zenpets.doctors.utils.models.doctors.clients.ClientAppointment;
 import co.zenpets.doctors.utils.models.doctors.clients.ClientAppointments;
@@ -133,6 +134,7 @@ public class ClientDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<Client> call, @NonNull Throwable t) {
+                Crashlytics.logException(t);
             }
         });
     }
@@ -165,6 +167,7 @@ public class ClientDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<ClientAppointments> call, @NonNull Throwable t) {
+                Crashlytics.logException(t);
             }
         });
     }

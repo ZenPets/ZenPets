@@ -26,7 +26,7 @@ import java.util.Locale;
 
 import co.zenpets.doctors.R;
 import co.zenpets.doctors.utils.TypefaceSpan;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.doctors.modules.TimingsAPI;
 import co.zenpets.doctors.utils.models.doctors.modules.Timings;
 import butterknife.BindView;

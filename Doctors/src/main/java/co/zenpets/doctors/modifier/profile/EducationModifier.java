@@ -21,19 +21,21 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import co.zenpets.doctors.R;
 import co.zenpets.doctors.utils.TypefaceSpan;
 import co.zenpets.doctors.utils.adapters.doctors.modules.EducationSelectorAdapter;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.doctors.modules.Qualification;
 import co.zenpets.doctors.utils.models.doctors.modules.QualificationsAPI;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -148,7 +150,7 @@ public class EducationModifier extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<Qualification> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -279,7 +281,7 @@ public class EducationModifier extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<Qualification> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }

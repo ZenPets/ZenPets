@@ -15,13 +15,14 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.crashlytics.android.Crashlytics;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import co.zenpets.doctors.R;
 import co.zenpets.doctors.utils.AppPrefs;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.appointments.AppointmentData;
 import co.zenpets.doctors.utils.models.appointments.AppointmentsAPI;
 import co.zenpets.doctors.utils.models.appointments.notifications.AppointmentNotification;
@@ -147,6 +148,7 @@ public class AppointmentDetails extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<AppointmentData> call, @NonNull Throwable t) {
 //                Log.e("DETAILS FAILURE", t.getMessage());
+                Crashlytics.logException(t);
             }
         });
     }
@@ -166,6 +168,7 @@ public class AppointmentDetails extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<UserData> call, @NonNull Throwable t) {
 //                Log.e("TOKEN FAILURE", t.getMessage());
+                Crashlytics.logException(t);
             }
         });
     }
@@ -190,6 +193,7 @@ public class AppointmentDetails extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<Doctor> call, @NonNull Throwable t) {
 //                Log.e("PROFILE FAILURE", t.getMessage());
+                Crashlytics.logException(t);
             }
         });
     }
@@ -244,6 +248,7 @@ public class AppointmentDetails extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<AppointmentData> call, @NonNull Throwable t) {
 //                Log.e("CONFIRM FAILURE", t.getMessage());
+                Crashlytics.logException(t);
             }
         });
     }
@@ -286,6 +291,7 @@ public class AppointmentDetails extends AppCompatActivity {
                             @Override
                             public void onFailure(@NonNull Call<AppointmentData> call, @NonNull Throwable t) {
 //                                Log.e("FAILURE", t.getMessage());
+                                Crashlytics.logException(t);
                             }
                         });
                     }
@@ -316,6 +322,7 @@ public class AppointmentDetails extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<AppointmentNotification> call, @NonNull Throwable t) {
 //                Log.e("CONFIRM FAILURE", t.getMessage());
+                Crashlytics.logException(t);
             }
         });
     }

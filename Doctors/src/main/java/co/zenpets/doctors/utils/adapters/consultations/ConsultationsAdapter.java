@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.crashlytics.android.Crashlytics;
 import com.mikepenz.iconics.view.IconicsImageView;
 
 import org.ocpsoft.prettytime.PrettyTime;
@@ -23,7 +24,7 @@ import java.util.Locale;
 import co.zenpets.doctors.R;
 import co.zenpets.doctors.details.consultation.ConsultationDetails;
 import co.zenpets.doctors.utils.AppPrefs;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.consultations.consultations.Consultation;
 import co.zenpets.doctors.utils.models.consultations.replies.ConsultationReplies;
 import co.zenpets.doctors.utils.models.consultations.replies.ConsultationRepliesAPI;
@@ -119,7 +120,7 @@ public class ConsultationsAdapter extends RecyclerView.Adapter<ConsultationsAdap
             @Override
             public void onFailure(@NonNull Call<ConsultationViews> call, @NonNull Throwable t) {
 //                Log.e("VIEWS FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
 
@@ -151,7 +152,7 @@ public class ConsultationsAdapter extends RecyclerView.Adapter<ConsultationsAdap
 
             @Override
             public void onFailure(@NonNull Call<ConsultationReplies> call, @NonNull Throwable t) {
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
 

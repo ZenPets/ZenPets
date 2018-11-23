@@ -16,6 +16,7 @@ import android.util.Patterns;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -31,7 +32,7 @@ import co.zenpets.doctors.R;
 import co.zenpets.doctors.creator.clinic.InitialClinicCreator;
 import co.zenpets.doctors.landing.LandingActivity;
 import co.zenpets.doctors.utils.AppPrefs;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.doctors.Doctor;
 import co.zenpets.doctors.utils.models.doctors.DoctorsAPI;
 import co.zenpets.doctors.utils.models.doctors.clinic.Clinic;
@@ -188,7 +189,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<Doctor> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }

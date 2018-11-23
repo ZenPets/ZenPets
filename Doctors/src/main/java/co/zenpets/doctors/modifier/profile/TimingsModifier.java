@@ -18,19 +18,20 @@ import android.widget.CompoundButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.mikepenz.iconics.view.IconicsImageButton;
 
 import java.util.Calendar;
 import java.util.Locale;
 
-import co.zenpets.doctors.R;
-import co.zenpets.doctors.utils.TypefaceSpan;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
-import co.zenpets.doctors.utils.models.doctors.modules.Timings;
-import co.zenpets.doctors.utils.models.doctors.modules.TimingsAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import co.zenpets.doctors.R;
+import co.zenpets.doctors.utils.TypefaceSpan;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
+import co.zenpets.doctors.utils.models.doctors.modules.Timings;
+import co.zenpets.doctors.utils.models.doctors.modules.TimingsAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -548,7 +549,7 @@ public class TimingsModifier extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TIMINGS FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
 
 //                /*  SHOW THE EMPTY LAYOUT AND HIDE THE TIMINGS SCROLL*/
 //                linlaEmpty.setVisibility(View.VISIBLE);
@@ -762,7 +763,7 @@ public class TimingsModifier extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                        Log.e("FAILURE", t.getMessage());
-//                        Crashlytics.logException(t);
+                        Crashlytics.logException(t);
                     }
                 });
                 break;

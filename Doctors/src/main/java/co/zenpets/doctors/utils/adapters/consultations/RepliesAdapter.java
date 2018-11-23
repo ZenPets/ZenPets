@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import co.zenpets.doctors.R;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.consultations.replies.ConsultationReply;
 import co.zenpets.doctors.utils.models.consultations.votes.Vote;
 import co.zenpets.doctors.utils.models.consultations.votes.Votes;

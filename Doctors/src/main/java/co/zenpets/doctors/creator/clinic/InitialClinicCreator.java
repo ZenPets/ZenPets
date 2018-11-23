@@ -42,6 +42,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -66,8 +67,8 @@ import co.zenpets.doctors.utils.TypefaceSpan;
 import co.zenpets.doctors.utils.adapters.location.CitiesAdapter;
 import co.zenpets.doctors.utils.adapters.location.LocalitiesAdapter;
 import co.zenpets.doctors.utils.adapters.location.StatesAdapter;
-import co.zenpets.doctors.utils.helpers.classes.LocationPickerActivity;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.LocationPickerActivity;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.clinics.ClinicsAPI;
 import co.zenpets.doctors.utils.models.clinics.map.ClinicMapper;
 import co.zenpets.doctors.utils.models.doctors.clinic.Clinic;
@@ -250,7 +251,7 @@ public class InitialClinicCreator extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<StatesData> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -275,7 +276,7 @@ public class InitialClinicCreator extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<CitiesData> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -300,7 +301,7 @@ public class InitialClinicCreator extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<LocalitiesData> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -521,31 +522,12 @@ public class InitialClinicCreator extends AppCompatActivity {
                             "There was an error mapping your account to the new Clinic. Please try again",
                             Toast.LENGTH_LONG).show();
                 }
-
-//                if (response.isSuccessful())    {
-//                    /* DISMISS THE DIALOG */
-//                    progressDialog.dismiss();
-//                    Toast.makeText(
-//                            getApplicationContext(),
-//                            "The new Clinic was successfully created.",
-//                            Toast.LENGTH_LONG).show();
-//                    Intent intent = new Intent(InitialClinicCreator.this, LandingActivity.class);
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    startActivity(intent);
-//                    finish();
-//                } else {
-//                    progressDialog.dismiss();
-//                    Toast.makeText(
-//                            getApplicationContext(),
-//                            "There was an error mapping your account to the new Clinic. Please try again",
-//                            Toast.LENGTH_LONG).show();
-//                }
             }
 
             @Override
             public void onFailure(@NonNull Call<ClinicMapper> call, @NonNull Throwable t) {
 //                Log.e("MAPPING FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }

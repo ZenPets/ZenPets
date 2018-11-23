@@ -21,6 +21,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
 
@@ -38,7 +40,7 @@ import co.zenpets.doctors.utils.AppPrefs;
 import co.zenpets.doctors.utils.adapters.appointments.creator.AfternoonCreatorAdapter;
 import co.zenpets.doctors.utils.adapters.appointments.creator.MorningCreatorAdapter;
 import co.zenpets.doctors.utils.adapters.clinics.ClinicSelectorAdapter;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.calendar.ZenCalendarData;
 import co.zenpets.doctors.utils.models.doctors.clinic.DoctorClinic;
 import co.zenpets.doctors.utils.models.doctors.clinic.DoctorClinics;
@@ -661,7 +663,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             @Override
             public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -706,7 +708,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             @Override
             public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -750,7 +752,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             @Override
             public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -795,7 +797,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             @Override
             public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -840,7 +842,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             @Override
             public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -885,7 +887,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             @Override
             public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -930,7 +932,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             @Override
             public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -975,7 +977,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             @Override
             public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -1020,7 +1022,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             @Override
             public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -1065,7 +1067,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             @Override
             public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -1110,7 +1112,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             @Override
             public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -1155,7 +1157,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             @Override
             public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -1200,7 +1202,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             @Override
             public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -1245,7 +1247,7 @@ public class AppointmentSlotCreator extends AppCompatActivity
             @Override
             public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
 //                Log.e("TUESDAY FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }

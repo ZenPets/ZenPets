@@ -16,12 +16,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.util.ArrayList;
 
 import co.zenpets.doctors.R;
 import co.zenpets.doctors.utils.TypefaceSpan;
 import co.zenpets.doctors.utils.adapters.clinics.ClinicsSearchAdapter;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.clinics.ClinicData;
 import co.zenpets.doctors.utils.models.clinics.ClinicsData;
 import co.zenpets.doctors.utils.models.clinics.ClinicsSearchAPI;
@@ -139,7 +141,7 @@ public class ClinicSearch extends AppCompatActivity implements SearchView.OnQuer
 
             @Override
             public void onFailure(@NonNull Call<ClinicsData> call, @NonNull Throwable t) {
-
+                Crashlytics.logException(t);
             }
         });
     }

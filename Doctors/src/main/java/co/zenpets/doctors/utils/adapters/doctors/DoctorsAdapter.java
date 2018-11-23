@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 import co.zenpets.doctors.R;
 import co.zenpets.doctors.utils.AppPrefs;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.doctors.Doctor;
 import co.zenpets.doctors.utils.models.doctors.reviews.DoctorReviewsAPI;
 import co.zenpets.doctors.utils.models.doctors.reviews.ReviewData;

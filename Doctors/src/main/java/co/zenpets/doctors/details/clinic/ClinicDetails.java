@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -34,6 +35,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import co.zenpets.doctors.R;
 import co.zenpets.doctors.creator.clinic.images.ClinicImagesManager;
 import co.zenpets.doctors.modifier.clinic.ClinicLogoUpdater;
@@ -42,7 +46,7 @@ import co.zenpets.doctors.utils.AppPrefs;
 import co.zenpets.doctors.utils.TypefaceSpan;
 import co.zenpets.doctors.utils.adapters.clinics.ClinicImagesDetailsAdapter;
 import co.zenpets.doctors.utils.adapters.doctors.DoctorsAdapter;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.clinics.ClinicData;
 import co.zenpets.doctors.utils.models.clinics.details.ClinicDetailsAPI;
 import co.zenpets.doctors.utils.models.clinics.images.ClinicImagesAPI;
@@ -51,9 +55,6 @@ import co.zenpets.doctors.utils.models.clinics.images.ImagesData;
 import co.zenpets.doctors.utils.models.doctors.Doctor;
 import co.zenpets.doctors.utils.models.doctors.Doctors;
 import co.zenpets.doctors.utils.models.doctors.DoctorsAPI;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -274,7 +275,7 @@ public class ClinicDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<ClinicData> call, @NonNull Throwable t) {
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -306,7 +307,7 @@ public class ClinicDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<ImagesData> call, @NonNull Throwable t) {
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -340,7 +341,7 @@ public class ClinicDetails extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<Doctors> call, @NonNull Throwable t) {
 //                Log.e("DOCTOR FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }

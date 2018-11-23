@@ -9,9 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,23 +16,23 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 
 import java.util.ArrayList;
 
-import co.zenpets.doctors.R;
-import co.zenpets.doctors.modifier.profile.TimingsModifier;
-import co.zenpets.doctors.utils.AppPrefs;
-import co.zenpets.doctors.utils.adapters.clinics.ClinicSelectorAdapter;
-import co.zenpets.doctors.utils.helpers.classes.TimingsPickerActivity;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
-import co.zenpets.doctors.utils.models.doctors.clinic.DoctorClinic;
-import co.zenpets.doctors.utils.models.doctors.clinic.DoctorClinics;
-import co.zenpets.doctors.utils.models.doctors.clinic.DoctorClinicsAPI;
-import co.zenpets.doctors.utils.models.doctors.modules.TimingsAPI;
-import co.zenpets.doctors.utils.models.doctors.modules.Timings;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import co.zenpets.doctors.R;
+import co.zenpets.doctors.utils.AppPrefs;
+import co.zenpets.doctors.utils.adapters.clinics.ClinicSelectorAdapter;
+import co.zenpets.doctors.utils.helpers.TimingsPickerActivity;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
+import co.zenpets.doctors.utils.models.doctors.clinic.DoctorClinic;
+import co.zenpets.doctors.utils.models.doctors.clinic.DoctorClinics;
+import co.zenpets.doctors.utils.models.doctors.clinic.DoctorClinicsAPI;
+import co.zenpets.doctors.utils.models.doctors.modules.Timings;
+import co.zenpets.doctors.utils.models.doctors.modules.TimingsAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -79,8 +76,16 @@ public class DoctorTimingsFrag extends Fragment {
     @BindView(R.id.txtSatMorning) AppCompatTextView txtSatMorning;
     @BindView(R.id.txtSatAfternoon) AppCompatTextView txtSatAfternoon;
 
-    /** ADD DOCTOR TIMINGS **/
+    /** ADD DOCTOR'S TIMINGS **/
     @OnClick(R.id.linlaEmpty) void configureTimings()   {
+        Intent intent = new Intent(getActivity(), TimingsPickerActivity.class);
+        intent.putExtra("DOCTOR_ID", DOCTOR_ID);
+        intent.putExtra("CLINIC_ID", CLINIC_ID);
+        startActivityForResult(intent, 101);
+    }
+
+    /** ADD THE DOCTOR'S TIMINGS **/
+    @OnClick(R.id.fabEditTimings) void fabConfigureTimings()    {
         Intent intent = new Intent(getActivity(), TimingsPickerActivity.class);
         intent.putExtra("DOCTOR_ID", DOCTOR_ID);
         intent.putExtra("CLINIC_ID", CLINIC_ID);
@@ -161,6 +166,7 @@ public class DoctorTimingsFrag extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<DoctorClinics> call, @NonNull Throwable t) {
+                Crashlytics.logException(t);
             }
         });
     }
@@ -340,39 +346,41 @@ public class DoctorTimingsFrag extends Fragment {
                 /* SET THE BOOLEAN TO FALSE AND INVALIDATE THE OPTIONS MENU */
                 blnTimings = false;
                 getActivity().invalidateOptionsMenu();
+
+                Crashlytics.logException(t);
             }
         });
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.fragment_doctor_timings, menu);
-        MenuItem menuItem = menu.findItem(R.id.menuEdit);
-        if (blnTimings) {
-            menuItem.setVisible(true);
-        } else {
-            menuItem.setVisible(false);
-        }
-        super.onCreateOptionsMenu(menu, inflater);
-    }
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        inflater.inflate(R.menu.fragment_doctor_timings, menu);
+//        MenuItem menuItem = menu.findItem(R.id.menuEdit);
+//        if (blnTimings) {
+//            menuItem.setVisible(true);
+//        } else {
+//            menuItem.setVisible(false);
+//        }
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                getActivity().finish();
-                break;
-            case R.id.menuEdit:
-                Intent intent = new Intent(getActivity(), TimingsModifier.class);
-                intent.putExtra("DOCTOR_ID", DOCTOR_ID);
-                intent.putExtra("CLINIC_ID", CLINIC_ID);
-                startActivityForResult(intent, 102);
-                break;
-            default:
-                break;
-        }
-        return false;
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                getActivity().finish();
+//                break;
+//            case R.id.menuEdit:
+//                Intent intent = new Intent(getActivity(), TimingsModifier.class);
+//                intent.putExtra("DOCTOR_ID", DOCTOR_ID);
+//                intent.putExtra("CLINIC_ID", CLINIC_ID);
+//                startActivityForResult(intent, 102);
+//                break;
+//            default:
+//                break;
+//        }
+//        return false;
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

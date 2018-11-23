@@ -28,11 +28,10 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -51,7 +50,7 @@ import butterknife.OnClick;
 import co.zenpets.doctors.R;
 import co.zenpets.doctors.modifier.profile.ProfileModifier;
 import co.zenpets.doctors.utils.AppPrefs;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.doctors.account.AccountData;
 import co.zenpets.doctors.utils.models.doctors.profile.DoctorProfileAPI;
 import co.zenpets.doctors.utils.models.doctors.profile.DoctorProfileData;
@@ -246,7 +245,7 @@ public class DoctorDetailsFrag extends Fragment {
             @Override
             public void onFailure(@NonNull Call<DoctorProfileData> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -433,8 +432,11 @@ public class DoctorDetailsFrag extends Fragment {
                 DOCTOR_DISPLAY_PROFILE_URI = Uri.fromFile(file);
 //                Log.e("URI", String.valueOf(DOCTOR_DISPLAY_PROFILE_URI));
 
-                /* DELETE THE CURRENT FILE */
-                deleteProfileFile();
+//                /* DELETE THE CURRENT FILE */
+//                deleteProfileFile();
+
+                /* UPLOAD THE NEW DISPLAY PROFILE */
+                uploadNewProfile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -443,24 +445,24 @@ public class DoctorDetailsFrag extends Fragment {
         }
     }
 
-    /***** DELETE THE CURRENT FILE *****/
-    private void deleteProfileFile() {
-        FirebaseStorage reference = FirebaseStorage.getInstance();
-        StorageReference refFile = reference.getReferenceFromUrl(DOCTOR_DISPLAY_PROFILE);
-        refFile.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                /* UPLOAD THE NEW DISPLAY PROFILE */
-                uploadNewProfile();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                dialog.dismiss();
-                Toast.makeText(getActivity(), "Update failed...", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    /***** DELETE THE CURRENT FILE *****/
+//    private void deleteProfileFile() {
+//        FirebaseStorage reference = FirebaseStorage.getInstance();
+//        StorageReference refFile = reference.getReferenceFromUrl(DOCTOR_DISPLAY_PROFILE);
+//        refFile.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+//            @Override
+//            public void onSuccess(Void aVoid) {
+//                /* UPLOAD THE NEW DISPLAY PROFILE */
+//                uploadNewProfile();
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                dialog.dismiss();
+//                Toast.makeText(getActivity(), "Update failed...", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
     /***** UPLOAD THE NEW DISPLAY PROFILE *****/
     private void uploadNewProfile() {

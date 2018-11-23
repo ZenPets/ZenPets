@@ -46,6 +46,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -78,7 +79,7 @@ import co.zenpets.doctors.utils.TypefaceSpan;
 import co.zenpets.doctors.utils.adapters.doctors.DoctorPrefixAdapter;
 import co.zenpets.doctors.utils.adapters.location.CitiesAdapter;
 import co.zenpets.doctors.utils.adapters.location.StatesAdapter;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.legal.NewPrivacyPolicyActivity;
 import co.zenpets.doctors.utils.legal.SellerAgreementActivity;
 import co.zenpets.doctors.utils.models.doctors.account.SignUp;
@@ -525,7 +526,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onFailure(@NonNull Exception e) {
                 progressDialog.dismiss();
                 Toast.makeText(SignUpActivity.this, "EXCEPTION: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                Crashlytics.logException(e);
+                Crashlytics.logException(e);
             }
         });
     }
@@ -556,7 +557,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<DoctorExists> call, @NonNull Throwable t) {
 //                Log.e("EXISTS FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -680,7 +681,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<SignUp> call, @NonNull Throwable t) {
 //                Log.e("SIGN UP FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -706,7 +707,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<Subscription> call, @NonNull Throwable t) {
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -877,7 +878,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<StatesData> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -902,7 +903,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<CitiesData> call, @NonNull Throwable t) {
 //                Log.e("FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
 
             }
         });
@@ -1016,7 +1017,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         } catch (IOException e) {
             e.printStackTrace();
-//            Crashlytics.logException(e);
+            Crashlytics.logException(e);
         }
     }
 

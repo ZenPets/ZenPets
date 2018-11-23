@@ -17,7 +17,7 @@ import com.github.vipulasri.timelineview.TimelineView;
 import java.util.ArrayList;
 
 import co.zenpets.doctors.R;
-import co.zenpets.doctors.utils.helpers.classes.VectorDrawableUtils;
+import co.zenpets.doctors.utils.helpers.VectorDrawableUtils;
 import co.zenpets.doctors.utils.models.doctors.clients.ClientAppointment;
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.mikepenz.iconics.view.IconicsImageView;
 
@@ -39,11 +40,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import co.zenpets.doctors.R;
 import co.zenpets.doctors.utils.AppPrefs;
 import co.zenpets.doctors.utils.TypefaceSpan;
 import co.zenpets.doctors.utils.adapters.consultations.RepliesAdapter;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.consultations.ReplyData;
 import co.zenpets.doctors.utils.models.consultations.consultations.Consultation;
 import co.zenpets.doctors.utils.models.consultations.consultations.ConsultationsAPI;
@@ -54,8 +57,6 @@ import co.zenpets.doctors.utils.models.consultations.replies.ConsultationStatus;
 import co.zenpets.doctors.utils.models.consultations.views.ConsultationView;
 import co.zenpets.doctors.utils.models.consultations.views.ConsultationViews;
 import co.zenpets.doctors.utils.models.consultations.views.ConsultationViewsAPI;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -219,7 +220,7 @@ public class ConsultationDetails extends AppCompatActivity {
 
                         @Override
                         public void onFailure(@NonNull Call<ConsultationReplies> call, @NonNull Throwable t) {
-//                            Crashlytics.logException(t);
+                            Crashlytics.logException(t);
                         }
                     });
 
@@ -235,7 +236,7 @@ public class ConsultationDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<Consultation> call, @NonNull Throwable t) {
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -256,7 +257,7 @@ public class ConsultationDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<ConsultationStatus> call, @NonNull Throwable t) {
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -279,7 +280,7 @@ public class ConsultationDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<ConsultationViews> call, @NonNull Throwable t) {
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -322,7 +323,7 @@ public class ConsultationDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<ConsultationReplies> call, @NonNull Throwable t) {
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -463,7 +464,7 @@ public class ConsultationDetails extends AppCompatActivity {
                                 /* SHOW THE ERROR MESSAGE */
                                 Toast.makeText(getApplicationContext(), "There was an error posting your reply. Please try again...", Toast.LENGTH_LONG).show();
 //                                Log.e("FAILURE", t.getMessage());
-//                                Crashlytics.logException(t);
+                                Crashlytics.logException(t);
                             }
                         });
                     }

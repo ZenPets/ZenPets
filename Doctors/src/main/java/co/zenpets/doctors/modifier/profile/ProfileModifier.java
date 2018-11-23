@@ -25,6 +25,8 @@ import android.widget.AdapterView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,10 +37,10 @@ import butterknife.OnClick;
 import co.zenpets.doctors.R;
 import co.zenpets.doctors.utils.TypefaceSpan;
 import co.zenpets.doctors.utils.adapters.doctors.DoctorPrefixAdapter;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
-import co.zenpets.doctors.utils.helpers.classes.location.CitySelectorActivity;
-import co.zenpets.doctors.utils.helpers.classes.location.CountrySelectorActivity;
-import co.zenpets.doctors.utils.helpers.classes.location.StateSelectorActivity;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.location.CitySelectorActivity;
+import co.zenpets.doctors.utils.helpers.location.CountrySelectorActivity;
+import co.zenpets.doctors.utils.helpers.location.StateSelectorActivity;
 import co.zenpets.doctors.utils.models.doctors.profile.DoctorProfileAPI;
 import co.zenpets.doctors.utils.models.doctors.profile.DoctorProfileData;
 import retrofit2.Call;
@@ -246,7 +248,7 @@ public class ProfileModifier extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<DoctorProfileData> call, @NonNull Throwable t) {
 //                Log.e("PROFILE FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }

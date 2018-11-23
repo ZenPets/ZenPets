@@ -30,7 +30,7 @@ import co.zenpets.doctors.creator.clinic.ClinicSearch;
 import co.zenpets.doctors.utils.AppPrefs;
 import co.zenpets.doctors.utils.TypefaceSpan;
 import co.zenpets.doctors.utils.adapters.clinics.UserClinicsAdapter;
-import co.zenpets.doctors.utils.helpers.classes.ZenApiClient;
+import co.zenpets.doctors.utils.helpers.ZenApiClient;
 import co.zenpets.doctors.utils.models.doctors.clinic.DoctorClinic;
 import co.zenpets.doctors.utils.models.doctors.clinic.DoctorClinics;
 import co.zenpets.doctors.utils.models.doctors.clinic.DoctorClinicsAPI;
