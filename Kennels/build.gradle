@@ -35,10 +35,26 @@ android {
         }
     }
     buildTypes {
+        debug {
+
+            buildConfigField 'String', "GoogleMapsApiKey", global_google_maps_api_key
+            resValue 'string', "google_maps_api_key", global_google_maps_api_key
+            buildConfigField 'String', "RazorPayID", global_razor_pay_api_key_id
+            resValue 'string', "razor_pay_id", global_razor_pay_api_key_id
+            buildConfigField 'String', "RazorPaySecret", global_razor_pay_api_key_secret
+            resValue 'string', "razor_pay_secret", global_razor_pay_api_key_secret
+        }
         release {
             signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField 'String', "GoogleMapsApiKey", global_google_maps_api_key
+            resValue 'string', "google_maps_api_key", global_google_maps_api_key
+            buildConfigField 'String', "RazorPayID", global_razor_pay_api_key_id
+            resValue 'string', "razor_pay_id", global_razor_pay_api_key_id
+            buildConfigField 'String', "RazorPaySecret", global_razor_pay_api_key_secret
+            resValue 'string', "razor_pay_secret", global_razor_pay_api_key_secret
         }
     }
     dexOptions {

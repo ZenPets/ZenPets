@@ -20,6 +20,7 @@ import android.view.View;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
@@ -36,6 +37,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import co.zenpets.users.R;
 import co.zenpets.users.utils.adapters.doctors.DoctorsSubsetAdapter;
 import co.zenpets.users.utils.helpers.classes.ZenApiClient;
@@ -46,8 +49,6 @@ import co.zenpets.users.utils.models.doctors.list.Doctors;
 import co.zenpets.users.utils.models.location.City;
 import co.zenpets.users.utils.models.location.Locality;
 import co.zenpets.users.utils.models.location.LocationsAPI;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -122,7 +123,7 @@ public class NewLandingActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Doctors> call, Throwable t) {
 //                Log.e("SUBSET FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -503,7 +504,7 @@ public class NewLandingActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<City> call, Throwable t) {
 //                Log.e("CITY FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -546,7 +547,7 @@ public class NewLandingActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Locality> call, Throwable t) {
 //                Log.e("LOCALITY FAILURE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }

@@ -1,0 +1,320 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/zen_toolbar" />
+
+    <include layout="@layout/zen_progress" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--<android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/imgvwKennelCoverPhoto"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="16dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+                &lt;!&ndash;<ImageView
+                    android:id="@+id/imgvwKennelCoverPhoto"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/avatars" />&ndash;&gt;
+
+                <TextView
+                    android:id="@+id/txtKennelLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginRight="12dp"
+                    android:text="Booking a stay at..."
+                    android:textColor="@color/tertiary_text"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/roboto_condensed_regular"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imgvwKennelCoverPhoto"
+                    app:layout_constraintTop_toTopOf="@+id/imgvwKennelCoverPhoto" />
+
+                <TextView
+                    android:id="@+id/txtKennelName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginRight="12dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/kennel_details_name"
+                    android:textColor="@color/primary_text"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imgvwKennelCoverPhoto"
+                    app:layout_constraintTop_toBottomOf="@+id/txtKennelLabel" />
+            </android.support.constraint.ConstraintLayout>-->
+
+            <TextView
+                android:id="@+id/txtPetSelectLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="12dp"
+                android:text="@string/kbs_pet_label"
+                android:textColor="@color/secondary_text"
+                android:textSize="14sp"
+                app:fontFamily="@font/roboto_medium" />
+
+            <Spinner
+                android:id="@+id/spnPets"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="12dp" />
+
+            <TextView
+                android:id="@+id/txtSizeSelectLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="12dp"
+                android:text="@string/kbs_pet_size"
+                android:textColor="@color/secondary_text"
+                android:textSize="14sp"
+                app:fontFamily="@font/roboto_medium" />
+
+            <RadioGroup
+                android:id="@+id/groupSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="12dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/btnSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="@string/kbs_size_small"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/roboto_condensed_regular" />
+
+                <RadioButton
+                    android:id="@+id/btnMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/kbs_size_medium"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/roboto_condensed_regular" />
+
+                <RadioButton
+                    android:id="@+id/btnLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/kbs_size_large"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/roboto_condensed_regular" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/txtModeSelectLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="12dp"
+                android:text="@string/kbs_date_label"
+                android:textColor="@color/secondary_text"
+                android:textSize="14sp"
+                app:fontFamily="@font/roboto_medium" />
+
+            <RadioGroup
+                android:id="@+id/groupMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="12dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/btnSingle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="@string/kbs_date_single"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/roboto_condensed_regular" />
+
+                <RadioButton
+                    android:id="@+id/btnMultiple"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/kbs_date_multiple"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/roboto_condensed_regular" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/txtCalendarLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="12dp"
+                android:text="Select a date / range of dates based on previous selection"
+                android:textColor="@color/secondary_text"
+                android:textSize="14sp"
+                app:fontFamily="@font/roboto_medium" />
+
+            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                android:id="@+id/kennelCalendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="8dp"
+                app:mcv_selectionMode="range"
+                app:mcv_tileHeight="32dp" />
+
+            <LinearLayout
+                android:id="@+id/linlaInventoryProgress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp" />
+
+                <TextView
+                    style="@style/LightBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:padding="2dp"
+                    android:text="@string/common_loading"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/listInventory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="8dp"
+                android:cacheColorHint="@android:color/transparent"
+                android:fadingEdge="none"
+                android:persistentDrawingCache="scrolling"
+                android:scrollbars="none"
+                android:visibility="visible" />
+
+            <!--<TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_condensed_light"
+                android:gravity="center"
+                android:text="Please Note: The facilities offered by the Kennel will not differ depending on the unit chosen for your Pet's boarding. However, you can call and confirm"
+                android:textColor="@color/secondary_text"
+                android:textSize="12sp" />-->
+
+            <LinearLayout
+                android:id="@+id/linlaEmpty"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="12dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/empty_graphic" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/LightBold"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:padding="11dp"
+                    android:text="There are no slots for your pet's size. :-("
+                    android:textColor="@color/secondary_text"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

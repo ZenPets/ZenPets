@@ -57,7 +57,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import co.zenpets.users.R;
-import co.zenpets.users.creator.appointment.AppointmentSlotCreator;
+import co.zenpets.users.creator.appointments.AppointmentSlotCreator;
 import co.zenpets.users.utils.helpers.classes.ZenApiClient;
 import co.zenpets.users.utils.helpers.directions.DataParser;
 import co.zenpets.users.utils.models.doctors.subscription.SubscriptionData;

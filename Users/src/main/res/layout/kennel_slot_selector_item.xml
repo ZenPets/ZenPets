@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        style="@style/ZenPetsCards"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/imgvwInventoryPhoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="#A6000000"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:srcCompat="@tools:sample/avatars[2]" />
+
+                    <TextView
+                        android:id="@+id/txtUnitCost"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center"
+                        android:background="#A6000000"
+                        android:gravity="start|center"
+                        android:paddingStart="5dp"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="15dp"
+                        android:paddingEnd="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingBottom="15dp"
+                        android:text="TextView"
+                        android:textColor="@android:color/primary_text_dark"
+                        app:layout_constraintBottom_toBottomOf="@+id/imgvwInventoryPhoto"
+                        app:layout_constraintEnd_toEndOf="@+id/imgvwInventoryPhoto"
+                        app:layout_constraintStart_toStartOf="@+id/imgvwInventoryPhoto" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/kennel_booking_rate_bg"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtPricePerNight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:text="Price Per Night"
+                        android:textColor="@android:color/holo_green_dark"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/roboto_condensed_regular"
+                        app:layout_constraintEnd_toStartOf="@+id/txtBookNow"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtPerNightLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="The rate is per night"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="10sp"
+                        app:fontFamily="@font/roboto_condensed_regular"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/txtBookNow"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtPricePerNight"
+                        app:layout_constraintVertical_bias="0.0" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txtBookNow"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="1"
+                        android:gravity="end|center"
+                        android:text="Book Now"
+                        android:textColor="@color/primary_text"
+                        android:textSize="12sp"
+                        app:fontFamily="@font/roboto_condensed_regular"
+                        app:layout_constraintBottom_toBottomOf="@+id/txtPerNightLabel"
+                        app:layout_constraintEnd_toStartOf="@+id/imgvwRightArrow"
+                        app:layout_constraintTop_toTopOf="@+id/txtPricePerNight"
+                        app:layout_constraintVertical_bias="1.0" />
+
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:id="@+id/imgvwRightArrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:adjustViewBounds="true"
+                        android:padding="11dp"
+                        app:iiv_color="@color/secondary_text"
+                        app:iiv_icon="gmd_chevron_right"
+                        app:iiv_size="12dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/txtBookNow"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/txtBookNow" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--<android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="6">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:text="TextView"
+                    app:layout_constraintEnd_toStartOf="@+id/txtBookNow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="4dp"
+                    android:text="TextView"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/txtBookNow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/txtBookNow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:text="Book Now"
+                    android:textColor="@color/primary_text"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/raleway_medium"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                    app:layout_constraintEnd_toStartOf="@+id/imgvwRightArrow"
+                    app:layout_constraintTop_toTopOf="@+id/textView"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:id="@+id/imgvwRightArrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:adjustViewBounds="true"
+                    android:padding="11dp"
+                    app:iiv_color="@color/secondary_text"
+                    app:iiv_icon="gmd_chevron_right"
+                    app:iiv_size="12dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtBookNow"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/txtBookNow" />
+            </android.support.constraint.ConstraintLayout>-->
+        </LinearLayout>
+
+        <!--<android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imgvwInventoryPhoto"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="#A6000000"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars[2]" />
+
+            <TextView
+                android:id="@+id/txtUnitCost"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="#A6000000"
+                android:gravity="end|center"
+                android:paddingStart="5dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="15dp"
+                android:paddingEnd="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="15dp"
+                android:text="TextView"
+                android:textColor="@android:color/primary_text_dark"
+                app:layout_constraintBottom_toBottomOf="@+id/imgvwInventoryPhoto"
+                app:layout_constraintEnd_toEndOf="@+id/imgvwInventoryPhoto"
+                app:layout_constraintStart_toStartOf="@+id/imgvwInventoryPhoto" />
+        </android.support.constraint.ConstraintLayout>-->
+    </android.support.v7.widget.CardView>
+</android.support.constraint.ConstraintLayout>

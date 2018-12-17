@@ -65,6 +65,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import co.zenpets.kennels.BuildConfig;
 import co.zenpets.kennels.R;
 import co.zenpets.kennels.utils.AppPrefs;
 import co.zenpets.kennels.utils.TypefaceSpan;
@@ -536,8 +537,10 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
 
     /** CAPTURE THE KENNEL PAYMENT **/
     private void captureKennelPayment(final String razorPaymentID) {
-        String apiKey = getString(R.string.razor_pay_api_key_id);
-        String apiSecret = getString(R.string.razor_pay_api_key_secret);
+        String apiKey = BuildConfig.RazorPayID;
+        String apiSecret = BuildConfig.RazorPaySecret;
+//        String apiKey = getString(R.string.razor_pay_api_key_id);
+//        String apiSecret = getString(R.string.razor_pay_api_key_secret);
         String strCredentials = Credentials.basic(apiKey, apiSecret);
         String strUrl = "https://" + apiKey + ":" + apiSecret + "@api.razorpay.com/v1/payments/" + razorPaymentID + "/capture";
         OkHttpClient client = new OkHttpClient();
@@ -567,8 +570,10 @@ public class KennelCreator extends AppCompatActivity implements PaymentResultLis
 
     /** CHECK IF THE PAYMENT WAS CAPTURED SUCCESSFULLY **/
     private void checkCaptureStatus(final String razorPaymentID) {
-        String apiKey = getString(R.string.razor_pay_api_key_id);
-        String apiSecret = getString(R.string.razor_pay_api_key_secret);
+        String apiKey = BuildConfig.RazorPayID;
+        String apiSecret = BuildConfig.RazorPaySecret;
+//        String apiKey = getString(R.string.razor_pay_api_key_id);
+//        String apiSecret = getString(R.string.razor_pay_api_key_secret);
         String strCredentials = Credentials.basic(apiKey, apiSecret);
         String URL_CHECK_CAPTURE = "https://" + apiKey + ":" + apiSecret + "@api.razorpay.com/v1/payments/" + razorPaymentID;
         OkHttpClient client = new OkHttpClient();

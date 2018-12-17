@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.crashlytics.android.Crashlytics;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
@@ -174,19 +175,6 @@ public class CalendarActivity extends AppCompatActivity
         call.enqueue(new Callback<DoctorClinics>() {
             @Override
             public void onResponse(@NonNull Call<DoctorClinics> call, @NonNull Response<DoctorClinics> response) {
-//                String strResponse = new Gson().toJson(response);
-//                try {
-//                    JSONObject JORoot = new JSONObject(strResponse);
-//                    JSONObject JOBody = JORoot.getJSONObject("body");
-//                    JSONArray JAClinics = JOBody.getJSONArray("clinics");
-//                    for (int i = 0; i < JAClinics.length(); i++) {
-//                        JSONObject JOClinics = JAClinics.getJSONObject(i);
-//                        Log.e("CLINIC", String.valueOf(JOClinics));
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-
                 arrClinics = response.body().getClinics();
                 if (arrClinics != null && arrClinics.size() > 0)    {
                     spnClinics.setAdapter(new ClinicSelectorAdapter(CalendarActivity.this,
@@ -197,7 +185,7 @@ public class CalendarActivity extends AppCompatActivity
 
             @Override
             public void onFailure(@NonNull Call<DoctorClinics> call, @NonNull Throwable t) {
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -251,7 +239,7 @@ public class CalendarActivity extends AppCompatActivity
 
             @Override
             public void onFailure(@NonNull Call<AppointmentsData> call, @NonNull Throwable t) {
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -283,7 +271,7 @@ public class CalendarActivity extends AppCompatActivity
 
             @Override
             public void onFailure(@NonNull Call<AppointmentsData> call, @NonNull Throwable t) {
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -413,6 +401,7 @@ public class CalendarActivity extends AppCompatActivity
 
             @Override
             public void onFailure(@NonNull Call<Timings> call, @NonNull Throwable t) {
+                Crashlytics.logException(t);
             }
         });
     }

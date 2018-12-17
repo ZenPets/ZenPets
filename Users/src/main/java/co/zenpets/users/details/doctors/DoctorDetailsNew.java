@@ -53,7 +53,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import co.zenpets.users.R;
-import co.zenpets.users.creator.appointment.AppointmentSlotCreator;
+import co.zenpets.users.creator.appointments.AppointmentSlotCreator;
 import co.zenpets.users.creator.profile.ProfileEditor;
 import co.zenpets.users.creator.review.ReviewCreator;
 import co.zenpets.users.details.doctors.map.MapDetails;

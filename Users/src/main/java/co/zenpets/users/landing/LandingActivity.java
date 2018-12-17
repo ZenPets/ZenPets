@@ -11,29 +11,33 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import co.zenpets.users.R;
 import co.zenpets.users.landing.modules.HomeFragment;
 import co.zenpets.users.landing.modules.ProfileFragment;
 import co.zenpets.users.landing.modules.QuestionsFragment;
 import co.zenpets.users.utils.AppPrefs;
 import co.zenpets.users.utils.helpers.classes.ZenApiClient;
+import co.zenpets.users.utils.helpers.connectivity.ConnectivityChecker;
+import co.zenpets.users.utils.helpers.connectivity.ConnectivityInterface;
 import co.zenpets.users.utils.models.user.UserData;
 import co.zenpets.users.utils.models.user.UsersAPI;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LandingActivity extends AppCompatActivity {
+public class LandingActivity extends AppCompatActivity implements ConnectivityInterface {
 
     private AppPrefs getApp()	{
         return (AppPrefs) getApplication();
@@ -71,6 +75,9 @@ public class LandingActivity extends AppCompatActivity {
 
         /* CREATE THE NOTIFICATION CHANNEL */
         createNotificationChannel();
+
+        /* CHECK FOR INTERNET CONNECTIVITY */
+        new ConnectivityChecker(LandingActivity.this).execute();
     }
 
     /***** FETCH THE USER'S PROFILE *****/
@@ -100,7 +107,7 @@ public class LandingActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<UserData> call, Throwable t) {
 //                Log.e("USER PROFILE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -117,7 +124,7 @@ public class LandingActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UserData> call, Throwable t) {
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
     }
@@ -171,6 +178,23 @@ public class LandingActivity extends AppCompatActivity {
             // or other notification behaviors after this
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    @Override
+    public void checkConnectivity(Boolean result) {
+        if (result) {
+            Log.e("STATUS", "Internet is available...");
+//            Toast.makeText(
+//                    getApplicationContext(),
+//                    "Internet is available...",
+//                    Toast.LENGTH_SHORT).show();
+        } else {
+            Log.e("STATUS", "Internet unavailable!!!");
+//            Toast.makeText(
+//                    getApplicationContext(),
+//                    "Internet unavailable!!!",
+//                    Toast.LENGTH_SHORT).show();
         }
     }
 }

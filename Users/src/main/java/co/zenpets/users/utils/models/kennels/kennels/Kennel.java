@@ -10,11 +10,11 @@ public class Kennel {
     @SerializedName("error") private Boolean error;
     @SerializedName("message") private String message;
     @SerializedName("kennelID") private String kennelID;
-    @SerializedName("kennelOwnerID") private String kennelOwnerID;
-    @SerializedName("kennelChargesID") private String kennelChargesID;
-    @SerializedName("paymentID") private String paymentID;
-    @SerializedName("kennelOwnerName") private String kennelOwnerName;
-    @SerializedName("kennelOwnerDisplayProfile") private String kennelOwnerDisplayProfile;
+//    @SerializedName("kennelOwnerID") private String kennelOwnerID;
+//    @SerializedName("kennelChargesID") private String kennelChargesID;
+//    @SerializedName("paymentID") private String paymentID;
+//    @SerializedName("kennelOwnerName") private String kennelOwnerName;
+//    @SerializedName("kennelOwnerDisplayProfile") private String kennelOwnerDisplayProfile;
     @SerializedName("kennelName") private String kennelName;
     @SerializedName("kennelCoverPhoto") private String kennelCoverPhoto;
     @SerializedName("kennelAddress") private String kennelAddress;
@@ -64,46 +64,6 @@ public class Kennel {
 
     public void setKennelID(String kennelID) {
         this.kennelID = kennelID;
-    }
-
-    public String getKennelOwnerID() {
-        return kennelOwnerID;
-    }
-
-    public void setKennelOwnerID(String kennelOwnerID) {
-        this.kennelOwnerID = kennelOwnerID;
-    }
-
-    public String getKennelChargesID() {
-        return kennelChargesID;
-    }
-
-    public void setKennelChargesID(String kennelChargesID) {
-        this.kennelChargesID = kennelChargesID;
-    }
-
-    public String getPaymentID() {
-        return paymentID;
-    }
-
-    public void setPaymentID(String paymentID) {
-        this.paymentID = paymentID;
-    }
-
-    public String getKennelOwnerName() {
-        return kennelOwnerName;
-    }
-
-    public void setKennelOwnerName(String kennelOwnerName) {
-        this.kennelOwnerName = kennelOwnerName;
-    }
-
-    public String getKennelOwnerDisplayProfile() {
-        return kennelOwnerDisplayProfile;
-    }
-
-    public void setKennelOwnerDisplayProfile(String kennelOwnerDisplayProfile) {
-        this.kennelOwnerDisplayProfile = kennelOwnerDisplayProfile;
     }
 
     public String getKennelName() {

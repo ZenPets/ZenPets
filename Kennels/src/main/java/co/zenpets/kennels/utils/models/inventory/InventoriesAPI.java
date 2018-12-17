@@ -16,8 +16,8 @@ public interface InventoriesAPI {
             @Field("inventoryTypeID") String inventoryTypeID,
             @Field("kennelID") String kennelID,
             @Field("kennelInventoryName") String kennelInventoryName,
+            @Field("kennelInventoryPhoto") String kennelInventoryPhoto,
             @Field("kennelInventoryCost") String kennelInventoryCost,
-            @Field("kennelInventoryTax") String kennelInventoryTax,
             @Field("kennelInventoryStatus") String kennelInventoryStatus);
 
     /** CHECK THE INVENTORY ITEM'S UNIQUE NAME **/

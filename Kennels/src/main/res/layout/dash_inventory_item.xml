@@ -6,21 +6,18 @@
     android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cardInventory"
         style="@style/ZenPetsCards"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/txtInventoryName"
@@ -46,17 +43,14 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/constraintLayout2"
+                android:id="@+id/layoutPetDetails"
                 android:layout_width="0dp"
                 android:layout_height="?attr/actionBarSize"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="8dp"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="@+id/txtInventoryName"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/txtInventoryName"
-                app:layout_constraintTop_toBottomOf="@+id/txtInventoryStatus"
-                app:layout_constraintVertical_bias="0.050000012">
+                app:layout_constraintTop_toBottomOf="@+id/txtInventoryName">
 
                 <ImageView
                     android:id="@+id/imgvwPetDisplayProfile"
@@ -66,6 +60,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -82,6 +77,7 @@
                     android:text="Pet Name"
                     android:textColor="@color/primary_text"
                     android:textSize="14sp"
+                    android:visibility="visible"
                     app:fontFamily="@font/roboto_condensed_regular"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imgvwPetDisplayProfile"
@@ -97,29 +93,72 @@
                     android:text="Occupation status"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
+                    android:visibility="visible"
                     app:fontFamily="@font/roboto_condensed_regular"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/txtPetName"
                     app:layout_constraintTop_toBottomOf="@+id/txtPetName" />
+
+                <TextView
+                    android:id="@+id/txtNoBookingHistory"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center"
+                    android:text="There is no booking history available for this inventory item"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    app:fontFamily="@font/roboto_condensed_bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
             </android.support.constraint.ConstraintLayout>
+
+            <Switch
+                android:id="@+id/switchAvailable"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="10dp"
+                android:paddingStart="11dp"
+                android:paddingLeft="11dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="11dp"
+                android:paddingRight="11dp"
+                android:paddingBottom="5dp"
+                android:text="@string/inv_item_available_label"
+                android:textColor="@color/primary_text"
+                android:textSize="12sp"
+                app:fontFamily="@font/roboto_condensed_regular"
+                app:layout_constraintBottom_toTopOf="@+id/txtInventoryStatus"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutPetDetails" />
 
             <TextView
                 android:id="@+id/txtInventoryStatus"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginBottom="10dp"
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="end|center"
                 android:text="Inventory Status"
                 android:textColor="@color/primary_text"
                 android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtInventoryName" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/switchAvailable"
+                app:layout_constraintStart_toStartOf="@+id/switchAvailable" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

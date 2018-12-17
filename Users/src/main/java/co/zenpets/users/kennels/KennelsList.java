@@ -459,26 +459,26 @@ public class KennelsList extends AppCompatActivity {
                             data.setKennelName(null);
                         }
 
-                        /* GET THE KENNEL OWNER'S ID */
-                        if (JOKennels.has("kennelOwnerID")) {
-                            data.setKennelOwnerID(JOKennels.getString("kennelOwnerID"));
-                        } else {
-                            data.setKennelOwnerID(null);
-                        }
+//                        /* GET THE KENNEL OWNER'S ID */
+//                        if (JOKennels.has("kennelOwnerID")) {
+//                            data.setKennelOwnerID(JOKennels.getString("kennelOwnerID"));
+//                        } else {
+//                            data.setKennelOwnerID(null);
+//                        }
 
-                        /* GET THE KENNEL OWNER'S NAME */
-                        if (JOKennels.has("kennelOwnerName"))   {
-                            data.setKennelOwnerName(JOKennels.getString("kennelOwnerName"));
-                        } else {
-                            data.setKennelOwnerName(null);
-                        }
+//                        /* GET THE KENNEL OWNER'S NAME */
+//                        if (JOKennels.has("kennelOwnerName"))   {
+//                            data.setKennelOwnerName(JOKennels.getString("kennelOwnerName"));
+//                        } else {
+//                            data.setKennelOwnerName(null);
+//                        }
 
-                        /* GET THE KENNEL OWNER'S DISPLAY PROFILE */
-                        if (JOKennels.has("kennelOwnerDisplayProfile")) {
-                            data.setKennelOwnerDisplayProfile(JOKennels.getString("kennelOwnerDisplayProfile"));
-                        } else {
-                            data.setKennelOwnerDisplayProfile(null);
-                        }
+//                        /* GET THE KENNEL OWNER'S DISPLAY PROFILE */
+//                        if (JOKennels.has("kennelOwnerDisplayProfile")) {
+//                            data.setKennelOwnerDisplayProfile(JOKennels.getString("kennelOwnerDisplayProfile"));
+//                        } else {
+//                            data.setKennelOwnerDisplayProfile(null);
+//                        }
 
                         /* GET THE KENNEL ADDRESS */
                         if (JOKennels.has("kennelAddress")) {

@@ -1,6 +1,7 @@
 package co.zenpets.location;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
@@ -12,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -113,6 +115,11 @@ public class MainActivity extends AppCompatActivity {
         btnFetch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /* HIDE THE KEYBOARD */
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(edtLatMin.getWindowToken(), 0);
+                }
                 if (edtLatMin.getText().toString() != null
                         && edtLatMax.getText().toString() != null
                         && edtLngMin.getText().toString() != null
@@ -182,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(aVoid);
 
             if (CITY_NAME != null && LOCALITY_NAME != null) {
-//                Log.e("CITY NAME", CITY_NAME);
+                Log.e("CITY NAME", CITY_NAME);
                 if (CITY_NAME.equalsIgnoreCase("Mangaluru")) {
                     Log.e("LOCALITY", LOCALITY_NAME + " : " + CITY_NAME);
                     createLocality("120", LOCALITY_NAME);
@@ -271,9 +278,20 @@ public class MainActivity extends AppCompatActivity {
                     myToolbar.setTitle("Localities Count: " + intCount);
                     getSupportActionBar().setTitle("Localities Count: " + intCount);
 
-                } else if (CITY_NAME.equalsIgnoreCase("Patna"))  {
+                } else if (CITY_NAME.equalsIgnoreCase("Patna")) {
                     Log.e("LOCALITY", LOCALITY_NAME + " : " + CITY_NAME);
                     createLocality("166", LOCALITY_NAME);
+                    arrayList.add(LOCALITY_NAME);
+                    adapter.notifyDataSetChanged();
+
+                    /* INCREMENT THE NUMBER IN THE TITLE */
+                    intCount++;
+                    myToolbar.setTitle("Localities Count: " + intCount);
+                    getSupportActionBar().setTitle("Localities Count: " + intCount);
+
+                } else if (CITY_NAME.equalsIgnoreCase("Puducherry"))  {
+                    Log.e("LOCALITY", LOCALITY_NAME + " : " + CITY_NAME);
+                    createLocality("168", LOCALITY_NAME);
                     arrayList.add(LOCALITY_NAME);
                     adapter.notifyDataSetChanged();
 
@@ -406,6 +424,8 @@ public class MainActivity extends AppCompatActivity {
                     txtCoordinates.setText(getString(R.string.bihar_madhubani));
                 } else if (CITY_ID.equalsIgnoreCase("166")) {
                     txtCoordinates.setText(getString(R.string.bihar_patna));
+                } else if (CITY_ID.equalsIgnoreCase("168")){
+                    txtCoordinates.setText(getString(R.string.pondicherry));
                 }
             }
         }

@@ -38,7 +38,7 @@
             android:layout_weight="1"
             android:hint="Min Lat"
             android:padding="11dp"
-            android:text="25.5700034" />
+            android:text="11.907537" />
 
         <EditText
             android:id="@+id/edtLatMax"
@@ -47,7 +47,7 @@
             android:layout_weight="1"
             android:hint="Max Lat"
             android:padding="11dp"
-            android:text="25.586078" />
+            android:text="11.95553" />
     </LinearLayout>
 
     <LinearLayout
@@ -62,7 +62,7 @@
             android:layout_weight="1"
             android:hint="Min Lng"
             android:padding="11dp"
-            android:text="83.9608882" />
+            android:text="79.8263723" />
 
         <EditText
             android:id="@+id/edtLngMax"
@@ -71,7 +71,7 @@
             android:layout_weight="1"
             android:hint="Max Lng"
             android:padding="11dp"
-            android:text="84.0088423" />
+            android:text="79.7880906" />
     </LinearLayout>
 
     <Button
@@ -91,7 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:maxLines="7"
+        android:maxLines="11"
         android:scrollbars="vertical"
         android:text="@string/coords"
         android:textIsSelectable="true" />

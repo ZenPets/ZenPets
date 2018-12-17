@@ -4,9 +4,6 @@
     <!-- SPLASH SCREEN -->
     <string name="splash_title">ZEN PETS</string>
 
-    <!-- THE API KEY'S -->
-    <string name="google_maps_key">AIzaSyD2Mo0q1AD6fCNLsrnrstTeE6pjS0clefQ</string>
-
     <!-- PRIVACY POLICY -->
     <string name="privacy_policy_url">http://zenpets.s3-website.ap-south-1.amazonaws.com/privacy-policy.html</string>
 

@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.Theme;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -41,7 +42,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import co.zenpets.users.R;
+import co.zenpets.users.creator.kennel.NewKennelSlotSelector;
 import co.zenpets.users.creator.profile.ProfileEditor;
 import co.zenpets.users.details.kennels.enquiry.KennelEnquiryActivity;
 import co.zenpets.users.details.kennels.reviews.KennelReviewCreator;
@@ -61,10 +66,6 @@ import co.zenpets.users.utils.models.kennels.reviews.KennelReviews;
 import co.zenpets.users.utils.models.kennels.reviews.KennelReviewsAPI;
 import co.zenpets.users.utils.models.kennels.statistics.Stat;
 import co.zenpets.users.utils.models.kennels.statistics.StatisticsAPI;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -118,9 +119,9 @@ public class KennelDetails extends AppCompatActivity {
     @BindView(R.id.appBar) AppBarLayout appBar;
     @BindView(R.id.toolbarLayout) CollapsingToolbarLayout toolbarLayout;
     @BindView(R.id.imgvwKennelCoverPhoto) ImageView imgvwKennelCoverPhoto;
-    @BindView(R.id.imgvwKennelOwnerDisplayProfile) CircleImageView imgvwKennelOwnerDisplayProfile;
+//    @BindView(R.id.imgvwKennelOwnerDisplayProfile) CircleImageView imgvwKennelOwnerDisplayProfile;
     @BindView(R.id.txtKennelName) TextView txtKennelName;
-    @BindView(R.id.txtKennelOwnerName) TextView txtKennelOwnerName;
+//    @BindView(R.id.txtKennelOwnerName) TextView txtKennelOwnerName;
     @BindView(R.id.txtVotes) TextView txtVotes;
     @BindView(R.id.kennelRating) RatingBar kennelRating;
     @BindView(R.id.linlaPhoneNumber1) LinearLayout linlaPhoneNumber1;
@@ -145,6 +146,14 @@ public class KennelDetails extends AppCompatActivity {
     /** SHOW ALL THE KENNEL REVIEWS **/
     @OnClick(R.id.txtAllReviews) void showAllReviews()  {
         Intent intent = new Intent(getApplicationContext(), KennelReviewsActivity.class);
+        intent.putExtra("KENNEL_ID", KENNEL_ID);
+        intent.putExtra("KENNEL_NAME", KENNEL_NAME);
+        startActivity(intent);
+    }
+
+    /** SHOW THE KENNEL BOOKING ACTIVITY **/
+    @OnClick(R.id.btnBookKennel) void bookKennel()  {
+        Intent intent = new Intent(KennelDetails.this, NewKennelSlotSelector.class);
         intent.putExtra("KENNEL_ID", KENNEL_ID);
         intent.putExtra("KENNEL_NAME", KENNEL_NAME);
         startActivity(intent);
@@ -258,48 +267,48 @@ public class KennelDetails extends AppCompatActivity {
                         toolbarLayout.setTitle(data.getKennelName());
                     }
 
-                    /* GET THE KENNEL OWNER'S ID */
-                    KENNEL_OWNER_ID = data.getKennelOwnerID();
+//                    /* GET THE KENNEL OWNER'S ID */
+//                    KENNEL_OWNER_ID = data.getKennelOwnerID();
 
                     /* GET AND SET THE KENNEL OWNER'S DISPLAY PROFILE */
-                    KENNEL_OWNER_DISPLAY_PROFILE = data.getKennelOwnerDisplayProfile();
-                    if (KENNEL_OWNER_DISPLAY_PROFILE != null) {
-                        Picasso.with(KennelDetails.this)
-                                .load(KENNEL_OWNER_DISPLAY_PROFILE)
-                                .networkPolicy(NetworkPolicy.OFFLINE)
-                                .fit()
-                                .centerCrop()
-                                .into(imgvwKennelOwnerDisplayProfile, new com.squareup.picasso.Callback() {
-                                    @Override
-                                    public void onSuccess() {
-                                    }
+//                    KENNEL_OWNER_DISPLAY_PROFILE = data.getKennelOwnerDisplayProfile();
+//                    if (KENNEL_OWNER_DISPLAY_PROFILE != null) {
+//                        Picasso.with(KennelDetails.this)
+//                                .load(KENNEL_OWNER_DISPLAY_PROFILE)
+//                                .networkPolicy(NetworkPolicy.OFFLINE)
+//                                .fit()
+//                                .centerCrop()
+//                                .into(imgvwKennelOwnerDisplayProfile, new com.squareup.picasso.Callback() {
+//                                    @Override
+//                                    public void onSuccess() {
+//                                    }
+//
+//                                    @Override
+//                                    public void onError() {
+//                                        Picasso.with(KennelDetails.this)
+//                                                .load(KENNEL_OWNER_DISPLAY_PROFILE)
+//                                                .fit()
+//                                                .centerCrop()
+//                                                .error(R.drawable.ic_person_black_24dp)
+//                                                .into(imgvwKennelOwnerDisplayProfile, new com.squareup.picasso.Callback() {
+//                                                    @Override
+//                                                    public void onSuccess() {
+//                                                    }
+//
+//                                                    @Override
+//                                                    public void onError() {
+////                                                        Log.e("Picasso","Could not fetch image");
+//                                                    }
+//                                                });
+//                                    }
+//                                });
+//                    }
 
-                                    @Override
-                                    public void onError() {
-                                        Picasso.with(KennelDetails.this)
-                                                .load(KENNEL_OWNER_DISPLAY_PROFILE)
-                                                .fit()
-                                                .centerCrop()
-                                                .error(R.drawable.ic_person_black_24dp)
-                                                .into(imgvwKennelOwnerDisplayProfile, new com.squareup.picasso.Callback() {
-                                                    @Override
-                                                    public void onSuccess() {
-                                                    }
-
-                                                    @Override
-                                                    public void onError() {
-//                                                        Log.e("Picasso","Could not fetch image");
-                                                    }
-                                                });
-                                    }
-                                });
-                    }
-
-                    /* GET AND SET THE KENNEL OWNER'S NAME */
-                    KENNEL_OWNER_NAME = data.getKennelOwnerName();
-                    if (KENNEL_OWNER_NAME != null)  {
-                        txtKennelOwnerName.setText(KENNEL_OWNER_NAME);
-                    }
+//                    /* GET AND SET THE KENNEL OWNER'S NAME */
+//                    KENNEL_OWNER_NAME = data.getKennelOwnerName();
+//                    if (KENNEL_OWNER_NAME != null)  {
+//                        txtKennelOwnerName.setText(KENNEL_OWNER_NAME);
+//                    }
 
                     /* GET AND SET THE KENNEL ADDRESS */
                     KENNEL_ADDRESS = data.getKennelAddress();
@@ -425,6 +434,7 @@ public class KennelDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Kennel> call, Throwable t) {
+                Crashlytics.logException(t);
 //                Log.e("KENNEL FAILURES", t.getMessage());
             }
         });
@@ -466,6 +476,7 @@ public class KennelDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<KennelReviews> call, Throwable t) {
+                Crashlytics.logException(t);
             }
         });
     }
@@ -503,6 +514,7 @@ public class KennelDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<KennelImages> call, Throwable t) {
+                Crashlytics.logException(t);
             }
         });
     }
@@ -518,8 +530,6 @@ public class KennelDetails extends AppCompatActivity {
             ORIGIN_LATITUDE = bundle.getString("ORIGIN_LATITUDE");
             ORIGIN_LONGITUDE = bundle.getString("ORIGIN_LONGITUDE");
             if (KENNEL_ID != null && ORIGIN_LATITUDE != null && ORIGIN_LONGITUDE != null)  {
-//                Log.e("LATITUDE", ORIGIN_LATITUDE);
-//                Log.e("LONGITUDE", ORIGIN_LONGITUDE);
                 /* FETCH THE KENNEL DETAILS */
                 fetchKennelDetails();
 
@@ -667,6 +677,7 @@ public class KennelDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<KennelReview> call, Throwable t) {
+                Crashlytics.logException(t);
 //                Log.e("CHECK FAILURE", t.getMessage());
             }
         });
@@ -723,7 +734,7 @@ public class KennelDetails extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Stat> call, Throwable t) {
-//                Log.e("DISPLAYED FAILED", t.getMessage());
+                Crashlytics.logException(t);
             }
         });
     }

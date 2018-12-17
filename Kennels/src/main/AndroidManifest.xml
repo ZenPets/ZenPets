@@ -116,6 +116,26 @@
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
+        <!-- ADDONS -->
+        <activity
+            android:name=".addons.KennelAddons"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".creator.addon.AddonCreator"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".modifier.addon.AddonModifier"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <!-- BOOKINGS -->
+        <activity
+            android:name=".details.bookings.BookingHistory"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
         <!-- REVIEWS -->
         <activity
             android:name=".reviews.ReviewsList"
@@ -135,6 +155,7 @@
             android:name=".reports.TestReportActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
+
         <!-- ENQUIRY -->
         <activity
             android:name=".enquiry.KennelEnquiryActivity"
@@ -168,7 +189,7 @@
         <!-- RAZOR PAY -->
         <meta-data
             android:name="com.razorpay.ApiKey"
-            android:value="@string/razor_pay_api_key_id" />
+            android:value="@string/razor_pay_id" />
 
         <!-- FIREBASE CLOUD MESSAGING -->
         <service

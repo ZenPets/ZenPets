@@ -35,10 +35,17 @@ android {
         }
     }
     buildTypes {
+        debug {
+            buildConfigField 'String', "GoogleMapsApiKey", global_google_maps_api_key
+            resValue 'string', "google_maps_api_key", global_google_maps_api_key
+        }
         release {
             signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField 'String', "GoogleMapsApiKey", global_google_maps_api_key
+            resValue 'string', "google_maps_api_key", global_google_maps_api_key
         }
     }
     dexOptions {

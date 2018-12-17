@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -17,13 +19,15 @@ import co.zenpets.users.creator.profile.ProfileEditor;
 import co.zenpets.users.landing.LandingActivity;
 import co.zenpets.users.utils.AppPrefs;
 import co.zenpets.users.utils.helpers.classes.ZenApiClient;
+import co.zenpets.users.utils.helpers.connectivity.ConnectivityChecker;
+import co.zenpets.users.utils.helpers.connectivity.ConnectivityInterface;
 import co.zenpets.users.utils.models.user.UserData;
 import co.zenpets.users.utils.models.user.UsersAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SplashScreen extends AppCompatActivity {
+public class SplashScreen extends AppCompatActivity implements ConnectivityInterface {
 
     private AppPrefs getApp()	{
         return (AppPrefs) getApplication();
@@ -71,6 +75,9 @@ public class SplashScreen extends AppCompatActivity {
             public void onAnimationRepeat(Animation animation) {
             }
         });
+
+        /* CHECK FOR INTERNET CONNECTIVITY */
+        new ConnectivityChecker(SplashScreen.this).execute();
     }
 
     /***** FETCH THE USER'S PROFILE *****/
@@ -110,8 +117,25 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void onFailure(Call<UserData> call, Throwable t) {
 //                Log.e("USER PROFILE", t.getMessage());
-//                Crashlytics.logException(t);
+                Crashlytics.logException(t);
             }
         });
+    }
+
+    @Override
+    public void checkConnectivity(Boolean result) {
+        if (result) {
+            Log.e("STATUS", "Internet is available...");
+//            Toast.makeText(
+//                    getApplicationContext(),
+//                    "Internet is available...",
+//                    Toast.LENGTH_SHORT).show();
+        } else {
+            Log.e("STATUS", "Internet unavailable!!!");
+//            Toast.makeText(
+//                    getApplicationContext(),
+//                    "Internet unavailable!!!",
+//                    Toast.LENGTH_SHORT).show();
+        }
     }
 }

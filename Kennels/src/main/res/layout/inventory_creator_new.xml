@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:gravity="start|center"
-                android:text="Provide the cost of booking this inventory (per day / night)"
+                android:text="Provide the cost of booking this inventory per day / night (inclusive of taxes)"
                 android:textColor="@color/secondary_text"
                 android:textSize="14sp"
                 app:fontFamily="@font/roboto_condensed_regular"
@@ -128,45 +128,44 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter the per day / night cost"
+                    android:inputType="numberDecimal"
                     android:textColor="@color/primary_text"
                     android:textColorHint="@color/tertiary_text"
                     android:textSize="14sp"
                     app:fontFamily="@font/roboto_condensed_regular" />
             </android.support.design.widget.TextInputLayout>
 
-            <RadioGroup
+            <TextView
+                android:id="@+id/txtKennelPhotoLabel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:orientation="horizontal"
+                android:gravity="start|center"
+                android:text="Select a picture for this inventory"
+                android:textColor="@color/secondary_text"
+                android:textSize="14sp"
+                app:fontFamily="@font/roboto_condensed_regular"
                 app:layout_constraintEnd_toEndOf="@+id/inputInventoryCost"
                 app:layout_constraintStart_toStartOf="@+id/inputInventoryCost"
-                app:layout_constraintTop_toBottomOf="@+id/inputInventoryCost">
+                app:layout_constraintTop_toBottomOf="@+id/inputInventoryCost" />
 
-                <RadioButton
-                    android:id="@+id/btnInclusive"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
-                    android:text="Inclusive"
-                    android:textColor="@color/primary_text"
-                    android:textSize="13sp"
-                    app:fontFamily="@font/roboto_condensed_regular" />
+            <android.support.v7.widget.CardView
+                style="@style/ZenPetsCards"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/txtKennelPhotoLabel"
+                app:layout_constraintStart_toStartOf="@+id/txtKennelPhotoLabel"
+                app:layout_constraintTop_toBottomOf="@+id/txtKennelPhotoLabel">
 
-                <RadioButton
-                    android:id="@+id/btnExclusive"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_weight="1"
-                    android:text="Exclusive"
-                    android:textColor="@color/primary_text"
-                    android:textSize="13sp"
-                    app:fontFamily="@font/roboto_condensed_regular" />
-            </RadioGroup>
+                <ImageView
+                    android:id="@+id/imgvwKennelPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:scaleType="center"
+                    android:src="@drawable/empty_camera" />
+            </android.support.v7.widget.CardView>
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 

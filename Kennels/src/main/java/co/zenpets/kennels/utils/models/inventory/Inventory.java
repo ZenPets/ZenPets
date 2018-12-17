@@ -11,7 +11,6 @@ public class Inventory {
     @SerializedName("kennelID") private String kennelID;
     @SerializedName("kennelInventoryName") private String kennelInventoryName;
     @SerializedName("kennelInventoryCost") private String kennelInventoryCost;
-    @SerializedName("kennelInventoryTax") private String kennelInventoryTax;
     @SerializedName("kennelInventoryStatus") private String kennelInventoryStatus;
 
     public Boolean getError() {
@@ -76,14 +75,6 @@ public class Inventory {
 
     public void setKennelInventoryCost(String kennelInventoryCost) {
         this.kennelInventoryCost = kennelInventoryCost;
-    }
-
-    public String getKennelInventoryTax() {
-        return kennelInventoryTax;
-    }
-
-    public void setKennelInventoryTax(String kennelInventoryTax) {
-        this.kennelInventoryTax = kennelInventoryTax;
     }
 
     public String getKennelInventoryStatus() {

@@ -28,6 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import co.zenpets.kennels.R;
+import co.zenpets.kennels.addons.KennelAddons;
 import co.zenpets.kennels.inventory.KennelInventory;
 import co.zenpets.kennels.utils.AppPrefs;
 import co.zenpets.kennels.utils.TypefaceSpan;
@@ -94,6 +95,12 @@ public class HomeFragment extends Fragment {
     /** MANAGE THE KENNEL INVENTORY **/
     @OnClick(R.id.linlaInventory) void manageInventory()    {
         Intent intent = new Intent(getActivity(), KennelInventory.class);
+        startActivity(intent);
+    }
+
+    /** MANAGE THE KENNEL ADD-ONS **/
+    @OnClick(R.id.linlaAddons) void manageAddons()  {
+        Intent intent = new Intent(getActivity(), KennelAddons.class);
         startActivity(intent);
     }
 

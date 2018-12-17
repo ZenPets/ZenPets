@@ -1,13 +1,6 @@
 <resources>
     <string name="app_name">Kennel Manager</string>
 
-    <!-- GOOGLE MAPS API KEY -->
-    <string name="google_maps_api_key">AIzaSyCC6_QV-QfckZ9SaEhKrccZcnYFTDcF0ec</string>
-
-    <!-- RAZOR PAY API KEYS -->
-    <string name="razor_pay_api_key_id">rzp_test_ySDpAnHqFLEgk3</string>
-    <string name="razor_pay_api_key_secret">Pt4op0fbrZtMCJT0idcdBi67</string>
-
     <!-- SPLASH SCREEN -->
     <string name="splash_title">ZEN PETS</string>
 
@@ -147,4 +140,22 @@
     <string name="rb_total_views_placeholder">%1$s Views</string>
     <string name="report_duration_summary">30 days summary…</string>
     <string name="report_duration_summary_placeholder">%1$s days summary...</string>
+
+    <!-- INVENTORY ITEM STRINGS -->
+    <string name="inv_item_available_label">Inventory Item is <b>available</b> for bookings</string>
+    <string name="inv_item_available">The inventory item is available for bookings</string>
+    <string name="inv_item_unavailable_label">Inventory Item is <b>unavailable</b> for bookings</string>
+    <string name="inv_item_unavailable">This inventory item is marked <b>unavailable</b> for bookings</string>
+
+    <!-- KENNEL ADD-ONS -->
+    <string name="add_on_creator_label">Create a new Add-on for Pet Parents to choose along with your boarding services</string>
+    <string name="add_on_creator_name_label">Provide a name for the new Add-on service. This will be displayed to Pet Parents</string>
+    <string name="add_on_creator_name_hint">Enter the Add-on name</string>
+    <string name="add_on_creator_cost_label">Provide the cost of this Add-on</string>
+    <string name="add_on_creator_cost_hint">Enter the cost of the Add-on</string>
+    <string name="add_on_creator_desc_label">Describe what is included with the Add-on. For example:
+        \n1. Bath and Shampoo (Rs.200/Bath)
+        \n2. Pick up (Rs.10/km - based on actual distance)
+        \n3. In-house Tick Treatment (Rs.100/Treatment)</string>
+    <string name="add_on_creator_desc_hint">Describe what the add-on includes and it\'s cost</string>
 </resources>

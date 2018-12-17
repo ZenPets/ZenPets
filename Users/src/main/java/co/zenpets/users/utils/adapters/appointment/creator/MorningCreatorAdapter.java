@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import co.zenpets.users.R;
-import co.zenpets.users.creator.appointment.AppointmentDetailsCreator;
+import co.zenpets.users.creator.appointments.AppointmentDetailsCreator;
 import co.zenpets.users.utils.models.doctors.timings.TimeSlot;
 
 public class MorningCreatorAdapter extends RecyclerView.Adapter<MorningCreatorAdapter.SlotsVH> {

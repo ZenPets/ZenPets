@@ -39,7 +39,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import co.zenpets.users.R;
-import co.zenpets.users.creator.appointment.AppointmentClinicSelector;
+import co.zenpets.users.creator.appointments.AppointmentClinicSelector;
 import co.zenpets.users.creator.profile.ProfileEditor;
 import co.zenpets.users.creator.review.ReviewClinicSelector;
 import co.zenpets.users.modifier.review.ReviewModifier;

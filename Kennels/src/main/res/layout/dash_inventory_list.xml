@@ -54,7 +54,7 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:padding="6dp"
-                android:text="You haven't added any inventory for Kennel yet. Tap here to add one now..."
+                android:text="You haven't added any inventory for your Kennel yet. Tap here to add one now..."
                 android:textColor="@color/secondary_text"
                 android:textSize="14sp"
                 app:fontFamily="@font/roboto_condensed_regular" />

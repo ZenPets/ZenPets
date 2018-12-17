@@ -2,17 +2,10 @@
     <string name="app_name" tools:ignore="PrivateResource">Zen Pets</string>
 
     <!-- THE API KEY'S -->
-    <string name="facebook_app_id">1584967218498481</string>
-    <!--<string name="google_maps_key">AIzaSyCoMTYVqI-JmuJ_cTV8TDqASsc2lknnQ_Q</string>-->
-    <string name="google_maps_key">AIzaSyCC6_QV-QfckZ9SaEhKrccZcnYFTDcF0ec</string>
     <string name="google_static_map_api_key">AIzaSyD-5QWNIgI2O0F6JmmrGZyKUHUPb_YePkw</string>
     <!--<string name="google_directions_api_key">AIzaSyAW3Rn42MhLRJ8EeeCGuyYSiPV5Q5q_4bI</string>-->
     <string name="google_directions_api_key">AIzaSyArMfGlHiyPFZoF_o0u7I80LVKQK45NWbA</string>
     <!--<string name="google_directions_api_key">AIzaSyDSJMH7Oh4FS3sUgv30g6VBSugpVandEMw</string>-->
-
-    <!-- RAZOR PAY API KEYS -->
-    <string name="razor_pay_api_key_id">rzp_test_ySDpAnHqFLEgk3</string>
-    <string name="razor_pay_api_key_secret">Pt4op0fbrZtMCJT0idcdBi67</string>
 
     <!-- THE NOTIFICATION CHANNELS -->
     <string name="default_notification_channel_id">USERS_DEFAULT_CHANNEL</string>
@@ -623,4 +616,22 @@
     <string name="hbud_unit_smoking_no">Smoke free home</string>
     <string name="hbud_unit_vaping_yes">Someone at home vapes</string>
     <string name="hbud_unit_vaping_no">Vape free Home</string>
+
+    <!-- KENNEL BOOKING SLOT SELECTOR STRINGS -->
+    <string name="kbs_pet_label">Select a Pet for Boarding</string>
+    <string name="kbs_pet_size">Select your Pet\'s size</string>
+    <string name="kbs_size_small">Small</string>
+    <string name="kbs_size_medium">Medium</string>
+    <string name="kbs_size_large">Large</string>
+    <string name="kbs_date_label">Will the pet stay for a single day or multiple days?</string>
+    <string name="kbs_date_single">Single Day</string>
+    <string name="kbs_date_multiple">Multiple Days</string>
+    <string name="kbs_available_title">Available For Booking</string>
+    <string name="kbs_available_content">There are %1$s unit/s available for booking. Do you wish to confirm the booking for your pet now?
+    \n\nTo confirm, click \"CONFIRM BOOKING\"</string>
+    <string name="kbs_available_positive">CONFIRM BOOKING</string>
+    <string name="kbs_available_negative">CANCEL</string>
+    <string name="kbs_unavailable_title">No Slots Available</string>
+    <string name="kbs_unavailable_content">Sorry. There are no slots available for booking. Please try different dates for availability.</string>
+    <string name="kbs_unavailable_positive">DISMISS</string>
 </resources>

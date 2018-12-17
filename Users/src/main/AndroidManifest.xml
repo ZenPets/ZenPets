@@ -243,15 +243,15 @@
 
         <!-- APPOINTMENTS -->
         <activity
-            android:name=".creator.appointment.AppointmentSlotCreator"
+            android:name=".creator.appointments.AppointmentSlotCreator"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".creator.appointment.AppointmentDetailsCreator"
+            android:name=".creator.appointments.AppointmentDetailsCreator"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".creator.appointment.AppointmentClinicSelector"
+            android:name=".creator.appointments.AppointmentClinicSelector"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
@@ -373,6 +373,24 @@
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
+        <!-- KENNEL BOOKINGS -->
+        <activity
+            android:name=".creator.kennel.KennelSlotSelector"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".creator.kennel.NewKennelSlotSelector"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".creator.kennel.KennelDateSelector"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".creator.kennel.NewKennelDateSelector"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
         <!-- HOME BOARDING -->
         <activity
             android:name=".boarding.BoardingsList"
@@ -436,7 +454,7 @@
         <!-- GOOGLE MAPS -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="@string/google_maps_api_key" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -449,7 +467,7 @@
         <!-- RAZOR PAY -->
         <meta-data
             android:name="com.razorpay.ApiKey"
-            android:value="@string/razor_pay_api_key_id" />
+            android:value="@string/razor_pay_id" />
 
         <!-- FIREBASE CLOUD MESSAGING -->
         <!--<service

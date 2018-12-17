@@ -37,10 +37,31 @@ android {
         }
     }
     buildTypes {
+        debug {
+            buildConfigField 'String', "FacebookAppID", global_facebook_id
+            resValue 'string', "facebook_app_id", global_facebook_id
+            buildConfigField 'String', "GoogleMapsApiKey", global_google_maps_api_key
+            resValue 'string', "google_maps_api_key", global_google_maps_api_key
+            buildConfigField 'String', "RazorPayID", global_razor_pay_api_key_id
+            resValue 'string', "razor_pay_id", global_razor_pay_api_key_id
+            buildConfigField 'String', "RazorPaySecret", global_razor_pay_api_key_secret
+            resValue 'string', "razor_pay_secret", global_razor_pay_api_key_secret
+        }
         release {
             signingConfig signingConfigs.release
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-fresco.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField 'String', "FacebookAppID", global_facebook_id
+            resValue 'string', "facebook_app_id", global_facebook_id
+            buildConfigField 'String', "GoogleMapsApiKey", global_google_maps_api_key
+            resValue 'string', "google_maps_api_key", global_google_maps_api_key
+            buildConfigField 'String', "GoogleMapsDirectionsApi", global_google_directions_api_key
+            resValue 'string', "google_maps_directions_api", global_google_directions_api_key
+            buildConfigField 'String', "RazorPayID", global_razor_pay_api_key_id
+            resValue 'string', "razor_pay_id", global_razor_pay_api_key_id
+            buildConfigField 'String', "RazorPaySecret", global_razor_pay_api_key_secret
+            resValue 'string', "razor_pay_secret", global_razor_pay_api_key_secret
         }
     }
     dexOptions {
@@ -155,7 +176,7 @@ dependencies {
     implementation 'com.mikepenz:foundation-icons-typeface:3.0.0.4@aar'
 
     /** JODA TIME LIBRARY **/
-    implementation 'joda-time:joda-time:2.9.9'
+    implementation 'joda-time:joda-time:2.10.1'
 
     /** PHOTO VIEW **/
     implementation 'com.github.chrisbanes:PhotoView:2.1.3'
@@ -174,6 +195,11 @@ dependencies {
 
     /** SEGMENTED BUTTON **/
     implementation 'com.github.ceryle:SegmentedButton:v2.0.2'
+
+    /** TIMES SQUARE CALENDAR LIBRARY **/
+    implementation 'com.squareup:android-times-square:1.7.10@aar'
+
+    implementation 'com.github.prolificinteractive:material-calendarview:2.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

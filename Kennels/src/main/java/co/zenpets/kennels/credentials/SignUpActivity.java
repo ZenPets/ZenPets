@@ -244,7 +244,7 @@ public class SignUpActivity extends AppCompatActivity /*implements PaymentResult
             calendar.setTime(format.parse(VALID_FROM));
 
             /* CALCULATE THE END DATE */
-            calendar.add(Calendar.MONTH, 3);
+            calendar.add(Calendar.YEAR, 1);
             Date dateEnd = new Date(calendar.getTimeInMillis());
             VALID_TO = format.format(dateEnd);
 //            Log.e("VALID TO", VALID_TO);

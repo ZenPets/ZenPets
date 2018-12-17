@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/zen_toolbar" />
+
+    <include layout="@layout/zen_progress" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbarSize="3dp"
+        android:scrollbarThumbVertical="@color/primary_dark">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                style="@style/ZenPetsCards"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txtSelectedKennel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:text="Selected Kennel"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="12sp"
+                        app:fontFamily="@font/roboto_condensed_light"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtKennelName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Kennel Name"
+                        android:textColor="@color/primary_text"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/roboto_condensed_regular"
+                        app:layout_constraintEnd_toEndOf="@+id/txtSelectedKennel"
+                        app:layout_constraintStart_toStartOf="@+id/txtSelectedKennel"
+                        app:layout_constraintTop_toBottomOf="@+id/txtSelectedKennel" />
+
+                    <View
+                        android:id="@+id/viewKennelDivider"
+                        android:layout_width="0dp"
+                        android:layout_height="0.75dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/fixed_divider_horizontal_bright"
+                        app:layout_constraintEnd_toEndOf="@+id/txtKennelName"
+                        app:layout_constraintStart_toStartOf="@+id/txtKennelName"
+                        app:layout_constraintTop_toBottomOf="@+id/txtKennelName" />
+
+                    <TextView
+                        android:id="@+id/txtPetSizeLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:gravity="start|center"
+                        android:paddingStart="5dp"
+                        android:paddingLeft="5dp"
+                        android:paddingEnd="5dp"
+                        android:paddingRight="5dp"
+                        android:text="Select Your Pet's Size"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="12sp"
+                        app:fontFamily="@font/roboto_condensed_light"
+                        app:layout_constraintEnd_toEndOf="@+id/txtKennelName"
+                        app:layout_constraintStart_toStartOf="@+id/txtKennelName"
+                        app:layout_constraintTop_toBottomOf="@+id/viewKennelDivider" />
+
+                    <RadioGroup
+                        android:id="@+id/groupSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="@+id/txtPetSizeLabel"
+                        app:layout_constraintStart_toStartOf="@+id/txtPetSizeLabel"
+                        app:layout_constraintTop_toBottomOf="@+id/txtPetSizeLabel">
+
+                        <RadioButton
+                            android:id="@+id/btnSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:checked="true"
+                            android:text="@string/kbs_size_small"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="14sp"
+                            app:fontFamily="@font/roboto_condensed_regular" />
+
+                        <RadioButton
+                            android:id="@+id/btnMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/kbs_size_medium"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="14sp"
+                            app:fontFamily="@font/roboto_condensed_regular" />
+
+                        <RadioButton
+                            android:id="@+id/btnLarge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/kbs_size_large"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="14sp"
+                            app:fontFamily="@font/roboto_condensed_regular" />
+                    </RadioGroup>
+
+                    <View
+                        android:id="@+id/viewSizeDivider"
+                        android:layout_width="0dp"
+                        android:layout_height="0.75dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/fixed_divider_horizontal_bright"
+                        app:layout_constraintEnd_toEndOf="@+id/groupSize"
+                        app:layout_constraintStart_toStartOf="@+id/groupSize"
+                        app:layout_constraintTop_toBottomOf="@+id/groupSize" />
+
+                    <LinearLayout
+                        android:id="@+id/linlaConfig"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="@+id/groupSize"
+                        app:layout_constraintStart_toStartOf="@+id/groupSize"
+                        app:layout_constraintTop_toBottomOf="@+id/viewSizeDivider">
+
+                        <LinearLayout
+                            android:id="@+id/linlaDate"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="start|center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/txtDateLabel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="5dp"
+                                android:paddingLeft="5dp"
+                                android:paddingEnd="5dp"
+                                android:paddingRight="5dp"
+                                android:text="Dates"
+                                android:textColor="@color/secondary_text"
+                                android:textSize="12sp"
+                                app:fontFamily="@font/roboto_condensed_light"
+                                app:layout_constraintStart_toStartOf="@+id/txtKennelName"
+                                app:layout_constraintTop_toBottomOf="@+id/viewKennelDivider" />
+
+                            <TextView
+                                android:id="@+id/txtSelectedDates"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="start|center"
+                                android:paddingStart="5dp"
+                                android:paddingLeft="5dp"
+                                android:paddingEnd="5dp"
+                                android:paddingRight="5dp"
+                                android:text="Select The Dates"
+                                android:textColor="@color/primary_text"
+                                android:textSize="14sp"
+                                app:fontFamily="@font/roboto_condensed_regular"
+                                app:layout_constraintStart_toStartOf="@+id/txtDateLabel"
+                                app:layout_constraintTop_toBottomOf="@+id/txtDateLabel" />
+                        </LinearLayout>
+
+                        <!--<View
+                            android:id="@+id/view4"
+                            android:layout_width="1dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@drawable/fixed_divider_horizontal_bright" />
+
+                        <LinearLayout
+                            android:id="@+id/linlaSize"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end|center"
+                            android:orientation="vertical">-->
+
+                        <!--<TextView
+                                android:id="@+id/txtPetSizeLabel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end|center"
+                                android:paddingStart="5dp"
+                                android:paddingLeft="5dp"
+                                android:paddingEnd="5dp"
+                                android:paddingRight="5dp"
+                                android:text="Pet Size"
+                                android:textColor="@color/secondary_text"
+                                android:textSize="12sp"
+                                app:fontFamily="@font/roboto_condensed_light"
+                                app:layout_constraintEnd_toEndOf="@+id/txtKennelName"
+                                app:layout_constraintTop_toBottomOf="@+id/viewKennelDivider" />-->
+
+                        <!--<Spinner
+                                android:id="@+id/spnPetSize"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />-->
+
+                        <!--<TextView
+                                android:id="@+id/txtPetSize"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="end|center"
+                                android:paddingStart="5dp"
+                                android:paddingLeft="5dp"
+                                android:paddingEnd="5dp"
+                                android:paddingRight="5dp"
+                                android:text="Selected Size"
+                                android:textColor="@color/primary_text"
+                                android:textSize="14sp"
+                                app:fontFamily="@font/roboto_condensed_regular"
+                                app:layout_constraintEnd_toEndOf="@+id/txtPetSizeLabel"
+                                app:layout_constraintTop_toBottomOf="@+id/txtPetSizeLabel" />-->
+                        <!--</LinearLayout>-->
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/viewConfigDivider"
+                        android:layout_width="0dp"
+                        android:layout_height="0.75dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/fixed_divider_horizontal_bright"
+                        app:layout_constraintEnd_toEndOf="@+id/linlaConfig"
+                        app:layout_constraintStart_toStartOf="@+id/linlaConfig"
+                        app:layout_constraintTop_toBottomOf="@+id/linlaConfig" />
+
+                    <Button
+                        android:id="@+id/btnSearchUnits"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginRight="40dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/generic_button_bg"
+                        android:text="Search"
+                        android:textColor="@android:color/primary_text_dark"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/roboto_medium"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/linlaConfig"
+                        app:layout_constraintStart_toStartOf="@+id/linlaConfig"
+                        app:layout_constraintTop_toBottomOf="@+id/viewConfigDivider" />
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnSearchUnits">
+
+                <LinearLayout
+                    android:id="@+id/linlaProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp" />
+
+                    <TextView
+                        style="@style/LightBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:padding="2dp"
+                        android:text="@string/common_loading"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/layoutUnitSelection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginRight="15dp"
+                    android:visibility="gone"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/kennel_booking_rate_bg">
+
+                    <TextView
+                        android:id="@+id/txtPricePerNight"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:text="Price Per Night"
+                        android:textColor="@android:color/holo_green_light"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/roboto_condensed_regular"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtPerNightLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="The rate is per night"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="10sp"
+                        app:fontFamily="@font/roboto_condensed_regular"
+                        app:layout_constraintEnd_toEndOf="@+id/txtPricePerNight"
+                        app:layout_constraintStart_toStartOf="@+id/txtPricePerNight"
+                        app:layout_constraintTop_toBottomOf="@+id/txtPricePerNight" />
+
+                    <TextView
+                        android:id="@+id/txtTotalPrice"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="end|center"
+                        android:text="Total Price"
+                        android:textColor="@android:color/holo_green_light"
+                        android:textSize="16sp"
+                        app:fontFamily="@font/roboto_medium"
+                        app:layout_constraintEnd_toEndOf="@+id/txtPerNightLabel"
+                        app:layout_constraintStart_toStartOf="@+id/txtPerNightLabel"
+                        app:layout_constraintTop_toBottomOf="@+id/txtPerNightLabel" />
+
+                    <TextView
+                        android:id="@+id/txtTotalPriceLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="end|center"
+                        android:text="Total cost is inclusive of taxes"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="10sp"
+                        app:fontFamily="@font/roboto_condensed_regular"
+                        app:layout_constraintEnd_toEndOf="@+id/txtTotalPrice"
+                        app:layout_constraintStart_toStartOf="@+id/txtTotalPrice"
+                        app:layout_constraintTop_toBottomOf="@+id/txtTotalPrice" />
+
+                    <Button
+                        android:id="@+id/btnBookNow"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="Book Now"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/txtTotalPriceLabel"
+                        app:layout_constraintStart_toStartOf="@+id/txtTotalPriceLabel"
+                        app:layout_constraintTop_toBottomOf="@+id/txtTotalPriceLabel"
+                        app:layout_constraintVertical_bias="0.0" />
+                </android.support.constraint.ConstraintLayout>
+
+                <!--<LinearLayout
+                    android:id="@+id/linlaUnitSelection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/kennel_booking_rate_bg"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txtPricePerNight"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:text="Price Per Night"
+                            android:textColor="@android:color/holo_green_dark"
+                            android:textSize="14sp"
+                            app:fontFamily="@font/roboto_condensed_regular"
+                            app:layout_constraintEnd_toStartOf="@+id/txtBookNow"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/txtPerNightLabel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:text="The rate is per night"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="10sp"
+                            app:fontFamily="@font/roboto_condensed_regular"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/txtBookNow"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txtPricePerNight"
+                            app:layout_constraintVertical_bias="0.0" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txtBookNow"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_weight="1"
+                            android:gravity="end|center"
+                            android:text="Book Now"
+                            android:textColor="@color/primary_text"
+                            android:textSize="12sp"
+                            app:fontFamily="@font/roboto_condensed_regular"
+                            app:layout_constraintBottom_toBottomOf="@+id/txtPerNightLabel"
+                            app:layout_constraintEnd_toStartOf="@+id/imgvwRightArrow"
+                            app:layout_constraintTop_toTopOf="@+id/txtPricePerNight"
+                            app:layout_constraintVertical_bias="1.0" />
+
+                        <com.mikepenz.iconics.view.IconicsImageView
+                            android:id="@+id/imgvwRightArrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:adjustViewBounds="true"
+                            android:padding="11dp"
+                            app:iiv_color="@color/secondary_text"
+                            app:iiv_icon="gmd_chevron_right"
+                            app:iiv_size="12dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/txtBookNow"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/txtBookNow" />
+                    </LinearLayout>
+                </LinearLayout>-->
+
+                <!--<android.support.v7.widget.RecyclerView
+                    android:id="@+id/listInventory"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:cacheColorHint="@android:color/transparent"
+                    android:fadingEdge="none"
+                    android:persistentDrawingCache="scrolling"
+                    android:scrollbars="none"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/linlaEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginBottom="12dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/empty_graphic" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/LightBold"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center"
+                        android:padding="11dp"
+                        android:text="There are no slots for your pet's size. :-("
+                        android:textColor="@color/secondary_text"
+                        android:textSize="16sp" />
+                </LinearLayout>-->
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
